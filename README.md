@@ -106,15 +106,15 @@ Follow-ups from the initial code review, to address as the catalogue grows:
       dataset for every paint page (~O(n²) CIEDE2000 calls). Fine at the current
       size, but cap or precompute similar-colour lists before the dataset grows
       much larger.
-- [ ] **Search debounce race.** The debounced search commit closes over a stale
+- [x] **Search debounce race.** The debounced search commit closes over a stale
       `searchParams`, so toggling a facet mid-debounce can drop it. `clearAll`
       also doesn't cancel the pending timer, and the timer isn't cleared on
       unmount.
-- [ ] **Validate URL filter params.** The `type` query param is cast to
+- [x] **Validate URL filter params.** The `type` query param is cast to
       `PaintType[]` without validation — filter it against the known set instead.
-- [ ] **Type the colour family.** `PaintWithLab.family` is `string` rather than
+- [x] **Type the colour family.** `PaintWithLab.family` is `string` rather than
       `ColourFamily`, losing type safety where it would help.
-- [ ] **Remove dead code.** `getRanges()` in `src/lib/paints/load.ts` is unused
+- [x] **Remove dead code.** `getRanges()` in `src/lib/paints/load.ts` is unused
       (the browser computes range facets itself).
 
 ## License
