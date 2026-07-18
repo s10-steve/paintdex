@@ -29,25 +29,77 @@ function parseList(v: string | null): string[] {
 // the client JS bundle. See the loader effect below.
 export const BROWSE_INDEX_URL = "/browse-index.json";
 
-/** Derive the filter facet lists from the loaded dataset. */
+/** Derive the full facet lists (every present value) from the loaded dataset. */
 function computeFacets(paints: BrowsePaint[]) {
   const brands = new Set<string>();
-  const ranges = new Map<string, Set<string>>(); // range -> brands
+  const ranges = new Set<string>();
   const types = new Set<string>();
   const families = new Set<string>();
   for (const p of paints) {
     brands.add(p.brand);
     types.add(p.type);
     families.add(p.family);
-    if (!ranges.has(p.range)) ranges.set(p.range, new Set());
-    ranges.get(p.range)!.add(p.brand);
+    ranges.add(p.range);
   }
   return {
     brands: [...brands].sort(),
-    ranges,
+    ranges: [...ranges].sort((a, b) => a.localeCompare(b)),
     types: PAINT_TYPES.filter((t) => types.has(t)),
     families: COLOUR_FAMILIES.filter((f) => families.has(f)),
   };
+}
+
+interface FacetSelection {
+  brands: Set<string>;
+  ranges: Set<string>;
+  types: Set<string>;
+  families: Set<string>;
+  metallic?: "only" | "exclude";
+  includeDiscontinued: boolean;
+}
+
+/**
+ * For each facet, the values that still yield results given the *other* active
+ * filters. A facet's own selection is ignored for its own list, so ticking one
+ * value doesn't hide its siblings. Search text is intentionally excluded, so
+ * typing never makes filter options disappear.
+ */
+function computeAvailable(paints: BrowsePaint[], sel: FacetSelection) {
+  const match = (
+    p: BrowsePaint,
+    skip: "brand" | "range" | "type" | "family",
+  ) =>
+    (sel.includeDiscontinued || !p.discontinued) &&
+    (!sel.metallic ||
+      (sel.metallic === "only" ? !!p.metallic : !p.metallic)) &&
+    (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
+    (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
+    (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
+    (skip === "family" || !sel.families.size || sel.families.has(p.family));
+
+  const brands = new Set<string>();
+  const ranges = new Set<string>();
+  const types = new Set<string>();
+  const families = new Set<string>();
+  for (const p of paints) {
+    if (match(p, "brand")) brands.add(p.brand);
+    if (match(p, "range")) ranges.add(p.range);
+    if (match(p, "type")) types.add(p.type);
+    if (match(p, "family")) families.add(p.family);
+  }
+  return { brands, ranges, types, families };
+}
+
+/** Keep values that are still available, plus any already selected. */
+function keepAvailable(
+  values: string[],
+  available: Set<string>,
+  selected: string[],
+): { value: string; label: string }[] {
+  const sel = new Set(selected);
+  return values
+    .filter((v) => available.has(v) || sel.has(v))
+    .map((v) => ({ value: v, label: v }));
 }
 
 export function PaintsBrowser() {
@@ -185,17 +237,27 @@ export function PaintsBrowser() {
     setVisible(PAGE);
   }
 
-  // Ranges scoped to selected brands (or all when none selected).
-  const rangeEntries = [...facets.ranges.entries()];
-  const rangeOptions = (
-    selBrands.length
-      ? rangeEntries.filter(([, brands]) =>
-          selBrands.some((b) => brands.has(b)),
-        )
-      : rangeEntries
-  )
-    .map(([range]) => ({ value: range, label: range }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+  // Remove options that would return nothing given the other active filters, so
+  // e.g. picking Vallejo drops Citadel-only types and ranges from the lists.
+  // Cheap (one pass over the dataset) and the selection arrays are rebuilt each
+  // render anyway, so it's computed inline rather than memoized.
+  const available = computeAvailable(paints ?? [], {
+    brands: new Set(selBrands),
+    ranges: new Set(selRanges),
+    types: new Set(selTypes),
+    families: new Set(selFamilies),
+    metallic,
+    includeDiscontinued,
+  });
+
+  const brandOptions = keepAvailable(facets.brands, available.brands, selBrands);
+  const familyOptions = keepAvailable(
+    facets.families,
+    available.families,
+    selFamilies,
+  );
+  const typeOptions = keepAvailable(facets.types, available.types, selTypes);
+  const rangeOptions = keepAvailable(facets.ranges, available.ranges, selRanges);
 
   const activeFilterCount =
     selBrands.length +
@@ -224,19 +286,19 @@ export function PaintsBrowser() {
       </div>
       <FacetGroup
         title="Brand"
-        options={facets.brands.map((b) => ({ value: b, label: b }))}
+        options={brandOptions}
         selected={new Set(selBrands)}
         onToggle={(v) => toggleIn("brand", v)}
       />
       <FacetGroup
         title="Colour family"
-        options={facets.families.map((f) => ({ value: f, label: f }))}
+        options={familyOptions}
         selected={new Set(selFamilies)}
         onToggle={(v) => toggleIn("family", v)}
       />
       <FacetGroup
         title="Type"
-        options={facets.types.map((t) => ({ value: t, label: t }))}
+        options={typeOptions}
         selected={new Set(selTypes)}
         onToggle={(v) => toggleIn("type", v)}
       />

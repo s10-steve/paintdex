@@ -19,9 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Metallic/non-metallic filter on the `/paints` browse page (encoded in the URL).
 - Filters on each paint's similar-colour list, reusing the browse page's
   checkbox facets: multi-select Brand, Type and Range, plus a Metallic /
-  Non-metallic finish control. Options that would yield no results given the
-  other selections are greyed out (e.g. selecting Vallejo greys out Citadel-only
-  types like `contrast`). Applying a filter re-ranks the whole catalogue
+  Non-metallic finish control. Applying a filter re-ranks the whole catalogue
   client-side (reusing the browse index) rather than narrowing the precomputed
   top matches, so e.g. filtering Auric Armour Gold's matches to a single brand
   surfaces real matches from deeper in the catalogue instead of an empty list.
@@ -41,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   static-generation phase drops from ~32 s to ~17 s and no longer scales
   quadratically with the catalogue.
 - The `import:source` script now treats a literal `"null"` code cell as no code.
+- Browse-page filters now hide options that would return nothing given the other
+  active filters (e.g. selecting Vallejo removes Citadel-only types like
+  `contrast` and narrows the Range list). This generalises the previous
+  brand-scoped Range list to every facet, and matches the similar-colour list.
 
 ### Fixed
 

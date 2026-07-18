@@ -114,34 +114,26 @@ export function SimilarColours({
     [selBrands, selTypes, selRanges, metallic],
   );
 
-  // Which option values still yield results given the *other* selected facets.
-  // Null until the dataset loads (nothing greyed before then).
+  // Which option values still yield results given the *other* selected facets
+  // (the metallic finish always constrains). Null until the dataset loads, so
+  // nothing is hidden before then.
   const availability = useMemo(() => {
     if (!universe) return null;
-    const match = (
-      p: PaintWithLab,
-      skip: "brand" | "type" | "range" | "metallic",
-    ) =>
+    const match = (p: PaintWithLab, skip: "brand" | "type" | "range") =>
       (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
       (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
       (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
-      (skip === "metallic" || matchMetallic(p, sel.metallic));
+      matchMetallic(p, sel.metallic);
 
     const brandSet = new Set<string>();
     const typeSet = new Set<string>();
     const rangeSet = new Set<string>();
-    let metalOnly = false;
-    let metalExclude = false;
     for (const p of universe) {
       if (match(p, "brand")) brandSet.add(p.brand);
       if (match(p, "type")) typeSet.add(p.type);
       if (match(p, "range")) rangeSet.add(p.range);
-      if (match(p, "metallic")) {
-        if (p.metallic) metalOnly = true;
-        else metalExclude = true;
-      }
     }
-    return { brandSet, typeSet, rangeSet, metalOnly, metalExclude };
+    return { brandSet, typeSet, rangeSet };
   }, [universe, sel]);
 
   // Recompute the ranked list from the filtered subset when a filter is active.
@@ -195,17 +187,16 @@ export function SimilarColours({
     setMetallic("");
   };
 
-  // Mark an option disabled when it's unavailable and not already selected.
-  const opt = (
-    value: string,
-    label: string,
+  // Show only values that still yield results given the other selections, plus
+  // anything already selected so it can always be unticked.
+  const visible = (
+    values: string[],
     availSet: Set<string> | undefined,
     selected: Set<string>,
-  ): FacetOption => ({
-    value,
-    label,
-    disabled: !!availSet && !availSet.has(value) && !selected.has(value),
-  });
+  ): FacetOption[] =>
+    values
+      .filter((v) => !availSet || availSet.has(v) || selected.has(v))
+      .map((v) => ({ value: v, label: v }));
 
   const sidebar = (
     <div className="text-sm">
@@ -223,15 +214,13 @@ export function SimilarColours({
       </div>
       <FacetGroup
         title="Brand"
-        options={brands.map((b) =>
-          opt(b, b, availability?.brandSet, selBrands),
-        )}
+        options={visible(brands, availability?.brandSet, selBrands)}
         selected={selBrands}
         onToggle={toggle(setSelBrands)}
       />
       <FacetGroup
         title="Type"
-        options={types.map((t) => opt(t, t, availability?.typeSet, selTypes))}
+        options={visible(types, availability?.typeSet, selTypes)}
         selected={selTypes}
         onToggle={toggle(setSelTypes)}
       />
@@ -240,37 +229,20 @@ export function SimilarColours({
         <div className="mt-2 flex flex-col gap-1">
           {(
             [
-              { value: "", label: "All", disabled: false },
-              {
-                value: "only",
-                label: "Metallic",
-                disabled:
-                  !!availability && !availability.metalOnly && metallic !== "only",
-              },
-              {
-                value: "exclude",
-                label: "Non-metallic",
-                disabled:
-                  !!availability &&
-                  !availability.metalExclude &&
-                  metallic !== "exclude",
-              },
+              { value: "", label: "All" },
+              { value: "only", label: "Metallic" },
+              { value: "exclude", label: "Non-metallic" },
             ] as const
           ).map((o) => (
             <label
               key={o.value}
-              className={`flex items-center gap-2 rounded px-1 py-0.5 text-sm ${
-                o.disabled
-                  ? "cursor-not-allowed text-muted-foreground/50"
-                  : "cursor-pointer hover:bg-muted"
-              }`}
+              className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-sm hover:bg-muted"
             >
               <input
                 type="radio"
                 name="similar-finish"
                 className="accent-[var(--primary)]"
                 checked={metallic === o.value}
-                disabled={o.disabled}
                 onChange={() => setMetallic(o.value as Metallic)}
               />
               {o.label}
@@ -280,9 +252,7 @@ export function SimilarColours({
       </div>
       <FacetGroup
         title="Range"
-        options={ranges.map((r) =>
-          opt(r, r, availability?.rangeSet, selRanges),
-        )}
+        options={visible(ranges, availability?.rangeSet, selRanges)}
         selected={selRanges}
         onToggle={toggle(setSelRanges)}
         defaultOpen={false}
