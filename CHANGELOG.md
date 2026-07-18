@@ -29,6 +29,3 @@ First release: the paint database and colour matching.
   an `import:source` script to (re)import from the upstream dataset.
 - Unit tests for the colour maths and filtering logic.
 - CI pipeline running lint, data validation, tests and build on every PR.
-
-[Unreleased]: https://github.com/s10-steve/paintdex/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/s10-steve/paintdex/releases/tag/v0.1.0
