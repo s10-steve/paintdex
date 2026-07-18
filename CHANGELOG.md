@@ -21,7 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the type options). Applying a filter re-ranks the whole catalogue client-side
   (reusing the browse index) rather than narrowing the precomputed top matches,
   so e.g. filtering Auric Armour Gold's matches to a single brand surfaces real
-  matches from deeper in the catalogue instead of an empty list.
+  matches from deeper in the catalogue instead of an empty list. This replaces
+  the old "other brands only" toggle, whose precomputed cross-brand list is no
+  longer built — halving the similar-colour index cache.
 - Interactive colour-wheel idea added to the roadmap.
 
 ### Changed

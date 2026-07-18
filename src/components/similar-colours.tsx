@@ -22,8 +22,6 @@ interface SimilarColoursProps {
   target: Paint;
   /** Closest matches across all brands (precomputed, unfiltered default view). */
   all: SimilarItem[];
-  /** Closest matches excluding the target's own brand (precomputed). */
-  crossBrand: SimilarItem[];
   /** Brands available to filter by (whole catalogue). */
   brands: string[];
   /** Paint types present in the catalogue. */
@@ -32,9 +30,6 @@ interface SimilarColoursProps {
 
 /** The dataset the browse page already ships; reused here to re-rank on filter. */
 const BROWSE_INDEX_URL = "/browse-index.json";
-
-/** "Other brands only" — a sentinel brand value distinct from any real brand. */
-const CROSS = "__cross__";
 
 /** Minimal shape the list renders from (shared by precomputed + recomputed). */
 type RenderItem = {
@@ -59,21 +54,18 @@ const toRenderItems = (items: SimilarItem[]): RenderItem[] =>
 export function SimilarColours({
   target,
   all,
-  crossBrand,
   brands,
   types,
 }: SimilarColoursProps) {
-  // Filter state. brand === "" means all; CROSS means other-brands-only.
+  // Filter state. brand === "" / type === "" mean no filter on that axis;
   // "metallic" lives in the type list, so brand + type cover every filter here.
   const [brand, setBrand] = useState("");
   const [type, setType] = useState<"" | PaintType>("");
 
-  const specificBrand = brand !== "" && brand !== CROSS;
-  // The precomputed lists cover the two no-filter cases (all / cross-brand)
-  // instantly. Anything narrower has to re-rank the whole catalogue, because the
-  // precomputed lists only hold each paint's top matches — filtering those would
-  // usually come back empty.
-  const needsCompute = specificBrand || type !== "";
+  // The precomputed `all` list covers the unfiltered view instantly. Any filter
+  // has to re-rank the whole catalogue, because the precomputed list only holds
+  // each paint's top matches — filtering those would usually come back empty.
+  const needsCompute = brand !== "" || type !== "";
 
   // The full catalogue (with Lab), fetched lazily the first time a filter that
   // needs re-ranking is applied, then reused.
@@ -102,7 +94,7 @@ export function SimilarColours({
   const computed = useMemo<RenderItem[] | null>(() => {
     if (!needsCompute || !dataset) return null;
     const candidates = dataset.filter((p) => {
-      if (specificBrand && p.brand !== brand) return false;
+      if (brand && p.brand !== brand) return false;
       if (type && p.type !== type) return false;
       return true;
     });
@@ -114,7 +106,6 @@ export function SimilarColours({
     };
     return findSimilar(candidates, targetWithLab, {
       limit: 16,
-      excludeSameBrand: brand === CROSS,
     }).map(({ paint, distance }) => ({
       id: paint.id,
       hex: paint.hex,
@@ -123,11 +114,11 @@ export function SimilarColours({
       range: paint.range,
       distance,
     }));
-  }, [needsCompute, dataset, specificBrand, brand, type, target]);
+  }, [needsCompute, dataset, brand, type, target]);
 
   const items: RenderItem[] = needsCompute
     ? (computed ?? [])
-    : toRenderItems(brand === CROSS ? crossBrand : all);
+    : toRenderItems(all);
 
   const filtersActive = brand !== "" || type !== "";
   const clearFilters = () => {
@@ -171,7 +162,6 @@ export function SimilarColours({
           className={selectClass}
         >
           <option value="">All brands</option>
-          <option value={CROSS}>Other brands only</option>
           {brands.map((b) => (
             <option key={b} value={b}>
               {b}

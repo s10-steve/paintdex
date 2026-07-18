@@ -59,9 +59,8 @@ export default async function PaintDetailPage({
   const paint = getPaintById(id);
   if (!paint) notFound();
 
-  const { all, cross } = getSimilarColours(paint.id);
+  const { all } = getSimilarColours(paint.id);
   const similarAll = toItems(all);
-  const similarCross = toItems(cross);
 
   const brands = getBrands();
   // Types present in the catalogue, in the canonical PAINT_TYPES order.
@@ -131,7 +130,6 @@ export default async function PaintDetailPage({
       <SimilarColours
         target={toPaint(paint)}
         all={similarAll}
-        crossBrand={similarCross}
         brands={brands}
         types={types}
       />
