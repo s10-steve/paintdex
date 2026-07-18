@@ -83,16 +83,34 @@ of their respective owners.
 - [x] Similar-colour matching (CIEDE2000)
 - [x] Light/dark + responsive
 - [ ] Add more paint brands and ranges
-- [ ] Performance: serve the paint dataset as a cacheable static asset and
-      precompute Lab values, so the browse page's JS bundle stays lean as the
-      paint catalogue grows (the full dataset currently ships in the client
-      bundle)
 - [ ] Make light/dark follow the system automatically (drop the manual toggle)
 - [ ] User accounts & login
 - [ ] Save the paints you own
 - [ ] Painting recipes with colour-coded guide text
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own
+
+### Known issues & fixes
+
+Follow-ups from the initial code review, to address as the catalogue grows:
+
+- [ ] **Browse-page bundle size.** The full paint dataset currently ships in the
+      client JS bundle. Serve it as a cacheable static asset and precompute Lab
+      values so the `/paints` bundle stays lean as more brands are added.
+- [ ] **Build-time scaling.** Static generation runs `findSimilar` over the whole
+      dataset for every paint page (~O(n²) CIEDE2000 calls). Fine at the current
+      size, but cap or precompute similar-colour lists before the dataset grows
+      much larger.
+- [ ] **Search debounce race.** The debounced search commit closes over a stale
+      `searchParams`, so toggling a facet mid-debounce can drop it. `clearAll`
+      also doesn't cancel the pending timer, and the timer isn't cleared on
+      unmount.
+- [ ] **Validate URL filter params.** The `type` query param is cast to
+      `PaintType[]` without validation — filter it against the known set instead.
+- [ ] **Type the colour family.** `PaintWithLab.family` is `string` rather than
+      `ColourFamily`, losing type safety where it would help.
+- [ ] **Remove dead code.** `getRanges()` in `src/lib/paints/load.ts` is unused
+      (the browser computes range facets itself).
 
 ## License
 
