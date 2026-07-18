@@ -451,7 +451,8 @@
     "type": "metallic",
     "hex": "#005D78",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-azure-magic-warpaints-air",
@@ -2031,7 +2032,8 @@
     "type": "metallic",
     "hex": "#003D81",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-elven-flesh",
@@ -2141,7 +2143,8 @@
     "type": "metallic",
     "hex": "#A46049",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-evil-chrome-warpaints-fanatic",
@@ -2211,7 +2214,8 @@
     "type": "metallic",
     "hex": "#A93C27",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-fairy-pink",
@@ -2581,7 +2585,8 @@
     "type": "metallic",
     "hex": "#AE1C28",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-gemstone-warpaints-air",
@@ -2681,7 +2686,8 @@
     "type": "metallic",
     "hex": "#007B3A",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-glitter-green-warpaints-air",
@@ -4282,7 +4288,8 @@
     "type": "metallic",
     "hex": "#312C2F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-night-sky",
@@ -5342,7 +5349,8 @@
     "type": "metallic",
     "hex": "#701B55",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-royal-purple-warpaints-air",
@@ -5962,7 +5970,8 @@
     "type": "metallic",
     "hex": "#686139",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-tainted-gold-warpaints-fanatic",
@@ -6962,7 +6971,8 @@
     "type": "metallic",
     "hex": "#B4406F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-zephyr-pink-warpaints-air",

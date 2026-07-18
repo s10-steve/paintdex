@@ -12,6 +12,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Eight more paint brands imported from the upstream dataset — The Army Painter,
   Duncan Rhodes, Green Stuff World, Liquitex, Mig, P3, Scale 75 and Tamiya —
   taking the catalogue from ~2,700 to 4,940 paints across 11 brands.
+- Metallic-finish flag (`metallic`) on paint records, independent of `type`
+  since brands classify metallics inconsistently. Seeded from `type: "metallic"`
+  plus a vetted set of Citadel metallics, shown as a badge on paint cards and
+  detail pages, and community-correctable like hex values.
+- Metallic/non-metallic filter on the `/paints` browse page (encoded in the URL).
+- Filters on each paint's similar-colour list, reusing the browse page's
+  checkbox facets: multi-select Brand, Type and Range, plus a Metallic /
+  Non-metallic finish control. Applying a filter re-ranks the whole catalogue
+  client-side (reusing the browse index) rather than narrowing the precomputed
+  top matches, so e.g. filtering Auric Armour Gold's matches to a single brand
+  surfaces real matches from deeper in the catalogue instead of an empty list.
+  This replaces the old "other brands only" toggle, whose precomputed cross-brand
+  list is no longer built — halving the similar-colour index cache.
+- A "Minimum match" control on the similar-colour list that hides looser matches
+  by ΔE band (Identical → Show all), defaulting to "Close or better" so the
+  least-useful matches are trimmed out of the box.
 - Interactive colour-wheel idea added to the roadmap.
 
 ### Changed
@@ -26,6 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   static-generation phase drops from ~32 s to ~17 s and no longer scales
   quadratically with the catalogue.
 - The `import:source` script now treats a literal `"null"` code cell as no code.
+- Browse-page filters now hide options that would return nothing given the other
+  active filters (e.g. selecting Vallejo removes Citadel-only types like
+  `contrast` and narrows the Range list). This generalises the previous
+  brand-scoped Range list to every facet, and matches the similar-colour list.
 
 ### Fixed
 

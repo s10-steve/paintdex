@@ -97,7 +97,8 @@
     "type": "metallic",
     "hex": "#B89E85",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-american-olive",
@@ -117,7 +118,8 @@
     "type": "metallic",
     "hex": "#9F8EB0",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-ancestral-blue",
@@ -357,7 +359,8 @@
     "type": "metallic",
     "hex": "#484848",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-blackert-brown",
@@ -577,7 +580,8 @@
     "type": "metallic",
     "hex": "#EFE1C7",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-city-dust",
@@ -607,7 +611,8 @@
     "type": "metallic",
     "hex": "#7FA2B5",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-cobalt-violet-grey",
@@ -817,7 +822,8 @@
     "type": "metallic",
     "hex": "#5D4038",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-deep-blue",
@@ -967,7 +973,8 @@
     "type": "metallic",
     "hex": "#D68D2F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-earth-green",
@@ -1027,7 +1034,8 @@
     "type": "metallic",
     "hex": "#CDAB47",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-emerald-alchemy",
@@ -1037,7 +1045,8 @@
     "type": "metallic",
     "hex": "#78A098",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-emerald-green",
@@ -1197,7 +1206,8 @@
     "type": "metallic",
     "hex": "#88424D",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-gelbraun-brown",
@@ -1407,7 +1417,8 @@
     "type": "metallic",
     "hex": "#9C9DA1",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-hellbound-flesh",
@@ -1637,7 +1648,8 @@
     "type": "metallic",
     "hex": "#CA9FBB",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-leaden-sky",
@@ -1927,7 +1939,8 @@
     "type": "metallic",
     "hex": "#BC937F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-moss-green",
@@ -1977,7 +1990,8 @@
     "type": "metallic",
     "hex": "#574E31",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-necro-grey",
@@ -2107,7 +2121,8 @@
     "type": "metallic",
     "hex": "#97604C",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-olive-brown",
@@ -2347,7 +2362,8 @@
     "type": "metallic",
     "hex": "#8A8D78",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-permanent-orange",
@@ -2507,7 +2523,8 @@
     "type": "metallic",
     "hex": "#CC744C",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-purity-white",
@@ -2717,7 +2734,8 @@
     "type": "metallic",
     "hex": "#D37887",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-russian-green",
@@ -2937,7 +2955,8 @@
     "type": "metallic",
     "hex": "#D4D4D6",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-speed-yellow",
@@ -3197,7 +3216,8 @@
     "type": "metallic",
     "hex": "#544943",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-tiamat-orange",
@@ -3257,7 +3277,8 @@
     "type": "metallic",
     "hex": "#E7A8B3",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-toxic-waste-green",
@@ -3377,7 +3398,8 @@
     "type": "metallic",
     "hex": "#B6843B",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-viking-gold",
@@ -3387,7 +3409,8 @@
     "type": "metallic",
     "hex": "#8D591F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-violet",
@@ -3471,7 +3494,8 @@
     "type": "metallic",
     "hex": "#F1F1F1",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-white-sands",

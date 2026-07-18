@@ -166,7 +166,8 @@
     "type": "metallic",
     "hex": "#AEAEAE",
     "code": "77.701",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-aluminum-metallic",
@@ -1604,7 +1605,8 @@
     "type": "metallic",
     "hex": "#7D7D7B",
     "code": "77.721",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-burnt-orange",
@@ -2142,7 +2144,8 @@
     "type": "metallic",
     "hex": "#AFAFAF",
     "code": "77.707",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-chrome-metallic",
@@ -2302,7 +2305,8 @@
     "type": "metallic",
     "hex": "#9C8F87",
     "code": "77.710",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-copper-mecha-color",
@@ -2492,7 +2496,8 @@
     "type": "metallic",
     "hex": "#949496",
     "code": "77.703",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-dark-blue",
@@ -3504,7 +3509,8 @@
     "type": "metallic",
     "hex": "#BBBBBB",
     "code": "77.717",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-duraluminium",
@@ -3514,7 +3520,8 @@
     "type": "metallic",
     "hex": "#A4A4A4",
     "code": "77.702",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-dusty-rose",
@@ -3780,7 +3787,8 @@
     "type": "metallic",
     "hex": "#7D7D7B",
     "code": "77.723",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-extra-dark-green",
@@ -4744,7 +4752,8 @@
     "type": "metallic",
     "hex": "#FFFFFF",
     "code": "77.657",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-gloss-varnish",
@@ -4864,7 +4873,8 @@
     "type": "metallic",
     "hex": "#AAA184",
     "code": "77.725",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-gold-liquid-gold",
@@ -5536,7 +5546,8 @@
     "type": "metallic",
     "hex": "#737373",
     "code": "77.720",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-gunship-green",
@@ -6334,7 +6345,8 @@
     "type": "metallic",
     "hex": "#797979",
     "code": "77.713",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-jgsd-brown-3606",
@@ -7216,7 +7228,8 @@
     "type": "metallic",
     "hex": "#858585",
     "code": "77.711",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-mahogany",
@@ -8640,7 +8653,8 @@
     "type": "metallic",
     "hex": "#A9A9A9",
     "code": "77.704",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-pale-flesh",
@@ -9972,7 +9986,8 @@
     "type": "metallic",
     "hex": "#C0C1C3",
     "code": "77.716",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-sepia",
@@ -10102,7 +10117,8 @@
     "type": "metallic",
     "hex": "#A0A0A0",
     "code": "77.724",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-silver-model-color",
@@ -10500,7 +10516,8 @@
     "type": "metallic",
     "hex": "#757573",
     "code": "77.712",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-steel-metallic",
@@ -11894,7 +11911,8 @@
     "type": "metallic",
     "hex": "#BAB9BE",
     "code": "77.706",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "vallejo-white-flesh",

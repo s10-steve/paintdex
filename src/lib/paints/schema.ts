@@ -18,6 +18,13 @@ export const paintSchema = z.object({
   hex: z.string().regex(/^#[0-9A-F]{6}$/, "hex must be uppercase #RRGGBB"),
   code: z.string().min(1).nullable().optional(),
   discontinued: z.boolean(),
+  /**
+   * Whether the paint has a metallic finish. Independent of `type`: brands
+   * classify metallics inconsistently (some as `type: "metallic"`, others under
+   * a colour/finish line like Citadel's "layer"), so this is a separate,
+   * hand-correctable flag. Absent is treated as false.
+   */
+  metallic: z.boolean().optional(),
 });
 
 export const paintsFileSchema = z.array(paintSchema);

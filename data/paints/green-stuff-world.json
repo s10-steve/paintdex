@@ -87,7 +87,8 @@
     "type": "metallic",
     "hex": "#7B7E83",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-antique-gold",
@@ -97,7 +98,8 @@
     "type": "metallic",
     "hex": "#957E38",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-aqua-turquoise",
@@ -107,7 +109,8 @@
     "type": "metallic",
     "hex": "#9BD1D1",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-arachnid-green",
@@ -227,7 +230,8 @@
     "type": "metallic",
     "hex": "#5E88FF",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-blue-glacier-dip",
@@ -287,7 +291,8 @@
     "type": "metallic",
     "hex": "#7AC9D6",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-brown-skin",
@@ -317,7 +322,8 @@
     "type": "metallic",
     "hex": "#F2DE2F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-caesar-red",
@@ -327,7 +333,8 @@
     "type": "metallic",
     "hex": "#C8606B",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-camouflage-green",
@@ -367,7 +374,8 @@
     "type": "metallic",
     "hex": "#7CC8D6",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-chancellor-blue",
@@ -397,7 +405,8 @@
     "type": "metallic",
     "hex": "#FCFDFF",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-citrine-yellow",
@@ -417,7 +426,8 @@
     "type": "metallic",
     "hex": "#4476D7",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-cool-blue-dip",
@@ -487,7 +497,8 @@
     "type": "metallic",
     "hex": "#3E2C14",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-dark-umber",
@@ -507,7 +518,8 @@
     "type": "metallic",
     "hex": "#4476D9",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-deck-grey",
@@ -577,7 +589,8 @@
     "type": "metallic",
     "hex": "#BA931C",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-elfwood-brown-dip",
@@ -617,7 +630,8 @@
     "type": "metallic",
     "hex": "#33AE92",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-english-field-brown",
@@ -637,7 +651,8 @@
     "type": "metallic",
     "hex": "#531516",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-faded-orange",
@@ -757,7 +772,8 @@
     "type": "metallic",
     "hex": "#E1A767",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-glorious-magenta-dip",
@@ -857,7 +873,8 @@
     "type": "metallic",
     "hex": "#ACB1B7",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-hellfire-red",
@@ -1007,7 +1024,8 @@
     "type": "metallic",
     "hex": "#4EFF71",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-limelight-dip",
@@ -1067,7 +1085,8 @@
     "type": "metallic",
     "hex": "#869B62",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-military-green",
@@ -1167,7 +1186,8 @@
     "type": "metallic",
     "hex": "#F2DE2F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-mystic-white",
@@ -1177,7 +1197,8 @@
     "type": "metallic",
     "hex": "#EFF0F4",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-nebula-copper",
@@ -1187,7 +1208,8 @@
     "type": "metallic",
     "hex": "#C94FA6",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-neptunus-blue",
@@ -1197,7 +1219,8 @@
     "type": "metallic",
     "hex": "#60BAF8",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-nightsahde-purple-dip",
@@ -1277,7 +1300,8 @@
     "type": "metallic",
     "hex": "#F96E33",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-orchid-purple",
@@ -1287,7 +1311,8 @@
     "type": "metallic",
     "hex": "#734472",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-ork-flesh-dip",
@@ -1367,7 +1392,8 @@
     "type": "metallic",
     "hex": "#412480",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-phantom-violet",
@@ -1397,7 +1423,8 @@
     "type": "metallic",
     "hex": "#78CDD2",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-primer-black",
@@ -1487,7 +1514,8 @@
     "type": "metallic",
     "hex": "#69ACB5",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-purple-vanity-dip",
@@ -1527,7 +1555,8 @@
     "type": "metallic",
     "hex": "#E0E3E8",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-radiant-orange-dip",
@@ -1557,7 +1586,8 @@
     "type": "metallic",
     "hex": "#F03C25",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-red-cloak-dip",
@@ -1577,7 +1607,8 @@
     "type": "metallic",
     "hex": "#A9BA73",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-red-opulence-dip",
@@ -1627,7 +1658,8 @@
     "type": "metallic",
     "hex": "#F470A1",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-rotten-green",
@@ -1647,7 +1679,8 @@
     "type": "metallic",
     "hex": "#90A375",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-ruby-red",
@@ -1747,7 +1780,8 @@
     "type": "metallic",
     "hex": "#95CAF6",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-shiny-gold",
@@ -1757,7 +1791,8 @@
     "type": "metallic",
     "hex": "#BFA22C",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-sirenscale-green",
@@ -1767,7 +1802,8 @@
     "type": "metallic",
     "hex": "#05C18E",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-skeleton-brown-dip",
@@ -1817,7 +1853,8 @@
     "type": "metallic",
     "hex": "#D154A2",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-starship-grey",
@@ -1837,7 +1874,8 @@
     "type": "metallic",
     "hex": "#DDA37E",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-steel-grey",
@@ -1857,7 +1895,8 @@
     "type": "metallic",
     "hex": "#61A694",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-summersea-blue",
@@ -1937,7 +1976,8 @@
     "type": "metallic",
     "hex": "#B9ADAD",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-toxic-purple",
@@ -1947,7 +1987,8 @@
     "type": "metallic",
     "hex": "#7A398D",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-tropical-green",
@@ -1957,7 +1998,8 @@
     "type": "metallic",
     "hex": "#B3D924",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-tropical-turquoise",
@@ -2027,7 +2069,8 @@
     "type": "metallic",
     "hex": "#BE68E3",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-violet-hint-dip",
@@ -2087,7 +2130,8 @@
     "type": "metallic",
     "hex": "#FFFFFF",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-whitecap-beige",
@@ -2127,7 +2171,8 @@
     "type": "metallic",
     "hex": "#F8FB48",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-yellow-submarine-dip",
@@ -2157,7 +2202,8 @@
     "type": "metallic",
     "hex": "#F89D68",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "green-stuff-world-yoda-green",

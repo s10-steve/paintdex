@@ -13,11 +13,12 @@ across brands.
 - **Searchable, filterable database** of 4,900+ paints across 11 brands —
   **Citadel**, **Vallejo**, **AK Interactive**, **The Army Painter**, **Duncan
   Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**, **Scale 75**
-  and **Tamiya**. Filter by brand, product range, finish type and colour family
-  — every filter is encoded in the URL, so any view is shareable.
+  and **Tamiya**. Filter by brand, product range, finish type, colour family and
+  metallic finish — every filter is encoded in the URL, so any view is
+  shareable.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
-  distance — with an option to see other brands only.
+  distance — with filters to narrow the matches by brand or type.
 - **Light & dark mode**, following your system preference with a manual toggle.
 - **Responsive** desktop and mobile layouts.
 - **Open data.** The paint database is plain JSON in this repo, so anyone can
@@ -82,24 +83,48 @@ Brand and product names are trademarks of their respective owners.
 
 ## Roadmap
 
+### Minor UI tweaks
+
+- [ ] The search box currently says "search by name, brand, range or code" but
+      I'm pretty sure it only matches name and code? That's fine, filters work
+      for the rest but please update the search text to be accurate.
+- [ ] Autocomplete search suggestions (e.g. typing "abaddon" should suggest
+      "Abaddon Black" and "Abaddon Grey")
+- [x] On the paint page, add a filter for the match grouping. By default have it
+      only show matches of 'close' or better.
+
+### Paint database and UI features
+
 - [x] Paint database: search, filter, colour families
 - [x] Similar-colour matching (CIEDE2000)
 - [x] Light/dark + responsive
+- [ ] Add URL links to the paint database for the official product pages (e.g.
+      Citadel paints link to the Games Workshop site). Would help ensure
+      correctness and tie in with adding new ranges and paints.
 - [ ] Add more paint brands and ranges
-- [ ] Make light/dark follow the system automatically (drop the manual toggle)
-- [ ] Add a flag for metallic paints, and a filter for metallic vs non-metallic
+- [x] Light/dark follows the system by default, with a manual toggle to override
+- [x] Add a flag for metallic paints, and a filter for metallic vs non-metallic
       (e.g Auric Armour Gold is listed as similar to yellows and golds, but
       really they're completely different use cases)
-- [ ] Add filters to the similar-colour list (e.g. only show paints from a
+- [x] Add filters to the similar-colour list (e.g. only show paints from a
       certain brand, or only show paints of a certain type)
+- [ ] Interactive colour wheel (à la
+      [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
+      suggests matching paints based on the colours you pick
+
+### Real live website
+
+- [ ] Deploy to Vercel, make it an actual live website, and get some users to
+      try it out. The paint data is already in the repo, so the site can be
+      deployed without any backend or database.
+
+### User accounts & recipe features
+
 - [ ] User accounts & login
 - [ ] Save the paints you own
 - [ ] Painting recipes with colour-coded guide text
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own
-- [ ] Interactive colour wheel (à la
-      [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
-      suggests matching paints based on the colours you pick
 
 ### Known issues & fixes
 

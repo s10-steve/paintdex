@@ -81,7 +81,7 @@ interface SimilarRef {
   id: string;
   d: number;
 }
-type SimilarIndex = Record<string, { all: SimilarRef[]; cross: SimilarRef[] }>;
+type SimilarIndex = Record<string, { all: SimilarRef[] }>;
 
 let similarCache: SimilarIndex | null = null;
 function getSimilarIndex(): SimilarIndex {
@@ -105,16 +105,13 @@ function getSimilarIndex(): SimilarIndex {
 }
 
 /**
- * Precomputed nearest colours for a paint: `all` across every brand and `cross`
- * excluding the paint's own brand. Resolves the stored ids to full records and
- * silently drops any that are no longer present.
+ * Precomputed nearest colours for a paint (`all`, across every brand). Resolves
+ * the stored ids to full records and silently drops any no longer present.
+ * Narrower views (by brand or type) are re-ranked client-side in the browser.
  */
-export function getSimilarColours(id: string): {
-  all: SimilarMatch[];
-  cross: SimilarMatch[];
-} {
+export function getSimilarColours(id: string): { all: SimilarMatch[] } {
   const record = getSimilarIndex()[id];
-  if (!record) return { all: [], cross: [] };
+  if (!record) return { all: [] };
   const byId = getPaintMap();
   const resolve = (refs: SimilarRef[]): SimilarMatch[] =>
     refs
@@ -123,5 +120,5 @@ export function getSimilarColours(id: string): {
         return paint ? { paint, distance: r.d } : null;
       })
       .filter((m): m is SimilarMatch => m !== null);
-  return { all: resolve(record.all), cross: resolve(record.cross) };
+  return { all: resolve(record.all) };
 }
