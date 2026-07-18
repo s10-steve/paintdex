@@ -14,7 +14,8 @@ across brands.
   **Citadel**, **Vallejo**, **AK Interactive**, **The Army Painter**, **Duncan
   Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**, **Scale 75**
   and **Tamiya**. Filter by brand, product range, finish type, colour family and
-  metallic finish — every filter is encoded in the URL, so any view is shareable.
+  metallic finish — every filter is encoded in the URL, so any view is
+  shareable.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
   distance — with filters to narrow the matches by brand or type.
@@ -82,6 +83,16 @@ Brand and product names are trademarks of their respective owners.
 
 ## Roadmap
 
+### Minor UI tweaks
+
+- [ ] The search box currently says "search by name, brand, range or code" but
+      I'm pretty sure it only matches name and code? That's fine, filters work
+      for the rest but please update the search text to be accurate.
+- [ ] Autocomplete search suggestions (e.g. typing "abaddon" should suggest
+      "Abaddon Black" and "Abaddon Grey")
+- [ ] On the paint page, add a filter for the match grouping. By default have it
+      only show matches of 'close' or better.
+
 ### Paint database and UI features
 
 - [x] Paint database: search, filter, colour families
@@ -97,8 +108,6 @@ Brand and product names are trademarks of their respective owners.
       really they're completely different use cases)
 - [x] Add filters to the similar-colour list (e.g. only show paints from a
       certain brand, or only show paints of a certain type)
-- [ ] Autocomplete search suggestions (e.g. typing "abaddon" should suggest
-      "Abaddon Black" and "Abaddon Grey")
 - [ ] Interactive colour wheel (à la
       [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
       suggests matching paints based on the colours you pick
