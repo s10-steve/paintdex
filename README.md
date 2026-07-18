@@ -10,10 +10,11 @@ across brands.
 
 ## Features
 
-- **Searchable, filterable database** of 2,600+ paints across **Citadel**,
-  **Vallejo** and **AK Interactive**. Filter by brand, product range, finish
-  type and colour family — every filter is encoded in the URL, so any view is
-  shareable.
+- **Searchable, filterable database** of 4,900+ paints across 11 brands —
+  **Citadel**, **Vallejo**, **AK Interactive**, **The Army Painter**,
+  **Duncan Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**,
+  **Scale 75** and **Tamiya**. Filter by brand, product range, finish type and
+  colour family — every filter is encoded in the URL, so any view is shareable.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
   distance — with an option to see other brands only.
@@ -74,8 +75,9 @@ best-effort and community-correctable. See
 [`data/paints/README.md`](data/paints/README.md) for details.
 
 Paintdex is not affiliated with or endorsed by Games Workshop, Vallejo, AK
-Interactive, or any paint manufacturer. Brand and product names are trademarks
-of their respective owners.
+Interactive, The Army Painter, Duncan Rhodes, Green Stuff World, Liquitex, AMMO
+by Mig Jimenez, Privateer Press, Scale 75, Tamiya, or any paint manufacturer.
+Brand and product names are trademarks of their respective owners.
 
 ## Roadmap
 
@@ -89,6 +91,9 @@ of their respective owners.
 - [ ] Painting recipes with colour-coded guide text
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own
+- [ ] Interactive colour wheel (à la
+      [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
+      suggests matching paints based on the colours you pick
 
 ### Known issues & fixes
 
@@ -101,15 +106,15 @@ Follow-ups from the initial code review, to address as the catalogue grows:
       dataset for every paint page (~O(n²) CIEDE2000 calls). Fine at the current
       size, but cap or precompute similar-colour lists before the dataset grows
       much larger.
-- [ ] **Search debounce race.** The debounced search commit closes over a stale
+- [x] **Search debounce race.** The debounced search commit closes over a stale
       `searchParams`, so toggling a facet mid-debounce can drop it. `clearAll`
       also doesn't cancel the pending timer, and the timer isn't cleared on
       unmount.
-- [ ] **Validate URL filter params.** The `type` query param is cast to
+- [x] **Validate URL filter params.** The `type` query param is cast to
       `PaintType[]` without validation — filter it against the known set instead.
-- [ ] **Type the colour family.** `PaintWithLab.family` is `string` rather than
+- [x] **Type the colour family.** `PaintWithLab.family` is `string` rather than
       `ColourFamily`, losing type safety where it would help.
-- [ ] **Remove dead code.** `getRanges()` in `src/lib/paints/load.ts` is unused
+- [x] **Remove dead code.** `getRanges()` in `src/lib/paints/load.ts` is unused
       (the browser computes range facets itself).
 
 ## License

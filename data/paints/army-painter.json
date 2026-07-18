@@ -1,0 +1,6997 @@
+[
+  {
+    "id": "army-painter-abomination-gore",
+    "name": "Abomination Gore",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#A32F26",
+    "code": "WP1401",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-absolution-green",
+    "name": "Absolution Green",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#22311F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-absolution-green-speedpaint-set-2-0",
+    "name": "Absolution Green",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#214A28",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-abyssal-black",
+    "name": "Abyssal Black",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#21201D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-abyssal-blue",
+    "name": "Abyssal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#00506C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-aegis-aqua",
+    "name": "Aegis Aqua",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#32B3D5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-aegis-suit-satin-varnish",
+    "name": "Aegis Suit Satin Varnish",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#F4F7F7",
+    "code": "CP3027",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-afterglow",
+    "name": "Afterglow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#E4EA8D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-agate-skin",
+    "name": "Agate Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D7877B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-aged-hide",
+    "name": "Aged Hide",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#D56C4F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-algae-green",
+    "name": "Algae Green",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#9CAA53",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-alien-purple",
+    "name": "Alien Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#6154A3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-alien-purple-warpaints-primer",
+    "name": "Alien Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#492B79",
+    "code": "CP3019",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-alien-purple-warpaints-air",
+    "name": "Alien Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#3D2560",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-alien-purple-warpaints",
+    "name": "Alien Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#462D59",
+    "code": "WP1128",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-alpha-blue",
+    "name": "Alpha Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#667DC0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-amber-skin",
+    "name": "Amber Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#C4A083",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-amber-skin-skin-tones-paint-set",
+    "name": "Amber Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#AC835D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-amulet-aqua",
+    "name": "Amulet Aqua",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#68C5B6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ancient-honey",
+    "name": "Ancient Honey",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#EBBD21",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ancient-mummy",
+    "name": "Ancient Mummy",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#FDEAA9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ancient-stone",
+    "name": "Ancient Stone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D0C3A3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-angel-green",
+    "name": "Angel Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#20321D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-angel-green-warpaints",
+    "name": "Angel Green",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#0F3515",
+    "code": "WP1112",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-angel-green-warpaints-primer",
+    "name": "Angel Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#273B2F",
+    "code": "CP3020",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-angel-green-warpaints-fanatic",
+    "name": "Angel Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#173E31",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-angelic-red",
+    "name": "Angelic Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D42C39",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-angelic-yellow",
+    "name": "Angelic Yellow",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#F9DF1C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-anti-shine-matt-varnish",
+    "name": "Anti-Shine Matt Varnish",
+    "brand": "Army Painter",
+    "range": "Warpaints Wash",
+    "type": "wash",
+    "hex": "#F0F0F0",
+    "code": "CP3003",
+    "discontinued": false,
+    "ranges": [
+      "Warpaints Primer",
+      "Warpaints Wash"
+    ]
+  },
+  {
+    "id": "army-painter-aqua-alchemy",
+    "name": "Aqua Alchemy",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#24BBA6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-aquamarine",
+    "name": "Aquamarine",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#56C4CD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-archangel-red",
+    "name": "Archangel Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#C52822",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-arctic-gem",
+    "name": "Arctic Gem",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#1995D4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-arid-earth",
+    "name": "Arid Earth",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#FDEDC7",
+    "code": "WP1402",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-army-green",
+    "name": "Army Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#5D7554",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-army-green-warpaints-air",
+    "name": "Army Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#536638",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-army-green-warpaints-primer",
+    "name": "Army Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#66693A",
+    "code": "CP3005",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-army-green-warpaints",
+    "name": "Army Green",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#747260",
+    "code": "WP1110",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ash-grey",
+    "name": "Ash Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#95959F",
+    "code": "WP1117",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ash-grey-warpaints-fanatic",
+    "name": "Ash Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#84878F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ashen-stone",
+    "name": "Ashen Stone",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#B3B9B9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-augur-blue",
+    "name": "Augur Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#ACBCE2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-autumn-sage",
+    "name": "Autumn Sage",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#75AD98",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-aztec-gold",
+    "name": "Aztec Gold",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#62732F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-azure-magic",
+    "name": "Azure Magic",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#005D78",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-azure-magic-warpaints-air",
+    "name": "Azure Magic",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#153F51",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-babe-blonde",
+    "name": "Babe Blonde",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#FBDC04",
+    "code": "WP1403",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-banshee-brown",
+    "name": "Banshee Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#BFA59B",
+    "code": "WP1404",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-barbarian-flesh",
+    "name": "Barbarian Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#D28D57",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-barbarian-flesh-warpaints-fanatic",
+    "name": "Barbarian Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F69B7F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-barbarian-flesh-warpaints",
+    "name": "Barbarian Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#E38C7F",
+    "code": "WP1126",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-barbarian-flesh-warpaints-primer",
+    "name": "Barbarian Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#E59B66",
+    "code": "CP3007",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-baron-blue",
+    "name": "Baron Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#7C95CC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-barren-dune",
+    "name": "Barren Dune",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#DEBB72",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-barren-yellow",
+    "name": "Barren Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#845B25",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-basilisk-brown",
+    "name": "Basilisk Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#CF8100",
+    "code": "WP1405",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-basilisk-red",
+    "name": "Basilisk Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#6C2539",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-battleship-grey",
+    "name": "Battleship Grey",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#B7C6C9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-beholder-purple",
+    "name": "Beholder Purple",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#A893B3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-beowulf-blue",
+    "name": "Beowulf Blue",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#0C3F80",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bleached-bone",
+    "name": "Bleached Bone",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#DFD9B7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bleached-skull",
+    "name": "Bleached Skull",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#F5F4F0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blinding-light",
+    "name": "Blinding Light",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#F5F4EF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blood-chalice",
+    "name": "Blood Chalice",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#DB4B50",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blood-red",
+    "name": "Blood Red",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#DB3016",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blood-red-speedpaint-set",
+    "name": "Blood Red",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#A8141F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blue-flux",
+    "name": "Blue Flux",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#008BBD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blue-tone",
+    "name": "Blue Tone",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#0D2540",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blue-tone-warpaints-tone",
+    "name": "Blue Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "other",
+    "hex": "#112A47",
+    "code": "WP1139",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blue-tone-warpaints-fanatic-wash",
+    "name": "Blue Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#132B47",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bogey-green",
+    "name": "Bogey Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#A1BD67",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-boney-spikes",
+    "name": "Boney Spikes",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#E6D4C1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bony-matter",
+    "name": "Bony Matter",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#B69471",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bootstrap-brown",
+    "name": "Bootstrap Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#5D4D4D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brainmatter-beige",
+    "name": "Brainmatter Beige",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#DEDBD3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brainmatter-beige-warpaints",
+    "name": "Brainmatter Beige",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#F1F2E2",
+    "code": "WP1405",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brazen-copper",
+    "name": "Brazen Copper",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#6A3D37",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brethil-flesh",
+    "name": "Brethil Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#C4915A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brigade-grey",
+    "name": "Brigade Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D0D0D2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brigadine-brown",
+    "name": "Brigadine Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#443A40",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bright-gold",
+    "name": "Bright Gold",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#B48024",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bright-gold-warpaints-fanatic",
+    "name": "Bright Gold",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#987B1A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bright-gold-warpaints",
+    "name": "Bright Gold",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#BB8702",
+    "code": "WP1144",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bright-red",
+    "name": "Bright Red",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#E15A3D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bright-sapphire",
+    "name": "Bright Sapphire",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#84CEF0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-broadsword-silver",
+    "name": "Broadsword Silver",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#595854",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-broodmother-purple",
+    "name": "Broodmother Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#26233B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brown-wash",
+    "name": "Brown Wash",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments Wash",
+    "type": "wash",
+    "hex": "#352A16",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brownish-decay",
+    "name": "Brownish Decay",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#7B6C33",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brush-on-primer",
+    "name": "Brush-On Primer",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#727475",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-brush-on-primer-warpaints-primer",
+    "name": "Brush-On Primer",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#A0A3A2",
+    "code": "WP1472",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-buffed-hide",
+    "name": "Buffed Hide",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#B3756A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bugbear-brown",
+    "name": "Bugbear Brown",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#7B561E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bullwhack-brown",
+    "name": "Bullwhack Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#8A6243",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-burning-ore",
+    "name": "Burning Ore",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F2653E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-burnished-red",
+    "name": "Burnished Red",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#633B33",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-burnt-moss",
+    "name": "Burnt Moss",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#4D5A50",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-burnt-turf",
+    "name": "Burnt Turf",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#BE9859",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cadre-grey",
+    "name": "Cadre Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#8E9999",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cambion-crimson",
+    "name": "Cambion Crimson",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#9C1A1D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-camo-cloak",
+    "name": "Camo Cloak",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#5A713B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-camo-cloak-speedpaint-set",
+    "name": "Camo Cloak",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#536639",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-camouflage-green",
+    "name": "Camouflage Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#6E8358",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-canopy-green",
+    "name": "Canopy Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#ABBE55",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-caribbean-ocean",
+    "name": "Caribbean Ocean",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#09A6B5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-carmine-dragon",
+    "name": "Carmine Dragon",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#DC3058",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-carnelian-skin",
+    "name": "Carnelian Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#5D3E46",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-castle-grey",
+    "name": "Castle Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#8D887F",
+    "code": "WP1407",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-centaur-skin",
+    "name": "Centaur Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#E3B1A5",
+    "code": "WP1408",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-chaotic-red",
+    "name": "Chaotic Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#582013",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-chaotic-red-warpaints-primer",
+    "name": "Chaotic Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#6C2A31",
+    "code": "CP3026",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-chaotic-red-warpaints",
+    "name": "Chaotic Red",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#6F1D06",
+    "code": "WP1142",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-charming-chartreuse",
+    "name": "Charming Chartreuse",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#C9CF47",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-charred-bone",
+    "name": "Charred Bone",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#8C7757",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-chimera-red",
+    "name": "Chimera Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#621723",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cloudburst-blue",
+    "name": "Cloudburst Blue",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#3C4258",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cloudburst-blue-speedpaint-set",
+    "name": "Cloudburst Blue",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#364653",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cobalt-metal",
+    "name": "Cobalt Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#2E4249",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cold-flesh",
+    "name": "Cold Flesh",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#E7F0F9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-combat-fatigues",
+    "name": "Combat Fatigues",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#868E59",
+    "code": "WP1409",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-command-khaki",
+    "name": "Command Khaki",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#B49488",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-commando-green",
+    "name": "Commando Green",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#847F37",
+    "code": "WP1410",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-company-grey",
+    "name": "Company Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#BCBEC2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-consul-blue",
+    "name": "Consul Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#526899",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-corpse-pale",
+    "name": "Corpse Pale",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#EFD0AF",
+    "code": "WP1411",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cosmic-dust",
+    "name": "Cosmic Dust",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#EEE47D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-coven-purple",
+    "name": "Coven Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#7B5A85",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crow-hue",
+    "name": "Crow Hue",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#424B47",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crusader-skin",
+    "name": "Crusader Skin",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#EB9A5B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crusader-skin-speedpaint-set",
+    "name": "Crusader Skin",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#D28D57",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crusted-sore",
+    "name": "Crusted Sore",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#843046",
+    "code": "WP1412",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crypt-wraith",
+    "name": "Crypt Wraith",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#5D5F4D",
+    "code": "WP1413",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crystal-blue",
+    "name": "Crystal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#2580BA",
+    "code": "CP3017",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crystal-blue-warpaints-fanatic",
+    "name": "Crystal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#0273BC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crystal-blue-warpaints-air",
+    "name": "Crystal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#106DAC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-crystal-blue-warpaints",
+    "name": "Crystal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#2579BB",
+    "code": "WP1114",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cultist-purple",
+    "name": "Cultist Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#6962AB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cultist-robe",
+    "name": "Cultist Robe",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#787164",
+    "code": "WP1414",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cursed-blade",
+    "name": "Cursed Blade",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#7B482A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-cypress-brown",
+    "name": "Cypress Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#544537",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-daemonic-yellow",
+    "name": "Daemonic Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#F8BF3E",
+    "code": "WP1107",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-daemonic-yellow-warpaints-fanatic",
+    "name": "Daemonic Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FECE2A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-daemonic-yellow-warpaints-primer",
+    "name": "Daemonic Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#F7D201",
+    "code": "CP3015",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-daemonic-yellow-warpaints-air",
+    "name": "Daemonic Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#F1D12F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-blue-tone",
+    "name": "Dark Blue Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#17202E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-emerald",
+    "name": "Dark Emerald",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#3B4A25",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-red-tone",
+    "name": "Dark Red Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#2E131A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-rust",
+    "name": "Dark Rust",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#290F12",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-skin-shade",
+    "name": "Dark Skin Shade",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "shade",
+    "hex": "#443638",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-skin-wash",
+    "name": "Dark Skin Wash",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set - Washes",
+    "type": "wash",
+    "hex": "#332123",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-sky",
+    "name": "Dark Sky",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#354653",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-sky-warpaints",
+    "name": "Dark Sky",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#314F5E",
+    "code": "WP1415",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-stone",
+    "name": "Dark Stone",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#49383C",
+    "code": "WP1425",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-tone",
+    "name": "Dark Tone",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#0C060E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-tone-warpaints-fanatic-wash",
+    "name": "Dark Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#1F1F1F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-tone-warpaints-tone",
+    "name": "Dark Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "other",
+    "hex": "#050505",
+    "code": "WP1136",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-wood",
+    "name": "Dark Wood",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#482D1A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dark-wood-speedpaint-set",
+    "name": "Dark Wood",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#3A2415",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-data-system-glow",
+    "name": "Data System Glow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#87C866",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-death-metal",
+    "name": "Death Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#2B2B2B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-deep-azure",
+    "name": "Deep Azure",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#006B79",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-deep-blue",
+    "name": "Deep Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#0E4E76",
+    "code": "WP1116",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-deep-grey",
+    "name": "Deep Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#4B5164",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-deep-ocean-blue",
+    "name": "Deep Ocean Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#1B3044",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-demigod-flames",
+    "name": "Demigod Flames",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D17B41",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-desert-yellow",
+    "name": "Desert Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#856D45",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-desert-yellow-warpaints",
+    "name": "Desert Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#D7955A",
+    "code": "WP1121",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-desert-yellow-warpaints-primer",
+    "name": "Desert Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#C18C17",
+    "code": "CP3011",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-desert-yellow-warpaints-air",
+    "name": "Desert Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#B99029",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-desolate-brown",
+    "name": "Desolate Brown",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#7A703B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-diabolic-plum",
+    "name": "Diabolic Plum",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#562D74",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dirt-spatter",
+    "name": "Dirt Spatter",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#603920",
+    "code": "WP1416",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-disgusting-slime",
+    "name": "Disgusting Slime",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#A5C345",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-disgusting-slime-warpaints",
+    "name": "Disgusting Slime",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#CBB503",
+    "code": "WP1477",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-diviner-light",
+    "name": "Diviner Light",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D59FC5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-doomfire-drab",
+    "name": "Doomfire Drab",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F9D9E6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dorado-skin",
+    "name": "Dorado Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#A97761",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dorado-skin-warpaints-fanatic",
+    "name": "Dorado Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#EEC79E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-drab-green",
+    "name": "Drab Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#7F815C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dragon-red",
+    "name": "Dragon Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#952526",
+    "code": "CP3018",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dragon-red-warpaints-air",
+    "name": "Dragon Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#7C191B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dragon-red-warpaints-fanatic",
+    "name": "Dragon Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#BF283B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dragon-red-warpaints",
+    "name": "Dragon Red",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#B91130",
+    "code": "WP1105",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dragonfire-red",
+    "name": "Dragonfire Red",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#CF2529",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-drake-tooth",
+    "name": "Drake Tooth",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#D5D2BD",
+    "code": "WP1417",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-drakolich-scales",
+    "name": "Drakolich Scales",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#6D7FA3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dry-blood",
+    "name": "Dry Blood",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#24000E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dry-rust",
+    "name": "Dry Rust",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#E74F35",
+    "code": "WP1479",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dryad-brown",
+    "name": "Dryad Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#613630",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-duergar-metal",
+    "name": "Duergar Metal",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#582121",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dungeon-grey",
+    "name": "Dungeon Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#676B70",
+    "code": "WP1418",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dungeon-stone",
+    "name": "Dungeon Stone",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#666D74",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dusk-red",
+    "name": "Dusk Red",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#603E3D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dusty-skull",
+    "name": "Dusty Skull",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#8B7C68",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-dwarven-bronze",
+    "name": "Dwarven Bronze",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#CD601F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-elder-flower",
+    "name": "Elder Flower",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#A8577B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-electric-blue",
+    "name": "Electric Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#5288B8",
+    "code": "WP1113",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-electric-lime",
+    "name": "Electric Lime",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#BDD532",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-elemental-bolt",
+    "name": "Elemental Bolt",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#158E76",
+    "code": "WP1419",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-elemental-bolt-warpaints-air",
+    "name": "Elemental Bolt",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#00816C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-elf-green",
+    "name": "Elf Green",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#4B5212",
+    "code": "WP1420",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-elven-armor",
+    "name": "Elven Armor",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#1B3061",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-elven-armour",
+    "name": "Elven Armour",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#003D81",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-elven-flesh",
+    "name": "Elven Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#E6AD86",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-elven-flesh-warpaints",
+    "name": "Elven Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#F9BE94",
+    "code": "WP1421",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-emerald-forest",
+    "name": "Emerald Forest",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#5BBB4D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-encarmine-red",
+    "name": "Encarmine Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#721824",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-enchanted-pink",
+    "name": "Enchanted Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#B66CAE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-enchanted-steel",
+    "name": "Enchanted Steel",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#4F595B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-eternal-blue",
+    "name": "Eternal Blue",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#5A7F93",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-eternal-hunt",
+    "name": "Eternal Hunt",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#279A4C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ethereal-specter",
+    "name": "Ethereal Specter",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#C1AFBB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-evergreen-fog",
+    "name": "Evergreen Fog",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#396360",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-evil-chrome",
+    "name": "Evil Chrome",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#A46049",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-evil-chrome-warpaints-fanatic",
+    "name": "Evil Chrome",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#5B3B2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-evil-chrome-warpaints-air",
+    "name": "Evil Chrome",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#644133",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-exile-green",
+    "name": "Exile Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#4C685B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-faerzress-purple",
+    "name": "Faerzress Purple",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#87146E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fair-skin",
+    "name": "Fair Skin",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#EACDAD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fairy-dust",
+    "name": "Fairy Dust",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#8C8C8C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fairy-dust-metallic-colours-paint-set",
+    "name": "Fairy Dust",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#A93C27",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fairy-pink",
+    "name": "Fairy Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#81375F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-familiar-pink",
+    "name": "Familiar Pink",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#D62F7F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-feral-green",
+    "name": "Feral Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#5D8758",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ferocious-green",
+    "name": "Ferocious Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#75C377",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fey-pink",
+    "name": "Fey Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#C384A6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-feywild-emerald",
+    "name": "Feywild Emerald",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#006E40",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-feywild-glow",
+    "name": "Feywild Glow",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#F2CC9E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-field-grey",
+    "name": "Field Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#7D807B",
+    "code": "WP1481",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fiendish-yellow",
+    "name": "Fiendish Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#EC9A44",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-figgy-pink",
+    "name": "Figgy Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#E3AFC9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-filthy-cape",
+    "name": "Filthy Cape",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#7D785A",
+    "code": "WP1424",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fire-drake",
+    "name": "Fire Drake",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#D2916B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fire-giant-orange",
+    "name": "Fire Giant Orange",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#BE3F20",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fire-giant-orange-speedpaint-set-2-0",
+    "name": "Fire Giant Orange",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#E77924",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fire-lizard",
+    "name": "Fire Lizard",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#F07000",
+    "code": "WP1426",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-firenewt-orange",
+    "name": "Firenewt Orange",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#F6AA0D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-flesh-wash",
+    "name": "Flesh Wash",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "wash",
+    "hex": "#4A1B0E",
+    "code": "WP1143",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-flesh-wash-quickshade-washes-set",
+    "name": "Flesh Wash",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#441517",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-flesh-wash-d-d-nolzur-s-marvelous-pigments-wash",
+    "name": "Flesh Wash",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments Wash",
+    "type": "wash",
+    "hex": "#4B1B0E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-flickering-flame",
+    "name": "Flickering Flame",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F58B3D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-flumph-pink",
+    "name": "Flumph Pink",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#E69D63",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fog-grey",
+    "name": "Fog Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#7A97B1",
+    "code": "WP1427",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-forbidden-fruit",
+    "name": "Forbidden Fruit",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#CD88A9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-forest-faun",
+    "name": "Forest Faun",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#A1C7AF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-forest-sprite",
+    "name": "Forest Sprite",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#6FA045",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fresh-rust",
+    "name": "Fresh Rust",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#C25428",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-frost-blue",
+    "name": "Frost Blue",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#0080BF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-frost-blue-warpaints-fanatic",
+    "name": "Frost Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#9ABEDE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fur-brown",
+    "name": "Fur Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#84351D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fur-brown-warpaints-fanatic",
+    "name": "Fur Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#774544",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fur-brown-warpaints-primer",
+    "name": "Fur Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#993822",
+    "code": "CP3016",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-fur-brown-warpaints",
+    "name": "Fur Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#A13A0F",
+    "code": "WP1122",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gargoyle-grey",
+    "name": "Gargoyle Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#A8A292",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-garment-pigment-toner",
+    "name": "Garment Pigment Toner",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#752330",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gauss-green",
+    "name": "Gauss Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#63A33C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gelatinous-blue",
+    "name": "Gelatinous Blue",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#C7CFE3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gemstone",
+    "name": "Gemstone",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#AE1C28",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gemstone-warpaints-air",
+    "name": "Gemstone",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#69191F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gemstone-red",
+    "name": "Gemstone Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#821D23",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ghillie-dew",
+    "name": "Ghillie Dew",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#90AC23",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ghostly-blue",
+    "name": "Ghostly Blue",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#3A9DD5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ghostly-vapours",
+    "name": "Ghostly Vapours",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#A5C5C0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ghoul-green",
+    "name": "Ghoul Green",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#44A963",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ghoul-grey",
+    "name": "Ghoul Grey",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#B9BEC4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-glistening-blood",
+    "name": "Glistening Blood",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#B3082D",
+    "code": "WP1476",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-glistening-blood-d-d-nolzur-s-marvelous-pigments-wash",
+    "name": "Glistening Blood",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments Wash",
+    "type": "wash",
+    "hex": "#BB2929",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-glitter-green",
+    "name": "Glitter Green",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#007B3A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-glitter-green-warpaints-air",
+    "name": "Glitter Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#2E5A2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-glittering-green",
+    "name": "Glittering Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#2E794A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-glittering-loot",
+    "name": "Glittering Loot",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#836608",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gloss-varnish",
+    "name": "Gloss Varnish",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#F7F7F7",
+    "code": "WP1473",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-glowing-inferno",
+    "name": "Glowing Inferno",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F79D42",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gnome-cheeks",
+    "name": "Gnome Cheeks",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#978376",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-goblin-green",
+    "name": "Goblin Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#528536",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-goblin-green-warpaints-primer",
+    "name": "Goblin Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#1E8430",
+    "code": "CP3024",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-goblin-green-warpaints",
+    "name": "Goblin Green",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#338E46",
+    "code": "WP1109",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-goblin-skin",
+    "name": "Goblin Skin",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#E0B26A",
+    "code": "WP1720",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-goddess-glow",
+    "name": "Goddess Glow",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#9A5751",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-golden-armour",
+    "name": "Golden Armour",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#714808",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gorgon-hide",
+    "name": "Gorgon Hide",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#CFD7E7",
+    "code": "WP1428",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gothic-blue",
+    "name": "Gothic Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#2E3E79",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gravelord-grey",
+    "name": "Gravelord Grey",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#44474C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gravelord-grey-speedpaint-set",
+    "name": "Gravelord Grey",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#29292B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-great-hall-grey",
+    "name": "Great Hall Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#BBB4A6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-greedy-gold",
+    "name": "Greedy Gold",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#CC7D00",
+    "code": "WP1132",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-greedy-gold-warpaints-fanatic",
+    "name": "Greedy Gold",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#745218",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-greedy-gold-warpaints-air",
+    "name": "Greedy Gold",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#A35819",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-green-flame",
+    "name": "Green Flame",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#81AC36",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-green-tone",
+    "name": "Green Tone",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#0F2B18",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-green-tone-warpaints-fanatic-wash",
+    "name": "Green Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#1F3625",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-green-tone-warpaints-tone",
+    "name": "Green Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "other",
+    "hex": "#162F12",
+    "code": "WP1137",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-greenskin",
+    "name": "Greenskin",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#1B613A",
+    "code": "CP3014",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-greenskin-warpaints-fanatic",
+    "name": "Greenskin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#1F7843",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-greenskin-warpaints",
+    "name": "Greenskin",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#04662B",
+    "code": "WP1111",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-greenskin-warpaints-air",
+    "name": "Greenskin",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#2C5C2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gremlin-green",
+    "name": "Gremlin Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#4A5A2B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grey-castle",
+    "name": "Grey Castle",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#929286",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grey-primer",
+    "name": "Grey Primer",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments Primer",
+    "type": "primer",
+    "hex": "#919296",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-griffon-blue",
+    "name": "Griffon Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#20477A",
+    "code": "WP1429",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grim-black",
+    "name": "Grim Black",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#161511",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grim-black-speedpaint-set",
+    "name": "Grim Black",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#191915",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grimoire-purple",
+    "name": "Grimoire Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#724860",
+    "code": "WP1444",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grotesque-green",
+    "name": "Grotesque Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#B3C29D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grung-green",
+    "name": "Grung Green",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#9DC29E",
+    "code": "WP1731",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-guardian-green",
+    "name": "Guardian Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#226248",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gun-metal",
+    "name": "Gun Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#5F5D5C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gun-metal-warpaints-fanatic",
+    "name": "Gun Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#4F5053",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gun-metal-warpaints-primer",
+    "name": "Gun Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#858180",
+    "code": "CP3025",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gun-metal-warpaints",
+    "name": "Gun Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#7E7C7B",
+    "code": "WP1131",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gunner-camo",
+    "name": "Gunner Camo",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#325141",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hardened-carapace",
+    "name": "Hardened Carapace",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#44453B",
+    "code": "WP1430",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hardened-leather",
+    "name": "Hardened Leather",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#8C501E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hardened-leather-speedpaint-set",
+    "name": "Hardened Leather",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#68461F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hazardous-smog",
+    "name": "Hazardous Smog",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#60AB97",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hemp-rope",
+    "name": "Hemp Rope",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#977C3A",
+    "code": "WP1431",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hexed-violet",
+    "name": "Hexed Violet",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#8D81BE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-highlord-blue",
+    "name": "Highlord Blue",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#1B5682",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-highlord-blue-speedpaint-set",
+    "name": "Highlord Blue",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#2A4974",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hive-dweller-purple",
+    "name": "Hive Dweller Purple",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#57366B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hive-dweller-purple-speedpaint-set",
+    "name": "Hive Dweller Purple",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#3E2561",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hoard-bronze",
+    "name": "Hoard Bronze",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#867240",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hobgoblin-hue",
+    "name": "Hobgoblin Hue",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#F3DBC0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-holy-white",
+    "name": "Holy White",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-holy-white-speedpaint-set-2-0",
+    "name": "Holy White",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#E2E1DC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hoplite-gold",
+    "name": "Hoplite Gold",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#907317",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hot-pink",
+    "name": "Hot Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#CB4485",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-howling-sand",
+    "name": "Howling Sand",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#CECFB0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-husk-brown",
+    "name": "Husk Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#562F22",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hydra-turqoise",
+    "name": "Hydra Turqoise",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#1E939C",
+    "code": "WP1141",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hydra-turquoise",
+    "name": "Hydra Turquoise",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#277581",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-hydra-turquoise-warpaints-fanatic",
+    "name": "Hydra Turquoise",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#149398",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ice-storm",
+    "name": "Ice Storm",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#3BA0CB",
+    "code": "WP1432",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ice-yellow",
+    "name": "Ice Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FFEDAD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-imp-yellow",
+    "name": "Imp Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#E3BE6A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-imperial-navy",
+    "name": "Imperial Navy",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#063565",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-impish-rouge",
+    "name": "Impish Rouge",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D957A0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-incursion-orange",
+    "name": "Incursion Orange",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#D7752A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-inner-light",
+    "name": "Inner Light",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FDCB5F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ionic-blue",
+    "name": "Ionic Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#3992C5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-iron-wolf",
+    "name": "Iron Wolf",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#354B57",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-jasper-skin",
+    "name": "Jasper Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#834641",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-jasper-skin-warpaints-fanatic",
+    "name": "Jasper Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#BA7372",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-jungle-green",
+    "name": "Jungle Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#779F37",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-jungle-green-warpaints",
+    "name": "Jungle Green",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#8EA901",
+    "code": "WP1433",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ki-rin-gold",
+    "name": "Ki-Rin Gold",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#AF8102",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-kobold-red",
+    "name": "Kobold Red",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#6D1F0C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-kobold-skin",
+    "name": "Kobold Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#C79C79",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-kobold-skin-warpaints",
+    "name": "Kobold Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#D89D8F",
+    "code": "WP1434",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-kraken-blue",
+    "name": "Kraken Blue",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#055E8F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-kraken-lavender",
+    "name": "Kraken Lavender",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D5CAE5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-kraken-skin",
+    "name": "Kraken Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#71BF87",
+    "code": "WP1435",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-lava-orange",
+    "name": "Lava Orange",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F5792C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-lava-orange-warpaints",
+    "name": "Lava Orange",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#E24606",
+    "code": "WP1106",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-lava-orange-warpaints-air",
+    "name": "Lava Orange",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#BF3D20",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-lawfull-white",
+    "name": "Lawfull White",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#FEFFFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-leafy-green",
+    "name": "Leafy Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#76C045",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-leather-brown",
+    "name": "Leather Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#7C5B54",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-leather-brown-warpaints",
+    "name": "Leather Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#7C4F10",
+    "code": "WP1123",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-leather-brown-warpaints-primer",
+    "name": "Leather Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#713E29",
+    "code": "CP3004",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-leather-brown-warpaints-air",
+    "name": "Leather Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#67471E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-legendary-red",
+    "name": "Legendary Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#EF4B3E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-lens-flare-glow",
+    "name": "Lens Flare Glow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#FFF464",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-leopard-stone-skin",
+    "name": "Leopard Stone Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#E7B4B1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-leviathan-light",
+    "name": "Leviathan Light",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#B5D2BA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-lich-blue",
+    "name": "Lich Blue",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#094073",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-lich-skin",
+    "name": "Lich Skin",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#83827B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-light-tone",
+    "name": "Light Tone",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#AB3B2C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-light-tone-warpaints-fanatic-wash",
+    "name": "Light Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#7F5216",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-light-tone-warpaints-tone",
+    "name": "Light Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "other",
+    "hex": "#B03812",
+    "code": "WP1470",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-lizardfolk-cyan",
+    "name": "Lizardfolk Cyan",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#39989C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-magecast-magenta",
+    "name": "Magecast Magenta",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#704099",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-magenta-tone",
+    "name": "Magenta Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#590135",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-maggot-skin",
+    "name": "Maggot Skin",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#CBC861",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-magic-blue",
+    "name": "Magic Blue",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#116DAC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-magic-blue-speedpaint-set-2-0",
+    "name": "Magic Blue",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#0B79AE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-magnolia-brown",
+    "name": "Magnolia Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#2C2C24",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-maize-yellow",
+    "name": "Maize Yellow",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#F6D31F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-majestic-fortress",
+    "name": "Majestic Fortress",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#006856",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-malignant-green",
+    "name": "Malignant Green",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#BECB3D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-malignent-green",
+    "name": "Malignent Green",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#B2B886",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-marine-mist",
+    "name": "Marine Mist",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#94D6D7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mars-red",
+    "name": "Mars Red",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#D33830",
+    "code": "WP1436",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-matt-black",
+    "name": "Matt Black",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#000000",
+    "code": "WP1101",
+    "discontinued": false,
+    "ranges": [
+      "Warpaints",
+      "Warpaints Fanatic",
+      "Warpaints Primer"
+    ]
+  },
+  {
+    "id": "army-painter-matt-black-warpaints-air",
+    "name": "Matt Black",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#181915",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-matt-white",
+    "name": "Matt White",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "WP1102",
+    "discontinued": false,
+    "ranges": [
+      "Warpaints",
+      "Warpaints Air",
+      "Warpaints Fanatic",
+      "Warpaints Primer"
+    ]
+  },
+  {
+    "id": "army-painter-medieval-forest",
+    "name": "Medieval Forest",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#437C6D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-merfolk-turquoise",
+    "name": "Merfolk Turquoise",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#019096",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-meteor-rock",
+    "name": "Meteor Rock",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#D7AF2B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mid-brown",
+    "name": "Mid Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#925A11",
+    "code": "WP1469",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mid-brown-quickshade-washes-set",
+    "name": "Mid Brown",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#934E2B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-military-shade",
+    "name": "Military Shade",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "shade",
+    "hex": "#23270E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-military-shader",
+    "name": "Military Shader",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "shade",
+    "hex": "#4C631C",
+    "code": "WP1471",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-military-shader-quickshade-washes-set",
+    "name": "Military Shader",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#43582B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-militia-green",
+    "name": "Militia Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#273124",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-minotaur-hide",
+    "name": "Minotaur Hide",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#A34521",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mithral-silver",
+    "name": "Mithral Silver",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#808182",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mithril",
+    "name": "Mithril",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#9E9FA3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mocca-skin",
+    "name": "Mocca Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#402828",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mocca-skin-warpaints-fanatic",
+    "name": "Mocca Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#81655A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-moldy-wine",
+    "name": "Moldy Wine",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#7D3451",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-molten-lava",
+    "name": "Molten Lava",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F05A3E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-molten-orange",
+    "name": "Molten Orange",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#7D3222",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-monster-brown",
+    "name": "Monster Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#9D6A5F",
+    "code": "WP1120",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-moody-mauve",
+    "name": "Moody Mauve",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#A14F7D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-moon-dust",
+    "name": "Moon Dust",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#E4CB63",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-moon-dust-warpaints",
+    "name": "Moon Dust",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#F0D45F",
+    "code": "WP1438",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-moonlake-coral",
+    "name": "Moonlake Coral",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#A5396D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-moonstone-skin",
+    "name": "Moonstone Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#C57B74",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mossy-green",
+    "name": "Mossy Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#B1DCC0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mouldy-clothes",
+    "name": "Mouldy Clothes",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#3A7529",
+    "code": "WP1439",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mouldy-wash",
+    "name": "Mouldy Wash",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "wash",
+    "hex": "#41630C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mulled-berry",
+    "name": "Mulled Berry",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#623348",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mummified-grime",
+    "name": "Mummified Grime",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#666748",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mummy-robes",
+    "name": "Mummy Robes",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#EFDED6",
+    "code": "WP1440",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-murder-scene",
+    "name": "Murder Scene",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#6E2A39",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mutant-hue",
+    "name": "Mutant Hue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#AC8A8D",
+    "code": "WP1441",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-mythical-orange",
+    "name": "Mythical Orange",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#E22E0D",
+    "code": "WP1442",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-necromancer-cloak",
+    "name": "Necromancer Cloak",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#413C47",
+    "code": "WP1443",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-necrotic-flesh",
+    "name": "Necrotic Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#B1B886",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-necrotic-flesh-warpaints",
+    "name": "Necrotic Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#B6A789",
+    "code": "WP1108",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-necrotic-flesh-warpaints-primer",
+    "name": "Necrotic Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#BCBE8C",
+    "code": "CP3013",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-necrotic-flesh-warpaints-fanatic",
+    "name": "Necrotic Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#9AA984",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-neon-yellow",
+    "name": "Neon Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#FEDE40",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-neptune-glow",
+    "name": "Neptune Glow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#75CED4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-night-scales",
+    "name": "Night Scales",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#232023",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-night-scales-metallic-colours-paint-set",
+    "name": "Night Scales",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#312C2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-night-sky",
+    "name": "Night Sky",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#304358",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-noble-skin",
+    "name": "Noble Skin",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#4F493D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-nomad-flesh",
+    "name": "Nomad Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#B3614B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-nuclear-sunrise",
+    "name": "Nuclear Sunrise",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#E56F25",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-oak-brown",
+    "name": "Oak Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#3A2415",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-oak-brown-warpaints-fanatic",
+    "name": "Oak Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#39262A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-oak-brown-warpaints",
+    "name": "Oak Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#48240A",
+    "code": "WP1124",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-obsidian-pigment-toner",
+    "name": "Obsidian Pigment Toner",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#1F2224",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-obsidian-skin",
+    "name": "Obsidian Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#4A4046",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-occultist-cloak",
+    "name": "Occultist Cloak",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#30323E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ocean-depths",
+    "name": "Ocean Depths",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#054C5B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ochre-clay",
+    "name": "Ochre Clay",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#B8A936",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-oil-stains",
+    "name": "Oil Stains",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#1D252B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-olive-drab",
+    "name": "Olive Drab",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#7A905F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-omega-blue",
+    "name": "Omega Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#1F3863",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-onyx-skin",
+    "name": "Onyx Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#363231",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-onyx-skin-warpaints-fanatic",
+    "name": "Onyx Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#664A4D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-oozing-purple",
+    "name": "Oozing Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#B29DB7",
+    "code": "WP1445",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-oozing-vomit",
+    "name": "Oozing Vomit",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#7B5C1D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-opal-skin",
+    "name": "Opal Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#D6C3C1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-opal-skin-warpaints-fanatic",
+    "name": "Opal Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FFD2C8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-orange-magma",
+    "name": "Orange Magma",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#C52822",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-orange-tone",
+    "name": "Orange Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#64300F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-orc-blood",
+    "name": "Orc Blood",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#904B7A",
+    "code": "WP1422",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-orc-skin",
+    "name": "Orc Skin",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#2D5B2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-orc-skin-speedpaint-set-2-0",
+    "name": "Orc Skin",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#258335",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-orc-skin-d-d-nolzur-s-marvelous-pigments",
+    "name": "Orc Skin",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#9FA3A3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-otyugh-brown",
+    "name": "Otyugh Brown",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#DEB57D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-owlbear-brown",
+    "name": "Owlbear Brown",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#5F3D27",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pale-sand",
+    "name": "Pale Sand",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#EFEAD3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pallid-bone",
+    "name": "Pallid Bone",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#E1CC95",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pallid-bone-speedpaint-set",
+    "name": "Pallid Bone",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#CBC295",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-paratrooper-tan",
+    "name": "Paratrooper Tan",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#9A776C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pastel-indigo",
+    "name": "Pastel Indigo",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#9FBCDA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pastel-lavender",
+    "name": "Pastel Lavender",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#D5BFD4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pastel-salmon",
+    "name": "Pastel Salmon",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#F3C498",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pastel-seafoam",
+    "name": "Pastel Seafoam",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#B8D7C8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pastel-yellow",
+    "name": "Pastel Yellow",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#F6E178",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-patagon-pine",
+    "name": "Patagon Pine",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#63917F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-peachy-flesh",
+    "name": "Peachy Flesh",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#EDA668",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pearl-pigment-toner",
+    "name": "Pearl Pigment Toner",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#EBE4E1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pearl-skin",
+    "name": "Pearl Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FFE3D8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-periwinkle-purple",
+    "name": "Periwinkle Purple",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#585396",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pestilent-flesh",
+    "name": "Pestilent Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#70733B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-phalanx-blue",
+    "name": "Phalanx Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#048BAE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-phantasmal-blue",
+    "name": "Phantasmal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#5CADB3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pharaoh-guard",
+    "name": "Pharaoh Guard",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#0C7C61",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-phoenix-flames",
+    "name": "Phoenix Flames",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#F7A103",
+    "code": "WP1446",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pink-potion",
+    "name": "Pink Potion",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F4B9D4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pixie-pink",
+    "name": "Pixie Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#D67B83",
+    "code": "WP1447",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pixie-pink-warpaints-air",
+    "name": "Pixie Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#B94F8C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pixie-pink-warpaints-fanatic",
+    "name": "Pixie Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#D96FAE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pixiedust-pink",
+    "name": "Pixiedust Pink",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#D27F84",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-plasma-coil-glow",
+    "name": "Plasma Coil Glow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#5ECDF4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-plasmatic-bolt",
+    "name": "Plasmatic Bolt",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#00816C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-plasmatic-bolt-speedpaint-set-2-0",
+    "name": "Plasmatic Bolt",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#0A9B8C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-plate-mail-metal",
+    "name": "Plate Mail Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#6A6B68",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-plate-mail-metal-warpaints-primer",
+    "name": "Plate Mail Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#858584",
+    "code": "CP3008",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-plate-mail-metal-warpaints",
+    "name": "Plate Mail Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#949494",
+    "code": "WP1130",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-plate-mail-metal-warpaints-fanatic",
+    "name": "Plate Mail Metal",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#686A6E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-poisonous-cloud",
+    "name": "Poisonous Cloud",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#CFDA2F",
+    "code": "WP1448",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-polished-silver",
+    "name": "Polished Silver",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#888782",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-poppy-red",
+    "name": "Poppy Red",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#C8453B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-potion-green",
+    "name": "Potion Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#618A72",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-power-node-glow",
+    "name": "Power Node Glow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#F286B5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-prairie-ochre",
+    "name": "Prairie Ochre",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#696242",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-princess-pink",
+    "name": "Princess Pink",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#E29FB0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-psychic-shock",
+    "name": "Psychic Shock",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#5DA490",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pure-red",
+    "name": "Pure Red",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#CA1913",
+    "code": "WP1104",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pure-red-warpaints-air",
+    "name": "Pure Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#A8141F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pure-red-warpaints-primer",
+    "name": "Pure Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#C3231E",
+    "code": "CP3006",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pure-red-warpaints-fanatic",
+    "name": "Pure Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#CD151C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-purple-alchemy",
+    "name": "Purple Alchemy",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#AE3F6A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-purple-alchemy-speedpaint-set",
+    "name": "Purple Alchemy",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#8D335C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-purple-swarm",
+    "name": "Purple Swarm",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#653483",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-purple-tone",
+    "name": "Purple Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#241C31",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-purple-tone-warpaints-tone",
+    "name": "Purple Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "other",
+    "hex": "#2A1C4D",
+    "code": "WP1140",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-purple-tone-quickshade-washes-set",
+    "name": "Purple Tone",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#2A194A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-purple-worm",
+    "name": "Purple Worm",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#826D8D",
+    "code": "WP1712",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-putrid-slime",
+    "name": "Putrid Slime",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#C4B107",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-quartz-skin",
+    "name": "Quartz Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F0D0B4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-quickshade-wash-mixing-medium",
+    "name": "Quickshade Wash Mixing Medium",
+    "brand": "Army Painter",
+    "range": "Warpaints Wash",
+    "type": "wash",
+    "hex": "#EEEFEF",
+    "code": "WP1474",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-radiation-glow",
+    "name": "Radiation Glow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#FBB375",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-raging-rose",
+    "name": "Raging Rose",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#E96663",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-raging-rouge",
+    "name": "Raging Rouge",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F68F82",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-raging-sea",
+    "name": "Raging Sea",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#1B95A4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rainforest",
+    "name": "Rainforest",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#8BC63E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-raven-black",
+    "name": "Raven Black",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#2B3030",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rawhide-brown",
+    "name": "Rawhide Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#4F3826",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rebel-red",
+    "name": "Rebel Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#741434",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-red-copper",
+    "name": "Red Copper",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#4D2C30",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-red-tone",
+    "name": "Red Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "other",
+    "hex": "#502114",
+    "code": "WP1138",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-red-tone-warpaints-fanatic-wash",
+    "name": "Red Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#531F28",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-red-tone-quickshade-washes-set",
+    "name": "Red Tone",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#421516",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-regal-blue",
+    "name": "Regal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#004F88",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-regiment-grey",
+    "name": "Regiment Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#424B4A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-resplendent-red",
+    "name": "Resplendent Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#96272F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rigid-leather",
+    "name": "Rigid Leather",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#521C02",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rigor-mortis",
+    "name": "Rigor Mortis",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#ADAD6F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rosy-skin",
+    "name": "Rosy Skin",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#F7BF96",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rough-iron",
+    "name": "Rough Iron",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#20130E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rough-iron-warpaints-fanatic",
+    "name": "Rough Iron",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#352D25",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rough-iron-warpaints",
+    "name": "Rough Iron",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#22130F",
+    "code": "WP1468",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-royal-blue",
+    "name": "Royal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#0162AF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-royal-cloak",
+    "name": "Royal Cloak",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#1C9095",
+    "code": "WP1449",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-royal-purple",
+    "name": "Royal Purple",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#701B55",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-royal-purple-warpaints-air",
+    "name": "Royal Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#43173B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-royal-robes",
+    "name": "Royal Robes",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#5363A1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ruby-skin",
+    "name": "Ruby Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#E5ABAB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ruby-skin-warpaints-fanatic",
+    "name": "Ruby Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FBB99D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ruddy-fur",
+    "name": "Ruddy Fur",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#9D4925",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ruddy-skin",
+    "name": "Ruddy Skin",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#BB7962",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ruddy-umber",
+    "name": "Ruddy Umber",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#985951",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ruinous-spell",
+    "name": "Ruinous Spell",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#375242",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-runic-cobalt",
+    "name": "Runic Cobalt",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#7496B4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-runic-grey",
+    "name": "Runic Grey",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#557989",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-runic-grey-speedpaint-set",
+    "name": "Runic Grey",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#566E7E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rust-monster",
+    "name": "Rust Monster",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#E5581E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-rust-tone",
+    "name": "Rust Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#452A11",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-sacred-scarlet",
+    "name": "Sacred Scarlet",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F1634C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-safety-orange",
+    "name": "Safety Orange",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#DE8F58",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-sand-golem",
+    "name": "Sand Golem",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#CB9413",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-sand-golem-speedpaint-set",
+    "name": "Sand Golem",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#BA9029",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-sapphire-gem",
+    "name": "Sapphire Gem",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#1C477E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-satchel-brown",
+    "name": "Satchel Brown",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#583D32",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-savage-green",
+    "name": "Savage Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#164F2C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-scaly-hide",
+    "name": "Scaly Hide",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#939F8C",
+    "code": "WP1450",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-scar-tissue",
+    "name": "Scar Tissue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#CF8C73",
+    "code": "WP1480",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-scarab-green",
+    "name": "Scarab Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#193C44",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-sepia-tone",
+    "name": "Sepia Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#734014",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-shadow-wash",
+    "name": "Shadow Wash",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments Wash",
+    "type": "wash",
+    "hex": "#000103",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-shamrock-green",
+    "name": "Shamrock Green",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#60AB2C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-shark-white",
+    "name": "Shark White",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#959F9C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-shieldwall-blue",
+    "name": "Shieldwall Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#08A1CC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-shining-silver",
+    "name": "Shining Silver",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#86888C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-shining-silver-warpaints-air",
+    "name": "Shining Silver",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#A9A9A7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-shining-silver-warpaints",
+    "name": "Shining Silver",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#B1B1AF",
+    "code": "WP1129",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-silver-dragon",
+    "name": "Silver Dragon",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#B2B2B3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-skeleton-bone",
+    "name": "Skeleton Bone",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#666D74",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-skeleton-bone-warpaints-air",
+    "name": "Skeleton Bone",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#CBC294",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-skeleton-bone-warpaints-fanatic",
+    "name": "Skeleton Bone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#C2B293",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-skeleton-bone-warpaints",
+    "name": "Skeleton Bone",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#C2AE9D",
+    "code": "WP1125",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-skeleton-bone-warpaints-primer",
+    "name": "Skeleton Bone",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#D0C59A",
+    "code": "CP3012",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-slaughter-red",
+    "name": "Slaughter Red",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#7B191B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-slaughter-red-speedpaint-set-2-0",
+    "name": "Slaughter Red",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#991926",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-snake-scales",
+    "name": "Snake Scales",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#8EAE11",
+    "code": "WP1453",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-soft-skin-wash",
+    "name": "Soft Skin Wash",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set - Washes",
+    "type": "wash",
+    "hex": "#6B412B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-soft-tone",
+    "name": "Soft Tone",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#49251E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-soft-tone-warpaints-tone",
+    "name": "Soft Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "other",
+    "hex": "#532814",
+    "code": "WP1134",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-soft-tone-warpaints-fanatic-wash",
+    "name": "Soft Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#563D2A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-space-dust",
+    "name": "Space Dust",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FFE388",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-spaceship-exterior",
+    "name": "Spaceship Exterior",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#D6D6D6",
+    "code": "WP1454",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-speedpaint-medium",
+    "name": "Speedpaint Medium",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#EFEFEF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-speedpaint-medium-speedpaint-set-2-0",
+    "name": "Speedpaint Medium",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#F3F0EB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-spellbound-fuchsia",
+    "name": "Spellbound Fuchsia",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#AD4DA0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-stirge-tan",
+    "name": "Stirge Tan",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#C47A7B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-stone-golem",
+    "name": "Stone Golem",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#C3C5BE",
+    "code": "WP1455",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-storm-wolf",
+    "name": "Storm Wolf",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#9DAED2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-stratos-blue",
+    "name": "Stratos Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#33658F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-strong-skin-shade",
+    "name": "Strong Skin Shade",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "shade",
+    "hex": "#442824",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-strong-skin-wash",
+    "name": "Strong Skin Wash",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set - Washes",
+    "type": "wash",
+    "hex": "#382A22",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-strong-tone",
+    "name": "Strong Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#211913",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-strong-tone-warpaints-tone",
+    "name": "Strong Tone",
+    "brand": "Army Painter",
+    "range": "Warpaints Tone",
+    "type": "other",
+    "hex": "#3A2A11",
+    "code": "WP1135",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-strong-tone-quickshade-washes-set",
+    "name": "Strong Tone",
+    "brand": "Army Painter",
+    "range": "Quickshade Washes Set",
+    "type": "shade",
+    "hex": "#3B2826",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-succubus-red",
+    "name": "Succubus Red",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#AA262F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-sulfide-ochre",
+    "name": "Sulfide Ochre",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#C78600",
+    "code": "WP1456",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tainted-gold",
+    "name": "Tainted Gold",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#46422C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tainted-gold-metallic-colours-paint-set",
+    "name": "Tainted Gold",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#686139",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tainted-gold-warpaints-fanatic",
+    "name": "Tainted Gold",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#575235",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-talisman-purple",
+    "name": "Talisman Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#CE859C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-talisman-teal",
+    "name": "Talisman Teal",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#1FAE91",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-talos-bronze",
+    "name": "Talos Bronze",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#6B3B27",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tanned-flesh",
+    "name": "Tanned Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#BB6F51",
+    "code": "WP1127",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-temple-gate-teal",
+    "name": "Temple Gate Teal",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#046154",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-terrestial-titan",
+    "name": "Terrestial Titan",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#303149",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-thunder-storm",
+    "name": "Thunder Storm",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#1E2931",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-thunderbird-blue",
+    "name": "Thunderbird Blue",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#66B797",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-thunderous-blue",
+    "name": "Thunderous Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#34577B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tidal-blue",
+    "name": "Tidal Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#026B93",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tidal-wave",
+    "name": "Tidal Wave",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#1278B6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tiger-s-eye-skin",
+    "name": "Tiger's Eye Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#7F4841",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tiger-s-eye-skin-warpaints-fanatic",
+    "name": "Tiger’s Eye Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#904D52",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tomb-king-tan",
+    "name": "Tomb King Tan",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#A29278",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-topaz-skin",
+    "name": "Topaz Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#B25A53",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-topaz-skin-skin-tones-paint-set",
+    "name": "Topaz Skin",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#BF8477",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tourmaline-skin",
+    "name": "Tourmaline Skin",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#E3988B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-toxic-boils",
+    "name": "Toxic Boils",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#A66E7D",
+    "code": "WP1457",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-toxic-mist",
+    "name": "Toxic Mist",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#63B0B5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-toxic-mist-warpaints",
+    "name": "Toxic Mist",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#40BAC0",
+    "code": "WP1437",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-traitor-red",
+    "name": "Traitor Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#34251F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-treant-green",
+    "name": "Treant Green",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#409B4B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tree-ancient",
+    "name": "Tree Ancient",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#513430",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-triumphant-navy",
+    "name": "Triumphant Navy",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#1A2C53",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-troglodyte-blue",
+    "name": "Troglodyte Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#2588B9",
+    "code": "WP1458",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-troll-claws",
+    "name": "Troll Claws",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#CB883E",
+    "code": "WP1459",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-troll-skin",
+    "name": "Troll Skin",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#06381F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-true-blood",
+    "name": "True Blood",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#8D0422",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-true-brass",
+    "name": "True Brass",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#635D58",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-true-copper",
+    "name": "True Copper",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#E07D2D",
+    "code": "WP1467",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-true-copper-warpaints-fanatic",
+    "name": "True Copper",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#6B4731",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-true-copper-warpaints-air",
+    "name": "True Copper",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#BD5225",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tundra-taupe",
+    "name": "Tundra Taupe",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#4B4D3E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-turquoise-siren",
+    "name": "Turquoise Siren",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#29B3B9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-twilight-sky",
+    "name": "Twilight Sky",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#1B455F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tyrian-navy",
+    "name": "Tyrian Navy",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#2A414F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ultramarine-blue",
+    "name": "Ultramarine Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#154275",
+    "code": "CP3022",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ultramarine-blue-warpaints-air",
+    "name": "Ultramarine Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#2A4A74",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ultramarine-blue-warpaints-fanatic",
+    "name": "Ultramarine Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#284D8E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ultramarine-blue-warpaints",
+    "name": "Ultramarine Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#3B57A5",
+    "code": "WP1115",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-underdark-grey",
+    "name": "Underdark Grey",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#7F7372",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-underdark-indigo",
+    "name": "Underdark Indigo",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#205286",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-undergrowth-green",
+    "name": "Undergrowth Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#507D35",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-unforgiven-green",
+    "name": "Unforgiven Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#242923",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-uniform-grey",
+    "name": "Uniform Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#545D62",
+    "code": "WP1118P",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-uniform-grey-warpaints-air",
+    "name": "Uniform Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#555C61",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-uniform-grey-warpaints-fanatic",
+    "name": "Uniform Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#6B707C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-uniform-grey-warpaints",
+    "name": "Uniform Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#70737F",
+    "code": "WP1118",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-urban-buff",
+    "name": "Urban Buff",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#DBB9AB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-vampire-garments",
+    "name": "Vampire Garments",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#A12F24",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-vampire-red",
+    "name": "Vampire Red",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#98172A",
+    "code": "WP1460",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-venom-wyrm",
+    "name": "Venom Wyrm",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#6A653E",
+    "code": "WP1461",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-verdigris",
+    "name": "Verdigris",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#61B89B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-viking-blue",
+    "name": "Viking Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#1C5B98",
+    "code": "WP1462",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-violent-vermillion",
+    "name": "Violent Vermillion",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#F37964",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-violet-coven",
+    "name": "Violet Coven",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#A999C7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-violet-volt",
+    "name": "Violet Volt",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#764287",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-viper-brown",
+    "name": "Viper Brown",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#9B5F4C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-vivid-volt",
+    "name": "Vivid Volt",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#CFDC51",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-voidshield-blue",
+    "name": "Voidshield Blue",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#5BBCD7",
+    "code": "WP1452",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-warlock-magenta",
+    "name": "Warlock Magenta",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#834D9F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-warlock-purple",
+    "name": "Warlock Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#C34D81",
+    "code": "WP1451",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-warlock-purple-warpaints-air",
+    "name": "Warlock Purple",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#8C345C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-warpaints-mixing-medium",
+    "name": "Warpaints Mixing Medium",
+    "brand": "Army Painter",
+    "range": "Skin Tones Paint Set",
+    "type": "other",
+    "hex": "#EFF1F0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-warpaints-mixing-medium-warpaints",
+    "name": "Warpaints Mixing Medium",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#EFEFEF",
+    "code": "WP1475",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-warped-yellow",
+    "name": "Warped Yellow",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#FED548",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-warrior-skin",
+    "name": "Warrior Skin",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#A37051",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wash-medium",
+    "name": "Wash Medium",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic Wash",
+    "type": "wash",
+    "hex": "#B1B3B4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wasteland-clay",
+    "name": "Wasteland Clay",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#A38755",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wasteland-soil",
+    "name": "Wasteland Soil",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#844857",
+    "code": "WP1463",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-weapon-bronze",
+    "name": "Weapon Bronze",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#955610",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-weapon-bronze-warpaints",
+    "name": "Weapon Bronze",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#E47533",
+    "code": "WP1133",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-weapon-bronze-warpaints-air",
+    "name": "Weapon Bronze",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#AD5B33",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-weird-elixir",
+    "name": "Weird Elixir",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#E092BF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-werewolf-fur",
+    "name": "Werewolf Fur",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#796352",
+    "code": "WP1464",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wet-mud",
+    "name": "Wet Mud",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#9E3E35",
+    "code": "WP1478",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wicked-pink",
+    "name": "Wicked Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#CE0886",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wild-green",
+    "name": "Wild Green",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#46B758",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wildling-flesh",
+    "name": "Wildling Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#DE937B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wilted-rose",
+    "name": "Wilted Rose",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#ECC5D7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-witch-brew",
+    "name": "Witch Brew",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#919634",
+    "code": "WP1465",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-witchbane-plum",
+    "name": "Witchbane Plum",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#601841",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wizards-orb",
+    "name": "Wizards Orb",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#2A6A5B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wizards-orb-warpaints",
+    "name": "Wizards Orb",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#0F7260",
+    "code": "WP1466",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wolf-grey",
+    "name": "Wolf Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#517383",
+    "code": "CP3021",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wolf-grey-warpaints-air",
+    "name": "Wolf Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#576F7E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wolf-grey-warpaints",
+    "name": "Wolf Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "other",
+    "hex": "#5E7F9F",
+    "code": "WP1119",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wolf-grey-warpaints-fanatic",
+    "name": "Wolf Grey",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#4F78A3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-woodland-camo",
+    "name": "Woodland Camo",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#4B6149",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-worn-stone",
+    "name": "Worn Stone",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#C4BFB1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wraith-black",
+    "name": "Wraith Black",
+    "brand": "Army Painter",
+    "range": "D&D Undead Set",
+    "type": "other",
+    "hex": "#3C3F50",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wyrmling-red",
+    "name": "Wyrmling Red",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#B43646",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-wyvern-fury",
+    "name": "Wyvern Fury",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "other",
+    "hex": "#993243",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-xanathar-blue",
+    "name": "Xanathar Blue",
+    "brand": "Army Painter",
+    "range": "D&D Underdark Set",
+    "type": "other",
+    "hex": "#2EB5B0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-yellow-dune",
+    "name": "Yellow Dune",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#C2994D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-yeti-white",
+    "name": "Yeti White",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#B7BABF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-zealot-yellow",
+    "name": "Zealot Yellow",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set 2.0",
+    "type": "contrast",
+    "hex": "#F4D008",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-zealot-yellow-speedpaint-set",
+    "name": "Zealot Yellow",
+    "brand": "Army Painter",
+    "range": "Speedpaint Set",
+    "type": "contrast",
+    "hex": "#F1D12F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-zephyr-pink",
+    "name": "Zephyr Pink",
+    "brand": "Army Painter",
+    "range": "Metallic Colours Paint Set",
+    "type": "metallic",
+    "hex": "#B4406F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-zephyr-pink-warpaints-air",
+    "name": "Zephyr Pink",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#6B304D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-zombie-flesh",
+    "name": "Zombie Flesh",
+    "brand": "Army Painter",
+    "range": "D&D Nolzur's Marvelous Pigments",
+    "type": "other",
+    "hex": "#B0C194",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-zombie-flesh-warpaints-air",
+    "name": "Zombie Flesh",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "air",
+    "hex": "#AFB395",
+    "code": null,
+    "discontinued": false
+  }
+]

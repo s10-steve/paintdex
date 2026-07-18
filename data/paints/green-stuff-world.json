@@ -1,0 +1,2202 @@
+[
+  {
+    "id": "green-stuff-world-abyss-blue",
+    "name": "Abyss Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#00134B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-acid-green-dip",
+    "name": "Acid Green Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#455C0E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-aether-blue",
+    "name": "Aether Blue",
+    "brand": "Green Stuff World",
+    "range": "Wash Ink",
+    "type": "wash",
+    "hex": "#666ED0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-amber-orange",
+    "name": "Amber Orange",
+    "brand": "Green Stuff World",
+    "range": "Candy Ink Metallic",
+    "type": "ink",
+    "hex": "#F4B11A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-amberglow-dip",
+    "name": "Amberglow Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#642D0F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-amethyst-purple",
+    "name": "Amethyst Purple",
+    "brand": "Green Stuff World",
+    "range": "Candy Ink Metallic",
+    "type": "ink",
+    "hex": "#D7A7F1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-ancient-sepia",
+    "name": "Ancient Sepia",
+    "brand": "Green Stuff World",
+    "range": "Wash Ink",
+    "type": "wash",
+    "hex": "#AAA168",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-andalusian-earth",
+    "name": "Andalusian Earth",
+    "brand": "Green Stuff World",
+    "range": "Wash Ink",
+    "type": "wash",
+    "hex": "#766B59",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-anthrax-metal",
+    "name": "Anthrax Metal",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#7B7E83",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-antique-gold",
+    "name": "Antique Gold",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#957E38",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-aqua-turquoise",
+    "name": "Aqua Turquoise",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#9BD1D1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-arachnid-green",
+    "name": "Arachnid Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#124244",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-arctic-blue",
+    "name": "Arctic Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#14ADCC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-arrakis-brown",
+    "name": "Arrakis Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#E39C28",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-atramentum-black",
+    "name": "Atramentum Black",
+    "brand": "Green Stuff World",
+    "range": "Wash Ink",
+    "type": "wash",
+    "hex": "#515151",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-azure-dip",
+    "name": "Azure Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#094448",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-banana-split",
+    "name": "Banana Split",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#F0E229",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-barrel-grey",
+    "name": "Barrel Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#25221B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-bestial-brown",
+    "name": "Bestial Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#2D1E01",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-black-green-stone-dip",
+    "name": "Black Green Stone Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#3E4639",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-black-stallion",
+    "name": "Black Stallion",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#000000",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-blackroot-grey",
+    "name": "Blackroot Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#343436",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-blue",
+    "name": "Blue",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#5E88FF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-blue-glacier-dip",
+    "name": "Blue Glacier Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#53A7CB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-bluebird-grey",
+    "name": "Bluebird Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#6F657D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-bluegrey-dusk",
+    "name": "Bluegrey Dusk",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#2A2C41",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-blush-red",
+    "name": "Blush Red",
+    "brand": "Green Stuff World",
+    "range": "Wash Ink",
+    "type": "wash",
+    "hex": "#DB746D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-blushing-flesh",
+    "name": "Blushing Flesh",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#DA523A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-borealis-green",
+    "name": "Borealis Green",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#7AC9D6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-brown-skin",
+    "name": "Brown Skin",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#802709",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-burgundy-dip",
+    "name": "Burgundy Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#4F2330",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-burning-gold",
+    "name": "Burning Gold",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#F2DE2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-caesar-red",
+    "name": "Caesar Red",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#C8606B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-camouflage-green",
+    "name": "Camouflage Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#63601B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-canary-green",
+    "name": "Canary Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#D3DC65",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-carnage-red",
+    "name": "Carnage Red",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#C22B24",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-celestial-azure",
+    "name": "Celestial Azure",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#7CC8D6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-chancellor-blue",
+    "name": "Chancellor Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#323045",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-choco-brown",
+    "name": "Choco Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#3F2001",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-chrome-paint",
+    "name": "Chrome Paint",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#FCFDFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-citrine-yellow",
+    "name": "Citrine Yellow",
+    "brand": "Green Stuff World",
+    "range": "Candy Ink Metallic",
+    "type": "ink",
+    "hex": "#FFF64F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-cobalt-blue",
+    "name": "Cobalt Blue",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#4476D7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-cool-blue-dip",
+    "name": "Cool Blue Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#387971",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-coyote-brown",
+    "name": "Coyote Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#806B3E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-crimson-magenta",
+    "name": "Crimson Magenta",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#FF5A94",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-cutthroat-red",
+    "name": "Cutthroat Red",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#8E1316",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-cyber-yellow",
+    "name": "Cyber Yellow",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#F2D12C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-dark-beige",
+    "name": "Dark Beige",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#715C41",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-dark-elder-bronze",
+    "name": "Dark Elder Bronze",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#3E2C14",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-dark-umber",
+    "name": "Dark Umber",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#3B302E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-darth-blue",
+    "name": "Darth Blue",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#4476D9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-deck-grey",
+    "name": "Deck Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#D1C2A3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-deep-black-dip",
+    "name": "Deep Black Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#252525",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-desert-camo",
+    "name": "Desert Camo",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#947B3B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-dusty-blue-dip",
+    "name": "Dusty Blue Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#2C4655",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-dusty-rose",
+    "name": "Dusty Rose",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#F0636B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-dwarven-flesh",
+    "name": "Dwarven Flesh",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#FF7D4B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-el-dorado",
+    "name": "El Dorado",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#BA931C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-elfwood-brown-dip",
+    "name": "Elfwood Brown Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#4C361F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-elven-flesh",
+    "name": "Elven Flesh",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#F2AA82",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-ember-orange",
+    "name": "Ember Orange",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#D94A22",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-emerald-getaway",
+    "name": "Emerald Getaway",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#33AE92",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-english-field-brown",
+    "name": "English Field Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#6C4615",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-evil-forest",
+    "name": "Evil Forest",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#531516",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-faded-orange",
+    "name": "Faded Orange",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#F4793D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-fang-white",
+    "name": "Fang White",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#FFFBDD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-field-green-grey",
+    "name": "Field Green-grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#1B4724",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-flaming-orange",
+    "name": "Flaming Orange",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#EA701B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-flesh-rose",
+    "name": "Flesh Rose",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#D16855",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-flubber-green",
+    "name": "Flubber Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#88B719",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-forest-green",
+    "name": "Forest Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#003910",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-foxhide-brown",
+    "name": "Foxhide Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#C16001",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-gangrene",
+    "name": "Gangrene",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#3B4312",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-garnet-purple-dip",
+    "name": "Garnet Purple Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#712F53",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-gengis-khaki",
+    "name": "Gengis Khaki",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#665B3B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-gladius-bronze",
+    "name": "Gladius Bronze",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#E1A767",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-glorious-magenta-dip",
+    "name": "Glorious Magenta Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#7A2E4A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-go-mango",
+    "name": "Go Mango",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#FFA032",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-golden-cream",
+    "name": "Golden Cream",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#FFCE53",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-gorgon-dark-green",
+    "name": "Gorgon Dark Green",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#6EA87F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-goth-skin-dip",
+    "name": "Goth Skin Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#632D2B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-green-ghost-dip",
+    "name": "Green Ghost Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#1D5113",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-green-shark-skin-dip",
+    "name": "Green Shark Skin Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#004542",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-grey-mist-dip",
+    "name": "Grey Mist Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#787878",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-grey-teal",
+    "name": "Grey Teal",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#64857E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-gunmetal-grey",
+    "name": "Gunmetal Grey",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#ACB1B7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-hellfire-red",
+    "name": "Hellfire Red",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#CB160F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-hulky-green-dip",
+    "name": "Hulky Green Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#094625",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-hunter-green",
+    "name": "Hunter Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#017601",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-hydromiel-yellow",
+    "name": "Hydromiel Yellow",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#F5F092",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-imperium-blue",
+    "name": "Imperium Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#1A3085",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-indigo-blue-dip",
+    "name": "Indigo Blue Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#1C2F59",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-ivory-tusk",
+    "name": "Ivory Tusk",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#F3DFBE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-jade-green",
+    "name": "Jade Green",
+    "brand": "Green Stuff World",
+    "range": "Candy Ink Metallic",
+    "type": "ink",
+    "hex": "#9BFFD4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-komodo-khaki",
+    "name": "Komodo Khaki",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#885A29",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-kraken-green",
+    "name": "Kraken Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#034C39",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-lapislazuli",
+    "name": "Lapislazuli",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#172C63",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-leather-brown",
+    "name": "Leather Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#AF6816",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-liche-purple",
+    "name": "Liche Purple",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#441C5A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-lilac-purple",
+    "name": "Lilac Purple",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#B076B3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-lime",
+    "name": "Lime",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#4EFF71",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-limelight-dip",
+    "name": "Limelight Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#605A02",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-lollipop-magenta",
+    "name": "Lollipop Magenta",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#AB0061",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-majin-pink",
+    "name": "Majin Pink",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#D5618E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-malefic-purple",
+    "name": "Malefic Purple",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#110B49",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-marine-blue",
+    "name": "Marine Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#12407E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-martian-green",
+    "name": "Martian Green",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#869B62",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-military-green",
+    "name": "Military Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#22260F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-mint-twister",
+    "name": "Mint Twister",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#00BAA3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-mirage-blue",
+    "name": "Mirage Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#36455A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-misted-yellow-dip",
+    "name": "Misted Yellow Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#8D611A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-moon-mist-grey",
+    "name": "Moon Mist Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#DCCFC9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-moonstone-grey",
+    "name": "Moonstone Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#8C8C8C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-morrow-purple-dip",
+    "name": "Morrow Purple Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#786696",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-moss-green",
+    "name": "Moss Green",
+    "brand": "Green Stuff World",
+    "range": "Wash Ink",
+    "type": "wash",
+    "hex": "#6EAC56",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-mustard-yellow",
+    "name": "Mustard Yellow",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#936611",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-mystic-gold",
+    "name": "Mystic Gold",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#F2DE2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-mystic-white",
+    "name": "Mystic White",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#EFF0F4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-nebula-copper",
+    "name": "Nebula Copper",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#C94FA6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-neptunus-blue",
+    "name": "Neptunus Blue",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#60BAF8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-nightsahde-purple-dip",
+    "name": "Nightsahde Purple Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#472D5A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-nuclear-white",
+    "name": "Nuclear White",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-nude-skin-dip",
+    "name": "Nude Skin Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#DE9390",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-ochre-desert",
+    "name": "Ochre Desert",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#E08500",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-olive-brown-ops",
+    "name": "Olive-brown Ops",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#372D0A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-olivegrove-green",
+    "name": "Olivegrove Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#1B290F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-opulentus-black",
+    "name": "Opulentus Black",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#515151",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-orange",
+    "name": "Orange",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#F96E33",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-orchid-purple",
+    "name": "Orchid Purple",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#734472",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-ork-flesh-dip",
+    "name": "Ork Flesh Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#13331B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-overlord-olive",
+    "name": "Overlord Olive",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#37321F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-pale-flesh",
+    "name": "Pale Flesh",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#E8B9A7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-papyrus-dip",
+    "name": "Papyrus Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#6E4E1B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-parchment",
+    "name": "Parchment",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#E1C095",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-peach-flesh",
+    "name": "Peach Flesh",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#E47700",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-pecatum-flesh",
+    "name": "Pecatum Flesh",
+    "brand": "Green Stuff World",
+    "range": "Wash Ink",
+    "type": "wash",
+    "hex": "#F4929F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-persian-violet",
+    "name": "Persian Violet",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#412480",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-phantom-violet",
+    "name": "Phantom Violet",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#7D367C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-phoenix-orange",
+    "name": "Phoenix Orange",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#F1A760",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-pinky-blue",
+    "name": "Pinky Blue",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#78CDD2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-primer-black",
+    "name": "Primer Black",
+    "brand": "Green Stuff World",
+    "range": "Gloss Surface",
+    "type": "other",
+    "hex": "#202020",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-primer-black-matt-surface",
+    "name": "Primer Black",
+    "brand": "Green Stuff World",
+    "range": "Matt Surface",
+    "type": "other",
+    "hex": "#1A1A1A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-primer-green",
+    "name": "Primer Green",
+    "brand": "Green Stuff World",
+    "range": "Matt Surface",
+    "type": "other",
+    "hex": "#485A04",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-primer-grey",
+    "name": "Primer Grey",
+    "brand": "Green Stuff World",
+    "range": "Matt Surface",
+    "type": "other",
+    "hex": "#CCCCCC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-primer-red",
+    "name": "Primer Red",
+    "brand": "Green Stuff World",
+    "range": "Matt Surface",
+    "type": "other",
+    "hex": "#882A1E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-primer-white",
+    "name": "Primer White",
+    "brand": "Green Stuff World",
+    "range": "Matt Surface",
+    "type": "other",
+    "hex": "#FDFDFD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-prussian-blue",
+    "name": "Prussian Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#00416B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-prussian-green",
+    "name": "Prussian Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#152E1B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-psychotic-illusions",
+    "name": "Psychotic Illusions",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#69ACB5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-purple-vanity-dip",
+    "name": "Purple Vanity Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#392E56",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-quartz-magenta",
+    "name": "Quartz Magenta",
+    "brand": "Green Stuff World",
+    "range": "Candy Ink Metallic",
+    "type": "ink",
+    "hex": "#EA86AA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-quicksand-brown",
+    "name": "Quicksand Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#7D4A1B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-quicksilver",
+    "name": "Quicksilver",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#E0E3E8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-radiant-orange-dip",
+    "name": "Radiant Orange Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#844406",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-ranger-green",
+    "name": "Ranger Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#38352E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-red",
+    "name": "Red",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#F03C25",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-red-cloak-dip",
+    "name": "Red Cloak Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#B2655D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-red-goblin",
+    "name": "Red Goblin",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#A9BA73",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-red-opulence-dip",
+    "name": "Red Opulence Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#BB2320",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-red-truth",
+    "name": "Red Truth",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#EC2005",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-redwood-brown",
+    "name": "Redwood Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#3E0D00",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-rocket-green",
+    "name": "Rocket Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#415E24",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-rose",
+    "name": "Rose",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#F470A1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-rotten-green",
+    "name": "Rotten Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#77932C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-royal-burgundy",
+    "name": "Royal Burgundy",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#90A375",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-ruby-red",
+    "name": "Ruby Red",
+    "brand": "Green Stuff World",
+    "range": "Candy Ink Metallic",
+    "type": "ink",
+    "hex": "#F5904C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sacra-purple",
+    "name": "Sacra Purple",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#8869B9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sandstorm",
+    "name": "Sandstorm",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#BF9F66",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sangria-red",
+    "name": "Sangria Red",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#5E0A0A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sanguinem-red",
+    "name": "Sanguinem Red",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#FF6050",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sapphire-blue",
+    "name": "Sapphire Blue",
+    "brand": "Green Stuff World",
+    "range": "Candy Ink Metallic",
+    "type": "ink",
+    "hex": "#ACC9FF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-scorched-wood",
+    "name": "Scorched Wood",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#24110A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sepia-vetus",
+    "name": "Sepia Vetus",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#ABA269",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-seraphim-flesh-dip",
+    "name": "Seraphim Flesh Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#BC6F51",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sharkfin-blue",
+    "name": "Sharkfin Blue",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#95CAF6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-shiny-gold",
+    "name": "Shiny Gold",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#BFA22C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sirenscale-green",
+    "name": "Sirenscale Green",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#05C18E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-skeleton-brown-dip",
+    "name": "Skeleton Brown Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#4E3E25",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-skull-linen-dip",
+    "name": "Skull Linen Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#A2A19D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-slate-grey",
+    "name": "Slate Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#565656",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-smoked-blue",
+    "name": "Smoked Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#55677F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-solar-anomalie",
+    "name": "Solar Anomalie",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#D154A2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-starship-grey",
+    "name": "Starship Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#7D6C72",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-steampunk-copper",
+    "name": "Steampunk Copper",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#DDA37E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-steel-grey",
+    "name": "Steel Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#2A333C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-storm-surge-green",
+    "name": "Storm Surge Green",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#61A694",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-summersea-blue",
+    "name": "Summersea Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#0268B0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-sun-bleached-bone",
+    "name": "Sun-bleached Bone",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#D1904E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-swamp-brown",
+    "name": "Swamp Brown",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#A85D46",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-temple-ochre",
+    "name": "Temple Ochre",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#CA9F5B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-tenebris-blue",
+    "name": "Tenebris Blue",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#676FD1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-tiger-brown",
+    "name": "Tiger Brown",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#F19200",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-tiger-eye-brown",
+    "name": "Tiger Eye Brown",
+    "brand": "Green Stuff World",
+    "range": "Candy Ink Metallic",
+    "type": "ink",
+    "hex": "#E8C196",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-tinmetal-grey",
+    "name": "Tinmetal Grey",
+    "brand": "Green Stuff World",
+    "range": "Metallic Colors",
+    "type": "metallic",
+    "hex": "#B9ADAD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-toxic-purple",
+    "name": "Toxic Purple",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#7A398D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-tropical-green",
+    "name": "Tropical Green",
+    "brand": "Green Stuff World",
+    "range": "Chameleon Colorshift Metallic",
+    "type": "metallic",
+    "hex": "#B3D924",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-tropical-turquoise",
+    "name": "Tropical Turquoise",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#33AFA5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-turquoise-ghost-dip",
+    "name": "Turquoise Ghost Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#055145",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-ultramar-blue",
+    "name": "Ultramar Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#343468",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-valkyrie-yellow",
+    "name": "Valkyrie Yellow",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#E7D96C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-vanilla-drop",
+    "name": "Vanilla Drop",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#FEE591",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-vicious-purple",
+    "name": "Vicious Purple",
+    "brand": "Green Stuff World",
+    "range": "Wash Ink",
+    "type": "wash",
+    "hex": "#8767BA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-violet",
+    "name": "Violet",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#BE68E3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-violet-hint-dip",
+    "name": "Violet Hint Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#9A82BC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-viridian-green",
+    "name": "Viridian Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#019A88",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-viridis-green",
+    "name": "Viridis Green",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#5AA38F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-walnut-brown",
+    "name": "Walnut Brown",
+    "brand": "Green Stuff World",
+    "range": "Intensity Ink",
+    "type": "ink",
+    "hex": "#776C5A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-warcry-green",
+    "name": "Warcry Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#3E6121",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-white",
+    "name": "White",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-whitecap-beige",
+    "name": "Whitecap Beige",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#D6C4B0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-wolven-grey",
+    "name": "Wolven Grey",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#B0B6C6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-wonka-violet",
+    "name": "Wonka Violet",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#771641",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-yellow",
+    "name": "Yellow",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#F8FB48",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-yellow-submarine-dip",
+    "name": "Yellow Submarine Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#BD9C0F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-yellow-brown-ops",
+    "name": "Yellow-brown Ops",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#8A5E21",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-yellow-orange",
+    "name": "Yellow-orange",
+    "brand": "Green Stuff World",
+    "range": "Fluor Metallic",
+    "type": "metallic",
+    "hex": "#F89D68",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-yoda-green",
+    "name": "Yoda Green",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#557C5D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-zima-blue",
+    "name": "Zima Blue",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#48A3C0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-zombie-dip",
+    "name": "Zombie Dip",
+    "brand": "Green Stuff World",
+    "range": "Dipping Inks",
+    "type": "ink",
+    "hex": "#373B22",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "green-stuff-world-zombie-flesh",
+    "name": "Zombie Flesh",
+    "brand": "Green Stuff World",
+    "range": "Acrylic Colors",
+    "type": "other",
+    "hex": "#C9AC6A",
+    "code": null,
+    "discontinued": false
+  }
+]

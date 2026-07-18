@@ -28,6 +28,14 @@ const SOURCES = [
   { file: "Vallejo.md", brand: "Vallejo", out: "vallejo.json" },
   { file: "AK.md", brand: "AK Interactive", out: "ak-interactive.json" },
   { file: "AKRC.md", brand: "AK Interactive", out: "ak-interactive.json" },
+  { file: "Army_Painter.md", brand: "Army Painter", out: "army-painter.json" },
+  { file: "Duncan.md", brand: "Duncan Rhodes", out: "duncan-rhodes.json" },
+  { file: "GreenStuffWorld.md", brand: "Green Stuff World", out: "green-stuff-world.json" },
+  { file: "Liquitex.md", brand: "Liquitex", out: "liquitex.json" },
+  { file: "Mig.md", brand: "Mig", out: "mig.json" },
+  { file: "P3.md", brand: "P3", out: "p3.json" },
+  { file: "Scale75.md", brand: "Scale 75", out: "scale-75.json" },
+  { file: "Tamiya.md", brand: "Tamiya", out: "tamiya.json" },
 ];
 
 function slugify(s) {
@@ -131,7 +139,9 @@ async function main() {
       const setRaw = (row.set ?? "").trim();
       const discontinued = /\(discontinued\)/i.test(setRaw);
       const range = setRaw.replace(/\s*\(discontinued\)\s*/i, "").trim() || "General";
-      const code = (row.code ?? "").trim() || null;
+      // Some upstream files use the literal string "null" for a missing code.
+      const codeRaw = (row.code ?? "").trim();
+      const code = codeRaw && codeRaw.toLowerCase() !== "null" ? codeRaw : null;
 
       const key = `${name.toLowerCase()}|${hex}`;
       const existing = bucket.get(key);

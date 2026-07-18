@@ -6,6 +6,14 @@ Each file is a JSON array of paint records for one brand:
 - `citadel.json` — Citadel Colour (Games Workshop)
 - `vallejo.json` — Vallejo
 - `ak-interactive.json` — AK Interactive (incl. Real Colors)
+- `army-painter.json` — The Army Painter (Warpaints, Speedpaint, …)
+- `duncan-rhodes.json` — Duncan Rhodes Painting Academy
+- `green-stuff-world.json` — Green Stuff World
+- `liquitex.json` — Liquitex
+- `mig.json` — AMMO by Mig Jimenez
+- `p3.json` — Privateer Press Formula P3
+- `scale-75.json` — Scale 75
+- `tamiya.json` — Tamiya
 
 ## Record schema
 

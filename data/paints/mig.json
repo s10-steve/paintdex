@@ -1,0 +1,2522 @@
+[
+  {
+    "id": "mig-3b-au-basic-protector-alkidno-uretanovaya",
+    "name": "3b Au Basic Protector Alkidno-uretanovaya",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3D331A",
+    "code": "AMIG0022",
+    "discontinued": false
+  },
+  {
+    "id": "mig-4bo-russian-green",
+    "name": "4bo Russian Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#4F5129",
+    "code": "AMIG0019",
+    "discontinued": false
+  },
+  {
+    "id": "mig-6k-russian-brown",
+    "name": "6k Russian Brown",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3B3128",
+    "code": "AMIG0020",
+    "discontinued": false
+  },
+  {
+    "id": "mig-7k-russian-tan",
+    "name": "7k Russian Tan",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#70603E",
+    "code": "AMIG0021",
+    "discontinued": false
+  },
+  {
+    "id": "mig-afrika-korps-wash",
+    "name": "Afrika Korps Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#322A1D",
+    "code": "AMIG1001",
+    "discontinued": false
+  },
+  {
+    "id": "mig-apc-interior-light-green",
+    "name": "Apc Interior Light Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#8DA186",
+    "code": "AMIG0082",
+    "discontinued": false
+  },
+  {
+    "id": "mig-basic-skin-tone",
+    "name": "Basic Skin Tone",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#E3B4A4",
+    "code": "AMIG0116",
+    "discontinued": false
+  },
+  {
+    "id": "mig-black-wash",
+    "name": "Black Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#0E0E0E",
+    "code": "AMIG1011",
+    "discontinued": false
+  },
+  {
+    "id": "mig-blood-red",
+    "name": "Blood Red",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#AC2B25",
+    "code": "AMIG0121",
+    "discontinued": false
+  },
+  {
+    "id": "mig-blue-ral-5019",
+    "name": "Blue (RAL 5019)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#1B4F88",
+    "code": "AMIG0086",
+    "discontinued": false
+  },
+  {
+    "id": "mig-blue-green",
+    "name": "Blue Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#283C23",
+    "code": "AMIG0069",
+    "discontinued": false
+  },
+  {
+    "id": "mig-blue-wash-for-panzer-grey",
+    "name": "Blue Wash For Panzer Grey",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#1F242A",
+    "code": "AMIG1006",
+    "discontinued": false
+  },
+  {
+    "id": "mig-bluish-titanium",
+    "name": "Bluish Titanium",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#619185",
+    "code": "AMIG0193",
+    "discontinued": false
+  },
+  {
+    "id": "mig-bone",
+    "name": "Bone",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#EDEEDC",
+    "code": "AMIG0122",
+    "discontinued": false
+  },
+  {
+    "id": "mig-brass",
+    "name": "Brass",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B7881C",
+    "code": "AMIG0197",
+    "discontinued": false
+  },
+  {
+    "id": "mig-bright-green-amt-4",
+    "name": "Bright Green Amt-4",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#5E7D3A",
+    "code": "AMIG0080",
+    "discontinued": false
+  },
+  {
+    "id": "mig-brown-soil",
+    "name": "Brown Soil",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#6E4939",
+    "code": "AMIG0076",
+    "discontinued": false
+  },
+  {
+    "id": "mig-brown-wash-for-german-dark-yellow",
+    "name": "Brown Wash For German Dark Yellow",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#423222",
+    "code": "AMIG1000",
+    "discontinued": false
+  },
+  {
+    "id": "mig-burnt-brown-red",
+    "name": "Burnt Brown Red",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#352005",
+    "code": "AMIG0134",
+    "discontinued": false
+  },
+  {
+    "id": "mig-burnt-sand",
+    "name": "Burnt Sand",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#7E5A3A",
+    "code": "AMIG0118",
+    "discontinued": false
+  },
+  {
+    "id": "mig-chipping",
+    "name": "Chipping",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#260E0E",
+    "code": "AMIG0044",
+    "discontinued": false
+  },
+  {
+    "id": "mig-cinnamon",
+    "name": "Cinnamon",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#937D6F",
+    "code": "AMIG0135",
+    "discontinued": false
+  },
+  {
+    "id": "mig-clay-brown",
+    "name": "Clay Brown",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#683F23",
+    "code": "AMIG0079",
+    "discontinued": false
+  },
+  {
+    "id": "mig-cold-gray",
+    "name": "Cold Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D3D3D3",
+    "code": "AMIG0119",
+    "discontinued": false
+  },
+  {
+    "id": "mig-copper",
+    "name": "Copper",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C94A5D",
+    "code": "AMIG0199",
+    "discontinued": false
+  },
+  {
+    "id": "mig-crystal-black-blue",
+    "name": "Crystal Black Blue",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#022334",
+    "code": "AMIG0099",
+    "discontinued": false
+  },
+  {
+    "id": "mig-crystal-glass",
+    "name": "Crystal Glass",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#A7A7A7",
+    "code": "AMIG0094",
+    "discontinued": false
+  },
+  {
+    "id": "mig-crystal-green",
+    "name": "Crystal Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#2D4410",
+    "code": "AMIG0092",
+    "discontinued": false
+  },
+  {
+    "id": "mig-crystal-light-blue",
+    "name": "Crystal Light Blue",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#0784BE",
+    "code": "AMIG0098",
+    "discontinued": false
+  },
+  {
+    "id": "mig-crystal-orange",
+    "name": "Crystal Orange",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#FE8F00",
+    "code": "AMIG0097",
+    "discontinued": false
+  },
+  {
+    "id": "mig-crystal-periscope-green",
+    "name": "Crystal Periscope Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#40770F",
+    "code": "AMIG0096",
+    "discontinued": false
+  },
+  {
+    "id": "mig-crystal-red",
+    "name": "Crystal Red",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#591610",
+    "code": "AMIG0093",
+    "discontinued": false
+  },
+  {
+    "id": "mig-crystal-smoke",
+    "name": "Crystal Smoke",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#131E18",
+    "code": "AMIG0095",
+    "discontinued": false
+  },
+  {
+    "id": "mig-cyan",
+    "name": "Cyan",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#2495FB",
+    "code": "AMIG0128",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dark-brown-wash-for-green-vehicles",
+    "name": "Dark Brown Wash For Green Vehicles",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#1D0E0B",
+    "code": "AMIG1005",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dark-green-bs-241",
+    "name": "Dark Green (bs 241)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#455330",
+    "code": "AMIG0915",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dark-rust",
+    "name": "Dark Rust",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#893B24",
+    "code": "AMIG0041",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dark-tracks",
+    "name": "Dark Tracks",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#130707",
+    "code": "AMIG0035",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dark-wash",
+    "name": "Dark Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#171310",
+    "code": "AMIG1008",
+    "discontinued": false
+  },
+  {
+    "id": "mig-deep-green",
+    "name": "Deep Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#0B562D",
+    "code": "AMIG0052",
+    "discontinued": false
+  },
+  {
+    "id": "mig-desert-yellow",
+    "name": "Desert Yellow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B8996D",
+    "code": "AMIG0138",
+    "discontinued": false
+  },
+  {
+    "id": "mig-duck-egg-green-bs-216",
+    "name": "Duck Egg Green (bs 216)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#AFB985",
+    "code": "AMIG0244",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dull-green",
+    "name": "Dull Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3D595A",
+    "code": "AMIG0077",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgelb-base",
+    "name": "Dunkelgelb Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#8E814A",
+    "code": "AMIG0902",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgelb-dark-base",
+    "name": "Dunkelgelb Dark Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#7B6B37",
+    "code": "AMIG0901",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgelb-high-light",
+    "name": "Dunkelgelb High Light",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D0CE93",
+    "code": "AMIG0904",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgelb-light-base",
+    "name": "Dunkelgelb Light Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B7AB79",
+    "code": "AMIG0903",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgelb-shadow",
+    "name": "Dunkelgelb Shadow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#381B20",
+    "code": "AMIG0900",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgelb-shine",
+    "name": "Dunkelgelb Shine",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#E2E1C5",
+    "code": "AMIG0905",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgrau-base",
+    "name": "Dunkelgrau Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#333542",
+    "code": "AMIG0908",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgrau-dark-base",
+    "name": "Dunkelgrau Dark Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#474956",
+    "code": "AMIG0907",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgrau-light-base",
+    "name": "Dunkelgrau Light Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#696D76",
+    "code": "AMIG0909",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dunkelgrau-shadow",
+    "name": "Dunkelgrau Shadow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#323335",
+    "code": "AMIG0906",
+    "discontinued": false
+  },
+  {
+    "id": "mig-dust",
+    "name": "Dust",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#968C71",
+    "code": "AMIG0072",
+    "discontinued": false
+  },
+  {
+    "id": "mig-earth",
+    "name": "Earth",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#745739",
+    "code": "AMIG0073",
+    "discontinued": false
+  },
+  {
+    "id": "mig-earth-brown",
+    "name": "Earth Brown",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#814428",
+    "code": "AMIG0064",
+    "discontinued": false
+  },
+  {
+    "id": "mig-faded-sinai-grey",
+    "name": "Faded Sinai Grey",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#736C5A",
+    "code": "AMIG0066",
+    "discontinued": false
+  },
+  {
+    "id": "mig-faded-yellow",
+    "name": "Faded Yellow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D8CD73",
+    "code": "AMIG0130",
+    "discontinued": false
+  },
+  {
+    "id": "mig-forest-green",
+    "name": "Forest Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#384527",
+    "code": "AMIG0065",
+    "discontinued": false
+  },
+  {
+    "id": "mig-french-blue",
+    "name": "French Blue",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#445366",
+    "code": "AMIG0062",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-15102-dark-gray-blue",
+    "name": "Fs 15102 Dark Gray Blue",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#2489BD",
+    "code": "AMIG0229",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-23070-dark-olive-drab",
+    "name": "Fs 23070 Dark Olive Drab",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#6C6845",
+    "code": "AMIG0237",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-24277-green",
+    "name": "Fs 24277 Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#6B8778",
+    "code": "AMIG0213",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-25042-sea-blue-ana-606",
+    "name": "Fs 25042 Sea Blue (ana 606)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#21262C",
+    "code": "AMIG0227",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-26231-bs-638",
+    "name": "Fs 26231 (bs 638)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#71737F",
+    "code": "AMIG0205",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-26373-silver-grey",
+    "name": "Fs 26373 Silver Grey",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#92A2A2",
+    "code": "AMIG0212",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-30219-tan",
+    "name": "Fs 30219 Tan",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#81603D",
+    "code": "AMIG0202",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-33446-us-modern-vehicles",
+    "name": "Fs 33446 US Modern Vehicles",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C7A780",
+    "code": "AMIG0025",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-33481-zinc-chromate-yellow",
+    "name": "Fs 33481 Zinc Chromate Yellow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B19846",
+    "code": "AMIG0221",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-33531-middlestone",
+    "name": "Fs 33531 Middlestone",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D6C7B4",
+    "code": "AMIG0200",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-34086-ana-613",
+    "name": "Fs 34086 (ana 613)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3F402E",
+    "code": "AMIG0240",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-34092-medium-green",
+    "name": "Fs 34092 Medium Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3A523A",
+    "code": "AMIG0238",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-34151-zinc-chromate-green-interior-green",
+    "name": "Fs 34151 Zinc Chromate Green (interior Green)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#666E45",
+    "code": "AMIG0220",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-34226-bs283-interior-green",
+    "name": "Fs 34226 (bs283) Interior Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#729182",
+    "code": "AMIG0219",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-34424-light-gray-green",
+    "name": "Fs 34424 Light Gray Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B1CAAA",
+    "code": "AMIG0201",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-35164-intermediate-blue-ana-608",
+    "name": "Fs 35164 Intermediate Blue (ana 608)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#707980",
+    "code": "AMIG0228",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36118-medium-gunship-gray",
+    "name": "Fs 36118 Medium Gunship Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3F4551",
+    "code": "AMIG0204",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36122-neutral-gray",
+    "name": "Fs 36122 NeutRAL Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#67686C",
+    "code": "AMIG0239",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36270-medium-gray",
+    "name": "Fs 36270 Medium Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#99999B",
+    "code": "AMIG0211",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36293",
+    "name": "Fs 36293",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#7F8487",
+    "code": "AMIG0236",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36314-bs-626",
+    "name": "Fs 36314 (bs 626)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#83978C",
+    "code": "AMIG0207",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36320-dark-compass-ghost-gray",
+    "name": "Fs 36320 Dark Compass Ghost Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#70878D",
+    "code": "AMIG0208",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36375-light-compass-ghost-gray",
+    "name": "Fs 36375 Light Compass Ghost Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#8390A3",
+    "code": "AMIG0203",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36440-light-gull-gray",
+    "name": "Fs 36440 Light Gull Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#959A94",
+    "code": "AMIG0241",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36495-light-gray",
+    "name": "Fs 36495 Light Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#A6B7AD",
+    "code": "AMIG0209",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-36622-gray",
+    "name": "Fs 36622 Gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D1D2C2",
+    "code": "AMIG0226",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs-37886",
+    "name": "Fs 37886",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#F0F0D8",
+    "code": "AMIG0242",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs35237-blue-gray-amt-11",
+    "name": "Fs35237 Blue Gray Amt-11",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#6D7D8A",
+    "code": "AMIG0210",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs35260-sky-line-blue-a-ii",
+    "name": "Fs35260 Sky Line Blue A II",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#71C6E3",
+    "code": "AMIG0224",
+    "discontinued": false
+  },
+  {
+    "id": "mig-fs36152-dark-grey-amt-12",
+    "name": "Fs36152 Dark Grey AMT-12",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#5D6268",
+    "code": "AMIG0235",
+    "discontinued": false
+  },
+  {
+    "id": "mig-gold",
+    "name": "Gold",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B8B021",
+    "code": "AMIG0198",
+    "discontinued": false
+  },
+  {
+    "id": "mig-gold-yellow-rlm-04-gelb",
+    "name": "Gold Yellow (RLM 04 Gelb)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D7C012",
+    "code": "AMIG0125",
+    "discontinued": false
+  },
+  {
+    "id": "mig-green-base",
+    "name": "Green Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#4E6338",
+    "code": "AMIG0916",
+    "discontinued": false
+  },
+  {
+    "id": "mig-green-khaki",
+    "name": "Green Khaki",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#545035",
+    "code": "AMIG0056",
+    "discontinued": false
+  },
+  {
+    "id": "mig-green-moss",
+    "name": "Green Moss",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#6A6837",
+    "code": "AMIG0074",
+    "discontinued": false
+  },
+  {
+    "id": "mig-green-slate-rlm-02",
+    "name": "Green Slate (RLM 02)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#2A381E",
+    "code": "AMIG0217",
+    "discontinued": false
+  },
+  {
+    "id": "mig-grey",
+    "name": "Grey",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#81858E",
+    "code": "AMIG0059",
+    "discontinued": false
+  },
+  {
+    "id": "mig-grey-brown-amt-1",
+    "name": "Grey Brown Amt-1",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#827B71",
+    "code": "AMIG0252",
+    "discontinued": false
+  },
+  {
+    "id": "mig-grey-high-light",
+    "name": "Grey High Light",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#7D8087",
+    "code": "AMIG0910",
+    "discontinued": false
+  },
+  {
+    "id": "mig-grey-shine",
+    "name": "Grey Shine",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#A2A5AC",
+    "code": "AMIG0911",
+    "discontinued": false
+  },
+  {
+    "id": "mig-gun-metal",
+    "name": "Gun Metal",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#525044",
+    "code": "AMIG0045",
+    "discontinued": false
+  },
+  {
+    "id": "mig-idf-green",
+    "name": "Idf Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#56542E",
+    "code": "AMIG0068",
+    "discontinued": false
+  },
+  {
+    "id": "mig-interior-turquoise-green",
+    "name": "Interior Turquoise Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#1C8368",
+    "code": "AMIG0223",
+    "discontinued": false
+  },
+  {
+    "id": "mig-interiors-wash",
+    "name": "Interiors Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#3C3229",
+    "code": "AMIG1003",
+    "discontinued": false
+  },
+  {
+    "id": "mig-jet-exhaust-burnt-iron",
+    "name": "Jet Exhaust Burnt Iron",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3E2417",
+    "code": "AMIG0187",
+    "discontinued": false
+  },
+  {
+    "id": "mig-khaki",
+    "name": "Khaki",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#735533",
+    "code": "AMIG0071",
+    "discontinued": false
+  },
+  {
+    "id": "mig-khaki-brown",
+    "name": "Khaki Brown",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B39267",
+    "code": "AMIG0088",
+    "discontinued": false
+  },
+  {
+    "id": "mig-khaki-green-no3-british-1939-42",
+    "name": "Khaki Green Nº3 (british 1939-42)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#685F38",
+    "code": "AMIG0113",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-blue",
+    "name": "Light Blue",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B4CEDB",
+    "code": "AMIG0249",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-brown-gray",
+    "name": "Light Brown-gray",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D6D1CE",
+    "code": "AMIG0120",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-green",
+    "name": "Light Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#93AF75",
+    "code": "AMIG0917",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-green-khaki",
+    "name": "Light Green Khaki",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#7C7B4D",
+    "code": "AMIG0058",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-green-khv-553m",
+    "name": "Light Green Khv-553m",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#A5BB8A",
+    "code": "AMIG0051",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-rust",
+    "name": "Light Rust",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#E5910B",
+    "code": "AMIG0039",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-rust-wash",
+    "name": "Light Rust Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#552E11",
+    "code": "AMIG1004",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-sand-grey",
+    "name": "Light Sand Grey",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B8A680",
+    "code": "AMIG0067",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-skin-tone",
+    "name": "Light Skin Tone",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#EECAA8",
+    "code": "AMIG0115",
+    "discontinued": false
+  },
+  {
+    "id": "mig-light-wood",
+    "name": "Light Wood",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#BBAA7F",
+    "code": "AMIG0038",
+    "discontinued": false
+  },
+  {
+    "id": "mig-lime-green",
+    "name": "Lime Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#109F45",
+    "code": "AMIG0124",
+    "discontinued": false
+  },
+  {
+    "id": "mig-marine-blue",
+    "name": "Marine Blue",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#18568F",
+    "code": "AMIG0123",
+    "discontinued": false
+  },
+  {
+    "id": "mig-matt-aluminum",
+    "name": "Matt Aluminum",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#AABCB0",
+    "code": "AMIG0194",
+    "discontinued": false
+  },
+  {
+    "id": "mig-matt-black",
+    "name": "Matt Black",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#131313",
+    "code": "AMIG0046",
+    "discontinued": false
+  },
+  {
+    "id": "mig-matt-varnish",
+    "name": "Matt Varnish",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#FEFEFE",
+    "code": "AMIG0089",
+    "discontinued": false
+  },
+  {
+    "id": "mig-matt-white",
+    "name": "Matt White",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#FCFEFB",
+    "code": "AMIG0050",
+    "discontinued": false
+  },
+  {
+    "id": "mig-medium-blue",
+    "name": "Medium Blue",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#294888",
+    "code": "AMIG0103",
+    "discontinued": false
+  },
+  {
+    "id": "mig-medium-brown-dark-earth-bs-450",
+    "name": "Medium Brown Dark Earth (bs 450)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#523628",
+    "code": "AMIG0070",
+    "discontinued": false
+  },
+  {
+    "id": "mig-medium-rust",
+    "name": "Medium Rust",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B85430",
+    "code": "AMIG0040",
+    "discontinued": false
+  },
+  {
+    "id": "mig-medium-sea-grey-bs-637",
+    "name": "Medium Sea Grey (bs 637)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#858F91",
+    "code": "AMIG0246",
+    "discontinued": false
+  },
+  {
+    "id": "mig-metallic-orange",
+    "name": "Metallic Orange",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#CD6702",
+    "code": "AMIG0189",
+    "discontinued": false
+  },
+  {
+    "id": "mig-metallic-red",
+    "name": "Metallic Red",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C13828",
+    "code": "AMIG0188",
+    "discontinued": false
+  },
+  {
+    "id": "mig-nato-brown",
+    "name": "Nato Brown",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#412C27",
+    "code": "AMIG0085",
+    "discontinued": false
+  },
+  {
+    "id": "mig-nato-green",
+    "name": "Nato Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#424733",
+    "code": "AMIG0084",
+    "discontinued": false
+  },
+  {
+    "id": "mig-neutral-wash",
+    "name": "Neutral Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#505050",
+    "code": "AMIG1010",
+    "discontinued": false
+  },
+  {
+    "id": "mig-new-wood",
+    "name": "New  Wood",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C1AB72",
+    "code": "AMIG0037",
+    "discontinued": false
+  },
+  {
+    "id": "mig-new-iraqui-army-sand",
+    "name": "New Iraqui Army Sand",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C8AF76",
+    "code": "AMIG0029",
+    "discontinued": false
+  },
+  {
+    "id": "mig-night-blue-grey",
+    "name": "Night Blue Grey",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#525662",
+    "code": "AMIG0250",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ocean-grey-bs-629",
+    "name": "Ocean Grey (bs 629)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#626B72",
+    "code": "AMIG0245",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ochre-brown",
+    "name": "Ochre Brown",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#9E8356",
+    "code": "AMIG0102",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ochre-earth",
+    "name": "Ochre Earth",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C28E5C",
+    "code": "AMIG0078",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oil-ochre",
+    "name": "Oil Ochre",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#CEAD50",
+    "code": "AMIG0055",
+    "discontinued": false
+  },
+  {
+    "id": "mig-old-brass",
+    "name": "Old Brass",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#816116",
+    "code": "AMIG0190",
+    "discontinued": false
+  },
+  {
+    "id": "mig-old-rust",
+    "name": "Old Rust",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#452621",
+    "code": "AMIG0042",
+    "discontinued": false
+  },
+  {
+    "id": "mig-old-wood",
+    "name": "Old Wood",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#BFAB8A",
+    "code": "AMIG0036",
+    "discontinued": false
+  },
+  {
+    "id": "mig-olive-drab-base",
+    "name": "Olive Drab  Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#524F2E",
+    "code": "AMIG0926",
+    "discontinued": false
+  },
+  {
+    "id": "mig-olive-drab-high-lights",
+    "name": "Olive Drab  High Lights",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#797653",
+    "code": "AMIG0928",
+    "discontinued": false
+  },
+  {
+    "id": "mig-olive-drab-light-base",
+    "name": "Olive Drab  Light Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#686542",
+    "code": "AMIG0927",
+    "discontinued": false
+  },
+  {
+    "id": "mig-olive-drab-shadow",
+    "name": "Olive Drab Shadow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#323017",
+    "code": "AMIG0924",
+    "discontinued": false
+  },
+  {
+    "id": "mig-olive-drab-shine",
+    "name": "Olive Drab Shine",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#898761",
+    "code": "AMIG0929",
+    "discontinued": false
+  },
+  {
+    "id": "mig-one-shot-primer-black",
+    "name": "One Shot Primer - Black",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#181818",
+    "code": "AMIG2023",
+    "discontinued": false
+  },
+  {
+    "id": "mig-one-shot-primer-brown-oxide",
+    "name": "One Shot Primer - Brown Oxide",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#412017",
+    "code": "AMIG2026",
+    "discontinued": false
+  },
+  {
+    "id": "mig-one-shot-primer-green",
+    "name": "One Shot Primer - Green",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#263427",
+    "code": "AMIG2028",
+    "discontinued": false
+  },
+  {
+    "id": "mig-one-shot-primer-grey",
+    "name": "One Shot Primer - Grey",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#6B6B6B",
+    "code": "AMIG2024",
+    "discontinued": false
+  },
+  {
+    "id": "mig-one-shot-primer-sand-flesh",
+    "name": "One Shot Primer - Sand Flesh",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#B7A371",
+    "code": "AMIG2027",
+    "discontinued": false
+  },
+  {
+    "id": "mig-one-shot-primer-white",
+    "name": "One Shot Primer - White",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#E4E4E4",
+    "code": "AMIG2022",
+    "discontinued": false
+  },
+  {
+    "id": "mig-orange",
+    "name": "Orange",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#E7731E",
+    "code": "AMIG0129",
+    "discontinued": false
+  },
+  {
+    "id": "mig-pale-green",
+    "name": "Pale Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3A6327",
+    "code": "AMIG0060",
+    "discontinued": false
+  },
+  {
+    "id": "mig-polished-metal",
+    "name": "Polished Metal",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#5B6C5C",
+    "code": "AMIG0192",
+    "discontinued": false
+  },
+  {
+    "id": "mig-protective-green",
+    "name": "Protective Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#5E733B",
+    "code": "AMIG0023",
+    "discontinued": false
+  },
+  {
+    "id": "mig-protective-mc-1200",
+    "name": "Protective Mc 1200",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#18341B",
+    "code": "AMIG0053",
+    "discontinued": false
+  },
+  {
+    "id": "mig-purple",
+    "name": "Purple",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#9154A4",
+    "code": "AMIG0127",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-6003-olivgru-n-opt-1",
+    "name": "RAL 6003 Olivgrün Opt.1",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#353D26",
+    "code": "AMIG0001",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-6003-olivgru-n-opt-2",
+    "name": "RAL 6003 Olivgrün Opt.2",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#4E5536",
+    "code": "AMIG0002",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-6011-b-resedagru-n",
+    "name": "RAL 6011 B Resedagrün",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#525D33",
+    "code": "AMIG0004",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-6011-resedagru-n",
+    "name": "RAL 6011 Resedagrün",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#677D4C",
+    "code": "AMIG0003",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-6014-gelboliv",
+    "name": "RAL 6014 Gelboliv",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#454732",
+    "code": "AMIG0087",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-7008-graugru-n",
+    "name": "RAL 7008 Graugrün",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#62593C",
+    "code": "AMIG0005",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-7008-graugru-n-opt-2",
+    "name": "RAL 7008 Graugrün Opt.2",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#8A854D",
+    "code": "AMIG0006",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-7017-dunkelbraun",
+    "name": "RAL 7017 Dunkelbraun",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#524232",
+    "code": "AMIG0007",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-7021-dunkelgrau",
+    "name": "RAL 7021 Dunkelgrau",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#272B34",
+    "code": "AMIG0008",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-7027-sandgrau",
+    "name": "RAL 7027 Sandgrau",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C0AF93",
+    "code": "AMIG0009",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-7028-dunkelgelb-mid-war",
+    "name": "RAL 7028 Dunkelgelb (mid War)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#A4943F",
+    "code": "AMIG0010",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-7028-dunkelgelb-aus-44-dg-i",
+    "name": "RAL 7028 Dunkelgelb AUS ’44 Dg I",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C9BE86",
+    "code": "AMIG0011",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-7028-dunkelgelb-aus-44-dg-iii",
+    "name": "RAL 7028 Dunkelgelb AUS ’44 Dg IIi",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D7CEA5",
+    "code": "AMIG0012",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-8000-gelbbraun",
+    "name": "RAL 8000 Gelbbraun",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#AE9576",
+    "code": "AMIG0013",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-8012-rotbraun",
+    "name": "RAL 8012 Rotbraun",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#85320A",
+    "code": "AMIG0014",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-8017-schokobraun",
+    "name": "RAL 8017 Schokobraun",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#50312C",
+    "code": "AMIG0015",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-8020-gelbbraun",
+    "name": "RAL 8020 Gelbbraun",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#E7CA7A",
+    "code": "AMIG0016",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-8031-f9-sand-brown",
+    "name": "RAL 8031 F9 Sand Brown",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#CDA38B",
+    "code": "AMIG0026",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral-9001-cremeweiss",
+    "name": "RAL 9001 Cremeweiss",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#F2EFC2",
+    "code": "AMIG0017",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral1039-f9-german-sand-beige",
+    "name": "RAL1039 F9 German Sand Beige",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C6B074",
+    "code": "AMIG0027",
+    "discontinued": false
+  },
+  {
+    "id": "mig-ral7050-f7-german-grey-beige",
+    "name": "RAL7050 F7 German Grey Beige",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#807863",
+    "code": "AMIG0028",
+    "discontinued": false
+  },
+  {
+    "id": "mig-real-idf-sand-grey-73",
+    "name": "Real Idf Sand Grey 73",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#84794B",
+    "code": "AMIG0132",
+    "discontinued": false
+  },
+  {
+    "id": "mig-real-idf-sinai-grey-82",
+    "name": "Real Idf Sinai Grey 82",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#534F2A",
+    "code": "AMIG0131",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red",
+    "name": "Red",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#BD2615",
+    "code": "AMIG0049",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-brown-base",
+    "name": "Red Brown Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#6B321E",
+    "code": "AMIG0913",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-brown-light",
+    "name": "Red Brown Light",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#9E5340",
+    "code": "AMIG0914",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-brown-shadow",
+    "name": "Red Brown Shadow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#421D14",
+    "code": "AMIG0912",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-leather",
+    "name": "Red Leather",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#643B29",
+    "code": "AMIG0133",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-primer-high-lights",
+    "name": "Red Primer  High Lights",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#7F3D1A",
+    "code": "AMIG0922",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-primer-shine",
+    "name": "Red Primer  Shine",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#9E5922",
+    "code": "AMIG0923",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-primer-base",
+    "name": "Red Primer Base",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#491404",
+    "code": "AMIG0920",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-primer-dark-base",
+    "name": "Red Primer Dark Base",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#593B23",
+    "code": "AMIG0919",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-primer-light-base",
+    "name": "Red Primer Light Base",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#63250C",
+    "code": "AMIG0921",
+    "discontinued": false
+  },
+  {
+    "id": "mig-red-primer-shadow",
+    "name": "Red Primer Shadow",
+    "brand": "Mig",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#321819",
+    "code": "AMIG0918",
+    "discontinued": false
+  },
+  {
+    "id": "mig-reddish-earth",
+    "name": "Reddish Earth",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#705446",
+    "code": "AMIG0139",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-65-hellblau",
+    "name": "RLM 65 Hellblau",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C7DBE2",
+    "code": "AMIG0231",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-66-schwartzgrau",
+    "name": "RLM 66 Schwartzgrau",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#282B34",
+    "code": "AMIG0218",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-70-schwartzgru-n",
+    "name": "RLM 70 Schwartzgrün",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#333C2B",
+    "code": "AMIG0232",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-71-dunkelgru-n",
+    "name": "RLM 71 Dunkelgrün",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#51563F",
+    "code": "AMIG0233",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-74-graugru-n",
+    "name": "RLM 74 Graugrün",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#434E48",
+    "code": "AMIG0253",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-75-grauviolett",
+    "name": "RLM 75 Grauviolett",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#7C7E7B",
+    "code": "AMIG0254",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-76-pale-grey",
+    "name": "RLM 76 Pale Grey",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#9AC4B6",
+    "code": "AMIG0063",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-78-hellblau",
+    "name": "RLM 78 Hellblau",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#819B9C",
+    "code": "AMIG0247",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-79-sandgelb",
+    "name": "RLM 79 Sandgelb",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C59942",
+    "code": "AMIG0222",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-80-olivgru-n",
+    "name": "RLM 80 Olivgrün",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3B4930",
+    "code": "AMIG0248",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-81",
+    "name": "RLM 81",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#47512C",
+    "code": "AMIG0206",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-81-braunviolett",
+    "name": "RLM 81 Braunviolett",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#553C37",
+    "code": "AMIG0255",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-81-olive-drab-dark",
+    "name": "RLM 81 Olive Drab Dark",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#413D20",
+    "code": "AMIG0925",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-82-camo-green",
+    "name": "RLM 82 Camo Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3E3E00",
+    "code": "AMIG0230",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rlm-84-graublau",
+    "name": "RLM 84 Graublau",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B9B97B",
+    "code": "AMIG0256",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rubber-amp-tires",
+    "name": "Rubber &amp; Tires",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#3D383C",
+    "code": "AMIG0033",
+    "discontinued": false
+  },
+  {
+    "id": "mig-russian-blue-amt-7",
+    "name": "Russian Blue Amt-7",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#2F737E",
+    "code": "AMIG0251",
+    "discontinued": false
+  },
+  {
+    "id": "mig-russian-dark-base",
+    "name": "Russian Dark Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#4A4F27",
+    "code": "AMIG0931",
+    "discontinued": false
+  },
+  {
+    "id": "mig-russian-green-base",
+    "name": "Russian Green Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#5D5C19",
+    "code": "AMIG0932",
+    "discontinued": false
+  },
+  {
+    "id": "mig-russian-high-light",
+    "name": "Russian High Light",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#8C8557",
+    "code": "AMIG0934",
+    "discontinued": false
+  },
+  {
+    "id": "mig-russian-light-base",
+    "name": "Russian Light Base",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#797244",
+    "code": "AMIG0933",
+    "discontinued": false
+  },
+  {
+    "id": "mig-russian-shadow",
+    "name": "Russian Shadow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#30300E",
+    "code": "AMIG0930",
+    "discontinued": false
+  },
+  {
+    "id": "mig-russian-shine",
+    "name": "Russian Shine",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#9E976D",
+    "code": "AMIG0935",
+    "discontinued": false
+  },
+  {
+    "id": "mig-rust-tracks",
+    "name": "Rust Tracks",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#38261C",
+    "code": "AMIG0034",
+    "discontinued": false
+  },
+  {
+    "id": "mig-sand-yellow",
+    "name": "Sand Yellow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D8A64F",
+    "code": "AMIG0030",
+    "discontinued": false
+  },
+  {
+    "id": "mig-satin-black",
+    "name": "Satin Black",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#1C1C1C",
+    "code": "AMIG0032",
+    "discontinued": false
+  },
+  {
+    "id": "mig-satin-white",
+    "name": "Satin White",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#E8E8E8",
+    "code": "AMIG0047",
+    "discontinued": false
+  },
+  {
+    "id": "mig-scc-15-british-1944-45-olive-drab",
+    "name": "Scc 15 (british 1944-45 Olive Drab)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#353B19",
+    "code": "AMIG0112",
+    "discontinued": false
+  },
+  {
+    "id": "mig-scc-1a-british-brown-1941-42",
+    "name": "Scc 1a  (british Brown 1941-42)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#352118",
+    "code": "AMIG0110",
+    "discontinued": false
+  },
+  {
+    "id": "mig-scc-2-british-1941-44-service-drab",
+    "name": "Scc 2 (british 1941-44 Service Drab)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#544933",
+    "code": "AMIG0111",
+    "discontinued": false
+  },
+  {
+    "id": "mig-shadow-rust",
+    "name": "Shadow Rust",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#331716",
+    "code": "AMIG0043",
+    "discontinued": false
+  },
+  {
+    "id": "mig-signal-green",
+    "name": "Signal Green",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#28812D",
+    "code": "AMIG0054",
+    "discontinued": false
+  },
+  {
+    "id": "mig-silver",
+    "name": "Silver",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C6D1C1",
+    "code": "AMIG0195",
+    "discontinued": false
+  },
+  {
+    "id": "mig-sky-type-s-bs-210",
+    "name": "Sky Type S (bs 210)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B4B299",
+    "code": "AMIG0243",
+    "discontinued": false
+  },
+  {
+    "id": "mig-spanish-green-khaki",
+    "name": "Spanish Green-khaki",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#504728",
+    "code": "AMIG0031",
+    "discontinued": false
+  },
+  {
+    "id": "mig-starship-wash",
+    "name": "Starship Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#0F0B0A",
+    "code": "AMIG1009",
+    "discontinued": false
+  },
+  {
+    "id": "mig-steel",
+    "name": "Steel",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B7C2B1",
+    "code": "AMIG0191",
+    "discontinued": false
+  },
+  {
+    "id": "mig-stone-grey",
+    "name": "Stone Grey",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B2B2B2",
+    "code": "AMIG0075",
+    "discontinued": false
+  },
+  {
+    "id": "mig-tracks-wash",
+    "name": "Tracks Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#1A120F",
+    "code": "AMIG1002",
+    "discontinued": false
+  },
+  {
+    "id": "mig-us-modern-vehicles-wash",
+    "name": "US Modern Vehicles Wash",
+    "brand": "Mig",
+    "range": "Washes",
+    "type": "wash",
+    "hex": "#5A4A3D",
+    "code": "AMIG1007",
+    "discontinued": false
+  },
+  {
+    "id": "mig-us-olive-drab-vietnam-era-fs-24087",
+    "name": "US Olive Drab Vietnam Era (fs 24087)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#424A35",
+    "code": "AMIG0081",
+    "discontinued": false
+  },
+  {
+    "id": "mig-violet",
+    "name": "Violet",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#56439C",
+    "code": "AMIG0126",
+    "discontinued": false
+  },
+  {
+    "id": "mig-waffen-ss",
+    "name": "Waffen Ss",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#42685B",
+    "code": "AMIG0018",
+    "discontinued": false
+  },
+  {
+    "id": "mig-warhead-metallic-blue",
+    "name": "Warhead Metallic Blue",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#237EE9",
+    "code": "AMIG0196",
+    "discontinued": false
+  },
+  {
+    "id": "mig-warm-sand-yellow",
+    "name": "Warm Sand-yellow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#D7B657",
+    "code": "AMIG0061",
+    "discontinued": false
+  },
+  {
+    "id": "mig-warm-skin-tone",
+    "name": "Warm Skin Tone",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#B5876F",
+    "code": "AMIG0117",
+    "discontinued": false
+  },
+  {
+    "id": "mig-washable-black",
+    "name": "Washable Black",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#000000",
+    "code": "AMIG0104",
+    "discontinued": false
+  },
+  {
+    "id": "mig-washable-dust-ral-8000",
+    "name": "Washable Dust (RAL 8000)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#9D8152",
+    "code": "AMIG0105",
+    "discontinued": false
+  },
+  {
+    "id": "mig-washable-earth",
+    "name": "Washable Earth",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#714D35",
+    "code": "AMIG0107",
+    "discontinued": false
+  },
+  {
+    "id": "mig-washable-mud",
+    "name": "Washable Mud",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#533229",
+    "code": "AMIG0108",
+    "discontinued": false
+  },
+  {
+    "id": "mig-washable-rust",
+    "name": "Washable Rust",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#A0402A",
+    "code": "AMIG0109",
+    "discontinued": false
+  },
+  {
+    "id": "mig-washable-sand-ral-8020",
+    "name": "Washable Sand (RAL 8020)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C09853",
+    "code": "AMIG0106",
+    "discontinued": false
+  },
+  {
+    "id": "mig-washable-white-camo",
+    "name": "Washable White Camo",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#FAFBF6",
+    "code": "AMIG0024",
+    "discontinued": false
+  },
+  {
+    "id": "mig-xb-518-zashchitniy-zeleno-russian-postwar-green",
+    "name": "Xb-518 Zashchitniy Zeleno (russian Postwar Green)",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#4E4F30",
+    "code": "AMIG0083",
+    "discontinued": false
+  },
+  {
+    "id": "mig-yellow",
+    "name": "Yellow",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#EBC30B",
+    "code": "AMIG0048",
+    "discontinued": false
+  },
+  {
+    "id": "mig-yellow-grey",
+    "name": "Yellow Grey",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#C9B68E",
+    "code": "AMIG0057",
+    "discontinued": false
+  },
+  {
+    "id": "mig-zimmerit-ochre-color",
+    "name": "Zimmerit Ochre Color",
+    "brand": "Mig",
+    "range": "Acrylics",
+    "type": "other",
+    "hex": "#9A8B76",
+    "code": "AMIG0114",
+    "discontinued": false
+  }
+]
