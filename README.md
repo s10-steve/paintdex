@@ -4,17 +4,17 @@ An open, community-maintained database of miniature paints with hex colour
 values — searchable, filterable, and able to find visually similar colours
 across brands.
 
-> **Status:** first release covers the paint database + colour matching.
-> User accounts, owned-paint inventories, and shareable painting recipes are
-> planned (see [Roadmap](#roadmap)).
+> **Status:** first release covers the paint database + colour matching. User
+> accounts, owned-paint inventories, and shareable painting recipes are planned
+> (see [Roadmap](#roadmap)).
 
 ## Features
 
 - **Searchable, filterable database** of 4,900+ paints across 11 brands —
-  **Citadel**, **Vallejo**, **AK Interactive**, **The Army Painter**,
-  **Duncan Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**,
-  **Scale 75** and **Tamiya**. Filter by brand, product range, finish type and
-  colour family — every filter is encoded in the URL, so any view is shareable.
+  **Citadel**, **Vallejo**, **AK Interactive**, **The Army Painter**, **Duncan
+  Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**, **Scale 75**
+  and **Tamiya**. Filter by brand, product range, finish type and colour family
+  — every filter is encoded in the URL, so any view is shareable.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
   distance — with an option to see other brands only.
@@ -42,15 +42,15 @@ npm run dev          # http://localhost:3000
 
 ### Scripts
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the dev server |
-| `npm run build` | Production build (statically generates every paint page) |
-| `npm run lint` | ESLint |
-| `npm run test` | Unit tests (colour maths + filtering) |
-| `npm run validate:data` | Validate `data/paints/*.json` against the schema |
-| `npm run build:index` | Precompute the browse index + similar-colour lists (runs automatically before `dev`/`build`) |
-| `npm run import:source` | (Re)import paint data from the upstream dataset |
+| Command                 | Description                                                                                  |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| `npm run dev`           | Start the dev server                                                                         |
+| `npm run build`         | Production build (statically generates every paint page)                                     |
+| `npm run lint`          | ESLint                                                                                       |
+| `npm run test`          | Unit tests (colour maths + filtering)                                                        |
+| `npm run validate:data` | Validate `data/paints/*.json` against the schema                                             |
+| `npm run build:index`   | Precompute the browse index + similar-colour lists (runs automatically before `dev`/`build`) |
+| `npm run import:source` | (Re)import paint data from the upstream dataset                                              |
 
 ## Deploying
 
@@ -87,6 +87,11 @@ Brand and product names are trademarks of their respective owners.
 - [x] Light/dark + responsive
 - [ ] Add more paint brands and ranges
 - [ ] Make light/dark follow the system automatically (drop the manual toggle)
+- [ ] Add a flag for metallic paints, and a filter for metallic vs non-metallic
+      (e.g Auric Armour Gold is listed as similar to yellows and golds, but
+      really they're completely different use cases)
+- [ ] Add filters to the similar-colour list (e.g. only show paints from a
+      certain brand, or only show paints of a certain type)
 - [ ] User accounts & login
 - [ ] Save the paints you own
 - [ ] Painting recipes with colour-coded guide text
@@ -103,8 +108,8 @@ Follow-ups from the initial code review, to address as the catalogue grows:
 - [x] **Browse-page bundle size.** The paint dataset is now precomputed (Lab +
       colour family) into `public/browse-index.json` by
       `npm run build:browse-index` and fetched at runtime, so it no longer ships
-      in the `/paints` client JS bundle. (~850 KB of data left the bundle;
-      ~175 KB gzipped over the wire as a cacheable static asset.)
+      in the `/paints` client JS bundle. (~850 KB of data left the bundle; ~175
+      KB gzipped over the wire as a cacheable static asset.)
 - [x] **Build-time scaling.** Similar-colour lists are now precomputed once by
       `npm run build:similar-index` (sharded across CPU cores) into
       `.cache/similar-index.json`, and each paint page reads its list as an O(1)
@@ -116,7 +121,8 @@ Follow-ups from the initial code review, to address as the catalogue grows:
       also doesn't cancel the pending timer, and the timer isn't cleared on
       unmount.
 - [x] **Validate URL filter params.** The `type` query param is cast to
-      `PaintType[]` without validation — filter it against the known set instead.
+      `PaintType[]` without validation — filter it against the known set
+      instead.
 - [x] **Type the colour family.** `PaintWithLab.family` is `string` rather than
       `ColourFamily`, losing type safety where it would help.
 - [x] **Remove dead code.** `getRanges()` in `src/lib/paints/load.ts` is unused
