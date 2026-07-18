@@ -13,11 +13,11 @@ across brands.
 - **Searchable, filterable database** of 4,900+ paints across 11 brands —
   **Citadel**, **Vallejo**, **AK Interactive**, **The Army Painter**, **Duncan
   Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**, **Scale 75**
-  and **Tamiya**. Filter by brand, product range, finish type and colour family
-  — every filter is encoded in the URL, so any view is shareable.
+  and **Tamiya**. Filter by brand, product range, finish type, colour family and
+  metallic finish — every filter is encoded in the URL, so any view is shareable.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
-  distance — with an option to see other brands only.
+  distance — with filters to narrow the matches by brand or type.
 - **Light & dark mode**, following your system preference with a manual toggle.
 - **Responsive** desktop and mobile layouts.
 - **Open data.** The paint database is plain JSON in this repo, so anyone can
