@@ -85,6 +85,9 @@ Brand and product names are trademarks of their respective owners.
 - [x] Paint database: search, filter, colour families
 - [x] Similar-colour matching (CIEDE2000)
 - [x] Light/dark + responsive
+- [ ] Add URL links to the paint database for the official product pages (e.g.
+      Citadel paints link to the Games Workshop site). Would help ensure
+      correctness and tie in with adding new ranges and paints.
 - [ ] Add more paint brands and ranges
 - [x] Light/dark follows the system by default, with a manual toggle to override
 - [x] Add a flag for metallic paints, and a filter for metallic vs non-metallic
@@ -92,14 +95,14 @@ Brand and product names are trademarks of their respective owners.
       really they're completely different use cases)
 - [x] Add filters to the similar-colour list (e.g. only show paints from a
       certain brand, or only show paints of a certain type)
+- [ ] Interactive colour wheel (à la
+      [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
+      suggests matching paints based on the colours you pick
 - [ ] User accounts & login
 - [ ] Save the paints you own
 - [ ] Painting recipes with colour-coded guide text
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own
-- [ ] Interactive colour wheel (à la
-      [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
-      suggests matching paints based on the colours you pick
 
 ### Known issues & fixes
 
