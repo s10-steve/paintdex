@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { PaintsBrowser } from "@/components/paints-browser";
+import { PaintsBrowser, BROWSE_INDEX_URL } from "@/components/paints-browser";
 import { getAllPaints, getBrands } from "@/lib/paints/load";
 
 export const metadata: Metadata = {
@@ -14,6 +14,15 @@ export default function PaintsPage() {
   const brandCount = getBrands().length;
   return (
     <main>
+      {/* Preload the dataset so it downloads in parallel with the JS bundle
+          instead of waiting for the client component to mount and fetch it
+          (avoids a request waterfall on first load). Hoisted to <head>. */}
+      <link
+        rel="preload"
+        href={BROWSE_INDEX_URL}
+        as="fetch"
+        crossOrigin="anonymous"
+      />
       <div className="mx-auto max-w-6xl px-4 pt-6">
         <h1 className="text-2xl font-bold tracking-tight">Browse paints</h1>
         <p className="mt-1 text-sm text-muted-foreground">

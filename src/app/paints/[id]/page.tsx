@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllPaints, getPaintById } from "@/lib/paints/load";
-import { findSimilar } from "@/lib/paints/filter";
+import { getAllPaints, getPaintById, getSimilarColours } from "@/lib/paints/load";
 import { contrastText } from "@/lib/color";
 import type { Paint, PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
@@ -11,6 +10,12 @@ import { SimilarColours, type SimilarItem } from "@/components/similar-colours";
 export function generateStaticParams() {
   return getAllPaints().map((p) => ({ id: p.id }));
 }
+
+// Every paint id is enumerated above and prerendered at build time, when the
+// precomputed `.cache/similar-index.json` (read by getSimilarColours) exists.
+// Disallow on-demand rendering so an unknown id 404s statically instead of
+// trying to read that cache file at request time, where it wouldn't be present.
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -49,11 +54,9 @@ export default async function PaintDetailPage({
   const paint = getPaintById(id);
   if (!paint) notFound();
 
-  const all = getAllPaints();
-  const similarAll = toItems(findSimilar(all, paint, { limit: 16 }));
-  const similarCross = toItems(
-    findSimilar(all, paint, { limit: 16, excludeSameBrand: true }),
-  );
+  const { all, cross } = getSimilarColours(paint.id);
+  const similarAll = toItems(all);
+  const similarCross = toItems(cross);
 
   const fg = contrastText(paint.hex);
 
