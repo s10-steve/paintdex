@@ -34,6 +34,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - URL filter params (`type`, `sort`) are validated against the known sets
   instead of being cast blindly.
 - `PaintWithLab.family` is now typed as `ColourFamily` rather than `string`.
+- The precomputed similar-colour lists now match `findSimilar` exactly:
+  `getAllPaints()` is ordered name-A–Z-within-brand (the same order the build
+  scripts rank in), so paints sharing a hex break equal-distance ties
+  identically instead of diverging on which fills the last slot.
+- Paint detail pages are pinned to static rendering (`dynamicParams = false`),
+  so an unknown id 404s at build instead of trying to read the build-only
+  `.cache/similar-index.json` at request time.
 
 ### Removed
 
