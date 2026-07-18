@@ -97,6 +97,8 @@ Brand and product names are trademarks of their respective owners.
       really they're completely different use cases)
 - [x] Add filters to the similar-colour list (e.g. only show paints from a
       certain brand, or only show paints of a certain type)
+- [ ] Autocomplete search suggestions (e.g. typing "abaddon" should suggest
+      "Abaddon Black" and "Abaddon Grey")
 - [ ] Interactive colour wheel (à la
       [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
       suggests matching paints based on the colours you pick
