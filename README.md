@@ -82,6 +82,8 @@ of their respective owners.
 - [x] Paint database: search, filter, colour families
 - [x] Similar-colour matching (CIEDE2000)
 - [x] Light/dark + responsive
+- [ ] Add more paint brands and ranges
+- [ ] Make light/dark follow the system automatically (drop the manual toggle)
 - [ ] User accounts & login
 - [ ] Save the paints you own
 - [ ] Painting recipes with colour-coded guide text
