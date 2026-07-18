@@ -83,6 +83,10 @@ of their respective owners.
 - [x] Similar-colour matching (CIEDE2000)
 - [x] Light/dark + responsive
 - [ ] Add more paint brands and ranges
+- [ ] Performance: serve the paint dataset as a cacheable static asset and
+      precompute Lab values, so the browse page's JS bundle stays lean as the
+      paint catalogue grows (the full dataset currently ships in the client
+      bundle)
 - [ ] Make light/dark follow the system automatically (drop the manual toggle)
 - [ ] User accounts & login
 - [ ] Save the paints you own
