@@ -4,6 +4,7 @@
  * The canonical, human-editable source of truth lives in `data/paints/*.json`.
  * These types describe the shape of a single record after loading.
  */
+import type { ColourFamily } from "@/lib/color";
 
 /** Normalized paint finish/type. `range` keeps the brand's own product-line label. */
 export const PAINT_TYPES = [
@@ -48,5 +49,5 @@ export interface Paint {
 export interface PaintWithLab extends Paint {
   lab: readonly [number, number, number];
   /** Coarse colour family used for the colour-family filter facet. */
-  family: string;
+  family: ColourFamily;
 }

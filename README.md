@@ -91,6 +91,9 @@ Brand and product names are trademarks of their respective owners.
 - [ ] Painting recipes with colour-coded guide text
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own
+- [ ] Interactive colour wheel (à la
+      [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
+      suggests matching paints based on the colours you pick
 
 ### Known issues & fixes
 

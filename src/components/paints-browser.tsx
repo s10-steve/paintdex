@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getAllPaints } from "@/lib/paints/load";
 import { filterPaints, type SortKey } from "@/lib/paints/filter";
@@ -53,36 +53,60 @@ export function PaintsBrowser() {
   const q = searchParams.get("q") ?? "";
   const selBrands = parseList(searchParams.get("brand"));
   const selRanges = parseList(searchParams.get("range"));
-  const selTypes = parseList(searchParams.get("type")) as PaintType[];
+  // Validate against the known set — the param is user-editable in the URL.
+  const selTypes = parseList(searchParams.get("type")).filter(
+    (t): t is PaintType => (PAINT_TYPES as readonly string[]).includes(t),
+  );
   const selFamilies = parseList(searchParams.get("family"));
   const includeDiscontinued = searchParams.get("disc") === "1";
-  const sort = (searchParams.get("sort") as SortKey) ?? "name";
+  const sortParam = searchParams.get("sort");
+  const sort: SortKey = SORTS.some((s) => s.value === sortParam)
+    ? (sortParam as SortKey)
+    : "name";
 
   // Local search text so typing stays snappy; committed to the URL (debounced).
   const [searchText, setSearchText] = useState(q);
-  const [searchTimer, setSearchTimer] = useState<ReturnType<
-    typeof setTimeout
-  > | null>(null);
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const commit = (mut: (params: URLSearchParams) => void) => {
-    const params = new URLSearchParams(searchParams.toString());
-    mut(params);
+  // Keep the latest params in a ref so the debounced commit builds from current
+  // state rather than the params captured when the timer was scheduled —
+  // otherwise a facet toggled mid-debounce would be dropped.
+  const searchParamsRef = useRef(searchParams);
+  useEffect(() => {
+    searchParamsRef.current = searchParams;
+  }, [searchParams]);
+
+  const cancelSearchTimer = () => {
+    if (searchTimer.current) {
+      clearTimeout(searchTimer.current);
+      searchTimer.current = null;
+    }
+  };
+
+  const applyParams = (params: URLSearchParams) => {
     const qs = params.toString();
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
+  const commit = (mut: (params: URLSearchParams) => void) => {
+    const params = new URLSearchParams(searchParams.toString());
+    mut(params);
+    applyParams(params);
+  };
+
   const onSearchChange = (value: string) => {
     setSearchText(value);
-    if (searchTimer) clearTimeout(searchTimer);
-    setSearchTimer(
-      setTimeout(() => {
-        commit((p) => {
-          if (value) p.set("q", value);
-          else p.delete("q");
-        });
-      }, 200),
-    );
+    cancelSearchTimer();
+    searchTimer.current = setTimeout(() => {
+      const params = new URLSearchParams(searchParamsRef.current.toString());
+      if (value) params.set("q", value);
+      else params.delete("q");
+      applyParams(params);
+    }, 200);
   };
+
+  // Clear any pending debounce on unmount.
+  useEffect(() => () => cancelSearchTimer(), []);
 
   const toggleIn = (key: string, value: string) => {
     commit((p) => {
@@ -96,6 +120,7 @@ export function PaintsBrowser() {
   };
 
   const clearAll = () => {
+    cancelSearchTimer();
     setSearchText("");
     router.replace(pathname, { scroll: false });
   };

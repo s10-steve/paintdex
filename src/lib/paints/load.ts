@@ -49,14 +49,3 @@ export function getPaintById(id: string): PaintWithLab | undefined {
 export function getBrands(): string[] {
   return [...new Set(getAllPaints().map((p) => p.brand))].sort();
 }
-
-/** Distinct ranges, sorted (optionally scoped to a set of brands). */
-export function getRanges(brands?: string[]): string[] {
-  const paints = getAllPaints();
-  const set = new Set<string>();
-  for (const p of paints) {
-    if (brands && brands.length && !brands.includes(p.brand)) continue;
-    set.add(p.range);
-  }
-  return [...set].sort();
-}
