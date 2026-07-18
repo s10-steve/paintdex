@@ -64,16 +64,16 @@ export function SimilarColours({
   types,
 }: SimilarColoursProps) {
   // Filter state. brand === "" means all; CROSS means other-brands-only.
+  // "metallic" lives in the type list, so brand + type cover every filter here.
   const [brand, setBrand] = useState("");
   const [type, setType] = useState<"" | PaintType>("");
-  const [finish, setFinish] = useState<"" | "only" | "exclude">("");
 
   const specificBrand = brand !== "" && brand !== CROSS;
   // The precomputed lists cover the two no-filter cases (all / cross-brand)
   // instantly. Anything narrower has to re-rank the whole catalogue, because the
   // precomputed lists only hold each paint's top matches — filtering those would
   // usually come back empty.
-  const needsCompute = specificBrand || type !== "" || finish !== "";
+  const needsCompute = specificBrand || type !== "";
 
   // The full catalogue (with Lab), fetched lazily the first time a filter that
   // needs re-ranking is applied, then reused.
@@ -104,8 +104,6 @@ export function SimilarColours({
     const candidates = dataset.filter((p) => {
       if (specificBrand && p.brand !== brand) return false;
       if (type && p.type !== type) return false;
-      if (finish === "only" && !p.metallic) return false;
-      if (finish === "exclude" && p.metallic) return false;
       return true;
     });
     const targetWithLab: PaintWithLab = {
@@ -125,17 +123,16 @@ export function SimilarColours({
       range: paint.range,
       distance,
     }));
-  }, [needsCompute, dataset, specificBrand, brand, type, finish, target]);
+  }, [needsCompute, dataset, specificBrand, brand, type, target]);
 
   const items: RenderItem[] = needsCompute
     ? (computed ?? [])
     : toRenderItems(brand === CROSS ? crossBrand : all);
 
-  const filtersActive = brand !== "" || type !== "" || finish !== "";
+  const filtersActive = brand !== "" || type !== "";
   const clearFilters = () => {
     setBrand("");
     setType("");
-    setFinish("");
   };
 
   const selectClass =
@@ -197,22 +194,6 @@ export function SimilarColours({
               {t}
             </option>
           ))}
-        </select>
-
-        <label className="sr-only" htmlFor="similar-finish">
-          Filter by finish
-        </label>
-        <select
-          id="similar-finish"
-          value={finish}
-          onChange={(e) =>
-            setFinish(e.target.value as "" | "only" | "exclude")
-          }
-          className={selectClass}
-        >
-          <option value="">Any finish</option>
-          <option value="only">Metallic</option>
-          <option value="exclude">Non-metallic</option>
         </select>
       </div>
 
