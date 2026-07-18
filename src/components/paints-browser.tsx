@@ -5,8 +5,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { filterPaints, type SortKey } from "@/lib/paints/filter";
 import {
   PAINT_TYPES,
+  type BrowsePaint,
   type PaintType,
-  type PaintWithLab,
 } from "@/lib/paints/types";
 import { COLOUR_FAMILIES } from "@/lib/color";
 import { PaintCard } from "./paint-card";
@@ -30,7 +30,7 @@ function parseList(v: string | null): string[] {
 export const BROWSE_INDEX_URL = "/browse-index.json";
 
 /** Derive the filter facet lists from the loaded dataset. */
-function computeFacets(paints: PaintWithLab[]) {
+function computeFacets(paints: BrowsePaint[]) {
   const brands = new Set<string>();
   const ranges = new Map<string, Set<string>>(); // range -> brands
   const types = new Set<string>();
@@ -56,14 +56,14 @@ export function PaintsBrowser() {
   const searchParams = useSearchParams();
 
   // Load the dataset from the static asset once on mount (null = still loading).
-  const [paints, setPaints] = useState<PaintWithLab[] | null>(null);
+  const [paints, setPaints] = useState<BrowsePaint[] | null>(null);
   const [loadError, setLoadError] = useState(false);
   useEffect(() => {
     let cancelled = false;
     fetch(BROWSE_INDEX_URL)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<PaintWithLab[]>;
+        return r.json() as Promise<BrowsePaint[]>;
       })
       .then((data) => {
         if (!cancelled) setPaints(data);

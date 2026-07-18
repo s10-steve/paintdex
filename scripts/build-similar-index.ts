@@ -14,23 +14,37 @@
  * loader, but a child process can), each child ranks a contiguous slice and
  * writes a shard file, and the main process merges them.
  *
- * Reads `public/browse-index.json` (produced by `build-browse-index.ts`) so the
- * Lab values don't have to be recomputed here. Wired into `prebuild`/`predev`
- * after the browse index; safe to run by hand with `npm run build:similar-index`.
+ * Reads the source `data/paints/*.json` and computes Lab itself. Wired into
+ * `prebuild`/`predev`; safe to run by hand with `npm run build:similar-index`.
  */
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
+import {
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  rmSync,
+} from "node:fs";
 import { join } from "node:path";
 import { spawn } from "node:child_process";
 import { cpus } from "node:os";
 import { fileURLToPath } from "node:url";
-import { ciede2000 } from "../src/lib/color/index";
-import type { PaintWithLab } from "../src/lib/paints/types";
+import { ciede2000, hexToLab } from "../src/lib/color/index";
+import type { Paint } from "../src/lib/paints/types";
 
 const LIMIT = 16; // matches the detail page's findSimilar limit
-const IN_FILE = join(process.cwd(), "public", "browse-index.json");
+const DATA_DIR = join(process.cwd(), "data", "paints");
 const OUT_DIR = join(process.cwd(), ".cache");
 const OUT_FILE = join(OUT_DIR, "similar-index.json");
 const shardFile = (i: number) => join(OUT_DIR, `similar-shard-${i}.json`);
+
+/** A paint with its Lab value — only what the ranking needs. */
+interface RankPaint {
+  id: string;
+  name: string;
+  brand: string;
+  discontinued: boolean;
+  lab: readonly [number, number, number];
+}
 
 interface Entry {
   id: string;
@@ -58,7 +72,7 @@ const round = (n: number) => Math.round(n * 1000) / 1000;
 
 /** Rank paints[start, end) against the whole dataset. */
 function rankRange(
-  paints: PaintWithLab[],
+  paints: RankPaint[],
   start: number,
   end: number,
 ): ShardResult {
@@ -85,8 +99,33 @@ function rankRange(
   return out;
 }
 
-function loadPaints(): PaintWithLab[] {
-  return JSON.parse(readFileSync(IN_FILE, "utf8")) as PaintWithLab[];
+/**
+ * Read the source data and enrich with Lab, in the same order the browse index
+ * uses (name A–Z within brand) so ids/order are stable across shards.
+ */
+function loadPaints(): RankPaint[] {
+  const files = readdirSync(DATA_DIR)
+    .filter((f) => f.endsWith(".json"))
+    .sort();
+  const paints: RankPaint[] = [];
+  for (const file of files) {
+    const records = JSON.parse(
+      readFileSync(join(DATA_DIR, file), "utf8"),
+    ) as Paint[];
+    for (const p of records) {
+      paints.push({
+        id: p.id,
+        name: p.name,
+        brand: p.brand,
+        discontinued: p.discontinued,
+        lab: hexToLab(p.hex),
+      });
+    }
+  }
+  paints.sort(
+    (x, y) => x.brand.localeCompare(y.brand) || x.name.localeCompare(y.name),
+  );
+  return paints;
 }
 
 /** Child: `--shard <i> <count>` ranks its slice and writes a shard file. */

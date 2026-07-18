@@ -1,13 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { hexToLab, hueFamily } from "@/lib/color";
 import { filterPaints, findSimilar } from "@/lib/paints/filter";
-import type { Paint, PaintWithLab } from "@/lib/paints/types";
+import type { BrowsePaint, Paint, PaintWithLab } from "@/lib/paints/types";
 
-function make(p: Paint): PaintWithLab {
-  return { ...p, lab: hexToLab(p.hex), family: hueFamily(p.hex) };
+// Carries both the full Lab triple (for findSimilar) and the lightness `l`
+// (for filterPaints), so the same records satisfy PaintWithLab and BrowsePaint.
+function make(p: Paint): PaintWithLab & BrowsePaint {
+  const lab = hexToLab(p.hex);
+  return { ...p, lab, l: lab[0], family: hueFamily(p.hex) };
 }
 
-const paints: PaintWithLab[] = [
+const paints: (PaintWithLab & BrowsePaint)[] = [
   make({ id: "citadel-abaddon-black", name: "Abaddon Black", brand: "Citadel", range: "Base", type: "base", hex: "#000000", discontinued: false }),
   make({ id: "citadel-mephiston-red", name: "Mephiston Red", brand: "Citadel", range: "Base", type: "base", hex: "#9A1115", discontinued: false }),
   make({ id: "vallejo-black", name: "Black", brand: "Vallejo", range: "Model Color", type: "other", hex: "#0A0A0A", discontinued: false }),
@@ -40,7 +43,7 @@ describe("filterPaints", () => {
 
   it("sorts by lightness", () => {
     const r = filterPaints(paints, { includeDiscontinued: true }, "lightness");
-    const lightness = r.map((p) => p.lab[0]);
+    const lightness = r.map((p) => p.l);
     expect(lightness).toEqual([...lightness].sort((a, b) => a - b));
   });
 });

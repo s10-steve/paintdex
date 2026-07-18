@@ -15,13 +15,13 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { hexToLab, hueFamily } from "../src/lib/color/index";
-import type { Paint, PaintWithLab } from "../src/lib/paints/types";
+import type { BrowsePaint, Paint } from "../src/lib/paints/types";
 
 const DATA_DIR = join(process.cwd(), "data", "paints");
 const OUT_DIR = join(process.cwd(), "public");
 const OUT_FILE = join(OUT_DIR, "browse-index.json");
 
-/** Round Lab components; ~3 decimals is well beyond perceptual precision. */
+/** Round to ~3 decimals; well beyond perceptual precision. */
 function round(n: number): number {
   return Math.round(n * 1000) / 1000;
 }
@@ -31,16 +31,17 @@ function main() {
     .filter((f) => f.endsWith(".json"))
     .sort();
 
-  const paints: PaintWithLab[] = [];
+  const paints: BrowsePaint[] = [];
   for (const file of files) {
     const records = JSON.parse(
       readFileSync(join(DATA_DIR, file), "utf8"),
     ) as Paint[];
     for (const p of records) {
-      const [l, a, b] = hexToLab(p.hex);
+      // Ship only lightness (for the sort) + family (for the filter). The full
+      // Lab triple isn't needed on the browse page and would bloat the payload.
       paints.push({
         ...p,
-        lab: [round(l), round(a), round(b)] as [number, number, number],
+        l: round(hexToLab(p.hex)[0]),
         family: hueFamily(p.hex),
       });
     }

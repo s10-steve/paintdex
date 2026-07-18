@@ -1,5 +1,5 @@
 import { ciede2000 } from "@/lib/color";
-import type { PaintType, PaintWithLab } from "./types";
+import type { BrowsePaint, PaintType, PaintWithLab } from "./types";
 
 export interface PaintFilters {
   search?: string;
@@ -19,10 +19,10 @@ export type SortKey = "name" | "brand" | "lightness";
  * Pure and synchronous — safe to run on every keystroke over the full dataset.
  */
 export function filterPaints(
-  paints: PaintWithLab[],
+  paints: BrowsePaint[],
   filters: PaintFilters,
   sort: SortKey = "name",
-): PaintWithLab[] {
+): BrowsePaint[] {
   const q = filters.search?.trim().toLowerCase();
   const brands = new Set(filters.brands ?? []);
   const ranges = new Set(filters.ranges ?? []);
@@ -47,7 +47,7 @@ export function filterPaints(
       case "brand":
         return a.brand.localeCompare(b.brand) || a.name.localeCompare(b.name);
       case "lightness":
-        return a.lab[0] - b.lab[0] || a.name.localeCompare(b.name);
+        return a.l - b.l || a.name.localeCompare(b.name);
       default:
         return a.name.localeCompare(b.name);
     }

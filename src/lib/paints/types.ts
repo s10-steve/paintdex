@@ -51,3 +51,15 @@ export interface PaintWithLab extends Paint {
   /** Coarse colour family used for the colour-family filter facet. */
   family: ColourFamily;
 }
+
+/**
+ * A paint as shipped in the browse index (`public/browse-index.json`): the
+ * source fields plus the precomputed facets the browser actually needs — the
+ * colour family (filter) and lightness (sort). Deliberately omits the full Lab
+ * triple to keep the fetched payload small; similarity maths uses PaintWithLab.
+ */
+export interface BrowsePaint extends Paint {
+  family: ColourFamily;
+  /** Precomputed CIE L* lightness, for the lightness sort. */
+  l: number;
+}
