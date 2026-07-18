@@ -3,16 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "npm run build:browse-index",
+    "predev": "npm run build:index",
     "dev": "next dev",
-    "prebuild": "npm run build:browse-index",
+    "prebuild": "npm run build:index",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
     "validate:data": "tsx scripts/validate-data.ts",
+    "build:index": "npm run build:browse-index && npm run build:similar-index",
     "build:browse-index": "tsx scripts/build-browse-index.ts",
+    "build:similar-index": "tsx scripts/build-similar-index.ts",
     "import:source": "node scripts/import-source.mjs"
   },
   "dependencies": {

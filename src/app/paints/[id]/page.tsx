@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllPaints, getPaintById } from "@/lib/paints/load";
-import { findSimilar } from "@/lib/paints/filter";
+import { getAllPaints, getPaintById, getSimilarColours } from "@/lib/paints/load";
 import { contrastText } from "@/lib/color";
 import type { Paint, PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
@@ -49,11 +48,9 @@ export default async function PaintDetailPage({
   const paint = getPaintById(id);
   if (!paint) notFound();
 
-  const all = getAllPaints();
-  const similarAll = toItems(findSimilar(all, paint, { limit: 16 }));
-  const similarCross = toItems(
-    findSimilar(all, paint, { limit: 16, excludeSameBrand: true }),
-  );
+  const { all, cross } = getSimilarColours(paint.id);
+  const similarAll = toItems(all);
+  const similarCross = toItems(cross);
 
   const fg = contrastText(paint.hex);
 

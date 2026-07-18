@@ -49,7 +49,7 @@ npm run dev          # http://localhost:3000
 | `npm run lint` | ESLint |
 | `npm run test` | Unit tests (colour maths + filtering) |
 | `npm run validate:data` | Validate `data/paints/*.json` against the schema |
-| `npm run build:browse-index` | Precompute the `/paints` browse index (runs automatically before `dev`/`build`) |
+| `npm run build:index` | Precompute the browse index + similar-colour lists (runs automatically before `dev`/`build`) |
 | `npm run import:source` | (Re)import paint data from the upstream dataset |
 
 ## Deploying
@@ -105,10 +105,12 @@ Follow-ups from the initial code review, to address as the catalogue grows:
       `npm run build:browse-index` and fetched at runtime, so it no longer ships
       in the `/paints` client JS bundle. (~850 KB of data left the bundle;
       ~175 KB gzipped over the wire as a cacheable static asset.)
-- [ ] **Build-time scaling.** Static generation runs `findSimilar` over the whole
-      dataset for every paint page (~O(n²) CIEDE2000 calls). Fine at the current
-      size, but cap or precompute similar-colour lists before the dataset grows
-      much larger.
+- [x] **Build-time scaling.** Similar-colour lists are now precomputed once by
+      `npm run build:similar-index` (sharded across CPU cores) into
+      `.cache/similar-index.json`, and each paint page reads its list as an O(1)
+      lookup instead of running `findSimilar` over the whole dataset at render.
+      The static-generation phase no longer grows with the square of the
+      catalogue size.
 - [x] **Search debounce race.** The debounced search commit closes over a stale
       `searchParams`, so toggling a facet mid-debounce can drop it. `clearAll`
       also doesn't cancel the pending timer, and the timer isn't cleared on
