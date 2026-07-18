@@ -1,0 +1,3070 @@
+[
+  {
+    "id": "tamiya-acrylic-thinner",
+    "name": "Acrylic thinner",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "X-20A",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-bare-metal-silver",
+    "name": "Bare-metal silver",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#C2C8CA",
+    "code": "AS-12",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-base-white",
+    "name": "Base white",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-101",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-black",
+    "name": "Black",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#040000",
+    "code": "LP-1",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-black-acrylics-mini-gloss",
+    "name": "Black",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#000000",
+    "code": "X-1",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-black-tamiya-spray",
+    "name": "Black",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#333333",
+    "code": "TS-14",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-black-green",
+    "name": "Black green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#00260F",
+    "code": "XF-27",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-blue",
+    "name": "Blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#09347B",
+    "code": "TS-15",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Gloss",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-blue-violet",
+    "name": "Blue violet",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#5172B3",
+    "code": "TS-57",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-bright-mica-red",
+    "name": "Bright mica red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#E50012",
+    "code": "TS-85",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-bright-orange",
+    "name": "Bright orange",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FE1B0E",
+    "code": "TS-31",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-bright-red",
+    "name": "Bright red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FF0000",
+    "code": "TS-49",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-bright-red-lacquer-paint",
+    "name": "Bright red",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#E50014",
+    "code": "LP-50",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-brilliant-blue",
+    "name": "Brilliant blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#0860A8",
+    "code": "TS-44",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-brilliant-orange",
+    "name": "Brilliant orange",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FF7F00",
+    "code": "TS-56",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-british-green",
+    "name": "British green",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#002B11",
+    "code": "TS-9",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-bronze",
+    "name": "Bronze",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#672622",
+    "code": "X-33",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-brown",
+    "name": "Brown",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#4D2207",
+    "code": "X-9",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-brown-jgsdf",
+    "name": "Brown (JGSDF)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#715A3D",
+    "code": "LP-25",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-brown-jgsdf-acrylics-mini-flat",
+    "name": "Brown (JGSDF)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#734C0C",
+    "code": "XF-72",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-brown-jgsdf-tamiya-spray",
+    "name": "Brown (JGSDF)",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#826636",
+    "code": "TS-90",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-buff",
+    "name": "Buff",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#CCA77B",
+    "code": "LP-75",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-buff-acrylics-mini-flat",
+    "name": "Buff",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#B8B36A",
+    "code": "XF-57",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-camel-yellow",
+    "name": "Camel yellow",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFB300",
+    "code": "TS-34",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-candy-lime-green",
+    "name": "Candy lime green",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#4DAC26",
+    "code": "TS-52",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-champagne-gold",
+    "name": "Champagne gold",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#D2C79A",
+    "code": "LP-71",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-champagne-gold-tamiya-spray",
+    "name": "Champagne gold",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#C3B87E",
+    "code": "TS-75",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-chrome-silver",
+    "name": "Chrome silver",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#C2C8CA",
+    "code": "X-11",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-chrome-yellow",
+    "name": "Chrome yellow",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFCC00",
+    "code": "TS-47",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear",
+    "name": "Clear",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "TS-13",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Gloss",
+      "Lacquer Paint",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-clear-blue",
+    "name": "Clear blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#34B3D1",
+    "code": "X-23",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-blue-lacquer-paint",
+    "name": "Clear blue",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#00A6EA",
+    "code": "LP-68",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-blue-tamiya-spray",
+    "name": "Clear blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#34B0B9",
+    "code": "TS-72",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-green",
+    "name": "Clear green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#1A9641",
+    "code": "X-25",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-orange",
+    "name": "Clear orange",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FE8C14",
+    "code": "X-26",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-orange-tamiya-spray",
+    "name": "Clear orange",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FF7300",
+    "code": "TS-73",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-orange-lacquer-paint",
+    "name": "Clear orange",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#F08900",
+    "code": "LP-53",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-red",
+    "name": "Clear red",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#E5007F",
+    "code": "LP-52",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-red-acrylics-mini-gloss",
+    "name": "Clear red",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FA0026",
+    "code": "X-27",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-red-tamiya-spray",
+    "name": "Clear red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#F0027F",
+    "code": "TS-74",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-yellow",
+    "name": "Clear yellow",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFE500",
+    "code": "LP-69",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-clear-yellow-acrylics-mini-gloss",
+    "name": "Clear yellow",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FFE600",
+    "code": "X-24",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-cockpit-green-ijn",
+    "name": "Cockpit green (IJN)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#74925D",
+    "code": "XF-71",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-copper",
+    "name": "Copper",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#CC5C03",
+    "code": "XF-6",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-coral-blue",
+    "name": "Coral blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#4EB8A3",
+    "code": "TS-41",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-blue",
+    "name": "Dark blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#02142E",
+    "code": "TS-55",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-copper",
+    "name": "Dark copper",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#995F3B",
+    "code": "XF-28",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-earth",
+    "name": "Dark earth",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#674B2B",
+    "code": "AS-22",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-ghost-gray",
+    "name": "Dark ghost gray",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#80A1B0",
+    "code": "LP-36",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-ghost-grey",
+    "name": "Dark ghost grey",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#6C898E",
+    "code": "AS-25",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green",
+    "name": "Dark green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#1A2D0F",
+    "code": "TS-2",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-dark-green-aircraft-spray",
+    "name": "Dark green",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#113915",
+    "code": "AS-1",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-2",
+    "name": "Dark green",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#2E4814",
+    "code": "AS-9",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-ija",
+    "name": "Dark green (IJA)",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#184316",
+    "code": "AS-17",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-jgsdf",
+    "name": "Dark green (JGSDF)",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-91",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-jgsdf-acrylics-mini-flat",
+    "name": "Dark green (JGSDF)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#1A4316",
+    "code": "XF-73",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-jgsdf-jpeg",
+    "name": "Dark green (JGSDF).jpeg",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#3D593F",
+    "code": "LP-26",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-luftwaffe",
+    "name": "Dark green (Luftwaffe)",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#18280D",
+    "code": "AS-24",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-2-lacquer-paint",
+    "name": "Dark green 2",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#5B8361",
+    "code": "LP-56",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-2-acrylics-mini-flat",
+    "name": "Dark green 2",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#00250F",
+    "code": "XF-70",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-2-2",
+    "name": "Dark green 2",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-89",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-2-aircraft-spray",
+    "name": "Dark green 2",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#355533",
+    "code": "AS-30",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-2-ijn",
+    "name": "Dark green 2 (IJN)",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#002C12",
+    "code": "AS-21",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-2-ijn-lacquer-paint",
+    "name": "Dark green 2 (IJN)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#004234",
+    "code": "LP-31",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-green-2-raf",
+    "name": "Dark green 2 (RAF)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-81",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-grey",
+    "name": "Dark grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#3E4448",
+    "code": "XF-24",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-iron",
+    "name": "Dark iron",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-84",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-iron-lacquer-paint",
+    "name": "Dark iron",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#534334",
+    "code": "LP-54",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-mica-blue",
+    "name": "Dark mica blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#0A1423",
+    "code": "TS-64",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-sea-grey",
+    "name": "Dark sea grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#5C5D61",
+    "code": "XF-54",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-yellow",
+    "name": "Dark yellow",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#C7B140",
+    "code": "XF-60",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-yellow-tamiya-spray",
+    "name": "Dark yellow",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#CBAF5B",
+    "code": "TS-3",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-yellow-2",
+    "name": "Dark yellow 2",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-88",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dark-yellow-2-lacquer-paint",
+    "name": "Dark yellow 2",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#C9B44B",
+    "code": "LP-55",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-deck-tan",
+    "name": "Deck tan",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#B7B187",
+    "code": "XF-55",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-deep-green",
+    "name": "Deep green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#2E1F09",
+    "code": "XF-26",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-deep-metallic-blue",
+    "name": "Deep metallic blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#112135",
+    "code": "TS-53",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-desert-yellow",
+    "name": "Desert yellow",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#D89C42",
+    "code": "XF-59",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dull-red",
+    "name": "Dull red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#660000",
+    "code": "TS-33",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-dull-red-jpeg",
+    "name": "Dull red.jpeg",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#7B4538",
+    "code": "LP-18",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-field-blue",
+    "name": "Field blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#364146",
+    "code": "XF-50",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-field-grey",
+    "name": "Field grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#67866B",
+    "code": "XF-65",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-field-grey-tamiya-spray",
+    "name": "Field grey",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#4F6C56",
+    "code": "TS-78",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-aluminum",
+    "name": "Flat aluminum",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#DCDEDD",
+    "code": "LP-38",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-aluminum-acrylics-mini-flat",
+    "name": "Flat aluminum",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#CCCCCC",
+    "code": "XF-16",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-base",
+    "name": "Flat base",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFFFFE",
+    "code": "LP-22",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-base-acrylics-mini-gloss",
+    "name": "Flat base",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "X-21",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-black",
+    "name": "Flat black",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#040000",
+    "code": "LP-3",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-black-acrylics-mini-flat",
+    "name": "Flat black",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#333333",
+    "code": "XF-1",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-blue",
+    "name": "Flat blue",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#006A94",
+    "code": "LP-78",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-blue-acrylics-mini-flat",
+    "name": "Flat blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#284C7B",
+    "code": "XF-8",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-brown",
+    "name": "Flat brown",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#3E2A09",
+    "code": "XF-10",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-clear",
+    "name": "Flat clear",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#9DB3BF",
+    "code": "LP-23",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-clear-acrylics-mini-flat",
+    "name": "Flat clear",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-86",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-flat-earth",
+    "name": "Flat earth",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#99472F",
+    "code": "LP-74",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-earth-acrylics-mini-flat",
+    "name": "Flat earth",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#734834",
+    "code": "XF-52",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-flesh",
+    "name": "Flat flesh",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FDC086",
+    "code": "TS-77",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-flesh-acrylics-mini-flat",
+    "name": "Flat flesh",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FDCDA1",
+    "code": "XF-15",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-flesh-lacquer-paint",
+    "name": "Flat flesh",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FACC8E",
+    "code": "LP-66",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-green",
+    "name": "Flat green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#244313",
+    "code": "XF-5",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-red",
+    "name": "Flat red",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#E6001C",
+    "code": "LP-79",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-red-acrylics-mini-flat",
+    "name": "Flat red",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FF0000",
+    "code": "XF-7",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-white",
+    "name": "Flat white",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "LP-4",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Lacquer Paint"
+    ]
+  },
+  {
+    "id": "tamiya-flat-yellow",
+    "name": "Flat yellow",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFCC00",
+    "code": "XF-3",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-flat-yellow-lacquer-paint",
+    "name": "Flat yellow",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FEE101",
+    "code": "LP-80",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-fluorescent-orange",
+    "name": "Fluorescent orange",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-96",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-fluorescent-red",
+    "name": "Fluorescent red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FC0019",
+    "code": "TS-36",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-french-blue",
+    "name": "French blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#3690C0",
+    "code": "TS-10",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-german-gray",
+    "name": "German gray",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#415862",
+    "code": "LP-27",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-german-grey",
+    "name": "German grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#3E474A",
+    "code": "TS-4",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-gloss-aluminum",
+    "name": "Gloss aluminum",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#C2C8CA",
+    "code": "TS-17",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gloss-aluminum-lacquer-paint",
+    "name": "Gloss aluminum",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#DCDEDD",
+    "code": "LP-70",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gold",
+    "name": "Gold",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#CCA208",
+    "code": "TS-21",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gold-leaf",
+    "name": "Gold leaf",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#CCA208",
+    "code": "X-12",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gray-green",
+    "name": "Gray green",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#253A2E",
+    "code": "AS-3",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gray-green-ijn",
+    "name": "Gray green (IJN)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#B9C4A6",
+    "code": "LP-33",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gray-green-ijn-acrylics-mini-flat",
+    "name": "Gray green (IJN)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#B8C3A7",
+    "code": "XF-76",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Aircraft Spray"
+    ]
+  },
+  {
+    "id": "tamiya-gray-violet",
+    "name": "Gray violet",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#405367",
+    "code": "AS-4",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-green",
+    "name": "Green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#00441B",
+    "code": "X-5",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-green-aircraft-spray",
+    "name": "Green",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#163126",
+    "code": "AS-13",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gun-metal",
+    "name": "Gun metal",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#4D4E4D",
+    "code": "LP-19",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gun-metal-acrylics-mini-gloss",
+    "name": "Gun metal",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#505557",
+    "code": "X-10",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Gloss",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-gunship-gray-2",
+    "name": "Gunship gray 2",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#3D4E59",
+    "code": "AS-27",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-gunship-grey",
+    "name": "Gunship grey",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#464A4B",
+    "code": "TS-48",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-haze-grey",
+    "name": "Haze grey",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#7B8E92",
+    "code": "TS-32",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-hull-red",
+    "name": "Hull red",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#3E0E02",
+    "code": "XF-9",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ijn-gray-kure-arsenal",
+    "name": "IJN gray (Kure Arsenal)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#828D93",
+    "code": "TS-66",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-ijn-gray-maizuru-arsenal",
+    "name": "IJN gray (Maizuru Arsenal)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "TS-99",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-ijn-gray-sasebo-arsenal",
+    "name": "IJN gray (Sasebo Arsenal)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#686D71",
+    "code": "XF-77",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ijn-gray-yokosuka-arsenal",
+    "name": "IJN gray (Yokosuka Arsenal)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-91",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ijn-gray-br-kure-arsenal",
+    "name": "IJN gray<br>(Kure Arsenal)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#717B85",
+    "code": "LP-12",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ijn-gray-br-maizuru-arsenal",
+    "name": "IJN gray<br>(Maizuru Arsenal)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#7D8087",
+    "code": "LP-14",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ijn-gray-br-sasebo-arsenal",
+    "name": "IJN gray<br>(Sasebo Arsenal)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#535760",
+    "code": "LP-13",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ijn-gray-br-yokosuka-arsenal",
+    "name": "IJN gray<br>(Yokosuka Arsenal)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#646B75",
+    "code": "LP-15",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ijn-graysasebo-arsenal",
+    "name": "IJN graySasebo Arsenal",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#686D71",
+    "code": "TS-67",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-insignia-white",
+    "name": "Insignia white",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#DDDCD7",
+    "code": "LP-35",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-insignia-white-aircraft-spray",
+    "name": "Insignia white",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#F2F2E5",
+    "code": "AS-20",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-intermediate-blue",
+    "name": "Intermediate blue",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#5B8E98",
+    "code": "AS-19",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-italian-red",
+    "name": "Italian red",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#C63834",
+    "code": "LP-21",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-italian-red-tamiya-spray",
+    "name": "Italian red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FF0000",
+    "code": "TS-8",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-j-a-green",
+    "name": "J.A. green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#334A1F",
+    "code": "XF-13",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-j-a-grey",
+    "name": "J.A. grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#B3CA8E",
+    "code": "XF-14",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-j-n-green",
+    "name": "J.N. green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#26330B",
+    "code": "XF-11",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-j-n-grey",
+    "name": "J.N. grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#B3CBAE",
+    "code": "XF-12",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-khaki",
+    "name": "Khaki",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#9A8F33",
+    "code": "LP-73",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-khaki-acrylics-mini-flat",
+    "name": "Khaki",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#7E783F",
+    "code": "XF-49",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-khaki-drab",
+    "name": "Khaki drab",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#29330E",
+    "code": "XF-51",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-lacquer-thinner",
+    "name": "Lacquer thinner",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "LP-10",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-lavender",
+    "name": "Lavender",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#6A2990",
+    "code": "TS-37",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-lemon-yellow",
+    "name": "Lemon yellow",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FFE600",
+    "code": "X-8",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-blue",
+    "name": "Light blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#28AECF",
+    "code": "TS-23",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-blue-aircraft-spray",
+    "name": "Light blue",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#99C2B5",
+    "code": "AS-5",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-blue-acrylics-mini-flat",
+    "name": "Light blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#8FB5AD",
+    "code": "XF-23",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-brown-dak-1941",
+    "name": "Light brown (DAK 1941)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#E5B36E",
+    "code": "LP-77",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-ghost-gray",
+    "name": "Light ghost gray",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#98B4C0",
+    "code": "LP-37",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-ghost-grey",
+    "name": "Light ghost grey",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#85A0A3",
+    "code": "AS-26",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-gray",
+    "name": "Light gray",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#A3AA96",
+    "code": "AS-2",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-gray-lacquer-paint",
+    "name": "Light gray",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#D0CCC0",
+    "code": "LP-34",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-gray-aircraft-spray",
+    "name": "Light gray",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#CCD4BC",
+    "code": "AS-16",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-gray-ija",
+    "name": "Light gray (IJA)",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#A1B7A7",
+    "code": "AS-18",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-gray-ijn",
+    "name": "Light gray (IJN)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#C9D1C2",
+    "code": "LP-32",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-green",
+    "name": "Light green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#66B821",
+    "code": "X-15",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-green-tamiya-spray",
+    "name": "Light green",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#7FC31C",
+    "code": "TS-22",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-green-luftwaffe",
+    "name": "Light green (Luftwaffe)",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#33701F",
+    "code": "AS-23",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-grey",
+    "name": "Light grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#667679",
+    "code": "XF-66",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-gun-metal",
+    "name": "Light gun metal",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#777776",
+    "code": "LP-20",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-gun-metal-tamiya-spray",
+    "name": "Light gun metal",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#737A7C",
+    "code": "TS-42",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-metallic-blue",
+    "name": "Light metallic blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#10667A",
+    "code": "TS-54",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-sand",
+    "name": "Light sand",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#D1AB7C",
+    "code": "LP-30",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-sand-tamiya-spray",
+    "name": "Light sand",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#CBA458",
+    "code": "TS-46",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-light-sea-grey",
+    "name": "Light sea grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#7A8BA9",
+    "code": "XF-25",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-linoleum-deck-brown",
+    "name": "Linoleum deck brown",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#5C2105",
+    "code": "TS-69",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-linoleum-deck-brown-acrylics-mini-flat",
+    "name": "Linoleum deck brown",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#784629",
+    "code": "XF-79",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-linoleum-deck-brown-jpeg",
+    "name": "Linoleum deck brown.jpeg",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#564A3A",
+    "code": "LP-17",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-maroon",
+    "name": "Maroon",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#4D1202",
+    "code": "TS-11",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-matt-black",
+    "name": "Matt black",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#333333",
+    "code": "TS-6",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-matt-white",
+    "name": "Matt white",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-27",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-medium-blue",
+    "name": "Medium blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#485B5F",
+    "code": "XF-18",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-medium-gray",
+    "name": "Medium gray",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#727D7D",
+    "code": "AS-28",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-medium-grey",
+    "name": "Medium grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#A3AA96",
+    "code": "XF-20",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-medium-sea-gray",
+    "name": "Medium sea gray",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#8F9D87",
+    "code": "AS-11",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-medium-sea-gray-2",
+    "name": "Medium sea gray 2",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#AABEB9",
+    "code": "AS-32",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-medium-sea-gray-2-raf",
+    "name": "Medium sea gray 2 (RAF)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-83",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-black",
+    "name": "Metallic black",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#393D3E",
+    "code": "TS-40",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-black-lacquer-paint",
+    "name": "Metallic black",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#3F3B3A",
+    "code": "LP-40",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-blue",
+    "name": "Metallic blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#1E7497",
+    "code": "X-13",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-blue-tamiya-spray",
+    "name": "Metallic blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#0A50A1",
+    "code": "TS-19",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-brown",
+    "name": "Metallic brown",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#993F06",
+    "code": "X-34",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-gold",
+    "name": "Metallic gold",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#DDD29D",
+    "code": "TS-84",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-gray",
+    "name": "Metallic gray",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-94",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-gray-lacquer-paint",
+    "name": "Metallic gray",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#727071",
+    "code": "LP-61",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-green",
+    "name": "Metallic green",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#279E4F",
+    "code": "TS-20",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-grey",
+    "name": "Metallic grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#5C6264",
+    "code": "XF-56",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-orange",
+    "name": "Metallic orange",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-92",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-orange-lacquer-paint",
+    "name": "Metallic orange",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#EF7800",
+    "code": "LP-44",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-red",
+    "name": "Metallic red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#E30017",
+    "code": "TS-18",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-metallic-silver",
+    "name": "Metallic silver",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#D9DADE",
+    "code": "TS-83",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mica-blue",
+    "name": "Mica blue",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#01398E",
+    "code": "LP-41",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mica-blue-tamiya-spray",
+    "name": "Mica blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#0B3A8B",
+    "code": "TS-50",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mica-red",
+    "name": "Mica red",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#C8171D",
+    "code": "LP-42",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mica-red-tamiya-spray",
+    "name": "Mica red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#E60000",
+    "code": "TS-39",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mica-silver",
+    "name": "Mica silver",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#D4D9DC",
+    "code": "LP-72",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mica-silver-tamiya-spray",
+    "name": "Mica silver",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#CCCCCC",
+    "code": "TS-76",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mixing-blue",
+    "name": "Mixing blue",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#202A67",
+    "code": "LP-81",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mixing-red",
+    "name": "Mixing red",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#C8113D",
+    "code": "LP-82",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-mixing-yellow",
+    "name": "Mixing yellow",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FED700",
+    "code": "LP-83",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-nato-black",
+    "name": "NATO black",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#000000",
+    "code": "LP-60",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-nato-black-acrylics-mini-flat",
+    "name": "NATO black",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#222424",
+    "code": "TS-63",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-nato-brown",
+    "name": "NATO brown",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#6A4A31",
+    "code": "LP-59",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-nato-brown-acrylics-mini-flat",
+    "name": "NATO brown",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#733007",
+    "code": "XF-68",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-nato-green",
+    "name": "NATO green",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#295438",
+    "code": "LP-58",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-nato-green-acrylics-mini-flat",
+    "name": "NATO green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#33601A",
+    "code": "XF-67",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-navy-blue",
+    "name": "Navy blue",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#28425E",
+    "code": "AS-8",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-neutral-gray",
+    "name": "Neutral gray",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#7E8789",
+    "code": "AS-7",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-neutral-grey",
+    "name": "Neutral grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#6C787B",
+    "code": "XF-53",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ocean-gray",
+    "name": "Ocean gray",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#525A5F",
+    "code": "AS-10",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ocean-gray-2",
+    "name": "Ocean gray 2",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#6C8C99",
+    "code": "AS-31",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-ocean-gray-2-raf",
+    "name": "Ocean gray 2 (RAF)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-82",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-olive-drab",
+    "name": "Olive drab",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#404B13",
+    "code": "XF-62",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Aircraft Spray",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-olive-drab-lacquer-paint",
+    "name": "Olive drab",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#4D5641",
+    "code": "LP-28",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-olive-drab-jgsdf",
+    "name": "Olive drab (JGSDF)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#295438",
+    "code": "LP-64",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-olive-drab-jgsdf-acrylics-mini-flat",
+    "name": "Olive drab (JGSDF)",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#334012",
+    "code": "XF-74",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-olive-drab-jgsdf-tamiya-spray",
+    "name": "Olive drab (JGSDF)",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#2E4112",
+    "code": "TS-70",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-olive-drab-2",
+    "name": "Olive drab 2",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#4D5613",
+    "code": "TS-28",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-olive-drab-2-lacquer-paint",
+    "name": "Olive drab 2",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#47573E",
+    "code": "LP-29",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-olive-green",
+    "name": "Olive green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#1A3B14",
+    "code": "XF-58",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-olive-green-aircraft-spray",
+    "name": "Olive green",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#335016",
+    "code": "AS-14",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-orange",
+    "name": "Orange",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FF7F00",
+    "code": "X-6",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-orange-tamiya-spray",
+    "name": "Orange",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FF5900",
+    "code": "TS-12",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-park-green",
+    "name": "Park green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#33A44D",
+    "code": "X-28",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-park-green-tamiya-spray",
+    "name": "Park green",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#33A23D",
+    "code": "TS-35",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-blue",
+    "name": "Pearl blue",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#013B8F",
+    "code": "LP-47",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-blue-tamiya-spray",
+    "name": "Pearl blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#0C3E80",
+    "code": "TS-89",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-clear",
+    "name": "Pearl clear",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#F7F9F8",
+    "code": "LP-49",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-clear-tamiya-spray",
+    "name": "Pearl clear",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#E6E6CF",
+    "code": "TS-65",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-green",
+    "name": "Pearl green",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#99CA90",
+    "code": "TS-60",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-light-blue",
+    "name": "Pearl light blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#7396BA",
+    "code": "TS-58",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-light-red",
+    "name": "Pearl light red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#CC86A3",
+    "code": "TS-59",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-white",
+    "name": "Pearl white",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "LP-43",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-white-tamiya-spray",
+    "name": "Pearl white",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#F2F2E5",
+    "code": "TS-45",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pearl-yellow",
+    "name": "Pearl yellow",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-97",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pink",
+    "name": "Pink",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FA9AB8",
+    "code": "TS-25",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pink-acrylics-mini-gloss",
+    "name": "Pink",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#F881AC",
+    "code": "X-17",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-blue",
+    "name": "Pure blue",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#005BAC",
+    "code": "LP-6",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-blue-tamiya-spray",
+    "name": "Pure blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-93",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-metallic-red",
+    "name": "Pure metallic red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-95",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-metallic-red-lacquer-paint",
+    "name": "Pure metallic red",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#DF0012",
+    "code": "LP-46",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-orange",
+    "name": "Pure orange",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#F18D01",
+    "code": "LP-51",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-orange-tamiya-spray",
+    "name": "Pure orange",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-98",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-red",
+    "name": "Pure red",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#E70012",
+    "code": "LP-7",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-red-tamiya-spray",
+    "name": "Pure red",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#E50012",
+    "code": "TS-86",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-white",
+    "name": "Pure white",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-26",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-pure-yellow",
+    "name": "Pure yellow",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFF001",
+    "code": "LP-8",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-purple",
+    "name": "Purple",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#474BA0",
+    "code": "X-16",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Gloss",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-racing-blue",
+    "name": "Racing blue",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#013B8F",
+    "code": "LP-45",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-racing-blue-tamiya-spray",
+    "name": "Racing blue",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#0E1E7D",
+    "code": "TS-51",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-racing-green",
+    "name": "Racing green",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#184316",
+    "code": "TS-43",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-racing-white",
+    "name": "Racing white",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#E6E6E6",
+    "code": "TS-7",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-racing-white-lacquer-paint",
+    "name": "Racing white",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "LP-39",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-red",
+    "name": "Red",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FF0000",
+    "code": "X-7",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-red-brown",
+    "name": "Red brown",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#66370A",
+    "code": "TS-1",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-red-brown-2",
+    "name": "Red brown 2",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#4F3733",
+    "code": "LP-57",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-red-brown-2-acrylics-mini-flat",
+    "name": "Red brown 2",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-90",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-rlm-grey",
+    "name": "RLM grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#7B8D7D",
+    "code": "XF-22",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-royal-blue",
+    "name": "Royal blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#1D2D53",
+    "code": "X-3",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-royal-light-gray",
+    "name": "Royal light gray",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#C1CAC8",
+    "code": "TS-81",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Flat",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-rubber-black",
+    "name": "Rubber black",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "XF-85",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-rubber-black-lacquer-paint",
+    "name": "Rubber black",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#000000",
+    "code": "LP-65",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-rubber-black-tamiya-spray",
+    "name": "Rubber black",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#444648",
+    "code": "TS-82",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-sea-blue",
+    "name": "Sea blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#2E3B43",
+    "code": "XF-17",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-semi-gloss-black",
+    "name": "Semi gloss black",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#333333",
+    "code": "TS-29",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Gloss",
+      "Tamiya Spray"
+    ]
+  },
+  {
+    "id": "tamiya-semi-gloss-black-lacquer-paint",
+    "name": "Semi gloss black",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#040000",
+    "code": "LP-5",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-semi-gloss-clear",
+    "name": "Semi gloss clear",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-79",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-semi-gloss-clear-lacquer-paint",
+    "name": "Semi gloss clear",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFFFFE",
+    "code": "LP-24",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-semi-gloss-bright-gun-metal",
+    "name": "Semi-gloss bright gun metal",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": "TS-100",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-semi-gloss-clear-acrylics-mini-gloss",
+    "name": "Semi-gloss clear",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "X-35",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-silver",
+    "name": "Silver",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#DFDFDF",
+    "code": "LP-11",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-silver-leaf",
+    "name": "Silver leaf",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#CCCCCC",
+    "code": "TS-30",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-sky",
+    "name": "Sky",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#B8BE77",
+    "code": "XF-21",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-sky-blue",
+    "name": "Sky blue",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#1D99C4",
+    "code": "X-14",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-sky-grey",
+    "name": "Sky grey",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#ADB7C0",
+    "code": "XF-19",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-smoke",
+    "name": "Smoke",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#C7C9C8",
+    "code": "LP-67",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-smoke-acrylics-mini-gloss",
+    "name": "Smoke",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#8F918C",
+    "code": "X-19",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-smoke-tamiya-spray",
+    "name": "Smoke",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#B3AAAE",
+    "code": "TS-71",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-sparkling-silver",
+    "name": "Sparkling silver",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#DEE0DF",
+    "code": "LP-48",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-tan",
+    "name": "Tan",
+    "brand": "Tamiya",
+    "range": "Aircraft Spray",
+    "type": "spray",
+    "hex": "#A68354",
+    "code": "AS-15",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-titanium-gold",
+    "name": "Titanium gold",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#CBBB72",
+    "code": "X-31",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-titanium-gold-tamiya-spray",
+    "name": "Titanium gold",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#C7BA82",
+    "code": "TS-87",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-titanium-gold-lacquer-paint",
+    "name": "Titanium gold",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#DAC993",
+    "code": "LP-62",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-titanium-silver",
+    "name": "Titanium silver",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#C6CDC2",
+    "code": "TS-88",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-titanium-silver-lacquer-paint",
+    "name": "Titanium silver",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#DBDCCE",
+    "code": "LP-63",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-titanium-silver-acrylics-mini-gloss",
+    "name": "Titanium silver",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Gloss",
+    "type": "other",
+    "hex": "#CCCCB8",
+    "code": "X-32",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-white",
+    "name": "White",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": "LP-2",
+    "discontinued": false,
+    "ranges": [
+      "Acrylics Mini Gloss",
+      "Lacquer Paint"
+    ]
+  },
+  {
+    "id": "tamiya-wooden-deck-tan",
+    "name": "Wooden deck tan",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#ACA184",
+    "code": "LP-16",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-wooden-deck-tan-acrylics-mini-flat",
+    "name": "Wooden deck tan",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#D3B685",
+    "code": "XF-78",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-wooden-deck-tan-tamiya-spray",
+    "name": "Wooden deck tan",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#CBA46C",
+    "code": "TS-68",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-yellow",
+    "name": "Yellow",
+    "brand": "Tamiya",
+    "range": "Tamiya Spray",
+    "type": "spray",
+    "hex": "#FFE600",
+    "code": "TS-16",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-yellow-green",
+    "name": "Yellow green",
+    "brand": "Tamiya",
+    "range": "Acrylics Mini Flat",
+    "type": "other",
+    "hex": "#B3C60F",
+    "code": "XF-4",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-yellow-brown-dak-1941",
+    "name": "Yellow-brown (DAK 1941)",
+    "brand": "Tamiya",
+    "range": "Lacquer Paint",
+    "type": "other",
+    "hex": "#B18150",
+    "code": "LP-76",
+    "discontinued": false
+  }
+]

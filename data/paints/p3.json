@@ -1,0 +1,1312 @@
+[
+  {
+    "id": "p3-jack-bone",
+    "name": "'Jack Bone",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#D6D3AA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-amethyst-rose",
+    "name": "Amethyst Rose",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#481306",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-arcane-blue",
+    "name": "Arcane Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#7ACFD9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-arcantrik-green",
+    "name": "Arcantrik Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#547E5B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-armor-wash",
+    "name": "Armor Wash",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3 Wash",
+    "type": "wash",
+    "hex": "#879284",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-asheth-grey",
+    "name": "Asheth Grey",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#2A2524",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bad-bruise",
+    "name": "Bad Bruise",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#33283A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bane-grey",
+    "name": "Bane Grey",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#564F3D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-basilisk-brown",
+    "name": "Basilisk Brown",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#76412B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bastion-grey",
+    "name": "Bastion Grey",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#777965",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-battle-dress-green",
+    "name": "Battle Dress Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#5E4E14",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-battledress-green",
+    "name": "Battledress Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#757131",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-battlefield-brown",
+    "name": "Battlefield Brown",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#32261D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-beast-hide",
+    "name": "Beast Hide",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#AF9369",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-beaten-purple",
+    "name": "Beaten Purple",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#552A72",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bile-thrall",
+    "name": "Bile Thrall",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#6A4E16",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-blazing-ink",
+    "name": "Blazing Ink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "ink",
+    "hex": "#EEAA58",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bleached-blue",
+    "name": "Bleached Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#877A68",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-blighted-gold",
+    "name": "Blighted Gold",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#8B9742",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-blindwater-green",
+    "name": "Blindwater Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#2A271A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bloodstone",
+    "name": "Bloodstone",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#9E4923",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bloodtracker-brown",
+    "name": "Bloodtracker Brown",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#A56A28",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-blue-ink",
+    "name": "Blue Ink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "ink",
+    "hex": "#3B5BA1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bog-moss",
+    "name": "Bog Moss",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#80703C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bogrin-brown",
+    "name": "Bogrin Brown",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#92653C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-boiler-black",
+    "name": "Boiler Black",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#5D5A55",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bootstrap-leather",
+    "name": "Bootstrap Leather",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#946839",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-brass-balls",
+    "name": "Brass Balls",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#FAF8D2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-broken-brick",
+    "name": "Broken Brick",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#A53331",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-bronze-badge",
+    "name": "Bronze Badge",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#954A02",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-brown-ink",
+    "name": "Brown Ink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "ink",
+    "hex": "#744439",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-carnal-pink",
+    "name": "Carnal Pink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F9E0EA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-caspian-flesh-wash",
+    "name": "Caspian Flesh Wash",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3 Wash",
+    "type": "wash",
+    "hex": "#A49881",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-coal-black",
+    "name": "Coal Black",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#005A61",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-cold-steel",
+    "name": "Cold Steel",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#BFCACE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-copper-pipe",
+    "name": "Copper Pipe",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#745738",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-cryx-bane-base",
+    "name": "Cryx Bane Base",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#313A25",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-cryx-bane-highlight",
+    "name": "Cryx Bane Highlight",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#908E7C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-cryx-green",
+    "name": "Cryx Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#2C281B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-cygnar-blue-base",
+    "name": "Cygnar Blue Base",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#124B9A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-cygnar-blue-highlight",
+    "name": "Cygnar Blue Highlight",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#2C75BB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-cygnus-yellow",
+    "name": "Cygnus Yellow",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F7E52D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-deathless-metal",
+    "name": "Deathless Metal",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#503528",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-devout-white",
+    "name": "Devout White",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#B3A998",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-drake-grey",
+    "name": "Drake Grey",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#8D8581",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-eldritch",
+    "name": "Eldritch",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#35795E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-eldritch-green",
+    "name": "Eldritch Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#21573B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-ember-orange",
+    "name": "Ember Orange",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#EE2C24",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-exile-blue",
+    "name": "Exile Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#203467",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-flesh-wash",
+    "name": "Flesh Wash",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3 Wash",
+    "type": "wash",
+    "hex": "#CCB19D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-frostbite",
+    "name": "Frostbite",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#E6EFF5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-galvanized-steel",
+    "name": "Galvanized Steel",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#B5BCB2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-gnarls-green",
+    "name": "Gnarls Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#0D6232",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-gravedigger-denim",
+    "name": "Gravedigger Denim",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#4A5456",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-greatcoat-grey",
+    "name": "Greatcoat Grey",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#4E5861",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-green-ink",
+    "name": "Green Ink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "ink",
+    "hex": "#129959",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-greylord",
+    "name": "Greylord",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#48453D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-gun-corps-brown",
+    "name": "Gun Corps Brown",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#927D47",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-hammerfall-khaki",
+    "name": "Hammerfall Khaki",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#C7BF97",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-heartfire",
+    "name": "Heartfire",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F4AF46",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-hoksune-red",
+    "name": "Hoksune Red",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#4B2015",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-icy-yellow",
+    "name": "Icy Yellow",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#C7B378",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-idrian-flesh",
+    "name": "Idrian Flesh",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#9B5E37",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-immortal-black",
+    "name": "Immortal Black",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#30281F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-inferno-orange",
+    "name": "Inferno Orange",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#E16E41",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-iosan-green",
+    "name": "Iosan Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#23A652",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-ironhull-grey",
+    "name": "Ironhull Grey",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#8E959A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-jack-bone-privateer-press-formula-p3",
+    "name": "Jack Bone",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#D6D3AE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-kapitan-red",
+    "name": "Kapitan Red",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#D07B3A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-khador-red-base",
+    "name": "Khador Red Base",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#EE2C24",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-khador-red-highlight",
+    "name": "Khador Red Highlight",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F09042",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-khardic-flesh",
+    "name": "Khardic Flesh",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#C87A5A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-kossite-flesh-wash",
+    "name": "Kossite Flesh Wash",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3 Wash",
+    "type": "wash",
+    "hex": "#AA9883",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-lyossan-flesh",
+    "name": "Lyossan Flesh",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#AC8454",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-mage-hunter-green",
+    "name": "Mage Hunter Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#596453",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-meaty-ochre",
+    "name": "Meaty Ochre",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#B28240",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-menoth-white-base",
+    "name": "Menoth White Base",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#EFECBA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-menoth-white-highlight",
+    "name": "Menoth White Highlight",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F2F1DC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-meredius-blue",
+    "name": "Meredius Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#00AFB8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-meridius-blue",
+    "name": "Meridius Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#1F9095",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-midlund-flesh",
+    "name": "Midlund Flesh",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#EEA883",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-moldy-ochre",
+    "name": "Moldy Ochre",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#DCB43D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-molten-bronze",
+    "name": "Molten Bronze",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#CB8C57",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-morrow-white",
+    "name": "Morrow White",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#FFFCFD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-mouldy-ochre",
+    "name": "Mouldy Ochre",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#B0830E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-mud-rut",
+    "name": "Mud Rut",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#674D2D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-muddy-wash",
+    "name": "Muddy Wash",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3 Wash",
+    "type": "wash",
+    "hex": "#8A7F6E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-murderous-magenta",
+    "name": "Murderous Magenta",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#A91F5E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-necrotite-green",
+    "name": "Necrotite Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#7FC246",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-ordic-olive",
+    "name": "Ordic Olive",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#6E7E36",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-orgoth-bronze",
+    "name": "Orgoth Bronze",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#6D6346",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-pig-iron",
+    "name": "Pig Iron",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#797979",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-piggy-purple-ink",
+    "name": "Piggy Purple Ink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "ink",
+    "hex": "#6E5D7E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-pyg-grey",
+    "name": "Pyg Grey",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#5F6156",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-quick-silver",
+    "name": "Quick Silver",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#D7D9E0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-radiant-platinum",
+    "name": "Radiant Platinum",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#C0C0AE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-red-ink",
+    "name": "Red Ink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "ink",
+    "hex": "#E9543A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-rhok-hide",
+    "name": "Rhok Hide",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#35211C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-rhulic-gold",
+    "name": "Rhulic Gold",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F7D259",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-riven-green",
+    "name": "Riven Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#99AB90",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-royal-violet",
+    "name": "Royal Violet",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#553D55",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-rucksack-tan",
+    "name": "Rucksack Tan",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#B2953D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-ruddy-blush",
+    "name": "Ruddy Blush",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#AB3737",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-runeshot",
+    "name": "Runeshot",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#2E728B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-ryn-flesh",
+    "name": "Ryn Flesh",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F8E2D1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-sanguine-base",
+    "name": "Sanguine Base",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#6B160F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-sanguine-highlight",
+    "name": "Sanguine Highlight",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#C64958",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-sanguine-shadow",
+    "name": "Sanguine Shadow",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#541A0E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-sickly-skin",
+    "name": "Sickly Skin",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#E8E6BD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-sinari-skin",
+    "name": "Sinari Skin",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#4B2B1F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-skorne-flesh",
+    "name": "Skorne Flesh",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#9D6327",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-skorne-red",
+    "name": "Skorne Red",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#B12024",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-solid-gold",
+    "name": "Solid Gold",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F8F39F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-stormguard-blue",
+    "name": "Stormguard Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#285C8A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-sul-red",
+    "name": "Sul Red",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#4A2518",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-sulfuric-yellow",
+    "name": "Sulfuric Yellow",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#F0D133",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-thamar-black",
+    "name": "Thamar Black",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#000000",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-tharn-flesh",
+    "name": "Tharn Flesh",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#7A5131",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-thornwood-green",
+    "name": "Thornwood Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#65644B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-thrall-flesh",
+    "name": "Thrall Flesh",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#CFD7AC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-traitor-green",
+    "name": "Traitor Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#808F65",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-troll-tongue",
+    "name": "Troll Tongue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#B65E77",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-trollblod-highlight",
+    "name": "Trollblod Highlight",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#BBB4A2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-trollblood-base",
+    "name": "Trollblood Base",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#178799",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-trollblood-blue",
+    "name": "Trollblood Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#1F6A77",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-turquoise-ink",
+    "name": "Turquoise Ink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "ink",
+    "hex": "#006669",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-umbral-umber",
+    "name": "Umbral Umber",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#240600",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-underbelly-blue",
+    "name": "Underbelly Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#C0D4D9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-voltaic-blue",
+    "name": "Voltaic Blue",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#7AA0AB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-wurm-green",
+    "name": "Wurm Green",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "other",
+    "hex": "#8FBE40",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "p3-yellow-ink",
+    "name": "Yellow Ink",
+    "brand": "P3",
+    "range": "Privateer Press Formula P3",
+    "type": "ink",
+    "hex": "#FBE734",
+    "code": null,
+    "discontinued": false
+  }
+]

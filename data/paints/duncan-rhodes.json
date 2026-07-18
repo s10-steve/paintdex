@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "duncan-rhodes-abyss-blue",
+    "name": "Abyss Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#334A66",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ambush-yellow",
+    "name": "Ambush Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#E3CC73",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-amethyst-rayne",
+    "name": "Amethyst Rayne",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#524169",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-amphora-red",
+    "name": "Amphora Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#482124",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-amulet-purple",
+    "name": "Amulet Purple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#BEACD2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ancient-forest",
+    "name": "Ancient Forest",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#715B52",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ancient-gold",
+    "name": "Ancient Gold",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#776742",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-antiquity-green",
+    "name": "Antiquity Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#367D7A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-apocalypse-sky",
+    "name": "Apocalypse Sky",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#E34E3F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-archaic-sepia-wash",
+    "name": "Archaic Sepia Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "wash",
+    "hex": "#A48773",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ares-flesh",
+    "name": "Ares Flesh",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#DEC287",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-argonaut-skin",
+    "name": "Argonaut Skin",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#A78E6C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ashen-grey",
+    "name": "Ashen Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#4E5248",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-asmodeus-red",
+    "name": "Asmodeus Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#8E4847",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-aztec-turquoise-wash",
+    "name": "Aztec Turquoise Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "wash",
+    "hex": "#939EA0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-barbarian-brawn",
+    "name": "Barbarian Brawn",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#8F5E54",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-bard-skin",
+    "name": "Bard Skin",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#956F61",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-batle-axe-brass",
+    "name": "Batle Axe Brass",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#D4A97D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-battle-mud-wash",
+    "name": "Battle Mud Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "wash",
+    "hex": "#796A5D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-berserker-red",
+    "name": "Berserker Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#4D1A15",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-blue-glaze",
+    "name": "Blue Glaze",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "glaze",
+    "hex": "#5A79BC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-blue-steel",
+    "name": "Blue Steel",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#7F8C8B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-boar-hide",
+    "name": "Boar Hide",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#724438",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-bone-wash",
+    "name": "Bone Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "wash",
+    "hex": "#B6A8A9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-boot-strap-brown",
+    "name": "Boot Strap Brown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#8E674B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-carapace-green",
+    "name": "Carapace Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#4F955A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-carcharodon-grey",
+    "name": "Carcharodon Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#959496",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-celestial-blue",
+    "name": "Celestial Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#6991C0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-centurion-red",
+    "name": "Centurion Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#E63132",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-cerberus-brown",
+    "name": "Cerberus Brown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#DFAD58",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-chaos-bronze",
+    "name": "Chaos Bronze",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#A68B6D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-cold-corpse-blue",
+    "name": "Cold Corpse Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#50555C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-contagion-green",
+    "name": "Contagion Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#8B9E7B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-craven-yellow",
+    "name": "Craven Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#ECEB69",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-cuirass-leather",
+    "name": "Cuirass Leather",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#514239",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-cursed-blue",
+    "name": "Cursed Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#4199B3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-cyber-pink",
+    "name": "Cyber Pink",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#C64B8A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dark-sun-yellow",
+    "name": "Dark Sun Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#C38639",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-death-metal",
+    "name": "Death Metal",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#69655D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-death-reaper",
+    "name": "Death Reaper",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#434142",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-decadent-purple",
+    "name": "Decadent Purple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#C1BED3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-demon-red",
+    "name": "Demon Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#D21116",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-doom-death-black",
+    "name": "Doom Death Black",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#3C3936",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dragon-fang",
+    "name": "Dragon Fang",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#9E8461",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dragon-s-gold",
+    "name": "Dragon's Gold",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#CDA24E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dread-red",
+    "name": "Dread Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#6E3E3E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-druid-flesh",
+    "name": "Druid Flesh",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#533D33",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dry-rust-brown",
+    "name": "Dry Rust Brown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#BA773F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dungeon-stone-grey",
+    "name": "Dungeon Stone Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#5C5E5F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dust-bowl",
+    "name": "Dust Bowl",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#7D6349",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dwarven-iron",
+    "name": "Dwarven Iron",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#898884",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-dwarven-skin",
+    "name": "Dwarven Skin",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#B07C62",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-eidolon-grey",
+    "name": "Eidolon Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#535548",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-elder-robe",
+    "name": "Elder Robe",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#2259A0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-elixir-green",
+    "name": "Elixir Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#7EC68F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-elven-skin",
+    "name": "Elven Skin",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#C49774",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-elysium-blue",
+    "name": "Elysium Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#5179AB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-emperor-red",
+    "name": "Emperor Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#A03140",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-emperor-s-purple",
+    "name": "Emperor's Purple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#7A6089",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-enchantment-blue",
+    "name": "Enchantment Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#347DAA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-enchantress-purple",
+    "name": "Enchantress Purple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#593662",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-enticing-purple",
+    "name": "Enticing Purple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#7F7A8B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ethereal-green",
+    "name": "Ethereal Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#567F2D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-evil-eye-red",
+    "name": "Evil Eye Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#C15D4F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-fanatic-orange",
+    "name": "Fanatic Orange",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#D94A2E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-faust-blue",
+    "name": "Faust Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#45515B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-field-grey",
+    "name": "Field Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#6C715E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-fire-opal",
+    "name": "Fire Opal",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#C36E4A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-flak-gun-yellow",
+    "name": "Flak Gun Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#C5AA5A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-flaming-forge-orange",
+    "name": "Flaming Forge Orange",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#E9A544",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-flesh-wash",
+    "name": "Flesh Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "wash",
+    "hex": "#C4A678",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-frost-blue",
+    "name": "Frost Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#78969D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-fury-green",
+    "name": "Fury Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#6C6B4B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ghoul-green",
+    "name": "Ghoul Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#52BD97",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-gigawatt-blue",
+    "name": "Gigawatt Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#57B7E8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-glistening-gold",
+    "name": "Glistening Gold",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#9B8664",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-glistening-gums",
+    "name": "Glistening Gums",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#995779",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-gloss-varnish",
+    "name": "Gloss Varnish",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#A5A5A4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-goblinoid-green",
+    "name": "Goblinoid Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#89B76A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-gravestone-blue",
+    "name": "Gravestone Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#7A8896",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-green-beret",
+    "name": "Green Beret",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#ABAB87",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-green-glaze",
+    "name": "Green Glaze",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "glaze",
+    "hex": "#95CB74",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-griffon-claw",
+    "name": "Griffon Claw",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#9E9084",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-gung-ho-green",
+    "name": "Gung-ho Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#A8A264",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-gyzmo-fur",
+    "name": "Gyzmo Fur",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#D28950",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-hazard-yellow-wash",
+    "name": "Hazard Yellow Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "wash",
+    "hex": "#E5C0B4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-heirloom-gold",
+    "name": "Heirloom Gold",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#C69C53",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-helion-red-wash",
+    "name": "Helion Red Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "wash",
+    "hex": "#865453",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-hellspawn-red",
+    "name": "Hellspawn Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#BE392E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-hot-pink",
+    "name": "Hot Pink",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#E184A5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-hydra-green",
+    "name": "Hydra Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#344B4D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-incubus-purple",
+    "name": "Incubus Purple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#6A696C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-inferno-orange",
+    "name": "Inferno Orange",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#CE4A32",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ion-blue",
+    "name": "Ion Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#B7D5D8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ivory-tusk",
+    "name": "Ivory Tusk",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#D2C7BF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-jade-green",
+    "name": "Jade Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#2E7968",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-keleton-legion",
+    "name": "Keleton Legion",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#AF966C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-kobold-grey",
+    "name": "Kobold Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#858B75",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-kronos-flesh",
+    "name": "Kronos Flesh",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#BF9A6F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-legion-green",
+    "name": "Legion Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#2A6A66",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-leviathan-blue",
+    "name": "Leviathan Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#3A7BBF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-magi-purple-wash",
+    "name": "Magi Purple Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "wash",
+    "hex": "#4F3350",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-manticore-ochre",
+    "name": "Manticore Ochre",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#D69744",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-marine-blue",
+    "name": "Marine Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#43496F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-matt-varnish",
+    "name": "Matt Varnish",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#DCDCDD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-merald-green",
+    "name": "Merald Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#3C5C43",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-mythic-turquoise",
+    "name": "Mythic Turquoise",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#599E9C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-mythril-blade",
+    "name": "Mythril Blade",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#7D7F7F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-necrosis-green-wash",
+    "name": "Necrosis Green Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "wash",
+    "hex": "#7B8A69",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-neo-pink",
+    "name": "Neo Pink",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#F3BCD7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-noble-steed-brown",
+    "name": "Noble Steed Brown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#755339",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-oblivion-black-wash",
+    "name": "Oblivion Black Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "wash",
+    "hex": "#454344",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-omega-blue",
+    "name": "Omega Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#58B9B6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-orange-flare",
+    "name": "Orange Flare",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#EB7140",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-orange-glaze",
+    "name": "Orange Glaze",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "glaze",
+    "hex": "#F89F5B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-orc-hide",
+    "name": "Orc Hide",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#7B9B68",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-overlord-brass",
+    "name": "Overlord Brass",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#D6AF83",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-oxidation-green",
+    "name": "Oxidation Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#34444C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-paladin-flesh",
+    "name": "Paladin Flesh",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#76564B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-pale-skin",
+    "name": "Pale Skin",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#CAAA7A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-panzer-yellow",
+    "name": "Panzer Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#A58E42",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-perisher-pink",
+    "name": "Perisher Pink",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#BA6368",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-pestilence-green",
+    "name": "Pestilence Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#D3DF95",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-plate-armour",
+    "name": "Plate Armour",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#787979",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-platinum-crown",
+    "name": "Platinum Crown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#CEC2A4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-purple-glaze",
+    "name": "Purple Glaze",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "glaze",
+    "hex": "#B679AA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ranger-cloak",
+    "name": "Ranger Cloak",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#7D8351",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ray-gun-glow",
+    "name": "Ray Gun Glow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#47B0C2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-rc-flesh-wash",
+    "name": "RC Flesh Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "wash",
+    "hex": "#52854C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-red-glaze",
+    "name": "Red Glaze",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "glaze",
+    "hex": "#F38366",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-red-rage",
+    "name": "Red Rage",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#6A342A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-relic-blue",
+    "name": "Relic Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#2B7FBB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ritz-o-tin",
+    "name": "Ritz O'Tin",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#968273",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-rodent-grey",
+    "name": "Rodent Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#707263",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-royal-cloak",
+    "name": "Royal Cloak",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#5B4249",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-runic-purple",
+    "name": "Runic Purple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#9B8DB4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-rust-orange",
+    "name": "Rust Orange",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#B94D37",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-sandstone",
+    "name": "Sandstone",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#927B68",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-sanguine-scarlet",
+    "name": "Sanguine Scarlet",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#961714",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-satyr-brown",
+    "name": "Satyr Brown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#D59657",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-scabbard-brown",
+    "name": "Scabbard Brown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#7B5E46",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-scarab-red",
+    "name": "Scarab Red",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#B04045",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-scorched-earth",
+    "name": "Scorched Earth",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#594C48",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-seafarer-blue",
+    "name": "Seafarer Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#4A9CC7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-sentient-turquoise",
+    "name": "Sentient Turquoise",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#3A83A0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-septric-green",
+    "name": "Septric Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#ABB337",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-serpent-eye-yellow",
+    "name": "Serpent Eye Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#F5D10D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-shadow-blue",
+    "name": "Shadow Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#4F646B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-sir-coates-silver",
+    "name": "Sir Coates Silver",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#4D4F4F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-skulker-yellow",
+    "name": "Skulker Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#F49E00",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-smoke-grey-wash",
+    "name": "Smoke Grey Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "wash",
+    "hex": "#FBFCFB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-solar-flare",
+    "name": "Solar Flare",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#EE7F21",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-sorceror-s-cloak",
+    "name": "Sorceror's Cloak",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#78588D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-spartan-bronze",
+    "name": "Spartan Bronze",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#644534",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-spectral-purple",
+    "name": "Spectral Purple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#995A9A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-steampunk-copper",
+    "name": "Steampunk Copper",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#B5623C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-sun-bleach-yellow",
+    "name": "Sun Bleach Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#F5E350",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-sword-hilt-burgundy",
+    "name": "Sword Hilt Burgundy",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#773D4A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-talisman-green",
+    "name": "Talisman Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#79C042",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-tempest-blue-wash",
+    "name": "Tempest Blue Wash",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "wash",
+    "hex": "#3E5165",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-temple-stone",
+    "name": "Temple Stone",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#A39179",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-top-brass",
+    "name": "Top Brass",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#B59155",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-traitor-green",
+    "name": "Traitor Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#2F534F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-troll-snot-green",
+    "name": "Troll Snot Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#9CC575",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-trooper-white",
+    "name": "Trooper White",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#ECEADF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-twin-suns-yellow",
+    "name": "Twin Suns Yellow",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#E5E6AC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-ur-cloak",
+    "name": "Ur Cloak",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#91524D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-vambrace-brown",
+    "name": "Vambrace Brown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#9C745C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-vampire-fang",
+    "name": "Vampire Fang",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#CBB89B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-von-evile-pimple",
+    "name": "Von Evile Pimple",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#22012E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-war-master-green",
+    "name": "War Master Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#3A4140",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-wasteland-brown",
+    "name": "Wasteland Brown",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#856C5C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-white-star",
+    "name": "White Star",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#F9F9F9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-witching-hour-blue",
+    "name": "Witching Hour Blue",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "other",
+    "hex": "#326AB3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-wizard-grey",
+    "name": "Wizard Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#6D6B6C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-wolf-grey",
+    "name": "Wolf Grey",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#627587",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-wyvern-green",
+    "name": "Wyvern Green",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#404942",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-yellow-flame",
+    "name": "Yellow Flame",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 1",
+    "type": "other",
+    "hex": "#F8AF2B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-yellow-glaze",
+    "name": "Yellow Glaze",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 2",
+    "type": "glaze",
+    "hex": "#F2F075",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "duncan-rhodes-zombie-rot",
+    "name": "Zombie Rot",
+    "brand": "Duncan Rhodes",
+    "range": "Wave 3",
+    "type": "other",
+    "hex": "#B1B679",
+    "code": null,
+    "discontinued": false
+  }
+]

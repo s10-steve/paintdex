@@ -1,0 +1,1052 @@
+[
+  {
+    "id": "liquitex-alizarin-crimson-hue-permanent",
+    "name": "Alizarin Crimson Hue Permanent",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#FCFEFD",
+    "code": "116",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-bright-aqua-green",
+    "name": "Bright Aqua Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#5AAC7C",
+    "code": "660",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-brilliant-blue",
+    "name": "Brilliant Blue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#037BC9",
+    "code": "570",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-brilliant-purple",
+    "name": "Brilliant Purple",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#8961A7",
+    "code": "590",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-brilliant-yellow-green",
+    "name": "Brilliant Yellow Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#B7CF55",
+    "code": "840",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-bronze-yellow",
+    "name": "Bronze Yellow",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#816C33",
+    "code": "530",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-burnt-sienna",
+    "name": "Burnt Sienna",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F1F1F3",
+    "code": "127",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-burnt-umber",
+    "name": "Burnt Umber",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F1F1F1",
+    "code": "128",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cadmium-free-orange",
+    "name": "Cadmium-free Orange",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#E87427",
+    "code": "892",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cadmium-free-red-deep",
+    "name": "Cadmium-free Red Deep",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#7D1E26",
+    "code": "895",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cadmium-free-red-light",
+    "name": "Cadmium-free Red Light",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#E0412B",
+    "code": "893",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cadmium-free-red-medium",
+    "name": "Cadmium-free Red Medium",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#B12B2C",
+    "code": "894",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cadmium-free-yellow-deep",
+    "name": "Cadmium-free Yellow Deep",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#E89509",
+    "code": "891",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cadmium-free-yellow-light",
+    "name": "Cadmium-free Yellow Light",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#FCCD43",
+    "code": "889",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cadmium-free-yellow-medium",
+    "name": "Cadmium-free Yellow Medium",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#DEA301",
+    "code": "890",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cerulean-blue",
+    "name": "Cerulean Blue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#234E7B",
+    "code": "164",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-cerulean-blue-hue",
+    "name": "Cerulean Blue Hue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#1C5E78",
+    "code": "470",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-chromium-oxide-green",
+    "name": "Chromium Oxide Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#5C6E34",
+    "code": "166",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-deep-magenta",
+    "name": "Deep Magenta",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#4A1A28",
+    "code": "300",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-deep-violet",
+    "name": "Deep Violet",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#2C0321",
+    "code": "115",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-dioxazine-purple",
+    "name": "Dioxazine Purple",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F3F3F5",
+    "code": "186",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-emerald-green",
+    "name": "Emerald Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#326F2A",
+    "code": "450",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-fluorescent-blue",
+    "name": "Fluorescent Blue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#00A0FB",
+    "code": "984",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-fluorescent-green",
+    "name": "Fluorescent Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#2FBD73",
+    "code": "985",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-fluorescent-orange",
+    "name": "Fluorescent Orange",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#FE8D01",
+    "code": "982",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-fluorescent-pink",
+    "name": "Fluorescent Pink",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#FE4D69",
+    "code": "987",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-fluorescent-red",
+    "name": "Fluorescent Red",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#FF4C36",
+    "code": "983",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-fluorescent-yellow",
+    "name": "Fluorescent Yellow",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#E1ED6D",
+    "code": "981",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-green-deep-permanent",
+    "name": "Green Deep Permanent",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#0B4417",
+    "code": "350",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-green-gold",
+    "name": "Green Gold",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#413915",
+    "code": "325",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-hooker-s-green-deep-hue-permanent",
+    "name": "Hooker’s Green Deep Hue Permanent",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#13271E",
+    "code": "225",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-hooker-s-green-hue-permanent",
+    "name": "Hooker’s Green Hue Permanent",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#DFDFDF",
+    "code": "224",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-indantherene-blue",
+    "name": "Indantherene Blue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#2D2439",
+    "code": "322",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-indian-yellow",
+    "name": "Indian Yellow",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#C38111",
+    "code": "324",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-indigo",
+    "name": "Indigo",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#201B22",
+    "code": "208",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-antique-gold",
+    "name": "Iridescent Antique Gold",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#958146",
+    "code": "237",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-black",
+    "name": "Iridescent Black",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#252328",
+    "code": "338",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-bright-gold",
+    "name": "Iridescent Bright Gold",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F4F5F9",
+    "code": "234",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-bright-silver",
+    "name": "Iridescent Bright Silver",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#9C9E9D",
+    "code": "236",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-rich-bronze",
+    "name": "Iridescent Rich Bronze",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#724623",
+    "code": "229",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-rich-copper",
+    "name": "Iridescent Rich Copper",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#935337",
+    "code": "230",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-rich-gold",
+    "name": "Iridescent Rich Gold",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#8C6931",
+    "code": "235",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-rich-silver",
+    "name": "Iridescent Rich Silver",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F1F3F2",
+    "code": "239",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-rose-gold",
+    "name": "Iridescent Rose Gold",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#BA5658",
+    "code": "227",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-iridescent-white",
+    "name": "Iridescent White",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#D9D6CF",
+    "code": "238",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-ivory-black",
+    "name": "Ivory Black",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#222325",
+    "code": "244",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-light-bismuth-yellow",
+    "name": "Light Bismuth Yellow",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#E3DBAC",
+    "code": "156",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-light-blue-permanent",
+    "name": "Light Blue Permanent",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#8AC5C1",
+    "code": "770",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-light-blue-violet",
+    "name": "Light Blue Violet",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#8486C3",
+    "code": "680",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-light-emerald-green",
+    "name": "Light Emerald Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#5BA23A",
+    "code": "650",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-light-green-permanent",
+    "name": "Light Green Permanent",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#367F2D",
+    "code": "312",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-light-phthalocyanine-green",
+    "name": "Light Phthalocyanine Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#8EDBE1",
+    "code": "313",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-light-pink",
+    "name": "Light Pink",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F2F4F3",
+    "code": "810",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-manganese-blue-hue",
+    "name": "Manganese Blue Hue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#165068",
+    "code": "275",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-mars-black",
+    "name": "Mars Black",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#232325",
+    "code": "276",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-medium-magenta",
+    "name": "Medium Magenta",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#B53A68",
+    "code": "500",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-muted-green",
+    "name": "Muted Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#254737",
+    "code": "501",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-muted-grey",
+    "name": "Muted Grey",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#343434",
+    "code": "505",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-muted-pink",
+    "name": "Muted Pink",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#523531",
+    "code": "504",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-muted-turquoise",
+    "name": "Muted Turquoise",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#283339",
+    "code": "503",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-muted-violet",
+    "name": "Muted Violet",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#3A2931",
+    "code": "502",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-naphthol-crimson",
+    "name": "Naphthol Crimson",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#95071D",
+    "code": "292",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-naphthol-red-light",
+    "name": "Naphthol Red Light",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#C42C21",
+    "code": "294",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-naples-yellow-hue",
+    "name": "Naples Yellow Hue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#D59646",
+    "code": "601",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-neutral-gray-5",
+    "name": "Neutral Gray 5",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#6F685E",
+    "code": "599",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-parchment",
+    "name": "Parchment",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#D8D4B1",
+    "code": "436",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-payne-s-gray",
+    "name": "Payne's Gray",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F4F6F5",
+    "code": "310",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-phthalocyanine-blue-green-shade",
+    "name": "Phthalocyanine Blue Green Shade",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "shade",
+    "hex": "#EEEEF0",
+    "code": "316",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-phthalocyanine-blue-red-shade",
+    "name": "Phthalocyanine Blue Red Shade",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "shade",
+    "hex": "#221F3A",
+    "code": "314",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-phthalocyanine-green-blue-shade",
+    "name": "Phthalocyanine Green Blue Shade",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "shade",
+    "hex": "#F5F5F7",
+    "code": "317",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-phthalocyanine-green-yellow-shade",
+    "name": "Phthalocyanine Green Yellow Shade",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "shade",
+    "hex": "#034D2C",
+    "code": "319",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-prism-violet",
+    "name": "Prism Violet",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#2E2135",
+    "code": "391",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-prussian-blue-hue",
+    "name": "Prussian Blue Hue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#192734",
+    "code": "320",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-pyrrole-crimson",
+    "name": "Pyrrole Crimson",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#702029",
+    "code": "326",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-pyrrole-orange",
+    "name": "Pyrrole Orange",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#D44D16",
+    "code": "323",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-pyrrole-red",
+    "name": "Pyrrole Red",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#A61816",
+    "code": "321",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-quinacridone-blue-violet",
+    "name": "Quinacridone Blue Violet",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#331C2E",
+    "code": "118",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-quinacridone-crimson",
+    "name": "Quinacridone Crimson",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#791C26",
+    "code": "110",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-quinacridone-magenta",
+    "name": "Quinacridone Magenta",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#5D2735",
+    "code": "114",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-quinacridone-red",
+    "name": "Quinacridone Red",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#A13B2C",
+    "code": "112",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-quinacridone-red-orange",
+    "name": "Quinacridone Red-orange",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#701824",
+    "code": "109",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-raw-sienna",
+    "name": "Raw Sienna",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F1F3F2",
+    "code": "330",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-raw-umber",
+    "name": "Raw Umber",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F4F6F5",
+    "code": "331",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-red-oxide",
+    "name": "Red Oxide",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#86422D",
+    "code": "335",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-sap-green-permanent",
+    "name": "Sap Green Permanent",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#2B3211",
+    "code": "315",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-titanium-white",
+    "name": "Titanium White",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F0F2F1",
+    "code": "432",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-transparent-burnt-sienna",
+    "name": "Transparent Burnt Sienna",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#492318",
+    "code": "129",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-transparent-burnt-umber",
+    "name": "Transparent Burnt Umber",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#302219",
+    "code": "130",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-transparent-orange",
+    "name": "Transparent Orange",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#CE0A0E",
+    "code": "035",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-transparent-raw-sienna",
+    "name": "Transparent Raw Sienna",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#9B5A20",
+    "code": "332",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-transparent-raw-umber",
+    "name": "Transparent Raw Umber",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#403323",
+    "code": "333",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-transparent-viridian-hue",
+    "name": "Transparent Viridian Hue",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#026749",
+    "code": "327",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-turner-s-yellow",
+    "name": "Turner’s Yellow",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#CD8717",
+    "code": "730",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-turquoise-deep",
+    "name": "Turquoise Deep",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#1E2D32",
+    "code": "561",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-ultramarine-blue-green-shade",
+    "name": "Ultramarine Blue Green Shade",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "shade",
+    "hex": "#1D1F58",
+    "code": "380",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-ultramarine-blue-red-shade",
+    "name": "Ultramarine Blue Red Shade",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "shade",
+    "hex": "#2D2A5F",
+    "code": "382",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-unbleached-titanium",
+    "name": "Unbleached Titanium",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F3F4F6",
+    "code": "434",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-van-dyke-red",
+    "name": "Van Dyke Red",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#362825",
+    "code": "392",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-viridian-hue-permanent",
+    "name": "Viridian Hue Permanent",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#0F3C28",
+    "code": "398",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-vivid-lime-green",
+    "name": "Vivid Lime Green",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#AFBB1B",
+    "code": "740",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-vivid-red-orange",
+    "name": "Vivid Red Orange",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#D75E19",
+    "code": "620",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-yellow-light-hansa",
+    "name": "Yellow Light Hansa",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#FFD13E",
+    "code": "411",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-yellow-medium-azo",
+    "name": "Yellow Medium Azo",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F2B72B",
+    "code": "412",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-yellow-orange-azo",
+    "name": "Yellow Orange Azo",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#F38E00",
+    "code": "414",
+    "discontinued": false
+  },
+  {
+    "id": "liquitex-yellow-oxide",
+    "name": "Yellow Oxide",
+    "brand": "Liquitex",
+    "range": "Liquitex Heavy Body Acrylix",
+    "type": "other",
+    "hex": "#C08521",
+    "code": "416",
+    "discontinued": false
+  }
+]
