@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { getAllPaints } from "@/lib/paints/load";
 import { filterPaints, type SortKey } from "@/lib/paints/filter";
-import { PAINT_TYPES, type PaintType } from "@/lib/paints/types";
+import {
+  PAINT_TYPES,
+  type BrowsePaint,
+  type PaintType,
+} from "@/lib/paints/types";
 import { COLOUR_FAMILIES } from "@/lib/color";
 import { PaintCard } from "./paint-card";
 import { FacetGroup } from "./facet-group";
@@ -21,15 +24,18 @@ function parseList(v: string | null): string[] {
   return v ? v.split(",").filter(Boolean) : [];
 }
 
-// getAllPaints() and the facet lists are derived from static data that never
-// changes at runtime, so they're computed once at module scope.
-const PAINTS = getAllPaints();
-const FACETS = (() => {
+// The dataset is served as a cacheable static asset (precomputed by
+// `scripts/build-browse-index.ts`) and fetched at runtime, so it never enters
+// the client JS bundle. See the loader effect below.
+export const BROWSE_INDEX_URL = "/browse-index.json";
+
+/** Derive the filter facet lists from the loaded dataset. */
+function computeFacets(paints: BrowsePaint[]) {
   const brands = new Set<string>();
   const ranges = new Map<string, Set<string>>(); // range -> brands
   const types = new Set<string>();
   const families = new Set<string>();
-  for (const p of PAINTS) {
+  for (const p of paints) {
     brands.add(p.brand);
     types.add(p.type);
     families.add(p.family);
@@ -42,12 +48,39 @@ const FACETS = (() => {
     types: PAINT_TYPES.filter((t) => types.has(t)),
     families: COLOUR_FAMILIES.filter((f) => families.has(f)),
   };
-})();
+}
 
 export function PaintsBrowser() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  // Load the dataset from the static asset once on mount (null = still loading).
+  const [paints, setPaints] = useState<BrowsePaint[] | null>(null);
+  const [loadError, setLoadError] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    fetch(BROWSE_INDEX_URL)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json() as Promise<BrowsePaint[]>;
+      })
+      .then((data) => {
+        if (!cancelled) setPaints(data);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setLoadError(true);
+          setPaints([]);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const loading = paints === null;
+  const facets = useMemo(() => computeFacets(paints ?? []), [paints]);
 
   // Filters derived from the URL (shareable + back/forward friendly).
   const q = searchParams.get("q") ?? "";
@@ -126,7 +159,7 @@ export function PaintsBrowser() {
   };
 
   const results = filterPaints(
-    PAINTS,
+    paints ?? [],
     {
       search: q,
       brands: selBrands,
@@ -149,7 +182,7 @@ export function PaintsBrowser() {
   }
 
   // Ranges scoped to selected brands (or all when none selected).
-  const rangeEntries = [...FACETS.ranges.entries()];
+  const rangeEntries = [...facets.ranges.entries()];
   const rangeOptions = (
     selBrands.length
       ? rangeEntries.filter(([, brands]) =>
@@ -186,19 +219,19 @@ export function PaintsBrowser() {
       </div>
       <FacetGroup
         title="Brand"
-        options={FACETS.brands.map((b) => ({ value: b, label: b }))}
+        options={facets.brands.map((b) => ({ value: b, label: b }))}
         selected={new Set(selBrands)}
         onToggle={(v) => toggleIn("brand", v)}
       />
       <FacetGroup
         title="Colour family"
-        options={FACETS.families.map((f) => ({ value: f, label: f }))}
+        options={facets.families.map((f) => ({ value: f, label: f }))}
         selected={new Set(selFamilies)}
         onToggle={(v) => toggleIn("family", v)}
       />
       <FacetGroup
         title="Type"
-        options={FACETS.types.map((t) => ({ value: t, label: t }))}
+        options={facets.types.map((t) => ({ value: t, label: t }))}
         selected={new Set(selTypes)}
         onToggle={(v) => toggleIn("type", v)}
       />
@@ -286,11 +319,35 @@ export function PaintsBrowser() {
 
         <div className="min-w-0 flex-1">
           <p className="mb-3 text-sm text-muted-foreground" aria-live="polite">
-            {results.length.toLocaleString()} paint
-            {results.length === 1 ? "" : "s"}
+            {loading
+              ? "Loading paints…"
+              : `${results.length.toLocaleString()} paint${
+                  results.length === 1 ? "" : "s"
+                }`}
           </p>
 
-          {results.length === 0 ? (
+          {loading ? (
+            <div
+              className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"
+              aria-hidden="true"
+            >
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-32 animate-pulse rounded-lg border border-border bg-muted"
+                />
+              ))}
+            </div>
+          ) : loadError ? (
+            <div className="rounded-lg border border-dashed border-border p-10 text-center text-muted-foreground">
+              <p className="font-medium text-foreground">
+                Couldn’t load the paint database
+              </p>
+              <p className="mt-1 text-sm">
+                Check your connection and try refreshing the page.
+              </p>
+            </div>
+          ) : results.length === 0 ? (
             <div className="rounded-lg border border-dashed border-border p-10 text-center text-muted-foreground">
               <p className="font-medium text-foreground">No paints found</p>
               <p className="mt-1 text-sm">

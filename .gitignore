@@ -17,6 +17,10 @@
 /.next/
 /out/
 
+# generated at build time from data/paints/*.json (npm run build:index)
+/public/browse-index.json
+/.cache/
+
 # production
 /build
 
