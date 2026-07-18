@@ -86,11 +86,11 @@ Brand and product names are trademarks of their respective owners.
 - [x] Similar-colour matching (CIEDE2000)
 - [x] Light/dark + responsive
 - [ ] Add more paint brands and ranges
-- [ ] Make light/dark follow the system automatically (drop the manual toggle)
-- [ ] Add a flag for metallic paints, and a filter for metallic vs non-metallic
+- [x] Light/dark follows the system by default, with a manual toggle to override
+- [x] Add a flag for metallic paints, and a filter for metallic vs non-metallic
       (e.g Auric Armour Gold is listed as similar to yellows and golds, but
       really they're completely different use cases)
-- [ ] Add filters to the similar-colour list (e.g. only show paints from a
+- [x] Add filters to the similar-colour list (e.g. only show paints from a
       certain brand, or only show paints of a certain type)
 - [ ] User accounts & login
 - [ ] Save the paints you own

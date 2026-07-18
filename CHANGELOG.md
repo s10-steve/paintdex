@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Eight more paint brands imported from the upstream dataset — The Army Painter,
   Duncan Rhodes, Green Stuff World, Liquitex, Mig, P3, Scale 75 and Tamiya —
   taking the catalogue from ~2,700 to 4,940 paints across 11 brands.
+- Metallic-finish flag (`metallic`) on paint records, independent of `type`
+  since brands classify metallics inconsistently. Seeded from `type: "metallic"`
+  plus a vetted set of Citadel metallics, shown as a badge on paint cards and
+  detail pages, and community-correctable like hex values.
+- Metallic/non-metallic filter on the `/paints` browse page (encoded in the URL).
+- Brand, type and finish (metallic) filters on each paint's similar-colour list.
+  Applying a filter re-ranks the whole catalogue client-side (reusing the browse
+  index) rather than narrowing the precomputed top matches, so e.g. filtering
+  Auric Armour Gold to "metallic" surfaces real golds instead of flat yellows.
 - Interactive colour-wheel idea added to the roadmap.
 
 ### Changed

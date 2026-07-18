@@ -43,6 +43,12 @@ export interface Paint {
   /** Manufacturer product code, when known. */
   code?: string | null;
   discontinued: boolean;
+  /**
+   * Whether the paint has a metallic finish. Independent of `type` — brands
+   * classify metallics inconsistently — so it's a separate, hand-correctable
+   * flag. Absent is treated as false.
+   */
+  metallic?: boolean;
 }
 
 /** A paint enriched with precomputed CIE-Lab for fast similarity math. */

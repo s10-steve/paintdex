@@ -92,6 +92,9 @@ export function PaintsBrowser() {
   );
   const selFamilies = parseList(searchParams.get("family"));
   const includeDiscontinued = searchParams.get("disc") === "1";
+  const metalParam = searchParams.get("metal");
+  const metallic: "only" | "exclude" | undefined =
+    metalParam === "1" ? "only" : metalParam === "0" ? "exclude" : undefined;
   const sortParam = searchParams.get("sort");
   const sort: SortKey = SORTS.some((s) => s.value === sortParam)
     ? (sortParam as SortKey)
@@ -167,6 +170,7 @@ export function PaintsBrowser() {
       types: selTypes,
       families: selFamilies,
       includeDiscontinued,
+      metallic,
     },
     sort,
   );
@@ -199,6 +203,7 @@ export function PaintsBrowser() {
     selTypes.length +
     selFamilies.length +
     (includeDiscontinued ? 1 : 0) +
+    (metallic ? 1 : 0) +
     (q ? 1 : 0);
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -235,6 +240,37 @@ export function PaintsBrowser() {
         selected={new Set(selTypes)}
         onToggle={(v) => toggleIn("type", v)}
       />
+      <div className="border-b border-border py-3">
+        <span className="text-sm font-semibold">Finish</span>
+        <div className="mt-2 flex flex-col gap-1">
+          {(
+            [
+              { value: "", label: "All" },
+              { value: "1", label: "Metallic only" },
+              { value: "0", label: "Non-metallic" },
+            ] as const
+          ).map((o) => (
+            <label
+              key={o.value}
+              className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-sm hover:bg-muted"
+            >
+              <input
+                type="radio"
+                name="metallic-filter"
+                className="accent-[var(--primary)]"
+                checked={(metalParam ?? "") === o.value}
+                onChange={() =>
+                  commit((p) => {
+                    if (o.value) p.set("metal", o.value);
+                    else p.delete("metal");
+                  })
+                }
+              />
+              {o.label}
+            </label>
+          ))}
+        </div>
+      </div>
       <FacetGroup
         title="Range"
         options={rangeOptions}
