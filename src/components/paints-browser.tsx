@@ -27,7 +27,7 @@ function parseList(v: string | null): string[] {
 // The dataset is served as a cacheable static asset (precomputed by
 // `scripts/build-browse-index.ts`) and fetched at runtime, so it never enters
 // the client JS bundle. See the loader effect below.
-const BROWSE_INDEX_URL = "/browse-index.json";
+export const BROWSE_INDEX_URL = "/browse-index.json";
 
 /** Derive the filter facet lists from the loaded dataset. */
 function computeFacets(paints: PaintWithLab[]) {
