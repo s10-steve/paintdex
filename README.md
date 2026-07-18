@@ -90,7 +90,7 @@ Brand and product names are trademarks of their respective owners.
       for the rest but please update the search text to be accurate.
 - [ ] Autocomplete search suggestions (e.g. typing "abaddon" should suggest
       "Abaddon Black" and "Abaddon Grey")
-- [ ] On the paint page, add a filter for the match grouping. By default have it
+- [x] On the paint page, add a filter for the match grouping. By default have it
       only show matches of 'close' or better.
 
 ### Paint database and UI features

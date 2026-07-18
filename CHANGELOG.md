@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   surfaces real matches from deeper in the catalogue instead of an empty list.
   This replaces the old "other brands only" toggle, whose precomputed cross-brand
   list is no longer built — halving the similar-colour index cache.
+- A "Minimum match" control on the similar-colour list that hides looser matches
+  by ΔE band (Identical → Show all), defaulting to "Close or better" so the
+  least-useful matches are trimmed out of the box.
 - Interactive colour-wheel idea added to the roadmap.
 
 ### Changed

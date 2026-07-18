@@ -59,6 +59,19 @@ const toRenderItems = (items: SimilarItem[]): RenderItem[] =>
 const matchMetallic = (p: { metallic?: boolean }, m: Metallic) =>
   m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
 
+// Minimum-match cutoffs, keyed to matchLabel()'s ΔE bands. Value is the upper
+// (exclusive) ΔE bound; "all" removes the cap. Defaults to "Close or better",
+// since looser matches aren't much use.
+const MATCH_OPTIONS = [
+  { value: "1", label: "Identical only" },
+  { value: "2", label: "Near-perfect or better" },
+  { value: "5", label: "Very close or better" },
+  { value: "10", label: "Close or better" },
+  { value: "20", label: "Similar or better" },
+  { value: "all", label: "Show all" },
+] as const;
+const DEFAULT_MATCH = "10";
+
 export function SimilarColours({
   target,
   all,
@@ -71,11 +84,17 @@ export function SimilarColours({
   const [selTypes, setSelTypes] = useState<Set<string>>(new Set());
   const [selRanges, setSelRanges] = useState<Set<string>>(new Set());
   const [metallic, setMetallic] = useState<Metallic>("");
+  const [minMatch, setMinMatch] = useState<string>(DEFAULT_MATCH);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const activeCount =
+  // Facet filters drive the re-rank; the match cutoff is a cheap post-filter on
+  // distance, so it's tracked separately and never triggers a fetch/re-rank.
+  const facetCount =
     selBrands.size + selTypes.size + selRanges.size + (metallic ? 1 : 0);
-  const anyFilter = activeCount > 0;
+  const anyFilter = facetCount > 0;
+  const matchActive = minMatch !== DEFAULT_MATCH;
+  const activeCount = facetCount + (matchActive ? 1 : 0);
+  const cutoff = minMatch === "all" ? Infinity : Number(minMatch);
 
   // The precomputed `all` list renders the unfiltered view instantly. The full
   // catalogue (with Lab) is fetched once so we can re-rank on filter AND grey out
@@ -164,9 +183,9 @@ export function SimilarColours({
     );
   }, [anyFilter, universe, selBrands, selTypes, selRanges, metallic, target]);
 
-  const items: RenderItem[] = anyFilter
-    ? (computed ?? [])
-    : toRenderItems(all);
+  const items: RenderItem[] = (
+    anyFilter ? (computed ?? []) : toRenderItems(all)
+  ).filter((i) => i.distance < cutoff);
   // A filter is set but the dataset (and so the re-rank) isn't ready yet.
   const awaitingData = anyFilter && !universe && !loadError;
 
@@ -185,6 +204,7 @@ export function SimilarColours({
     setSelTypes(new Set());
     setSelRanges(new Set());
     setMetallic("");
+    setMinMatch(DEFAULT_MATCH);
   };
 
   // Show only values that still yield results given the other selections, plus
@@ -202,7 +222,7 @@ export function SimilarColours({
     <div className="text-sm">
       <div className="flex items-center justify-between pb-2">
         <span className="font-semibold">Filter matches</span>
-        {anyFilter ? (
+        {anyFilter || matchActive ? (
           <button
             type="button"
             onClick={clearAll}
@@ -211,6 +231,23 @@ export function SimilarColours({
             Clear all
           </button>
         ) : null}
+      </div>
+      <div className="border-b border-border py-3">
+        <label htmlFor="similar-match" className="text-sm font-semibold">
+          Minimum match
+        </label>
+        <select
+          id="similar-match"
+          value={minMatch}
+          onChange={(e) => setMinMatch(e.target.value)}
+          className="mt-2 w-full rounded-lg border border-input bg-card px-2.5 py-1.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          {MATCH_OPTIONS.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
       </div>
       <FacetGroup
         title="Brand"
