@@ -49,6 +49,7 @@ npm run dev          # http://localhost:3000
 | `npm run lint` | ESLint |
 | `npm run test` | Unit tests (colour maths + filtering) |
 | `npm run validate:data` | Validate `data/paints/*.json` against the schema |
+| `npm run build:browse-index` | Precompute the `/paints` browse index (runs automatically before `dev`/`build`) |
 | `npm run import:source` | (Re)import paint data from the upstream dataset |
 
 ## Deploying
@@ -99,9 +100,11 @@ Brand and product names are trademarks of their respective owners.
 
 Follow-ups from the initial code review, to address as the catalogue grows:
 
-- [ ] **Browse-page bundle size.** The full paint dataset currently ships in the
-      client JS bundle. Serve it as a cacheable static asset and precompute Lab
-      values so the `/paints` bundle stays lean as more brands are added.
+- [x] **Browse-page bundle size.** The paint dataset is now precomputed (Lab +
+      colour family) into `public/browse-index.json` by
+      `npm run build:browse-index` and fetched at runtime, so it no longer ships
+      in the `/paints` client JS bundle. (~850 KB of data left the bundle;
+      ~175 KB gzipped over the wire as a cacheable static asset.)
 - [ ] **Build-time scaling.** Static generation runs `findSimilar` over the whole
       dataset for every paint page (~O(n²) CIEDE2000 calls). Fine at the current
       size, but cap or precompute similar-colour lists before the dataset grows
