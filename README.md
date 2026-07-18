@@ -10,10 +10,11 @@ across brands.
 
 ## Features
 
-- **Searchable, filterable database** of 2,600+ paints across **Citadel**,
-  **Vallejo** and **AK Interactive**. Filter by brand, product range, finish
-  type and colour family — every filter is encoded in the URL, so any view is
-  shareable.
+- **Searchable, filterable database** of 4,900+ paints across 11 brands —
+  **Citadel**, **Vallejo**, **AK Interactive**, **The Army Painter**,
+  **Duncan Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**,
+  **Scale 75** and **Tamiya**. Filter by brand, product range, finish type and
+  colour family — every filter is encoded in the URL, so any view is shareable.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
   distance — with an option to see other brands only.
@@ -74,8 +75,9 @@ best-effort and community-correctable. See
 [`data/paints/README.md`](data/paints/README.md) for details.
 
 Paintdex is not affiliated with or endorsed by Games Workshop, Vallejo, AK
-Interactive, or any paint manufacturer. Brand and product names are trademarks
-of their respective owners.
+Interactive, The Army Painter, Duncan Rhodes, Green Stuff World, Liquitex, AMMO
+by Mig Jimenez, Privateer Press, Scale 75, Tamiya, or any paint manufacturer.
+Brand and product names are trademarks of their respective owners.
 
 ## Roadmap
 

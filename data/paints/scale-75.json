@@ -1,0 +1,3576 @@
+[
+  {
+    "id": "scale-75-abyssal-blue",
+    "name": "Abyssal Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#292A2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-acid-green",
+    "name": "Acid Green",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#C4D964",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-acid-pink",
+    "name": "Acid Pink",
+    "brand": "Scale 75",
+    "range": "FX Range",
+    "type": "other",
+    "hex": "#F81DFE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-adriatic-blue",
+    "name": "Adriatic Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#128A9B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-african-shadow",
+    "name": "African Shadow",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#56424B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-airnrhod-blue",
+    "name": "Airnrhod Blue",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#39398F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-aldebaran-red",
+    "name": "Aldebaran Red",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#BE331E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-alizarin-green",
+    "name": "Alizarin Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#26944B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-amarth-blue",
+    "name": "Amarth Blue",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#0582C5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-amber-alchemy",
+    "name": "Amber Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#B89E85",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-american-olive",
+    "name": "American Olive",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#736737",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-amethyst-alchemy",
+    "name": "Amethyst Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#9F8EB0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ancestral-blue",
+    "name": "Ancestral Blue",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#61ABC4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-antares-red",
+    "name": "Antares Red",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#C11E21",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-anthartic-grey",
+    "name": "Anthartic Grey",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#42424C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-arabic-shadow",
+    "name": "Arabic Shadow",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#7C6833",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-arbuckles-brown",
+    "name": "Arbuckles Brown",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#3C2922",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-arcane-purple",
+    "name": "Arcane Purple",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#350D4C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ardenes-green",
+    "name": "Ardenes Green",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#566345",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-arphen-jade",
+    "name": "Arphen Jade",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#035D53",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-art-black",
+    "name": "Art Black",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#101010",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-art-white",
+    "name": "Art White",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#FEFEFE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-artic-blue",
+    "name": "Artic Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#888FA1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-artic-blue-scale-color-range",
+    "name": "Artic Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#9FB3BC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-baal-crimson",
+    "name": "Baal Crimson",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#E11A39",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-basic-flesh",
+    "name": "Basic Flesh",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#D0B393",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-basilisk-green",
+    "name": "Basilisk Green",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#3D5152",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-beherit-red",
+    "name": "Beherit Red",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#E2390E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-belladonna-green",
+    "name": "Belladonna Green",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#4CA579",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-bering-blue",
+    "name": "Bering Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#6C8997",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-birch",
+    "name": "Birch",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#EFD2B0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-black",
+    "name": "Black",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#2C2C2C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-black-forest-green",
+    "name": "Black Forest Green",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#004834",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-black-ink",
+    "name": "Black Ink",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "ink",
+    "hex": "#1B1A18",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-black-leather",
+    "name": "Black Leather",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#422A2A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-black-metal",
+    "name": "Black Metal",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#484848",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-blackert-brown",
+    "name": "Blackert Brown",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#B8825C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-blood-red",
+    "name": "Blood Red",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#912727",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-bloodfest-crimson",
+    "name": "Bloodfest Crimson",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#6A033B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-boreal-green",
+    "name": "Boreal Green",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#00563E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-bosh-chesnut",
+    "name": "Bosh Chesnut",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#69452F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-braineater-azure",
+    "name": "Braineater Azure",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#676AAF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-braun",
+    "name": "Braun",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#E5C89E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-brilli-white",
+    "name": "Brilli White",
+    "brand": "Scale 75",
+    "range": "FX Range",
+    "type": "other",
+    "hex": "#FEFEFE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-brown-gray",
+    "name": "Brown Gray",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#7B7170",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-brown-leather",
+    "name": "Brown Leather",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#4D2C1D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-buff",
+    "name": "Buff",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#B29D82",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-burgundy-wine-red",
+    "name": "Burgundy Wine Red",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#5A2212",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-burnt-sienna",
+    "name": "Burnt Sienna",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#7C2D06",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-burnt-sienna-umber",
+    "name": "Burnt Sienna Umber",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#4C2A20",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-burnt-skin",
+    "name": "Burnt Skin",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#654023",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-burnt-umber",
+    "name": "Burnt Umber",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#51402C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-cantabric-blue",
+    "name": "Cantabric Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#164765",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-caribbean-blue",
+    "name": "Caribbean Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#75B6B0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-caspian-blue",
+    "name": "Caspian Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#2A4F58",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-chesknut-ink",
+    "name": "Chesknut Ink",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "ink",
+    "hex": "#40362D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-chink-orange",
+    "name": "Chink Orange",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#B2621B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-citrine-alchemy",
+    "name": "Citrine Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#EFE1C7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-city-dust",
+    "name": "City Dust",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#C6C1BD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-cobalt-blue",
+    "name": "Cobalt Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#005E91",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-cobalt-metal",
+    "name": "Cobalt Metal",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#7FA2B5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-cobalt-violet-grey",
+    "name": "Cobalt Violet Grey",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#73768B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-cokum-copper",
+    "name": "Cokum Copper",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#A37021",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-coral-red",
+    "name": "Coral Red",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#F73724",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-cork-brown",
+    "name": "Cork Brown",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#9F8D78",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-corrupted-stamina",
+    "name": "Corrupted Stamina",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#699D0C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-cremeweiss",
+    "name": "Cremeweiss",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#FCFCE0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-crimsom",
+    "name": "Crimsom",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#C22335",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-crimson-ink",
+    "name": "Crimson Ink",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "ink",
+    "hex": "#9F1C2B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-brown-ochre",
+    "name": "Dark Brown Ochre",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#1E1317",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-earth",
+    "name": "Dark Earth",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#643722",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-kraken",
+    "name": "Dark Kraken",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#194A5B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-mud",
+    "name": "Dark Mud",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#210200",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-prussian-blue",
+    "name": "Dark Prussian Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#252430",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-rust",
+    "name": "Dark Rust",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#6B3729",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-sand",
+    "name": "Dark Sand",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#D4BB92",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-stains",
+    "name": "Dark Stains",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#000000",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-ultramarine",
+    "name": "Dark Ultramarine",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#32297A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dark-violet",
+    "name": "Dark Violet",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#481A3F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dead-flesh",
+    "name": "Dead Flesh",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#7F6662",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-decay-black",
+    "name": "Decay Black",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#1C1C1C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-decayed-metal",
+    "name": "Decayed Metal",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#5D4038",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-deep-blue",
+    "name": "Deep Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#383B4A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-deep-ocean",
+    "name": "Deep Ocean",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#000B2B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-deep-red",
+    "name": "Deep Red",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#701B20",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-demon-brown",
+    "name": "Demon Brown",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#66271E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-desert-yellow",
+    "name": "Desert Yellow",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#D9AF75",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-despair-green",
+    "name": "Despair Green",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#17383D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dragon-blood",
+    "name": "Dragon Blood",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#810622",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-drain-life",
+    "name": "Drain Life",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#E69464",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dubai-brown",
+    "name": "Dubai Brown",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#583D22",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dunkelbraun-brown",
+    "name": "Dunkelbraun Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#413028",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dunkelgelb-44",
+    "name": "Dunkelgelb 44",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#DED1B1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dunkelgelb-yellow",
+    "name": "Dunkelgelb Yellow",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#CBB550",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dunkelgrau-gray",
+    "name": "Dunkelgrau Gray",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#57585A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dust-in-summertime",
+    "name": "Dust In Summertime",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#727556",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-dwarven-gold",
+    "name": "Dwarven Gold",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#D68D2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-earth-green",
+    "name": "Earth Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#4A3C2F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-eclipse-grey",
+    "name": "Eclipse Grey",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#363636",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-eldandil-violet",
+    "name": "Eldandil Violet",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#2B1A3C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-electric-blue",
+    "name": "Electric Blue",
+    "brand": "Scale 75",
+    "range": "FX Range",
+    "type": "other",
+    "hex": "#021AFE",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-elixir-green",
+    "name": "Elixir Green",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#005C4D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-elven-gold",
+    "name": "Elven Gold",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#CDAB47",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-emerald-alchemy",
+    "name": "Emerald Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#78A098",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-emerald-green",
+    "name": "Emerald Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#165341",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-endurance-brown",
+    "name": "Endurance Brown",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#773F1C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-estus-yellow",
+    "name": "Estus Yellow",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#FEE459",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-evil-root",
+    "name": "Evil Root",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#F07E4A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-fairy-blood",
+    "name": "Fairy Blood",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#414874",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-fall-green",
+    "name": "Fall Green",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#C9D161",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-field-gray",
+    "name": "Field Gray",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#66736C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-field-grey-1",
+    "name": "Field Grey 1",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#39553C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-field-grey-2",
+    "name": "Field Grey 2",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#3F4C45",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-flat-black",
+    "name": "Flat Black",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#1C1C1C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-flight-blue",
+    "name": "Flight Blue",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#01688B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-frenzy-orange",
+    "name": "Frenzy Orange",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#EC6001",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-fuchsia",
+    "name": "Fuchsia",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#AA336B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-fuel-and-grease",
+    "name": "Fuel And Grease",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#EEEAE9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-full-healing",
+    "name": "Full Healing",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#FEEF00",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-garnet-alchemy",
+    "name": "Garnet Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#88424D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-gelbraun-brown",
+    "name": "Gelbraun Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#D5AC74",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-gobi-brown",
+    "name": "Gobi Brown",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#6E5A3F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-goblin-flesh",
+    "name": "Goblin Flesh",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#77B840",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-golden-flesh",
+    "name": "Golden Flesh",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#E2A76D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-golden-skin",
+    "name": "Golden Skin",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#EDC89C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-golem-grey",
+    "name": "Golem Grey",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#2C3031",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-graphene-gray",
+    "name": "Graphene Gray",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#4A515B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-graphite",
+    "name": "Graphite",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#8B8C87",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-grau",
+    "name": "Grau",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#E8D5C4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-graugrun-gray",
+    "name": "Graugrun Gray",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#A08848",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-grease",
+    "name": "Grease",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#3E2D25",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-green-grey",
+    "name": "Green Grey",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#2C3033",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-green-moss",
+    "name": "Green Moss",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#1C7C23",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-green-ochre",
+    "name": "Green Ochre",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#948123",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-greenskin-flesh",
+    "name": "Greenskin Flesh",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#006F34",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-grey-spell",
+    "name": "Grey Spell",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#808FB0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-grizzly-brown",
+    "name": "Grizzly Brown",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#50181B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-harvester-flesh",
+    "name": "Harvester Flesh",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#D0A791",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-hastur-purple",
+    "name": "Hastur Purple",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#740331",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-health-red",
+    "name": "Health Red",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#C31610",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-heavy-metal",
+    "name": "Heavy Metal",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#9C9DA1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-hellbound-flesh",
+    "name": "Hellbound Flesh",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#9CB1AC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-hiril-blue",
+    "name": "Hiril Blue",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#4AA9BF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-huldra-blue",
+    "name": "Huldra Blue",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#234256",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-human-flesh",
+    "name": "Human Flesh",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#DAAB97",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-hykey-yellow",
+    "name": "Hykey Yellow",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#EFD491",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-indian-shadow",
+    "name": "Indian Shadow",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#673D3F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-inktense-black",
+    "name": "Inktense Black",
+    "brand": "Scale 75",
+    "range": "Inktensity Range",
+    "type": "ink",
+    "hex": "#292929",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-inktense-blue",
+    "name": "Inktense Blue",
+    "brand": "Scale 75",
+    "range": "Inktensity Range",
+    "type": "ink",
+    "hex": "#012861",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-inktense-chesnut",
+    "name": "Inktense Chesnut",
+    "brand": "Scale 75",
+    "range": "Inktensity Range",
+    "type": "ink",
+    "hex": "#803C15",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-inktense-green",
+    "name": "Inktense Green",
+    "brand": "Scale 75",
+    "range": "Inktensity Range",
+    "type": "ink",
+    "hex": "#043E32",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-inktense-red",
+    "name": "Inktense Red",
+    "brand": "Scale 75",
+    "range": "Inktensity Range",
+    "type": "ink",
+    "hex": "#A91E21",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-inktense-violet",
+    "name": "Inktense Violet",
+    "brand": "Scale 75",
+    "range": "Inktensity Range",
+    "type": "ink",
+    "hex": "#49196F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-inktense-wood",
+    "name": "Inktense Wood",
+    "brand": "Scale 75",
+    "range": "Inktensity Range",
+    "type": "ink",
+    "hex": "#493326",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-inktense-yellow",
+    "name": "Inktense Yellow",
+    "brand": "Scale 75",
+    "range": "Inktensity Range",
+    "type": "ink",
+    "hex": "#E3BE15",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-innsmouth-blue",
+    "name": "Innsmouth Blue",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#00596B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-intense-yellow",
+    "name": "Intense Yellow",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#F2CB02",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-irati-green",
+    "name": "Irati Green",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#008721",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-iroko",
+    "name": "Iroko",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#B28F4D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ishtar-pink",
+    "name": "Ishtar Pink",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#FC9363",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-jade-green",
+    "name": "Jade Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#2FBEAF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-jorildyn-turquoise",
+    "name": "Jorildyn Turquoise",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#067DA7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-kalahari-orange",
+    "name": "Kalahari Orange",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#A3563C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-kunzite-alchemy",
+    "name": "Kunzite Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#CA9FBB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-leaden-sky",
+    "name": "Leaden Sky",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#404F70",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-lemon-yellow",
+    "name": "Lemon Yellow",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#EBEA52",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-lendanis-grey",
+    "name": "Lendanis Grey",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#8B8DA4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-leviathan-blue",
+    "name": "Leviathan Blue",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#005E70",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-life-red",
+    "name": "Life Red",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#E63217",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-light-moss-green",
+    "name": "Light Moss Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#61701B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-light-rust",
+    "name": "Light Rust",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#C1682C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-light-skin",
+    "name": "Light Skin",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#E2B890",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-light-skin-artist-range",
+    "name": "Light Skin",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#D3B5AD",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-light-sky",
+    "name": "Light Sky",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#7890B4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-light-ultramarine",
+    "name": "Light Ultramarine",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#263E88",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-lilith-yellow",
+    "name": "Lilith Yellow",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#FDEA83",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-lime-green",
+    "name": "Lime Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#ACE44A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-love-affair",
+    "name": "Love Affair",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#E92B37",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-magenta",
+    "name": "Magenta",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#C60A85",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-magic-blue",
+    "name": "Magic Blue",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#147797",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-mana-regeneration",
+    "name": "Mana Regeneration",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#0184D2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-marduk-yellow",
+    "name": "Marduk Yellow",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#FFEF00",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-mars-orange",
+    "name": "Mars Orange",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#AF6631",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-mayhem-red",
+    "name": "Mayhem Red",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#9F0D20",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-mediterranean-blue",
+    "name": "Mediterranean Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#4D73B2",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-medium-wet",
+    "name": "Medium Wet",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-merm-green",
+    "name": "Merm Green",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#455236",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-mid-ground-earth",
+    "name": "Mid Ground / Earth",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#C8AD7E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-misfits-green",
+    "name": "Misfits Green",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#004B31",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-miskatonic-grey",
+    "name": "Miskatonic Grey",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#BBB7B4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-mojave-white",
+    "name": "Mojave White",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#D2CEB5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-moonray-flesh",
+    "name": "Moonray Flesh",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#F0D7A1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-moonstone-alchemy",
+    "name": "Moonstone Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#BC937F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-moss-green",
+    "name": "Moss Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#43492F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-nacar",
+    "name": "Nacar",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#9B9F90",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-naples-yellow",
+    "name": "Naples Yellow",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#DAAC22",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-navy-blue",
+    "name": "Navy Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#253B6D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-necro-gold",
+    "name": "Necro Gold",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#574E31",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-necro-grey",
+    "name": "Necro Grey",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#303038",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-neon-blue",
+    "name": "Neon Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#0E81D6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-neon-green",
+    "name": "Neon Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#62F687",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-neon-orange",
+    "name": "Neon Orange",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#FF9E0E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-neon-pink",
+    "name": "Neon Pink",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#FE3F47",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-neon-red",
+    "name": "Neon Red",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#EF321D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-neon-yellow",
+    "name": "Neon Yellow",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#EDFE5A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ocean-blue",
+    "name": "Ocean Blue",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#0C2140",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ocean-gray",
+    "name": "Ocean Gray",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#556477",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-odorless-thinner",
+    "name": "Odorless Thinner",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#DFDFDF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-off-white",
+    "name": "Off White",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#DFD3B9",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ogre-brown",
+    "name": "Ogre Brown",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#C07704",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-old-copper",
+    "name": "Old Copper",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#97604C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-olive-brown",
+    "name": "Olive Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#434631",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-olive-green",
+    "name": "Olive Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#585135",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-olivegrun-44",
+    "name": "Olivegrun 44",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#93A45D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-olivegrun-green",
+    "name": "Olivegrun Green",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#5A6432",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-orange",
+    "name": "Orange",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#E9670F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-orange-artist-range",
+    "name": "Orange",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#D45B14",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-orange-leather",
+    "name": "Orange Leather",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#A06337",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-orange-neon",
+    "name": "Orange Neon",
+    "brand": "Scale 75",
+    "range": "FX Range",
+    "type": "other",
+    "hex": "#F96401",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-orcish-dermis",
+    "name": "Orcish Dermis",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#DB7D73",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-oxford-blue",
+    "name": "Oxford Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#434EA8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pale-dust",
+    "name": "Pale Dust",
+    "brand": "Scale 75",
+    "range": "Soil Works",
+    "type": "other",
+    "hex": "#EAD1BB",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pale-earth",
+    "name": "Pale Earth",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#5F4125",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pale-skin",
+    "name": "Pale Skin",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#F1D9CF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pale-skin-artist-range",
+    "name": "Pale Skin",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#F3D6CF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-panzer-grey",
+    "name": "Panzer Grey",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#30383B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-panzer-yellow",
+    "name": "Panzer Yellow",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#D6C78C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-paralyze-blue",
+    "name": "Paralyze Blue",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#3579C0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pastel-blue",
+    "name": "Pastel Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#44646F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pastel-green",
+    "name": "Pastel Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#929D97",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pastel-pink",
+    "name": "Pastel Pink",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#D97ABA",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pastel-violet",
+    "name": "Pastel Violet",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#804A95",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-peanut-butter",
+    "name": "Peanut Butter",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#BB8103",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pearl-grey",
+    "name": "Pearl Grey",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#867980",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-peridot-alchemy",
+    "name": "Peridot Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#8A8D78",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-permanent-orange",
+    "name": "Permanent Orange",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#FF6B0D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-petroleum-gray",
+    "name": "Petroleum Gray",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#554D4B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-phoenix-egg",
+    "name": "Phoenix Egg",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#E5D0A3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-phoenix-feather",
+    "name": "Phoenix Feather",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#D18A5C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pink-flesh",
+    "name": "Pink Flesh",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#D1928D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pink-flesh-artist-range",
+    "name": "Pink Flesh",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#BD7066",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pistachio-green-ink",
+    "name": "Pistachio Green Ink",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "ink",
+    "hex": "#C0CF18",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-primary-blue",
+    "name": "Primary Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#1A76B5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-primary-red",
+    "name": "Primary Red",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#D53036",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-primary-yellow",
+    "name": "Primary Yellow",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#F4E915",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-primer-surface-black",
+    "name": "Primer Surface Black",
+    "brand": "Scale 75",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#101318",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-primer-surface-gray",
+    "name": "Primer Surface Gray",
+    "brand": "Scale 75",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#646464",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-primer-surface-white",
+    "name": "Primer Surface White",
+    "brand": "Scale 75",
+    "range": "Primers",
+    "type": "primer",
+    "hex": "#C9CFD5",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-prusian-blue",
+    "name": "Prusian Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#06293D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-psychedelic-purple",
+    "name": "Psychedelic Purple",
+    "brand": "Scale 75",
+    "range": "FX Range",
+    "type": "other",
+    "hex": "#BB1CFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-pure-copper",
+    "name": "Pure Copper",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#CC744C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-purity-white",
+    "name": "Purity White",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-purple",
+    "name": "Purple",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#912360",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-rage-brown",
+    "name": "Rage Brown",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#7C2B16",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ragweed-orange",
+    "name": "Ragweed Orange",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#DF6A27",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-rainy-gray",
+    "name": "Rainy Gray",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#8B8683",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-raw-sienna",
+    "name": "Raw Sienna",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#654226",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-raw-umber",
+    "name": "Raw Umber",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#765F33",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-red-ecstasy",
+    "name": "Red Ecstasy",
+    "brand": "Scale 75",
+    "range": "FX Range",
+    "type": "other",
+    "hex": "#F81803",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-red-label",
+    "name": "Red Label",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#DF0617",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-red-leather",
+    "name": "Red Leather",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#5F3634",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-red-ochre",
+    "name": "Red Ochre",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#80362D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-remove-mana",
+    "name": "Remove Mana",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#0D2736",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-replenish-blue",
+    "name": "Replenish Blue",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#01479C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-resurrection-flesh",
+    "name": "Resurrection Flesh",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#BB8B65",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-riff-green",
+    "name": "Riff Green",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#1A2D29",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-rlyeh-grey",
+    "name": "Rlyeh Grey",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#464B4E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-rotbraun-44",
+    "name": "Rotbraun 44",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#905024",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-rotbraun-primer-red",
+    "name": "Rotbraun Primer Red",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#925447",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-rotbraun-red",
+    "name": "Rotbraun Red",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#52341A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-rotten-pus",
+    "name": "Rotten Pus",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#FBB400",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ruby-alchemy",
+    "name": "Ruby Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#D37887",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-russian-green",
+    "name": "Russian Green",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#584F26",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-russian-light-green",
+    "name": "Russian Light Green",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#635111",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-russian-uniform",
+    "name": "Russian Uniform",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#695928",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sahara-sand",
+    "name": "Sahara Sand",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#EFD066",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sahara-yellow",
+    "name": "Sahara Yellow",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#AA852D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-salmon-fury",
+    "name": "Salmon Fury",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#EB5650",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sand-yellow",
+    "name": "Sand Yellow",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#EAC581",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sandalwood",
+    "name": "Sandalwood",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#B89086",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sap-green",
+    "name": "Sap Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#033417",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-savage-beige",
+    "name": "Savage Beige",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#F3D783",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-shadow-black",
+    "name": "Shadow Black",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#1D1F1C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-shadow-blue",
+    "name": "Shadow Blue",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#2A3245",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sharpnel-red",
+    "name": "Sharpnel Red",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#6E290A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sherwood-green",
+    "name": "Sherwood Green",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#7D853A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sky-blue",
+    "name": "Sky Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#2496C8",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sky-blue-artist-range",
+    "name": "Sky Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#C0E4ED",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-slate-gray",
+    "name": "Slate Gray",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#372B15",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-slimer-green",
+    "name": "Slimer Green",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#5A9032",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-smoke-gray",
+    "name": "Smoke Gray",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#886859",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sol-yellow",
+    "name": "Sol Yellow",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#ECCB00",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-spectral-wolf",
+    "name": "Spectral Wolf",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#AB9FA1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-speed-metal",
+    "name": "Speed Metal",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#D4D4D6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-speed-yellow",
+    "name": "Speed Yellow",
+    "brand": "Scale 75",
+    "range": "FX Range",
+    "type": "other",
+    "hex": "#FFFE00",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-spring-green",
+    "name": "Spring Green",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#5D9F35",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-spring-green-scale-color-range",
+    "name": "Spring Green",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#7FB953",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-dark-brown",
+    "name": "Ss Camo Dark Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#220B05",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-dark-green",
+    "name": "Ss Camo Dark Green",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#2A331E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-golden-brown",
+    "name": "SS Camo Golden Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#F0A001",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-gray-brown",
+    "name": "Ss Camo Gray Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#6F4F36",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-grey",
+    "name": "Ss Camo Grey",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#8F8063",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-highlights",
+    "name": "Ss Camo Highlights",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#FAB861",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-italian-green",
+    "name": "Ss Camo Italian Green",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#3F5232",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-light-green",
+    "name": "Ss Camo Light Green",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#7E8126",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-medium-brown",
+    "name": "Ss Camo Medium Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#825D31",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-medium-green",
+    "name": "Ss Camo Medium Green",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#4D5025",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-ocher-brown",
+    "name": "Ss Camo Ocher Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#CFAE5F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-red-brown",
+    "name": "Ss Camo Red Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#593A1B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-top-lights",
+    "name": "Ss Camo Top Lights",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#FBC77E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-top-shadows",
+    "name": "Ss Camo Top Shadows",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#343428",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-ss-camo-yellow-sand",
+    "name": "Ss Camo Yellow Sand",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#C0A56E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sulfur-yellow",
+    "name": "Sulfur Yellow",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#FED500",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-sunset-purple",
+    "name": "Sunset Purple",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#622E54",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-surfer-orc-flesh",
+    "name": "Surfer Orc Flesh",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#00A58B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-techno-green",
+    "name": "Techno Green",
+    "brand": "Scale 75",
+    "range": "FX Range",
+    "type": "other",
+    "hex": "#44FA05",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-tenere-yellow",
+    "name": "Tenere Yellow",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#E5C76F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-tesla-blue",
+    "name": "Tesla Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#414D97",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-thar-brown",
+    "name": "Thar Brown",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#B09F81",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-thrash-metal",
+    "name": "Thrash Metal",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#544943",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-tiamat-orange",
+    "name": "Tiamat Orange",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#E97329",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-tindalos-red",
+    "name": "Tindalos Red",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#5B2922",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-titanium-gray",
+    "name": "Titanium Gray",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#41342B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-titanium-grey",
+    "name": "Titanium Grey",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#404445",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-toad-green",
+    "name": "Toad Green",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#475139",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-tourmaline-alchemy",
+    "name": "Tourmaline Alchemy",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#E7A8B3",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-toxic-waste-green",
+    "name": "Toxic Waste Green",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#C7D538",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-turquoise",
+    "name": "Turquoise",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#03435F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-turquoise-blue",
+    "name": "Turquoise Blue",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#15998E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-turquoise-ink",
+    "name": "Turquoise Ink",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "ink",
+    "hex": "#204C50",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-undead-dragon",
+    "name": "Undead Dragon",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#B6C8BC",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-undead-flesh",
+    "name": "Undead Flesh",
+    "brand": "Scale 75",
+    "range": "Fantasy & Games Range",
+    "type": "other",
+    "hex": "#A8B170",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-us-dark-brown",
+    "name": "Us Dark Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#AE8A72",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-us-green",
+    "name": "Us Green",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#474632",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-us-medium-brown",
+    "name": "Us Medium Brown",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#D4AD84",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-vanilla-white",
+    "name": "Vanilla White",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#EDE8D4",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-vanilla-yellow",
+    "name": "Vanilla Yellow",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#D8CC68",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-victorian-brass",
+    "name": "Victorian Brass",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#B6843B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-viking-gold",
+    "name": "Viking Gold",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#8D591F",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-violet",
+    "name": "Violet",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#2A1C51",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-violet-blue",
+    "name": "Violet Blue",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#604673",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-violet-grey",
+    "name": "Violet Grey",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#72727C",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-walnut",
+    "name": "Walnut",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#7D6450",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-werewolf-brown",
+    "name": "Werewolf Brown",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#553C35",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-white",
+    "name": "White",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false,
+    "ranges": [
+      "Scale Color Range",
+      "Warfront  Range"
+    ]
+  },
+  {
+    "id": "scale-75-white-ink",
+    "name": "White Ink",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "ink",
+    "hex": "#F7F7F7",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-white-metal",
+    "name": "White Metal",
+    "brand": "Scale 75",
+    "range": "Metal N Alchemy Range",
+    "type": "metallic",
+    "hex": "#F1F1F1",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-white-sands",
+    "name": "White Sands",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "other",
+    "hex": "#F6E1C6",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-wild-beast",
+    "name": "Wild Beast",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#CA854E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-winter-grey",
+    "name": "Winter Grey",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#6E6E70",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-winter-shadow",
+    "name": "Winter Shadow",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#3A3C39",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-wood",
+    "name": "Wood",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#60483E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-yellow-code",
+    "name": "Yellow Code",
+    "brand": "Scale 75",
+    "range": "Warfront  Range",
+    "type": "other",
+    "hex": "#FFCB06",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-yellow-ocre",
+    "name": "Yellow Ocre",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#A0702E",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-yellow-oxide",
+    "name": "Yellow Oxide",
+    "brand": "Scale 75",
+    "range": "Artist Range",
+    "type": "other",
+    "hex": "#4B3527",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-zombie-skin",
+    "name": "Zombie Skin",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#A6A869",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-zucchini-green",
+    "name": "Zucchini Green",
+    "brand": "Scale 75",
+    "range": "Instant Colors Range",
+    "type": "other",
+    "hex": "#405B32",
+    "code": null,
+    "discontinued": false
+  }
+]
