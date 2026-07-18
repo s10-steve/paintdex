@@ -17,13 +17,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   plus a vetted set of Citadel metallics, shown as a badge on paint cards and
   detail pages, and community-correctable like hex values.
 - Metallic/non-metallic filter on the `/paints` browse page (encoded in the URL).
-- Brand and type filters on each paint's similar-colour list (metallic is one of
-  the type options). Applying a filter re-ranks the whole catalogue client-side
-  (reusing the browse index) rather than narrowing the precomputed top matches,
-  so e.g. filtering Auric Armour Gold's matches to a single brand surfaces real
-  matches from deeper in the catalogue instead of an empty list. This replaces
-  the old "other brands only" toggle, whose precomputed cross-brand list is no
-  longer built — halving the similar-colour index cache.
+- Filters on each paint's similar-colour list, reusing the browse page's
+  checkbox facets: multi-select Brand, Type and Range, plus a Metallic /
+  Non-metallic finish control. Options that would yield no results given the
+  other selections are greyed out (e.g. selecting Vallejo greys out Citadel-only
+  types like `contrast`). Applying a filter re-ranks the whole catalogue
+  client-side (reusing the browse index) rather than narrowing the precomputed
+  top matches, so e.g. filtering Auric Armour Gold's matches to a single brand
+  surfaces real matches from deeper in the catalogue instead of an empty list.
+  This replaces the old "other brands only" toggle, whose precomputed cross-brand
+  list is no longer built — halving the similar-colour index cache.
 - Interactive colour-wheel idea added to the roadmap.
 
 ### Changed

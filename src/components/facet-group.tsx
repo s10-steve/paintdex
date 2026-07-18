@@ -5,6 +5,8 @@ import { useState } from "react";
 export interface FacetOption {
   value: string;
   label: string;
+  /** Greyed out and non-interactive — no results with the current selection. */
+  disabled?: boolean;
 }
 
 interface FacetGroupProps {
@@ -55,11 +57,18 @@ export function FacetGroup({
         >
           {options.map((o) => (
             <li key={o.value}>
-              <label className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-sm hover:bg-muted">
+              <label
+                className={`flex items-center gap-2 rounded px-1 py-0.5 text-sm ${
+                  o.disabled
+                    ? "cursor-not-allowed text-muted-foreground/50"
+                    : "cursor-pointer hover:bg-muted"
+                }`}
+              >
                 <input
                   type="checkbox"
                   className="accent-[var(--primary)]"
                   checked={selected.has(o.value)}
+                  disabled={o.disabled}
                   onChange={() => onToggle(o.value)}
                 />
                 <span className="capitalize">{o.label}</span>

@@ -10,6 +10,7 @@ import type {
   PaintType,
   PaintWithLab,
 } from "@/lib/paints/types";
+import { FacetGroup, type FacetOption } from "./facet-group";
 import { MatchBadge } from "./match-badge";
 
 export interface SimilarItem {
@@ -26,10 +27,14 @@ interface SimilarColoursProps {
   brands: string[];
   /** Paint types present in the catalogue. */
   types: PaintType[];
+  /** Product ranges present in the catalogue. */
+  ranges: string[];
 }
 
 /** The dataset the browse page already ships; reused here to re-rank on filter. */
 const BROWSE_INDEX_URL = "/browse-index.json";
+
+type Metallic = "" | "only" | "exclude";
 
 /** Minimal shape the list renders from (shared by precomputed + recomputed). */
 type RenderItem = {
@@ -51,33 +56,37 @@ const toRenderItems = (items: SimilarItem[]): RenderItem[] =>
     distance,
   }));
 
+const matchMetallic = (p: { metallic?: boolean }, m: Metallic) =>
+  m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
+
 export function SimilarColours({
   target,
   all,
   brands,
   types,
+  ranges,
 }: SimilarColoursProps) {
-  // Filter state. brand === "" / type === "" mean no filter on that axis;
-  // "metallic" lives in the type list, so brand + type cover every filter here.
-  const [brand, setBrand] = useState("");
-  const [type, setType] = useState<"" | PaintType>("");
+  // Filter state (multi-select, mirroring the browse sidebar). Empty = no filter.
+  const [selBrands, setSelBrands] = useState<Set<string>>(new Set());
+  const [selTypes, setSelTypes] = useState<Set<string>>(new Set());
+  const [selRanges, setSelRanges] = useState<Set<string>>(new Set());
+  const [metallic, setMetallic] = useState<Metallic>("");
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // The precomputed `all` list covers the unfiltered view instantly. Any filter
-  // has to re-rank the whole catalogue, because the precomputed list only holds
-  // each paint's top matches — filtering those would usually come back empty.
-  const needsCompute = brand !== "" || type !== "";
+  const activeCount =
+    selBrands.size + selTypes.size + selRanges.size + (metallic ? 1 : 0);
+  const anyFilter = activeCount > 0;
 
-  // The full catalogue (with Lab), fetched lazily the first time a filter that
-  // needs re-ranking is applied, then reused.
+  // The precomputed `all` list renders the unfiltered view instantly. The full
+  // catalogue (with Lab) is fetched once so we can re-rank on filter AND grey out
+  // facet options that would yield nothing. Initial render never waits on it.
   const [dataset, setDataset] = useState<PaintWithLab[] | null>(null);
-  const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const fetchStarted = useRef(false);
 
   useEffect(() => {
-    if (!needsCompute || fetchStarted.current) return;
+    if (fetchStarted.current) return;
     fetchStarted.current = true;
-    setLoading(true);
     fetch(BROWSE_INDEX_URL)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -87,47 +96,199 @@ export function SimilarColours({
         // Recover the Lab triple (kept out of the shipped index) from hex.
         setDataset(data.map((p) => ({ ...p, lab: hexToLab(p.hex) })));
       })
-      .catch(() => setLoadError(true))
-      .finally(() => setLoading(false));
-  }, [needsCompute]);
+      .catch(() => setLoadError(true));
+  }, []);
 
+  // Candidate universe: everything a match could be — non-discontinued and not
+  // the paint itself. Filtering + availability both work from this.
+  const universe = useMemo(
+    () =>
+      dataset
+        ? dataset.filter((p) => p.id !== target.id && !p.discontinued)
+        : null,
+    [dataset, target.id],
+  );
+
+  const sel = useMemo(
+    () => ({ brands: selBrands, types: selTypes, ranges: selRanges, metallic }),
+    [selBrands, selTypes, selRanges, metallic],
+  );
+
+  // Which option values still yield results given the *other* selected facets.
+  // Null until the dataset loads (nothing greyed before then).
+  const availability = useMemo(() => {
+    if (!universe) return null;
+    const match = (
+      p: PaintWithLab,
+      skip: "brand" | "type" | "range" | "metallic",
+    ) =>
+      (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
+      (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
+      (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
+      (skip === "metallic" || matchMetallic(p, sel.metallic));
+
+    const brandSet = new Set<string>();
+    const typeSet = new Set<string>();
+    const rangeSet = new Set<string>();
+    let metalOnly = false;
+    let metalExclude = false;
+    for (const p of universe) {
+      if (match(p, "brand")) brandSet.add(p.brand);
+      if (match(p, "type")) typeSet.add(p.type);
+      if (match(p, "range")) rangeSet.add(p.range);
+      if (match(p, "metallic")) {
+        if (p.metallic) metalOnly = true;
+        else metalExclude = true;
+      }
+    }
+    return { brandSet, typeSet, rangeSet, metalOnly, metalExclude };
+  }, [universe, sel]);
+
+  // Recompute the ranked list from the filtered subset when a filter is active.
   const computed = useMemo<RenderItem[] | null>(() => {
-    if (!needsCompute || !dataset) return null;
-    const candidates = dataset.filter((p) => {
-      if (brand && p.brand !== brand) return false;
-      if (type && p.type !== type) return false;
-      return true;
-    });
+    if (!anyFilter || !universe) return null;
+    const candidates = universe.filter(
+      (p) =>
+        (!selBrands.size || selBrands.has(p.brand)) &&
+        (!selTypes.size || selTypes.has(p.type)) &&
+        (!selRanges.size || selRanges.has(p.range)) &&
+        matchMetallic(p, metallic),
+    );
     const targetWithLab: PaintWithLab = {
       ...target,
       lab: hexToLab(target.hex),
       // family isn't needed by findSimilar; a placeholder keeps the type honest.
       family: "neutral",
     };
-    return findSimilar(candidates, targetWithLab, {
-      limit: 16,
-    }).map(({ paint, distance }) => ({
-      id: paint.id,
-      hex: paint.hex,
-      name: paint.name,
-      brand: paint.brand,
-      range: paint.range,
-      distance,
-    }));
-  }, [needsCompute, dataset, brand, type, target]);
+    return findSimilar(candidates, targetWithLab, { limit: 16 }).map(
+      ({ paint, distance }) => ({
+        id: paint.id,
+        hex: paint.hex,
+        name: paint.name,
+        brand: paint.brand,
+        range: paint.range,
+        distance,
+      }),
+    );
+  }, [anyFilter, universe, selBrands, selTypes, selRanges, metallic, target]);
 
-  const items: RenderItem[] = needsCompute
+  const items: RenderItem[] = anyFilter
     ? (computed ?? [])
     : toRenderItems(all);
+  // A filter is set but the dataset (and so the re-rank) isn't ready yet.
+  const awaitingData = anyFilter && !universe && !loadError;
 
-  const filtersActive = brand !== "" || type !== "";
-  const clearFilters = () => {
-    setBrand("");
-    setType("");
+  const toggle =
+    (setter: React.Dispatch<React.SetStateAction<Set<string>>>) =>
+    (value: string) =>
+      setter((prev) => {
+        const next = new Set(prev);
+        if (next.has(value)) next.delete(value);
+        else next.add(value);
+        return next;
+      });
+
+  const clearAll = () => {
+    setSelBrands(new Set());
+    setSelTypes(new Set());
+    setSelRanges(new Set());
+    setMetallic("");
   };
 
-  const selectClass =
-    "rounded-lg border border-input bg-card px-2.5 py-1.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  // Mark an option disabled when it's unavailable and not already selected.
+  const opt = (
+    value: string,
+    label: string,
+    availSet: Set<string> | undefined,
+    selected: Set<string>,
+  ): FacetOption => ({
+    value,
+    label,
+    disabled: !!availSet && !availSet.has(value) && !selected.has(value),
+  });
+
+  const sidebar = (
+    <div className="text-sm">
+      <div className="flex items-center justify-between pb-2">
+        <span className="font-semibold">Filter matches</span>
+        {anyFilter ? (
+          <button
+            type="button"
+            onClick={clearAll}
+            className="text-xs text-primary hover:underline"
+          >
+            Clear all
+          </button>
+        ) : null}
+      </div>
+      <FacetGroup
+        title="Brand"
+        options={brands.map((b) =>
+          opt(b, b, availability?.brandSet, selBrands),
+        )}
+        selected={selBrands}
+        onToggle={toggle(setSelBrands)}
+      />
+      <FacetGroup
+        title="Type"
+        options={types.map((t) => opt(t, t, availability?.typeSet, selTypes))}
+        selected={selTypes}
+        onToggle={toggle(setSelTypes)}
+      />
+      <div className="border-b border-border py-3">
+        <span className="text-sm font-semibold">Finish</span>
+        <div className="mt-2 flex flex-col gap-1">
+          {(
+            [
+              { value: "", label: "All", disabled: false },
+              {
+                value: "only",
+                label: "Metallic",
+                disabled:
+                  !!availability && !availability.metalOnly && metallic !== "only",
+              },
+              {
+                value: "exclude",
+                label: "Non-metallic",
+                disabled:
+                  !!availability &&
+                  !availability.metalExclude &&
+                  metallic !== "exclude",
+              },
+            ] as const
+          ).map((o) => (
+            <label
+              key={o.value}
+              className={`flex items-center gap-2 rounded px-1 py-0.5 text-sm ${
+                o.disabled
+                  ? "cursor-not-allowed text-muted-foreground/50"
+                  : "cursor-pointer hover:bg-muted"
+              }`}
+            >
+              <input
+                type="radio"
+                name="similar-finish"
+                className="accent-[var(--primary)]"
+                checked={metallic === o.value}
+                disabled={o.disabled}
+                onChange={() => setMetallic(o.value as Metallic)}
+              />
+              {o.label}
+            </label>
+          ))}
+        </div>
+      </div>
+      <FacetGroup
+        title="Range"
+        options={ranges.map((r) =>
+          opt(r, r, availability?.rangeSet, selRanges),
+        )}
+        selected={selRanges}
+        onToggle={toggle(setSelRanges)}
+        defaultOpen={false}
+      />
+    </div>
+  );
 
   return (
     <section aria-labelledby="similar-heading">
@@ -135,105 +296,76 @@ export function SimilarColours({
         <h2 id="similar-heading" className="text-lg font-semibold">
           Similar colours
         </h2>
-        {filtersActive ? (
-          <button
-            type="button"
-            onClick={clearFilters}
-            className="text-xs text-primary hover:underline"
-          >
-            Clear filters
-          </button>
-        ) : null}
+        <button
+          type="button"
+          onClick={() => setMobileOpen((o) => !o)}
+          className="rounded-lg border border-input bg-card px-3 py-1.5 text-sm md:hidden"
+          aria-expanded={mobileOpen}
+        >
+          Filters{activeCount > 0 ? ` (${activeCount})` : ""}
+        </button>
       </div>
 
-      <p className="mb-3 text-sm text-muted-foreground">
+      <p className="mb-4 text-sm text-muted-foreground">
         Ranked by perceptual colour distance (CIEDE2000). Lower ΔE = closer match.
       </p>
 
-      {/* Filters */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        <label className="sr-only" htmlFor="similar-brand">
-          Filter by brand
-        </label>
-        <select
-          id="similar-brand"
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-          className={selectClass}
-        >
-          <option value="">All brands</option>
-          {brands.map((b) => (
-            <option key={b} value={b}>
-              {b}
-            </option>
-          ))}
-        </select>
+      <div className="flex gap-6">
+        <aside className="hidden w-56 shrink-0 md:block">{sidebar}</aside>
+        {mobileOpen ? (
+          <aside className="mb-4 w-full md:hidden">{sidebar}</aside>
+        ) : null}
 
-        <label className="sr-only" htmlFor="similar-type">
-          Filter by type
-        </label>
-        <select
-          id="similar-type"
-          value={type}
-          onChange={(e) => setType(e.target.value as "" | PaintType)}
-          className={`${selectClass} capitalize`}
-        >
-          <option value="">All types</option>
-          {types.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {loadError ? (
-        <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-          Couldn’t load the paint database to filter. Try refreshing the page.
-        </div>
-      ) : needsCompute && (loading || !dataset) ? (
-        <ul
-          className="grid grid-cols-1 gap-2 sm:grid-cols-2"
-          aria-hidden="true"
-        >
-          {Array.from({ length: 8 }).map((_, i) => (
-            <li
-              key={i}
-              className="h-[60px] animate-pulse rounded-lg border border-border bg-muted"
-            />
-          ))}
-        </ul>
-      ) : items.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-          No similar colours match these filters. Try widening them.
-        </div>
-      ) : (
-        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {items.map((item) => (
-            <li key={item.id}>
-              <Link
-                href={`/paints/${item.id}`}
-                className="flex items-center gap-3 rounded-lg border border-border bg-card p-2.5 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <span
-                  className="h-10 w-10 shrink-0 rounded-md border border-border"
-                  style={{ backgroundColor: item.hex }}
-                  aria-hidden="true"
+        <div className="min-w-0 flex-1">
+          {loadError && anyFilter ? (
+            <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
+              Couldn’t load the paint database to filter. Try refreshing the page.
+            </div>
+          ) : awaitingData ? (
+            <ul
+              className="grid grid-cols-1 gap-2 sm:grid-cols-2"
+              aria-hidden="true"
+            >
+              {Array.from({ length: 8 }).map((_, i) => (
+                <li
+                  key={i}
+                  className="h-[60px] animate-pulse rounded-lg border border-border bg-muted"
                 />
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-medium">
-                    {item.name}
-                  </span>
-                  <span className="block truncate text-xs text-muted-foreground">
-                    {item.brand} · {item.range}
-                  </span>
-                </span>
-                <MatchBadge distance={item.distance} />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+              ))}
+            </ul>
+          ) : items.length === 0 ? (
+            <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
+              No similar colours match these filters. Try widening them.
+            </div>
+          ) : (
+            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {items.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    href={`/paints/${item.id}`}
+                    className="flex items-center gap-3 rounded-lg border border-border bg-card p-2.5 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <span
+                      className="h-10 w-10 shrink-0 rounded-md border border-border"
+                      style={{ backgroundColor: item.hex }}
+                      aria-hidden="true"
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-medium">
+                        {item.name}
+                      </span>
+                      <span className="block truncate text-xs text-muted-foreground">
+                        {item.brand} · {item.range}
+                      </span>
+                    </span>
+                    <MatchBadge distance={item.distance} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
     </section>
   );
 }
