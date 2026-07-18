@@ -50,7 +50,7 @@ interface Entry {
   id: string;
   d: number;
 }
-type ShardResult = Record<string, { all: Entry[]; cross: Entry[] }>;
+type ShardResult = Record<string, { all: Entry[] }>;
 
 /** Insert into a distance-ascending list, keeping at most `limit` entries. */
 function boundedInsert(list: Entry[], cand: Entry, limit: number) {
@@ -81,7 +81,6 @@ function rankRange(
   for (let i = start; i < end; i++) {
     const a = paints[i];
     const all: Entry[] = [];
-    const cross: Entry[] = [];
     for (let j = 0; j < n; j++) {
       if (j === i) continue;
       const b = paints[j];
@@ -89,11 +88,9 @@ function rankRange(
       if (b.discontinued) continue;
       const d = ciede2000(a.lab, b.lab);
       boundedInsert(all, { id: b.id, d }, LIMIT);
-      if (b.brand !== a.brand) boundedInsert(cross, { id: b.id, d }, LIMIT);
     }
     out[a.id] = {
       all: all.map((e) => ({ id: e.id, d: round(e.d) })),
-      cross: cross.map((e) => ({ id: e.id, d: round(e.d) })),
     };
   }
   return out;

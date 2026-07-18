@@ -425,7 +425,8 @@
     "type": "metallic",
     "hex": "#AFAFAF",
     "code": "AK11207",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-aluminium-real-colors-modern",
@@ -679,7 +680,8 @@
     "type": "metallic",
     "hex": "#9D8696",
     "code": "AK11202",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-anthracite-grey",
@@ -759,7 +761,8 @@
     "type": "metallic",
     "hex": "#799E8D",
     "code": "AK11200",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-australian-black",
@@ -1191,7 +1194,8 @@
     "type": "metallic",
     "hex": "#A55D09",
     "code": "AK11194",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-braun-brown-ral-8010",
@@ -1391,7 +1395,8 @@
     "type": "metallic",
     "hex": "#7F5405",
     "code": "AK11196",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-bronze-89",
@@ -1733,7 +1738,8 @@
     "type": "metallic",
     "hex": "#331702",
     "code": "AK11198",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-burnt-umber",
@@ -2101,7 +2107,8 @@
     "type": "metallic",
     "hex": "#012136",
     "code": "AK11201",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-cockpit-grey",
@@ -2155,7 +2162,8 @@
     "type": "metallic",
     "hex": "#BD500B",
     "code": "AK11197",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-copper-87",
@@ -2239,7 +2247,8 @@
     "type": "metallic",
     "hex": "#787878",
     "code": "AK11208",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-dark-blue",
@@ -3353,7 +3362,8 @@
     "type": "metallic",
     "hex": "#21753A",
     "code": "AK11204",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-english-grey",
@@ -3677,7 +3687,8 @@
     "type": "metallic",
     "hex": "#C53733",
     "code": "AK11203",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-french-army-desert-sand",
@@ -4185,7 +4196,8 @@
     "type": "metallic",
     "hex": "#9E6806",
     "code": "AK11191",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-golden-brown",
@@ -4675,7 +4687,8 @@
     "type": "metallic",
     "hex": "#4E4E4C",
     "code": "AK11212",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-gun-metal-real-colors-standard",
@@ -6499,7 +6512,8 @@
     "type": "metallic",
     "hex": "#829C99",
     "code": "AK11199",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-middle-grey",
@@ -6763,7 +6777,8 @@
     "type": "metallic",
     "hex": "#A7A6A1",
     "code": "AK11210",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-navy-blue-5-n",
@@ -7137,7 +7152,8 @@
     "type": "metallic",
     "hex": "#A7A491",
     "code": "AK11211",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-old-gold",
@@ -7147,7 +7163,8 @@
     "type": "metallic",
     "hex": "#B89402",
     "code": "AK11192",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-old-rose",
@@ -7741,7 +7758,8 @@
     "type": "metallic",
     "hex": "#F5EFD5",
     "code": "AK11206",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-penetrating-red",
@@ -10399,7 +10417,8 @@
     "type": "metallic",
     "hex": "#A04D0B",
     "code": "AK11195",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-rusty-gold",
@@ -10409,7 +10428,8 @@
     "type": "metallic",
     "hex": "#734B03",
     "code": "AK11193",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-rusty-tracks",
@@ -10799,7 +10819,8 @@
     "type": "metallic",
     "hex": "#A0AAAC",
     "code": "AK11209",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "ak-interactive-silver-metal-midtones",

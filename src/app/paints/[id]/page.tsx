@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllPaints, getPaintById, getSimilarColours } from "@/lib/paints/load";
+import {
+  getAllPaints,
+  getBrands,
+  getPaintById,
+  getSimilarColours,
+} from "@/lib/paints/load";
 import { contrastText } from "@/lib/color";
-import type { Paint, PaintWithLab } from "@/lib/paints/types";
+import { PAINT_TYPES, type Paint, type PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
 import { SimilarColours, type SimilarItem } from "@/components/similar-colours";
 
@@ -54,9 +59,17 @@ export default async function PaintDetailPage({
   const paint = getPaintById(id);
   if (!paint) notFound();
 
-  const { all, cross } = getSimilarColours(paint.id);
+  const { all } = getSimilarColours(paint.id);
   const similarAll = toItems(all);
-  const similarCross = toItems(cross);
+
+  const brands = getBrands();
+  const catalogue = getAllPaints();
+  // Types present in the catalogue, in the canonical PAINT_TYPES order.
+  const presentTypes = new Set(catalogue.map((p) => p.type));
+  const types = PAINT_TYPES.filter((t) => presentTypes.has(t));
+  const ranges = [...new Set(catalogue.map((p) => p.range))].sort((a, b) =>
+    a.localeCompare(b),
+  );
 
   const fg = contrastText(paint.hex);
 
@@ -86,7 +99,14 @@ export default async function PaintDetailPage({
             <dt className="text-muted-foreground">Range</dt>
             <dd>{paint.ranges ? paint.ranges.join(", ") : paint.range}</dd>
             <dt className="text-muted-foreground">Type</dt>
-            <dd className="capitalize">{paint.type}</dd>
+            <dd className="capitalize">
+              {paint.type}
+              {paint.metallic ? (
+                <span className="ml-2 rounded-md bg-muted px-1.5 py-0.5 text-xs">
+                  Metallic
+                </span>
+              ) : null}
+            </dd>
             <dt className="text-muted-foreground">Colour family</dt>
             <dd className="capitalize">{paint.family}</dd>
             {paint.code ? (
@@ -111,7 +131,13 @@ export default async function PaintDetailPage({
 
       <hr className="my-8 border-border" />
 
-      <SimilarColours all={similarAll} crossBrand={similarCross} />
+      <SimilarColours
+        target={toPaint(paint)}
+        all={similarAll}
+        brands={brands}
+        types={types}
+        ranges={ranges}
+      />
     </main>
   );
 }

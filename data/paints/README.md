@@ -27,7 +27,8 @@ Each file is a JSON array of paint records for one brand:
   "type": "base",                  // normalized finish (see below)
   "hex": "#231F20",                // uppercase #RRGGBB
   "code": null,                    // OPTIONAL manufacturer code, or null
-  "discontinued": false
+  "discontinued": false,
+  "metallic": true                 // OPTIONAL: metallic finish (absent = false)
 }
 ```
 
@@ -35,6 +36,16 @@ Each file is a JSON array of paint records for one brand:
 `metallic`, `air`, `primer`, `spray`, `ink`, `wash`, `glaze`, `dry`, `other`.
 It's a best-effort normalization of the finish; `range` keeps the brand's own
 product-line label.
+
+**`metallic`** marks a metallic finish. It's deliberately separate from `type`
+because brands classify metallics inconsistently: some ship a dedicated
+`metallic` line (Vallejo Metal Color, Scale 75 Metal, …) while others file their
+metallics under a colour/finish line — Citadel's golds and silvers, for example,
+are Layer or Base paints. The flag was seeded from `type: "metallic"` plus a
+vetted set of Citadel metallics, so coverage for other brands is still partial.
+If a metallic paint isn't flagged (e.g. a gold that shows up as "similar" to flat
+yellows), add `"metallic": true` and open a PR — it's community-correctable just
+like hex values. Omit the field entirely for non-metallic paints.
 
 ### Rules (enforced by `npm run validate:data`)
 

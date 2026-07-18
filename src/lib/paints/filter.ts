@@ -9,6 +9,8 @@ export interface PaintFilters {
   families?: string[];
   /** Discontinued paints are hidden unless this is true. */
   includeDiscontinued?: boolean;
+  /** Restrict by metallic finish: `only` metallics, or `exclude` them. */
+  metallic?: "only" | "exclude";
 }
 
 export type SortKey = "name" | "brand" | "lightness";
@@ -31,6 +33,8 @@ export function filterPaints(
 
   const result = paints.filter((p) => {
     if (!filters.includeDiscontinued && p.discontinued) return false;
+    if (filters.metallic === "only" && !p.metallic) return false;
+    if (filters.metallic === "exclude" && p.metallic) return false;
     if (brands.size && !brands.has(p.brand)) return false;
     if (ranges.size && !ranges.has(p.range)) return false;
     if (types.size && !types.has(p.type)) return false;

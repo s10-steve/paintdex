@@ -271,7 +271,8 @@
     "type": "layer",
     "hex": "#FFC451",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-averland-sunset",
@@ -350,6 +351,7 @@
     "hex": "#A77353",
     "code": null,
     "discontinued": false,
+    "metallic": true,
     "ranges": [
       "Air",
       "Base"
@@ -397,7 +399,8 @@
     "type": "base",
     "hex": "#73372D",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-bestial-brown",
@@ -557,7 +560,8 @@
     "type": "base",
     "hex": "#888789",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-brass-scorpion",
@@ -567,7 +571,8 @@
     "type": "layer",
     "hex": "#A65D2C",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-brazen-brass",
@@ -577,7 +582,8 @@
     "type": "base",
     "hex": "#966747",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-bronzed-flesh",
@@ -617,7 +623,8 @@
     "type": "base",
     "hex": "#E0C068",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-cadian-fleshtone",
@@ -709,7 +716,8 @@
     "type": "layer",
     "hex": "#C3B2AC",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-carroburg-crimson",
@@ -797,7 +805,8 @@
     "type": "base",
     "hex": "#8E8C91",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-changeling-pink",
@@ -1226,7 +1235,8 @@
     "type": "base",
     "hex": "#A26840",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-dwarf-flesh",
@@ -1462,7 +1472,8 @@
     "type": "layer",
     "hex": "#CE8D51",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-fyreslayer-flesh",
@@ -1698,7 +1709,8 @@
     "type": "layer",
     "hex": "#BA885F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-hawk-turquoise",
@@ -1833,6 +1845,7 @@
     "hex": "#B2A79F",
     "code": null,
     "discontinued": false,
+    "metallic": true,
     "ranges": [
       "Air",
       "Base"
@@ -1857,6 +1870,7 @@
     "hex": "#899092",
     "code": null,
     "discontinued": false,
+    "metallic": true,
     "ranges": [
       "Air",
       "Layer"
@@ -2080,7 +2094,8 @@
     "type": "spray",
     "hex": "#868686",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-leadbelcher-base",
@@ -2091,6 +2106,7 @@
     "hex": "#969696",
     "code": null,
     "discontinued": false,
+    "metallic": true,
     "ranges": [
       "Air",
       "Base"
@@ -2134,7 +2150,8 @@
     "type": "layer",
     "hex": "#E1BA7F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-liche-purple",
@@ -2375,7 +2392,8 @@
     "type": "base",
     "hex": "#B7BEC5",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-moot-green",
@@ -2503,7 +2521,8 @@
     "type": "dry",
     "hex": "#DADDDF",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-niblet-green",
@@ -2837,7 +2856,8 @@
     "type": "base",
     "hex": "#EDC169",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-retributor-armour-spray",
@@ -2847,7 +2867,8 @@
     "type": "spray",
     "hex": "#EDC06A",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-rhinox-hide",
@@ -2878,6 +2899,7 @@
     "hex": "#C2C8CC",
     "code": null,
     "discontinued": false,
+    "metallic": true,
     "ranges": [
       "Air",
       "Layer"
@@ -2975,7 +2997,8 @@
     "type": "base",
     "hex": "#D18A5E",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-screaming-skull",
@@ -3015,7 +3038,8 @@
     "type": "base",
     "hex": "#EFB736",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-shyish-purple",
@@ -3317,7 +3341,8 @@
     "type": "layer",
     "hex": "#DADDDF",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-stormshield",
@@ -3385,7 +3410,8 @@
     "type": "layer",
     "hex": "#BB9F84",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-sylvaneth-bark",
@@ -3609,7 +3635,8 @@
     "type": "base",
     "hex": "#473F39",
     "code": null,
-    "discontinued": true
+    "discontinued": true,
+    "metallic": true
   },
   {
     "id": "citadel-troll-slayer-orange",
@@ -3893,7 +3920,8 @@
     "type": "base",
     "hex": "#B36E4F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-warpstone-glow",

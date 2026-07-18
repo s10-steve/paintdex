@@ -18,11 +18,18 @@ export function PaintCard({ paint }: { paint: Paint }) {
           <span className="line-clamp-2 text-sm font-medium leading-tight group-hover:text-primary">
             {paint.name}
           </span>
-          {paint.discontinued ? (
-            <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
-              disc.
-            </span>
-          ) : null}
+          <span className="flex shrink-0 flex-col items-end gap-1">
+            {paint.metallic ? (
+              <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
+                metallic
+              </span>
+            ) : null}
+            {paint.discontinued ? (
+              <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
+                disc.
+              </span>
+            ) : null}
+          </span>
         </div>
         <span className="text-xs text-muted-foreground">
           {paint.brand} · {paint.range}
