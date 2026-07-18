@@ -82,6 +82,8 @@ Brand and product names are trademarks of their respective owners.
 
 ## Roadmap
 
+### Paint database and UI features
+
 - [x] Paint database: search, filter, colour families
 - [x] Similar-colour matching (CIEDE2000)
 - [x] Light/dark + responsive
@@ -98,6 +100,15 @@ Brand and product names are trademarks of their respective owners.
 - [ ] Interactive colour wheel (à la
       [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
       suggests matching paints based on the colours you pick
+
+### Real live website
+
+- [ ] Deploy to Vercel, make it an actual live website, and get some users to
+      try it out. The paint data is already in the repo, so the site can be
+      deployed without any backend or database.
+
+### User accounts & recipe features
+
 - [ ] User accounts & login
 - [ ] Save the paints you own
 - [ ] Painting recipes with colour-coded guide text
