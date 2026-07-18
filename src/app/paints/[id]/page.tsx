@@ -11,6 +11,12 @@ export function generateStaticParams() {
   return getAllPaints().map((p) => ({ id: p.id }));
 }
 
+// Every paint id is enumerated above and prerendered at build time, when the
+// precomputed `.cache/similar-index.json` (read by getSimilarColours) exists.
+// Disallow on-demand rendering so an unknown id 404s statically instead of
+// trying to read that cache file at request time, where it wouldn't be present.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {
