@@ -63,9 +63,13 @@ export default async function PaintDetailPage({
   const similarAll = toItems(all);
 
   const brands = getBrands();
+  const catalogue = getAllPaints();
   // Types present in the catalogue, in the canonical PAINT_TYPES order.
-  const presentTypes = new Set(getAllPaints().map((p) => p.type));
+  const presentTypes = new Set(catalogue.map((p) => p.type));
   const types = PAINT_TYPES.filter((t) => presentTypes.has(t));
+  const ranges = [...new Set(catalogue.map((p) => p.range))].sort((a, b) =>
+    a.localeCompare(b),
+  );
 
   const fg = contrastText(paint.hex);
 
@@ -132,6 +136,7 @@ export default async function PaintDetailPage({
         all={similarAll}
         brands={brands}
         types={types}
+        ranges={ranges}
       />
     </main>
   );
