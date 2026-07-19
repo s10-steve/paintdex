@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://paintdex.vercel.app"),
+  metadataBase: new URL("https://paintdex.app"),
   title: {
     default: "Paintdex — miniature paint database & colour matcher",
     template: "%s · Paintdex",

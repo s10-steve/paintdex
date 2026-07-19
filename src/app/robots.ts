@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 // Keep in sync with `metadataBase` in src/app/layout.tsx.
-const BASE_URL = "https://paintdex.vercel.app";
+const BASE_URL = "https://paintdex.app";
 
 export default function robots(): MetadataRoute.Robots {
   return {
