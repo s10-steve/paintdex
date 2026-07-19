@@ -5,7 +5,10 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.0] - 2026-07-19
+
+First public release — Paintdex is now live at
+[paintdex.app](https://paintdex.app).
 
 ### Added
 
@@ -18,9 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   toggle switches the bars between smooth gradients and hard bands. Add paints by
   searching the browse index (reusing `filterPaints`) or enter a custom name +
   hex for anything not in the database. Schemes autosave to `localStorage` and
-  can be exported/imported as JSON (no account needed), and the page ships
-  preloaded with a White Templars example. Pure bar and import/export logic
-  lives in `src/lib/scheme/` with unit tests.
+  can be exported/imported as JSON (no account needed). Pure bar and
+  import/export logic lives in `src/lib/scheme/` with unit tests.
 - Eight more paint brands imported from the upstream dataset — The Army Painter,
   Duncan Rhodes, Green Stuff World, Liquitex, Mig, P3, Scale 75 and Tamiya —
   taking the catalogue from ~2,700 to 4,940 paints across 11 brands.
@@ -41,8 +43,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   by ΔE band (Identical → Show all), defaulting to "Close or better" so the
   least-useful matches are trimmed out of the box.
 - Interactive colour-wheel idea added to the roadmap.
+- **Public launch on Vercel** at [paintdex.app](https://paintdex.app), with a
+  `robots.txt` and a `sitemap.xml` covering every paint page (generated from the
+  catalogue). Vercel Analytics and Speed Insights are wired in for traffic and
+  real-world performance monitoring.
+- Site-wide "work in progress" banner, and a homepage callout giving the paint
+  scheme visualiser top billing.
 
 ### Changed
+
+- Canonical, social-share and sitemap URLs now point at the production domain
+  (`paintdex.app`).
+- The visualiser now starts from an empty scheme and Reset clears it, instead of
+  seeding a built-in example scheme.
+- Homepage copy refreshed for launch (dropped the open-source framing while the
+  repository is private).
 
 - The `/paints` browse dataset is now served as a cacheable static asset
   (`public/browse-index.json`, precomputed with lightness + colour family) and
@@ -61,6 +76,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Browse search and filters no longer get stuck when the page is opened directly
+  with query params (e.g. following the homepage search to `/paints?q=…`). On a
+  statically-generated page `router.replace` was a no-op in that case, so the
+  URL — and the results — never updated; URL writes now go through the History
+  API, which syncs reliably.
 - Search debounce race: a facet toggled mid-debounce is no longer dropped, and
   the timer is cancelled on clear-all and unmount.
 - URL filter params (`type`, `sort`) are validated against the known sets
