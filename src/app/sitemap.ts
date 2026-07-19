@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllPaints } from "@/lib/paints/load";
 
 // Keep in sync with `metadataBase` in src/app/layout.tsx.
-const BASE_URL = "https://paintdex.vercel.app";
+const BASE_URL = "https://paintdex.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
