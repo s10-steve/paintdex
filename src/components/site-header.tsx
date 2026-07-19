@@ -31,14 +31,6 @@ export function SiteHeader() {
           </Link>
         </nav>
         <div className="ml-auto flex items-center gap-2">
-          <a
-            href="https://github.com/s10-steve/paintdex"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:inline-block"
-          >
-            GitHub
-          </a>
           <ThemeToggle />
         </div>
       </div>
