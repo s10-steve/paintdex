@@ -1,12 +1,13 @@
 # Paintdex
 
-An open, community-maintained database of miniature paints with hex colour
-values — searchable, filterable, and able to find visually similar colours
-across brands.
+A database of miniature paints with hex colour values — searchable, filterable,
+and able to find visually similar colours across brands.
 
 > **Status:** covers the paint database, perceptual colour matching and a paint
-> scheme visualiser. User accounts, owned-paint inventories, and shareable
-> recipe links are planned (see [Roadmap](#roadmap)).
+> scheme visualiser. The project is intended to be open-sourced in future — the
+> paint catalogue especially, so the community can help keep colours accurate.
+> User accounts, owned-paint inventories, and shareable recipe links are also
+> planned (see [Roadmap](#roadmap)).
 
 ## Features
 
@@ -28,8 +29,9 @@ across brands.
   name + hex. Schemes autosave in your browser and export/import as JSON.
 - **Light & dark mode**, following your system preference with a manual toggle.
 - **Responsive** desktop and mobile layouts.
-- **Open data.** The paint database is plain JSON in this repo, so anyone can
-  fix a colour or add a paint via a pull request.
+- **Plain-JSON data.** The paint database is plain JSON, one file per brand. The
+  catalogue is intended to be open-sourced, so the community can help fix colours
+  and add paints.
 
 ## Tech stack
 
@@ -83,10 +85,11 @@ Hobby tier is plenty and there is nothing to keep warm.
 ## Contributing to the paint data
 
 The paint database lives in [`data/paints/`](data/paints/) as one JSON file per
-brand. Spotted a wrong hex value or a missing paint? Edits are just JSON — see
-[`data/paints/README.md`](data/paints/README.md) for the schema and
-[`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow. `npm run validate:data`
-checks your changes, and CI runs it on every PR.
+brand — and is the part of the project most intended to be opened up. Edits are
+just JSON: see [`data/paints/README.md`](data/paints/README.md) for the schema
+and [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow. Once the repo is
+public, corrections and additions will be welcome via pull request.
+`npm run validate:data` checks changes, and CI runs it on every PR.
 
 ## Data attribution
 
