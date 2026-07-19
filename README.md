@@ -145,6 +145,9 @@ Brand and product names are trademarks of their respective owners.
 - [ ] User accounts & login
 - [ ] Save the paints you own
 - [ ] Save your paint schemes
+- [ ] Example/starter schemes to explore in the visualiser — likely built on
+      top of user accounts and saved schemes (e.g. a curated gallery you can
+      load and tweak), rather than a single scheme baked into the app
 - [ ] Paint schemes can suggest only paints from your collection
 - [ ] Wishlist for paints you don't own yet but want to buy
 - [ ] Public, shareable recipe links (no login to view) with suggestions from

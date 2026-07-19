@@ -78,6 +78,9 @@ export interface Scheme {
   elements: SchemeElement[];
 }
 
+/** A blank scheme — the starting point for the visualiser and the Reset target. */
+export const emptyScheme = (): Scheme => ({ title: "", elements: [] });
+
 export const roleOf = (p: SchemePaint): RoleMeta => ROLES[p.role] ?? ROLES.layer;
 export const weightOf = (p: SchemePaint): number =>
   typeof p.weight === "number" ? p.weight : roleOf(p).weight;

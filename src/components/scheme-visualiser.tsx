@@ -17,6 +17,7 @@ import {
   roleOf,
   weightOf,
   elementWeightOf,
+  emptyScheme,
   ELEMENT_WEIGHT_MIN,
   ELEMENT_WEIGHT_MAX,
   type Scheme,
@@ -25,7 +26,6 @@ import {
   type SchemeRole,
 } from "@/lib/scheme/types";
 import { barModel, rampGradient, overlayCenter, clamp } from "@/lib/scheme/bars";
-import { whiteTemplars } from "@/lib/scheme/example";
 import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
 
 const STORE = "paintdex-scheme-v1";
@@ -55,7 +55,7 @@ type HoverHandlers = {
 };
 
 export function SchemeVisualiser() {
-  const [scheme, setScheme] = useState<Scheme>(() => whiteTemplars());
+  const [scheme, setScheme] = useState<Scheme>(() => emptyScheme());
   const [blend, setBlend] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -159,7 +159,7 @@ export function SchemeVisualiser() {
     mutatePaints(eid, (paints) => paints.map((p) => (p.id === pid ? { ...p, weight } : p)));
 
   const reset = () => {
-    setScheme(whiteTemplars());
+    setScheme(emptyScheme());
     setBlend(true);
   };
 
@@ -280,7 +280,7 @@ export function SchemeVisualiser() {
               </button>
               <button
                 onClick={reset}
-                title="Restore the White Templars example scheme"
+                title="Clear the scheme and start fresh"
                 className="rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 Reset
