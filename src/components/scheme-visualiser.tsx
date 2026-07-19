@@ -59,6 +59,7 @@ export function SchemeVisualiser() {
   const [blend, setBlend] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [tipPaint, setTipPaint] = useState<SchemePaint | null>(null);
 
   // Paint database, fetched from the same static asset the browse page uses.
   const [dbPaints, setDbPaints] = useState<BrowsePaint[] | null>(null);
@@ -93,7 +94,14 @@ export function SchemeVisualiser() {
       const raw = localStorage.getItem(STORE);
       if (raw) {
         const parsed = JSON.parse(raw) as { scheme?: Scheme; blend?: boolean };
-        if (parsed?.scheme?.elements) setScheme(parsed.scheme);
+        if (parsed?.scheme) {
+          // Route restored data through the same sanitiser the file-import path
+          // uses, so a corrupted shape can't reach `.map(...)` during render and
+          // white-screen the page — it throws here and we fall back to the seed.
+          const restored = importScheme(JSON.stringify(parsed.scheme), uid);
+          if (typeof parsed.scheme.title === "string") restored.title = parsed.scheme.title;
+          setScheme(restored);
+        }
         if (typeof parsed?.blend === "boolean") setBlend(parsed.blend);
       }
     } catch {
@@ -190,14 +198,12 @@ export function SchemeVisualiser() {
   const hover: HoverHandlers = useMemo(
     () => ({
       enter(paint, e) {
+        // Content comes from React (see the tooltip JSX); only position and
+        // visibility are set imperatively so mousemove doesn't re-render.
         setHovered(paint.id);
+        setTipPaint(paint);
         const tip = tipRef.current;
         if (!tip) return;
-        const role = roleOf(paint);
-        tip.innerHTML =
-          `<span class="mr-1.5 inline-block h-2.5 w-2.5 rounded-sm align-baseline ring-1 ring-white/30" style="background:${paint.hex}"></span>` +
-          `<span class="mr-1.5 text-[10px] font-bold uppercase tracking-wide" style="color:${role.cssVar}">${role.label}</span>` +
-          `${escapeHtml(paint.name)}<span class="ml-1.5 font-mono opacity-70">${escapeHtml(paint.hex.toUpperCase())}</span>`;
         tip.style.left = `${e.clientX}px`;
         tip.style.top = `${e.clientY - 14}px`;
         tip.style.opacity = "1";
@@ -210,6 +216,7 @@ export function SchemeVisualiser() {
       },
       leave() {
         setHovered(null);
+        setTipPaint(null);
         if (tipRef.current) tipRef.current.style.opacity = "0";
       },
       mark(pid) {
@@ -396,11 +403,30 @@ export function SchemeVisualiser() {
         </section>
       </div>
 
+      {/* Tooltip: content from React (no innerHTML); position/opacity set
+          imperatively in hover.* so mousemove never re-renders. No inline
+          left/top here, or a re-render would clobber the imperative position. */}
       <div
         ref={tipRef}
-        className="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-2 whitespace-nowrap rounded-md bg-foreground px-2 py-1.5 text-xs text-background opacity-0 shadow-xl transition-opacity"
-        style={{ left: 0, top: 0 }}
-      />
+        className="pointer-events-none fixed left-0 top-0 z-50 -translate-x-1/2 -translate-y-2 whitespace-nowrap rounded-md bg-foreground px-2 py-1.5 text-xs text-background opacity-0 shadow-xl transition-opacity"
+      >
+        {tipPaint && (
+          <>
+            <span
+              className="mr-1.5 inline-block h-2.5 w-2.5 rounded-sm align-baseline ring-1 ring-white/30"
+              style={{ background: tipPaint.hex }}
+            />
+            <span
+              className="mr-1.5 text-[10px] font-bold uppercase tracking-wide"
+              style={{ color: roleOf(tipPaint).cssVar }}
+            >
+              {roleOf(tipPaint).label}
+            </span>
+            {tipPaint.name}
+            <span className="ml-1.5 font-mono opacity-70">{tipPaint.hex.toUpperCase()}</span>
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -839,6 +865,8 @@ function Bar({
         {segs.map((s) => (
           <div
             key={s.paint.id}
+            role="img"
+            aria-label={paintLabel(s.paint)}
             className="relative min-h-0"
             style={{
               flexGrow: s.frac,
@@ -857,6 +885,8 @@ function Bar({
           return (
             <div
               key={ov.paint.id}
+              role="img"
+              aria-label={paintLabel(ov.paint)}
               className="absolute inset-x-0 mix-blend-multiply"
               style={{
                 bottom: `${(bottom * 100).toFixed(2)}%`,
@@ -889,6 +919,7 @@ const EMPTY_BAR_STYLE: CSSProperties = {
 
 /* ------------------------------------------------------------------ utils */
 
-function escapeHtml(s: string): string {
-  return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
+/** Accessible label for a bar band, e.g. "Base: Deck Tan (#ABA390)". */
+function paintLabel(p: SchemePaint): string {
+  return `${roleOf(p).label}: ${p.name} (${p.hex.toUpperCase()})`;
 }
