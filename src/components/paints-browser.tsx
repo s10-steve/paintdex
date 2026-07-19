@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { filterPaints, type SortKey } from "@/lib/paints/filter";
 import {
   PAINT_TYPES,
@@ -103,7 +103,6 @@ function keepAvailable(
 }
 
 export function PaintsBrowser() {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -173,7 +172,13 @@ export function PaintsBrowser() {
 
   const applyParams = (params: URLSearchParams) => {
     const qs = params.toString();
-    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    // Update the URL through the History API rather than router.replace. On
+    // this statically-generated page, router.replace is a no-op when the page
+    // was hard-loaded with query params (e.g. arriving from the homepage search
+    // form at /paints?q=…), which left filters and search stuck. pushState/
+    // replaceState integrate with the App Router and reliably sync
+    // useSearchParams, so the results update as expected.
+    window.history.replaceState(null, "", qs ? `${pathname}?${qs}` : pathname);
   };
 
   const commit = (mut: (params: URLSearchParams) => void) => {
@@ -210,7 +215,7 @@ export function PaintsBrowser() {
   const clearAll = () => {
     cancelSearchTimer();
     setSearchText("");
-    router.replace(pathname, { scroll: false });
+    window.history.replaceState(null, "", pathname);
   };
 
   const results = filterPaints(

@@ -24,9 +24,9 @@ export default function Home() {
           Find the right miniature paint
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Paintdex is an open, community-maintained database of hobby paints with
-          hex colour values. Search across brands and discover visually similar
-          colours.
+          Search a database of miniature and hobby paints with hex colour values,
+          find visually similar colours across brands, and plan whole paint
+          schemes.
         </p>
 
         <form action="/paints" method="get" className="mx-auto mt-8 flex max-w-xl gap-2">
@@ -69,7 +69,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-4xl gap-4 px-4 pb-20 sm:grid-cols-3">
+      <section className="mx-auto grid max-w-4xl gap-4 px-4 pb-12 sm:grid-cols-2">
         <Feature
           title="Searchable & filterable"
           body="Filter by brand, product range, finish type and colour family. Every filter is shareable via the URL."
@@ -78,10 +78,52 @@ export default function Home() {
           title="Perceptual colour matching"
           body="Similar colours are ranked with CIEDE2000 — the same maths professionals use to compare colours."
         />
-        <Feature
-          title="Open source data"
-          body="The paint database lives as JSON in the repo. Spot a wrong colour or a missing paint? Open a pull request."
-        />
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 pb-20">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card">
+          <div className="grid gap-6 p-6 sm:grid-cols-[1.4fr_1fr] sm:items-center sm:p-8">
+            <div className="text-left">
+              <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                Featured
+              </span>
+              <h2 className="mt-3 text-2xl font-bold tracking-tight">
+                Plan your whole colour scheme
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                The paint scheme visualiser lets you group paints by element —
+                armour, robes, lenses — and preview every colour together as
+                aligned, blended vertical bars, so the whole model reads as one.
+                Add paints from the database or your own custom hex, set roles
+                and weights, and your scheme autosaves in your browser.
+              </p>
+              <Link
+                href="/visualiser"
+                className="mt-4 inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+              >
+                Open the visualiser →
+              </Link>
+            </div>
+            <div
+              className="hidden h-40 gap-2 sm:flex"
+              aria-hidden="true"
+            >
+              {spectrum.slice(0, 6).map(({ family, paint }, i) => {
+                const next =
+                  spectrum[(i + 1) % Math.min(spectrum.length, 6)].paint.hex;
+                return (
+                  <div
+                    key={family}
+                    className="flex-1 rounded-md border border-border/40"
+                    style={{
+                      background: `linear-gradient(to bottom, ${paint.hex}, ${next})`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
