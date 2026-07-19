@@ -95,7 +95,9 @@ body {
   appearance: none;
   height: 4px;
   border-radius: 999px;
-  background: var(--muted);
+  /* Translucent grey tints whatever's behind it, so the track stays visible on
+     the card, the muted element header, and a row's muted hover state alike. */
+  background: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
   outline: none;
 }
 .sv-weight::-webkit-slider-thumb {
