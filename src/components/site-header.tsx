@@ -23,6 +23,12 @@ export function SiteHeader() {
           >
             Browse paints
           </Link>
+          <Link
+            href="/visualiser"
+            className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            Visualiser
+          </Link>
         </nav>
         <div className="ml-auto flex items-center gap-2">
           <a
