@@ -43,10 +43,20 @@ No database or backend is required — the site is fully static.
 
 ## Getting started
 
+The project targets **Node 24** (the version CI runs — see
+[`.nvmrc`](.nvmrc)). With [nvm](https://github.com/nvm-sh/nvm) or
+[fnm](https://github.com/Schniz/fnm), run `nvm use` to switch to it.
+
 ```bash
-npm install
+nvm use              # select Node 24 (optional, if you use nvm/fnm)
+npm ci               # clean, reproducible install from package-lock.json
 npm run dev          # http://localhost:3000
 ```
+
+Use `npm ci` for setup: it installs exactly what's in `package-lock.json` and
+never rewrites it. Reach for `npm install` only when you're intentionally adding
+or updating a dependency (commit the resulting `package.json` **and**
+`package-lock.json` together).
 
 ### Scripts
 
