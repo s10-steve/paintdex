@@ -69,25 +69,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-4xl gap-4 px-4 pb-12 sm:grid-cols-2">
-        <Feature
-          title="Searchable & filterable"
-          body="Filter by brand, product range, finish type and colour family. Every filter is shareable via the URL."
-        />
-        <Feature
-          title="Perceptual colour matching"
-          body="Similar colours are ranked with CIEDE2000 — the same maths professionals use to compare colours."
-        />
-      </section>
-
-      <section className="mx-auto max-w-4xl px-4 pb-20">
+      <section className="mx-auto max-w-4xl px-4 pb-12">
         <div className="overflow-hidden rounded-2xl border border-border bg-card">
           <div className="grid gap-6 p-6 sm:grid-cols-[1.4fr_1fr] sm:items-center sm:p-8">
             <div className="text-left">
-              <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                Featured
-              </span>
-              <h2 className="mt-3 text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight">
                 Plan your whole colour scheme
               </h2>
               <p className="mt-2 text-muted-foreground">
@@ -124,6 +110,17 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto grid max-w-4xl gap-4 px-4 pb-20 sm:grid-cols-2">
+        <Feature
+          title="Searchable & filterable"
+          body="Filter by brand, product range, finish type and colour family. Every filter is shareable via the URL."
+        />
+        <Feature
+          title="Perceptual colour matching"
+          body="Similar colours are ranked with CIEDE2000 — the same maths professionals use to compare colours."
+        />
       </section>
     </main>
   );
