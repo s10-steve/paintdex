@@ -4,9 +4,9 @@ An open, community-maintained database of miniature paints with hex colour
 values — searchable, filterable, and able to find visually similar colours
 across brands.
 
-> **Status:** first release covers the paint database + colour matching. User
-> accounts, owned-paint inventories, and shareable painting recipes are planned
-> (see [Roadmap](#roadmap)).
+> **Status:** covers the paint database, perceptual colour matching and a paint
+> scheme visualiser. User accounts, owned-paint inventories, and shareable
+> recipe links are planned (see [Roadmap](#roadmap)).
 
 ## Features
 
@@ -19,6 +19,13 @@ across brands.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
   distance — with filters to narrow the matches by brand or type.
+- **Paint scheme visualiser.** Plan a miniature's colour scheme on `/visualiser`:
+  group your paints by element (armour, robes, lenses…) and preview every
+  element's colours as aligned, optionally-blended vertical bars, so the whole
+  model reads together. Paints carry a role (base, layer, highlight, wash, glaze,
+  weathering) and a weight; elements have a weight that sets their bar width.
+  Search the database to add a paint or enter a custom name + hex. Schemes
+  autosave in your browser and export/import as JSON.
 - **Light & dark mode**, following your system preference with a manual toggle.
 - **Responsive** desktop and mobile layouts.
 - **Open data.** The paint database is plain JSON in this repo, so anyone can
@@ -97,6 +104,9 @@ Brand and product names are trademarks of their respective owners.
 
 - [x] Paint database: search, filter, colour families
 - [x] Similar-colour matching (CIEDE2000)
+- [x] Paint scheme visualiser (`/visualiser`): group paints by element and
+      preview the whole scheme's colours as blended vertical bars, with roles,
+      per-paint and per-element weights, and JSON export/import
 - [x] Light/dark + responsive
 - [ ] Add URL links to the paint database for the official product pages (e.g.
       Citadel paints link to the Games Workshop site). Would help ensure
