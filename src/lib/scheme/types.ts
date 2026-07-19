@@ -66,6 +66,11 @@ export interface SchemeElement {
   id: string;
   name: string;
   paints: SchemePaint[];
+  /**
+   * How much of the model this element covers, relative to the others. Drives
+   * the bar's width so e.g. armour reads wider than eye lenses. Defaults to 1.
+   */
+  weight?: number;
 }
 
 export interface Scheme {
@@ -76,3 +81,9 @@ export interface Scheme {
 export const roleOf = (p: SchemePaint): RoleMeta => ROLES[p.role] ?? ROLES.layer;
 export const weightOf = (p: SchemePaint): number =>
   typeof p.weight === "number" ? p.weight : roleOf(p).weight;
+
+/** Bounds for the per-element size control. */
+export const ELEMENT_WEIGHT_MIN = 0.4;
+export const ELEMENT_WEIGHT_MAX = 3;
+export const elementWeightOf = (e: SchemeElement): number =>
+  typeof e.weight === "number" ? e.weight : 1;

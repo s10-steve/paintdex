@@ -36,6 +36,12 @@ export interface BarModel {
 export const clamp = (v: number, lo: number, hi: number): number =>
   Math.max(lo, Math.min(hi, v));
 
+/** Bar width (px) for a given element weight (1 = default). */
+export function elementBarWidth(weight: number | undefined): number {
+  const w = typeof weight === "number" ? weight : 1;
+  return clamp(Math.round(60 * w), 36, 170);
+}
+
 /**
  * Split paints into the weighted solid ramp and the overlay list.
  *

@@ -16,12 +16,15 @@ import {
   ROLE_KEYS,
   roleOf,
   weightOf,
+  elementWeightOf,
+  ELEMENT_WEIGHT_MIN,
+  ELEMENT_WEIGHT_MAX,
   type Scheme,
   type SchemeElement,
   type SchemePaint,
   type SchemeRole,
 } from "@/lib/scheme/types";
-import { barModel, rampGradient, overlayCenter, clamp } from "@/lib/scheme/bars";
+import { barModel, rampGradient, overlayCenter, clamp, elementBarWidth } from "@/lib/scheme/bars";
 import { whiteTemplars } from "@/lib/scheme/example";
 
 const STORE = "paintdex-scheme-v1";
@@ -116,6 +119,8 @@ export function SchemeVisualiser() {
 
   const setTitle = (title: string) => setScheme((s) => ({ ...s, title }));
   const renameElement = (eid: string, name: string) => mutateElement(eid, (e) => ({ ...e, name }));
+  const setElementWeight = (eid: string, weight: number) =>
+    mutateElement(eid, (e) => ({ ...e, weight }));
   const removeElement = (eid: string) =>
     setScheme((s) => ({ ...s, elements: s.elements.filter((e) => e.id !== eid) }));
   const addElement = () =>
@@ -239,6 +244,7 @@ export function SchemeVisualiser() {
                 hovered={hovered}
                 hover={hover}
                 onRename={(name) => renameElement(element.id, name)}
+                onSetElementWeight={(w) => setElementWeight(element.id, w)}
                 onRemove={() => removeElement(element.id)}
                 onAddPaint={(p) => addPaint(element.id, p)}
                 onMovePaint={(pid, dir) => movePaint(element.id, pid, dir)}
@@ -281,7 +287,7 @@ export function SchemeVisualiser() {
             </div>
 
             <div className="overflow-x-auto px-4 pb-2 pt-5">
-              <div className="flex min-h-[360px] items-end gap-3">
+              <div className="flex min-h-[360px] items-start gap-3">
                 <div className="flex h-[340px] flex-none flex-col items-end justify-between pr-1">
                   <span className="[writing-mode:vertical-rl] rotate-180 text-[10px] uppercase tracking-widest text-muted-foreground">
                     highlight → base
@@ -345,6 +351,7 @@ function ElementCard({
   hovered,
   hover,
   onRename,
+  onSetElementWeight,
   onRemove,
   onAddPaint,
   onMovePaint,
@@ -358,6 +365,7 @@ function ElementCard({
   hovered: string | null;
   hover: HoverHandlers;
   onRename: (name: string) => void;
+  onSetElementWeight: (weight: number) => void;
   onRemove: () => void;
   onAddPaint: (p: Omit<SchemePaint, "id">) => void;
   onMovePaint: (pid: string, dir: -1 | 1) => void;
@@ -381,8 +389,27 @@ function ElementCard({
           spellCheck={false}
           className="min-w-0 flex-1 rounded-md bg-transparent px-1.5 py-1 text-[15px] font-semibold tracking-tight outline-none hover:bg-card focus:bg-card focus:ring-1 focus:ring-inset focus:ring-input"
         />
-        <span className="flex-none text-xs text-muted-foreground">
-          {element.paints.length} {element.paints.length === 1 ? "paint" : "paints"}
+        <label
+          className="flex flex-none items-center gap-1.5 text-[10px] uppercase tracking-wide text-muted-foreground"
+          title="How much of the model this element covers — sets the bar's width"
+        >
+          <span className="hidden sm:inline">size</span>
+          <input
+            type="range"
+            min={ELEMENT_WEIGHT_MIN}
+            max={ELEMENT_WEIGHT_MAX}
+            step={0.1}
+            value={elementWeightOf(element)}
+            onChange={(e) => onSetElementWeight(parseFloat(e.target.value))}
+            aria-label="Element size on the model"
+            className="sv-weight w-14"
+          />
+        </label>
+        <span
+          className="flex-none text-xs tabular-nums text-muted-foreground"
+          title={`${element.paints.length} ${element.paints.length === 1 ? "paint" : "paints"}`}
+        >
+          {element.paints.length}
         </span>
         <button
           onClick={onRemove}
@@ -735,9 +762,13 @@ function Bar({
 }) {
   const { segs, overlays } = useMemo(() => barModel(element.paints), [element.paints]);
   const empty = element.paints.length === 0;
+  const width = elementBarWidth(element.weight);
 
   return (
-    <div className="flex w-[clamp(52px,7vw,74px)] flex-none flex-col items-center gap-2.5">
+    <div
+      className="flex flex-none flex-col items-center gap-2.5"
+      style={{ width }}
+    >
       <div
         className="relative flex h-[340px] w-full flex-col-reverse overflow-hidden rounded-[9px] shadow-sm ring-1 ring-inset ring-black/10 [isolation:isolate]"
         style={empty ? EMPTY_BAR_STYLE : { background: rampGradient(segs, blend) }}

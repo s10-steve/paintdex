@@ -27,6 +27,7 @@ export function whiteTemplars(): Scheme {
       {
         id: id(),
         name: "White Armour",
+        weight: 3,
         paints: [
           p("IDF Sand Grey (primer)", "Vallejo", "Surface Primer", "#C7BDA4", "base", { custom: true }),
           p("Deck Tan", "Vallejo", "Model Color", "#ABA390", "layer", { weight: 1.1 }),
@@ -41,6 +42,7 @@ export function whiteTemplars(): Scheme {
       {
         id: id(),
         name: "Black Armour & Trim",
+        weight: 1.4,
         paints: [
           p("Black Purple", "AK Interactive", "custom", "#191320", "base", { custom: true, weight: 1.5 }),
           p("Graphite + Black Purple", "AK Interactive", "50:50 mix", "#3B3540", "layer", { custom: true }),
@@ -50,6 +52,7 @@ export function whiteTemplars(): Scheme {
       {
         id: id(),
         name: "Red Robes",
+        weight: 2,
         paints: [
           p("Black Purple", "AK Interactive", "custom", "#191320", "base", { custom: true, weight: 1.3 }),
           p("Wine Red", "AK Interactive", "Standard", "#69140D", "layer", { weight: 1.2 }),
@@ -60,6 +63,7 @@ export function whiteTemplars(): Scheme {
       {
         id: id(),
         name: "Silver Metal",
+        weight: 1,
         paints: [
           p("Exhaust Manifold", "Vallejo", "Metal Color", "#7D7D7B", "base", { weight: 1.3 }),
           p("Heavy Metal", "Scale 75", "Metal n' Alchemy", "#9C9DA1", "layer"),
@@ -70,6 +74,7 @@ export function whiteTemplars(): Scheme {
       {
         id: id(),
         name: "Dark Brown Leather",
+        weight: 0.9,
         paints: [
           p("Rhinox Hide", "Citadel", "Base", "#462F30", "base", { weight: 1.3 }),
           p("Doombull Brown", "Citadel", "Layer", "#570003", "layer", { weight: 1.1 }),
@@ -79,6 +84,7 @@ export function whiteTemplars(): Scheme {
       {
         id: id(),
         name: "Power Sword",
+        weight: 0.7,
         paints: [
           p("Andrea Blue", "Vallejo", "Model Color", "#0270AF", "base", { weight: 1.2 }),
           p("Deep Sky Blue", "Vallejo", "Model Color", "#4D95C5", "layer"),
@@ -88,6 +94,7 @@ export function whiteTemplars(): Scheme {
       {
         id: id(),
         name: "Purity Seals",
+        weight: 0.6,
         paints: [
           p("Zandri Dust", "Citadel", "Base", "#988E56", "base", { weight: 1.2 }),
           p("Ushabti Bone", "Citadel", "Layer", "#ABA173", "layer"),
@@ -97,6 +104,7 @@ export function whiteTemplars(): Scheme {
       {
         id: id(),
         name: "Eye Lenses",
+        weight: 0.4,
         paints: [
           p("Recess shade (cold blue)", "custom", "custom", "#142A4A", "base", { custom: true }),
           p("Deep glow", "custom", "custom", "#5A0E2E", "layer", { custom: true }),
