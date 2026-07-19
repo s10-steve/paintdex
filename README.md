@@ -1,12 +1,13 @@
 # Paintdex
 
-An open, community-maintained database of miniature paints with hex colour
-values — searchable, filterable, and able to find visually similar colours
-across brands.
+A database of miniature paints with hex colour values — searchable, filterable,
+and able to find visually similar colours across brands.
 
 > **Status:** covers the paint database, perceptual colour matching and a paint
-> scheme visualiser. User accounts, owned-paint inventories, and shareable
-> recipe links are planned (see [Roadmap](#roadmap)).
+> scheme visualiser. The project is intended to be open-sourced in future — the
+> paint catalogue especially, so the community can help keep colours accurate.
+> User accounts, owned-paint inventories, and shareable recipe links are also
+> planned (see [Roadmap](#roadmap)).
 
 ## Features
 
@@ -28,8 +29,9 @@ across brands.
   name + hex. Schemes autosave in your browser and export/import as JSON.
 - **Light & dark mode**, following your system preference with a manual toggle.
 - **Responsive** desktop and mobile layouts.
-- **Open data.** The paint database is plain JSON in this repo, so anyone can
-  fix a colour or add a paint via a pull request.
+- **Plain-JSON data.** The paint database is plain JSON, one file per brand. The
+  catalogue is intended to be open-sourced, so the community can help fix colours
+  and add paints.
 
 ## Tech stack
 
@@ -38,6 +40,8 @@ across brands.
 - [next-themes](https://github.com/pacocoursey/next-themes) for theming
 - [zod](https://zod.dev/) for data validation
 - [Vitest](https://vitest.dev/) for unit tests
+- Hosted on [Vercel](https://vercel.com/), with Vercel Analytics and Speed
+  Insights for traffic and performance monitoring
 
 No database or backend is required — the site is fully static.
 
@@ -72,18 +76,20 @@ or updating a dependency (commit the resulting `package.json` **and**
 
 ## Deploying
 
-The app is a standard Next.js project and deploys to
-[Vercel](https://vercel.com/) with zero configuration — import the repo and
-Vercel handles the build. Because everything is static, the free Hobby tier is
-plenty and there is nothing to keep warm.
+Paintdex is live at [paintdex.app](https://paintdex.app), hosted on
+[Vercel](https://vercel.com/). It's a standard Next.js project that deploys with
+zero configuration: every push to `main` builds and ships to production, and
+pull requests get their own preview URLs. Because everything is static, the free
+Hobby tier is plenty and there is nothing to keep warm.
 
 ## Contributing to the paint data
 
 The paint database lives in [`data/paints/`](data/paints/) as one JSON file per
-brand. Spotted a wrong hex value or a missing paint? Edits are just JSON — see
-[`data/paints/README.md`](data/paints/README.md) for the schema and
-[`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow. `npm run validate:data`
-checks your changes, and CI runs it on every PR.
+brand — and is the part of the project most intended to be opened up. Edits are
+just JSON: see [`data/paints/README.md`](data/paints/README.md) for the schema
+and [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow. Once the repo is
+public, corrections and additions will be welcome via pull request.
+`npm run validate:data` checks changes, and CI runs it on every PR.
 
 ## Data attribution
 
@@ -118,6 +124,13 @@ Brand and product names are trademarks of their respective owners.
 - [ ] Add URL links to the paint database for the official product pages (e.g.
       Citadel paints link to the Games Workshop site). Would help ensure
       correctness and tie in with adding new ranges and paints.
+- [ ] Review and correct the paint hex values — some are noticeably off (e.g.
+      Nuln Oil), as the initial data was best-effort. So far, fixes have been
+      manual: open the manufacturer's product page and sample the swatch image
+      with the macOS Digital Colour Meter (this is how several Vallejo hexes
+      were corrected). Worth exploring a bot/scraper that pulls product details
+      and hex values straight from each manufacturer's website to do this at
+      scale — ideally cross-checked against the official product-page links above.
 - [ ] Add more paint brands and ranges
 - [x] Light/dark follows the system by default, with a manual toggle to override
 - [x] Add a flag for metallic paints, and a filter for metallic vs non-metallic
@@ -136,9 +149,10 @@ Brand and product names are trademarks of their respective owners.
 
 ### Real live website
 
-- [ ] Deploy to Vercel, make it an actual live website, and get some users to
-      try it out. The paint data is already in the repo, so the site can be
-      deployed without any backend or database.
+- [x] Deploy to Vercel and make it an actual live website —
+      [paintdex.app](https://paintdex.app). The paint data ships in the repo, so
+      the site runs with no backend or database.
+- [ ] Get some users to try it out and gather feedback.
 
 ### User accounts & recipe features
 
