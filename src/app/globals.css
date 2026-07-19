@@ -18,6 +18,13 @@
   --accent: #f5f3ff;
   --accent-foreground: #6d28d9;
   --ring: #7c3aed;
+  /* Scheme visualiser — per-role accent colours. */
+  --role-base: #78716c;
+  --role-layer: #7c3aed;
+  --role-highlight: #d97706;
+  --role-wash: #2563eb;
+  --role-glaze: #db2777;
+  --role-weathering: #a1662f;
 }
 
 .dark {
@@ -34,6 +41,13 @@
   --accent: #2e1065;
   --accent-foreground: #ddd6fe;
   --ring: #a78bfa;
+  /* Scheme visualiser — per-role accent colours (dark). */
+  --role-base: #a8a29e;
+  --role-layer: #a78bfa;
+  --role-highlight: #f59e0b;
+  --role-wash: #60a5fa;
+  --role-glaze: #f472b6;
+  --role-weathering: #d1935a;
 }
 
 @theme inline {
@@ -65,4 +79,55 @@ body {
   * {
     border-color: var(--border);
   }
+}
+
+/* ---- Scheme visualiser -------------------------------------------------
+   A few bits that are awkward as pure Tailwind: the colour-mixed role tag,
+   the range-slider thumb, and the native colour-input swatch. Each reads its
+   accent from an inline `--role-c` (role tag) or the theme `--primary`. */
+.sv-role-tag {
+  color: var(--role-c);
+  background: color-mix(in srgb, var(--role-c) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--role-c) 34%, transparent);
+}
+.sv-weight {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--muted);
+  outline: none;
+}
+.sv-weight::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.sv-weight::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border: none;
+  border-radius: 999px;
+  background: var(--primary);
+  cursor: pointer;
+}
+.sv-swatch-input {
+  padding: 0;
+  cursor: pointer;
+}
+.sv-swatch-input::-webkit-color-swatch-wrapper {
+  padding: 3px;
+}
+.sv-swatch-input::-webkit-color-swatch {
+  border: none;
+  border-radius: 5px;
+}
+.sv-swatch-input::-moz-color-swatch {
+  border: none;
+  border-radius: 5px;
 }
