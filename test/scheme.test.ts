@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { barModel, rampGradient, overlayCenter, elementBarWidth } from "@/lib/scheme/bars";
-import type { SchemePaint, SchemeRole } from "@/lib/scheme/types";
+import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
+import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
 function p(role: SchemeRole, weight?: number): SchemePaint {
@@ -124,5 +125,82 @@ describe("overlayCenter", () => {
     const paints = [p("base"), p("wash"), p("layer")];
     const { segs, overlays } = barModel(paints);
     expect(overlayCenter(overlays[0], segs)).toBeCloseTo(segs[0].end, 5);
+  });
+});
+
+describe("scheme import/export", () => {
+  let n = 0;
+  const newId = () => `x${n++}`;
+
+  const sample: Scheme = {
+    title: "Test Scheme",
+    elements: [
+      {
+        id: "e1",
+        name: "Armour",
+        weight: 2,
+        paints: [
+          { id: "a1", name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
+          { id: "a2", name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+        ],
+      },
+    ],
+  };
+
+  it("round-trips a scheme through export → import (ignoring ids)", () => {
+    const json = exportSchemeJSON(sample);
+    const back = importScheme(json, newId);
+    expect(back.title).toBe("Test Scheme");
+    expect(back.elements).toHaveLength(1);
+    expect(back.elements[0].name).toBe("Armour");
+    expect(back.elements[0].weight).toBe(2);
+    expect(back.elements[0].paints.map((p) => ({ ...p, id: undefined }))).toEqual([
+      { id: undefined, name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
+      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+    ]);
+  });
+
+  it("assigns fresh unique ids on import", () => {
+    const back = importScheme(exportSchemeJSON(sample), newId);
+    const ids = [back.elements[0].id, ...back.elements[0].paints.map((p) => p.id)];
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("omits undefined weight/custom from the exported JSON", () => {
+    const json = exportSchemeJSON(sample);
+    const parsed = JSON.parse(json);
+    expect(parsed.app).toBe("paintdex");
+    expect("weight" in parsed.elements[0].paints[0]).toBe(false);
+    expect("custom" in parsed.elements[0].paints[0]).toBe(false);
+  });
+
+  it("rejects non-JSON and non-schemes", () => {
+    expect(() => importScheme("not json", newId)).toThrow(/valid JSON/);
+    expect(() => importScheme("{}", newId)).toThrow(/paint scheme/);
+    expect(() => importScheme('{"elements":"nope"}', newId)).toThrow(/paint scheme/);
+  });
+
+  it("sanitises bad fields instead of failing the whole import", () => {
+    const dirty = JSON.stringify({
+      elements: [{ name: "E", paints: [{ name: "P", hex: "zzz", role: "bogus" }] }],
+    });
+    const s = importScheme(dirty, newId);
+    const paint = s.elements[0].paints[0];
+    expect(paint.role).toBe("layer"); // unknown role → default
+    expect(paint.hex).toBe("#808080"); // invalid hex → default
+    expect(paint.brand).toBe("custom"); // missing → default
+  });
+
+  it("normalises hex to uppercase with a leading #", () => {
+    const s = importScheme(
+      JSON.stringify({ elements: [{ name: "E", paints: [{ name: "P", hex: "aabbcc", role: "base" }] }] }),
+      newId,
+    );
+    expect(s.elements[0].paints[0].hex).toBe("#AABBCC");
+  });
+
+  it("slugifies titles for filenames", () => {
+    expect(schemeSlug("Black Armour & Trim")).toBe("black-armour-trim");
+    expect(schemeSlug("   ")).toBe("paint-scheme");
   });
 });

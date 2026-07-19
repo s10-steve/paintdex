@@ -26,6 +26,7 @@ import {
 } from "@/lib/scheme/types";
 import { barModel, rampGradient, overlayCenter, clamp, elementBarWidth } from "@/lib/scheme/bars";
 import { whiteTemplars } from "@/lib/scheme/example";
+import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
 
 const STORE = "paintdex-scheme-v1";
 
@@ -154,6 +155,36 @@ export function SchemeVisualiser() {
     setBlend(true);
   };
 
+  /* ---- export / import (no accounts — a JSON file is the save format) ---- */
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [importError, setImportError] = useState<string | null>(null);
+
+  const doExport = () => {
+    const blob = new Blob([exportSchemeJSON(scheme)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${schemeSlug(scheme.title)}.paintdex.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const doImportFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        setScheme(importScheme(String(reader.result), uid));
+        setImportError(null);
+      } catch (err) {
+        setImportError(err instanceof Error ? err.message : "Couldn't import that file.");
+      }
+    };
+    reader.onerror = () => setImportError("Couldn't read that file.");
+    reader.readAsText(file);
+  };
+
   /* ---- tooltip (imperative, so mousemove doesn't re-render the tree) ---- */
   const tipRef = useRef<HTMLDivElement>(null);
   const hover: HoverHandlers = useMemo(
@@ -222,17 +253,49 @@ export function SchemeVisualiser() {
             like a real miniature.
           </p>
 
-          <div className="mb-3.5 flex items-baseline gap-3">
+          <div className="mb-3.5 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
             <h2 className="text-[15px] font-semibold tracking-tight">Elements &amp; paints</h2>
             <span className="text-xs text-muted-foreground">base → highlight, top to bottom</span>
-            <button
-              onClick={reset}
-              title="Restore the White Templars example scheme"
-              className="ml-auto flex-none rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            >
-              Reset to example
-            </button>
+            <div className="ml-auto flex flex-none items-center gap-0.5">
+              <button
+                onClick={() => fileRef.current?.click()}
+                title="Load a scheme from a .json file"
+                className="rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                Import
+              </button>
+              <button
+                onClick={doExport}
+                title="Download this scheme as a .json file (your backup / to share)"
+                className="rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                Export
+              </button>
+              <button
+                onClick={reset}
+                title="Restore the White Templars example scheme"
+                className="rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                Reset
+              </button>
+            </div>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="application/json,.json"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) doImportFile(file);
+                e.target.value = "";
+              }}
+            />
           </div>
+          {importError && (
+            <p className="mb-2 text-xs text-red-600 dark:text-red-400" role="alert">
+              {importError}
+            </p>
+          )}
 
           <div className="flex flex-col gap-3.5">
             {scheme.elements.map((element) => (

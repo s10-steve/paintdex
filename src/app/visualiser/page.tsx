@@ -19,7 +19,7 @@ export default function VisualiserPage() {
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
           Enter your paints grouped by element, then see how the whole
           miniature&apos;s colours read next to each other. Your scheme saves in this
-          browser.
+          browser — use Export to back it up or share it.
         </p>
       </div>
       <SchemeVisualiser />
