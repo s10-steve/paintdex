@@ -24,7 +24,7 @@ import {
   type SchemePaint,
   type SchemeRole,
 } from "@/lib/scheme/types";
-import { barModel, rampGradient, overlayCenter, clamp, elementBarWidth } from "@/lib/scheme/bars";
+import { barModel, rampGradient, overlayCenter, clamp } from "@/lib/scheme/bars";
 import { whiteTemplars } from "@/lib/scheme/example";
 import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
 
@@ -851,12 +851,14 @@ function Bar({
 }) {
   const { segs, overlays } = useMemo(() => barModel(element.paints), [element.paints]);
   const empty = element.paints.length === 0;
-  const width = elementBarWidth(element.weight);
 
+  // Bars share the row's fixed width in proportion to their element weight, so
+  // resizing one element just trades space with the others — the overall
+  // visualisation stays the same size. A min-width keeps thin bars usable.
   return (
     <div
-      className="flex flex-none flex-col items-center gap-2.5"
-      style={{ width }}
+      className="flex min-w-[46px] flex-col items-center gap-2.5"
+      style={{ flexGrow: elementWeightOf(element), flexBasis: 0 }}
     >
       <div
         className="relative flex h-[340px] w-full flex-col-reverse overflow-hidden rounded-[9px] shadow-sm ring-1 ring-inset ring-black/10 [isolation:isolate]"
@@ -902,7 +904,7 @@ function Bar({
           );
         })}
       </div>
-      <div className="max-w-full text-center text-xs font-medium leading-tight [text-wrap:balance]">
+      <div className="w-full break-words text-center text-xs font-medium leading-tight [text-wrap:balance]">
         {element.name}
         <span className="mt-0.5 block text-[10.5px] font-normal text-muted-foreground">
           {element.paints.length} {element.paints.length === 1 ? "paint" : "paints"}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { barModel, rampGradient, overlayCenter, elementBarWidth } from "@/lib/scheme/bars";
+import { barModel, rampGradient, overlayCenter } from "@/lib/scheme/bars";
 import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
@@ -86,23 +86,6 @@ describe("rampGradient", () => {
 
   it("is empty for no segments", () => {
     expect(rampGradient([], true)).toBe("");
-  });
-});
-
-describe("elementBarWidth", () => {
-  it("defaults to the base width when weight is unset", () => {
-    expect(elementBarWidth(undefined)).toBe(60);
-    expect(elementBarWidth(1)).toBe(60);
-  });
-
-  it("scales with weight so heavier elements read wider", () => {
-    expect(elementBarWidth(2)).toBeGreaterThan(elementBarWidth(1));
-    expect(elementBarWidth(0.5)).toBeLessThan(elementBarWidth(1));
-  });
-
-  it("clamps to sane bounds", () => {
-    expect(elementBarWidth(10)).toBe(170);
-    expect(elementBarWidth(0.01)).toBe(36);
   });
 });
 
