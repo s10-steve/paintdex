@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s · Paintdex",
   },
   description:
-    "Search and filter a community-maintained database of miniature paints with hex colour values, and find visually similar colours across brands.",
+    "Search and filter a database of miniature paints with hex colour values, find visually similar colours across brands, and plan whole paint schemes.",
 };
 
 export default function RootLayout({
@@ -37,19 +37,16 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="border-b border-amber-300/60 bg-amber-50 px-4 py-2 text-center text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/60 dark:text-amber-200">
+            🚧 Paintdex is a work in progress — the paint data is still being
+            checked and features may change.
+          </div>
           <SiteHeader />
           <div className="flex-1">{children}</div>
           <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
-            <p>
-              Open-source paint data ·{" "}
-              <a
-                className="underline underline-offset-2 hover:text-foreground"
-                href="https://github.com/s10-steve/paintdex"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Contribute on GitHub
-              </a>
+            <p className="mx-auto max-w-2xl px-4">
+              Paintdex is not affiliated with any paint manufacturer. Brand and
+              product names are trademarks of their respective owners.
             </p>
           </footer>
         </ThemeProvider>
