@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Paint scheme visualiser** (`/visualiser`): plan a miniature's paint scheme
+  by grouping paints into elements (armour, robes, lenses…) and see every
+  element's colours as aligned vertical bars, so the whole scheme reads
+  together. Each paint carries a role — base/layer/highlight build a weighted
+  tonal ramp, while wash/glaze/weathering render as translucent overlay passes —
+  plus a weight; each element has a weight that sets its bar width. A blend
+  toggle switches the bars between smooth gradients and hard bands. Add paints by
+  searching the browse index (reusing `filterPaints`) or enter a custom name +
+  hex for anything not in the database. Schemes autosave to `localStorage` and
+  can be exported/imported as JSON (no account needed), and the page ships
+  preloaded with a White Templars example. Pure bar and import/export logic
+  lives in `src/lib/scheme/` with unit tests.
 - Eight more paint brands imported from the upstream dataset — The Army Painter,
   Duncan Rhodes, Green Stuff World, Liquitex, Mig, P3, Scale 75 and Tamiya —
   taking the catalogue from ~2,700 to 4,940 paints across 11 brands.
