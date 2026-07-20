@@ -55,28 +55,26 @@ and schemes are saved to `localStorage`, as before.
 
 1. Create a free [Supabase](https://supabase.com/) project and run
    [`supabase/schema.sql`](supabase/schema.sql) in its SQL editor.
-2. Enable the **Google** provider under Authentication → Providers.
-3. Copy [`.env.example`](.env.example) to `.env.local` and set
-   `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (both are
-   public; access is protected by Row-Level Security). Set the same two in
-   Vercel for production.
+2. Create a Google OAuth **client ID** (Google Cloud → Credentials → OAuth
+   client ID → Web application). Add your origins (`http://localhost:3000`,
+   `https://paintdex.app`) to **Authorized JavaScript origins**.
+3. Enable the **Google** provider under Supabase → Authentication → Providers,
+   and add the client ID above to its **Client IDs** field (this is what lets
+   Supabase accept the browser-issued ID token).
+4. Copy [`.env.example`](.env.example) to `.env.local` and set
+   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and
+   `NEXT_PUBLIC_GOOGLE_CLIENT_ID` (all public; data access is protected by
+   Row-Level Security). Set the same three in Vercel for production.
 
-> **Consent-screen branding (known limitation).** Sign-in currently uses
-> Supabase's redirect OAuth (`signInWithOAuth`), which bounces through Supabase's
-> shared callback domain (`<ref>.supabase.co`). Google's consent screen therefore
-> shows that domain rather than "Paintdex", and publishing/verifying can't change
-> it — brand verification requires proving ownership of the callback domain, which
-> belongs to Supabase. Still worth setting the app *name*, logo, and
-> homepage/privacy links under Google Auth Platform → Branding.
->
-> Two ways to brand the domain, neither adopted yet:
-> - **Paid:** Supabase's custom-domain add-on puts the callback on e.g.
->   `auth.paintdex.app`. It requires the **Pro plan ($25/mo) + the add-on
->   ($10/mo)** — deliberately declined to keep hosting free.
-> - **Free:** switch sign-in to the Google Identity Services **ID-token flow**
->   (`signInWithIdToken`), which authenticates from our own origin so Google
->   shows `paintdex.app` — no Supabase upgrade needed. More client code (Google's
->   GIS script + nonce handling); a candidate future change.
+> **How sign-in is wired (and why).** Sign-in uses **Google Identity Services**
+> to obtain an ID token in the browser, then exchanges it with Supabase via
+> `signInWithIdToken`. Because this runs from our own origin, Google's consent
+> screen is branded to `paintdex.app` rather than the Supabase callback domain —
+> and it needs **no paid Supabase custom domain**. If `NEXT_PUBLIC_GOOGLE_CLIENT_ID`
+> is left unset, the app falls back to Supabase's redirect OAuth, which still
+> works but shows the `supabase.co` domain on consent. (Showing a custom *logo*
+> on the consent screen still requires Google's brand verification, which is now
+> achievable since the domain is one we own.)
 
 ## Getting started
 
