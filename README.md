@@ -40,10 +40,26 @@ and able to find visually similar colours across brands.
 - [next-themes](https://github.com/pacocoursey/next-themes) for theming
 - [zod](https://zod.dev/) for data validation
 - [Vitest](https://vitest.dev/) for unit tests
+- [Supabase](https://supabase.com/) for optional accounts (sign-in + saved
+  schemes), called directly from the browser
 - Hosted on [Vercel](https://vercel.com/), with Vercel Analytics and Speed
   Insights for traffic and performance monitoring
 
-No database or backend is required — the site is fully static.
+The core site (paint database, matching, visualiser) needs no backend — it's
+statically generated and the paint data ships in the repo. **Accounts are
+optional**: the browser talks to Supabase directly, so the site stays static and
+free to host. If the Supabase env vars are unset, accounts simply don't appear
+and schemes are saved to `localStorage`, as before.
+
+### Accounts setup (optional)
+
+1. Create a free [Supabase](https://supabase.com/) project and run
+   [`supabase/schema.sql`](supabase/schema.sql) in its SQL editor.
+2. Enable the **Google** provider under Authentication → Providers.
+3. Copy [`.env.example`](.env.example) to `.env.local` and set
+   `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (both are
+   public; access is protected by Row-Level Security). Set the same two in
+   Vercel for production.
 
 ## Getting started
 
@@ -156,9 +172,10 @@ Brand and product names are trademarks of their respective owners.
 
 ### User accounts & recipe features
 
-- [ ] User accounts & login
+- [x] User accounts & login (Google sign-in via Supabase)
 - [ ] Save the paints you own
-- [ ] Save your paint schemes
+- [x] Save your paint schemes (synced to your account, with local schemes
+      migrated on first sign-in)
 - [ ] Example/starter schemes to explore in the visualiser — likely built on
       top of user accounts and saved schemes (e.g. a curated gallery you can
       load and tweak), rather than a single scheme baked into the app

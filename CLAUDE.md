@@ -4,12 +4,30 @@ Guidance for AI agents (and humans) working in this repo.
 
 ## What Paintdex is
 
-A **fully static** Next.js (App Router) site: a searchable database of ~4,900
+A **static** Next.js (App Router) site: a searchable database of ~4,900
 miniature paints with hex colours, perceptual (CIEDE2000) colour matching, and a
-paint scheme visualiser. **No backend, no database, no auth** — paint data is
-plain JSON in the repo, pages are statically generated, and per-user state
-(visualiser schemes) lives in `localStorage`. Live at
-[paintdex.app](https://paintdex.app) on Vercel; every push to `main` deploys.
+paint scheme visualiser. Paint data is plain JSON in the repo and pages are
+statically generated. Per-user state (visualiser schemes) lives in
+`localStorage` by default. Live at [paintdex.app](https://paintdex.app) on
+Vercel; every push to `main` deploys.
+
+**Accounts (optional).** Sign-in and saved schemes are powered by **Supabase**,
+called **directly from the browser** — there are still **no Next.js API routes
+and no server components that read request-time data**, so the site stays
+static; the backend lives entirely outside Vercel. Access is enforced by Row-
+Level Security (see `supabase/schema.sql`), which is why the public
+`NEXT_PUBLIC_SUPABASE_*` anon key is safe to ship (see `.env.example`). If those
+env vars are unset the site runs exactly as before — account features hide
+themselves and the visualiser falls back to `localStorage` only.
+
+**"Keep everything static" is a cost-driven convention, not a hard limit.**
+`output: 'export'` is **not** set in `next.config.ts`, so Next.js server
+features (API routes, server components, server actions) *are* available on
+Vercel — we deliberately avoid them to keep the site free to host and
+maintenance-free (there's no revenue model), not because the build forbids them.
+A future contributor can revisit this on purpose. The most likely reason to
+would be server-rendered pages for SEO; note that's **not** needed for the
+planned share links, which are user-to-user, not public search resources.
 
 ## Commands
 
@@ -63,7 +81,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   homepage search), which silently freezes the results. See
   `src/components/paints-browser.tsx`.
 - Keep everything **static** — no server components that read request-time data,
-  no API routes. `getAllPaints()` and friends run at build time.
+  no API routes. `getAllPaints()` and friends run at build time. This is a
+  cost-driven convention, not a technical constraint (`output: 'export'` is not
+  set); see "What Paintdex is" above before relaxing it. Account features follow
+  it too: Supabase is called from the browser, never via a Next.js route.
 - Colour and scheme logic in `src/lib` is pure (no React/DOM) so it stays
   unit-testable; add tests in `test/` when changing it.
 - The canonical site URL (`https://paintdex.app`) is hardcoded in
