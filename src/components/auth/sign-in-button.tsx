@@ -1,18 +1,32 @@
 "use client";
 
 /**
- * Header auth control: "Sign in" when logged out, an account menu when logged
- * in. Renders nothing until mounted (avoids a hydration mismatch, since auth
- * state is client-only) and nothing at all when Supabase isn't configured.
+ * Header auth control. Signed out, it shows the official Google Identity
+ * Services button (rendered from our own origin, so the consent screen is
+ * branded to paintdex.app); signed in, an account menu. Renders nothing until
+ * mounted (auth state is client-only) and nothing when Supabase isn't
+ * configured. If no Google client id is set, it falls back to a plain button
+ * that uses Supabase's redirect sign-in.
  */
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import { useAuth } from "./auth-provider";
 
 export function SignInButton() {
-  const { configured, user, loading, signInWithGoogle, signOut } = useAuth();
+  const {
+    configured,
+    googleEnabled,
+    gisReady,
+    user,
+    loading,
+    signInWithGoogleRedirect,
+    signOut,
+  } = useAuth();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const gsiRef = useRef<HTMLDivElement>(null);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
@@ -29,19 +43,36 @@ export function SignInButton() {
     return () => document.removeEventListener("mousedown", onClick);
   }, [open]);
 
-  // Nothing to show if accounts aren't set up, or before mount/first check.
+  // Render (or re-render on theme change) the Google button while signed out.
+  useEffect(() => {
+    if (!mounted || user || !gisReady || !gsiRef.current || !window.google) return;
+    gsiRef.current.innerHTML = "";
+    window.google.accounts.id.renderButton(gsiRef.current, {
+      type: "icon",
+      shape: "circle",
+      size: "large",
+      theme: resolvedTheme === "dark" ? "filled_black" : "outline",
+    });
+  }, [mounted, user, gisReady, resolvedTheme]);
+
+  // Accounts unavailable, or before the first client-side session check.
   if (!configured || !mounted || loading) {
-    return <span className="h-9 w-[4.5rem]" aria-hidden="true" />;
+    return <span className="h-9 w-9" aria-hidden="true" />;
   }
 
   if (!user) {
+    if (googleEnabled) {
+      // The Google button renders here once GIS is ready; keep a fixed-size
+      // slot so the header doesn't shift while it loads.
+      return <div ref={gsiRef} className="flex h-10 w-10 items-center justify-center" />;
+    }
+    // Fallback: no Google client id configured — use Supabase's redirect flow.
     return (
       <button
         type="button"
-        onClick={() => void signInWithGoogle()}
+        onClick={() => void signInWithGoogleRedirect()}
         className="inline-flex h-9 items-center gap-2 rounded-md border border-border bg-card px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <GoogleIcon />
         Sign in
       </button>
     );
@@ -84,28 +115,5 @@ export function SignInButton() {
         </div>
       )}
     </div>
-  );
-}
-
-function GoogleIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        fill="#4285F4"
-        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"
-      />
-      <path
-        fill="#34A853"
-        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"
-      />
-      <path
-        fill="#FBBC05"
-        d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"
-      />
-      <path
-        fill="#EA4335"
-        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.3 9.14 5.38 12 5.38z"
-      />
-    </svg>
   );
 }
