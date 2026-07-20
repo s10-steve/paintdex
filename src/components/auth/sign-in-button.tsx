@@ -41,10 +41,12 @@ export function SignInButton() {
     if (renderedRef.current || !gisReady || !gsiRef.current || !window.google) return;
     renderedRef.current = true;
     window.google.accounts.id.renderButton(gsiRef.current, {
-      type: "icon",
-      shape: "circle",
-      size: "large",
+      type: "standard",
       theme: "outline",
+      size: "large",
+      shape: "pill",
+      text: "signin_with",
+      logo_alignment: "left",
     });
   }, [gisReady, loading, user]);
 
@@ -60,11 +62,7 @@ export function SignInButton() {
     <div className="flex items-center">
       {/* Google button: rendered once, hidden (not unmounted) when signed in. */}
       {googleEnabled && (
-        <div
-          ref={gsiRef}
-          className={user ? "hidden" : "flex items-center"}
-          aria-hidden={Boolean(user)}
-        />
+        <div ref={gsiRef} className={user ? "hidden" : undefined} aria-hidden={Boolean(user)} />
       )}
 
       {/* Account menu, shown when signed in. */}
