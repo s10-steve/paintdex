@@ -141,6 +141,19 @@ Brand and product names are trademarks of their respective owners.
       "Abaddon Black" and "Abaddon Grey")
 - [x] On the paint page, add a filter for the match grouping. By default have it
       only show matches of 'close' or better.
+- [ ] Update the favicon to match the new colour-wheel logo
+      (`public/logo.svg`).
+- [ ] Tapping a search box on mobile zooms the page in, which then lets it
+      scroll left/right. Likely the iOS Safari behaviour where it auto-zooms
+      inputs with a font-size below 16px — check the search inputs' font size
+      and/or the viewport `meta`.
+- [ ] Add an "are you sure?" confirmation dialog to the Reset button in the
+      scheme visualiser.
+- [ ] Rearrange the Scheme Visualiser layout. Currently the scheme name sits in
+      the middle of the explanation text and above the "My schemes" dropdown.
+      Better order: "Scheme Visualiser" heading + explanation full-width at the
+      top; then the "My schemes" dropdown; then the scheme title and the scheme
+      itself.
 
 ### Paint database and UI features
 
@@ -175,6 +188,11 @@ Brand and product names are trademarks of their respective owners.
       axes representing hue and luminance. So if you're looking for something
       slightly different to the paint you have, you can see the options in a
       more intuitive way than just a list of similar colours.
+- [ ] Fix specific hex values: Nuln Oil Gloss is wrong — should match the
+      non-gloss Nuln Oil; Agrax Earthshade looks wrong too — should be a darker
+      brown.
+- [ ] Add an "export as Markdown" option for paint schemes (alongside the
+      existing JSON export).
 
 ### Real live website
 
@@ -182,6 +200,8 @@ Brand and product names are trademarks of their respective owners.
       [paintdex.app](https://paintdex.app). The paint data ships in the repo, so
       the site runs with no backend or database.
 - [ ] Get some users to try it out and gather feedback.
+- [ ] Do an SEO pass on the site (metadata, structured data, per-page titles,
+      sitemap coverage, etc.).
 
 ### User accounts & recipe features
 
@@ -196,6 +216,10 @@ Brand and product names are trademarks of their respective owners.
 - [ ] Wishlist for paints you don't own yet but want to buy
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own (based on colour similarity)
+- [ ] Add a privacy policy and terms of service, then link them from Google
+      Auth Platform → Branding. Needed for Google OAuth verification (and lets
+      us show the app logo on the consent screen). See Google's
+      [verification requirements](https://support.google.com/cloud/answer/13464321).
 
 ## License
 
