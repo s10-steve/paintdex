@@ -61,6 +61,16 @@ and schemes are saved to `localStorage`, as before.
    public; access is protected by Row-Level Security). Set the same two in
    Vercel for production.
 
+> **Consent-screen branding (known limitation).** Sign-in runs through
+> Supabase's shared callback domain (`<ref>.supabase.co`), so Google's consent
+> screen shows that domain rather than "Paintdex" — and it can't be changed by
+> publishing or verifying, because Google's brand verification requires proving
+> ownership of that domain, which belongs to Supabase. The app *name*, logo,
+> and homepage/privacy links are still worth setting under Google Auth Platform
+> → Branding. Fully branding the domain would require Supabase's paid custom-
+> domain add-on (so the callback runs on e.g. `auth.paintdex.app`); deliberately
+> deferred to keep hosting free.
+
 ## Getting started
 
 The project targets **Node 24** (the version CI runs — see
