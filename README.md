@@ -4,10 +4,10 @@ A database of miniature paints with hex colour values — searchable, filterable
 and able to find visually similar colours across brands.
 
 > **Status:** covers the paint database, perceptual colour matching and a paint
-> scheme visualiser. The project is intended to be open-sourced in future — the
-> paint catalogue especially, so the community can help keep colours accurate.
-> User accounts, owned-paint inventories, and shareable recipe links are also
-> planned (see [Roadmap](#roadmap)).
+> scheme visualiser. User accounts, owned-paint inventories, and shareable
+> recipe links are planned next (see [Roadmap](#roadmap)) — the project will be
+> open-sourced once those are in, so the community can help keep the paint
+> catalogue accurate.
 
 ## Features
 
@@ -121,16 +121,11 @@ Brand and product names are trademarks of their respective owners.
       preview the whole scheme's colours as blended vertical bars, with roles,
       per-paint and per-element weights, and JSON export/import
 - [x] Light/dark + responsive
-- [ ] Add URL links to the paint database for the official product pages (e.g.
-      Citadel paints link to the Games Workshop site). Would help ensure
-      correctness and tie in with adding new ranges and paints.
-- [ ] Review and correct the paint hex values — some are noticeably off (e.g.
-      Nuln Oil), as the initial data was best-effort. So far, fixes have been
-      manual: open the manufacturer's product page and sample the swatch image
-      with the macOS Digital Colour Meter (this is how several Vallejo hexes
-      were corrected). Worth exploring a bot/scraper that pulls product details
-      and hex values straight from each manufacturer's website to do this at
-      scale — ideally cross-checked against the official product-page links above.
+- [ ] Review and correct the paint hex values — some are noticeably off, as the
+      initial data was best-effort. Fixes are manual: open the manufacturer's
+      product page and sample the swatch image with the macOS Digital Colour
+      Meter (this is how several Vallejo hexes were corrected, and how Nuln Oil
+      was fixed).
 - [ ] Add more paint brands and ranges
 - [x] Light/dark follows the system by default, with a manual toggle to override
 - [x] Add a flag for metallic paints, and a filter for metallic vs non-metallic
@@ -166,6 +161,11 @@ Brand and product names are trademarks of their respective owners.
 - [ ] Wishlist for paints you don't own yet but want to buy
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own (based on colour similarity)
+
+### Open source
+
+- [ ] Open-source the repo once the user accounts & recipe features above have
+      shipped, so the community can help keep the paint catalogue accurate.
 
 ## License
 
