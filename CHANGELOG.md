@@ -5,6 +5,38 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-07-20
+
+### Added
+
+- **Optional user accounts**, powered by Supabase called **directly from the
+  browser** — there are still no Next.js API routes and no server components
+  reading request-time data, so the site stays static and free to host. Access
+  is enforced by Row-Level Security (`supabase/schema.sql`), so the public
+  `NEXT_PUBLIC_*` keys are safe to ship. With the env vars unset, the site
+  behaves exactly as before (accounts hide themselves; the visualiser stays
+  `localStorage`-only).
+- **Sign in with Google** via Google Identity Services (`signInWithIdToken`).
+  Because auth runs from our own origin, Google's consent screen is branded to
+  `paintdex.app` rather than the Supabase callback domain — no paid Supabase
+  custom domain needed.
+- **Saved schemes synced to your account**: a "My schemes" picker
+  (new / select / delete) in the visualiser, debounced autosave, and first-login
+  adoption of the scheme built while signed out. The signed-out path is
+  unchanged.
+- **Brand logo** (`public/logo.svg`) — a colour-wheel "lens" mark — shown in the
+  header, plus a 1200×630 social-share image (`public/og-image.png`) wired into
+  OpenGraph/Twitter metadata.
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and
+  `NEXT_PUBLIC_GOOGLE_CLIENT_ID` environment variables (documented in
+  `.env.example`).
+
+### Changed
+
+- Extracted `toExportShape()` in `src/lib/scheme/io.ts`, shared by the JSON
+  export and the account-sync path (stored as `jsonb`, no stringify round trip).
+- The header brand mark is now the SVG logo instead of a CSS conic gradient.
+
 ## [0.2.0] - 2026-07-19
 
 First public release — Paintdex is now live at
