@@ -8,9 +8,8 @@
  * ID token directly in the browser, then exchanges it with Supabase via
  * `signInWithIdToken`. This authenticates from our own origin, so Google's
  * consent screen shows `paintdex.app` rather than the Supabase callback domain
- * — and it needs no paid Supabase custom domain. If `NEXT_PUBLIC_GOOGLE_CLIENT_ID`
- * is absent we fall back to Supabase's redirect OAuth (`signInWithOAuth`), which
- * still works but shows the `supabase.co` domain on consent.
+ * — and it needs no paid Supabase custom domain. `NEXT_PUBLIC_GOOGLE_CLIENT_ID`
+ * is required for sign-in to appear.
  *
  * When Supabase itself isn't configured the provider is inert: `configured` is
  * false and the UI hides all account features, so the site works exactly as it
@@ -34,7 +33,7 @@ const GSI_SRC = "https://accounts.google.com/gsi/client";
 interface AuthContextValue {
   /** True when Supabase env vars are present and accounts are available. */
   configured: boolean;
-  /** True when a Google client id is set (so the GIS button is the sign-in path). */
+  /** True when a Google client id is set (so the sign-in button can appear). */
   googleEnabled: boolean;
   /** True once the Google Identity Services library is loaded and initialised. */
   gisReady: boolean;
@@ -42,8 +41,6 @@ interface AuthContextValue {
   user: User | null;
   /** True until the initial session check resolves. */
   loading: boolean;
-  /** Fallback redirect sign-in, used only when no Google client id is set. */
-  signInWithGoogleRedirect: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -64,6 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(isSupabaseConfigured);
   const [gisReady, setGisReady] = useState(false);
   const nonceRef = useRef<string | null>(null);
+  const initedRef = useRef(false);
 
   // Track the Supabase session.
   useEffect(() => {
@@ -88,16 +86,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  // Load Google Identity Services and initialise the ID-token flow.
+  // Load Google Identity Services and initialise the ID-token flow (once).
   useEffect(() => {
     const supabase = getSupabase();
     if (!supabase || !GOOGLE_CLIENT_ID) return;
-    let cancelled = false;
 
     async function init() {
-      if (cancelled || !window.google) return;
+      if (initedRef.current || !window.google) return;
+      initedRef.current = true;
       const { raw, hashed } = await makeNonce();
-      if (cancelled) return;
       nonceRef.current = raw;
       window.google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID!,
@@ -111,14 +108,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           if (error) console.error("Google sign-in failed:", error.message);
         },
       });
-      if (!cancelled) setGisReady(true);
+      setGisReady(true);
     }
 
     if (window.google?.accounts?.id) {
       void init();
-      return () => {
-        cancelled = true;
-      };
+      return;
     }
 
     let script = document.getElementById("google-gsi") as HTMLScriptElement | null;
@@ -132,10 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       document.head.appendChild(script);
     }
     script.addEventListener("load", onLoad);
-    return () => {
-      cancelled = true;
-      script?.removeEventListener("load", onLoad);
-    };
+    return () => script?.removeEventListener("load", onLoad);
   }, []);
 
   const value = useMemo<AuthContextValue>(
@@ -146,17 +138,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session,
       user: session?.user ?? null,
       loading,
-      async signInWithGoogleRedirect() {
-        const supabase = getSupabase();
-        if (!supabase) return;
-        await supabase.auth.signInWithOAuth({
-          provider: "google",
-          options: {
-            redirectTo:
-              typeof window !== "undefined" ? window.location.href : undefined,
-          },
-        });
-      },
       async signOut() {
         window.google?.accounts.id.disableAutoSelect();
         const supabase = getSupabase();
@@ -181,7 +162,6 @@ export function useAuth(): AuthContextValue {
     session: null,
     user: null,
     loading: false,
-    async signInWithGoogleRedirect() {},
     async signOut() {},
   };
 }

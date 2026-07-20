@@ -70,10 +70,8 @@ and schemes are saved to `localStorage`, as before.
 > to obtain an ID token in the browser, then exchanges it with Supabase via
 > `signInWithIdToken`. Because this runs from our own origin, Google's consent
 > screen is branded to `paintdex.app` rather than the Supabase callback domain —
-> and it needs **no paid Supabase custom domain**. If `NEXT_PUBLIC_GOOGLE_CLIENT_ID`
-> is left unset, the app falls back to Supabase's redirect OAuth, which still
-> works but shows the `supabase.co` domain on consent. (Showing a custom *logo*
-> on the consent screen still requires Google's brand verification, which is now
+> and it needs **no paid Supabase custom domain**. (Showing a custom *logo* on
+> the consent screen still requires Google's brand verification, which is now
 > achievable since the domain is one we own.)
 
 ## Getting started
