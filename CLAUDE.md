@@ -16,9 +16,12 @@ called **directly from the browser** — there are still **no Next.js API routes
 and no server components that read request-time data**, so the site stays
 static; the backend lives entirely outside Vercel. Access is enforced by Row-
 Level Security (see `supabase/schema.sql`), which is why the public
-`NEXT_PUBLIC_SUPABASE_*` anon key is safe to ship (see `.env.example`). If those
-env vars are unset the site runs exactly as before — account features hide
-themselves and the visualiser falls back to `localStorage` only.
+`NEXT_PUBLIC_SUPABASE_*` anon key is safe to ship (see `.env.example`). Sign-in
+uses **Google Identity Services** in the browser (the `signInWithIdToken` flow),
+so Google's consent screen is branded to our own domain rather than the Supabase
+callback domain. If those env vars are unset the site runs exactly as before —
+account features hide themselves and the visualiser falls back to `localStorage`
+only.
 
 **"Keep everything static" is a cost-driven convention, not a hard limit.**
 `output: 'export'` is **not** set in `next.config.ts`, so Next.js server
@@ -59,17 +62,26 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 
 - `src/app/` — routes: `/` (home), `/paints` (browse), `/paints/[id]` (paint
   detail, SSG with `dynamicParams = false`), `/visualiser`, plus `robots.ts` and
-  `sitemap.ts`. Root `layout.tsx` holds metadata, the WIP banner, and Vercel
-  Analytics/Speed Insights.
+  `sitemap.ts`. Root `layout.tsx` holds metadata (incl. OpenGraph/Twitter),
+  wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the WIP banner,
+  header and Vercel Analytics/Speed Insights.
 - `src/components/` — client components (`paints-browser`, `similar-colours`,
-  `scheme-visualiser`, etc.).
+  `scheme-visualiser`, `site-header`, etc.), plus `auth/` (`auth-provider` with
+  the `useAuth` hook + Google Identity Services init; `sign-in-button`).
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
   contrast, colour families), `paints/` (load, filter, types), `scheme/` (bar
-  maths, JSON import/export, types).
+  maths, JSON import/export, types). Also `supabase/` (browser client +
+  hand-written row types) and `data/` (per-table CRUD, e.g. `schemes.ts`) — these
+  touch the network, so keep them thin and keep the logic in the pure modules.
+- `supabase/schema.sql` — the Postgres tables + Row-Level Security for accounts
+  (run in the Supabase SQL editor; not applied automatically).
 - `data/paints/*.json` — the paint catalogue, one file per brand.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
   `validate-data.ts`, `import-source.mjs`.
 - `test/` — Vitest suites for the `src/lib` logic.
+- `src/types/gis.d.ts` — minimal typings for the Google Identity Services lib.
+- `.env.example` — the three `NEXT_PUBLIC_*` vars accounts need (Supabase URL +
+  anon key, Google client id).
 - Import alias: `@/*` → `src/*`.
 
 ## Conventions & gotchas
@@ -95,5 +107,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 
 ## Deploying
 
-Vercel builds `main` for production and gives every PR a preview URL. Nothing to
-configure — it's a zero-config static Next.js app.
+Vercel builds `main` for production and gives every PR a preview URL — it's a
+zero-config static Next.js app. The **core site needs no configuration**;
+**accounts** additionally need the three `NEXT_PUBLIC_*` env vars (see
+`.env.example`) set in Vercel (Production/Preview/Development) — they're inlined
+at build time, so add them and redeploy. Google sign-in also requires the site's
+origins in the OAuth client's Authorized JavaScript origins, and the client id
+listed under Supabase → Auth → Providers → Google. With the env vars absent, the
+build still succeeds and ships the site without accounts.

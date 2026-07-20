@@ -3,11 +3,12 @@
 A database of miniature paints with hex colour values — searchable, filterable,
 and able to find visually similar colours across brands.
 
-> **Status:** covers the paint database, perceptual colour matching and a paint
-> scheme visualiser. The project is intended to be open-sourced in future — the
-> paint catalogue especially, so the community can help keep colours accurate.
-> User accounts, owned-paint inventories, and shareable recipe links are also
-> planned (see [Roadmap](#roadmap)).
+> **Status:** covers the paint database, perceptual colour matching, a paint
+> scheme visualiser, and optional accounts (Google sign-in with your schemes
+> synced to your account). The project is intended to be open-sourced in future —
+> the paint catalogue especially, so the community can help keep colours
+> accurate. Owned-paint inventories and shareable recipe links are also planned
+> (see [Roadmap](#roadmap)).
 
 ## Features
 
@@ -26,7 +27,11 @@ and able to find visually similar colours across brands.
   so the whole model reads together. Paints carry a role (base, layer,
   highlight, wash, glaze, weathering) and a weight; elements have a weight that
   sets their bar width. Search the database to add a paint or enter a custom
-  name + hex. Schemes autosave in your browser and export/import as JSON.
+  name + hex. Schemes autosave in your browser and export/import as JSON — or
+  sync to your account when signed in.
+- **Accounts (optional).** Sign in with Google to sync your saved schemes across
+  devices; without an account, schemes save to your browser exactly as before.
+  Owned-paint inventories and shareable recipe links are planned.
 - **Light & dark mode**, following your system preference with a manual toggle.
 - **Responsive** desktop and mobile layouts.
 - **Plain-JSON data.** The paint database is plain JSON, one file per brand. The
