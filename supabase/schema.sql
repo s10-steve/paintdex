@@ -109,3 +109,44 @@ drop trigger if exists schemes_touch on public.schemes;
 create trigger schemes_touch
   before update on public.schemes
   for each row execute function public.touch_updated_at();
+
+-- ---------------------------------------------------------------------------
+-- Quotas / abuse limits
+-- ---------------------------------------------------------------------------
+-- The browser inserts rows directly with the public anon key, so per-account
+-- limits must live in the database — the client can't be trusted to enforce
+-- them. RLS already restricts a user to their own rows; these bound how many
+-- and how large those rows can be, so no single account can run up unbounded
+-- storage. Both limits are tunable; a real scheme is only a few KB.
+
+-- Cap each scheme's stored JSON size (~100 KB is very generous).
+alter table public.schemes drop constraint if exists schemes_data_size;
+alter table public.schemes
+  add constraint schemes_data_size check (octet_length(data::text) <= 100000);
+
+-- Cap the number of schemes per account. A count can't be expressed as a CHECK
+-- (it references other rows), so it runs as a BEFORE INSERT trigger. The
+-- "Scheme limit reached" message is matched by the visualiser to show a
+-- specific, actionable error. security definer + a fixed search_path make the
+-- count authoritative regardless of RLS (mirrors handle_new_user above).
+create or replace function public.enforce_scheme_quota()
+  returns trigger
+  language plpgsql
+  security definer
+  set search_path = public
+as $$
+declare
+  max_schemes constant int := 100;
+begin
+  if (select count(*) from public.schemes where user_id = new.user_id) >= max_schemes then
+    raise exception 'Scheme limit reached (max % per account).', max_schemes
+      using errcode = 'check_violation';
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists schemes_quota on public.schemes;
+create trigger schemes_quota
+  before insert on public.schemes
+  for each row execute function public.enforce_scheme_quota();
