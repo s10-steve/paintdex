@@ -17,14 +17,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_DESCRIPTION =
+  "Search and filter a database of miniature paints with hex colour values, find visually similar colours across brands, and plan whole paint schemes.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://paintdex.app"),
   title: {
     default: "Paintdex — miniature paint database & colour matcher",
     template: "%s · Paintdex",
   },
-  description:
-    "Search and filter a database of miniature paints with hex colour values, find visually similar colours across brands, and plan whole paint schemes.",
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: "Paintdex",
+    title: "Paintdex — miniature paint database & colour matcher",
+    description: SITE_DESCRIPTION,
+    url: "/",
+    images: [
+      { url: "/og-image.png", width: 1200, height: 630, alt: "Paintdex" },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Paintdex — miniature paint database & colour matcher",
+    description: SITE_DESCRIPTION,
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
