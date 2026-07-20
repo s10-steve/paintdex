@@ -26,7 +26,14 @@ import {
   type SchemeRole,
 } from "@/lib/scheme/types";
 import { barModel, rampGradient, overlayCenter, clamp } from "@/lib/scheme/bars";
-import { exportSchemeJSON, importScheme, schemeSlug, toExportShape } from "@/lib/scheme/io";
+import {
+  exportSchemeJSON,
+  importScheme,
+  importSchemeObject,
+  schemeSlug,
+  toExportShape,
+} from "@/lib/scheme/io";
+import { planSignInScheme } from "@/lib/scheme/sync";
 import { useAuth } from "./auth/auth-provider";
 import {
   listSchemes,
@@ -120,7 +127,7 @@ export function SchemeVisualiser() {
           // Route restored data through the same sanitiser the file-import path
           // uses, so a corrupted shape can't reach `.map(...)` during render and
           // white-screen the page — it throws here and we fall back to the seed.
-          const restored = importScheme(JSON.stringify(parsed.scheme), uid);
+          const restored = importSchemeObject(parsed.scheme, uid);
           if (typeof parsed.scheme.title === "string") restored.title = parsed.scheme.title;
           setScheme(restored);
         }
@@ -177,26 +184,31 @@ export function SchemeVisualiser() {
       try {
         const rows = await listSchemes();
         if (cancelled) return;
-        if (rows.length > 0) {
+        const local = schemeRef.current;
+        // Decide what to do with the scheme currently in the editor. Crucially,
+        // if the user built something while signed out that isn't already
+        // saved, we adopt it as a NEW scheme rather than overwriting it with a
+        // saved one — otherwise that work would be silently lost on sign-in.
+        if (planSignInScheme(rows.map((r) => r.data), local) === "adopt-local") {
+          const row = await createScheme(
+            user.id,
+            toExportShape(local),
+            local.title || "Untitled scheme",
+          );
+          if (cancelled) return;
+          // The editor already shows `local`, so don't touch `scheme`; just
+          // make the new row the active, top-of-list saved scheme.
+          skipSaveRef.current = true;
+          setSavedSchemes([row, ...rows]);
+          setActiveSchemeId(row.id);
+        } else {
           setSavedSchemes(rows);
           const first = rows[0];
-          const restored = importScheme(JSON.stringify(first.data), uid);
+          const restored = importSchemeObject(first.data, uid);
           restored.title = first.title;
           skipSaveRef.current = true;
           setScheme(restored);
           setActiveSchemeId(first.id);
-        } else {
-          // No saved schemes yet — adopt the current in-memory scheme as the
-          // first one so autosave has a target. This migrates a scheme built
-          // while logged out; a blank seed just becomes an empty saved scheme.
-          // We never overwrite the current scheme here, so no local work is
-          // lost.
-          const seed = schemeRef.current;
-          const row = await createScheme(user.id, toExportShape(seed), seed.title || "Untitled scheme");
-          if (cancelled) return;
-          skipSaveRef.current = true;
-          setSavedSchemes([row]);
-          setActiveSchemeId(row.id);
         }
         setSyncState("idle");
       } catch {
@@ -224,9 +236,14 @@ export function SchemeVisualiser() {
       try {
         await updateScheme(activeSchemeId, toExportShape(scheme), title);
         setSyncState("saved");
-        setSavedSchemes((rows) =>
-          rows.map((r) => (r.id === activeSchemeId ? { ...r, title } : r)),
-        );
+        // Reflect the new title and bump updated_at so the picker keeps the
+        // same most-recently-updated-first order a reload would show.
+        setSavedSchemes((rows) => {
+          const now = new Date().toISOString();
+          return rows
+            .map((r) => (r.id === activeSchemeId ? { ...r, title, updated_at: now } : r))
+            .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1));
+        });
       } catch {
         setSyncState("error");
       }
@@ -237,7 +254,7 @@ export function SchemeVisualiser() {
   /* ---- saved-scheme picker handlers ---- */
   const loadSchemeRow = (row: SchemeRow) => {
     try {
-      const restored = importScheme(JSON.stringify(row.data), uid);
+      const restored = importSchemeObject(row.data, uid);
       restored.title = row.title;
       skipSaveRef.current = true;
       setScheme(restored);
@@ -279,7 +296,9 @@ export function SchemeVisualiser() {
       if (remaining.length > 0) {
         loadSchemeRow(remaining[0]);
       } else {
-        skipSaveRef.current = true;
+        // No active scheme left, so the autosave effect early-returns and won't
+        // consume a skip flag — clear it so it can't leak into a later save.
+        skipSaveRef.current = false;
         setScheme(emptyScheme());
         setActiveSchemeId(null);
         setSyncState("idle");

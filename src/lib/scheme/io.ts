@@ -106,6 +106,15 @@ export function importScheme(text: string, newId: () => string): Scheme {
   } catch {
     throw new Error("That file isn't valid JSON.");
   }
+  return importSchemeObject(data, newId);
+}
+
+/**
+ * Sanitise an already-parsed scheme object (e.g. a `jsonb` row from the
+ * database), assigning fresh ids via `newId`. Same lenient rules as
+ * `importScheme`; use this to avoid an object → string → object round trip.
+ */
+export function importSchemeObject(data: unknown, newId: () => string): Scheme {
   if (!data || typeof data !== "object") {
     throw new Error("That doesn't look like a paint scheme.");
   }
