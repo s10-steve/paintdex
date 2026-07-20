@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { barModel, rampGradient, overlayCenter } from "@/lib/scheme/bars";
-import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
+import { exportSchemeJSON, importScheme, schemeSlug, toExportShape, SCHEME_FORMAT } from "@/lib/scheme/io";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
@@ -185,5 +185,26 @@ describe("scheme import/export", () => {
   it("slugifies titles for filenames", () => {
     expect(schemeSlug("Black Armour & Trim")).toBe("black-armour-trim");
     expect(schemeSlug("   ")).toBe("paint-scheme");
+  });
+
+  it("toExportShape produces the same object exportSchemeJSON stringifies", () => {
+    const shape = toExportShape(sample);
+    expect(shape.format).toBe(SCHEME_FORMAT);
+    expect(shape.app).toBe("paintdex");
+    // No runtime ids leak into the stored shape.
+    expect(JSON.stringify(shape)).not.toMatch(/"id"/);
+    expect(shape).toEqual(JSON.parse(exportSchemeJSON(sample)));
+  });
+
+  it("round-trips a scheme through toExportShape → importScheme (the account-sync path)", () => {
+    // The DB stores the export shape as jsonb and loads it back through
+    // importScheme without a stringify round trip; simulate that here.
+    const stored = toExportShape(sample);
+    const back = importScheme(JSON.stringify(stored), newId);
+    expect(back.title).toBe("Test Scheme");
+    expect(back.elements[0].paints.map((p) => ({ ...p, id: undefined }))).toEqual([
+      { id: undefined, name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
+      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+    ]);
   });
 });

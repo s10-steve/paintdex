@@ -26,7 +26,15 @@ import {
   type SchemeRole,
 } from "@/lib/scheme/types";
 import { barModel, rampGradient, overlayCenter, clamp } from "@/lib/scheme/bars";
-import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
+import { exportSchemeJSON, importScheme, schemeSlug, toExportShape } from "@/lib/scheme/io";
+import { useAuth } from "./auth/auth-provider";
+import {
+  listSchemes,
+  createScheme,
+  updateScheme,
+  deleteScheme,
+} from "@/lib/data/schemes";
+import type { SchemeRow } from "@/lib/supabase/types";
 
 const STORE = "paintdex-scheme-v1";
 
@@ -110,7 +118,8 @@ export function SchemeVisualiser() {
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
-  // Autosave.
+  // Autosave to localStorage. This is always on — it's the anonymous fallback
+  // and the source for first-login migration, so it stays even when signed in.
   useEffect(() => {
     if (!mounted) return;
     try {
@@ -119,6 +128,150 @@ export function SchemeVisualiser() {
       /* quota / private mode — non-fatal */
     }
   }, [scheme, blend, mounted]);
+
+  /* ---- account sync (only active when signed in) ---- */
+  const { user } = useAuth();
+  const [savedSchemes, setSavedSchemes] = useState<SchemeRow[]>([]);
+  const [activeSchemeId, setActiveSchemeId] = useState<string | null>(null);
+  const [syncState, setSyncState] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  // Live handle on the current scheme, so the login effect can migrate it
+  // without depending on `scheme` (which would re-run it on every edit).
+  const schemeRef = useRef(scheme);
+  useEffect(() => {
+    schemeRef.current = scheme;
+  }, [scheme]);
+  // Set true just before we load a scheme into state programmatically, so the
+  // debounced autosave doesn't immediately re-write what we just fetched.
+  const skipSaveRef = useRef(false);
+
+  // On sign-in: load the user's schemes (migrating the local one the first
+  // time). On sign-out: drop server state; the localStorage path takes over
+  // again, exactly as before accounts existed.
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    if (!mounted) return;
+    if (!user) {
+      setSavedSchemes([]);
+      setActiveSchemeId(null);
+      setSyncState("idle");
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const rows = await listSchemes();
+        if (cancelled) return;
+        if (rows.length > 0) {
+          setSavedSchemes(rows);
+          const first = rows[0];
+          const restored = importScheme(JSON.stringify(first.data), uid);
+          restored.title = first.title;
+          skipSaveRef.current = true;
+          setScheme(restored);
+          setActiveSchemeId(first.id);
+        } else {
+          // No saved schemes yet — adopt the current in-memory scheme as the
+          // first one so autosave has a target. This migrates a scheme built
+          // while logged out; a blank seed just becomes an empty saved scheme.
+          // We never overwrite the current scheme here, so no local work is
+          // lost.
+          const seed = schemeRef.current;
+          const row = await createScheme(user.id, toExportShape(seed), seed.title || "Untitled scheme");
+          if (cancelled) return;
+          skipSaveRef.current = true;
+          setSavedSchemes([row]);
+          setActiveSchemeId(row.id);
+        }
+        setSyncState("idle");
+      } catch {
+        if (!cancelled) setSyncState("error");
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    /* eslint-enable react-hooks/set-state-in-effect */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, mounted]);
+
+  // Debounced autosave to the account for the active scheme. Blend is a view
+  // preference and isn't part of the stored scheme, so it's excluded here.
+  useEffect(() => {
+    if (!mounted || !user || !activeSchemeId) return;
+    if (skipSaveRef.current) {
+      skipSaveRef.current = false;
+      return;
+    }
+    setSyncState("saving");
+    const title = scheme.title || "Untitled scheme";
+    const timer = setTimeout(async () => {
+      try {
+        await updateScheme(activeSchemeId, toExportShape(scheme), title);
+        setSyncState("saved");
+        setSavedSchemes((rows) =>
+          rows.map((r) => (r.id === activeSchemeId ? { ...r, title } : r)),
+        );
+      } catch {
+        setSyncState("error");
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [scheme, user, activeSchemeId, mounted]);
+
+  /* ---- saved-scheme picker handlers ---- */
+  const loadSchemeRow = (row: SchemeRow) => {
+    try {
+      const restored = importScheme(JSON.stringify(row.data), uid);
+      restored.title = row.title;
+      skipSaveRef.current = true;
+      setScheme(restored);
+      setActiveSchemeId(row.id);
+      setSyncState("idle");
+    } catch {
+      setSyncState("error");
+    }
+  };
+
+  const selectScheme = (id: string) => {
+    if (id === activeSchemeId) return;
+    const row = savedSchemes.find((r) => r.id === id);
+    if (row) loadSchemeRow(row);
+  };
+
+  const newScheme = async () => {
+    if (!user) return;
+    try {
+      const fresh = emptyScheme();
+      const row = await createScheme(user.id, toExportShape(fresh), "Untitled scheme");
+      skipSaveRef.current = true;
+      setSavedSchemes((rows) => [row, ...rows]);
+      setActiveSchemeId(row.id);
+      setScheme(fresh);
+      setSyncState("idle");
+    } catch {
+      setSyncState("error");
+    }
+  };
+
+  const deleteActiveScheme = async () => {
+    if (!user || !activeSchemeId) return;
+    const id = activeSchemeId;
+    try {
+      await deleteScheme(id);
+      const remaining = savedSchemes.filter((r) => r.id !== id);
+      setSavedSchemes(remaining);
+      if (remaining.length > 0) {
+        loadSchemeRow(remaining[0]);
+      } else {
+        skipSaveRef.current = true;
+        setScheme(emptyScheme());
+        setActiveSchemeId(null);
+        setSyncState("idle");
+      }
+    } catch {
+      setSyncState("error");
+    }
+  };
 
   /* ---- immutable scheme updates ---- */
   const mutateElement = (eid: string, fn: (e: SchemeElement) => SchemeElement) =>
@@ -259,6 +412,50 @@ export function SchemeVisualiser() {
             how much of the bar each layer claims, so bases read chunky and highlights thin,
             like a real miniature.
           </p>
+
+          {user && (
+            <div className="mb-3.5 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card px-3 py-2">
+              <label htmlFor="saved-schemes" className="text-xs font-medium text-muted-foreground">
+                My schemes
+              </label>
+              <select
+                id="saved-schemes"
+                value={activeSchemeId ?? ""}
+                onChange={(e) => selectScheme(e.target.value)}
+                disabled={savedSchemes.length === 0}
+                className="min-w-0 flex-1 rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {savedSchemes.length === 0 && <option value="">No saved schemes</option>}
+                {savedSchemes.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.title || "Untitled scheme"}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={() => void newScheme()}
+                className="rounded-md border border-border px-2 py-1 text-xs text-foreground transition-colors hover:bg-muted"
+              >
+                New
+              </button>
+              <button
+                type="button"
+                onClick={() => void deleteActiveScheme()}
+                disabled={!activeSchemeId}
+                className="rounded-md border border-border px-2 py-1 text-xs text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Delete
+              </button>
+              <span className="ml-auto text-xs text-muted-foreground" aria-live="polite">
+                {syncState === "saving" && "Saving…"}
+                {syncState === "saved" && "Saved"}
+                {syncState === "error" && (
+                  <span className="text-red-600 dark:text-red-400">Sync error</span>
+                )}
+              </span>
+            </div>
+          )}
 
           <div className="mb-3.5 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
             <h2 className="text-[15px] font-semibold tracking-tight">Elements &amp; paints</h2>
