@@ -19,7 +19,7 @@ import {
 /** Current on-disk format version, for forward-compatible imports. */
 export const SCHEME_FORMAT = 1;
 
-interface ExportShape {
+export interface ExportShape {
   format: number;
   app: "paintdex";
   title: string;
@@ -38,9 +38,14 @@ interface ExportShape {
   }>;
 }
 
-/** Serialise a scheme to pretty JSON (no runtime ids). */
-export function exportSchemeJSON(scheme: Scheme): string {
-  const out: ExportShape = {
+/**
+ * Build the plain, id-free export object for a scheme. Used both by
+ * `exportSchemeJSON` (which stringifies it for a download) and by the
+ * account-sync path (which stores it directly as `jsonb`, no stringify round
+ * trip). Pure — no React/DOM — so it stays node-testable.
+ */
+export function toExportShape(scheme: Scheme): ExportShape {
+  return {
     format: SCHEME_FORMAT,
     app: "paintdex",
     title: scheme.title,
@@ -58,7 +63,11 @@ export function exportSchemeJSON(scheme: Scheme): string {
       })),
     })),
   };
-  return JSON.stringify(out, null, 2);
+}
+
+/** Serialise a scheme to pretty JSON (no runtime ids). */
+export function exportSchemeJSON(scheme: Scheme): string {
+  return JSON.stringify(toExportShape(scheme), null, 2);
 }
 
 /** A filesystem-friendly name for a scheme's export, e.g. "white-templars". */
@@ -97,6 +106,15 @@ export function importScheme(text: string, newId: () => string): Scheme {
   } catch {
     throw new Error("That file isn't valid JSON.");
   }
+  return importSchemeObject(data, newId);
+}
+
+/**
+ * Sanitise an already-parsed scheme object (e.g. a `jsonb` row from the
+ * database), assigning fresh ids via `newId`. Same lenient rules as
+ * `importScheme`; use this to avoid an object → string → object round trip.
+ */
+export function importSchemeObject(data: unknown, newId: () => string): Scheme {
   if (!data || typeof data !== "object") {
     throw new Error("That doesn't look like a paint scheme.");
   }

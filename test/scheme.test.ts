@@ -1,6 +1,14 @@
 import { describe, it, expect } from "vitest";
 import { barModel, rampGradient, overlayCenter } from "@/lib/scheme/bars";
-import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
+import {
+  exportSchemeJSON,
+  importScheme,
+  importSchemeObject,
+  schemeSlug,
+  toExportShape,
+  SCHEME_FORMAT,
+} from "@/lib/scheme/io";
+import { planSignInScheme } from "@/lib/scheme/sync";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
@@ -185,5 +193,78 @@ describe("scheme import/export", () => {
   it("slugifies titles for filenames", () => {
     expect(schemeSlug("Black Armour & Trim")).toBe("black-armour-trim");
     expect(schemeSlug("   ")).toBe("paint-scheme");
+  });
+
+  it("toExportShape produces the same object exportSchemeJSON stringifies", () => {
+    const shape = toExportShape(sample);
+    expect(shape.format).toBe(SCHEME_FORMAT);
+    expect(shape.app).toBe("paintdex");
+    // No runtime ids leak into the stored shape.
+    expect(JSON.stringify(shape)).not.toMatch(/"id"/);
+    expect(shape).toEqual(JSON.parse(exportSchemeJSON(sample)));
+  });
+
+  it("round-trips a scheme through toExportShape → importScheme (the account-sync path)", () => {
+    // The DB stores the export shape as jsonb and loads it back through
+    // importScheme without a stringify round trip; simulate that here.
+    const stored = toExportShape(sample);
+    const back = importScheme(JSON.stringify(stored), newId);
+    expect(back.title).toBe("Test Scheme");
+    expect(back.elements[0].paints.map((p) => ({ ...p, id: undefined }))).toEqual([
+      { id: undefined, name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
+      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+    ]);
+  });
+
+  it("importSchemeObject sanitises an already-parsed object (no string round trip)", () => {
+    const obj = { elements: [{ name: "E", paints: [{ name: "P", hex: "aabbcc", role: "bogus" }] }] };
+    const s = importSchemeObject(obj, newId);
+    expect(s.elements[0].paints[0].hex).toBe("#AABBCC");
+    expect(s.elements[0].paints[0].role).toBe("layer");
+  });
+});
+
+describe("planSignInScheme (sign-in reconciliation)", () => {
+  const blank: Scheme = { title: "", elements: [] };
+  const built: Scheme = {
+    title: "White Templars",
+    elements: [
+      {
+        id: "e1",
+        name: "Armour",
+        paints: [
+          { id: "p1", name: "Grey Seer", brand: "Citadel", range: "Base", hex: "#C6C6C4", role: "base" },
+        ],
+      },
+    ],
+  };
+
+  it("adopts the local scheme when the user has nothing saved", () => {
+    expect(planSignInScheme([], built)).toBe("adopt-local");
+    expect(planSignInScheme([], blank)).toBe("adopt-local");
+  });
+
+  it("loads the latest saved scheme when the local one is blank", () => {
+    expect(planSignInScheme([toExportShape(built)], blank)).toBe("load-latest");
+  });
+
+  it("loads the latest when the local scheme is already saved (no duplicate)", () => {
+    expect(planSignInScheme([toExportShape(built)], built)).toBe("load-latest");
+  });
+
+  it("adopts local — preserving work built while signed out — when it isn't saved", () => {
+    const other = toExportShape({ ...built, title: "Something Else" });
+    expect(planSignInScheme([other], built)).toBe("adopt-local");
+  });
+
+  it("compares regardless of JSON key order (jsonb doesn't preserve it)", () => {
+    const shape = toExportShape(built);
+    const reordered = {
+      elements: shape.elements,
+      app: shape.app,
+      title: shape.title,
+      format: shape.format,
+    };
+    expect(planSignInScheme([reordered], built)).toBe("load-latest");
   });
 });

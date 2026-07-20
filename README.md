@@ -3,11 +3,11 @@
 A database of miniature paints with hex colour values — searchable, filterable,
 and able to find visually similar colours across brands.
 
-> **Status:** covers the paint database, perceptual colour matching and a paint
-> scheme visualiser. User accounts, owned-paint inventories, and shareable
-> recipe links are planned next (see [Roadmap](#roadmap)) — the project will be
-> open-sourced once those are in, so the community can help keep the paint
-> catalogue accurate.
+> **Status:** covers the paint database, perceptual colour matching, a paint
+> scheme visualiser, and optional accounts (Google sign-in with your schemes
+> synced to your account). Owned-paint inventories and shareable recipe links
+> are planned next (see [Roadmap](#roadmap)); the project will be open-sourced
+> once those are in, so the community can help keep the paint catalogue accurate.
 
 ## Features
 
@@ -26,7 +26,11 @@ and able to find visually similar colours across brands.
   so the whole model reads together. Paints carry a role (base, layer,
   highlight, wash, glaze, weathering) and a weight; elements have a weight that
   sets their bar width. Search the database to add a paint or enter a custom
-  name + hex. Schemes autosave in your browser and export/import as JSON.
+  name + hex. Schemes autosave in your browser and export/import as JSON — or
+  sync to your account when signed in.
+- **Accounts (optional).** Sign in with Google to sync your saved schemes across
+  devices; without an account, schemes save to your browser exactly as before.
+  Owned-paint inventories and shareable recipe links are planned.
 - **Light & dark mode**, following your system preference with a manual toggle.
 - **Responsive** desktop and mobile layouts.
 - **Plain-JSON data.** The paint database is plain JSON, one file per brand. The
@@ -40,10 +44,39 @@ and able to find visually similar colours across brands.
 - [next-themes](https://github.com/pacocoursey/next-themes) for theming
 - [zod](https://zod.dev/) for data validation
 - [Vitest](https://vitest.dev/) for unit tests
+- [Supabase](https://supabase.com/) for optional accounts (sign-in + saved
+  schemes), called directly from the browser
 - Hosted on [Vercel](https://vercel.com/), with Vercel Analytics and Speed
   Insights for traffic and performance monitoring
 
-No database or backend is required — the site is fully static.
+The core site (paint database, matching, visualiser) needs no backend — it's
+statically generated and the paint data ships in the repo. **Accounts are
+optional**: the browser talks to Supabase directly, so the site stays static and
+free to host. If the Supabase env vars are unset, accounts simply don't appear
+and schemes are saved to `localStorage`, as before.
+
+### Accounts setup (optional)
+
+1. Create a free [Supabase](https://supabase.com/) project and run
+   [`supabase/schema.sql`](supabase/schema.sql) in its SQL editor.
+2. Create a Google OAuth **client ID** (Google Cloud → Credentials → OAuth
+   client ID → Web application). Add your origins (`http://localhost:3000`,
+   `https://paintdex.app`) to **Authorized JavaScript origins**.
+3. Enable the **Google** provider under Supabase → Authentication → Providers,
+   and add the client ID above to its **Client IDs** field (this is what lets
+   Supabase accept the browser-issued ID token).
+4. Copy [`.env.example`](.env.example) to `.env.local` and set
+   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and
+   `NEXT_PUBLIC_GOOGLE_CLIENT_ID` (all public; data access is protected by
+   Row-Level Security). Set the same three in Vercel for production.
+
+> **How sign-in is wired (and why).** Sign-in uses **Google Identity Services**
+> to obtain an ID token in the browser, then exchanges it with Supabase via
+> `signInWithIdToken`. Because this runs from our own origin, Google's consent
+> screen is branded to `paintdex.app` rather than the Supabase callback domain —
+> and it needs **no paid Supabase custom domain**. (Showing a custom *logo* on
+> the consent screen still requires Google's brand verification, which is now
+> achievable since the domain is one we own.)
 
 ## Getting started
 
@@ -112,6 +145,19 @@ Brand and product names are trademarks of their respective owners.
       "Abaddon Black" and "Abaddon Grey")
 - [x] On the paint page, add a filter for the match grouping. By default have it
       only show matches of 'close' or better.
+- [ ] Update the favicon to match the new colour-wheel logo
+      (`public/logo.svg`).
+- [ ] Tapping a search box on mobile zooms the page in, which then lets it
+      scroll left/right. Likely the iOS Safari behaviour where it auto-zooms
+      inputs with a font-size below 16px — check the search inputs' font size
+      and/or the viewport `meta`.
+- [ ] Add an "are you sure?" confirmation dialog to the Reset button in the
+      scheme visualiser.
+- [ ] Rearrange the Scheme Visualiser layout. Currently the scheme name sits in
+      the middle of the explanation text and above the "My schemes" dropdown.
+      Better order: "Scheme Visualiser" heading + explanation full-width at the
+      top; then the "My schemes" dropdown; then the scheme title and the scheme
+      itself.
 
 ### Paint database and UI features
 
@@ -141,6 +187,11 @@ Brand and product names are trademarks of their respective owners.
       axes representing hue and luminance. So if you're looking for something
       slightly different to the paint you have, you can see the options in a
       more intuitive way than just a list of similar colours.
+- [ ] Fix specific hex values: Nuln Oil Gloss is wrong — should match the
+      non-gloss Nuln Oil; Agrax Earthshade looks wrong too — should be a darker
+      brown.
+- [ ] Add an "export as Markdown" option for paint schemes (alongside the
+      existing JSON export).
 
 ### Real live website
 
@@ -148,12 +199,15 @@ Brand and product names are trademarks of their respective owners.
       [paintdex.app](https://paintdex.app). The paint data ships in the repo, so
       the site runs with no backend or database.
 - [ ] Get some users to try it out and gather feedback.
+- [ ] Do an SEO pass on the site (metadata, structured data, per-page titles,
+      sitemap coverage, etc.).
 
 ### User accounts & recipe features
 
-- [ ] User accounts & login
+- [x] User accounts & login (Google sign-in via Supabase)
 - [ ] Save the paints you own
-- [ ] Save your paint schemes
+- [x] Save your paint schemes (synced to your account, with local schemes
+      migrated on first sign-in)
 - [ ] Example/starter schemes to explore in the visualiser — likely built on
       top of user accounts and saved schemes (e.g. a curated gallery you can
       load and tweak), rather than a single scheme baked into the app
@@ -161,6 +215,10 @@ Brand and product names are trademarks of their respective owners.
 - [ ] Wishlist for paints you don't own yet but want to buy
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own (based on colour similarity)
+- [ ] Add a privacy policy and terms of service, then link them from Google
+      Auth Platform → Branding. Needed for Google OAuth verification (and lets
+      us show the app logo on the consent screen). See Google's
+      [verification requirements](https://support.google.com/cloud/answer/13464321).
 
 ### Open source
 
