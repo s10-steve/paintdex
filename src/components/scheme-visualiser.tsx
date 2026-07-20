@@ -38,6 +38,20 @@ import type { SchemeRow } from "@/lib/supabase/types";
 
 const STORE = "paintdex-scheme-v1";
 
+/**
+ * True when a Supabase error is the per-account scheme-count cap firing (the
+ * `enforce_scheme_quota` trigger in supabase/schema.sql raises a message
+ * starting "Scheme limit reached"). Lets the picker show a specific,
+ * actionable message rather than the generic "Sync error".
+ */
+function isSchemeLimitError(err: unknown): boolean {
+  const message =
+    err && typeof err === "object" && "message" in err
+      ? String((err as { message?: unknown }).message ?? "")
+      : "";
+  return message.toLowerCase().includes("scheme limit reached");
+}
+
 /** Runtime-unique id for paints/elements added after load. */
 let counter = 0;
 const uid = () => `u${++counter}`;
@@ -133,7 +147,9 @@ export function SchemeVisualiser() {
   const { user } = useAuth();
   const [savedSchemes, setSavedSchemes] = useState<SchemeRow[]>([]);
   const [activeSchemeId, setActiveSchemeId] = useState<string | null>(null);
-  const [syncState, setSyncState] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [syncState, setSyncState] = useState<
+    "idle" | "saving" | "saved" | "error" | "limit"
+  >("idle");
   // Live handle on the current scheme, so the login effect can migrate it
   // without depending on `scheme` (which would re-run it on every edit).
   const schemeRef = useRef(scheme);
@@ -248,8 +264,8 @@ export function SchemeVisualiser() {
       setActiveSchemeId(row.id);
       setScheme(fresh);
       setSyncState("idle");
-    } catch {
-      setSyncState("error");
+    } catch (e) {
+      setSyncState(isSchemeLimitError(e) ? "limit" : "error");
     }
   };
 
@@ -452,6 +468,11 @@ export function SchemeVisualiser() {
                 {syncState === "saved" && "Saved"}
                 {syncState === "error" && (
                   <span className="text-red-600 dark:text-red-400">Sync error</span>
+                )}
+                {syncState === "limit" && (
+                  <span className="text-red-600 dark:text-red-400">
+                    Scheme limit reached — delete one to add another.
+                  </span>
                 )}
               </span>
             </div>
