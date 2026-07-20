@@ -45,12 +45,18 @@ create index if not exists schemes_share_idx
 alter table public.profiles enable row level security;
 alter table public.schemes  enable row level security;
 
--- profiles: readable by anyone (an author name can show on a public scheme),
--- writable only by the owner.
+-- profiles: a user can read only their own profile, and write only their own.
+-- Phase 1 never displays anyone else's profile, so there is no reason to expose
+-- the whole table (a world-readable policy would let anyone with the public
+-- anon key enumerate every user id + signup time). When public share links
+-- land and a scheme's author name needs to show, add a narrow policy that
+-- exposes just the profiles referenced by a public scheme — don't reopen the
+-- table with `using (true)`.
 drop policy if exists "profiles read"        on public.profiles;
+drop policy if exists "profiles read self"   on public.profiles;
 drop policy if exists "profiles upsert self" on public.profiles;
 drop policy if exists "profiles update self" on public.profiles;
-create policy "profiles read"        on public.profiles for select using (true);
+create policy "profiles read self"   on public.profiles for select using (auth.uid() = id);
 create policy "profiles upsert self" on public.profiles for insert with check (auth.uid() = id);
 create policy "profiles update self" on public.profiles for update using (auth.uid() = id);
 
