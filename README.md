@@ -24,10 +24,11 @@ and able to find visually similar colours across brands.
   `/visualiser`: group your paints by element (armour, robes, lenses…) and
   preview every element's colours as aligned, optionally-blended vertical bars,
   so the whole model reads together. Paints carry a role (base, layer,
-  highlight, wash, glaze, weathering) and a weight; elements have a weight that
-  sets their bar width. Search the database to add a paint or enter a custom
-  name + hex. Schemes autosave in your browser and export/import as JSON — or
-  sync to your account when signed in.
+  highlight, wash, glaze, weathering) and a weight; each element's bar is sized
+  by its order — largest-area element first — and elements can be reordered.
+  Search the database to add a paint or enter a custom name + hex. Schemes
+  autosave in your browser and export/import as JSON — or sync to your account
+  when signed in.
 - **Accounts (optional).** Sign in with Google to sync your saved schemes across
   devices; without an account, schemes save to your browser exactly as before.
   Owned-paint inventories and shareable recipe links are planned.

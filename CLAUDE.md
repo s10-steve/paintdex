@@ -63,11 +63,12 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `src/app/` — routes: `/` (home), `/paints` (browse), `/paints/[id]` (paint
   detail, SSG with `dynamicParams = false`), `/visualiser`, plus `robots.ts` and
   `sitemap.ts`. Root `layout.tsx` holds metadata (incl. OpenGraph/Twitter),
-  wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the WIP banner,
-  header and Vercel Analytics/Speed Insights.
+  wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the header and
+  Vercel Analytics/Speed Insights.
 - `src/components/` — client components (`paints-browser`, `similar-colours`,
-  `scheme-visualiser`, `site-header`, etc.), plus `auth/` (`auth-provider` with
-  the `useAuth` hook + Google Identity Services init; `sign-in-button`).
+  `scheme-visualiser`, `site-header`, `mobile-nav`, etc.), plus `auth/`
+  (`auth-provider` with the `useAuth` hook + Google Identity Services init;
+  `sign-in-button`). The theme follows the system setting (no manual toggle).
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
   contrast, colour families), `paints/` (load, filter, types), `scheme/` (bar
   maths, JSON import/export, types). Also `supabase/` (browser client +

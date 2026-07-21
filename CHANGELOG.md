@@ -5,6 +5,48 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-07-21
+
+### Added
+
+- Signed-out prompt in the visualiser explaining that signing in saves your
+  schemes to your account (shown only when accounts are configured).
+- A confirmation before the visualiser's Reset button clears a non-empty scheme.
+
+### Changed
+
+- **Scheme visualiser element sizing is now order-based.** The per-element size
+  sliders are gone; each element's bar is sized by its position (largest-area
+  element first) and elements can be reordered with ↑↓ buttons. Order elements by
+  how much of the model they cover (armour first, lenses last). Exported schemes
+  no longer include an element `weight`; older exports still import (the key is
+  ignored). The per-paint weight slider is unchanged.
+- The blend toggle's **Banded** mode now also flattens wash/glaze/weathering
+  overlays to a thin line, matching the ramp's hard steps; **Blended** keeps the
+  feathered bands. Weathering overlays are also less transparent.
+- Visualiser left column reordered (explanation → "My schemes" → scheme title →
+  elements) and the how-to rewritten as short paragraphs.
+- **Sign in with Google** button now follows dark mode (re-rendered with a
+  matching theme), and uses a shorter "Sign in" label on mobile so it fits the
+  phone header.
+- On mobile, the header nav collapses into a menu, keeping the header within the
+  viewport.
+- README setup (Supabase/Vercel/OAuth) reframed from owner voice to generic "run
+  your own instance" steps ahead of open-sourcing.
+
+### Removed
+
+- Site-wide "work in progress" banner.
+- The manual light/dark toggle — the theme now follows the system setting only.
+
+### Fixed
+
+- The "Sign in with Google" button rendered light/white and illegible in dark
+  mode.
+- The sign-in button made the header wider than the viewport on mobile.
+- Search inputs auto-zoomed on iOS Safari (font-size below 16px); they now use
+  16px on mobile.
+
 ## [0.3.0] - 2026-07-20
 
 ### Added
