@@ -20,12 +20,24 @@ export function SignInButton() {
   const { configured, googleEnabled, gisReady, user, loading, signOut } = useAuth();
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const gsiRef = useRef<HTMLDivElement>(null);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
+
+  // The full "Sign in with Google" pill is too wide for a phone header, so below
+  // the `sm` breakpoint render Google's compact icon-only button instead. Track
+  // the viewport so the button re-renders when it crosses the breakpoint.
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setCompact(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   // Close the account menu on an outside click.
   useEffect(() => {
@@ -47,14 +59,14 @@ export function SignInButton() {
     if (!mounted || !gisReady || !gsiRef.current || !window.google) return;
     gsiRef.current.innerHTML = "";
     window.google.accounts.id.renderButton(gsiRef.current, {
-      type: "standard",
+      type: compact ? "icon" : "standard",
       theme: resolvedTheme === "dark" ? "filled_black" : "outline",
       size: "large",
-      shape: "pill",
+      shape: compact ? "circle" : "pill",
       text: "signin_with",
       logo_alignment: "left",
     });
-  }, [gisReady, mounted, loading, user, resolvedTheme]);
+  }, [gisReady, mounted, loading, user, resolvedTheme, compact]);
 
   // Accounts unavailable, or before the first client-side session check.
   if (!configured || !mounted || loading) {
