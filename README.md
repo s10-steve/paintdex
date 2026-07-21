@@ -212,6 +212,15 @@ Brand and product names are trademarks of their respective owners.
       brown.
 - [ ] Add an "export as Markdown" option for paint schemes (alongside the
       existing JSON export).
+- [ ] Flag saved-scheme paints whose hex has since been corrected in the
+      catalogue, with a one-click update. Scheme paints copy a paint's hex at
+      add-time rather than referencing it live (so exported/imported JSON
+      stays self-contained, and hand-entered custom paints — which have no
+      catalogue entry — still work), so a later hex fix doesn't reach schemes
+      that already used that paint. Auto-updating silently isn't obviously
+      right either, since you may have painted the model with the old colour
+      — so surface the drift and let the user decide, rather than resolving
+      hex live against the catalogue.
 
 ### Real live website
 
