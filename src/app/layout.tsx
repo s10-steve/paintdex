@@ -59,10 +59,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
-            <div className="border-b border-amber-300/60 bg-amber-50 px-4 py-2 text-center text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/60 dark:text-amber-200">
-              🚧 Paintdex is a work in progress — the paint data is still being
-              checked and features may change.
-            </div>
             <SiteHeader />
             <div className="flex-1">{children}</div>
             <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">

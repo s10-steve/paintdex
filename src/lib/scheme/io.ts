@@ -25,7 +25,6 @@ export interface ExportShape {
   title: string;
   elements: Array<{
     name: string;
-    weight?: number;
     paints: Array<{
       name: string;
       brand: string;
@@ -51,7 +50,6 @@ export function toExportShape(scheme: Scheme): ExportShape {
     title: scheme.title,
     elements: scheme.elements.map((e) => ({
       name: e.name,
-      ...(typeof e.weight === "number" ? { weight: e.weight } : {}),
       paints: e.paints.map((p) => ({
         name: p.name,
         brand: p.brand,
@@ -142,7 +140,6 @@ export function importSchemeObject(data: unknown, newId: () => string): Scheme {
     return {
       id: newId(),
       name: str(e.name, "Element"),
-      ...(typeof e.weight === "number" ? { weight: e.weight } : {}),
       paints,
     };
   });

@@ -37,6 +37,31 @@ export const clamp = (v: number, lo: number, hi: number): number =>
   Math.max(lo, Math.min(hi, v));
 
 /**
+ * Relative width of an element's bar from its position in the list. Elements
+ * are ordered by how much of the model they cover (largest area first), so each
+ * one is a little narrower than the one before it — a gentle geometric taper
+ * that keeps a bounded first-vs-last ratio no matter how many elements there
+ * are. Used as a flex-grow, so only the ratios between values matter.
+ */
+export const ELEMENT_SIZE_DECAY = 0.8;
+export const elementSize = (index: number): number =>
+  Math.pow(ELEMENT_SIZE_DECAY, Math.max(0, index));
+
+/**
+ * Move the item with `id` one step in `dir` (-1 up / +1 down), returning a new
+ * array. Out-of-range moves (already at an end, or id not found) return the
+ * original array unchanged. Shared by the element and paint reorder controls.
+ */
+export function moveItem<T extends { id: string }>(items: T[], id: string, dir: -1 | 1): T[] {
+  const i = items.findIndex((it) => it.id === id);
+  const j = i + dir;
+  if (i < 0 || j < 0 || j >= items.length) return items;
+  const next = items.slice();
+  [next[i], next[j]] = [next[j], next[i]];
+  return next;
+}
+
+/**
  * Split paints into the weighted solid ramp and the overlay list.
  *
  * Fallback: an element made only of overlays (no solids) still needs something

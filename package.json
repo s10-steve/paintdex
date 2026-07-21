@@ -1,6 +1,6 @@
 {
   "name": "paintdex",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "predev": "npm run build:index",
