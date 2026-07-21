@@ -426,7 +426,7 @@ export function SchemeVisualiser() {
 
   return (
     <div className="mx-auto max-w-[1420px] px-4 pb-16">
-      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(340px,440px)_minmax(0,1fr)]">
         {/* LEFT — editor */}
         <section aria-label="Paint entry">
           <div className="mb-5 max-w-[62ch] space-y-2 text-sm text-muted-foreground">
