@@ -155,7 +155,7 @@ export function SchemeVisualiser() {
   }, [scheme, blend, mounted]);
 
   /* ---- account sync (only active when signed in) ---- */
-  const { user } = useAuth();
+  const { user, configured, googleEnabled } = useAuth();
   const [savedSchemes, setSavedSchemes] = useState<SchemeRow[]>([]);
   const [activeSchemeId, setActiveSchemeId] = useState<string | null>(null);
   const [syncState, setSyncState] = useState<
@@ -486,6 +486,18 @@ export function SchemeVisualiser() {
                     Scheme limit reached — delete one to add another.
                   </span>
                 )}
+              </span>
+            </div>
+          )}
+
+          {mounted && configured && googleEnabled && !user && (
+            <div className="mb-3.5 flex items-start gap-2 rounded-md border border-border bg-card px-3 py-2 text-xs text-muted-foreground">
+              <span aria-hidden className="text-sm leading-none">💾</span>
+              <span>
+                <b className="font-medium text-foreground">Sign in to save your schemes.</b>{" "}
+                Use the sign-in button at the top right to keep your schemes on your
+                account and sync them across devices. Until then, they&apos;re saved in
+                this browser only.
               </span>
             </div>
           )}
