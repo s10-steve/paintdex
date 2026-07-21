@@ -17,7 +17,7 @@ export function SiteHeader() {
             href="/paints"
             className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            Browse paints
+            Paints
           </Link>
           <Link
             href="/visualiser"
