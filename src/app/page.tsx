@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getAllPaints, getBrands } from "@/lib/paints/load";
 import { COLOUR_FAMILIES } from "@/lib/color";
 import { JsonLd } from "@/components/json-ld";
+import { HomeSearch } from "@/components/home-search";
 
 // Keep in sync with `metadataBase` in src/app/layout.tsx.
 const BASE_URL = "https://paintdex.app";
@@ -76,21 +77,7 @@ export default function Home() {
           schemes.
         </p>
 
-        <form action="/paints" method="get" className="mx-auto mt-8 flex max-w-xl gap-2">
-          <input
-            type="search"
-            name="q"
-            placeholder="Search paints — e.g. Mephiston Red, black, teal…"
-            aria-label="Search paints"
-            className="flex-1 rounded-lg border border-input bg-card px-4 py-3 text-base shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-sm"
-          />
-          <button
-            type="submit"
-            className="rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
-          >
-            Search
-          </button>
-        </form>
+        <HomeSearch />
 
         <div className="mx-auto mt-8 flex max-w-xl overflow-hidden rounded-lg border border-border">
           {spectrum.map(({ family, paint }) => (
