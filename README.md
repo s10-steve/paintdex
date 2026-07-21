@@ -1,13 +1,17 @@
 # Paintdex
 
-A database of miniature paints with hex colour values — searchable, filterable,
-and able to find visually similar colours across brands.
+A website featuring a database of miniature paints with hex colour values —
+searchable, filterable, and able to find visually similar colours across brands.
+Plus the ability to design and visualise a miniature's colour scheme, using this
+database to pick paints and preview how they read together. Optional accounts
+let you save your schemes and sync them across devices.
 
 > **Status:** covers the paint database, perceptual colour matching, a paint
 > scheme visualiser, and optional accounts (Google sign-in with your schemes
 > synced to your account). Owned-paint inventories and shareable recipe links
 > are planned next (see [Roadmap](#roadmap)); the project will be open-sourced
-> once those are in, so the community can help keep the paint catalogue accurate.
+> once those are in, so the community can help keep the paint catalogue
+> accurate.
 
 ## Features
 
@@ -35,8 +39,8 @@ and able to find visually similar colours across brands.
 - **Light & dark mode**, following your system preference.
 - **Responsive** desktop and mobile layouts.
 - **Plain-JSON data.** The paint database is plain JSON, one file per brand. The
-  catalogue is intended to be open-sourced, so the community can help fix colours
-  and add paints.
+  catalogue is intended to be open-sourced, so the community can help fix
+  colours and add paints.
 
 ## Tech stack
 
@@ -47,14 +51,12 @@ and able to find visually similar colours across brands.
 - [Vitest](https://vitest.dev/) for unit tests
 - [Supabase](https://supabase.com/) for optional accounts (sign-in + saved
   schemes), called directly from the browser
-- Hosted on [Vercel](https://vercel.com/), with Vercel Analytics and Speed
-  Insights for traffic and performance monitoring
+- Hosted on [Vercel](https://vercel.com/)
 
 The core site (paint database, matching, visualiser) needs no backend — it's
 statically generated and the paint data ships in the repo. **Accounts are
 optional**: the browser talks to Supabase directly, so the site stays static and
-free to host. If the Supabase env vars are unset, accounts simply don't appear
-and schemes are saved to `localStorage`, as before.
+free to host.
 
 ### Accounts setup (optional)
 
@@ -66,9 +68,7 @@ steps.
 1. Create a free [Supabase](https://supabase.com/) project and run
    [`supabase/schema.sql`](supabase/schema.sql) in its SQL editor.
 2. Create a Google OAuth **client ID** (Google Cloud → Credentials → OAuth
-   client ID → Web application). Add your own origins to **Authorized
-   JavaScript origins** — `http://localhost:3000` for local dev, plus whatever
-   domain you deploy to.
+   client ID → Web application).
 3. Enable the **Google** provider under Supabase → Authentication → Providers,
    and add the client ID above to its **Client IDs** field (this is what lets
    Supabase accept the browser-issued ID token).
@@ -81,15 +81,15 @@ steps.
 > **How sign-in is wired (and why).** Sign-in uses **Google Identity Services**
 > to obtain an ID token in the browser, then exchanges it with Supabase via
 > `signInWithIdToken`. Because this runs from your own origin, Google's consent
-> screen is branded to your own domain rather than the Supabase callback domain —
-> and it needs **no paid Supabase custom domain**. (Showing a custom *logo* on
+> screen is branded to your own domain rather than the Supabase callback domain
+> — and it needs **no paid Supabase custom domain**. (Showing a custom _logo_ on
 > the consent screen still requires Google's brand verification, which needs a
 > domain you own.)
 
 ## Getting started
 
-The project targets **Node 24** (the version CI runs — see
-[`.nvmrc`](.nvmrc)). With [nvm](https://github.com/nvm-sh/nvm) or
+The project targets **Node 24** (the version CI runs — see [`.nvmrc`](.nvmrc)).
+With [nvm](https://github.com/nvm-sh/nvm) or
 [fnm](https://github.com/Schniz/fnm), run `nvm use` to switch to it.
 
 ```bash
@@ -152,11 +152,11 @@ Brand and product names are trademarks of their respective owners.
 ### Minor UI tweaks
 
 - [ ] Autocomplete search suggestions (e.g. typing "abaddon" should suggest
-      "Abaddon Black" and "Abaddon Grey")
+      "Abaddon Black" and "Abaddon Grey"). This already works on the scheme
+      visualiser but not on the paint database search.
 - [x] On the paint page, add a filter for the match grouping. By default have it
       only show matches of 'close' or better.
-- [x] Update the favicon to match the new colour-wheel logo
-      (`public/logo.svg`).
+- [x] Update the favicon to match the new colour-wheel logo (`public/logo.svg`).
 - [x] Tapping a search box on mobile zooms the page in, which then lets it
       scroll left/right. Likely the iOS Safari behaviour where it auto-zooms
       inputs with a font-size below 16px — check the search inputs' font size
@@ -174,8 +174,8 @@ Brand and product names are trademarks of their respective owners.
 - [x] Make the weathering overlays in the scheme visualiser less transparent.
 - [x] Simplify the scheme visualiser: drop the per-element size sliders and size
       each element's bar by its order instead (largest-area element first), with
-      ↑↓ buttons to reorder elements. Add a note to order elements by how much of
-      the model they cover (e.g. armour first, lenses last).
+      ↑↓ buttons to reorder elements. Add a note to order elements by how much
+      of the model they cover (e.g. armour first, lenses last).
 - [x] When the blend toggle is off (Banded), also flatten washes/glazes/
       weathering to a thin line instead of a feathered band.
 
@@ -228,16 +228,19 @@ Brand and product names are trademarks of their respective owners.
 - [ ] Save the paints you own
 - [x] Save your paint schemes (synced to your account, with local schemes
       migrated on first sign-in)
-- [ ] Example/starter schemes to explore in the visualiser — likely built on
-      top of user accounts and saved schemes (e.g. a curated gallery you can
-      load and tweak), rather than a single scheme baked into the app
+- [ ] Example/starter schemes to explore in the visualiser — likely built on top
+      of user accounts and saved schemes (e.g. a curated gallery you can load
+      and tweak), rather than a single scheme baked into the app
 - [ ] Paint schemes can suggest only paints from your collection
 - [ ] Wishlist for paints you don't own yet but want to buy
 - [ ] Public, shareable recipe links (no login to view) with suggestions from
       paints you own (based on colour similarity)
-- [ ] Add a privacy policy and terms of service, then link them from Google
-      Auth Platform → Branding. Needed for Google OAuth verification (and lets
-      us show the app logo on the consent screen). See Google's
+- [ ] New separate page for managing your owned paints, wishlists, and saved
+      schemes (currently this is done in the visualiser which makes it hard to
+      find and manage them)
+- [ ] Add a privacy policy and terms of service, then link them from Google Auth
+      Platform → Branding. Needed for Google OAuth verification (and lets us
+      show the app logo on the consent screen). See Google's
       [verification requirements](https://support.google.com/cloud/answer/13464321).
 
 ### Open source
