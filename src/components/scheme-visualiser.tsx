@@ -1142,8 +1142,8 @@ function Bar({
             };
           } else {
             placement = {
-              bottom: `calc(${(center * 100).toFixed(2)}% - 1px)`,
-              height: "2px",
+              bottom: `calc(${(center * 100).toFixed(2)}% - 2px)`,
+              height: "4px",
               background: ov.paint.hex,
             };
           }
