@@ -5,6 +5,29 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-07-21
+
+### Added
+
+- **Autocomplete suggestions on the paint database search.** Typing in the
+  `/paints` search box now shows a dropdown of matching paints (swatch, name,
+  brand · range, hex); picking one jumps to that paint's page, with arrow-key
+  navigation and combobox accessibility. Pressing Enter with nothing highlighted
+  still filters the results grid as before. Reuses the same `filterPaints`
+  matcher the scheme visualiser's add-paint search already uses.
+- **SEO: JSON-LD structured data.** A `WebSite` + `SearchAction` (enabling a
+  sitelinks search box pointing at `/paints`) and `Organization` on the home
+  page, and `Product` + `BreadcrumbList` on each paint detail page, via a small
+  `JsonLd` helper component.
+- **SEO: canonical URLs** on every route. The browse page canonicalises to
+  `/paints` so its `?q=`/filter query permutations don't fragment as duplicate
+  content. Paint pages also get per-paint OpenGraph title/description.
+
+### Changed
+
+- The home page now sets its own title/description metadata instead of inheriting
+  the site default, and sitemap entries carry `changeFrequency` hints.
+
 ## [0.4.0] - 2026-07-21
 
 ### Added

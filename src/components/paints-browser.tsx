@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { filterPaints, type SortKey } from "@/lib/paints/filter";
 import {
   PAINT_TYPES,
@@ -104,6 +104,7 @@ function keepAvailable(
 
 export function PaintsBrowser() {
   const pathname = usePathname();
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   // Load the dataset from the static asset once on mount (null = still loading).
@@ -154,6 +155,24 @@ export function PaintsBrowser() {
   // Local search text so typing stays snappy; committed to the URL (debounced).
   const [searchText, setSearchText] = useState(q);
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Autocomplete suggestions: matches computed live from the typed text (not the
+  // debounced `q`) so the dropdown stays in step with keystrokes. Mirrors the
+  // scheme visualiser's add-paint search. Picking one jumps to that paint's page.
+  const [suggestOpen, setSuggestOpen] = useState(false);
+  const [activeSuggestion, setActiveSuggestion] = useState(-1);
+  const suggestions = useMemo(() => {
+    const term = searchText.trim();
+    if (term.length < 2 || !paints) return [];
+    return filterPaints(paints, { search: term }).slice(0, 8);
+  }, [searchText, paints]);
+  const suggestVisible = suggestOpen && searchText.trim().length >= 2;
+
+  const gotoPaint = (p: BrowsePaint) => {
+    setSuggestOpen(false);
+    setActiveSuggestion(-1);
+    router.push(`/paints/${p.id}`);
+  };
 
   // Keep the latest params in a ref so the debounced commit builds from current
   // state rather than the params captured when the timer was scheduled —
@@ -215,6 +234,8 @@ export function PaintsBrowser() {
   const clearAll = () => {
     cancelSearchTimer();
     setSearchText("");
+    setSuggestOpen(false);
+    setActiveSuggestion(-1);
     window.history.replaceState(null, "", pathname);
   };
 
@@ -370,9 +391,46 @@ export function PaintsBrowser() {
           <input
             type="search"
             value={searchText}
-            onChange={(e) => onSearchChange(e.target.value)}
+            onChange={(e) => {
+              onSearchChange(e.target.value);
+              setSuggestOpen(true);
+              setActiveSuggestion(-1);
+            }}
+            onFocus={() => setSuggestOpen(true)}
+            // Delay the close so a click (mousedown) on a suggestion registers first.
+            onBlur={() => setTimeout(() => setSuggestOpen(false), 120)}
+            onKeyDown={(e) => {
+              if (!suggestVisible || !suggestions.length) return;
+              if (e.key === "ArrowDown") {
+                e.preventDefault();
+                setActiveSuggestion((a) =>
+                  Math.min(a + 1, suggestions.length - 1),
+                );
+              } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                setActiveSuggestion((a) => Math.max(a - 1, 0));
+              } else if (e.key === "Enter" && activeSuggestion >= 0) {
+                // Enter with a highlighted suggestion jumps to that paint; Enter
+                // with none highlighted falls through to the normal (debounced)
+                // grid-filtering behaviour.
+                e.preventDefault();
+                gotoPaint(suggestions[activeSuggestion]);
+              } else if (e.key === "Escape") {
+                setSuggestOpen(false);
+                setActiveSuggestion(-1);
+              }
+            }}
             placeholder="Search by name, brand, range or code…"
             aria-label="Search paints"
+            role="combobox"
+            aria-expanded={suggestVisible && suggestions.length > 0}
+            aria-controls="paint-search-suggestions"
+            aria-autocomplete="list"
+            aria-activedescendant={
+              activeSuggestion >= 0
+                ? `paint-suggestion-${activeSuggestion}`
+                : undefined
+            }
             className="w-full rounded-lg border border-input bg-card px-4 py-2.5 pl-10 text-base shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-sm"
           />
           <svg
@@ -382,6 +440,56 @@ export function PaintsBrowser() {
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.3-4.3" />
           </svg>
+
+          {suggestVisible && (paints?.length || loadError) ? (
+            <ul
+              id="paint-search-suggestions"
+              role="listbox"
+              className="absolute inset-x-0 top-[calc(100%+4px)] z-30 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl"
+            >
+              {suggestions.length === 0 ? (
+                <li className="p-3 text-center text-[12.5px] text-muted-foreground">
+                  {loadError
+                    ? "Paint database unavailable."
+                    : "No matching paints."}
+                </li>
+              ) : (
+                suggestions.map((p, i) => (
+                  <li key={p.id} role="option" aria-selected={i === activeSuggestion}>
+                    <button
+                      type="button"
+                      id={`paint-suggestion-${i}`}
+                      // onMouseDown (not onClick) so it fires before the input's blur closes the list.
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        gotoPaint(p);
+                      }}
+                      onMouseEnter={() => setActiveSuggestion(i)}
+                      className={`flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${
+                        i === activeSuggestion ? "bg-muted" : "hover:bg-muted"
+                      }`}
+                    >
+                      <span
+                        className="h-[22px] w-[22px] flex-none rounded-md ring-1 ring-inset ring-black/15"
+                        style={{ background: p.hex }}
+                      />
+                      <span className="min-w-0">
+                        <span className="block truncate text-[13px] font-medium">
+                          {p.name}
+                        </span>
+                        <span className="block truncate text-[11.5px] text-muted-foreground">
+                          {p.brand} · {p.range}
+                        </span>
+                      </span>
+                      <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
+                        {p.hex}
+                      </span>
+                    </button>
+                  </li>
+                ))
+              )}
+            </ul>
+          ) : null}
         </div>
         <div className="flex items-center gap-2">
           <label htmlFor="sort" className="sr-only">

@@ -11,6 +11,10 @@ import { contrastText } from "@/lib/color";
 import { PAINT_TYPES, type Paint, type PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
 import { SimilarColours, type SimilarItem } from "@/components/similar-colours";
+import { JsonLd } from "@/components/json-ld";
+
+// Keep in sync with `metadataBase` in src/app/layout.tsx.
+const BASE_URL = "https://paintdex.app";
 
 export function generateStaticParams() {
   return getAllPaints().map((p) => ({ id: p.id }));
@@ -30,9 +34,15 @@ export async function generateMetadata({
   const { id } = await params;
   const paint = getPaintById(id);
   if (!paint) return { title: "Paint not found" };
+  const title = `${paint.name} — ${paint.brand}`;
+  const description = `${paint.name} by ${paint.brand} (${paint.range}) — hex ${paint.hex}. See visually similar miniature paints across brands.`;
   return {
-    title: `${paint.name} — ${paint.brand}`,
-    description: `${paint.name} by ${paint.brand} (${paint.range}) — hex ${paint.hex}. See visually similar miniature paints across brands.`,
+    title,
+    description,
+    alternates: { canonical: `/paints/${id}` },
+    // Per-paint title/description for shared links; the shared og-image.png
+    // (from the root layout) is reused as the preview image.
+    openGraph: { title, description, url: `/paints/${id}` },
   };
 }
 
@@ -73,8 +83,49 @@ export default async function PaintDetailPage({
 
   const fg = contrastText(paint.hex);
 
+  // Product describes the paint itself (a catalogue entry — no price/offer, so it
+  // won't earn rich-result stars, but the markup is semantically correct and
+  // non-blocking). BreadcrumbList reflects the Home → Browse → paint path.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": `${BASE_URL}/paints/${paint.id}#product`,
+        name: paint.name,
+        brand: { "@type": "Brand", name: paint.brand },
+        category: paint.type,
+        color: paint.hex,
+        ...(paint.code ? { sku: paint.code } : {}),
+        description: `${paint.name} by ${paint.brand} (${
+          paint.ranges ? paint.ranges.join(", ") : paint.range
+        }) — a ${paint.family} ${paint.type} miniature paint, hex ${paint.hex}.`,
+        url: `${BASE_URL}/paints/${paint.id}`,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Browse paints",
+            item: `${BASE_URL}/paints`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: paint.name,
+            item: `${BASE_URL}/paints/${paint.id}`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="mx-auto max-w-4xl px-4 py-6">
+      <JsonLd data={jsonLd} />
       <Link
         href="/paints"
         className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
