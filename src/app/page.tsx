@@ -1,6 +1,52 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPaints, getBrands } from "@/lib/paints/load";
 import { COLOUR_FAMILIES } from "@/lib/color";
+import { JsonLd } from "@/components/json-ld";
+
+// Keep in sync with `metadataBase` in src/app/layout.tsx.
+const BASE_URL = "https://paintdex.app";
+
+export const metadata: Metadata = {
+  // `absolute` opts out of the "%s · Paintdex" template so the homepage keeps its
+  // full standalone title rather than getting a suffix.
+  title: {
+    absolute: "Paintdex — miniature paint database & colour matcher",
+  },
+  alternates: { canonical: "/" },
+};
+
+// schema.org WebSite (with a SearchAction so search engines can offer a sitelinks
+// search box pointing at the browse page) plus a minimal Organization node.
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      url: `${BASE_URL}/`,
+      name: "Paintdex",
+      description:
+        "Search and filter a database of miniature paints with hex colour values, find visually similar colours across brands, and plan whole paint schemes.",
+      publisher: { "@id": `${BASE_URL}/#organization` },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${BASE_URL}/paints?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: "Paintdex",
+      url: `${BASE_URL}/`,
+      logo: `${BASE_URL}/logo.svg`,
+    },
+  ],
+};
 
 export default function Home() {
   const paints = getAllPaints();
@@ -19,6 +65,7 @@ export default function Home() {
 
   return (
     <main>
+      <JsonLd data={websiteJsonLd} />
       <section className="mx-auto max-w-4xl px-4 py-16 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Find the right miniature paint

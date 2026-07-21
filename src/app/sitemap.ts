@@ -6,9 +6,9 @@ const BASE_URL = "https://paintdex.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/`, priority: 1 },
-    { url: `${BASE_URL}/paints`, priority: 0.8 },
-    { url: `${BASE_URL}/visualiser`, priority: 0.6 },
+    { url: `${BASE_URL}/`, changeFrequency: "weekly", priority: 1 },
+    { url: `${BASE_URL}/paints`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/visualiser`, changeFrequency: "monthly", priority: 0.6 },
   ];
 
   // One entry per paint detail page. Reuses the same catalogue helper that
@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // stays in sync with the data automatically.
   const paintRoutes: MetadataRoute.Sitemap = getAllPaints().map((paint) => ({
     url: `${BASE_URL}/paints/${paint.id}`,
+    changeFrequency: "yearly",
     priority: 0.5,
   }));
 

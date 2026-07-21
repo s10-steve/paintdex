@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Browse paints",
   description:
     "Search and filter miniature paints by brand, range, type, colour family and hex value.",
+  // Filters/search live in query params (?q=, ?brand=…); canonicalise to the
+  // bare path so those permutations don't fragment as duplicate content.
+  alternates: { canonical: "/paints" },
 };
 
 export default function PaintsPage() {
