@@ -16,16 +16,20 @@ import {
   ROLE_KEYS,
   roleOf,
   weightOf,
-  elementWeightOf,
   emptyScheme,
-  ELEMENT_WEIGHT_MIN,
-  ELEMENT_WEIGHT_MAX,
   type Scheme,
   type SchemeElement,
   type SchemePaint,
   type SchemeRole,
 } from "@/lib/scheme/types";
-import { barModel, rampGradient, overlayCenter, clamp } from "@/lib/scheme/bars";
+import {
+  barModel,
+  rampGradient,
+  overlayCenter,
+  clamp,
+  elementSize,
+  moveItem,
+} from "@/lib/scheme/bars";
 import {
   exportSchemeJSON,
   importScheme,
@@ -316,10 +320,10 @@ export function SchemeVisualiser() {
 
   const setTitle = (title: string) => setScheme((s) => ({ ...s, title }));
   const renameElement = (eid: string, name: string) => mutateElement(eid, (e) => ({ ...e, name }));
-  const setElementWeight = (eid: string, weight: number) =>
-    mutateElement(eid, (e) => ({ ...e, weight }));
   const removeElement = (eid: string) =>
     setScheme((s) => ({ ...s, elements: s.elements.filter((e) => e.id !== eid) }));
+  const moveElement = (eid: string, dir: -1 | 1) =>
+    setScheme((s) => ({ ...s, elements: moveItem(s.elements, eid, dir) }));
   const addElement = () =>
     setScheme((s) => ({
       ...s,
@@ -331,14 +335,7 @@ export function SchemeVisualiser() {
   const removePaint = (eid: string, pid: string) =>
     mutatePaints(eid, (paints) => paints.filter((p) => p.id !== pid));
   const movePaint = (eid: string, pid: string, dir: -1 | 1) =>
-    mutatePaints(eid, (paints) => {
-      const i = paints.findIndex((p) => p.id === pid);
-      const j = i + dir;
-      if (i < 0 || j < 0 || j >= paints.length) return paints;
-      const next = paints.slice();
-      [next[i], next[j]] = [next[j], next[i]];
-      return next;
-    });
+    mutatePaints(eid, (paints) => moveItem(paints, pid, dir));
   const setRole = (eid: string, pid: string, role: SchemeRole) =>
     mutatePaints(eid, (paints) =>
       paints.map((p) => (p.id === pid ? { ...p, role, weight: undefined } : p)),
@@ -347,6 +344,11 @@ export function SchemeVisualiser() {
     mutatePaints(eid, (paints) => paints.map((p) => (p.id === pid ? { ...p, weight } : p)));
 
   const reset = () => {
+    // Guard against wiping real work: only confirm when there's something to lose.
+    const hasContent = scheme.title.trim() !== "" || scheme.elements.length > 0;
+    if (hasContent && !window.confirm("Clear this scheme and start fresh? This can't be undone.")) {
+      return;
+    }
     setScheme(emptyScheme());
     setBlend(true);
   };
@@ -427,25 +429,16 @@ export function SchemeVisualiser() {
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
         {/* LEFT — editor */}
         <section aria-label="Paint entry">
-          <div className="mb-4">
-            <input
-              value={scheme.title}
-              onChange={(e) => setTitle(e.target.value)}
-              aria-label="Scheme name"
-              spellCheck={false}
-              placeholder="Untitled scheme"
-              className="w-full bg-transparent py-0.5 text-3xl font-bold tracking-tight outline-none sm:text-4xl"
-            />
-            <div className="mt-1 h-0.5 rounded bg-gradient-to-r from-primary to-transparent" />
-          </div>
-
           <p className="mb-5 max-w-[62ch] text-sm text-muted-foreground">
             Group your paints by the element you&apos;re painting, in the order you apply
             them. Give each a <b className="font-semibold text-foreground">role</b> — a base,
             layer or highlight builds the tonal ramp; a wash, glaze or weathering pass sits
             over it. The <b className="font-semibold text-foreground">weight</b> slider sets
-            how much of the bar each layer claims, so bases read chunky and highlights thin,
-            like a real miniature.
+            how much of each bar that layer claims, so bases read chunky and highlights thin,
+            like a real miniature. Order the elements by how much of the model they cover —{" "}
+            <b className="font-semibold text-foreground">largest areas first</b> (e.g. armour),
+            smallest last (e.g. lenses); the bars scale to match, and the ↑↓ buttons rearrange
+            them.
           </p>
 
           {user && (
@@ -497,6 +490,18 @@ export function SchemeVisualiser() {
             </div>
           )}
 
+          <div className="mb-4">
+            <input
+              value={scheme.title}
+              onChange={(e) => setTitle(e.target.value)}
+              aria-label="Scheme name"
+              spellCheck={false}
+              placeholder="Untitled scheme"
+              className="w-full bg-transparent py-0.5 text-3xl font-bold tracking-tight outline-none sm:text-4xl"
+            />
+            <div className="mt-1 h-0.5 rounded bg-gradient-to-r from-primary to-transparent" />
+          </div>
+
           <div className="mb-3.5 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
             <h2 className="text-[15px] font-semibold tracking-tight">Elements &amp; paints</h2>
             <span className="text-xs text-muted-foreground">base → highlight, top to bottom</span>
@@ -542,16 +547,18 @@ export function SchemeVisualiser() {
           )}
 
           <div className="flex flex-col gap-3.5">
-            {scheme.elements.map((element) => (
+            {scheme.elements.map((element, i) => (
               <ElementCard
                 key={element.id}
                 element={element}
+                index={i}
+                count={scheme.elements.length}
                 dbPaints={dbPaints}
                 loadError={loadError}
                 hovered={hovered}
                 hover={hover}
                 onRename={(name) => renameElement(element.id, name)}
-                onSetElementWeight={(w) => setElementWeight(element.id, w)}
+                onMove={(dir) => moveElement(element.id, dir)}
                 onRemove={() => removeElement(element.id)}
                 onAddPaint={(p) => addPaint(element.id, p)}
                 onMovePaint={(pid, dir) => movePaint(element.id, pid, dir)}
@@ -600,10 +607,11 @@ export function SchemeVisualiser() {
                     highlight → base
                   </span>
                 </div>
-                {scheme.elements.map((element) => (
+                {scheme.elements.map((element, i) => (
                   <Bar
                     key={element.id}
                     element={element}
+                    index={i}
                     blend={blend}
                     hovered={hovered}
                     hover={hover}
@@ -672,12 +680,14 @@ export function SchemeVisualiser() {
 
 function ElementCard({
   element,
+  index,
+  count,
   dbPaints,
   loadError,
   hovered,
   hover,
   onRename,
-  onSetElementWeight,
+  onMove,
   onRemove,
   onAddPaint,
   onMovePaint,
@@ -686,12 +696,14 @@ function ElementCard({
   onSetWeight,
 }: {
   element: SchemeElement;
+  index: number;
+  count: number;
   dbPaints: BrowsePaint[] | null;
   loadError: boolean;
   hovered: string | null;
   hover: HoverHandlers;
   onRename: (name: string) => void;
-  onSetElementWeight: (weight: number) => void;
+  onMove: (dir: -1 | 1) => void;
   onRemove: () => void;
   onAddPaint: (p: Omit<SchemePaint, "id">) => void;
   onMovePaint: (pid: string, dir: -1 | 1) => void;
@@ -715,36 +727,31 @@ function ElementCard({
           spellCheck={false}
           className="min-w-0 flex-1 rounded-md bg-transparent px-1.5 py-1 text-[15px] font-semibold tracking-tight outline-none hover:bg-card focus:bg-card focus:ring-1 focus:ring-inset focus:ring-input"
         />
-        <label
-          className="flex flex-none items-center gap-1.5 text-[10px] uppercase tracking-wide text-muted-foreground"
-          title="How much of the model this element covers — sets the bar's width"
-        >
-          <span className="hidden sm:inline">size</span>
-          <input
-            type="range"
-            min={ELEMENT_WEIGHT_MIN}
-            max={ELEMENT_WEIGHT_MAX}
-            step={0.1}
-            value={elementWeightOf(element)}
-            onChange={(e) => onSetElementWeight(parseFloat(e.target.value))}
-            aria-label="Element size on the model"
-            className="sv-weight w-14"
-          />
-        </label>
         <span
           className="flex-none text-xs tabular-nums text-muted-foreground"
           title={`${element.paints.length} ${element.paints.length === 1 ? "paint" : "paints"}`}
         >
           {element.paints.length}
         </span>
-        <button
-          onClick={onRemove}
-          title="Remove element"
-          aria-label="Remove element"
-          className="inline-flex h-6 w-6 flex-none items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-card hover:text-red-600 dark:hover:text-red-400"
-        >
-          ✕
-        </button>
+        <div className="flex flex-none items-center gap-0.5">
+          <IconBtn
+            label="Move element earlier (larger area)"
+            disabled={index === 0}
+            onClick={() => onMove(-1)}
+          >
+            ↑
+          </IconBtn>
+          <IconBtn
+            label="Move element later (smaller area)"
+            disabled={index === count - 1}
+            onClick={() => onMove(1)}
+          >
+            ↓
+          </IconBtn>
+          <IconBtn label="Remove element" danger onClick={onRemove}>
+            ✕
+          </IconBtn>
+        </div>
       </div>
 
       {element.paints.length > 0 && (
@@ -994,7 +1001,7 @@ function AddPaint({
               : "Add a paint — search across 11 brands…"
           }
           aria-label="Search paints to add"
-          className="min-w-0 flex-1 rounded-lg border border-input bg-background px-3 py-2 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-accent"
+          className="min-w-0 flex-1 rounded-lg border border-input bg-background px-3 py-2 text-base outline-none focus:border-primary focus:ring-2 focus:ring-accent sm:text-[13px]"
         />
         <button
           onClick={() => setShowCustom((v) => !v)}
@@ -1077,11 +1084,13 @@ function AddPaint({
 
 function Bar({
   element,
+  index,
   blend,
   hovered,
   hover,
 }: {
   element: SchemeElement;
+  index: number;
   blend: boolean;
   hovered: string | null;
   hover: HoverHandlers;
@@ -1089,13 +1098,13 @@ function Bar({
   const { segs, overlays } = useMemo(() => barModel(element.paints), [element.paints]);
   const empty = element.paints.length === 0;
 
-  // Bars share the row's fixed width in proportion to their element weight, so
-  // resizing one element just trades space with the others — the overall
-  // visualisation stays the same size. A min-width keeps thin bars usable.
+  // Bars share the row's fixed width in proportion to their position — earlier
+  // (larger-area) elements read wider, later ones narrower — so the ordering
+  // does the sizing. A min-width keeps the thinnest bars usable.
   return (
     <div
       className="flex min-w-[46px] flex-col items-center gap-2.5"
-      style={{ flexGrow: elementWeightOf(element), flexBasis: 0 }}
+      style={{ flexGrow: elementSize(index), flexBasis: 0 }}
     >
       <div
         className="relative flex h-[340px] w-full flex-col-reverse overflow-hidden rounded-[9px] shadow-sm ring-1 ring-inset ring-black/10 [isolation:isolate]"
@@ -1119,8 +1128,25 @@ function Bar({
         ))}
         {overlays.map((ov) => {
           const center = overlayCenter(ov, segs);
-          const thick = clamp(weightOf(ov.paint) * 0.15, 0.08, 0.4);
-          const bottom = clamp(center - thick / 2, 0, 1 - thick);
+          // Blended → a soft, feathered translucent band. Banded → the overlay
+          // collapses to a thin crisp line at its boundary, matching the ramp's
+          // hard steps when blending is off.
+          let placement: CSSProperties;
+          if (blend) {
+            const thick = clamp(weightOf(ov.paint) * 0.15, 0.08, 0.4);
+            const bottom = clamp(center - thick / 2, 0, 1 - thick);
+            placement = {
+              bottom: `${(bottom * 100).toFixed(2)}%`,
+              height: `${(thick * 100).toFixed(2)}%`,
+              background: `linear-gradient(to top, transparent, ${ov.paint.hex} 50%, transparent)`,
+            };
+          } else {
+            placement = {
+              bottom: `calc(${(center * 100).toFixed(2)}% - 1px)`,
+              height: "2px",
+              background: ov.paint.hex,
+            };
+          }
           return (
             <div
               key={ov.paint.id}
@@ -1128,10 +1154,8 @@ function Bar({
               aria-label={paintLabel(ov.paint)}
               className="absolute inset-x-0 mix-blend-multiply"
               style={{
-                bottom: `${(bottom * 100).toFixed(2)}%`,
-                height: `${(thick * 100).toFixed(2)}%`,
+                ...placement,
                 opacity: roleOf(ov.paint).opacity,
-                background: `linear-gradient(to top, transparent, ${ov.paint.hex} 50%, transparent)`,
                 boxShadow: hovered === ov.paint.id ? "inset 0 0 0 2px rgba(255,255,255,.7)" : undefined,
               }}
               onPointerEnter={(e) => hover.enter(ov.paint, e)}

@@ -373,7 +373,7 @@ export function PaintsBrowser() {
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search by name, brand, range or code…"
             aria-label="Search paints"
-            className="w-full rounded-lg border border-input bg-card px-4 py-2.5 pl-10 text-sm shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="w-full rounded-lg border border-input bg-card px-4 py-2.5 pl-10 text-base shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-sm"
           />
           <svg
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"

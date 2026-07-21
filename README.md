@@ -57,26 +57,33 @@ and schemes are saved to `localStorage`, as before.
 
 ### Accounts setup (optional)
 
+You only need this to stand up your **own** accounts backend (running your own
+instance, or hacking on the account features). The core site — paint database,
+matching, visualiser — needs none of it and runs fully static without these
+steps.
+
 1. Create a free [Supabase](https://supabase.com/) project and run
    [`supabase/schema.sql`](supabase/schema.sql) in its SQL editor.
 2. Create a Google OAuth **client ID** (Google Cloud → Credentials → OAuth
-   client ID → Web application). Add your origins (`http://localhost:3000`,
-   `https://paintdex.app`) to **Authorized JavaScript origins**.
+   client ID → Web application). Add your own origins to **Authorized
+   JavaScript origins** — `http://localhost:3000` for local dev, plus whatever
+   domain you deploy to.
 3. Enable the **Google** provider under Supabase → Authentication → Providers,
    and add the client ID above to its **Client IDs** field (this is what lets
    Supabase accept the browser-issued ID token).
 4. Copy [`.env.example`](.env.example) to `.env.local` and set
    `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and
    `NEXT_PUBLIC_GOOGLE_CLIENT_ID` (all public; data access is protected by
-   Row-Level Security). Set the same three in Vercel for production.
+   Row-Level Security). Set the same three wherever you host (e.g. Vercel) for
+   production.
 
 > **How sign-in is wired (and why).** Sign-in uses **Google Identity Services**
 > to obtain an ID token in the browser, then exchanges it with Supabase via
-> `signInWithIdToken`. Because this runs from our own origin, Google's consent
-> screen is branded to `paintdex.app` rather than the Supabase callback domain —
+> `signInWithIdToken`. Because this runs from your own origin, Google's consent
+> screen is branded to your own domain rather than the Supabase callback domain —
 > and it needs **no paid Supabase custom domain**. (Showing a custom *logo* on
-> the consent screen still requires Google's brand verification, which is now
-> achievable since the domain is one we own.)
+> the consent screen still requires Google's brand verification, which needs a
+> domain you own.)
 
 ## Getting started
 
@@ -109,11 +116,13 @@ or updating a dependency (commit the resulting `package.json` **and**
 
 ## Deploying
 
-Paintdex is live at [paintdex.app](https://paintdex.app), hosted on
-[Vercel](https://vercel.com/). It's a standard Next.js project that deploys with
-zero configuration: every push to `main` builds and ships to production, and
-pull requests get their own preview URLs. Because everything is static, the free
-Hobby tier is plenty and there is nothing to keep warm.
+It's a standard Next.js project that deploys with zero configuration — nothing
+to configure for the core site, and no server to keep warm since everything is
+static. The public instance at [paintdex.app](https://paintdex.app) is hosted on
+[Vercel](https://vercel.com/) (every push to `main` builds and ships to
+production, pull requests get their own preview URLs, and the free Hobby tier is
+plenty), but any host that runs Next.js — or serves a static export — works just
+as well.
 
 ## Contributing to the paint data
 
@@ -145,19 +154,29 @@ Brand and product names are trademarks of their respective owners.
       "Abaddon Black" and "Abaddon Grey")
 - [x] On the paint page, add a filter for the match grouping. By default have it
       only show matches of 'close' or better.
-- [ ] Update the favicon to match the new colour-wheel logo
+- [x] Update the favicon to match the new colour-wheel logo
       (`public/logo.svg`).
-- [ ] Tapping a search box on mobile zooms the page in, which then lets it
+- [x] Tapping a search box on mobile zooms the page in, which then lets it
       scroll left/right. Likely the iOS Safari behaviour where it auto-zooms
       inputs with a font-size below 16px — check the search inputs' font size
       and/or the viewport `meta`.
-- [ ] Add an "are you sure?" confirmation dialog to the Reset button in the
+- [x] Add an "are you sure?" confirmation dialog to the Reset button in the
       scheme visualiser.
-- [ ] Rearrange the Scheme Visualiser layout. Currently the scheme name sits in
+- [x] Rearrange the Scheme Visualiser layout. Currently the scheme name sits in
       the middle of the explanation text and above the "My schemes" dropdown.
       Better order: "Scheme Visualiser" heading + explanation full-width at the
       top; then the "My schemes" dropdown; then the scheme title and the scheme
       itself.
+- [x] The "Sign in with Google" button renders light/white in dark mode — it's
+      Google's own iframe button, so re-render it with a dark `theme` when the
+      resolved theme changes.
+- [x] Make the weathering overlays in the scheme visualiser less transparent.
+- [x] Simplify the scheme visualiser: drop the per-element size sliders and size
+      each element's bar by its order instead (largest-area element first), with
+      ↑↓ buttons to reorder elements. Add a note to order elements by how much of
+      the model they cover (e.g. armour first, lenses last).
+- [x] When the blend toggle is off (Banded), also flatten washes/glazes/
+      weathering to a thin line instead of a feathered band.
 
 ### Paint database and UI features
 
@@ -165,7 +184,7 @@ Brand and product names are trademarks of their respective owners.
 - [x] Similar-colour matching (CIEDE2000)
 - [x] Paint scheme visualiser (`/visualiser`): group paints by element and
       preview the whole scheme's colours as blended vertical bars, with roles,
-      per-paint and per-element weights, and JSON export/import
+      per-paint weights, order-based element sizing, and JSON export/import
 - [x] Light/dark + responsive
 - [ ] Review and correct the paint hex values — some are noticeably off, as the
       initial data was best-effort. Fixes are manual: open the manufacturer's
@@ -224,6 +243,10 @@ Brand and product names are trademarks of their respective owners.
 
 - [ ] Open-source the repo once the user accounts & recipe features above have
       shipped, so the community can help keep the paint catalogue accurate.
+- [x] Review the README before going public — it read like a guide to reproduce
+      our exact live deployment (owner voice, `paintdex.app` infra). Reframe the
+      Supabase/Vercel setup as optional "run your own instance" steps so it
+      orients contributors rather than handing over the keys to the live site.
 
 ## License
 
