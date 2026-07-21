@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { barModel, rampGradient, overlayCenter } from "@/lib/scheme/bars";
+import { barModel, rampGradient, overlayCenter, elementSize, moveItem } from "@/lib/scheme/bars";
 import {
   exportSchemeJSON,
   importScheme,
@@ -119,6 +119,43 @@ describe("overlayCenter", () => {
   });
 });
 
+describe("elementSize", () => {
+  it("gives the first element the largest width and each later one smaller", () => {
+    const sizes = [0, 1, 2, 3].map(elementSize);
+    for (let i = 1; i < sizes.length; i++) {
+      expect(sizes[i]).toBeLessThan(sizes[i - 1]);
+    }
+    expect(sizes[0]).toBe(1);
+  });
+
+  it("keeps the first-vs-last ratio bounded regardless of count", () => {
+    // Geometric taper: the ratio between neighbours is constant, so a long list
+    // never collapses later bars to zero the way a linear count→1 taper would.
+    expect(elementSize(1) / elementSize(0)).toBeCloseTo(elementSize(6) / elementSize(5), 5);
+  });
+});
+
+describe("moveItem", () => {
+  const items = [{ id: "a" }, { id: "b" }, { id: "c" }];
+
+  it("moves an item up (dir -1) and down (dir +1)", () => {
+    expect(moveItem(items, "b", -1).map((i) => i.id)).toEqual(["b", "a", "c"]);
+    expect(moveItem(items, "b", 1).map((i) => i.id)).toEqual(["a", "c", "b"]);
+  });
+
+  it("returns the array unchanged at the ends or for an unknown id", () => {
+    expect(moveItem(items, "a", -1)).toBe(items);
+    expect(moveItem(items, "c", 1)).toBe(items);
+    expect(moveItem(items, "z", 1)).toBe(items);
+  });
+
+  it("does not mutate the input array", () => {
+    const moved = moveItem(items, "a", 1);
+    expect(moved).not.toBe(items);
+    expect(items.map((i) => i.id)).toEqual(["a", "b", "c"]);
+  });
+});
+
 describe("scheme import/export", () => {
   let n = 0;
   const newId = () => `x${n++}`;
@@ -129,7 +166,6 @@ describe("scheme import/export", () => {
       {
         id: "e1",
         name: "Armour",
-        weight: 2,
         paints: [
           { id: "a1", name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
           { id: "a2", name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
@@ -144,7 +180,6 @@ describe("scheme import/export", () => {
     expect(back.title).toBe("Test Scheme");
     expect(back.elements).toHaveLength(1);
     expect(back.elements[0].name).toBe("Armour");
-    expect(back.elements[0].weight).toBe(2);
     expect(back.elements[0].paints.map((p) => ({ ...p, id: undefined }))).toEqual([
       { id: undefined, name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
       { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },

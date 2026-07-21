@@ -38,7 +38,7 @@ export const ROLES: Record<SchemeRole, RoleMeta> = {
   highlight: { label: "Highlight", solid: true, weight: 0.55, cssVar: "var(--role-highlight)" },
   wash: { label: "Wash", solid: false, weight: 1.0, cssVar: "var(--role-wash)", opacity: 0.62 },
   glaze: { label: "Glaze", solid: false, weight: 1.0, cssVar: "var(--role-glaze)", opacity: 0.48 },
-  weathering: { label: "Weathering", solid: false, weight: 0.8, cssVar: "var(--role-weathering)", opacity: 0.6 },
+  weathering: { label: "Weathering", solid: false, weight: 0.8, cssVar: "var(--role-weathering)", opacity: 0.8 },
 };
 
 /** Role keys in display order (drives the role `<select>`). */
@@ -66,11 +66,6 @@ export interface SchemeElement {
   id: string;
   name: string;
   paints: SchemePaint[];
-  /**
-   * How much of the model this element covers, relative to the others. Drives
-   * the bar's width so e.g. armour reads wider than eye lenses. Defaults to 1.
-   */
-  weight?: number;
 }
 
 export interface Scheme {
@@ -84,9 +79,3 @@ export const emptyScheme = (): Scheme => ({ title: "", elements: [] });
 export const roleOf = (p: SchemePaint): RoleMeta => ROLES[p.role] ?? ROLES.layer;
 export const weightOf = (p: SchemePaint): number =>
   typeof p.weight === "number" ? p.weight : roleOf(p).weight;
-
-/** Bounds for the per-element size control. */
-export const ELEMENT_WEIGHT_MIN = 0.4;
-export const ELEMENT_WEIGHT_MAX = 3;
-export const elementWeightOf = (e: SchemeElement): number =>
-  typeof e.weight === "number" ? e.weight : 1;

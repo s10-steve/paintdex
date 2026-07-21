@@ -5,24 +5,39 @@
  * Services button (rendered from our own origin, so the consent screen is
  * branded to paintdex.app); signed in, an account menu.
  *
- * The Google button is rendered exactly once into a persistent container that
- * is merely hidden when signed in — never unmounted. Google mutates the DOM
- * inside that node, so letting React swap it out would leave a stray iframe;
- * keeping it mounted (and the avatar as a separate sibling) avoids that.
+ * The Google button is rendered into a persistent container that is merely
+ * hidden when signed in — never unmounted. Google mutates the DOM inside that
+ * node, so letting React swap it out would leave a stray iframe; keeping it
+ * mounted (and the avatar as a separate sibling) avoids that. Google renders
+ * its own iframe that CSS can't reach, so dark mode is handled by re-rendering
+ * the button with the matching `theme` whenever the resolved theme changes.
  */
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import { useAuth } from "./auth-provider";
 
 export function SignInButton() {
   const { configured, googleEnabled, gisReady, user, loading, signOut } = useAuth();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const gsiRef = useRef<HTMLDivElement>(null);
-  const renderedRef = useRef(false);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
+
+  // The full "Sign in with Google" pill is too wide for a phone header, so below
+  // the `sm` breakpoint render the shorter "Sign in" label instead. Track the
+  // viewport so the button re-renders when it crosses the breakpoint.
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setCompact(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   // Close the account menu on an outside click.
   useEffect(() => {
@@ -36,19 +51,24 @@ export function SignInButton() {
     return () => document.removeEventListener("mousedown", onClick);
   }, [open]);
 
-  // Render the Google button once, when it and its container are ready.
+  // (Re-)render the Google button whenever it, its container, or the resolved
+  // theme changes. Google's button is an iframe we can't style with CSS, so the
+  // only way to follow dark mode is to re-render it with the matching `theme`.
+  // The container is cleared first so we never stack multiple buttons.
   useEffect(() => {
-    if (renderedRef.current || !gisReady || !gsiRef.current || !window.google) return;
-    renderedRef.current = true;
+    if (!mounted || !gisReady || !gsiRef.current || !window.google) return;
+    gsiRef.current.innerHTML = "";
     window.google.accounts.id.renderButton(gsiRef.current, {
       type: "standard",
-      theme: "outline",
+      theme: resolvedTheme === "dark" ? "filled_black" : "outline",
       size: "large",
       shape: "pill",
-      text: "signin_with",
+      // Shorter "Sign in" on mobile so the pill fits the phone header; the full
+      // "Sign in with Google" at sm+. (The icon-only variant rendered blank.)
+      text: compact ? "signin" : "signin_with",
       logo_alignment: "left",
     });
-  }, [gisReady, loading, user]);
+  }, [gisReady, mounted, loading, user, resolvedTheme, compact]);
 
   // Accounts unavailable, or before the first client-side session check.
   if (!configured || !mounted || loading) {

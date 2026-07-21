@@ -35,7 +35,7 @@ export default function Home() {
             name="q"
             placeholder="Search paints — e.g. Mephiston Red, black, teal…"
             aria-label="Search paints"
-            className="flex-1 rounded-lg border border-input bg-card px-4 py-3 text-sm shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex-1 rounded-lg border border-input bg-card px-4 py-3 text-base shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-sm"
           />
           <button
             type="submit"
