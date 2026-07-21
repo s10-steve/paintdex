@@ -79,7 +79,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#A99D8D",
+    "hex": "#3C3C28",
     "code": null,
     "discontinued": false
   },
@@ -91,7 +91,7 @@
     "type": "shade",
     "hex": "#B4AA9E",
     "code": null,
-    "discontinued": false
+    "discontinued": true
   },
   {
     "id": "citadel-agrellan-badland",
@@ -259,7 +259,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#B6B788",
+    "hex": "#485F2B",
     "code": null,
     "discontinued": false
   },
@@ -428,7 +428,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#7DA57A",
+    "hex": "#336F47",
     "code": null,
     "discontinued": false
   },
@@ -725,7 +725,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#BE80A4",
+    "hex": "#752455",
     "code": null,
     "discontinued": false
   },
@@ -735,7 +735,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#F5CC92",
+    "hex": "#AD8A38",
     "code": null,
     "discontinued": false
   },
@@ -884,7 +884,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#1B8F85",
+    "hex": "#2B5D58",
     "code": null,
     "discontinued": false
   },
@@ -954,7 +954,7 @@
     "type": "shade",
     "hex": "#856A67",
     "code": null,
-    "discontinued": false
+    "discontinued": true
   },
   {
     "id": "citadel-cygor-brown",
@@ -1199,7 +1199,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#A1A5AF",
+    "hex": "#1B3E6E",
     "code": null,
     "discontinued": false
   },
@@ -1209,7 +1209,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#8F6592",
+    "hex": "#542B66",
     "code": null,
     "discontinued": false
   },
@@ -1450,7 +1450,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#BB7648",
+    "hex": "#7F512D",
     "code": null,
     "discontinued": false
   },
@@ -2588,7 +2588,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#14100E",
+    "hex": "#393944",
     "code": null,
     "discontinued": false
   },
@@ -2600,7 +2600,7 @@
     "type": "shade",
     "hex": "#B3AFAE",
     "code": null,
-    "discontinued": false
+    "discontinued": true
   },
   {
     "id": "citadel-nurgles-rot",
@@ -2824,7 +2824,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#BE9A80",
+    "hex": "#7E3226",
     "code": null,
     "discontinued": false
   },
@@ -2836,7 +2836,7 @@
     "type": "shade",
     "hex": "#C2A896",
     "code": null,
-    "discontinued": false
+    "discontinued": true
   },
   {
     "id": "citadel-relictor-gold",
@@ -3016,7 +3016,7 @@
     "brand": "Citadel",
     "range": "Shade",
     "type": "shade",
-    "hex": "#AE8158",
+    "hex": "#905931",
     "code": null,
     "discontinued": false
   },
@@ -4093,5 +4093,75 @@
       "Base",
       "Spray"
     ]
+  },
+  {
+    "id": "citadel-soulblight-grey",
+    "name": "Soulblight Grey",
+    "brand": "Citadel",
+    "range": "Shade",
+    "type": "shade",
+    "hex": "#7D747D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-berserker-bloodshade",
+    "name": "Berserker Bloodshade",
+    "brand": "Citadel",
+    "range": "Shade",
+    "type": "shade",
+    "hex": "#82233B",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-targor-rageshade",
+    "name": "Targor Rageshade",
+    "brand": "Citadel",
+    "range": "Shade",
+    "type": "shade",
+    "hex": "#514357",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-poxwalker",
+    "name": "Poxwalker",
+    "brand": "Citadel",
+    "range": "Shade",
+    "type": "shade",
+    "hex": "#4C7476",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-kroak-green",
+    "name": "Kroak Green",
+    "brand": "Citadel",
+    "range": "Shade",
+    "type": "shade",
+    "hex": "#67886D",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-tyran-blue",
+    "name": "Tyran Blue",
+    "brand": "Citadel",
+    "range": "Shade",
+    "type": "shade",
+    "hex": "#326895",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-mortarion-grime",
+    "name": "Mortarion Grime",
+    "brand": "Citadel",
+    "range": "Shade",
+    "type": "shade",
+    "hex": "#7F7928",
+    "code": null,
+    "discontinued": false
   }
 ]
