@@ -31,7 +31,7 @@ and able to find visually similar colours across brands.
 - **Accounts (optional).** Sign in with Google to sync your saved schemes across
   devices; without an account, schemes save to your browser exactly as before.
   Owned-paint inventories and shareable recipe links are planned.
-- **Light & dark mode**, following your system preference with a manual toggle.
+- **Light & dark mode**, following your system preference.
 - **Responsive** desktop and mobile layouts.
 - **Plain-JSON data.** The paint database is plain JSON, one file per brand. The
   catalogue is intended to be open-sourced, so the community can help fix colours
@@ -192,7 +192,7 @@ Brand and product names are trademarks of their respective owners.
       Meter (this is how several Vallejo hexes were corrected, and how Nuln Oil
       was fixed).
 - [ ] Add more paint brands and ranges
-- [x] Light/dark follows the system by default, with a manual toggle to override
+- [x] Light/dark follows the system preference
 - [x] Add a flag for metallic paints, and a filter for metallic vs non-metallic
       (e.g Auric Armour Gold is listed as similar to yellows and golds, but
       really they're completely different use cases)

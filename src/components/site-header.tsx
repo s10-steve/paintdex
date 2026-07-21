@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
 import { SignInButton } from "./auth/sign-in-button";
 import { MobileNav } from "./mobile-nav";
 import { LogoMark } from "./logo-mark";
@@ -29,7 +28,6 @@ export function SiteHeader() {
         </nav>
         <div className="ml-auto flex items-center gap-2">
           <SignInButton />
-          <ThemeToggle />
           <MobileNav className="sm:hidden" />
         </div>
       </div>
