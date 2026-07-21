@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Scheme visualiser",
   description:
     "Plan a miniature paint scheme: group paints by element and see every element's colours as blended vertical bars, side by side.",
+  alternates: { canonical: "/visualiser" },
 };
 
 export default function VisualiserPage() {

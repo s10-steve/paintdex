@@ -151,7 +151,7 @@ Brand and product names are trademarks of their respective owners.
 
 ### Minor UI tweaks
 
-- [ ] Autocomplete search suggestions (e.g. typing "abaddon" should suggest
+- [x] Autocomplete search suggestions (e.g. typing "abaddon" should suggest
       "Abaddon Black" and "Abaddon Grey"). This already works on the scheme
       visualiser but not on the paint database search.
 - [x] On the paint page, add a filter for the match grouping. By default have it
@@ -219,7 +219,7 @@ Brand and product names are trademarks of their respective owners.
       [paintdex.app](https://paintdex.app). The paint data ships in the repo, so
       the site runs with no backend or database.
 - [ ] Get some users to try it out and gather feedback.
-- [ ] Do an SEO pass on the site (metadata, structured data, per-page titles,
+- [x] Do an SEO pass on the site (metadata, structured data, per-page titles,
       sitemap coverage, etc.).
 
 ### User accounts & recipe features

@@ -27,6 +27,8 @@ export const metadata: Metadata = {
     template: "%s · Paintdex",
   },
   description: SITE_DESCRIPTION,
+  // Sensible default; each page overrides with its own canonical path.
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: "Paintdex",
