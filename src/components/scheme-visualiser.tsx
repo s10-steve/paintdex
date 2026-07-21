@@ -427,23 +427,31 @@ export function SchemeVisualiser() {
   return (
     <div className="mx-auto max-w-[1420px] px-4 pb-16">
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(340px,440px)_minmax(0,1fr)]">
-        {/* LEFT — editor */}
-        <section aria-label="Paint entry">
-          <div className="mb-5 max-w-[62ch] space-y-2 text-sm text-muted-foreground">
-            <p>Group your paints by element, in the order you apply them.</p>
-            <p>
-              Give each a <b className="font-semibold text-foreground">role</b>: base, layer
-              and highlight build the tonal ramp; wash, glaze and weathering sit over it. The{" "}
-              <b className="font-semibold text-foreground">weight</b> slider sets how much of
-              the bar a layer takes.
-            </p>
-            <p>
-              Order elements by how much of the model they cover —{" "}
-              <b className="font-semibold text-foreground">largest first</b> (armour), smallest
-              last (lenses). Bar widths follow the order; use the ↑↓ buttons to rearrange.
-            </p>
-          </div>
+        {/* Guidance — its own grid item so all the intro text stays together.
+            On mobile (single column) `order` keeps it above the visualisation;
+            on desktop explicit grid placement puts it at the top of the left
+            column, above the editor. */}
+        <div className="order-1 max-w-[62ch] space-y-2 text-sm text-muted-foreground lg:order-none lg:col-start-1 lg:row-start-1">
+          <p>Group your paints by element, in the order you apply them.</p>
+          <p>
+            Give each a <b className="font-semibold text-foreground">role</b>: base, layer
+            and highlight build the tonal ramp; wash, glaze and weathering sit over it. The{" "}
+            <b className="font-semibold text-foreground">weight</b> slider sets how much of
+            the bar a layer takes.
+          </p>
+          <p>
+            Order elements by how much of the model they cover —{" "}
+            <b className="font-semibold text-foreground">largest first</b> (armour), smallest
+            last (lenses). Bar widths follow the order; use the ↑↓ buttons to rearrange.
+          </p>
+        </div>
 
+        {/* LEFT — editor. Last on mobile (order-3), left column below the
+            guidance on desktop. */}
+        <section
+          aria-label="Paint entry"
+          className="order-3 lg:order-none lg:col-start-1 lg:row-start-2"
+        >
           {user && (
             <div className="mb-3.5 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card px-3 py-2">
               <label htmlFor="saved-schemes" className="text-xs font-medium text-muted-foreground">
@@ -593,9 +601,12 @@ export function SchemeVisualiser() {
         </section>
 
         {/* RIGHT — visualisation */}
+        {/* RIGHT — visualisation. Placed between the guidance and the editor
+            on mobile (order-2) so the result sits near the top; spans the full
+            right column on desktop. */}
         <section
           aria-label="Colour visualisation"
-          className="order-first lg:order-none lg:sticky lg:top-[4.75rem]"
+          className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-[4.75rem]"
         >
           <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
             <div className="flex items-center gap-3.5 border-b border-border bg-muted px-4 py-3.5">
