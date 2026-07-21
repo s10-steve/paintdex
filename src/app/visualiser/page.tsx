@@ -17,7 +17,10 @@ export default function VisualiserPage() {
       <link rel="preload" href={BROWSE_INDEX_URL} as="fetch" crossOrigin="anonymous" />
       <div className="mx-auto max-w-[1420px] px-4 pt-6">
         <h1 className="text-2xl font-bold tracking-tight">Scheme visualiser</h1>
-        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+        {/* Cap at the editor column width (see the grid template in
+            scheme-visualiser.tsx) so the subtitle stays in that column and
+            doesn't run wide across the visualisation panel beside it. */}
+        <p className="mt-1 max-w-[440px] text-sm text-muted-foreground">
           Enter your paints grouped by element, then see how the whole
           miniature&apos;s colours read next to each other. Your scheme saves in this
           browser — use Export to back it up or share it.
