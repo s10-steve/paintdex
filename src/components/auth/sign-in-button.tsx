@@ -29,8 +29,8 @@ export function SignInButton() {
   useEffect(() => setMounted(true), []);
 
   // The full "Sign in with Google" pill is too wide for a phone header, so below
-  // the `sm` breakpoint render Google's compact icon-only button instead. Track
-  // the viewport so the button re-renders when it crosses the breakpoint.
+  // the `sm` breakpoint render the shorter "Sign in" label instead. Track the
+  // viewport so the button re-renders when it crosses the breakpoint.
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 639px)");
     const update = () => setCompact(mq.matches);
@@ -59,11 +59,13 @@ export function SignInButton() {
     if (!mounted || !gisReady || !gsiRef.current || !window.google) return;
     gsiRef.current.innerHTML = "";
     window.google.accounts.id.renderButton(gsiRef.current, {
-      type: compact ? "icon" : "standard",
+      type: "standard",
       theme: resolvedTheme === "dark" ? "filled_black" : "outline",
       size: "large",
-      shape: compact ? "circle" : "pill",
-      text: "signin_with",
+      shape: "pill",
+      // Shorter "Sign in" on mobile so the pill fits the phone header; the full
+      // "Sign in with Google" at sm+. (The icon-only variant rendered blank.)
+      text: compact ? "signin" : "signin_with",
       logo_alignment: "left",
     });
   }, [gisReady, mounted, loading, user, resolvedTheme, compact]);

@@ -429,17 +429,20 @@ export function SchemeVisualiser() {
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
         {/* LEFT — editor */}
         <section aria-label="Paint entry">
-          <p className="mb-5 max-w-[62ch] text-sm text-muted-foreground">
-            Group your paints by the element you&apos;re painting, in the order you apply
-            them. Give each a <b className="font-semibold text-foreground">role</b> — a base,
-            layer or highlight builds the tonal ramp; a wash, glaze or weathering pass sits
-            over it. The <b className="font-semibold text-foreground">weight</b> slider sets
-            how much of each bar that layer claims, so bases read chunky and highlights thin,
-            like a real miniature. Order the elements by how much of the model they cover —{" "}
-            <b className="font-semibold text-foreground">largest areas first</b> (e.g. armour),
-            smallest last (e.g. lenses); the bars scale to match, and the ↑↓ buttons rearrange
-            them.
-          </p>
+          <div className="mb-5 max-w-[62ch] space-y-2 text-sm text-muted-foreground">
+            <p>Group your paints by element, in the order you apply them.</p>
+            <p>
+              Give each a <b className="font-semibold text-foreground">role</b>: base, layer
+              and highlight build the tonal ramp; wash, glaze and weathering sit over it. The{" "}
+              <b className="font-semibold text-foreground">weight</b> slider sets how much of
+              the bar a layer takes.
+            </p>
+            <p>
+              Order elements by how much of the model they cover —{" "}
+              <b className="font-semibold text-foreground">largest first</b> (armour), smallest
+              last (lenses). Bar widths follow the order; use the ↑↓ buttons to rearrange.
+            </p>
+          </div>
 
           {user && (
             <div className="mb-3.5 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card px-3 py-2">
