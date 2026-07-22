@@ -89,11 +89,11 @@ or updating a dependency (commit the resulting `package.json` **and**
 
 ## Deploying
 
-It's a standard Next.js project that deploys with zero configuration — nothing
-to configure for the core site, and no server to keep warm since everything is
-static. The public instance at [paintdex.app](https://paintdex.app) is hosted on
-[Vercel](https://vercel.com/), but any host that runs Next.js — or serves a
-static export — works just as well.
+This is a standard Next.js project that deploys with zero configuration —
+nothing to configure for the core site, and no server to keep warm since
+everything is static. The public instance at
+[paintdex.app](https://paintdex.app) is hosted on [Vercel](https://vercel.com/),
+but any host that runs Next.js — or serves a static export — works just as well.
 
 ## Contributing to the paint data
 
