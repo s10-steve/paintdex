@@ -17,14 +17,15 @@ export const SHARE_TOKEN_LENGTH = 10;
 /**
  * Derive a lowercase base-36 token from random bytes. Deterministic given its
  * input, so it's unit-testable; feed it `crypto.getRandomValues(new
- * Uint8Array(n))` at the call site. ~5 bits of entropy per character.
+ * Uint8Array(n))` at the call site. Each byte becomes two base-36 chars, so the
+ * 10-char token is fixed by the first 5 random bytes — ~40 bits of entropy
+ * (about 4 bits/char). Not a cryptographic key; just a hard-to-enumerate handle
+ * behind RLS.
  */
 export function makeShareToken(rand: Uint8Array): string {
   let out = "";
   for (const byte of rand) {
-    // 0–255 → two base-36 digits keeps the mapping simple and uniform enough
-    // for an unguessable id (this isn't a cryptographic key, just a hard-to-
-    // enumerate handle behind RLS).
+    // 0–255 → exactly two base-36 digits, so the byte→chars mapping is simple.
     out += byte.toString(36).padStart(2, "0");
   }
   return out.slice(0, SHARE_TOKEN_LENGTH) || "0";

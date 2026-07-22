@@ -23,10 +23,20 @@ export const revalidate = 60;
 /** Deduped fetch shared by generateMetadata and the page within one render. */
 const loadScheme = cache(getPublicSchemeBySlug);
 
-/** Parse a stored scheme into the runtime shape, assigning throwaway ids. */
-function parse(data: unknown): Scheme {
-  let n = 0;
-  return importSchemeObject(data, () => `s${n++}`);
+/**
+ * Parse a stored scheme into the runtime shape, assigning throwaway ids.
+ * Returns null on a malformed `data` shape (importSchemeObject throws when
+ * `elements` isn't an array) — the anon insert policy only checks size, not
+ * shape, so a public row could carry junk; we degrade to the not-available
+ * fallback rather than throwing into the error boundary.
+ */
+function parse(data: unknown): Scheme | null {
+  try {
+    let n = 0;
+    return importSchemeObject(data, () => `s${n++}`);
+  } catch {
+    return null;
+  }
 }
 
 export async function generateMetadata({
@@ -70,8 +80,10 @@ export default async function SharedSchemePage({
 }) {
   const { slug } = await params;
   const row = await loadScheme(slug);
+  const scheme = row ? parse(row.data) : null;
 
-  if (!row) {
+  // Missing/unpublished row, or a public row whose stored data is malformed.
+  if (!scheme) {
     return (
       <main className="mx-auto max-w-2xl px-4 py-20 text-center">
         <h1 className="text-2xl font-bold tracking-tight">Scheme not available</h1>
@@ -98,7 +110,7 @@ export default async function SharedSchemePage({
 
   return (
     <main className="pt-6">
-      <SchemeView scheme={parse(row.data)} />
+      <SchemeView scheme={scheme} />
     </main>
   );
 }

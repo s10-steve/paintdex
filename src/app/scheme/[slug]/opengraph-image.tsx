@@ -27,8 +27,17 @@ export default async function OgImage({
   const { slug } = await params;
   const row = await getPublicSchemeBySlug(slug);
 
-  let n = 0;
-  const scheme = row ? importSchemeObject(row.data, () => `o${n++}`) : null;
+  // Tolerate a malformed stored `data` shape (importSchemeObject throws when
+  // `elements` isn't an array): fall back to the generic card rather than 500.
+  let scheme = null;
+  if (row) {
+    try {
+      let n = 0;
+      scheme = importSchemeObject(row.data, () => `o${n++}`);
+    } catch {
+      scheme = null;
+    }
+  }
   const title = scheme?.title || "A Paintdex colour scheme";
   // Cap the number of bars so a huge scheme still fits the frame.
   const elements = (scheme?.elements ?? []).filter((e) => e.paints.length > 0).slice(0, 8);
