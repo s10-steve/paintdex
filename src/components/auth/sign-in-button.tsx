@@ -13,6 +13,7 @@
  * the button with the matching `theme` whenever the resolved theme changes.
  */
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useAuth } from "./auth-provider";
 
@@ -106,6 +107,14 @@ export function SignInButton() {
               <p className="truncate px-3 py-2 text-xs text-muted-foreground" title={label}>
                 {label}
               </p>
+              <Link
+                href="/account"
+                role="menuitem"
+                onClick={() => setOpen(false)}
+                className="block w-full rounded-sm px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
+              >
+                My account
+              </Link>
               <button
                 type="button"
                 role="menuitem"

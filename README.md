@@ -4,14 +4,14 @@ A website featuring a database of miniature paints with hex colour values —
 searchable, filterable, and able to find visually similar colours across brands.
 Plus the ability to design and visualise a miniature's colour scheme, using this
 database to pick paints and preview how they read together. Optional accounts
-let you save your schemes and sync them across devices.
+let you save your schemes, sync them across devices, and share them by link.
 
 > **Status:** covers the paint database, perceptual colour matching, a paint
-> scheme visualiser, and optional accounts (Google sign-in with your schemes
-> synced to your account). Owned-paint inventories and shareable recipe links
-> are planned next (see [Roadmap](#roadmap)); the project will be open-sourced
-> once those are in, so the community can help keep the paint catalogue
-> accurate.
+> scheme visualiser, optional accounts (Google sign-in with your schemes synced
+> to your account), a "My account" page for managing them, and public shareable
+> recipe links. Owned-paint inventories are planned next (see
+> [Roadmap](#roadmap)); the project will be open-sourced once those are in, so
+> the community can help keep the paint catalogue accurate.
 
 ## Features
 
@@ -35,7 +35,12 @@ let you save your schemes and sync them across devices.
   when signed in.
 - **Accounts (optional).** Sign in with Google to sync your saved schemes across
   devices; without an account, schemes save to your browser exactly as before.
-  Owned-paint inventories and shareable recipe links are planned.
+  A **My account** page (`/account`) manages your schemes — rename, duplicate,
+  delete and share. Owned-paint inventories are planned.
+- **Shareable scheme links.** Publish any saved scheme to an unguessable
+  `/scheme/<slug>` link that anyone can open — no login — to see the visual and
+  the full paint recipe, with a rich colour preview when pasted on social sites.
+  Signed-in viewers can save a copy to their own account.
 - **Light & dark mode**, following your system preference.
 - **Responsive** desktop and mobile layouts.
 - **Plain-JSON data.** The paint database is plain JSON, one file per brand. The
@@ -242,11 +247,14 @@ Brand and product names are trademarks of their respective owners.
       and tweak), rather than a single scheme baked into the app
 - [ ] Paint schemes can suggest only paints from your collection
 - [ ] Wishlist for paints you don't own yet but want to buy
-- [ ] Public, shareable recipe links (no login to view) with suggestions from
-      paints you own (based on colour similarity)
-- [ ] New separate page for managing your owned paints, wishlists, and saved
-      schemes (currently this is done in the visualiser which makes it hard to
-      find and manage them)
+- [x] Public, shareable recipe links (no login to view) — publish a scheme to an
+      unguessable `/scheme/<slug>` link showing the visual + full recipe, with a
+      generated colour preview for social embeds. (Suggestions from paints you
+      own, based on colour similarity, will follow once owned-paint inventories
+      land.)
+- [x] New separate "My account" page (`/account`) for managing saved schemes
+      (rename, duplicate, delete, share). Owned paints and wishlists will live
+      here too once they're added, so they're easy to find and manage.
 - [ ] Add a privacy policy and terms of service, then link them from Google Auth
       Platform → Branding. Needed for Google OAuth verification (and lets us
       show the app logo on the consent screen). See Google's

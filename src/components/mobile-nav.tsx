@@ -9,6 +9,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "./auth/auth-provider";
 
 const LINKS = [
   { href: "/paints", label: "Paints" },
@@ -19,6 +20,11 @@ export function MobileNav({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { user } = useAuth();
+
+  // Signed-in users get a link to their account page (matching the account
+  // menu on ≥ sm, which is off-screen on mobile).
+  const links = user ? [...LINKS, { href: "/account", label: "My account" }] : LINKS;
 
   // Close when the route changes (a link was followed).
   // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -62,7 +68,7 @@ export function MobileNav({ className }: { className?: string }) {
           role="menu"
           className="absolute right-0 z-40 mt-2 w-44 rounded-md border border-border bg-card p-1 shadow-lg"
         >
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}

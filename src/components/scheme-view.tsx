@@ -1,0 +1,170 @@
+"use client";
+
+/**
+ * Read-only view of a shared scheme — the public share page (`/scheme/[slug]`)
+ * renders this with a scheme parsed server-side. Shows the same colour-bar
+ * visualisation as the editor (via the shared `SchemeBars`) plus a full
+ * per-element recipe so a viewer can reproduce it, and a "Save a copy" action
+ * for signed-in users.
+ */
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { SchemeBars } from "./scheme-bars";
+import { useAuth } from "./auth/auth-provider";
+import { roleOf, type Scheme } from "@/lib/scheme/types";
+import { toExportShape } from "@/lib/scheme/io";
+import { duplicateScheme } from "@/lib/data/schemes";
+
+export function SchemeView({ scheme }: { scheme: Scheme }) {
+  const paintCount = scheme.elements.reduce((n, e) => n + e.paints.length, 0);
+
+  return (
+    <div className="mx-auto max-w-[1420px] px-4 pb-16">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="truncate text-3xl font-bold tracking-tight sm:text-4xl">
+            {scheme.title || "Untitled scheme"}
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {scheme.elements.length} elements · {paintCount} paints · shared from Paintdex
+          </p>
+        </div>
+        <SaveCopyButton scheme={scheme} />
+      </div>
+
+      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+        {scheme.elements.length > 0 ? (
+          <SchemeBars elements={scheme.elements} blend />
+        ) : (
+          <p className="px-4 py-10 text-center text-sm text-muted-foreground">
+            This scheme has no elements yet.
+          </p>
+        )}
+      </div>
+
+      {/* Full recipe — the point of a shareable link. */}
+      {scheme.elements.length > 0 && (
+        <section className="mt-8" aria-label="Recipe">
+          <h2 className="mb-3 text-[15px] font-semibold tracking-tight">Recipe</h2>
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            {scheme.elements.map((element) => (
+              <div
+                key={element.id}
+                className="rounded-xl border border-border bg-card p-3 shadow-sm"
+              >
+                <div className="mb-2 flex items-center gap-2.5 border-b border-border pb-2">
+                  <span className="flex h-[22px] w-10 flex-none overflow-hidden rounded-md ring-1 ring-inset ring-black/10">
+                    {(element.paints.length ? element.paints.map((p) => p.hex) : ["var(--muted)"]).map(
+                      (hex, i) => (
+                        <i key={i} className="flex-1" style={{ background: hex }} />
+                      ),
+                    )}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-[15px] font-semibold tracking-tight">
+                    {element.name}
+                  </span>
+                  <span className="flex-none text-xs tabular-nums text-muted-foreground">
+                    {element.paints.length}
+                  </span>
+                </div>
+                {element.paints.length === 0 ? (
+                  <p className="px-1 py-2 text-xs text-muted-foreground">No paints.</p>
+                ) : (
+                  <ol className="flex flex-col gap-1.5">
+                    {element.paints.map((paint) => {
+                      const role = roleOf(paint);
+                      const meta =
+                        paint.custom && (!paint.brand || paint.brand === "custom")
+                          ? "Custom colour"
+                          : paint.brand +
+                            (paint.range && paint.range !== "custom" ? ` · ${paint.range}` : "");
+                      return (
+                        <li key={paint.id} className="flex items-start gap-2.5 px-1">
+                          <span
+                            className="mt-0.5 h-[26px] w-[26px] flex-none rounded-md ring-1 ring-inset ring-black/15"
+                            style={{ background: paint.hex }}
+                          />
+                          <div className="min-w-0">
+                            <div className="flex min-w-0 items-center gap-1.5 text-[13.5px] font-medium">
+                              <span className="min-w-0 truncate">{paint.name}</span>
+                              <span
+                                className="sv-role-tag inline-flex flex-none items-center rounded-full px-1.5 text-[9.5px] font-bold uppercase leading-normal tracking-wide"
+                                style={{ ["--role-c" as string]: role.cssVar }}
+                              >
+                                {role.label}
+                              </span>
+                            </div>
+                            <div className="truncate text-[11.5px] text-muted-foreground">
+                              {meta}{" "}
+                              <span className="font-mono tabular-nums text-muted-foreground/80">
+                                {paint.hex.toUpperCase()}
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Copy a shared scheme into the viewer's own account, then open it in the
+ * visualiser. Signed-out users see a hint to sign in first (accounts are
+ * browser-only, so there's nothing to copy into without one).
+ */
+function SaveCopyButton({ scheme }: { scheme: Scheme }) {
+  const { configured, user } = useAuth();
+  const router = useRouter();
+  const [state, setState] = useState<"idle" | "saving" | "error">("idle");
+
+  if (!configured) return null;
+
+  if (!user) {
+    return (
+      <span className="text-xs text-muted-foreground">
+        Sign in (top right) to save a copy to your account.
+      </span>
+    );
+  }
+
+  const save = async () => {
+    if (state === "saving") return;
+    setState("saving");
+    try {
+      const row = await duplicateScheme(
+        user.id,
+        toExportShape(scheme),
+        `${scheme.title || "Untitled scheme"} (copy)`,
+      );
+      router.push(`/visualiser?scheme=${row.id}`);
+    } catch {
+      setState("error");
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-end gap-1">
+      <button
+        type="button"
+        onClick={() => void save()}
+        disabled={state === "saving"}
+        className="flex-none rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
+      >
+        {state === "saving" ? "Saving…" : "Save a copy"}
+      </button>
+      {state === "error" && (
+        <span className="text-xs text-red-600 dark:text-red-400">
+          Couldn&apos;t save. Please try again.
+        </span>
+      )}
+    </div>
+  );
+}

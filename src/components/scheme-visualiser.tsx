@@ -6,9 +6,10 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type PointerEvent as ReactPointerEvent,
 } from "react";
+import Link from "next/link";
 import { BROWSE_INDEX_URL } from "./paints-browser";
+import { Bar, useBarHover, type HoverHandlers } from "./scheme-bars";
 import { filterPaints } from "@/lib/paints/filter";
 import type { BrowsePaint } from "@/lib/paints/types";
 import {
@@ -22,14 +23,7 @@ import {
   type SchemePaint,
   type SchemeRole,
 } from "@/lib/scheme/types";
-import {
-  barModel,
-  rampGradient,
-  overlayCenter,
-  clamp,
-  elementSize,
-  moveItem,
-} from "@/lib/scheme/bars";
+import { moveItem } from "@/lib/scheme/bars";
 import {
   exportSchemeJSON,
   importScheme,
@@ -44,7 +38,10 @@ import {
   createScheme,
   updateScheme,
   deleteScheme,
+  publishScheme,
+  unpublishScheme,
 } from "@/lib/data/schemes";
+import { makeShareSlug, makeShareToken, shareUrl } from "@/lib/scheme/share";
 import type { SchemeRow } from "@/lib/supabase/types";
 
 const STORE = "paintdex-scheme-v1";
@@ -67,6 +64,9 @@ function isSchemeLimitError(err: unknown): boolean {
 let counter = 0;
 const uid = () => `u${++counter}`;
 
+/** A fresh, unguessable share token from browser randomness. */
+const freshShareToken = () => makeShareToken(crypto.getRandomValues(new Uint8Array(8)));
+
 /** CSS var wiring for the colour-mixed role tag. */
 function roleVarStyle(role: SchemeRole): CSSProperties {
   return { ["--role-c" as string]: ROLES[role].cssVar } as CSSProperties;
@@ -77,22 +77,13 @@ function defaultRole(element: SchemeElement): SchemeRole {
   return element.paints.some((p) => roleOf(p).solid) ? "layer" : "base";
 }
 
-type HoverHandlers = {
-  /** Bar segment: show the tooltip and highlight the matching row. */
-  enter: (paint: SchemePaint, e: ReactPointerEvent) => void;
-  move: (e: ReactPointerEvent) => void;
-  leave: () => void;
-  /** Editor row: highlight the matching bar band (no tooltip). */
-  mark: (pid: string) => void;
-  unmark: () => void;
-};
-
 export function SchemeVisualiser() {
   const [scheme, setScheme] = useState<Scheme>(() => emptyScheme());
   const [blend, setBlend] = useState(true);
   const [mounted, setMounted] = useState(false);
-  const [hovered, setHovered] = useState<string | null>(null);
-  const [tipPaint, setTipPaint] = useState<SchemePaint | null>(null);
+  // Bar hover + tooltip live in a shared hook so the read-only viewer can reuse
+  // the same visualisation; here we additionally link hover to the editor rows.
+  const { hovered, hover, tooltip } = useBarHover();
 
   // Paint database, fetched from the same static asset the browse page uses.
   const [dbPaints, setDbPaints] = useState<BrowsePaint[] | null>(null);
@@ -161,6 +152,11 @@ export function SchemeVisualiser() {
   const [syncState, setSyncState] = useState<
     "idle" | "saving" | "saved" | "error" | "limit"
   >("idle");
+  const [shareBusy, setShareBusy] = useState(false);
+  const [copied, setCopied] = useState(false);
+  // Ensures the ?scheme=<id> deep-link (from the account page / share viewer)
+  // is honoured only once, after the user's schemes have loaded.
+  const deepLinkedRef = useRef(false);
   // Live handle on the current scheme, so the login effect can migrate it
   // without depending on `scheme` (which would re-run it on every edit).
   const schemeRef = useRef(scheme);
@@ -312,6 +308,68 @@ export function SchemeVisualiser() {
     }
   };
 
+  // Honour a `?scheme=<id>` deep link once the user's schemes are loaded, so the
+  // account page's "Edit" and the viewer's "Save a copy" open the right scheme.
+  // Read from window.location (client-only) to avoid a Suspense boundary.
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    if (!user || deepLinkedRef.current || savedSchemes.length === 0) return;
+    const wanted = new URLSearchParams(window.location.search).get("scheme");
+    if (!wanted) {
+      deepLinkedRef.current = true;
+      return;
+    }
+    const row = savedSchemes.find((r) => r.id === wanted);
+    if (row && row.id !== activeSchemeId) loadSchemeRow(row);
+    deepLinkedRef.current = true;
+    // Drop the param so a later reload doesn't force-reselect over the user's
+    // subsequent picks.
+    const url = new URL(window.location.href);
+    url.searchParams.delete("scheme");
+    window.history.replaceState(null, "", url.pathname + url.search);
+    /* eslint-enable react-hooks/set-state-in-effect */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, savedSchemes]);
+
+  /* ---- sharing (publish a scheme under an unguessable link) ---- */
+  const activeRow = savedSchemes.find((r) => r.id === activeSchemeId) ?? null;
+
+  const patchRow = (id: string, patch: Partial<SchemeRow>) =>
+    setSavedSchemes((rows) => rows.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+
+  const toggleShare = async () => {
+    if (!activeRow || shareBusy) return;
+    setShareBusy(true);
+    try {
+      if (activeRow.is_public) {
+        await unpublishScheme(activeRow.id);
+        patchRow(activeRow.id, { is_public: false });
+      } else {
+        const slug =
+          activeRow.share_slug ?? makeShareSlug(activeRow.title, freshShareToken());
+        const stored = await publishScheme(activeRow.id, slug, () =>
+          makeShareSlug(activeRow.title, freshShareToken()),
+        );
+        patchRow(activeRow.id, { is_public: true, share_slug: stored });
+      }
+    } catch {
+      setSyncState("error");
+    } finally {
+      setShareBusy(false);
+    }
+  };
+
+  const copyShareLink = async () => {
+    if (!activeRow?.share_slug) return;
+    try {
+      await navigator.clipboard.writeText(shareUrl(window.location.origin, activeRow.share_slug));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* clipboard blocked — non-fatal */
+    }
+  };
+
   /* ---- immutable scheme updates ---- */
   const mutateElement = (eid: string, fn: (e: SchemeElement) => SchemeElement) =>
     setScheme((s) => ({ ...s, elements: s.elements.map((e) => (e.id === eid ? fn(e) : e)) }));
@@ -382,42 +440,6 @@ export function SchemeVisualiser() {
     reader.onerror = () => setImportError("Couldn't read that file.");
     reader.readAsText(file);
   };
-
-  /* ---- tooltip (imperative, so mousemove doesn't re-render the tree) ---- */
-  const tipRef = useRef<HTMLDivElement>(null);
-  const hover: HoverHandlers = useMemo(
-    () => ({
-      enter(paint, e) {
-        // Content comes from React (see the tooltip JSX); only position and
-        // visibility are set imperatively so mousemove doesn't re-render.
-        setHovered(paint.id);
-        setTipPaint(paint);
-        const tip = tipRef.current;
-        if (!tip) return;
-        tip.style.left = `${e.clientX}px`;
-        tip.style.top = `${e.clientY - 14}px`;
-        tip.style.opacity = "1";
-      },
-      move(e) {
-        const tip = tipRef.current;
-        if (!tip) return;
-        tip.style.left = `${e.clientX}px`;
-        tip.style.top = `${e.clientY - 14}px`;
-      },
-      leave() {
-        setHovered(null);
-        setTipPaint(null);
-        if (tipRef.current) tipRef.current.style.opacity = "0";
-      },
-      mark(pid) {
-        setHovered(pid);
-      },
-      unmark() {
-        setHovered(null);
-      },
-    }),
-    [],
-  );
 
   const paintCount = useMemo(
     () => scheme.elements.reduce((n, e) => n + e.paints.length, 0),
@@ -490,6 +512,43 @@ export function SchemeVisualiser() {
                   </span>
                 )}
               </span>
+            </div>
+          )}
+
+          {user && activeRow && (
+            <div className="mb-3.5 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-xs">
+              <span className="font-medium text-muted-foreground">Share</span>
+              <button
+                type="button"
+                onClick={() => void toggleShare()}
+                disabled={shareBusy}
+                className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {activeRow.is_public ? "Stop sharing" : "Create share link"}
+              </button>
+              {activeRow.is_public && activeRow.share_slug && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => void copyShareLink()}
+                    className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted"
+                  >
+                    {copied ? "Copied!" : "Copy link"}
+                  </button>
+                  <span className="inline-flex items-center gap-1 text-green-700 dark:text-green-400">
+                    <span aria-hidden>●</span> Public — anyone with the link can view
+                  </span>
+                </>
+              )}
+              {!activeRow.is_public && (
+                <span className="text-muted-foreground">Private to your account.</span>
+              )}
+              <Link
+                href="/account"
+                className="ml-auto text-primary underline-offset-2 hover:underline"
+              >
+                Manage in My schemes →
+              </Link>
             </div>
           )}
 
@@ -663,30 +722,8 @@ export function SchemeVisualiser() {
         </section>
       </div>
 
-      {/* Tooltip: content from React (no innerHTML); position/opacity set
-          imperatively in hover.* so mousemove never re-renders. No inline
-          left/top here, or a re-render would clobber the imperative position. */}
-      <div
-        ref={tipRef}
-        className="pointer-events-none fixed left-0 top-0 z-50 -translate-x-1/2 -translate-y-2 whitespace-nowrap rounded-md bg-foreground px-2 py-1.5 text-xs text-background opacity-0 shadow-xl transition-opacity"
-      >
-        {tipPaint && (
-          <>
-            <span
-              className="mr-1.5 inline-block h-2.5 w-2.5 rounded-sm align-baseline ring-1 ring-white/30"
-              style={{ background: tipPaint.hex }}
-            />
-            <span
-              className="mr-1.5 text-[10px] font-bold uppercase tracking-wide"
-              style={{ color: roleOf(tipPaint).cssVar }}
-            >
-              {roleOf(tipPaint).label}
-            </span>
-            {tipPaint.name}
-            <span className="ml-1.5 font-mono opacity-70">{tipPaint.hex.toUpperCase()}</span>
-          </>
-        )}
-      </div>
+      {/* Shared hover tooltip (positioned imperatively; see useBarHover). */}
+      {tooltip}
     </div>
   );
 }
@@ -1095,109 +1132,3 @@ function AddPaint({
   );
 }
 
-/* -------------------------------------------------------------------- Bar */
-
-function Bar({
-  element,
-  index,
-  blend,
-  hovered,
-  hover,
-}: {
-  element: SchemeElement;
-  index: number;
-  blend: boolean;
-  hovered: string | null;
-  hover: HoverHandlers;
-}) {
-  const { segs, overlays } = useMemo(() => barModel(element.paints), [element.paints]);
-  const empty = element.paints.length === 0;
-
-  // Bars share the row's fixed width in proportion to their position — earlier
-  // (larger-area) elements read wider, later ones narrower — so the ordering
-  // does the sizing. A min-width keeps the thinnest bars usable.
-  return (
-    <div
-      className="flex min-w-[46px] flex-col items-center gap-2.5"
-      style={{ flexGrow: elementSize(index), flexBasis: 0 }}
-    >
-      <div
-        className="relative flex h-[340px] w-full flex-col-reverse overflow-hidden rounded-[9px] shadow-sm ring-1 ring-inset ring-black/10 [isolation:isolate]"
-        style={empty ? EMPTY_BAR_STYLE : { background: rampGradient(segs, blend) }}
-      >
-        {segs.map((s) => (
-          <div
-            key={s.paint.id}
-            role="img"
-            aria-label={paintLabel(s.paint)}
-            className="relative min-h-0"
-            style={{
-              flexGrow: s.frac,
-              flexBasis: 0,
-              boxShadow: hovered === s.paint.id ? "inset 0 0 0 2px rgba(255,255,255,.7)" : undefined,
-            }}
-            onPointerEnter={(e) => hover.enter(s.paint, e)}
-            onPointerMove={hover.move}
-            onPointerLeave={hover.leave}
-          />
-        ))}
-        {overlays.map((ov) => {
-          const center = overlayCenter(ov, segs);
-          // Blended → a soft, feathered translucent band. Banded → the overlay
-          // collapses to a thin crisp line at its boundary, matching the ramp's
-          // hard steps when blending is off.
-          let placement: CSSProperties;
-          if (blend) {
-            const thick = clamp(weightOf(ov.paint) * 0.15, 0.08, 0.4);
-            const bottom = clamp(center - thick / 2, 0, 1 - thick);
-            placement = {
-              bottom: `${(bottom * 100).toFixed(2)}%`,
-              height: `${(thick * 100).toFixed(2)}%`,
-              background: `linear-gradient(to top, transparent, ${ov.paint.hex} 50%, transparent)`,
-            };
-          } else {
-            placement = {
-              bottom: `calc(${(center * 100).toFixed(2)}% - 4px)`,
-              height: "8px",
-              background: ov.paint.hex,
-            };
-          }
-          return (
-            <div
-              key={ov.paint.id}
-              role="img"
-              aria-label={paintLabel(ov.paint)}
-              className="absolute inset-x-0 mix-blend-multiply"
-              style={{
-                ...placement,
-                opacity: roleOf(ov.paint).opacity,
-                boxShadow: hovered === ov.paint.id ? "inset 0 0 0 2px rgba(255,255,255,.7)" : undefined,
-              }}
-              onPointerEnter={(e) => hover.enter(ov.paint, e)}
-              onPointerMove={hover.move}
-              onPointerLeave={hover.leave}
-            />
-          );
-        })}
-      </div>
-      <div className="w-full break-words text-center text-xs font-medium leading-tight [text-wrap:balance]">
-        {element.name}
-        <span className="mt-0.5 block text-[10.5px] font-normal text-muted-foreground">
-          {element.paints.length} {element.paints.length === 1 ? "paint" : "paints"}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-const EMPTY_BAR_STYLE: CSSProperties = {
-  background:
-    "repeating-linear-gradient(-45deg, var(--muted), var(--muted) 7px, var(--border) 7px, var(--border) 14px)",
-};
-
-/* ------------------------------------------------------------------ utils */
-
-/** Accessible label for a bar band, e.g. "Base: Deck Tan (#ABA390)". */
-function paintLabel(p: SchemePaint): string {
-  return `${roleOf(p).label}: ${p.name} (${p.hex.toUpperCase()})`;
-}
