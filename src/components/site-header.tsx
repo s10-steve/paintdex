@@ -26,10 +26,11 @@ export function SiteHeader() {
           >
             Visualiser
           </Link>
-          {/* Signed-in-only profile links (hidden when signed out). */}
-          <ProfileNav />
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          {/* Signed-in-only profile links, grouped with the account icon on the
+              right so they read as logged-in features (hidden when signed out). */}
+          <ProfileNav />
           <SignInButton />
           <MobileNav className="sm:hidden" />
         </div>
