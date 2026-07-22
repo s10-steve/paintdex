@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <main>
       <JsonLd data={websiteJsonLd} />
-      <section className="mx-auto max-w-4xl px-4 py-16 text-center">
+      <section className="mx-auto max-w-4xl px-4 py-10 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Find the right miniature paint
         </h1>
@@ -91,14 +91,18 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm">
-          <Link
-            href="/paints"
-            className="rounded-lg bg-primary px-5 py-2.5 font-medium text-primary-foreground hover:opacity-90"
-          >
-            Browse {paints.length.toLocaleString()} paints
-          </Link>
-          <span className="text-muted-foreground">{brands.join(" · ")}</span>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-sm text-muted-foreground">
+          {brands.map((brand, i) => (
+            <span key={brand}>
+              <Link
+                href={`/paints?brand=${encodeURIComponent(brand)}`}
+                className="hover:text-foreground hover:underline"
+              >
+                {brand}
+              </Link>
+              {i < brands.length - 1 && <span className="ml-1.5">·</span>}
+            </span>
+          ))}
         </div>
       </section>
 
@@ -112,15 +116,23 @@ export default function Home() {
               <p className="mt-2 text-muted-foreground">
                 The paint scheme visualiser lets you group paints by element —
                 armour, robes, lenses, etc — and preview every colour together as
-                blended vertical bars. Add paints from the database or your own custom 
+                blended vertical bars. Add paints from the database or your own custom
                 values. Save and share your schemes by logging in with a Google account.
               </p>
-              <Link
-                href="/visualiser"
-                className="mt-4 inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
-              >
-                Open the visualiser →
-              </Link>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/visualiser"
+                  className="inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+                >
+                  Open the visualiser →
+                </Link>
+                <Link
+                  href="/paints"
+                  className="inline-block rounded-lg border border-border px-5 py-2.5 text-sm font-medium hover:bg-accent"
+                >
+                  Browse {paints.length.toLocaleString()} paints
+                </Link>
+              </div>
             </div>
             <div
               className="hidden h-40 gap-2 sm:flex"
