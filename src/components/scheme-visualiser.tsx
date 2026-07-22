@@ -432,7 +432,12 @@ export function SchemeVisualiser() {
             on desktop explicit grid placement puts it at the top of the left
             column, above the editor. */}
         <div className="order-1 max-w-[62ch] space-y-2 text-sm text-muted-foreground lg:order-none lg:col-start-1 lg:row-start-1">
-          <p>Group your paints by element, in the order you apply them.</p>
+          <p>
+            Enter your paints grouped by element, in the order you apply them,
+            then see how the whole miniature&apos;s colours read next to each
+            other. Your scheme saves in this browser — use Export to back it up
+            or share it.
+          </p>
           <p>
             Give each a <b className="font-semibold text-foreground">role</b>: base, layer
             and highlight build the tonal ramp; wash, glaze and weathering sit over it. The{" "}
