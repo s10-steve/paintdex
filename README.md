@@ -35,8 +35,9 @@ let you save your schemes, sync them across devices, and share them by link.
   when signed in.
 - **Accounts (optional).** Sign in with Google to sync your saved schemes across
   devices; without an account, schemes save to your browser exactly as before.
-  A **My account** page (`/account`) manages your schemes — rename, duplicate,
-  delete and share. Owned-paint inventories are planned.
+  A **My schemes** page (`/my-schemes`) manages your schemes — rename,
+  duplicate, delete and share — reachable from the header. A placeholder
+  **My paints** page (`/my-paints`) marks where owned-paint inventories will go.
 - **Shareable scheme links.** Publish any saved scheme to an unguessable
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
   the full paint recipe, with a rich colour preview when pasted on social sites.
@@ -252,9 +253,10 @@ Brand and product names are trademarks of their respective owners.
       generated colour preview for social embeds. (Suggestions from paints you
       own, based on colour similarity, will follow once owned-paint inventories
       land.)
-- [x] New separate "My account" page (`/account`) for managing saved schemes
-      (rename, duplicate, delete, share). Owned paints and wishlists will live
-      here too once they're added, so they're easy to find and manage.
+- [x] New separate "My schemes" page (`/my-schemes`) for managing saved schemes
+      (rename, duplicate, delete, share), reachable from the header. A sibling
+      "My paints" page (`/my-paints`) is stubbed out for the owned-paints
+      feature, so both are easy to find and manage.
 - [ ] Add a privacy policy and terms of service, then link them from Google Auth
       Platform → Branding. Needed for Google OAuth verification (and lets us
       show the app logo on the consent screen). See Google's

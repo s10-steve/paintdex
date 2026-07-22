@@ -69,8 +69,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 ## Layout
 
 - `src/app/` — routes: `/` (home), `/paints` (browse), `/paints/[id]` (paint
-  detail, SSG with `dynamicParams = false`), `/visualiser`, `/account` (static
-  shell → client scheme manager), `/scheme/[slug]` (**server-rendered** public
+  detail, SSG with `dynamicParams = false`), `/visualiser`, `/my-schemes`
+  (static shell → client scheme manager) and `/my-paints` (placeholder for the
+  owned-paints feature), `/scheme/[slug]` (**server-rendered** public
   shared-scheme viewer + `opengraph-image.tsx`), plus `robots.ts` and
   `sitemap.ts`. Root `layout.tsx` holds metadata (incl. OpenGraph/Twitter),
   wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the header and
@@ -78,10 +79,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `src/components/` — client components (`paints-browser`, `similar-colours`,
   `scheme-visualiser`, `scheme-bars` (the shared bar visualisation + hover/
   tooltip, used by the editor and the read-only `scheme-view`), `site-header`,
-  `mobile-nav`, etc.), plus `auth/` (`auth-provider` with the `useAuth` hook +
-  Google Identity Services init; `sign-in-button`) and `account/`
-  (`account-manager`, the `/account` page's scheme list). The theme follows the
-  system setting (no manual toggle).
+  `mobile-nav`, `profile-nav` (signed-in-only header links), etc.), plus `auth/`
+  (`auth-provider` with the `useAuth` hook + Google Identity Services init;
+  `sign-in-button`) and `profile/` (`schemes-manager` for `/my-schemes`,
+  `paints-placeholder` for `/my-paints`, and the shared `signed-in-gate`). The
+  theme follows the system setting (no manual toggle).
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
   contrast, colour families), `paints/` (load, filter, types), `scheme/` (bar
   maths, JSON import/export, types). Also `supabase/` (browser client +

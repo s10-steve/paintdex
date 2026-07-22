@@ -1,17 +1,19 @@
 "use client";
 
 /**
- * The "My account" scheme manager — a fuller home for saved schemes than the
- * Visualiser's inline picker. Lists every saved scheme with rename, duplicate,
- * delete, edit (open in the visualiser) and share (publish + copy link).
+ * The "My schemes" manager (the `/my-schemes` page) — a fuller home for saved
+ * schemes than the Visualiser's inline picker. Lists every saved scheme with
+ * rename, duplicate, delete, edit (open in the visualiser) and share (publish +
+ * copy link).
  *
  * All state is browser-side against Supabase (RLS scopes it to the signed-in
- * user); nothing here runs on the server. When accounts aren't configured, or
- * the user is signed out, it shows the appropriate prompt instead.
+ * user); nothing here runs on the server. It's rendered inside `SignedInGate`,
+ * so it can assume there's a signed-in user.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/auth/auth-provider";
+import { SignedInGate } from "@/components/profile/signed-in-gate";
 import {
   listSchemes,
   updateScheme,
@@ -25,8 +27,16 @@ import type { SchemeRow } from "@/lib/supabase/types";
 
 const freshShareToken = () => makeShareToken(crypto.getRandomValues(new Uint8Array(8)));
 
-export function AccountManager() {
-  const { configured, user, loading: authLoading } = useAuth();
+export function SchemesManager() {
+  return (
+    <SignedInGate>
+      <SchemesList />
+    </SignedInGate>
+  );
+}
+
+function SchemesList() {
+  const { user } = useAuth();
   const [schemes, setSchemes] = useState<SchemeRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,110 +54,67 @@ export function AccountManager() {
   }, []);
 
   useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
-    if (!user) {
-      setSchemes([]);
-      setLoading(false);
-      return;
-    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void reload();
-    /* eslint-enable react-hooks/set-state-in-effect */
-  }, [user, reload]);
+  }, [reload]);
 
   const patch = (id: string, p: Partial<SchemeRow>) =>
     setSchemes((rows) => rows.map((r) => (r.id === id ? { ...r, ...p } : r)));
 
-  if (!configured) {
-    return (
-      <Panel>
-        <p className="text-sm text-muted-foreground">
-          Accounts aren&apos;t enabled on this deployment. Your schemes save in this
-          browser only — use the Visualiser&apos;s Export button to back them up.
-        </p>
-      </Panel>
-    );
-  }
-
-  if (authLoading) {
-    return <Panel><p className="text-sm text-muted-foreground">Loading…</p></Panel>;
-  }
-
-  if (!user) {
-    return (
-      <Panel>
-        <h2 className="text-lg font-semibold">Sign in to manage your schemes</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Use the sign-in button at the top right. Once signed in, your saved
-          schemes appear here to rename, duplicate, delete and share.
-        </p>
-      </Panel>
-    );
-  }
+  // Guaranteed present inside SignedInGate; guard keeps TypeScript happy.
+  if (!user) return null;
 
   return (
-    <div className="mt-6 space-y-8">
-      <section aria-label="Saved schemes">
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold tracking-tight">
-            Saved schemes{" "}
-            <span className="text-sm font-normal text-muted-foreground">
-              ({schemes.length})
-            </span>
-          </h2>
-          <Link
-            href="/visualiser"
-            className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
-          >
-            + New scheme
-          </Link>
-        </div>
+    <section aria-label="Saved schemes">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-semibold tracking-tight">
+          Saved schemes{" "}
+          <span className="text-sm font-normal text-muted-foreground">
+            ({schemes.length})
+          </span>
+        </h2>
+        <Link
+          href="/visualiser"
+          className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
+        >
+          + New scheme
+        </Link>
+      </div>
 
-        {error && (
-          <p className="mb-3 text-sm text-red-600 dark:text-red-400" role="alert">
-            {error}
-          </p>
-        )}
+      {error && (
+        <p className="mb-3 text-sm text-red-600 dark:text-red-400" role="alert">
+          {error}
+        </p>
+      )}
 
-        {loading ? (
-          <Panel><p className="text-sm text-muted-foreground">Loading your schemes…</p></Panel>
-        ) : schemes.length === 0 ? (
-          <Panel>
-            <p className="text-sm text-muted-foreground">
-              You haven&apos;t saved any schemes yet.{" "}
-              <Link href="/visualiser" className="text-primary underline-offset-2 hover:underline">
-                Build one in the Visualiser
-              </Link>{" "}
-              and it&apos;ll appear here.
-            </p>
-          </Panel>
-        ) : (
-          <ul className="grid gap-3">
-            {schemes.map((row) => (
-              <SchemeCard
-                key={row.id}
-                row={row}
-                onPatch={patch}
-                onRemoved={(id) => setSchemes((rows) => rows.filter((r) => r.id !== id))}
-                onDuplicated={(newRow) => setSchemes((rows) => [newRow, ...rows])}
-                onError={setError}
-                userId={user.id}
-              />
-            ))}
-          </ul>
-        )}
-      </section>
-
-      {/* Signals the page's future role (roadmap: save the paints you own). */}
-      <section aria-label="Owned paints" className="opacity-70">
-        <h2 className="text-lg font-semibold tracking-tight">Owned paints</h2>
+      {loading ? (
+        <Panel><p className="text-sm text-muted-foreground">Loading your schemes…</p></Panel>
+      ) : schemes.length === 0 ? (
         <Panel>
           <p className="text-sm text-muted-foreground">
-            Coming soon — track the paints you own so schemes can suggest colours
-            from your collection.
+            You haven&apos;t saved any schemes yet.{" "}
+            <Link href="/visualiser" className="text-primary underline-offset-2 hover:underline">
+              Build one in the Visualiser
+            </Link>{" "}
+            and it&apos;ll appear here.
           </p>
         </Panel>
-      </section>
-    </div>
+      ) : (
+        <ul className="grid gap-3">
+          {schemes.map((row) => (
+            <SchemeCard
+              key={row.id}
+              row={row}
+              onPatch={patch}
+              onRemoved={(id) => setSchemes((rows) => rows.filter((r) => r.id !== id))}
+              onDuplicated={(newRow) => setSchemes((rows) => [newRow, ...rows])}
+              onError={setError}
+              userId={user.id}
+            />
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }
 

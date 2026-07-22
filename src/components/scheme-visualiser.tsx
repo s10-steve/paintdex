@@ -37,7 +37,6 @@ import {
   listSchemes,
   createScheme,
   updateScheme,
-  deleteScheme,
   publishScheme,
   unpublishScheme,
 } from "@/lib/data/schemes";
@@ -286,28 +285,6 @@ export function SchemeVisualiser() {
     }
   };
 
-  const deleteActiveScheme = async () => {
-    if (!user || !activeSchemeId) return;
-    const id = activeSchemeId;
-    try {
-      await deleteScheme(id);
-      const remaining = savedSchemes.filter((r) => r.id !== id);
-      setSavedSchemes(remaining);
-      if (remaining.length > 0) {
-        loadSchemeRow(remaining[0]);
-      } else {
-        // No active scheme left, so the autosave effect early-returns and won't
-        // consume a skip flag — clear it so it can't leak into a later save.
-        skipSaveRef.current = false;
-        setScheme(emptyScheme());
-        setActiveSchemeId(null);
-        setSyncState("idle");
-      }
-    } catch {
-      setSyncState("error");
-    }
-  };
-
   // Honour a `?scheme=<id>` deep link once the user's schemes are loaded, so the
   // account page's "Edit" and the viewer's "Save a copy" open the right scheme.
   // Read from window.location (client-only) to avoid a Suspense boundary.
@@ -467,88 +444,84 @@ export function SchemeVisualiser() {
           </div>
 
           {user && (
-            <div className="mb-3.5 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card px-3 py-2">
-              <label htmlFor="saved-schemes" className="text-xs font-medium text-muted-foreground">
-                My schemes
-              </label>
-              <select
-                id="saved-schemes"
-                value={activeSchemeId ?? ""}
-                onChange={(e) => selectScheme(e.target.value)}
-                disabled={savedSchemes.length === 0}
-                className="min-w-0 flex-1 rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                {savedSchemes.length === 0 && <option value="">No saved schemes</option>}
-                {savedSchemes.map((r) => (
-                  <option key={r.id} value={r.id}>
-                    {r.title || "Untitled scheme"}
-                  </option>
-                ))}
-              </select>
-              <button
-                type="button"
-                onClick={() => void newScheme()}
-                className="rounded-md border border-border px-2 py-1 text-xs text-foreground transition-colors hover:bg-muted"
-              >
-                New
-              </button>
-              <button
-                type="button"
-                onClick={() => void deleteActiveScheme()}
-                disabled={!activeSchemeId}
-                className="rounded-md border border-border px-2 py-1 text-xs text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Delete
-              </button>
-              <span className="ml-auto text-xs text-muted-foreground" aria-live="polite">
-                {syncState === "saving" && "Saving…"}
-                {syncState === "saved" && "Saved"}
-                {syncState === "error" && (
-                  <span className="text-red-600 dark:text-red-400">Sync error</span>
-                )}
-                {syncState === "limit" && (
-                  <span className="text-red-600 dark:text-red-400">
-                    Scheme limit reached — delete one to add another.
-                  </span>
-                )}
-              </span>
-            </div>
-          )}
+            <div className="mb-3.5 rounded-md border border-border bg-card">
+              {/* Pick / create the scheme being edited. */}
+              <div className="flex flex-wrap items-center gap-2 px-3 py-2">
+                <label htmlFor="saved-schemes" className="text-xs font-medium text-muted-foreground">
+                  My schemes
+                </label>
+                <select
+                  id="saved-schemes"
+                  value={activeSchemeId ?? ""}
+                  onChange={(e) => selectScheme(e.target.value)}
+                  disabled={savedSchemes.length === 0}
+                  className="min-w-0 flex-1 rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {savedSchemes.length === 0 && <option value="">No saved schemes</option>}
+                  {savedSchemes.map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.title || "Untitled scheme"}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={() => void newScheme()}
+                  className="rounded-md border border-border px-2 py-1 text-xs text-foreground transition-colors hover:bg-muted"
+                >
+                  New
+                </button>
+                <span className="ml-auto text-xs text-muted-foreground" aria-live="polite">
+                  {syncState === "saving" && "Saving…"}
+                  {syncState === "saved" && "Saved"}
+                  {syncState === "error" && (
+                    <span className="text-red-600 dark:text-red-400">Sync error</span>
+                  )}
+                  {syncState === "limit" && (
+                    <span className="text-red-600 dark:text-red-400">
+                      Scheme limit reached — delete one to add another.
+                    </span>
+                  )}
+                </span>
+              </div>
 
-          {user && activeRow && (
-            <div className="mb-3.5 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-xs">
-              <span className="font-medium text-muted-foreground">Share</span>
-              <button
-                type="button"
-                onClick={() => void toggleShare()}
-                disabled={shareBusy}
-                className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {activeRow.is_public ? "Stop sharing" : "Create share link"}
-              </button>
-              {activeRow.is_public && activeRow.share_slug && (
-                <>
+              {/* Share the active scheme + jump to full management. */}
+              {activeRow && (
+                <div className="flex flex-wrap items-center gap-2 border-t border-border px-3 py-2 text-xs">
+                  <span className="font-medium text-muted-foreground">Share</span>
                   <button
                     type="button"
-                    onClick={() => void copyShareLink()}
-                    className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted"
+                    onClick={() => void toggleShare()}
+                    disabled={shareBusy}
+                    className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {copied ? "Copied!" : "Copy link"}
+                    {activeRow.is_public ? "Stop sharing" : "Create share link"}
                   </button>
-                  <span className="inline-flex items-center gap-1 text-green-700 dark:text-green-400">
-                    <span aria-hidden>●</span> Public — anyone with the link can view
-                  </span>
-                </>
+                  {activeRow.is_public && activeRow.share_slug && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => void copyShareLink()}
+                        className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted"
+                      >
+                        {copied ? "Copied!" : "Copy link"}
+                      </button>
+                      <span className="inline-flex items-center gap-1 text-green-700 dark:text-green-400">
+                        <span aria-hidden>●</span> Public — anyone with the link can view
+                      </span>
+                    </>
+                  )}
+                  {!activeRow.is_public && (
+                    <span className="text-muted-foreground">Private to your account.</span>
+                  )}
+                  <Link
+                    href="/my-schemes"
+                    className="ml-auto text-primary underline-offset-2 hover:underline"
+                  >
+                    Manage in My schemes →
+                  </Link>
+                </div>
               )}
-              {!activeRow.is_public && (
-                <span className="text-muted-foreground">Private to your account.</span>
-              )}
-              <Link
-                href="/account"
-                className="ml-auto text-primary underline-offset-2 hover:underline"
-              >
-                Manage in My schemes →
-              </Link>
             </div>
           )}
 

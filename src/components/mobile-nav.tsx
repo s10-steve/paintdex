@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "./auth/auth-provider";
+import { PROFILE_LINKS } from "./profile-nav";
 
 const LINKS = [
   { href: "/paints", label: "Paints" },
@@ -21,10 +22,6 @@ export function MobileNav({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { user } = useAuth();
-
-  // Signed-in users get a link to their account page (matching the account
-  // menu on ≥ sm, which is off-screen on mobile).
-  const links = user ? [...LINKS, { href: "/account", label: "My account" }] : LINKS;
 
   // Close when the route changes (a link was followed).
   // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -68,7 +65,7 @@ export function MobileNav({ className }: { className?: string }) {
           role="menu"
           className="absolute right-0 z-40 mt-2 w-44 rounded-md border border-border bg-card p-1 shadow-lg"
         >
-          {links.map((l) => (
+          {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
@@ -78,6 +75,25 @@ export function MobileNav({ className }: { className?: string }) {
               {l.label}
             </Link>
           ))}
+          {/* Signed-in profile pages, grouped under their own heading. */}
+          {user && (
+            <>
+              <div className="my-1 border-t border-border" />
+              <p className="px-3 pb-1 pt-1.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                Your profile
+              </p>
+              {PROFILE_LINKS.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  role="menuitem"
+                  className="block rounded-sm px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </>
+          )}
         </div>
       )}
     </div>
