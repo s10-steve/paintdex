@@ -120,11 +120,11 @@ Brand and product names are trademarks of their respective owners.
 
 ### Minor tweaks and fixes
 
-- [ ] Update og-image.png to say “miniature paint database & colour scheme
+- [x] Update og-image.png to say “miniature paint database & colour scheme
       visualiser”.
-- [ ] On the homepage, make sure the ‘plan your whole colour scheme’ banner is
+- [x] On the homepage, make sure the ‘plan your whole colour scheme’ banner is
       above the fold. Maybe move the ‘browse x paints’ button.
-- [ ] Make the list of brands on the homepage clickable, like the colour bar
+- [x] Make the list of brands on the homepage clickable, like the colour bar
 
 ### Paint database and UI features
 
