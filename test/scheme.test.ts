@@ -9,6 +9,12 @@ import {
   SCHEME_FORMAT,
 } from "@/lib/scheme/io";
 import { planSignInScheme } from "@/lib/scheme/sync";
+import {
+  makeShareToken,
+  makeShareSlug,
+  shareUrl,
+  SHARE_TOKEN_LENGTH,
+} from "@/lib/scheme/share";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
@@ -301,5 +307,44 @@ describe("planSignInScheme (sign-in reconciliation)", () => {
       format: shape.format,
     };
     expect(planSignInScheme([reordered], built)).toBe("load-latest");
+  });
+});
+
+describe("share links", () => {
+  it("derives a fixed-length lowercase base-36 token from bytes (deterministic)", () => {
+    const bytes = new Uint8Array([0, 1, 255, 128, 42, 7, 200, 99]);
+    const a = makeShareToken(bytes);
+    const b = makeShareToken(bytes);
+    expect(a).toBe(b); // pure: same input → same output
+    expect(a).toHaveLength(SHARE_TOKEN_LENGTH);
+    expect(a).toMatch(/^[0-9a-z]+$/);
+  });
+
+  it("produces different tokens for different random bytes", () => {
+    const a = makeShareToken(new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]));
+    const b = makeShareToken(new Uint8Array([9, 8, 7, 6, 5, 4, 3, 2]));
+    expect(a).not.toBe(b);
+  });
+
+  it("never returns an empty token, even for all-zero bytes", () => {
+    expect(makeShareToken(new Uint8Array(6)).length).toBeGreaterThan(0);
+  });
+
+  it("builds a readable slug: title-slug + token", () => {
+    const slug = makeShareSlug("White Templars!", "3f9a2b7c10");
+    expect(slug).toBe("white-templars-3f9a2b7c10");
+  });
+
+  it("falls back to the default title slug when the title is blank", () => {
+    expect(makeShareSlug("   ", "abc123")).toBe("paint-scheme-abc123");
+  });
+
+  it("builds an absolute share URL and tolerates a trailing slash in origin", () => {
+    expect(shareUrl("https://paintdex.app", "foo-123")).toBe(
+      "https://paintdex.app/scheme/foo-123",
+    );
+    expect(shareUrl("https://paintdex.app/", "foo-123")).toBe(
+      "https://paintdex.app/scheme/foo-123",
+    );
   });
 });

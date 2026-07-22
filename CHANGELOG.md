@@ -5,6 +5,44 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2026-07-22
+
+### Added
+
+- **Public, shareable scheme links.** Publish any saved scheme to an unguessable
+  `/scheme/<slug>` link that anyone can open — no login — to see the colour-bar
+  visualisation and the full paint recipe (each element's paints with name,
+  brand · range, hex and role). This is the one deliberately **server-rendered**
+  route: it emits per-scheme OpenGraph title/description and a generated
+  colour-bar preview image (`opengraph-image.tsx`), so links pasted on
+  Reddit/Instagram get a rich preview. It reads the scheme anonymously via Row-
+  Level Security (`is_public = true`) with a server anon client
+  (`src/lib/supabase/server.ts`); everything else stays static.
+- **"Save a copy"** on a shared scheme: signed-in viewers can duplicate someone
+  else's shared scheme into their own account and open it in the visualiser.
+- **"My schemes" page (`/my-schemes`).** A dedicated home for managing saved
+  schemes — rename, duplicate, delete, edit (opens in the visualiser), and share
+  (publish / copy link) — reachable from the header. Replaces managing schemes
+  through the cramped visualiser dropdown.
+- **"My paints" page (`/my-paints`).** A placeholder for the upcoming
+  owned-paints feature, so the profile area has an obvious home for it.
+- **Profile links in the header**, shown only when signed in and grouped on the
+  right beside the account icon (collapsing into the mobile menu), so they read
+  as signed-in features.
+- Pure share-slug helpers (`src/lib/scheme/share.ts`) with unit tests.
+
+### Changed
+
+- **Visualiser scheme controls consolidated.** The inline picker and the share
+  controls are now a single card, and the picker's Delete button is gone —
+  deleting a scheme is done from the "My schemes" page. The picker still
+  new/selects and autosaves as before.
+- The header account menu is now **auth-only** (email + Sign out); scheme
+  management moved to the header profile links and the "My schemes" page.
+- Extracted the bar visualisation and its hover/tooltip into a shared
+  `scheme-bars` component (`Bar` + `useBarHover`), reused by the visualiser
+  editor and the new read-only shared-scheme view.
+
 ## [0.5.0] - 2026-07-21
 
 ### Added
