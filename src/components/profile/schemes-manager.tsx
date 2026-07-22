@@ -274,7 +274,7 @@ function SchemeCard({
           </div>
         </div>
 
-        <div className="flex flex-none flex-wrap items-center gap-1.5">
+        <div className="flex w-full flex-none flex-wrap items-center gap-1.5 sm:w-auto">
           <Link
             href={`/visualiser?scheme=${row.id}`}
             className="rounded-md border border-border px-2.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
