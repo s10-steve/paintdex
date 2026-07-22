@@ -28,9 +28,17 @@ only.
 features (API routes, server components, server actions) *are* available on
 Vercel — we deliberately avoid them to keep the site free to host and
 maintenance-free (there's no revenue model), not because the build forbids them.
-A future contributor can revisit this on purpose. The most likely reason to
-would be server-rendered pages for SEO; note that's **not** needed for the
-planned share links, which are user-to-user, not public search resources.
+A future contributor can revisit this on purpose.
+
+**The one deliberate exception is `/scheme/[slug]`** — the public shared-scheme
+viewer — which *is* server-rendered so it can emit per-scheme OpenGraph title,
+description and a generated colour-bar preview image (`opengraph-image.tsx`),
+giving shared links a rich preview on Reddit/Instagram/etc. It reads the scheme
+anonymously via RLS (`is_public = true`) with a server anon client
+(`src/lib/supabase/server.ts`). This was a considered call: it's free within
+Vercel's Hobby allowance and the rich preview is the whole point of the feature.
+Everything else stays static/client-rendered — don't add more server routes
+without the same kind of deliberate reason.
 
 ## Commands
 
@@ -61,19 +69,28 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 ## Layout
 
 - `src/app/` — routes: `/` (home), `/paints` (browse), `/paints/[id]` (paint
-  detail, SSG with `dynamicParams = false`), `/visualiser`, plus `robots.ts` and
+  detail, SSG with `dynamicParams = false`), `/visualiser`, `/my-schemes`
+  (static shell → client scheme manager) and `/my-paints` (placeholder for the
+  owned-paints feature), `/scheme/[slug]` (**server-rendered** public
+  shared-scheme viewer + `opengraph-image.tsx`), plus `robots.ts` and
   `sitemap.ts`. Root `layout.tsx` holds metadata (incl. OpenGraph/Twitter),
   wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the header and
   Vercel Analytics/Speed Insights.
 - `src/components/` — client components (`paints-browser`, `similar-colours`,
-  `scheme-visualiser`, `site-header`, `mobile-nav`, etc.), plus `auth/`
+  `scheme-visualiser`, `scheme-bars` (the shared bar visualisation + hover/
+  tooltip, used by the editor and the read-only `scheme-view`), `site-header`,
+  `mobile-nav`, `profile-nav` (signed-in-only header links), etc.), plus `auth/`
   (`auth-provider` with the `useAuth` hook + Google Identity Services init;
-  `sign-in-button`). The theme follows the system setting (no manual toggle).
+  `sign-in-button`) and `profile/` (`schemes-manager` for `/my-schemes`,
+  `paints-placeholder` for `/my-paints`, and the shared `signed-in-gate`). The
+  theme follows the system setting (no manual toggle).
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
   contrast, colour families), `paints/` (load, filter, types), `scheme/` (bar
   maths, JSON import/export, types). Also `supabase/` (browser client +
   hand-written row types) and `data/` (per-table CRUD, e.g. `schemes.ts`) — these
   touch the network, so keep them thin and keep the logic in the pure modules.
+  `supabase/server.ts` is the anon server-read client used only by the
+  `/scheme/[slug]` route; `scheme/share.ts` holds the pure share-slug helpers.
 - `supabase/schema.sql` — the Postgres tables + Row-Level Security for accounts
   (run in the Supabase SQL editor; not applied automatically).
 - `data/paints/*.json` — the paint catalogue, one file per brand.
@@ -94,10 +111,13 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   homepage search), which silently freezes the results. See
   `src/components/paints-browser.tsx`.
 - Keep everything **static** — no server components that read request-time data,
-  no API routes. `getAllPaints()` and friends run at build time. This is a
-  cost-driven convention, not a technical constraint (`output: 'export'` is not
-  set); see "What Paintdex is" above before relaxing it. Account features follow
-  it too: Supabase is called from the browser, never via a Next.js route.
+  no API routes — **except the one deliberate `/scheme/[slug]` server route**
+  (rich share previews; see "What Paintdex is" above). `getAllPaints()` and
+  friends run at build time. This is a cost-driven convention, not a technical
+  constraint (`output: 'export'` is not set); see "What Paintdex is" above before
+  relaxing it further. Account features follow it: Supabase is called from the
+  browser (and, for that one server route, from an anon server client that can
+  only read public rows).
 - Colour and scheme logic in `src/lib` is pure (no React/DOM) so it stays
   unit-testable; add tests in `test/` when changing it.
 - The canonical site URL (`https://paintdex.app`) is hardcoded in

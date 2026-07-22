@@ -8,6 +8,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      // Personal/user-to-user pages aren't public search resources. Social
+      // crawlers still read the share pages' OpenGraph tags regardless of this.
+      disallow: ["/my-schemes", "/my-paints", "/scheme/"],
     },
     sitemap: `${BASE_URL}/sitemap.xml`,
   };

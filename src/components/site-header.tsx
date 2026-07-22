@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SignInButton } from "./auth/sign-in-button";
 import { MobileNav } from "./mobile-nav";
+import { ProfileNav } from "./profile-nav";
 import { LogoMark } from "./logo-mark";
 
 export function SiteHeader() {
@@ -26,7 +27,10 @@ export function SiteHeader() {
             Visualiser
           </Link>
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          {/* Signed-in-only profile links, grouped with the account icon on the
+              right so they read as logged-in features (hidden when signed out). */}
+          <ProfileNav />
           <SignInButton />
           <MobileNav className="sm:hidden" />
         </div>

@@ -9,6 +9,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "./auth/auth-provider";
+import { PROFILE_LINKS } from "./profile-nav";
 
 const LINKS = [
   { href: "/paints", label: "Paints" },
@@ -19,6 +21,7 @@ export function MobileNav({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { user } = useAuth();
 
   // Close when the route changes (a link was followed).
   // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -72,6 +75,25 @@ export function MobileNav({ className }: { className?: string }) {
               {l.label}
             </Link>
           ))}
+          {/* Signed-in profile pages, grouped under their own heading. */}
+          {user && (
+            <>
+              <div className="my-1 border-t border-border" />
+              <p className="px-3 pb-1 pt-1.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                Your profile
+              </p>
+              {PROFILE_LINKS.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  role="menuitem"
+                  className="block rounded-sm px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </>
+          )}
         </div>
       )}
     </div>
