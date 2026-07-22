@@ -16,12 +16,10 @@ export default function VisualiserPage() {
           (same cached asset the browse page uses). */}
       <link rel="preload" href={BROWSE_INDEX_URL} as="fetch" crossOrigin="anonymous" />
       <div className="mx-auto max-w-[1420px] px-4 pt-6">
+        {/* The descriptive intro lives with the guidance block in
+            scheme-visualiser.tsx (one place, consistent spacing, correct
+            stacking order on mobile). */}
         <h1 className="text-2xl font-bold tracking-tight">Scheme visualiser</h1>
-        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Enter your paints grouped by element, then see how the whole
-          miniature&apos;s colours read next to each other. Your scheme saves in this
-          browser — use Export to back it up or share it.
-        </p>
       </div>
       <SchemeVisualiser />
     </main>
