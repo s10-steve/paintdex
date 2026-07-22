@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   // `absolute` opts out of the "%s · Paintdex" template so the homepage keeps its
   // full standalone title rather than getting a suffix.
   title: {
-    absolute: "Paintdex — miniature paint database & colour matcher",
+    absolute: "Paintdex — miniature paint database & colour scheme visualiser",
   },
   alternates: { canonical: "/" },
 };
@@ -28,7 +28,7 @@ const websiteJsonLd = {
       url: `${BASE_URL}/`,
       name: "Paintdex",
       description:
-        "Search and filter a database of miniature paints with hex colour values, find visually similar colours across brands, and plan whole paint schemes.",
+        "Search a database of miniature paints with hex colour values, find visually similar colours across brands, plan and share whole paint schemes.",
       publisher: { "@id": `${BASE_URL}/#organization` },
       potentialAction: {
         "@type": "SearchAction",
@@ -72,9 +72,8 @@ export default function Home() {
           Find the right miniature paint
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Search a database of miniature and hobby paints with hex colour values,
-          find visually similar colours across brands, and plan whole paint
-          schemes.
+          Search a database of miniature paints with hex colour values, find
+          visually similar colours across brands, plan and share whole paint schemes.
         </p>
 
         <HomeSearch />
@@ -112,10 +111,9 @@ export default function Home() {
               </h2>
               <p className="mt-2 text-muted-foreground">
                 The paint scheme visualiser lets you group paints by element —
-                armour, robes, lenses — and preview every colour together as
-                aligned, blended vertical bars, so the whole model reads as one.
-                Add paints from the database or your own custom hex, set roles
-                and weights, and your scheme autosaves in your browser.
+                armour, robes, lenses, etc — and preview every colour together as
+                blended vertical bars. Add paints from the database or your own custom 
+                values. Save and share your schemes by logging in with a Google account.
               </p>
               <Link
                 href="/visualiser"
@@ -149,7 +147,7 @@ export default function Home() {
       <section className="mx-auto grid max-w-4xl gap-4 px-4 pb-20 sm:grid-cols-2">
         <Feature
           title="Searchable & filterable"
-          body="Filter by brand, product range, finish type and colour family. Every filter is shareable via the URL."
+          body="Filter by brand, product range, finish type and colour family. See paints with similar hues."
         />
         <Feature
           title="Perceptual colour matching"
