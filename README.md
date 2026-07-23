@@ -126,6 +126,10 @@ Brand and product names are trademarks of their respective owners.
       above the fold. Maybe move the ‘browse x paints’ button.
 - [x] Make the list of brands on the homepage clickable, like the colour bar
 - [ ] Default the scheme UI to show the unblended version.
+- [ ] In the unblended version, the glaze and weathering bars are too narrow.
+      Make them the same width as the wash bar.
+- [ ] Add a 'drybrush' role to the scheme visualiser, it should behave the same
+      as a highlight role.
 - [ ] Update weathering setting to be much less transparent than washes and
       glazes. Something like rust streaks or copper patina are usually much more
       visible than a glaze or a wash.
