@@ -139,12 +139,15 @@ Brand and product names are trademarks of their respective owners.
 - [ ] Add the ability to upload a photo of a model painted with a scheme, and
       show it on the scheme page.
 - [ ] Add ability to generate a shareable image of a scheme, designed for
-      Instagram so a 1x1 image format. Could be multiple images if the scheme is
-      long. Imagining people could post this on social media alongside pictures
-      of their models to show the paint scheme.
+      Instagram so a 1x1 image format. Similar style to the images when you
+      share a scheme via URL, but with including labels for the paints and
+      roles. Could be multiple images if the scheme is long so its kept
+      readable. Imagining people could post this on social media alongside
+      pictures of their models to show the paint scheme.
 - [ ] Add ability to label the image of the model itself with the elements and
       paint names used in it. Would be a cooler visualisation compared to just
-      the list of paints.
+      the list of paints. Again, potentially multiple images if the scheme is
+      long so its kept readable.
 
 ### Paint database and UI features
 
