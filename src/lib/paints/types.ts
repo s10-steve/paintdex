@@ -21,6 +21,7 @@ export const PAINT_TYPES = [
   "wash",
   "glaze",
   "dry",
+  "enamel",
   "other",
 ] as const;
 

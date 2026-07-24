@@ -1,7 +1,7 @@
 [
   {
     "id": "p3-jack-bone",
-    "name": "'Jack Bone",
+    "name": "Jack Bone",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
     "type": "other",
@@ -666,16 +666,6 @@
     "range": "Privateer Press Formula P3",
     "type": "other",
     "hex": "#8E959A",
-    "code": null,
-    "discontinued": false
-  },
-  {
-    "id": "p3-jack-bone-privateer-press-formula-p3",
-    "name": "Jack Bone",
-    "brand": "P3",
-    "range": "Privateer Press Formula P3",
-    "type": "other",
-    "hex": "#D6D3AE",
     "code": null,
     "discontinued": false
   },
