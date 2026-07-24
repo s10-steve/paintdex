@@ -1,0 +1,32 @@
+name: Feature request
+description: Suggest an idea for Paintdex
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the [README roadmap](../../README.md#roadmap) first — your idea
+        might already be listed as something we'd love help with.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve
+      description: What are you trying to do that the site doesn't support well today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you like to see happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false

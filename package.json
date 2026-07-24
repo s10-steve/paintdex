@@ -2,6 +2,13 @@
   "name": "paintdex",
   "version": "0.6.0",
   "private": true,
+  "description": "A searchable database of miniature paints with perceptual colour matching and a paint scheme visualiser.",
+  "license": "MIT",
+  "homepage": "https://paintdex.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s10-steve/paintdex.git"
+  },
   "scripts": {
     "predev": "npm run build:index",
     "dev": "next dev",
