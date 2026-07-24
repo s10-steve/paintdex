@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { getAllPaints, getBrands } from "@/lib/paints/load";
 import { COLOUR_FAMILIES } from "@/lib/color";
@@ -165,12 +166,30 @@ export default function Home() {
           title="Perceptual colour matching"
           body="Similar colours are ranked with CIEDE2000 — the same maths professionals use to compare colours."
         />
+        <Feature
+          title="Open source"
+          body={
+            <>
+              The paint database is plain, community-editable JSON. Spot a
+              wrong hex or a missing paint?{" "}
+              <a
+                href="https://github.com/s10-steve/paintdex"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground underline underline-offset-2 hover:no-underline"
+              >
+                Open a pull request on GitHub
+              </a>
+              .
+            </>
+          }
+        />
       </section>
     </main>
   );
 }
 
-function Feature({ title, body }: { title: string; body: string }) {
+function Feature({ title, body }: { title: string; body: ReactNode }) {
   return (
     <div className="rounded-lg border border-border bg-card p-5 text-left">
       <h2 className="font-semibold">{title}</h2>
