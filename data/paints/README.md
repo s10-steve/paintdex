@@ -24,7 +24,7 @@ file is a JSON array of paint records for one brand:
   "brand": "Citadel", // brand name
   "range": "Base", // primary product line
   "ranges": ["Air", "Base"], // OPTIONAL: all lines it appears in (if >1)
-  "type": "base", // normalized finish (see below)
+  "type": "base", // normalized type across brands (see below)
   "hex": "#231F20", // uppercase #RRGGBB
   "code": null, // OPTIONAL manufacturer code, or null
   "discontinued": false,
@@ -33,9 +33,9 @@ file is a JSON array of paint records for one brand:
 ```
 
 **`type`** is one of: `base`, `layer`, `shade`, `contrast`, `technical`,
-`metallic`, `air`, `primer`, `spray`, `ink`, `wash`, `glaze`, `dry`, `other`.
-It's a best-effort normalization of the finish; `range` keeps the brand's own
-product-line label.
+`metallic`, `air`, `primer`, `spray`, `ink`, `wash`, `glaze`, `dry`, `enamel`,
+`other`. It's a best-effort normalization of the product type across brands;
+`range` keeps the brand's own product-line label.
 
 **`metallic`** marks a metallic finish. It's deliberately separate from `type`
 because brands classify metallics inconsistently: some ship a dedicated

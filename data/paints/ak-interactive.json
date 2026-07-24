@@ -11969,5 +11969,65 @@
       "Real Colors - Air",
       "Real Colors - WWII"
     ]
+  },
+  {
+    "id": "ak-interactive-streaking-grime",
+    "name": "Streaking Grime",
+    "brand": "AK Interactive",
+    "range": "Effects",
+    "type": "enamel",
+    "hex": "#5C5951",
+    "code": "AK012",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-rust-streaks",
+    "name": "Rust Streaks",
+    "brand": "AK Interactive",
+    "range": "Effects",
+    "type": "enamel",
+    "hex": "#7B532A",
+    "code": "AK013",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-winter-streaking-grime",
+    "name": "Winter Streaking Grime",
+    "brand": "AK Interactive",
+    "range": "Effects",
+    "type": "enamel",
+    "hex": "#3A3A2B",
+    "code": "AK014",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-dust-effects",
+    "name": "Dust Effects",
+    "brand": "AK Interactive",
+    "range": "Effects",
+    "type": "enamel",
+    "hex": "#E9DFCE",
+    "code": "AK015",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-fresh-mud",
+    "name": "Fresh Mud",
+    "brand": "AK Interactive",
+    "range": "Effects",
+    "type": "enamel",
+    "hex": "#6D5546",
+    "code": "AK016",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-earth-effects",
+    "name": "Earth Effects",
+    "brand": "AK Interactive",
+    "range": "Effects",
+    "type": "enamel",
+    "hex": "#A07B6C",
+    "code": "AK017",
+    "discontinued": false
   }
 ]
