@@ -3066,5 +3066,95 @@
     "hex": "#B18150",
     "code": "LP-76",
     "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-black",
+    "name": "Panel Line Accent Color: Black",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#000000",
+    "code": "87131",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-brown",
+    "name": "Panel Line Accent Color: Brown",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#956E5F",
+    "code": "87132",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-dark-brown",
+    "name": "Panel Line Accent Color: Dark Brown",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#653E32",
+    "code": "87140",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-deep-brown",
+    "name": "Panel Line Accent Color: Deep Brown",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#361F1C",
+    "code": "87210",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-orange-brown",
+    "name": "Panel Line Accent Color: Orange Brown",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#DA772E",
+    "code": "87209",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-pink-brown",
+    "name": "Panel Line Accent Color: Pink Brown",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#BB5C6B",
+    "code": "87201",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-dark-gray",
+    "name": "Panel Line Accent Color: Dark Gray",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#5F6371",
+    "code": "87199",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-light-gray",
+    "name": "Panel Line Accent Color: Light Gray",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#C1C3D0",
+    "code": "87189",
+    "discontinued": false
+  },
+  {
+    "id": "tamiya-panel-line-accent-color-grey",
+    "name": "Panel Line Accent Color: Grey",
+    "brand": "Tamiya",
+    "range": "Weathering & Accents",
+    "type": "enamel",
+    "hex": "#7A7F8C",
+    "code": "87133",
+    "discontinued": false
   }
 ]
