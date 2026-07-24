@@ -125,6 +125,29 @@ Brand and product names are trademarks of their respective owners.
 - [x] On the homepage, make sure the ‘plan your whole colour scheme’ banner is
       above the fold. Maybe move the ‘browse x paints’ button.
 - [x] Make the list of brands on the homepage clickable, like the colour bar
+- [ ] Default the scheme UI to show the unblended version.
+- [ ] In the unblended version, the glaze and weathering bars are too narrow.
+      Make them the same width as the wash bar.
+- [ ] Add a 'drybrush' role to the scheme visualiser, it should behave the same
+      as a highlight role.
+- [ ] Update weathering setting to be much less transparent than washes and
+      glazes. Something like rust streaks or copper patina are usually much more
+      visible than a glaze or a wash.
+
+### Social sharing features
+
+- [ ] Add the ability to upload a photo of a model painted with a scheme, and
+      show it on the scheme page.
+- [ ] Add ability to generate a shareable image of a scheme, designed for
+      Instagram so a 1x1 image format. Similar style to the images when you
+      share a scheme via URL, but with including labels for the paints and
+      roles. Could be multiple images if the scheme is long so its kept
+      readable. Imagining people could post this on social media alongside
+      pictures of their models to show the paint scheme.
+- [ ] Add ability to label the image of the model itself with the elements and
+      paint names used in it. Would be a cooler visualisation compared to just
+      the list of paints. Again, potentially multiple images if the scheme is
+      long so its kept readable.
 
 ### Paint database and UI features
 
