@@ -23,6 +23,13 @@ npm ci
 npm run dev
 ```
 
+That's the whole setup — **you don't need a backend or any configuration.** The
+core site (paint database, colour matching, visualiser) is statically generated
+from the JSON in `data/paints/`, so it runs fully out of the box. Optional
+account features are the only thing that needs environment variables; with them
+unset, sign-in hides itself and schemes save to your browser's `localStorage`.
+See [`.env.example`](.env.example) if you specifically want to work on accounts.
+
 Before opening a PR, please make sure the following pass:
 
 ```bash

@@ -43,6 +43,56 @@ import {
 import { makeShareSlug, makeShareToken, shareUrl } from "@/lib/scheme/share";
 import type { SchemeRow } from "@/lib/supabase/types";
 
+/**
+ * The scheme visualiser (`/visualiser`) — the editor for a paint scheme.
+ *
+ * This is the largest component in the repo, so here's a map before you dive in.
+ *
+ * **Layout of this file**
+ * - Module helpers: `isSchemeLimitError`, `uid`, `freshShareToken`,
+ *   `roleVarStyle`, `defaultRole`.
+ * - `SchemeVisualiser` — the main component; state and effects first, then the
+ *   handlers it passes down, then its JSX.
+ * - In-file sub-components, all presentational and driven by props:
+ *   `ElementCard` (one element and its paint rows), `LayerRow` (a single paint
+ *   within an element), `IconBtn` (small square action button), `AddPaint`
+ *   (the paint search / custom-colour entry form).
+ *
+ * **State, grouped by concern**
+ * - *The scheme itself*: `scheme` (the document being edited), `blend` (a view
+ *   preference, deliberately NOT part of the saved scheme), `mounted` (gates
+ *   everything client-only).
+ * - *The paint database*: `dbPaints` / `loadError`, fetched from the same static
+ *   `browse-index.json` the browse page uses, so it stays out of the JS bundle.
+ * - *Accounts and sync*: `savedSchemes`, `activeSchemeId`, `syncState`,
+ *   `shareBusy`, `copied`, plus three refs that exist to keep effects from
+ *   re-running — `schemeRef` (live handle so the sign-in effect doesn't depend
+ *   on `scheme`), `skipSaveRef` (suppresses autosave right after we load a
+ *   scheme programmatically) and `deepLinkedRef` (honour `?scheme=` once).
+ *
+ * **Persistence, in layers**
+ * `localStorage` autosave is *always* on, even when signed in — it's the
+ * anonymous fallback and the source for first-login migration. On top of that,
+ * signed-in users get a debounced autosave to Supabase for the active scheme.
+ * The reconciliation decision on sign-in is pure and lives in
+ * `planSignInScheme` (`src/lib/scheme/sync.ts`) so it can be unit-tested; the
+ * important guarantee is that work built while signed out is adopted as a NEW
+ * scheme rather than being overwritten.
+ *
+ * **About the `eslint-disable`s.** All of them are
+ * `react-hooks/set-state-in-effect` (plus two `exhaustive-deps`) and all are
+ * deliberate: this component has to read client-only sources — `localStorage`,
+ * `window.location`, the auth session — which cannot be touched during SSR
+ * without a hydration mismatch. Hence the `mounted` gate and setting state from
+ * effects. The `exhaustive-deps` suppressions keep the sign-in and deep-link
+ * effects from re-firing on every scheme edit. Each site has its own inline
+ * comment; read that before removing one.
+ *
+ * Splitting this file up is welcome, but note there are currently no
+ * component-level tests to catch a regression (the suite covers `src/lib`), so
+ * add those first — the sync and reconciliation behaviour above is subtle.
+ */
+
 const STORE = "paintdex-scheme-v1";
 
 /**
