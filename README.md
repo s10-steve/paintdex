@@ -118,13 +118,11 @@ Brand and product names are trademarks of their respective owners.
 
 ## Roadmap
 
+Ideas we'd love help with — see [`CONTRIBUTING.md`](CONTRIBUTING.md) if you want
+to pick one up. Shipped work is tracked in [`CHANGELOG.md`](CHANGELOG.md).
+
 ### Minor tweaks and fixes
 
-- [x] Update og-image.png to say “miniature paint database & colour scheme
-      visualiser”.
-- [x] On the homepage, make sure the ‘plan your whole colour scheme’ banner is
-      above the fold. Maybe move the ‘browse x paints’ button.
-- [x] Make the list of brands on the homepage clickable, like the colour bar
 - [ ] Default the scheme UI to show the unblended version.
 - [ ] In the unblended version, the glaze and weathering bars are too narrow.
       Make them the same width as the wash bar.
@@ -168,13 +166,6 @@ Brand and product names are trademarks of their respective owners.
       something slightly different to the paint you have, you can see the
       options in a more intuitive way than just a list of similar colours.
 
-### User accounts
-
-- [ ] Add a privacy policy and terms of service, then link them from Google Auth
-      Platform → Branding. Needed for Google OAuth verification (and lets us
-      show the app logo on the consent screen). See Google's
-      [verification requirements](https://support.google.com/cloud/answer/13464321).
-
 ### My paints feature
 
 - [ ] Save the paints you own
@@ -183,11 +174,6 @@ Brand and product names are trademarks of their respective owners.
       and tweak), rather than a single scheme baked into the app
 - [ ] Paint schemes can suggest only paints from your collection
 - [ ] Wishlist for paints you don't own yet but want to buy
-
-### Open source
-
-- [ ] Open-source the repo once the user accounts & recipe features above have
-      shipped, so the community can help keep the paint catalogue accurate.
 
 ## License
 

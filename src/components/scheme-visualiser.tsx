@@ -202,6 +202,8 @@ export function SchemeVisualiser() {
           setActiveSchemeId(row.id);
         } else {
           setSavedSchemes(rows);
+          // Safe: planSignInScheme only returns "load-latest" when `rows` is
+          // non-empty (it returns "adopt-local" for an empty `savedData`).
           const first = rows[0];
           const restored = importSchemeObject(first.data, uid);
           restored.title = first.title;

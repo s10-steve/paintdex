@@ -1,0 +1,77 @@
+name: Paint data correction or addition
+description: Report a wrong hex value, a missing paint, or another correction to data/paints/*.json
+labels: ["paint-data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the catalogue accurate! This is the most valuable
+        kind of contribution and needs no coding — see
+        [`data/paints/README.md`](../../data/paints/README.md) for the record
+        schema if you'd rather just open a PR directly.
+
+  - type: input
+    id: brand
+    attributes:
+      label: Brand
+      description: e.g. Citadel, Vallejo, AK Interactive
+      placeholder: Citadel
+    validations:
+      required: true
+
+  - type: input
+    id: paint
+    attributes:
+      label: Paint name
+      placeholder: Abaddon Black
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What's wrong
+      options:
+        - Incorrect hex value
+        - Missing paint
+        - Paint should be marked discontinued
+        - Incorrect metallic flag
+        - Incorrect type/range
+        - Duplicate entry
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: current
+    attributes:
+      label: Current value (if applicable)
+      description: The value in data/paints/*.json today, e.g. the current hex
+      placeholder: "#231F20"
+
+  - type: input
+    id: correct
+    attributes:
+      label: Correct value
+      description: What it should be, e.g. the correct uppercase #RRGGBB hex
+      placeholder: "#000000"
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: >
+        Where does the correct value come from? Manufacturer swatch/site,
+        a physical sample photographed under known lighting, another
+        database, etc. Colour hex values are inherently best-effort, so a
+        source helps reviewers judge confidence.
+      placeholder: Link or description of source
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes

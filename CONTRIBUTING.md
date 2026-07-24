@@ -16,8 +16,10 @@ This is the most valuable contribution and needs no coding.
 
 ## 2. Code changes
 
+The project targets **Node 24** (see [`.nvmrc`](.nvmrc); `nvm use` picks it up).
+
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -35,8 +37,13 @@ npm run build
 - `data/paints/*.json` — the open paint database (source of truth)
 - `src/lib/color/` — colour maths (hex → Lab, CIEDE2000, colour families)
 - `src/lib/paints/` — types, zod schema, data loader, search/filter/similarity
+- `src/lib/scheme/` — scheme bar maths, JSON import/export, share-slug helpers
+- `src/lib/data/` — per-table Supabase CRUD (e.g. saved schemes)
+- `src/lib/supabase/` — browser client + the anon server client used only by
+  the `/scheme/[slug]` share viewer
 - `src/components/` — UI components
-- `src/app/` — routes (`/`, `/paints`, `/paints/[id]`)
+- `src/app/` — routes: `/`, `/paints`, `/paints/[id]`, `/visualiser`,
+  `/my-schemes`, `/my-paints`, `/scheme/[slug]` (the one server-rendered route)
 - `scripts/` — data import + validation
 
 Keep pure, testable logic in `src/lib` and add a test in `test/` when you
