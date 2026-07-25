@@ -1,22 +1,11 @@
 "use client";
 
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type CSSProperties,
-} from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Bar, useBarHover, type HoverHandlers } from "./scheme-bars";
-import { filterPaints } from "@/lib/paints/filter";
+import { Bar, useBarHover } from "./scheme-bars";
+import { ElementCard, type ElementHandlers } from "./scheme/element-card";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
-import type { BrowsePaint } from "@/lib/paints/types";
 import {
-  ROLES,
-  ROLE_KEYS,
-  roleOf,
-  weightOf,
   emptyScheme,
   type Scheme,
   type SchemeElement,
@@ -49,21 +38,23 @@ import type { SchemeRow } from "@/lib/supabase/types";
  * This is the largest component in the repo, so here's a map before you dive in.
  *
  * **Layout of this file**
- * - Module helpers: `isSchemeLimitError`, `uid`, `freshShareToken`,
- *   `roleVarStyle`, `defaultRole`.
+ * - Module helpers: `isSchemeLimitError`, `uid`, `freshShareToken`.
  * - `SchemeVisualiser` — the main component; state and effects first, then the
  *   handlers it passes down, then its JSX.
- * - In-file sub-components, all presentational and driven by props:
- *   `ElementCard` (one element and its paint rows), `LayerRow` (a single paint
- *   within an element), `IconBtn` (small square action button), `AddPaint`
- *   (the paint search / custom-colour entry form).
+ *
+ * The presentational pieces live in `./scheme/`, all driven by props:
+ * `ElementCard` (one element and its paint rows, plus the `ElementHandlers`
+ * type this file fills in), `LayerRow` (a single paint within an element),
+ * `AddPaint` (the paint search / custom-colour entry form), `IconBtn` and
+ * `RoleTag` (shared with the read-only `scheme-view`).
  *
  * **State, grouped by concern**
  * - *The scheme itself*: `scheme` (the document being edited), `blend` (a view
  *   preference, deliberately NOT part of the saved scheme), `mounted` (gates
  *   everything client-only).
- * - *The paint database*: `dbPaints` / `loadError`, fetched from the same static
- *   `browse-index.json` the browse page uses, so it stays out of the JS bundle.
+ * - *The paint database*: `dbPaints` / `loadError`, from the shared
+ *   `useBrowseIndex()` hook — the same static `browse-index.json` the browse
+ *   page uses, so the catalogue stays out of the JS bundle.
  * - *Accounts and sync*: `savedSchemes`, `activeSchemeId`, `syncState`,
  *   `shareBusy`, `copied`, plus three refs that exist to keep effects from
  *   re-running — `schemeRef` (live handle so the sign-in effect doesn't depend
@@ -116,15 +107,6 @@ const uid = () => `u${++counter}`;
 /** A fresh, unguessable share token from browser randomness. */
 const freshShareToken = () => makeShareToken(crypto.getRandomValues(new Uint8Array(8)));
 
-/** CSS var wiring for the colour-mixed role tag. */
-function roleVarStyle(role: SchemeRole): CSSProperties {
-  return { ["--role-c" as string]: ROLES[role].cssVar } as CSSProperties;
-}
-
-/** First paint in an element is a base; subsequent additions default to layer. */
-function defaultRole(element: SchemeElement): SchemeRole {
-  return element.paints.some((p) => roleOf(p).solid) ? "layer" : "base";
-}
 
 export function SchemeVisualiser() {
   const [scheme, setScheme] = useState<Scheme>(() => emptyScheme());
@@ -409,6 +391,21 @@ export function SchemeVisualiser() {
   const setWeight = (eid: string, pid: string, weight: number) =>
     mutatePaints(eid, (paints) => paints.map((p) => (p.id === pid ? { ...p, weight } : p)));
 
+  // Handed to every `ElementCard` as one object. Deliberately not memoised: the
+  // updaters above are re-created each render anyway (they only ever call
+  // `setScheme` with an updater, so they never go stale) and `ElementCard` isn't
+  // memoised either, so this is exactly what the per-row arrow props cost before.
+  const elementHandlers: ElementHandlers = {
+    rename: renameElement,
+    move: moveElement,
+    remove: removeElement,
+    addPaint,
+    movePaint,
+    removePaint,
+    setRole,
+    setWeight,
+  };
+
   const reset = () => {
     // Guard against wiping real work: only confirm when there's something to lose.
     const hasContent = scheme.title.trim() !== "" || scheme.elements.length > 0;
@@ -648,14 +645,7 @@ export function SchemeVisualiser() {
                 loadError={loadError}
                 hovered={hovered}
                 hover={hover}
-                onRename={(name) => renameElement(element.id, name)}
-                onMove={(dir) => moveElement(element.id, dir)}
-                onRemove={() => removeElement(element.id)}
-                onAddPaint={(p) => addPaint(element.id, p)}
-                onMovePaint={(pid, dir) => movePaint(element.id, pid, dir)}
-                onRemovePaint={(pid) => removePaint(element.id, pid)}
-                onSetRole={(pid, role) => setRole(element.id, pid, role)}
-                onSetWeight={(pid, w) => setWeight(element.id, pid, w)}
+                handlers={elementHandlers}
               />
             ))}
           </div>
@@ -747,408 +737,3 @@ export function SchemeVisualiser() {
     </div>
   );
 }
-
-/* ---------------------------------------------------------------- Element */
-
-function ElementCard({
-  element,
-  index,
-  count,
-  dbPaints,
-  loadError,
-  hovered,
-  hover,
-  onRename,
-  onMove,
-  onRemove,
-  onAddPaint,
-  onMovePaint,
-  onRemovePaint,
-  onSetRole,
-  onSetWeight,
-}: {
-  element: SchemeElement;
-  index: number;
-  count: number;
-  dbPaints: BrowsePaint[] | null;
-  loadError: boolean;
-  hovered: string | null;
-  hover: HoverHandlers;
-  onRename: (name: string) => void;
-  onMove: (dir: -1 | 1) => void;
-  onRemove: () => void;
-  onAddPaint: (p: Omit<SchemePaint, "id">) => void;
-  onMovePaint: (pid: string, dir: -1 | 1) => void;
-  onRemovePaint: (pid: string) => void;
-  onSetRole: (pid: string, role: SchemeRole) => void;
-  onSetWeight: (pid: string, weight: number) => void;
-}) {
-  const swatches = element.paints.length ? element.paints.map((p) => p.hex) : ["var(--muted)"];
-  return (
-    <div className="relative rounded-xl border border-border bg-card shadow-sm focus-within:z-10">
-      <div className="flex items-center gap-2.5 rounded-t-xl border-b border-border bg-muted px-3 py-3">
-        <span className="flex h-[22px] w-10 flex-none overflow-hidden rounded-md ring-1 ring-inset ring-black/10">
-          {swatches.map((hex, i) => (
-            <i key={i} className="flex-1" style={{ background: hex }} />
-          ))}
-        </span>
-        <input
-          value={element.name}
-          onChange={(e) => onRename(e.target.value)}
-          aria-label="Element name"
-          spellCheck={false}
-          className="min-w-0 flex-1 rounded-md bg-transparent px-1.5 py-1 text-[15px] font-semibold tracking-tight outline-none hover:bg-card focus:bg-card focus:ring-1 focus:ring-inset focus:ring-input"
-        />
-        <span
-          className="flex-none text-xs tabular-nums text-muted-foreground"
-          title={`${element.paints.length} ${element.paints.length === 1 ? "paint" : "paints"}`}
-        >
-          {element.paints.length}
-        </span>
-        <div className="flex flex-none items-center gap-0.5">
-          <IconBtn
-            label="Move element earlier (larger area)"
-            disabled={index === 0}
-            onClick={() => onMove(-1)}
-          >
-            ↑
-          </IconBtn>
-          <IconBtn
-            label="Move element later (smaller area)"
-            disabled={index === count - 1}
-            onClick={() => onMove(1)}
-          >
-            ↓
-          </IconBtn>
-          <IconBtn label="Remove element" danger onClick={onRemove}>
-            ✕
-          </IconBtn>
-        </div>
-      </div>
-
-      {element.paints.length > 0 && (
-        <div className="flex justify-between px-3 pt-1 text-[10.5px] tracking-wide text-muted-foreground">
-          <span>▲ base</span>
-          <span>highlight ▼</span>
-        </div>
-      )}
-
-      <ul className="flex flex-col gap-0.5 p-2">
-        {element.paints.map((paint, i) => (
-          <LayerRow
-            key={paint.id}
-            paint={paint}
-            index={i}
-            count={element.paints.length}
-            hot={hovered === paint.id}
-            hover={hover}
-            onMove={(dir) => onMovePaint(paint.id, dir)}
-            onRemove={() => onRemovePaint(paint.id)}
-            onSetRole={(role) => onSetRole(paint.id, role)}
-            onSetWeight={(w) => onSetWeight(paint.id, w)}
-          />
-        ))}
-      </ul>
-
-      <AddPaint
-        dbPaints={dbPaints}
-        loadError={loadError}
-        defaultRole={defaultRole(element)}
-        onAdd={onAddPaint}
-      />
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------- Row */
-
-function LayerRow({
-  paint,
-  index,
-  count,
-  hot,
-  hover,
-  onMove,
-  onRemove,
-  onSetRole,
-  onSetWeight,
-}: {
-  paint: SchemePaint;
-  index: number;
-  count: number;
-  hot: boolean;
-  hover: HoverHandlers;
-  onMove: (dir: -1 | 1) => void;
-  onRemove: () => void;
-  onSetRole: (role: SchemeRole) => void;
-  onSetWeight: (weight: number) => void;
-}) {
-  const role = roleOf(paint);
-  const meta =
-    paint.custom && (!paint.brand || paint.brand === "custom")
-      ? "Custom colour"
-      : paint.brand + (paint.range && paint.range !== "custom" ? ` · ${paint.range}` : "");
-  const showCustom = paint.custom && paint.brand && paint.brand !== "custom";
-
-  return (
-    <li
-      className={`group grid grid-cols-[auto_1fr_auto] items-start gap-2.5 rounded-lg px-2 py-1.5 transition-colors ${hot ? "bg-muted" : "hover:bg-muted"}`}
-      onPointerEnter={() => hover.mark(paint.id)}
-      onPointerLeave={hover.unmark}
-    >
-      <span
-        className="mt-0.5 h-[26px] w-[26px] flex-none rounded-md ring-1 ring-inset ring-black/15"
-        style={{ background: paint.hex }}
-      />
-      <div className="min-w-0">
-        <div className="flex min-w-0 items-center gap-1.5 text-[13.5px] font-medium">
-          <span className="min-w-0 truncate">{paint.name}</span>
-          <span
-            className="sv-role-tag inline-flex flex-none items-center rounded-full px-1.5 text-[9.5px] font-bold uppercase leading-normal tracking-wide"
-            style={roleVarStyle(paint.role)}
-          >
-            {role.label}
-          </span>
-        </div>
-        <div className="truncate text-[11.5px] text-muted-foreground">
-          {meta}{" "}
-          <span className="font-mono tabular-nums text-muted-foreground/80">
-            {paint.hex.toUpperCase()}
-          </span>
-          {showCustom && <span className="text-muted-foreground/70"> · custom</span>}
-        </div>
-        <div className="mt-1.5 flex items-center gap-2">
-          <select
-            value={paint.role}
-            onChange={(e) => onSetRole(e.target.value as SchemeRole)}
-            aria-label="Layer role"
-            className="rounded-md border border-input bg-muted px-1 py-0.5 text-[11px] text-muted-foreground"
-          >
-            {ROLE_KEYS.map((k) => (
-              <option key={k} value={k}>
-                {ROLES[k].label}
-              </option>
-            ))}
-          </select>
-          <div className="flex min-w-0 max-w-[150px] flex-1 items-center gap-1.5">
-            <span className="whitespace-nowrap text-[10px] tracking-wide text-muted-foreground">
-              {role.solid ? "weight" : "amount"}
-            </span>
-            <input
-              type="range"
-              min={0.3}
-              max={2.5}
-              step={0.05}
-              value={weightOf(paint)}
-              onChange={(e) => onSetWeight(parseFloat(e.target.value))}
-              aria-label="Layer weight"
-              className="sv-weight w-full"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-none gap-0.5 opacity-40 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
-        <IconBtn label="Move up (towards base)" disabled={index === 0} onClick={() => onMove(-1)}>
-          ↑
-        </IconBtn>
-        <IconBtn
-          label="Move down (towards highlight)"
-          disabled={index === count - 1}
-          onClick={() => onMove(1)}
-        >
-          ↓
-        </IconBtn>
-        <IconBtn label="Remove paint" danger onClick={onRemove}>
-          ✕
-        </IconBtn>
-      </div>
-    </li>
-  );
-}
-
-function IconBtn({
-  children,
-  label,
-  onClick,
-  disabled,
-  danger,
-}: {
-  children: React.ReactNode;
-  label: string;
-  onClick: () => void;
-  disabled?: boolean;
-  danger?: boolean;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      title={label}
-      aria-label={label}
-      className={`inline-flex h-6 w-6 items-center justify-center rounded-md text-[13px] text-muted-foreground transition-colors hover:bg-card hover:text-foreground disabled:opacity-25 disabled:hover:bg-transparent ${danger ? "hover:!text-red-600 dark:hover:!text-red-400" : ""}`}
-    >
-      {children}
-    </button>
-  );
-}
-
-/* -------------------------------------------------------------- Add paint */
-
-function AddPaint({
-  dbPaints,
-  loadError,
-  defaultRole: role,
-  onAdd,
-}: {
-  dbPaints: BrowsePaint[] | null;
-  loadError: boolean;
-  defaultRole: SchemeRole;
-  onAdd: (p: Omit<SchemePaint, "id">) => void;
-}) {
-  const [query, setQuery] = useState("");
-  const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(-1);
-  const [showCustom, setShowCustom] = useState(false);
-  const [customName, setCustomName] = useState("");
-  const [customHex, setCustomHex] = useState("#6d4aa8");
-
-  const loading = dbPaints === null;
-  const results = useMemo(() => {
-    const q = query.trim();
-    if (q.length < 2 || !dbPaints) return [];
-    return filterPaints(dbPaints, { search: q }).slice(0, 60);
-  }, [query, dbPaints]);
-
-  const pick = (p: BrowsePaint) => {
-    onAdd({ name: p.name, brand: p.brand, range: p.range, hex: p.hex, role });
-    setQuery("");
-    setOpen(false);
-    setActive(-1);
-  };
-
-  const addCustom = () => {
-    onAdd({
-      name: customName.trim() || "Custom colour",
-      brand: "custom",
-      range: "custom",
-      hex: customHex.toUpperCase(),
-      role,
-      custom: true,
-    });
-    setCustomName("");
-    setShowCustom(false);
-  };
-
-  return (
-    <div className="relative px-2.5 pb-3 pt-1.5">
-      <div className="flex items-center gap-2">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setOpen(true);
-            setActive(-1);
-          }}
-          onFocus={() => setOpen(true)}
-          onBlur={() => setTimeout(() => setOpen(false), 120)}
-          onKeyDown={(e) => {
-            if (!results.length) return;
-            if (e.key === "ArrowDown") {
-              e.preventDefault();
-              setActive((a) => Math.min(a + 1, results.length - 1));
-            } else if (e.key === "ArrowUp") {
-              e.preventDefault();
-              setActive((a) => Math.max(a - 1, 0));
-            } else if (e.key === "Enter" && active >= 0) {
-              e.preventDefault();
-              pick(results[active]);
-            } else if (e.key === "Escape") {
-              setOpen(false);
-            }
-          }}
-          placeholder={
-            loading
-              ? "Loading paint database…"
-              : "Add a paint — search across 11 brands…"
-          }
-          aria-label="Search paints to add"
-          className="min-w-0 flex-1 rounded-lg border border-input bg-background px-3 py-2 text-base outline-none focus:border-primary focus:ring-2 focus:ring-accent sm:text-[13px]"
-        />
-        <button
-          onClick={() => setShowCustom((v) => !v)}
-          title="Add a colour that isn't in the database"
-          className="flex-none whitespace-nowrap px-0.5 py-1 text-[12.5px] font-semibold text-accent-foreground hover:underline"
-        >
-          + Custom
-        </button>
-      </div>
-
-      {open && query.trim().length >= 2 && (
-        <div className="absolute inset-x-2.5 top-[calc(100%-6px)] z-20 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl">
-          {results.length === 0 ? (
-            <div className="p-3 text-center text-[12.5px] text-muted-foreground">
-              {loadError
-                ? "Paint database unavailable. Use + Custom to add it by hand."
-                : "No match. Use + Custom to add it by hand."}
-            </div>
-          ) : (
-            results.map((p, i) => (
-              <button
-                key={p.id}
-                // onMouseDown (not onClick) so it fires before the input's blur closes the list.
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  pick(p);
-                }}
-                onMouseEnter={() => setActive(i)}
-                className={`flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${i === active ? "bg-accent" : "hover:bg-accent"}`}
-              >
-                <span
-                  className="h-[22px] w-[22px] flex-none rounded-md ring-1 ring-inset ring-black/15"
-                  style={{ background: p.hex }}
-                />
-                <span className="min-w-0">
-                  <span className="block truncate text-[13px] font-medium">{p.name}</span>
-                  <span className="block truncate text-[11.5px] text-muted-foreground">
-                    {p.brand} · {p.range}
-                  </span>
-                </span>
-                <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
-                  {p.hex}
-                </span>
-              </button>
-            ))
-          )}
-        </div>
-      )}
-
-      {showCustom && (
-        <div className="mt-2 flex items-center gap-2 rounded-lg border border-dashed border-input bg-muted p-2.5">
-          <input
-            type="color"
-            value={customHex}
-            onChange={(e) => setCustomHex(e.target.value)}
-            aria-label="Pick custom colour"
-            className="sv-swatch-input h-[34px] w-[34px] flex-none rounded-lg border border-input bg-card"
-          />
-          <input
-            type="text"
-            value={customName}
-            onChange={(e) => setCustomName(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && addCustom()}
-            placeholder="Colour name (e.g. AK Black Purple)"
-            className="min-w-0 flex-1 rounded-md border border-input bg-card px-2.5 py-1.5 text-[13px] outline-none focus:border-primary"
-          />
-          <button
-            onClick={addCustom}
-            className="flex-none rounded-md bg-primary px-3 py-1.5 text-[13px] font-medium text-primary-foreground hover:opacity-90"
-          >
-            Add
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-

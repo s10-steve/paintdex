@@ -10,6 +10,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SchemeBars } from "./scheme-bars";
+import { RoleTag } from "./scheme/role-tag";
 import { useAuth } from "./auth/auth-provider";
 import { roleOf, type Scheme } from "@/lib/scheme/types";
 import { toExportShape } from "@/lib/scheme/io";
@@ -87,12 +88,7 @@ export function SchemeView({ scheme }: { scheme: Scheme }) {
                           <div className="min-w-0">
                             <div className="flex min-w-0 items-center gap-1.5 text-[13.5px] font-medium">
                               <span className="min-w-0 truncate">{paint.name}</span>
-                              <span
-                                className="sv-role-tag inline-flex flex-none items-center rounded-full px-1.5 text-[9.5px] font-bold uppercase leading-normal tracking-wide"
-                                style={{ ["--role-c" as string]: role.cssVar }}
-                              >
-                                {role.label}
-                              </span>
+                              <RoleTag role={role} />
                             </div>
                             <div className="truncate text-[11.5px] text-muted-foreground">
                               {meta}{" "}
