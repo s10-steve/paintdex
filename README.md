@@ -36,6 +36,11 @@ schemes, sync them across devices, and share them by link.
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
   the full paint recipe, with a rich colour preview when pasted on social sites.
   Signed-in viewers can save a copy to their own account.
+- **Share images.** Turn a scheme plus a photo of your model into a 4:5 PNG for
+  social media: drop a marker on each part of the model and it gets a callout
+  with that element's colour ramp and paint names, joined by a leader line.
+  Frame the photo, add your handle, and optionally show manufacturers and roles.
+  The photo is rendered in your browser and never uploaded.
 - **Light & dark mode**, following your system preference.
 - **Responsive** desktop and mobile layouts.
 - **Plain-JSON data.** The paint database is plain JSON, one file per brand.
@@ -124,18 +129,16 @@ to pick one up. Shipped work is tracked in [`CHANGELOG.md`](CHANGELOG.md).
 
 ### Social sharing features
 
-- [ ] Add the ability to upload a photo of a model painted with a scheme, and
-      show it on the scheme page.
-- [ ] Add ability to generate a shareable image of a scheme, designed for
-      Instagram so a 1x1 image format. Similar style to the images when you
-      share a scheme via URL, but with including labels for the paints and
-      roles. Could be multiple images if the scheme is long so its kept
-      readable. Imagining people could post this on social media alongside
-      pictures of their models to show the paint scheme.
-- [ ] Add ability to label the image of the model itself with the elements and
-      paint names used in it. Would be a cooler visualisation compared to just
-      the list of paints. Again, potentially multiple images if the scheme is
-      long so its kept readable.
+Generating a labelled share image has shipped — see **Share images** above. What
+is left of that idea:
+
+- [ ] Store the uploaded photo against the scheme (Supabase Storage) rather than
+      in the browser only, so it follows you across devices and can appear on
+      the public `/scheme/<slug>` page.
+- [ ] More aspect ratios for the share image — 1:1 for a square feed post, 9:16
+      for stories. It is 4:5 only today.
+- [ ] Split a long scheme across several share images instead of truncating the
+      paint lists, so every element stays readable.
 
 ### Paint database and UI features
 

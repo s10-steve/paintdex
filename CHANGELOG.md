@@ -5,6 +5,35 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Share images.** A **Share image** button in the visualiser opens a studio
+  that turns a scheme plus one photo of your model into a 4:5 PNG
+  (2160×2700) for social media. Drop a marker on each part of the model and
+  it gets a callout with that element's banded ramp and its paint names, joined
+  by a leader line — the labelled-photo format painters post on Instagram,
+  generated from the scheme you already built. Pan and zoom to frame the shot,
+  add your handle, and optionally show each paint's manufacturer and role. Every
+  image carries a quiet "generated with paintdex.app" credit.
+
+  **Your photo never leaves the browser.** It is downscaled onto a canvas and
+  rendered client-side — there is no upload and no new server route, so the site
+  stays static. The photo and your marker positions are kept in this browser
+  only (`localStorage`); syncing them to your account is a later phase.
+
+  Markers are stored against the *photo*, not the poster, so they stay on the
+  model when you re-frame it. When callouts can't all fit, the layout degrades
+  predictably — tighter spacing, then truncated paint lists with `+N more`, then
+  dropping the last elements — and always tells you what it left out.
+
+### Changed
+
+- The paint "brand · range" label (and the **Custom colour** fallback for a
+  colour you mixed yourself) is now a shared helper rather than being written
+  out separately in the visualiser's editor rows and the public scheme viewer.
+
 ## [0.7.0] - 2026-07-25
 
 ### Added
