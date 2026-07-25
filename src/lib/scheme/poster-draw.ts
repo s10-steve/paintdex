@@ -272,7 +272,7 @@ function drawCallout(
     rowY += pitch;
   }
   if (callout.hiddenCount > 0) {
-    ctx.font = `500 16px ${ff}`;
+    ctx.font = `500 17px ${ff}`;
     ctx.fillStyle = theme.roleText;
     ctx.fillText(`+${callout.hiddenCount} more`, x + DOT_TEXT_GAP, rowY + nameOffset);
   }
@@ -309,7 +309,7 @@ function drawPaintRow(
   // ended up printed on top of the paint name.
   const roleWidth = () => {
     if (!role) return 0;
-    ctx.font = `600 12px ${ff}`;
+    ctx.font = `600 13px ${ff}`;
     ctx.letterSpacing = "0.1em";
     const w = ctx.measureText(role).width;
     ctx.letterSpacing = "0px";
@@ -318,7 +318,7 @@ function drawPaintRow(
 
   const drawRole = (rx: number, ry: number) => {
     if (!role) return;
-    ctx.font = `600 12px ${ff}`;
+    ctx.font = `600 13px ${ff}`;
     ctx.letterSpacing = "0.1em";
     ctx.fillStyle = theme.roleText;
     ctx.fillText(role, rx, ry);
@@ -328,7 +328,7 @@ function drawPaintRow(
   if (!options.showBrands) {
     // One line: name, with the role tucked in after it.
     const available = full - (role ? roleWidth() + 8 : 0);
-    ctx.font = `400 18px ${ff}`;
+    ctx.font = `400 19px ${ff}`;
     ctx.fillStyle = theme.paintText;
     const name = ellipsize(ctx, paint.name, available);
     const nameW = ctx.measureText(name).width;
@@ -339,13 +339,13 @@ function drawPaintRow(
 
   // Two lines: the name, then the manufacturer and the role sharing a quieter
   // second line, so the two secondary facts don't compete for the same space.
-  ctx.font = `400 18px ${ff}`;
+  ctx.font = `400 19px ${ff}`;
   ctx.fillStyle = theme.paintText;
   ctx.fillText(ellipsize(ctx, paint.name, full), textX, cy);
 
   const subY = cy + BRAND_LINE_H;
   const brand = brandLabel(paint);
-  ctx.font = `400 13px ${ff}`;
+  ctx.font = `400 14px ${ff}`;
   ctx.fillStyle = theme.roleText;
   const shown = ellipsize(ctx, brand, full - (role ? roleWidth() + 8 : 0));
   const brandW = ctx.measureText(shown).width;

@@ -34,8 +34,11 @@ export const NAME_GAP = 12;
 export const STRIP_H = 26;
 export const STRIP_GAP = 14;
 export const ROW_H = 30;
-/** Extra height a paint row takes when it carries a manufacturer line. */
-export const BRAND_LINE_H = 16;
+/**
+ * Baseline-to-baseline distance from a paint name to its manufacturer line, and
+ * so the extra height a row costs when brands are shown.
+ */
+export const BRAND_LINE_H = 17;
 
 /**
  * Pitch of one paint row. Not a constant, because showing the manufacturer puts
