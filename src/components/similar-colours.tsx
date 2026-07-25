@@ -1,15 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { hexToLab } from "@/lib/color";
 import { findSimilar } from "@/lib/paints/filter";
-import type {
-  BrowsePaint,
-  Paint,
-  PaintType,
-  PaintWithLab,
-} from "@/lib/paints/types";
+import { useBrowseIndex } from "@/hooks/use-browse-index";
+import type { Paint, PaintType, PaintWithLab } from "@/lib/paints/types";
 import { FacetGroup, type FacetOption } from "./facet-group";
 import { MatchBadge } from "./match-badge";
 
@@ -30,9 +26,6 @@ interface SimilarColoursProps {
   /** Product ranges present in the catalogue. */
   ranges: string[];
 }
-
-/** The dataset the browse page already ships; reused here to re-rank on filter. */
-const BROWSE_INDEX_URL = "/browse-index.json";
 
 type Metallic = "" | "only" | "exclude";
 
@@ -99,24 +92,16 @@ export function SimilarColours({
   // The precomputed `all` list renders the unfiltered view instantly. The full
   // catalogue (with Lab) is fetched once so we can re-rank on filter AND grey out
   // facet options that would yield nothing. Initial render never waits on it.
-  const [dataset, setDataset] = useState<PaintWithLab[] | null>(null);
-  const [loadError, setLoadError] = useState(false);
-  const fetchStarted = useRef(false);
-
-  useEffect(() => {
-    if (fetchStarted.current) return;
-    fetchStarted.current = true;
-    fetch(BROWSE_INDEX_URL)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<BrowsePaint[]>;
-      })
-      .then((data) => {
-        // Recover the Lab triple (kept out of the shipped index) from hex.
-        setDataset(data.map((p) => ({ ...p, lab: hexToLab(p.hex) })));
-      })
-      .catch(() => setLoadError(true));
-  }, []);
+  const { paints, loadError } = useBrowseIndex();
+  // Recover the Lab triple (kept out of the shipped index) from hex. Stays null
+  // on a load failure so the facet-availability pass below hides nothing.
+  const dataset = useMemo<PaintWithLab[] | null>(
+    () =>
+      paints && !loadError
+        ? paints.map((p) => ({ ...p, lab: hexToLab(p.hex) }))
+        : null,
+    [paints, loadError],
+  );
 
   // Candidate universe: everything a match could be — non-discontinued and not
   // the paint itself. Filtering + availability both work from this.

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { PaintsBrowser, BROWSE_INDEX_URL } from "@/components/paints-browser";
+import { PaintsBrowser } from "@/components/paints-browser";
+import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
 import { getAllPaints, getBrands } from "@/lib/paints/load";
 
 export const metadata: Metadata = {

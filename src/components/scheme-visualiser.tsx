@@ -8,9 +8,9 @@ import {
   type CSSProperties,
 } from "react";
 import Link from "next/link";
-import { BROWSE_INDEX_URL } from "./paints-browser";
 import { Bar, useBarHover, type HoverHandlers } from "./scheme-bars";
 import { filterPaints } from "@/lib/paints/filter";
+import { useBrowseIndex } from "@/hooks/use-browse-index";
 import type { BrowsePaint } from "@/lib/paints/types";
 import {
   ROLES,
@@ -135,28 +135,7 @@ export function SchemeVisualiser() {
   const { hovered, hover, tooltip } = useBarHover();
 
   // Paint database, fetched from the same static asset the browse page uses.
-  const [dbPaints, setDbPaints] = useState<BrowsePaint[] | null>(null);
-  const [loadError, setLoadError] = useState(false);
-  useEffect(() => {
-    let cancelled = false;
-    fetch(BROWSE_INDEX_URL)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<BrowsePaint[]>;
-      })
-      .then((data) => {
-        if (!cancelled) setDbPaints(data);
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setLoadError(true);
-          setDbPaints([]);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { paints: dbPaints, loadError } = useBrowseIndex();
 
   // After mount, restore any saved scheme (localStorage is client-only, so this
   // can't run during SSR without a hydration mismatch — hence the mount gate).

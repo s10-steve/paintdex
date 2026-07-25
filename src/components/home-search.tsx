@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { filterPaints } from "@/lib/paints/filter";
+import { useBrowseIndex } from "@/hooks/use-browse-index";
 import type { BrowsePaint } from "@/lib/paints/types";
-import { BROWSE_INDEX_URL } from "./paints-browser";
 
 /**
  * Homepage search box. Mirrors the live autocomplete dropdown in
@@ -17,28 +17,7 @@ import { BROWSE_INDEX_URL } from "./paints-browser";
 export function HomeSearch() {
   const router = useRouter();
 
-  const [paints, setPaints] = useState<BrowsePaint[] | null>(null);
-  const [loadError, setLoadError] = useState(false);
-  useEffect(() => {
-    let cancelled = false;
-    fetch(BROWSE_INDEX_URL)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<BrowsePaint[]>;
-      })
-      .then((data) => {
-        if (!cancelled) setPaints(data);
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setLoadError(true);
-          setPaints([]);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { paints, loadError } = useBrowseIndex();
 
   const [query, setQuery] = useState("");
   const [suggestOpen, setSuggestOpen] = useState(false);
