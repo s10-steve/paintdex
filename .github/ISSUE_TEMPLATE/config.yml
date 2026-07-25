@@ -1,0 +1,12 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Paint data schema and rules
+    url: https://github.com/s10-steve/paintdex/blob/main/data/paints/README.md
+    about:
+      How a paint record is structured, the valid type values, and the rules
+      `npm run validate:data` enforces. Read this before reporting a data fix.
+  - name: Contributing guide
+    url: https://github.com/s10-steve/paintdex/blob/main/CONTRIBUTING.md
+    about:
+      How to correct paint data (no coding needed) or set up the project for a
+      code change.
