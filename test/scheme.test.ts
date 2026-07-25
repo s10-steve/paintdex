@@ -60,11 +60,19 @@ describe("roles", () => {
     expect(new Set(widths).size).toBe(1);
   });
 
-  it("makes weathering markedly more opaque than washes and glazes", () => {
-    // Rust streaks and copper patina read far stronger than a glaze in practice.
+  it("makes weathering more opaque than washes and glazes", () => {
+    // Rust streaks and verdigris read far stronger than a glaze in practice.
     const weathering = roleOf(p("weathering")).opacity ?? 0;
-    expect(weathering).toBeGreaterThan((roleOf(p("wash")).opacity ?? 0) + 0.2);
-    expect(weathering).toBeGreaterThan((roleOf(p("glaze")).opacity ?? 0) + 0.2);
+    expect(weathering).toBeGreaterThan(roleOf(p("wash")).opacity ?? 0);
+    expect(weathering).toBeGreaterThan(roleOf(p("glaze")).opacity ?? 0);
+  });
+
+  it("composites weathering normally, and washes/glazes as ink", () => {
+    // The whole point: a mint oxide over brass must read as the oxide, not as
+    // the brown-green that multiplying it against the base produces.
+    expect(roleOf(p("weathering")).blendMode).toBe("normal");
+    expect(roleOf(p("wash")).blendMode).toBe("multiply");
+    expect(roleOf(p("glaze")).blendMode).toBe("multiply");
   });
 });
 

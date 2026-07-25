@@ -197,7 +197,9 @@ export function Bar({
               key={ov.paint.id}
               role="img"
               aria-label={paintLabel(ov.paint)}
-              className="absolute inset-x-0 mix-blend-multiply"
+              className={`absolute inset-x-0 ${
+                roleOf(ov.paint).blendMode === "normal" ? "" : "mix-blend-multiply"
+              }`}
               style={{
                 ...placement,
                 opacity: roleOf(ov.paint).opacity,

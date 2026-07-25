@@ -27,9 +27,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (wash/glaze/weathering) is a 14px band rather than 8px. Weathering also takes
   the same share of the bar as a wash or glaze when blended, instead of being
   narrower than both.
-- **Weathering is much more opaque** (0.92 vs 0.8) — rust streaks and copper
-  patina read far stronger than a wash or glaze in practice, so the bar now shows
-  that.
+- **Weathering keeps its own colour.** Overlays were all composited with
+  `multiply`, which models a translucent ink tinted by the colour beneath. That's
+  right for a wash or glaze, but wrong for weathering effects — opaque pigments
+  sitting *on* the surface. Multiplying Nihilakh Oxide (`#66B39A`) over brass
+  produced `#434530`, a brown-green nothing like the paint. Weathering now
+  composites normally at 80% opacity, so it reads as itself while still letting a
+  little of the base through; washes and glazes keep multiplying as before.
 - `scheme-visualiser.tsx` split up (1,175 → 465 lines): its presentational pieces
   moved to `src/components/scheme/`, and its state layers to hooks in
   `src/hooks/` — `use-local-scheme`, `use-scheme-sync`, `use-scheme-share`. The
