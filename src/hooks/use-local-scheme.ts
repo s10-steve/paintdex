@@ -12,7 +12,11 @@ export type LocalScheme = {
   /** The scheme being edited. */
   scheme: Scheme;
   setScheme: Dispatch<SetStateAction<Scheme>>;
-  /** Bar-blending view preference — persisted locally, but never part of a saved scheme. */
+  /**
+   * Bar-blending view preference — persisted locally, but never part of a saved
+   * scheme. Defaults off: the banded view shows each paint as a discrete step,
+   * which reads as a recipe rather than a gradient.
+   */
   blend: boolean;
   setBlend: Dispatch<SetStateAction<boolean>>;
   /** False during SSR and the first render; gates everything client-only. */
@@ -29,7 +33,7 @@ export type LocalScheme = {
  */
 export function useLocalScheme(): LocalScheme {
   const [scheme, setScheme] = useState<Scheme>(() => emptyScheme());
-  const [blend, setBlend] = useState(true);
+  const [blend, setBlend] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   // Restore after mount: localStorage is client-only, so reading it during SSR

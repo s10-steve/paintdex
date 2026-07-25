@@ -15,6 +15,7 @@ import {
   shareUrl,
   SHARE_TOKEN_LENGTH,
 } from "@/lib/scheme/share";
+import { ROLES, roleOf, weightOf } from "@/lib/scheme/types";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
@@ -29,6 +30,43 @@ function p(role: SchemeRole, weight?: number): SchemePaint {
     weight,
   };
 }
+
+describe("roles", () => {
+  it("treats drybrush exactly like highlight", () => {
+    // Same ramp behaviour and share of the bar; only its name and colour differ.
+    expect(ROLES.drybrush.solid).toBe(ROLES.highlight.solid);
+    expect(ROLES.drybrush.solid).toBe(true);
+    expect(ROLES.drybrush.weight).toBe(ROLES.highlight.weight);
+    expect(ROLES.drybrush.opacity).toBe(ROLES.highlight.opacity);
+  });
+
+  it("puts drybrush in the ramp, not the overlays", () => {
+    const { segs, overlays } = barModel([p("base"), p("drybrush")]);
+    expect(segs.map((s) => s.paint.role)).toEqual(["base", "drybrush"]);
+    expect(overlays).toEqual([]);
+  });
+
+  it("survives an export/import round trip", () => {
+    const imported = importSchemeObject(
+      toExportShape({ title: "t", elements: [{ id: "e", name: "E", paints: [p("drybrush")] }] }),
+      () => "x",
+    );
+    expect(imported.elements[0].paints[0].role).toBe("drybrush");
+  });
+
+  it("gives every overlay role the same share of the bar", () => {
+    // Bands are told apart by colour and opacity, not thickness.
+    const widths = (["wash", "glaze", "weathering"] as const).map((r) => weightOf(p(r)));
+    expect(new Set(widths).size).toBe(1);
+  });
+
+  it("makes weathering markedly more opaque than washes and glazes", () => {
+    // Rust streaks and copper patina read far stronger than a glaze in practice.
+    const weathering = roleOf(p("weathering")).opacity ?? 0;
+    expect(weathering).toBeGreaterThan((roleOf(p("wash")).opacity ?? 0) + 0.2);
+    expect(weathering).toBeGreaterThan((roleOf(p("glaze")).opacity ?? 0) + 0.2);
+  });
+});
 
 describe("barModel", () => {
   it("splits solids (ramp) from wash/glaze/weathering overlays", () => {

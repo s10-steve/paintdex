@@ -35,7 +35,7 @@ export function SchemeView({ scheme }: { scheme: Scheme }) {
 
       <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
         {scheme.elements.length > 0 ? (
-          <SchemeBars elements={scheme.elements} blend />
+          <SchemeBars elements={scheme.elements} blend={false} />
         ) : (
           <p className="px-4 py-10 text-center text-sm text-muted-foreground">
             This scheme has no elements yet.

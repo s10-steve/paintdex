@@ -16,6 +16,7 @@ export type SchemeRole =
   | "base"
   | "layer"
   | "highlight"
+  | "drybrush"
   | "wash"
   | "glaze"
   | "weathering";
@@ -36,9 +37,14 @@ export const ROLES: Record<SchemeRole, RoleMeta> = {
   base: { label: "Base", solid: true, weight: 1.4, cssVar: "var(--role-base)" },
   layer: { label: "Layer", solid: true, weight: 1.0, cssVar: "var(--role-layer)" },
   highlight: { label: "Highlight", solid: true, weight: 0.55, cssVar: "var(--role-highlight)" },
+  // Drybrushing reads as a highlight pass — same ramp behaviour and share of the
+  // bar, kept as its own role so a recipe can say which technique was used.
+  drybrush: { label: "Drybrush", solid: true, weight: 0.55, cssVar: "var(--role-drybrush)" },
   wash: { label: "Wash", solid: false, weight: 1.0, cssVar: "var(--role-wash)", opacity: 0.62 },
   glaze: { label: "Glaze", solid: false, weight: 1.0, cssVar: "var(--role-glaze)", opacity: 0.48 },
-  weathering: { label: "Weathering", solid: false, weight: 0.8, cssVar: "var(--role-weathering)", opacity: 0.8 },
+  // Weathering effects (rust streaks, copper patina) are far more opaque than a
+  // wash or glaze in practice, and take the same share of the bar as both.
+  weathering: { label: "Weathering", solid: false, weight: 1.0, cssVar: "var(--role-weathering)", opacity: 0.92 },
 };
 
 /** Role keys in display order (drives the role `<select>`). */

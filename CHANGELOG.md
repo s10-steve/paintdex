@@ -5,6 +5,40 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`drybrush` role** in the scheme visualiser. It reads as a highlight pass —
+  same ramp behaviour and share of the bar — but is its own role so a recipe can
+  say which technique was used.
+
+### Changed
+
+- **The visualiser now defaults to the banded (unblended) view**, which shows
+  each paint as a discrete step and reads as a recipe rather than a gradient. The
+  toggle still switches to the blended view, and the choice is remembered. The
+  public shared-scheme viewer is banded to match.
+- **Overlay bands are easier to read.** In the banded view every overlay
+  (wash/glaze/weathering) is a 14px band rather than 8px, and a band landing at
+  the very top or bottom of a bar is no longer half-clipped by the rounded edge.
+  Weathering also takes the same share of the bar as a wash or glaze when
+  blended, instead of being narrower.
+- **Weathering is much more opaque** (0.92 vs 0.8) — rust streaks and copper
+  patina read far stronger than a wash or glaze in practice, so the bar now shows
+  that.
+
+### Internal
+
+- `scheme-visualiser.tsx` split up: its presentational pieces moved to
+  `src/components/scheme/` and its state layers to hooks in `src/hooks/`
+  (`use-local-scheme`, `use-scheme-sync`, `use-scheme-share`), taking the file
+  from 1,175 lines to under 500. The browse-index fetch, previously duplicated in
+  four components, is now the shared `useBrowseIndex()` hook.
+- First **component tests** (jsdom + `@testing-library/react`), covering the
+  sign-in reconciliation wiring — the one path where a bug silently loses a
+  user's work.
+
 ## [0.6.0] - 2026-07-22
 
 ### Added

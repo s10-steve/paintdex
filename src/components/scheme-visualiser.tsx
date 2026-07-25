@@ -138,7 +138,7 @@ export function SchemeVisualiser() {
       return;
     }
     setScheme(emptyScheme());
-    setBlend(true);
+    setBlend(false);
   };
 
   /* ---- export / import (no accounts — a JSON file is the save format) ---- */
@@ -191,8 +191,9 @@ export function SchemeVisualiser() {
             log in to save and share them via unique URLs.</b>
           </p>
           <p>
-            Give each a  <b className="font-semibold text-foreground">role</b>: base, layer
-            and highlight build the tonal ramp; wash, glaze and weathering sit over it. The{" "}
+            Give each a  <b className="font-semibold text-foreground">role</b>: base, layer,
+            highlight and drybrush build the tonal ramp; wash, glaze and weathering sit over
+            it. The{" "}
             <b className="font-semibold text-foreground">weight</b> slider sets how much of
             the bar a layer takes.
           </p>
@@ -442,7 +443,7 @@ export function SchemeVisualiser() {
                     className="inline-block h-2.5 w-2.5 rounded-sm"
                     style={{ background: "linear-gradient(to top, var(--role-base), var(--role-highlight))" }}
                   />
-                  base · layer · highlight
+                  base · layer · highlight · drybrush
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <i
