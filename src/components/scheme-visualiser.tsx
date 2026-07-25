@@ -1,364 +1,89 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Bar, useBarHover } from "./scheme-bars";
 import { ElementCard, type ElementHandlers } from "./scheme/element-card";
+import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
+import { useLocalScheme } from "@/hooks/use-local-scheme";
+import { useSchemeShare } from "@/hooks/use-scheme-share";
+import { useSchemeSync } from "@/hooks/use-scheme-sync";
 import {
   emptyScheme,
-  type Scheme,
   type SchemeElement,
   type SchemePaint,
   type SchemeRole,
 } from "@/lib/scheme/types";
 import { moveItem } from "@/lib/scheme/bars";
-import {
-  exportSchemeJSON,
-  importScheme,
-  importSchemeObject,
-  schemeSlug,
-  toExportShape,
-} from "@/lib/scheme/io";
-import { planSignInScheme } from "@/lib/scheme/sync";
-import { useAuth } from "./auth/auth-provider";
-import {
-  listSchemes,
-  createScheme,
-  updateScheme,
-  publishScheme,
-  unpublishScheme,
-} from "@/lib/data/schemes";
-import { makeShareSlug, makeShareToken, shareUrl } from "@/lib/scheme/share";
-import type { SchemeRow } from "@/lib/supabase/types";
-
+import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
+import { uid } from "@/lib/scheme/uid";
 /**
  * The scheme visualiser (`/visualiser`) — the editor for a paint scheme.
  *
- * This is the largest component in the repo, so here's a map before you dive in.
+ * This file is now the wiring: it composes four hooks, turns their state into
+ * the editor's mutations, and renders. Here's where everything lives.
  *
- * **Layout of this file**
- * - Module helpers: `isSchemeLimitError`, `uid`, `freshShareToken`.
- * - `SchemeVisualiser` — the main component; state and effects first, then the
- *   handlers it passes down, then its JSX.
+ * **State, by concern — each its own hook**
+ * - `useLocalScheme()` — the scheme document, the `blend` view preference
+ *   (deliberately NOT part of a saved scheme) and the `mounted` gate, backed by
+ *   `localStorage`. Always on, even when signed in: it's the anonymous fallback
+ *   and the source the account layer migrates from on first login.
+ * - `useBrowseIndex()` — the paint catalogue, from the same static
+ *   `browse-index.json` the browse page uses, so it stays out of the JS bundle.
+ * - `useSchemeSync()` — accounts: the user's saved schemes, the sign-in
+ *   reconciliation, the debounced Supabase autosave, `?scheme=` deep links. The
+ *   subtlest code in the feature; its own doc comment has the details, and
+ *   `test/scheme-visualiser.test.tsx` pins the behaviour that must not regress
+ *   (work built while signed out is adopted as a NEW scheme, never overwritten).
+ * - `useSchemeShare()` — publishing the active scheme under an unguessable link.
  *
- * The presentational pieces live in `./scheme/`, all driven by props:
- * `ElementCard` (one element and its paint rows, plus the `ElementHandlers`
- * type this file fills in), `LayerRow` (a single paint within an element),
- * `AddPaint` (the paint search / custom-colour entry form), `IconBtn` and
- * `RoleTag` (shared with the read-only `scheme-view`).
+ * Everything left in this file is either a `setScheme` wrapper (the immutable
+ * element/paint updates, grouped into `elementHandlers`), the JSON import/export
+ * pair, or JSX.
  *
- * **State, grouped by concern**
- * - *The scheme itself*: `scheme` (the document being edited), `blend` (a view
- *   preference, deliberately NOT part of the saved scheme), `mounted` (gates
- *   everything client-only).
- * - *The paint database*: `dbPaints` / `loadError`, from the shared
- *   `useBrowseIndex()` hook — the same static `browse-index.json` the browse
- *   page uses, so the catalogue stays out of the JS bundle.
- * - *Accounts and sync*: `savedSchemes`, `activeSchemeId`, `syncState`,
- *   `shareBusy`, `copied`, plus three refs that exist to keep effects from
- *   re-running — `schemeRef` (live handle so the sign-in effect doesn't depend
- *   on `scheme`), `skipSaveRef` (suppresses autosave right after we load a
- *   scheme programmatically) and `deepLinkedRef` (honour `?scheme=` once).
+ * **The presentational pieces** live in `./scheme/`, all driven by props:
+ * `ElementCard` (one element and its paint rows; it declares the
+ * `ElementHandlers` type this file fills in), `LayerRow` (a single paint within
+ * an element), `AddPaint` (the paint search / custom-colour entry form),
+ * `IconBtn`, and `RoleTag` (shared with the read-only `scheme-view`).
  *
- * **Persistence, in layers**
- * `localStorage` autosave is *always* on, even when signed in — it's the
- * anonymous fallback and the source for first-login migration. On top of that,
- * signed-in users get a debounced autosave to Supabase for the active scheme.
- * The reconciliation decision on sign-in is pure and lives in
- * `planSignInScheme` (`src/lib/scheme/sync.ts`) so it can be unit-tested; the
- * important guarantee is that work built while signed out is adopted as a NEW
- * scheme rather than being overwritten.
- *
- * **About the `eslint-disable`s.** All of them are
- * `react-hooks/set-state-in-effect` (plus two `exhaustive-deps`) and all are
- * deliberate: this component has to read client-only sources — `localStorage`,
- * `window.location`, the auth session — which cannot be touched during SSR
- * without a hydration mismatch. Hence the `mounted` gate and setting state from
- * effects. The `exhaustive-deps` suppressions keep the sign-in and deep-link
+ * **About the `eslint-disable`s.** They live in the hooks now, not here, and
+ * they're deliberate: this feature reads client-only sources — `localStorage`,
+ * `window.location`, the auth session — which can't be touched during SSR
+ * without a hydration mismatch, hence the `mounted` gate and setting state from
+ * effects. The two `exhaustive-deps` suppressions keep the sign-in and deep-link
  * effects from re-firing on every scheme edit. Each site has its own inline
- * comment; read that before removing one.
- *
- * Splitting this file up is welcome, but note there are currently no
- * component-level tests to catch a regression (the suite covers `src/lib`), so
- * add those first — the sync and reconciliation behaviour above is subtle.
+ * comment; read that before removing one, and don't treat removing them as a
+ * goal in itself — forcing it tends to reintroduce hydration bugs.
  */
-
-const STORE = "paintdex-scheme-v1";
-
-/**
- * True when a Supabase error is the per-account scheme-count cap firing (the
- * `enforce_scheme_quota` trigger in supabase/schema.sql raises a message
- * starting "Scheme limit reached"). Lets the picker show a specific,
- * actionable message rather than the generic "Sync error".
- */
-function isSchemeLimitError(err: unknown): boolean {
-  const message =
-    err && typeof err === "object" && "message" in err
-      ? String((err as { message?: unknown }).message ?? "")
-      : "";
-  return message.toLowerCase().includes("scheme limit reached");
-}
-
-/** Runtime-unique id for paints/elements added after load. */
-let counter = 0;
-const uid = () => `u${++counter}`;
-
-/** A fresh, unguessable share token from browser randomness. */
-const freshShareToken = () => makeShareToken(crypto.getRandomValues(new Uint8Array(8)));
-
 
 export function SchemeVisualiser() {
-  const [scheme, setScheme] = useState<Scheme>(() => emptyScheme());
-  const [blend, setBlend] = useState(true);
-  const [mounted, setMounted] = useState(false);
+  // The scheme document plus its localStorage layer (always on — see above).
+  const { scheme, setScheme, blend, setBlend, mounted } = useLocalScheme();
   // Bar hover + tooltip live in a shared hook so the read-only viewer can reuse
   // the same visualisation; here we additionally link hover to the editor rows.
   const { hovered, hover, tooltip } = useBarHover();
-
   // Paint database, fetched from the same static asset the browse page uses.
   const { paints: dbPaints, loadError } = useBrowseIndex();
-
-  // After mount, restore any saved scheme (localStorage is client-only, so this
-  // can't run during SSR without a hydration mismatch — hence the mount gate).
-  useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
-    setMounted(true);
-    try {
-      const raw = localStorage.getItem(STORE);
-      if (raw) {
-        const parsed = JSON.parse(raw) as { scheme?: Scheme; blend?: boolean };
-        if (parsed?.scheme) {
-          // Route restored data through the same sanitiser the file-import path
-          // uses, so a corrupted shape can't reach `.map(...)` during render and
-          // white-screen the page — it throws here and we fall back to the seed.
-          const restored = importSchemeObject(parsed.scheme, uid);
-          if (typeof parsed.scheme.title === "string") restored.title = parsed.scheme.title;
-          setScheme(restored);
-        }
-        if (typeof parsed?.blend === "boolean") setBlend(parsed.blend);
-      }
-    } catch {
-      /* ignore corrupt storage */
-    }
-    /* eslint-enable react-hooks/set-state-in-effect */
-  }, []);
-
-  // Autosave to localStorage. This is always on — it's the anonymous fallback
-  // and the source for first-login migration, so it stays even when signed in.
-  useEffect(() => {
-    if (!mounted) return;
-    try {
-      localStorage.setItem(STORE, JSON.stringify({ scheme, blend }));
-    } catch {
-      /* quota / private mode — non-fatal */
-    }
-  }, [scheme, blend, mounted]);
-
-  /* ---- account sync (only active when signed in) ---- */
+  // Accounts: the user's saved schemes, reconciliation on sign-in, autosave.
+  const {
+    savedSchemes,
+    activeSchemeId,
+    activeRow,
+    syncState,
+    setSyncState,
+    selectScheme,
+    newScheme,
+    patchRow,
+  } = useSchemeSync({ scheme, setScheme, mounted });
+  // Publishing the active scheme under an unguessable share link.
+  const { shareBusy, copied, togglePublished, copyShareLink } = useSchemeShare({
+    activeRow,
+    patchRow,
+    onError: () => setSyncState("error"),
+  });
   const { user, configured, googleEnabled } = useAuth();
-  const [savedSchemes, setSavedSchemes] = useState<SchemeRow[]>([]);
-  const [activeSchemeId, setActiveSchemeId] = useState<string | null>(null);
-  const [syncState, setSyncState] = useState<
-    "idle" | "saving" | "saved" | "error" | "limit"
-  >("idle");
-  const [shareBusy, setShareBusy] = useState(false);
-  const [copied, setCopied] = useState(false);
-  // Ensures the ?scheme=<id> deep-link (from the account page / share viewer)
-  // is honoured only once, after the user's schemes have loaded.
-  const deepLinkedRef = useRef(false);
-  // Live handle on the current scheme, so the login effect can migrate it
-  // without depending on `scheme` (which would re-run it on every edit).
-  const schemeRef = useRef(scheme);
-  useEffect(() => {
-    schemeRef.current = scheme;
-  }, [scheme]);
-  // Set true just before we load a scheme into state programmatically, so the
-  // debounced autosave doesn't immediately re-write what we just fetched.
-  const skipSaveRef = useRef(false);
-
-  // On sign-in: load the user's schemes (migrating the local one the first
-  // time). On sign-out: drop server state; the localStorage path takes over
-  // again, exactly as before accounts existed.
-  useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
-    if (!mounted) return;
-    if (!user) {
-      setSavedSchemes([]);
-      setActiveSchemeId(null);
-      setSyncState("idle");
-      return;
-    }
-    let cancelled = false;
-    (async () => {
-      try {
-        const rows = await listSchemes();
-        if (cancelled) return;
-        const local = schemeRef.current;
-        // Decide what to do with the scheme currently in the editor. Crucially,
-        // if the user built something while signed out that isn't already
-        // saved, we adopt it as a NEW scheme rather than overwriting it with a
-        // saved one — otherwise that work would be silently lost on sign-in.
-        if (planSignInScheme(rows.map((r) => r.data), local) === "adopt-local") {
-          const row = await createScheme(
-            user.id,
-            toExportShape(local),
-            local.title || "Untitled scheme",
-          );
-          if (cancelled) return;
-          // The editor already shows `local`, so don't touch `scheme`; just
-          // make the new row the active, top-of-list saved scheme.
-          skipSaveRef.current = true;
-          setSavedSchemes([row, ...rows]);
-          setActiveSchemeId(row.id);
-        } else {
-          setSavedSchemes(rows);
-          // Safe: planSignInScheme only returns "load-latest" when `rows` is
-          // non-empty (it returns "adopt-local" for an empty `savedData`).
-          const first = rows[0];
-          const restored = importSchemeObject(first.data, uid);
-          restored.title = first.title;
-          skipSaveRef.current = true;
-          setScheme(restored);
-          setActiveSchemeId(first.id);
-        }
-        setSyncState("idle");
-      } catch {
-        if (!cancelled) setSyncState("error");
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-    /* eslint-enable react-hooks/set-state-in-effect */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id, mounted]);
-
-  // Debounced autosave to the account for the active scheme. Blend is a view
-  // preference and isn't part of the stored scheme, so it's excluded here.
-  useEffect(() => {
-    if (!mounted || !user || !activeSchemeId) return;
-    if (skipSaveRef.current) {
-      skipSaveRef.current = false;
-      return;
-    }
-    setSyncState("saving");
-    const title = scheme.title || "Untitled scheme";
-    const timer = setTimeout(async () => {
-      try {
-        await updateScheme(activeSchemeId, toExportShape(scheme), title);
-        setSyncState("saved");
-        // Reflect the new title and bump updated_at so the picker keeps the
-        // same most-recently-updated-first order a reload would show.
-        setSavedSchemes((rows) => {
-          const now = new Date().toISOString();
-          return rows
-            .map((r) => (r.id === activeSchemeId ? { ...r, title, updated_at: now } : r))
-            .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1));
-        });
-      } catch {
-        setSyncState("error");
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [scheme, user, activeSchemeId, mounted]);
-
-  /* ---- saved-scheme picker handlers ---- */
-  const loadSchemeRow = (row: SchemeRow) => {
-    try {
-      const restored = importSchemeObject(row.data, uid);
-      restored.title = row.title;
-      skipSaveRef.current = true;
-      setScheme(restored);
-      setActiveSchemeId(row.id);
-      setSyncState("idle");
-    } catch {
-      setSyncState("error");
-    }
-  };
-
-  const selectScheme = (id: string) => {
-    if (id === activeSchemeId) return;
-    const row = savedSchemes.find((r) => r.id === id);
-    if (row) loadSchemeRow(row);
-  };
-
-  const newScheme = async () => {
-    if (!user) return;
-    try {
-      const fresh = emptyScheme();
-      const row = await createScheme(user.id, toExportShape(fresh), "Untitled scheme");
-      skipSaveRef.current = true;
-      setSavedSchemes((rows) => [row, ...rows]);
-      setActiveSchemeId(row.id);
-      setScheme(fresh);
-      setSyncState("idle");
-    } catch (e) {
-      setSyncState(isSchemeLimitError(e) ? "limit" : "error");
-    }
-  };
-
-  // Honour a `?scheme=<id>` deep link once the user's schemes are loaded, so the
-  // account page's "Edit" and the viewer's "Save a copy" open the right scheme.
-  // Read from window.location (client-only) to avoid a Suspense boundary.
-  useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
-    if (!user || deepLinkedRef.current || savedSchemes.length === 0) return;
-    const wanted = new URLSearchParams(window.location.search).get("scheme");
-    if (!wanted) {
-      deepLinkedRef.current = true;
-      return;
-    }
-    const row = savedSchemes.find((r) => r.id === wanted);
-    if (row && row.id !== activeSchemeId) loadSchemeRow(row);
-    deepLinkedRef.current = true;
-    // Drop the param so a later reload doesn't force-reselect over the user's
-    // subsequent picks.
-    const url = new URL(window.location.href);
-    url.searchParams.delete("scheme");
-    window.history.replaceState(null, "", url.pathname + url.search);
-    /* eslint-enable react-hooks/set-state-in-effect */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, savedSchemes]);
-
-  /* ---- sharing (publish a scheme under an unguessable link) ---- */
-  const activeRow = savedSchemes.find((r) => r.id === activeSchemeId) ?? null;
-
-  const patchRow = (id: string, patch: Partial<SchemeRow>) =>
-    setSavedSchemes((rows) => rows.map((r) => (r.id === id ? { ...r, ...patch } : r)));
-
-  const toggleShare = async () => {
-    if (!activeRow || shareBusy) return;
-    setShareBusy(true);
-    try {
-      if (activeRow.is_public) {
-        await unpublishScheme(activeRow.id);
-        patchRow(activeRow.id, { is_public: false });
-      } else {
-        const slug =
-          activeRow.share_slug ?? makeShareSlug(activeRow.title, freshShareToken());
-        const stored = await publishScheme(activeRow.id, slug, () =>
-          makeShareSlug(activeRow.title, freshShareToken()),
-        );
-        patchRow(activeRow.id, { is_public: true, share_slug: stored });
-      }
-    } catch {
-      setSyncState("error");
-    } finally {
-      setShareBusy(false);
-    }
-  };
-
-  const copyShareLink = async () => {
-    if (!activeRow?.share_slug) return;
-    try {
-      await navigator.clipboard.writeText(shareUrl(window.location.origin, activeRow.share_slug));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* clipboard blocked — non-fatal */
-    }
-  };
 
   /* ---- immutable scheme updates ---- */
   const mutateElement = (eid: string, fn: (e: SchemeElement) => SchemeElement) =>
@@ -532,7 +257,7 @@ export function SchemeVisualiser() {
                   <span className="font-medium text-muted-foreground">Share</span>
                   <button
                     type="button"
-                    onClick={() => void toggleShare()}
+                    onClick={() => void togglePublished()}
                     disabled={shareBusy}
                     className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
                   >
