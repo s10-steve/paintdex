@@ -175,6 +175,11 @@ Things to know before changing it:
   truncate paint lists with `+N more` → drop from the end of scheme order) and
   **always reports what it left out** in `layout.omitted`. Keep it that way; the
   studio surfaces those reasons to the user.
+- `layoutPoster` takes the whole `PosterOptions` and derives the paint-row pitch
+  itself (`paintRowHeight`), publishing it as `layout.rowHeight` for the renderer
+  to read back. Don't pass a pre-computed pitch alongside the options: showing
+  manufacturers makes rows two lines tall, and a caller that sets `showBrands`
+  but reserves one-line space gets text crushed into the next paint, silently.
 - `ctx.font` can't take a CSS variable — use `resolveFontFamily()` and
   `await document.fonts.ready`, or the export silently ships in system sans.
 

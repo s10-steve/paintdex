@@ -16,8 +16,9 @@
  * Layout decisions live in `./poster`; this module only paints.
  */
 import { overlayCenter, type Overlay, type Seg } from "./bars";
-import { roleOf, type SchemePaint } from "./types";
+import { brandLabel, roleOf, type SchemePaint } from "./types";
 import {
+  BRAND_LINE_H,
   COLUMN_W,
   FOOTER_H,
   MARGIN,
@@ -26,7 +27,6 @@ import {
   OVERLAY_W,
   photoRect,
   POSTER_THEMES,
-  ROW_H,
   STRIP_GAP,
   STRIP_H,
   type CalloutLayout,
@@ -41,7 +41,7 @@ export const CREDIT = "GENERATED WITH PAINTDEX.APP";
 
 const STRIP_RADIUS = 6;
 const LEADER_STUB = 18;
-const ANCHOR_RADIUS = 7;
+const ANCHOR_RADIUS = 9;
 const DOT_RADIUS = 5;
 const DOT_TEXT_GAP = 22;
 
@@ -217,14 +217,21 @@ function drawLeader(ctx: Ctx, callout: CalloutLayout, theme: PosterTheme, emphas
   ctx.lineJoin = "round";
 
   ctx.strokeStyle = theme.leaderShadow;
-  ctx.lineWidth = 3.5;
+  ctx.lineWidth = 5;
   ctx.stroke(path);
   ctx.stroke(ring);
 
   ctx.strokeStyle = theme.leader;
-  ctx.lineWidth = emphasised ? 2.5 : 1.5;
+  ctx.lineWidth = emphasised ? 3.4 : 2.4;
   ctx.stroke(path);
   ctx.stroke(ring);
+
+  // A filled centre is what makes the ring read as a deliberate pointer at the
+  // end of the line rather than a stray circle sitting on the model.
+  ctx.beginPath();
+  ctx.arc(anchor.x, anchor.y, 2.5, 0, Math.PI * 2);
+  ctx.fillStyle = theme.leader;
+  ctx.fill();
   ctx.restore();
 }
 
@@ -234,6 +241,7 @@ function drawCallout(
   theme: PosterTheme,
   options: PosterOptions,
   ff: string,
+  rowHeight: number,
 ) {
   const { x, y } = callout;
   setShadow(ctx, theme.textShadow);
@@ -251,15 +259,22 @@ function drawCallout(
   drawRampStrip(ctx, x, stripY, COLUMN_W, STRIP_H, callout.segs, callout.overlays, theme);
   setShadow(ctx, theme.textShadow);
 
-  let rowY = stripY + STRIP_H + STRIP_GAP + ROW_H / 2;
+  // The pitch the packer used, not a recomputation of it — the two must agree
+  // or the text runs past the height that was reserved for this callout.
+  const pitch = rowHeight;
+  // With a brand line the row is two lines tall, so the name (and the dot beside
+  // it) sit above centre rather than on it.
+  const nameOffset = options.showBrands ? -BRAND_LINE_H / 2 : 0;
+
+  let rowY = stripY + STRIP_H + STRIP_GAP + pitch / 2;
   for (const paint of callout.paints) {
-    drawPaintRow(ctx, paint, x, rowY, theme, options, ff);
-    rowY += ROW_H;
+    drawPaintRow(ctx, paint, x, rowY + nameOffset, theme, options, ff);
+    rowY += pitch;
   }
   if (callout.hiddenCount > 0) {
     ctx.font = `500 16px ${ff}`;
     ctx.fillStyle = theme.roleText;
-    ctx.fillText(`+${callout.hiddenCount} more`, x + DOT_TEXT_GAP, rowY);
+    ctx.fillText(`+${callout.hiddenCount} more`, x + DOT_TEXT_GAP, rowY + nameOffset);
   }
 
   setShadow(ctx, null);
@@ -285,35 +300,57 @@ function drawPaintRow(
   ctx.stroke();
 
   const textX = x + DOT_TEXT_GAP;
-  let available = COLUMN_W - DOT_TEXT_GAP;
+  const full = COLUMN_W - DOT_TEXT_GAP;
 
-  let role = "";
-  let roleW = 0;
-  if (options.showRoles) {
+  const role = options.showRoles ? roleOf(paint).label.toUpperCase() : "";
+
+  // Every string is measured while its own font is selected. Measuring after a
+  // font switch returns the wrong width, which is exactly how the role label
+  // ended up printed on top of the paint name.
+  const roleWidth = () => {
+    if (!role) return 0;
     ctx.font = `600 12px ${ff}`;
     ctx.letterSpacing = "0.1em";
-    role = roleOf(paint).label.toUpperCase();
-    roleW = ctx.measureText(role).width;
+    const w = ctx.measureText(role).width;
     ctx.letterSpacing = "0px";
-    available -= roleW + 8;
-  }
+    return w;
+  };
 
-  ctx.font = `400 18px ${ff}`;
-  ctx.fillStyle = theme.paintText;
-  const name = ellipsize(ctx, paint.name, available);
-  // Measure while the name's own font is still selected — measuring after the
-  // switch to the 12px role font returns a much shorter width and the role label
-  // lands on top of the name.
-  const nameW = ctx.measureText(name).width;
-  ctx.fillText(name, textX, cy);
-
-  if (role) {
+  const drawRole = (rx: number, ry: number) => {
+    if (!role) return;
     ctx.font = `600 12px ${ff}`;
     ctx.letterSpacing = "0.1em";
     ctx.fillStyle = theme.roleText;
-    ctx.fillText(role, textX + nameW + 8, cy + 1);
+    ctx.fillText(role, rx, ry);
     ctx.letterSpacing = "0px";
+  };
+
+  if (!options.showBrands) {
+    // One line: name, with the role tucked in after it.
+    const available = full - (role ? roleWidth() + 8 : 0);
+    ctx.font = `400 18px ${ff}`;
+    ctx.fillStyle = theme.paintText;
+    const name = ellipsize(ctx, paint.name, available);
+    const nameW = ctx.measureText(name).width;
+    ctx.fillText(name, textX, cy);
+    drawRole(textX + nameW + 8, cy + 1);
+    return;
   }
+
+  // Two lines: the name, then the manufacturer and the role sharing a quieter
+  // second line, so the two secondary facts don't compete for the same space.
+  ctx.font = `400 18px ${ff}`;
+  ctx.fillStyle = theme.paintText;
+  ctx.fillText(ellipsize(ctx, paint.name, full), textX, cy);
+
+  const subY = cy + BRAND_LINE_H;
+  const brand = brandLabel(paint);
+  ctx.font = `400 13px ${ff}`;
+  ctx.fillStyle = theme.roleText;
+  const shown = ellipsize(ctx, brand, full - (role ? roleWidth() + 8 : 0));
+  const brandW = ctx.measureText(shown).width;
+  ctx.fillText(shown, textX, subY);
+  drawRole(textX + brandW + 8, subY);
 }
 
 /** Top rule + optional `@handle`, and the credit line at the foot. */
@@ -376,7 +413,7 @@ export function drawPoster(ctx: Ctx, args: DrawPosterArgs) {
 
   // Leaders first so the callout blocks sit cleanly on top of the line ends.
   for (const c of layout.callouts) drawLeader(ctx, c, theme, highlight === c.elementIndex);
-  for (const c of layout.callouts) drawCallout(ctx, c, theme, options, ff);
+  for (const c of layout.callouts) drawCallout(ctx, c, theme, options, ff, layout.rowHeight);
 
   drawChrome(ctx, options, theme, ff, w, h);
   ctx.restore();

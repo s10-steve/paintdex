@@ -140,17 +140,13 @@ export function usePoster(elements: SchemeElement[]) {
     [elements],
   );
 
+  // Note for anyone adding a bulk caller: this closes over the current `anchors`,
+  // so calling it in a loop commits only the last one. Build the whole map and
+  // pass it to `commit` in one go instead.
   const setAnchor = useCallback(
     (index: number, anchor: PosterAnchor) => commit({ ...anchors, [index]: anchor }),
     [anchors, commit],
   );
-
-  /**
-   * Replace the whole set in one commit. Callers placing several anchors at once
-   * must use this: `setAnchor` in a loop closes over the same `anchors` snapshot
-   * each time, so only the last call would survive.
-   */
-  const setAnchors = useCallback((next: PosterAnchors) => commit(next), [commit]);
 
   const clearAnchor = useCallback(
     (index: number) => {
@@ -229,7 +225,6 @@ export function usePoster(elements: SchemeElement[]) {
     setFraming,
     anchors,
     setAnchor,
-    setAnchors,
     clearAnchor,
     clearAllAnchors,
     options,

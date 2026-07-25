@@ -42,7 +42,6 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
     setFraming,
     anchors,
     setAnchor,
-    setAnchors,
     clearAnchor,
     clearAllAnchors,
     options,
@@ -92,8 +91,12 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
         // Anchors are meaningless without a photo to hang them on.
         anchors: photoFraming ? anchors : {},
         photo: photoFraming,
+        // Showing manufacturers makes every paint row taller, so the packer
+        // needs the options too — it derives the row pitch the renderer reads
+        // back off `layout.rowHeight`.
+        options,
       }),
-    [scheme.elements, anchors, photoFraming],
+    [scheme.elements, anchors, photoFraming, options],
   );
 
   const placedCount = layout.callouts.length;
@@ -101,22 +104,6 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
   const setSide = (index: number, side: PosterSide | undefined) => {
     const a = anchors[index];
     if (a) setAnchor(index, { ...a, side });
-  };
-
-  /** Spread the unplaced elements over the model so they can be dragged into place. */
-  const autoPlace = () => {
-    if (!photoFraming) return;
-    const pending = scheme.elements
-      .map((_, i) => i)
-      .filter((i) => !anchors[i] && scheme.elements[i].paints.length > 0);
-    if (pending.length === 0) return;
-    // One commit for the lot — see `setAnchors`.
-    const next = { ...anchors };
-    pending.forEach((index, k) => {
-      const t = pending.length === 1 ? 0.5 : k / (pending.length - 1);
-      next[index] = { x: k % 2 === 0 ? 0.36 : 0.64, y: 0.22 + t * 0.56 };
-    });
-    setAnchors(next);
   };
 
   const download = useCallback(async () => {
@@ -213,7 +200,9 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
             <p className="mt-2 text-xs text-muted-foreground">
               {armed !== null
                 ? `Click the model to label ${scheme.elements[armed]?.name || "this element"}.`
-                : "Drag a marker to move it, or drag the background to reposition the photo."}
+                : placedCount === 0
+                  ? "Press Place next to an element on the right, then click that part of the model."
+                  : "Drag a marker to move it, or drag the background to reposition the photo."}
             </p>
           )}
         </div>
@@ -297,6 +286,14 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
             <label className="flex cursor-pointer items-center gap-2 pt-1 text-xs">
               <input
                 type="checkbox"
+                checked={options.showBrands}
+                onChange={(e) => setOptions((o) => ({ ...o, showBrands: e.target.checked }))}
+              />
+              Show paint manufacturer
+            </label>
+            <label className="flex cursor-pointer items-center gap-2 text-xs">
+              <input
+                type="checkbox"
                 checked={options.showRoles}
                 onChange={(e) => setOptions((o) => ({ ...o, showRoles: e.target.checked }))}
               />
@@ -319,16 +316,8 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
               <h3 className="text-xs font-semibold">Labels</h3>
               <button
                 type="button"
-                onClick={autoPlace}
-                disabled={!photo}
-                className="ml-auto rounded-md px-2 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40"
-              >
-                Auto-place
-              </button>
-              <button
-                type="button"
                 onClick={clearAllAnchors}
-                className="rounded-md px-2 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="ml-auto rounded-md px-2 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 Clear all
               </button>

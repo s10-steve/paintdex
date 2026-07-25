@@ -3,6 +3,7 @@
 import {
   ROLES,
   ROLE_KEYS,
+  paintMeta,
   roleOf,
   weightOf,
   type SchemePaint,
@@ -35,10 +36,7 @@ export function LayerRow({
   onSetWeight: (weight: number) => void;
 }) {
   const role = roleOf(paint);
-  const meta =
-    paint.custom && (!paint.brand || paint.brand === "custom")
-      ? "Custom colour"
-      : paint.brand + (paint.range && paint.range !== "custom" ? ` · ${paint.range}` : "");
+  const meta = paintMeta(paint);
   const showCustom = paint.custom && paint.brand && paint.brand !== "custom";
 
   return (

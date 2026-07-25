@@ -98,3 +98,21 @@ export const emptyScheme = (): Scheme => ({ title: "", elements: [] });
 export const roleOf = (p: SchemePaint): RoleMeta => ROLES[p.role] ?? ROLES.layer;
 export const weightOf = (p: SchemePaint): number =>
   typeof p.weight === "number" ? p.weight : roleOf(p).weight;
+
+/**
+ * A colour the user mixed or picked themselves, rather than one from the
+ * catalogue. `brand`/`range` are both the literal string `"custom"` for these,
+ * which must never be shown to the user as-is.
+ */
+export const isCustomColour = (p: SchemePaint): boolean =>
+  Boolean(p.custom) && (!p.brand || p.brand === "custom");
+
+/** Just the maker — for the poster, where there is no room for the range too. */
+export const brandLabel = (p: SchemePaint): string =>
+  isCustomColour(p) ? "Custom colour" : p.brand;
+
+/** Maker and range ("Citadel · Layer") — the editor and shared-view meta line. */
+export const paintMeta = (p: SchemePaint): string =>
+  isCustomColour(p)
+    ? "Custom colour"
+    : p.brand + (p.range && p.range !== "custom" ? ` · ${p.range}` : "");

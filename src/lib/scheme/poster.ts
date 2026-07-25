@@ -34,6 +34,17 @@ export const NAME_GAP = 12;
 export const STRIP_H = 26;
 export const STRIP_GAP = 14;
 export const ROW_H = 30;
+/** Extra height a paint row takes when it carries a manufacturer line. */
+export const BRAND_LINE_H = 16;
+
+/**
+ * Pitch of one paint row. Not a constant, because showing the manufacturer puts
+ * a second line under each paint name — so the packer and the renderer must
+ * agree on the taller value. `PosterLayout.rowHeight` carries the number that
+ * was actually packed with; read it from there rather than recomputing.
+ */
+export const paintRowHeight = (o: { showBrands: boolean }): number =>
+  o.showBrands ? ROW_H + BRAND_LINE_H : ROW_H;
 
 /**
  * Thickness of an overlay band on the ramp strip, in px — the poster's
@@ -164,16 +175,24 @@ export type PosterAnchors = Record<number, PosterAnchor>;
 export interface PosterOptions {
   /** Optional credit, rendered as `@handle`. Blank hides it. */
   handle: string;
-  /** Append a small role label ("BASE", "WASH") after each paint name. */
+  /**
+   * Show the manufacturer under each paint name. On by default: "Mephiston Red"
+   * identifies itself, but a name like "Dark Red" is meaningless to a reader
+   * without "Two Thin Coats" next to it — and an unidentifiable recipe defeats
+   * the point of the image.
+   */
+  showBrands: boolean;
+  /** Append a small role label ("BASE", "WASH") after each paint. */
   showRoles: boolean;
   theme: PosterThemeName;
 }
 
 export const defaultPosterOptions = (): PosterOptions => ({
   handle: "",
+  showBrands: true,
   showRoles: false,
   theme: "dark",
-  });
+});
 
 export type PosterThemeName = "dark" | "light";
 
@@ -277,11 +296,13 @@ export interface PosterLayout {
   omitted: PosterOmission[];
   /** Gap actually used, after any tightening. */
   gap: number;
+  /** Paint-row pitch these callouts were packed with. The renderer must reuse it. */
+  rowHeight: number;
 }
 
 /** Height of a callout showing `rows` paint rows. Deterministic — no text metrics. */
-export function calloutHeight(rows: number): number {
-  return NAME_H + NAME_GAP + STRIP_H + STRIP_GAP + Math.max(1, rows) * ROW_H;
+export function calloutHeight(rows: number, rowHeight: number = ROW_H): number {
+  return NAME_H + NAME_GAP + STRIP_H + STRIP_GAP + Math.max(1, rows) * rowHeight;
 }
 
 interface Candidate {
@@ -343,6 +364,7 @@ export function layoutPoster({
   elements,
   anchors,
   photo,
+  options = defaultPosterOptions(),
   width = POSTER_SIZE.width,
   height = POSTER_SIZE.height,
 }: {
@@ -350,9 +372,17 @@ export function layoutPoster({
   anchors: PosterAnchors;
   /** Framing used to project photo-space anchors. Omit to treat them as poster-space. */
   photo?: PhotoFraming | null;
+  /**
+   * Presentation options. Taken whole rather than as a pre-computed row pitch:
+   * `showBrands` makes every paint row taller, and if the packer and the renderer
+   * were told separately they could disagree — reserving one-line space while
+   * drawing two-line rows, which silently crushes the text together.
+   */
+  options?: Pick<PosterOptions, "showBrands">;
   width?: number;
   height?: number;
 }): PosterLayout {
+  const rowHeight = paintRowHeight(options);
   const omitted: PosterOmission[] = [];
   const candidates: Candidate[] = [];
 
@@ -415,7 +445,13 @@ export function layoutPoster({
               const hiddenCount = total - shown;
               // The "+N more" line occupies a row of its own.
               const rows = shown + (hiddenCount > 0 ? 1 : 0);
-              return { y: 0, height: calloutHeight(rows), rows: shown, hiddenCount, candidate: c };
+              return {
+                y: 0,
+                height: calloutHeight(rows, rowHeight),
+                rows: shown,
+                hiddenCount,
+                candidate: c,
+              };
             });
 
         const left = packSide(make("left"), bandTop, bandBottom, gap);
@@ -428,7 +464,7 @@ export function layoutPoster({
     }
   }
 
-  if (!best) return { width, height, callouts: [], omitted, gap: GAP };
+  if (!best) return { width, height, callouts: [], omitted, gap: GAP, rowHeight };
 
   for (const c of best.dropped) {
     omitted.push({ elementIndex: c.elementIndex, name: c.element.name, reason: "no-space" });
@@ -465,5 +501,5 @@ export function layoutPoster({
 
   callouts.sort((a, b) => a.elementIndex - b.elementIndex);
 
-  return { width, height, callouts, omitted, gap: best.gap };
+  return { width, height, callouts, omitted, gap: best.gap, rowHeight };
 }

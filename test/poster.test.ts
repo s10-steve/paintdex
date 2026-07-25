@@ -1,7 +1,10 @@
 import { describe, it, expect } from "vitest";
 import {
+  BRAND_LINE_H,
   calloutHeight,
+  defaultPosterOptions,
   layoutPoster,
+  paintRowHeight,
   photoRect,
   projectAnchor,
   COLUMN_W,
@@ -11,9 +14,11 @@ import {
   HEADER_H,
   MARGIN,
   POSTER_SIZE,
+  ROW_H,
   type PhotoFraming,
   type PosterAnchors,
 } from "@/lib/scheme/poster";
+import { brandLabel } from "@/lib/scheme/types";
 import type { SchemeElement, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
@@ -39,6 +44,13 @@ const stack = (n: number, x: number): { elements: SchemeElement[]; anchors: Post
   for (let i = 0; i < n; i++) anchors[i] = { x, y: (i + 0.5) / n };
   return { elements, anchors };
 };
+
+/**
+ * Brand lines are on by default and make every row taller. The geometry tests
+ * below reason in exact pixels, so they pin the lean single-line pitch and let
+ * the brand-specific block own the taller case.
+ */
+const LEAN = { showBrands: false };
 
 const { width: W, height: H } = POSTER_SIZE;
 const bandTop = HEADER_H;
@@ -209,7 +221,7 @@ describe("layoutPoster: degradation", () => {
     expect((h + GAP_TIGHT) * n - GAP_TIGHT).toBeLessThanOrEqual(band);
 
     const { elements, anchors } = stack(n, 0.2);
-    const layout = layoutPoster({ elements, anchors });
+    const layout = layoutPoster({ elements, anchors, options: LEAN });
 
     expect(layout.gap).toBe(GAP_TIGHT);
     expect(layout.callouts).toHaveLength(n);
@@ -222,7 +234,7 @@ describe("layoutPoster: degradation", () => {
     const anchors: PosterAnchors = {};
     for (let i = 0; i < 5; i++) anchors[i] = { x: 0.2, y: (i + 0.5) / 5 };
 
-    const layout = layoutPoster({ elements, anchors });
+    const layout = layoutPoster({ elements, anchors, options: LEAN });
 
     expect(layout.callouts).toHaveLength(5);
     const c = layout.callouts[0];
@@ -234,7 +246,7 @@ describe("layoutPoster: degradation", () => {
 
   it("drops surplus callouts last, from the end of scheme order, and reports them", () => {
     const { elements, anchors } = stack(14, 0.2);
-    const layout = layoutPoster({ elements, anchors });
+    const layout = layoutPoster({ elements, anchors, options: LEAN });
 
     expect(layout.callouts.length).toBeGreaterThan(0);
     expect(layout.callouts.length).toBeLessThan(14);
@@ -263,5 +275,70 @@ describe("calloutHeight", () => {
 
   it("never collapses below a single row", () => {
     expect(calloutHeight(0)).toBe(calloutHeight(1));
+  });
+
+  it("honours a custom row pitch", () => {
+    expect(calloutHeight(3, ROW_H + 10) - calloutHeight(3, ROW_H)).toBe(30);
+  });
+});
+
+describe("manufacturer line", () => {
+  it("adds exactly one brand line to each paint row", () => {
+    expect(paintRowHeight({ showBrands: false })).toBe(ROW_H);
+    expect(paintRowHeight({ showBrands: true })).toBe(ROW_H + BRAND_LINE_H);
+  });
+
+  it("is on by default — an unidentifiable recipe defeats the point of the image", () => {
+    expect(defaultPosterOptions().showBrands).toBe(true);
+  });
+
+  it("costs poster space, and says so rather than overflowing", () => {
+    // Sized to fit comfortably one-line, so any loss is attributable to brands.
+    const { elements, anchors } = stack(6, 0.2);
+    const lean = layoutPoster({ elements, anchors, options: LEAN });
+    const tall = layoutPoster({ elements, anchors, options: { showBrands: true } });
+
+    expect(lean.callouts).toHaveLength(6);
+    expect(lean.omitted).toEqual([]);
+
+    // Whatever it gives up — tighter gap, truncated lists, or dropped callouts —
+    // the total must still be accounted for and must still fit the band.
+    const lost =
+      tall.omitted.length + tall.callouts.filter((c) => c.hiddenCount > 0).length;
+    expect(lost).toBeGreaterThan(0);
+    expect(tall.rowHeight).toBe(ROW_H + BRAND_LINE_H);
+    for (const c of tall.callouts) {
+      expect(c.y).toBeGreaterThanOrEqual(bandTop - 0.001);
+      expect(c.y + c.height).toBeLessThanOrEqual(bandBottom + 0.001);
+    }
+  });
+
+  it("derives the pitch from the options, so the renderer can't disagree", () => {
+    // The packer takes the options whole rather than a pre-computed pitch:
+    // passing them separately let a caller reserve one-line space while the
+    // renderer drew two-line rows, crushing the brand into the next paint.
+    for (const showBrands of [false, true]) {
+      const layout = layoutPoster({
+        elements: [element("e")],
+        anchors: { 0: { x: 0.2, y: 0.5 } },
+        options: { showBrands },
+      });
+      const pitch = paintRowHeight({ showBrands });
+      expect(layout.rowHeight).toBe(pitch);
+      expect(layout.callouts[0].height).toBe(calloutHeight(3, pitch));
+    }
+  });
+});
+
+describe("brandLabel", () => {
+  it("never leaks the literal 'custom' sentinel to the poster", () => {
+    const mixed: SchemePaint = { ...paint(), brand: "custom", range: "custom", custom: true };
+    expect(brandLabel(mixed)).toBe("Custom colour");
+    expect(brandLabel({ ...paint(), brand: "Citadel" })).toBe("Citadel");
+  });
+
+  it("keeps the real brand on a catalogue paint the user then tweaked", () => {
+    // `custom` is set but the paint still came from a brand — name that brand.
+    expect(brandLabel({ ...paint(), brand: "Vallejo", custom: true })).toBe("Vallejo");
   });
 });
