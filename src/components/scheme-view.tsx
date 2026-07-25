@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { SchemeBars } from "./scheme-bars";
 import { RoleTag } from "./scheme/role-tag";
 import { useAuth } from "./auth/auth-provider";
-import { roleOf, type Scheme } from "@/lib/scheme/types";
+import { paintMeta, roleOf, type Scheme } from "@/lib/scheme/types";
 import { toExportShape } from "@/lib/scheme/io";
 import { duplicateScheme } from "@/lib/data/schemes";
 
@@ -74,11 +74,7 @@ export function SchemeView({ scheme }: { scheme: Scheme }) {
                   <ol className="flex flex-col gap-1.5">
                     {element.paints.map((paint) => {
                       const role = roleOf(paint);
-                      const meta =
-                        paint.custom && (!paint.brand || paint.brand === "custom")
-                          ? "Custom colour"
-                          : paint.brand +
-                            (paint.range && paint.range !== "custom" ? ` · ${paint.range}` : "");
+                      const meta = paintMeta(paint);
                       return (
                         <li key={paint.id} className="flex items-start gap-2.5 px-1">
                           <span

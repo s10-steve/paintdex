@@ -22,7 +22,10 @@ const contentSecurityPolicy = [
   "form-action 'self'",
   "script-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/client https://va.vercel-scripts.com",
   "style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style",
-  "img-src 'self' data: https:",
+  // `blob:` is for the share-image studio: the photo the user picks is read via
+  // `URL.createObjectURL` before being downscaled onto a canvas. It stays in the
+  // browser — no origin is contacted.
+  "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
   "frame-src https://accounts.google.com/gsi/",
   "connect-src 'self' https://accounts.google.com/gsi/ https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com",

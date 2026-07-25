@@ -84,13 +84,16 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `sign-in-button`) and `profile/` (`schemes-manager` for `/my-schemes`,
   `paints-placeholder` for `/my-paints`, and the shared `signed-in-gate`), and
   `scheme/` (the visualiser's presentational pieces: `element-card`, `layer-row`,
-  `add-paint`, `icon-btn`, `role-tag`). The theme follows the system setting (no
-  manual toggle).
+  `add-paint`, `icon-btn`, `role-tag`, plus the share-image studio —
+  `poster-studio` (the modal) and `poster-canvas` (the interactive preview)).
+  The theme follows the system setting (no manual toggle).
 - `src/hooks/` — stateful React logic shared between components or lifted out of
   one: `use-browse-index` (loads the catalogue; used by all four views that need
   it), and the visualiser's three state layers — `use-local-scheme`
   (`localStorage`), `use-scheme-sync` (accounts, sign-in reconciliation,
-  autosave), `use-scheme-share` (publishing a share link).
+  autosave), `use-scheme-share` (publishing a share link). `use-poster` holds
+  the share-image state (photo, framing, anchors) in its own `localStorage` key
+  — deliberately *not* in the scheme document, which has to stay portable.
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
   contrast, colour families), `paints/` (load, filter, types), `scheme/` (bar
   maths, JSON import/export, types). Also `supabase/` (browser client +
@@ -98,6 +101,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   touch the network, so keep them thin and keep the logic in the pure modules.
   `supabase/server.ts` is the anon server-read client used only by the
   `/scheme/[slug]` route; `scheme/share.ts` holds the pure share-slug helpers.
+  `scheme/poster.ts` is the pure layout maths for the share image (callout
+  packing, photo framing, anchor projection); `scheme/poster-draw.ts` is its
+  Canvas 2D renderer — see "Share images" below.
 - `supabase/schema.sql` — the Postgres tables + Row-Level Security for accounts
   (run in the Supabase SQL editor; not applied automatically).
 - `data/paints/*.json` — the paint catalogue, one file per brand.
@@ -136,6 +142,59 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   three together if it ever changes.
 - Paint hex values are best-effort; treat data edits as data, and run
   `npm run validate:data`.
+
+## Share images (the poster)
+
+The visualiser's **Share image** button opens a studio that renders the scheme
+over a photo of the model as a 4:5 PNG (1080×1350 logical, exported at 2×) for
+social media: one callout per element, each with the element's banded ramp and
+its paint names, joined by a leader line to a point on the model.
+
+Things to know before changing it:
+
+- **Canvas 2D, hand-rolled, no dependencies.** `next/og` (Satori) was rejected:
+  it supports neither CSS gradients nor blend modes, which is why
+  `opengraph-image.tsx` already draws banded solids and drops overlays entirely.
+  Canvas does both, and running client-side means **the photo never leaves the
+  browser** — there is no upload and no server route.
+- **One renderer for preview and export.** `drawPoster()` takes a `scale`; the
+  preview passes `devicePixelRatio`, the export passes 2. Don't add a second
+  drawing path. Editor-only chrome (grab handles) is drawn by `poster-canvas`
+  *after* `drawPoster`, so it can never reach the PNG.
+- **Anchors are normalised against the source photo, not the poster**, so they
+  stay on the model when the user zooms or pans. `photoRect()` is shared by the
+  renderer and by `projectAnchor`/`unprojectAnchor` — keep it that way.
+- Anchors persist by element **index plus name** (`reconcileAnchors`), because
+  `SchemeElement.id` comes from `uid.ts` and is regenerated every session.
+- Poster state is **not** part of `ExportShape` — schemes stay portable and
+  `canonicalScheme` comparison is unaffected. The photo lives in `localStorage`
+  under `paintdex-poster-v1`, degrading to a smaller re-encode and then to
+  no-photo-at-all rather than losing the anchors to a quota error. Supabase
+  Storage is a later phase.
+- Layout degrades deterministically when callouts don't fit (tighten the gap →
+  truncate paint lists with `+N more` → drop from the end of scheme order) and
+  **always reports what it left out** in `layout.omitted`. Keep it that way; the
+  studio surfaces those reasons to the user.
+- `layoutPoster` takes the whole `PosterOptions` and derives the paint-row pitch
+  itself (`paintRowHeight`), publishing it as `layout.rowHeight` for the renderer
+  to read back. Don't pass a pre-computed pitch alongside the options: showing
+  manufacturers makes rows two lines tall, and a caller that sets `showBrands`
+  but reserves one-line space gets text crushed into the next paint, silently.
+- `ctx.font` can't take a CSS variable — use `resolveFontFamily()` and
+  `await document.fonts.ready`, or the export silently ships in system sans.
+- Two renderer caveats worth knowing: `ctx.letterSpacing` is unsupported in
+  older Safari/Firefox, where the tracked text (element names, the credit line)
+  simply renders untracked rather than breaking; and `setShadow` is ambient
+  state, so anything drawn between a `setShadow(ctx, …)` and its reset inherits
+  the blur — `drawRampStrip` clears it deliberately for exactly that reason.
+- **Placing an anchor is pointer-only.** There is no keyboard path to putting a
+  marker on the model. The modal itself is fine (focus trap, Escape, restore),
+  but this is a real accessibility gap, not an oversight — fixing it needs a
+  keyboard nudge mode, e.g. arrow keys moving the armed element's anchor.
+- The photo persists in `localStorage` under `paintdex-poster-photo-v1`, split
+  from the settings key so panning doesn't re-serialise a megabyte per pointer
+  event. On a shared device the last photo survives a reload; **Remove** clears
+  it.
 
 ## Deploying
 
