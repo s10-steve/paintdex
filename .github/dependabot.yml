@@ -1,0 +1,39 @@
+# Routine dependency bumps. Security fixes arrive separately via Dependabot
+# alerts / security updates (toggled in Settings → Advanced Security); this file
+# is only about keeping ordinary versions from drifting.
+version: 2
+updates:
+  # App dependencies (package.json + package-lock.json).
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    # Batch the low-risk bumps so CI runs once per group and review stays quick.
+    # Majors are deliberately left ungrouped — they usually need real attention.
+    groups:
+      dev-minor-patch:
+        dependency-type: development
+        update-types: ["minor", "patch"]
+      prod-minor-patch:
+        dependency-type: production
+        update-types: ["minor", "patch"]
+    ignore:
+      # next/react/react-dom are pinned to exact versions in package.json and a
+      # major here is a migration, not a bump — take those by hand. Drop these
+      # entries if you'd rather see the PRs anyway.
+      - dependency-name: "next"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+
+  # Actions used by .github/workflows/ci.yml (actions/checkout, setup-node).
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
