@@ -83,25 +83,14 @@ export default async function PaintDetailPage({
 
   const fg = contrastText(paint.hex);
 
-  // Product describes the paint itself (a catalogue entry — no price/offer, so it
-  // won't earn rich-result stars, but the markup is semantically correct and
-  // non-blocking). BreadcrumbList reflects the Home → Browse → paint path.
+  // BreadcrumbList reflects the Home → Browse → paint path. Deliberately not a
+  // Product node: these paints aren't sold on Paintdex (no offers/review/
+  // aggregateRating), and Google validates `@type: "Product"` as a real
+  // product listing regardless of intent, which Search Console was flagging
+  // as a structured-data error on every paint page.
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Product",
-        "@id": `${BASE_URL}/paints/${paint.id}#product`,
-        name: paint.name,
-        brand: { "@type": "Brand", name: paint.brand },
-        category: paint.type,
-        color: paint.hex,
-        ...(paint.code ? { sku: paint.code } : {}),
-        description: `${paint.name} by ${paint.brand} (${
-          paint.ranges ? paint.ranges.join(", ") : paint.range
-        }) — a ${paint.family} ${paint.type} miniature paint, hex ${paint.hex}.`,
-        url: `${BASE_URL}/paints/${paint.id}`,
-      },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
