@@ -215,7 +215,10 @@ export function SchemeVisualiser() {
           className="order-3 lg:order-none lg:col-start-1 lg:row-start-2"
         >
           {user && (
-            <div className="mb-3.5 rounded-md border border-border bg-card">
+            // Wider bottom margin than the rest of the column: this is what
+            // holds the share calls to action apart from the scheme picker, so
+            // they read as their own thing rather than part of "My schemes".
+            <div className="mb-6 rounded-md border border-border bg-card">
               {/* Pick / create the scheme being edited. */}
               <div className="flex flex-wrap items-center gap-2 px-3 py-2">
                 <label htmlFor="saved-schemes" className="text-xs font-medium text-muted-foreground">
@@ -255,46 +258,78 @@ export function SchemeVisualiser() {
                   )}
                 </span>
               </div>
+            </div>
+          )}
 
-              {/* Share the active scheme + jump to full management. */}
-              {activeRow && (
-                <div className="flex flex-wrap items-center gap-2 border-t border-border px-3 py-2 text-xs">
-                  <span className="font-medium text-muted-foreground">Share</span>
+          {/* Share — its own card, deliberately separated from "My schemes"
+              above so the two calls to action are the first thing you see.
+              Always rendered: the image studio works signed out (it reads the
+              localStorage scheme), so gating the whole box on an account would
+              hide the feature from exactly the people most likely to try it. */}
+          <div className="mb-5 rounded-md border border-border bg-card px-3 py-3">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setStudioOpen(true)}
+                disabled={scheme.elements.length === 0}
+                className="flex-1 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Create shareable image
+              </button>
+              <button
+                type="button"
+                onClick={() => void togglePublished()}
+                disabled={!activeRow || shareBusy || activeRow.is_public}
+                className="flex-1 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Create shareable link
+              </button>
+            </div>
+
+            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+              {!activeRow && (
+                <span className="text-muted-foreground">
+                  A shareable image is made in your browser.{" "}
+                  {user
+                    ? "Save this scheme to create a link as well."
+                    : "Sign in to create a shareable link as well."}
+                </span>
+              )}
+              {activeRow?.is_public && activeRow.share_slug && (
+                <>
+                  <span className="inline-flex items-center gap-1 text-green-700 dark:text-green-400">
+                    <span aria-hidden>●</span> Public — anyone with the link can view
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => void copyShareLink()}
+                    className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted"
+                  >
+                    {copied ? "Copied!" : "Copy link"}
+                  </button>
                   <button
                     type="button"
                     onClick={() => void togglePublished()}
                     disabled={shareBusy}
-                    className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+                    className="rounded-md px-2 py-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {activeRow.is_public ? "Stop sharing" : "Create share link"}
+                    Stop sharing
                   </button>
-                  {activeRow.is_public && activeRow.share_slug && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => void copyShareLink()}
-                        className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted"
-                      >
-                        {copied ? "Copied!" : "Copy link"}
-                      </button>
-                      <span className="inline-flex items-center gap-1 text-green-700 dark:text-green-400">
-                        <span aria-hidden>●</span> Public — anyone with the link can view
-                      </span>
-                    </>
-                  )}
-                  {!activeRow.is_public && (
-                    <span className="text-muted-foreground">Private to your account.</span>
-                  )}
-                  <Link
-                    href="/my-schemes"
-                    className="ml-auto text-primary underline-offset-2 hover:underline"
-                  >
-                    Manage in My schemes →
-                  </Link>
-                </div>
+                </>
+              )}
+              {activeRow && !activeRow.is_public && (
+                <span className="text-muted-foreground">Private to your account.</span>
+              )}
+              {activeRow && (
+                <Link
+                  href="/my-schemes"
+                  className="ml-auto text-primary underline-offset-2 hover:underline"
+                >
+                  Manage in My schemes →
+                </Link>
               )}
             </div>
-          )}
+          </div>
 
           {mounted && configured && googleEnabled && !user && (
             <div className="mb-3.5 flex items-start gap-2 rounded-md border border-border bg-card px-3 py-2 text-xs text-muted-foreground">
@@ -337,13 +372,6 @@ export function SchemeVisualiser() {
                 className="rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 Export
-              </button>
-              <button
-                onClick={() => setStudioOpen(true)}
-                title="Make a shareable image: your photo, labelled with this scheme"
-                className="rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                Share image
               </button>
               <button
                 onClick={reset}
