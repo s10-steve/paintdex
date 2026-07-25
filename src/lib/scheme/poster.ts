@@ -106,6 +106,53 @@ export function projectAnchor(
   return { x: r.dx + a.x * r.dw, y: r.dy + a.y * r.dh };
 }
 
+/** Absolute poster pixels → photo-space anchor (0..1). Inverse of `projectAnchor`. */
+export function unprojectAnchor(
+  pt: { x: number; y: number },
+  f: PhotoFraming,
+  w: number,
+  h: number,
+): { x: number; y: number } {
+  const r = photoRect(f, w, h);
+  return { x: (pt.x - r.dx) / r.dw, y: (pt.y - r.dy) / r.dh };
+}
+
+/**
+ * Re-attach persisted anchors to the current elements.
+ *
+ * Anchors are stored by index next to the element name they were placed
+ * against, because element ids are session-only (see `PosterAnchors`). Reordering
+ * elements in the editor must carry the anchors along; renaming or deleting one
+ * must drop its anchor rather than silently move a "Shoulder Pads" label onto
+ * the eye lenses.
+ */
+export function reconcileAnchors(
+  stored: PosterAnchors,
+  storedNames: string[],
+  elements: SchemeElement[],
+): PosterAnchors {
+  const out: PosterAnchors = {};
+  const claimed = new Set<number>();
+
+  for (const key of Object.keys(stored)) {
+    const i = Number(key);
+    const name = storedNames[i];
+    if (name === undefined) continue;
+
+    let target = -1;
+    if (elements[i]?.name === name && !claimed.has(i)) {
+      target = i;
+    } else {
+      target = elements.findIndex((e, j) => e.name === name && !claimed.has(j));
+    }
+    if (target < 0) continue;
+
+    claimed.add(target);
+    out[target] = stored[i];
+  }
+  return out;
+}
+
 /**
  * Anchors keyed by element **index**, not id — `SchemeElement.id` comes from
  * `./uid` and is regenerated every session, so it cannot survive a reload. The
@@ -310,13 +357,16 @@ export function layoutPoster({
   const candidates: Candidate[] = [];
 
   elements.forEach((element, elementIndex) => {
+    // Paints first: an element with nothing in it can never be labelled, so
+    // "add some paints" is the useful thing to say — "not placed yet" would send
+    // the user off to click a marker that would be rejected anyway.
+    if (element.paints.length === 0) {
+      omitted.push({ elementIndex, name: element.name, reason: "no-paints" });
+      return;
+    }
     const a = anchors[elementIndex];
     if (!a) {
       omitted.push({ elementIndex, name: element.name, reason: "unplaced" });
-      return;
-    }
-    if (element.paints.length === 0) {
-      omitted.push({ elementIndex, name: element.name, reason: "no-paints" });
       return;
     }
     const anchor = photo

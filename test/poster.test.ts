@@ -91,6 +91,12 @@ describe("layoutPoster: eligibility", () => {
     ]);
   });
 
+  it("blames the empty paint list, not the missing anchor, for an empty element", () => {
+    // Both are true of a brand-new element; only one is worth acting on.
+    const layout = layoutPoster({ elements: [{ ...element("blank"), paints: [] }], anchors: {} });
+    expect(layout.omitted).toEqual([{ elementIndex: 0, name: "blank", reason: "no-paints" }]);
+  });
+
   it("omits anchors that the current framing has pushed outside the poster", () => {
     const photo: PhotoFraming = {
       naturalWidth: 1000,

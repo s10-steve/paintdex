@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Bar, useBarHover } from "./scheme-bars";
 import { ElementCard, type ElementHandlers } from "./scheme/element-card";
+import { PosterStudio } from "./scheme/poster-studio";
 import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useLocalScheme } from "@/hooks/use-local-scheme";
@@ -144,6 +145,9 @@ export function SchemeVisualiser() {
   /* ---- export / import (no accounts — a JSON file is the save format) ---- */
   const fileRef = useRef<HTMLInputElement>(null);
   const [importError, setImportError] = useState<string | null>(null);
+  // The share-image studio. Mounted only while open so its canvas, its photo
+  // and the localStorage read behind it cost nothing on a normal visit.
+  const [studioOpen, setStudioOpen] = useState(false);
 
   const doExport = () => {
     const blob = new Blob([exportSchemeJSON(scheme)], { type: "application/json" });
@@ -335,6 +339,13 @@ export function SchemeVisualiser() {
                 Export
               </button>
               <button
+                onClick={() => setStudioOpen(true)}
+                title="Make a shareable image: your photo, labelled with this scheme"
+                className="rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                Share image
+              </button>
+              <button
                 onClick={reset}
                 title="Clear the scheme and start fresh"
                 className="rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
@@ -457,6 +468,8 @@ export function SchemeVisualiser() {
           </div>
         </section>
       </div>
+
+      {studioOpen && <PosterStudio scheme={scheme} onClose={() => setStudioOpen(false)} />}
 
       {/* Shared hover tooltip (positioned imperatively; see useBarHover). */}
       {tooltip}
