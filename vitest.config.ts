@@ -8,7 +8,9 @@ export default defineConfig({
     },
   },
   test: {
-    include: ["test/**/*.test.ts"],
+    include: ["test/**/*.test.ts", "test/**/*.test.tsx"],
+    // Node by default — the `src/lib` suites are pure. Component tests opt into
+    // jsdom per file with a `@vitest-environment jsdom` docblock.
     environment: "node",
   },
 });

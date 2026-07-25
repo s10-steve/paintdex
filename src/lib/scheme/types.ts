@@ -16,6 +16,7 @@ export type SchemeRole =
   | "base"
   | "layer"
   | "highlight"
+  | "drybrush"
   | "wash"
   | "glaze"
   | "weathering";
@@ -30,15 +31,33 @@ export interface RoleMeta {
   cssVar: string;
   /** Overlay opacity (overlay roles only). */
   opacity?: number;
+  /**
+   * How an overlay composites over the ramp (overlay roles only).
+   *
+   * `multiply` models a translucent ink — the base tints the result, which is
+   * what a wash or glaze actually does. `normal` models an opaque pigment
+   * sitting *on* the surface, so the paint keeps its own colour; multiplying a
+   * mint oxide over brass would read as brown-green rather than as the paint.
+   */
+  blendMode?: "multiply" | "normal";
 }
 
 export const ROLES: Record<SchemeRole, RoleMeta> = {
   base: { label: "Base", solid: true, weight: 1.4, cssVar: "var(--role-base)" },
   layer: { label: "Layer", solid: true, weight: 1.0, cssVar: "var(--role-layer)" },
   highlight: { label: "Highlight", solid: true, weight: 0.55, cssVar: "var(--role-highlight)" },
-  wash: { label: "Wash", solid: false, weight: 1.0, cssVar: "var(--role-wash)", opacity: 0.62 },
-  glaze: { label: "Glaze", solid: false, weight: 1.0, cssVar: "var(--role-glaze)", opacity: 0.48 },
-  weathering: { label: "Weathering", solid: false, weight: 0.8, cssVar: "var(--role-weathering)", opacity: 0.8 },
+  // Drybrushing reads as a highlight pass — same ramp behaviour and share of the
+  // bar, kept as its own role so a recipe can say which technique was used.
+  drybrush: { label: "Drybrush", solid: true, weight: 0.55, cssVar: "var(--role-drybrush)" },
+  // Washes and glazes are translucent inks: the colour beneath tints the result,
+  // which is what `multiply` models.
+  wash: { label: "Wash", solid: false, weight: 1.0, cssVar: "var(--role-wash)", opacity: 0.62, blendMode: "multiply" },
+  glaze: { label: "Glaze", solid: false, weight: 1.0, cssVar: "var(--role-glaze)", opacity: 0.48, blendMode: "multiply" },
+  // Weathering effects (rust streaks, verdigris, copper patina) are opaque
+  // pigments sitting on the surface rather than inks tinted by it, so they
+  // composite normally and keep their own colour — multiplying something like
+  // Nihilakh Oxide over brass reads as brown-green instead of as the paint.
+  weathering: { label: "Weathering", solid: false, weight: 1.0, cssVar: "var(--role-weathering)", opacity: 0.8, blendMode: "normal" },
 };
 
 /** Role keys in display order (drives the role `<select>`). */

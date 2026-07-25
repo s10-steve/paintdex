@@ -5,6 +5,47 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`drybrush` role** in the scheme visualiser. It reads as a highlight pass —
+  same ramp behaviour and share of the bar — but is its own role so a recipe can
+  say which technique was used.
+- First **component tests** (`test/scheme-visualiser.test.tsx`, jsdom +
+  `@testing-library/react`), covering the sign-in reconciliation wiring — the one
+  path where a bug silently loses a user's work. The suite still runs in node by
+  default; component tests opt into jsdom per file.
+
+### Changed
+
+- **The visualiser now defaults to the banded (unblended) view**, which shows
+  each paint as a discrete step and reads as a recipe rather than a gradient. The
+  toggle still switches to the blended view, and the choice is remembered. The
+  public shared-scheme viewer is banded to match.
+- **Overlay bands are easier to read.** In the banded view every overlay
+  (wash/glaze/weathering) is a 14px band rather than 8px. Weathering also takes
+  the same share of the bar as a wash or glaze when blended, instead of being
+  narrower than both.
+- **Weathering keeps its own colour.** Overlays were all composited with
+  `multiply`, which models a translucent ink tinted by the colour beneath. That's
+  right for a wash or glaze, but wrong for weathering effects — opaque pigments
+  sitting *on* the surface. Multiplying Nihilakh Oxide (`#66B39A`) over brass
+  produced `#434530`, a brown-green nothing like the paint. Weathering now
+  composites normally at 80% opacity, so it reads as itself while still letting a
+  little of the base through; washes and glazes keep multiplying as before.
+- `scheme-visualiser.tsx` split up (1,175 → 465 lines): its presentational pieces
+  moved to `src/components/scheme/`, and its state layers to hooks in
+  `src/hooks/` — `use-local-scheme`, `use-scheme-sync`, `use-scheme-share`. The
+  browse-index fetch, previously duplicated across four components, is now the
+  shared `useBrowseIndex()` hook, and the role pill is shared with the public
+  viewer instead of being duplicated there.
+
+### Fixed
+
+- An overlay band landing at the very top or bottom of a bar is no longer
+  half-clipped by the bar's rounded edge.
+
 ## [0.6.0] - 2026-07-22
 
 ### Added

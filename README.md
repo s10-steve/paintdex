@@ -21,8 +21,9 @@ schemes, sync them across devices, and share them by link.
 - **Paint scheme visualiser.** Plan a miniature's colour scheme on
   `/visualiser`: Group your paints by element (armour, robes, lenses, etc) and
   preview every element's colours as aligned, optionally-blended vertical bars.
-  Paints carry a role (base, layer, highlight, wash, glaze, weathering) and a
-  weight; each element's bar is sized by its order — largest-area element first.
+  Paints carry a role (base, layer, highlight, drybrush, wash, glaze,
+  weathering) and a weight; each element's bar is sized by its order —
+  largest-area element first.
   Search the database to add a paint or enter a custom name + hex. Schemes
   autosave in your browser and export/import as JSON — or sync to your account
   when signed in.
@@ -120,17 +121,6 @@ Brand and product names are trademarks of their respective owners.
 
 Ideas we'd love help with — see [`CONTRIBUTING.md`](CONTRIBUTING.md) if you want
 to pick one up. Shipped work is tracked in [`CHANGELOG.md`](CHANGELOG.md).
-
-### Minor tweaks and fixes
-
-- [ ] Default the scheme UI to show the unblended version.
-- [ ] In the unblended version, the glaze and weathering bars are too narrow.
-      Make them the same width as the wash bar.
-- [ ] Add a 'drybrush' role to the scheme visualiser, it should behave the same
-      as a highlight role.
-- [ ] Update weathering setting to be much less transparent than washes and
-      glazes. Something like rust streaks or copper patina are usually much more
-      visible than a glaze or a wash.
 
 ### Social sharing features
 

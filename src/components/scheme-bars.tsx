@@ -36,6 +36,13 @@ export function paintLabel(p: SchemePaint): string {
   return `${roleOf(p).label}: ${p.name} (${p.hex.toUpperCase()})`;
 }
 
+/**
+ * Height of an overlay band in the banded (unblended) view, in px. Every overlay
+ * role gets the same band — the role is told apart by colour and opacity, not
+ * thickness — and this is the default view, so it needs to read clearly.
+ */
+const BANDED_OVERLAY_PX = 14;
+
 export const EMPTY_BAR_STYLE: CSSProperties = {
   background:
     "repeating-linear-gradient(-45deg, var(--muted), var(--muted) 7px, var(--border) 7px, var(--border) 14px)",
@@ -175,9 +182,13 @@ export function Bar({
               background: `linear-gradient(to top, transparent, ${ov.paint.hex} 50%, transparent)`,
             };
           } else {
+            // A crisp band matching the ramp's hard steps. `max`/`min` keep it
+            // inside the bar, so an overlay landing at the very top or bottom
+            // isn't half-clipped by the rounded edge.
+            const half = BANDED_OVERLAY_PX / 2;
             placement = {
-              bottom: `calc(${(center * 100).toFixed(2)}% - 4px)`,
-              height: "8px",
+              bottom: `max(0px, min(calc(100% - ${BANDED_OVERLAY_PX}px), calc(${(center * 100).toFixed(2)}% - ${half}px)))`,
+              height: `${BANDED_OVERLAY_PX}px`,
               background: ov.paint.hex,
             };
           }
@@ -186,7 +197,9 @@ export function Bar({
               key={ov.paint.id}
               role="img"
               aria-label={paintLabel(ov.paint)}
-              className="absolute inset-x-0 mix-blend-multiply"
+              className={`absolute inset-x-0 ${
+                roleOf(ov.paint).blendMode === "normal" ? "" : "mix-blend-multiply"
+              }`}
               style={{
                 ...placement,
                 opacity: roleOf(ov.paint).opacity,

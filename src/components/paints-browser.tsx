@@ -9,6 +9,7 @@ import {
   type PaintType,
 } from "@/lib/paints/types";
 import { COLOUR_FAMILIES } from "@/lib/color";
+import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { PaintCard } from "./paint-card";
 import { FacetGroup } from "./facet-group";
 
@@ -23,11 +24,6 @@ const SORTS: { value: SortKey; label: string }[] = [
 function parseList(v: string | null): string[] {
   return v ? v.split(",").filter(Boolean) : [];
 }
-
-// The dataset is served as a cacheable static asset (precomputed by
-// `scripts/build-browse-index.ts`) and fetched at runtime, so it never enters
-// the client JS bundle. See the loader effect below.
-export const BROWSE_INDEX_URL = "/browse-index.json";
 
 /** Derive the full facet lists (every present value) from the loaded dataset. */
 function computeFacets(paints: BrowsePaint[]) {
@@ -107,31 +103,8 @@ export function PaintsBrowser() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Load the dataset from the static asset once on mount (null = still loading).
-  const [paints, setPaints] = useState<BrowsePaint[] | null>(null);
-  const [loadError, setLoadError] = useState(false);
-  useEffect(() => {
-    let cancelled = false;
-    fetch(BROWSE_INDEX_URL)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<BrowsePaint[]>;
-      })
-      .then((data) => {
-        if (!cancelled) setPaints(data);
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setLoadError(true);
-          setPaints([]);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const loading = paints === null;
+  // The dataset is fetched from the static asset once on mount.
+  const { paints, loadError, loading } = useBrowseIndex();
   const facets = useMemo(() => computeFacets(paints ?? []), [paints]);
 
   // Filters derived from the URL (shareable + back/forward friendly).

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SchemeVisualiser } from "@/components/scheme-visualiser";
-import { BROWSE_INDEX_URL } from "@/components/paints-browser";
+import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
 
 export const metadata: Metadata = {
   title: "Scheme visualiser",

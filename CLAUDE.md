@@ -47,7 +47,7 @@ npm ci                 # install (reproducible; use over `npm install`)
 npm run dev            # dev server on :3000 (predev builds the indexes first)
 npm run build          # production build (prebuild builds the indexes first)
 npm run lint           # ESLint
-npm run test           # Vitest unit tests (colour maths, filtering, scheme io)
+npm run test           # Vitest tests (colour maths, filtering, scheme io + sync)
 npm run validate:data  # validate data/paints/*.json against the Zod schema
 ```
 
@@ -82,8 +82,15 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `mobile-nav`, `profile-nav` (signed-in-only header links), etc.), plus `auth/`
   (`auth-provider` with the `useAuth` hook + Google Identity Services init;
   `sign-in-button`) and `profile/` (`schemes-manager` for `/my-schemes`,
-  `paints-placeholder` for `/my-paints`, and the shared `signed-in-gate`). The
-  theme follows the system setting (no manual toggle).
+  `paints-placeholder` for `/my-paints`, and the shared `signed-in-gate`), and
+  `scheme/` (the visualiser's presentational pieces: `element-card`, `layer-row`,
+  `add-paint`, `icon-btn`, `role-tag`). The theme follows the system setting (no
+  manual toggle).
+- `src/hooks/` — stateful React logic shared between components or lifted out of
+  one: `use-browse-index` (loads the catalogue; used by all four views that need
+  it), and the visualiser's three state layers — `use-local-scheme`
+  (`localStorage`), `use-scheme-sync` (accounts, sign-in reconciliation,
+  autosave), `use-scheme-share` (publishing a share link).
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
   contrast, colour families), `paints/` (load, filter, types), `scheme/` (bar
   maths, JSON import/export, types). Also `supabase/` (browser client +
@@ -96,7 +103,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `data/paints/*.json` — the paint catalogue, one file per brand.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
   `validate-data.ts`, `import-source.mjs`.
-- `test/` — Vitest suites for the `src/lib` logic.
+- `test/` — Vitest suites for the `src/lib` logic, plus
+  `scheme-visualiser.test.tsx`, which covers the sign-in reconciliation wiring
+  (the one place a bug loses user data). The environment is `node` by default;
+  component tests opt into jsdom with a per-file `@vitest-environment jsdom`
+  docblock, so the pure suites stay fast.
 - `src/types/gis.d.ts` — minimal typings for the Google Identity Services lib.
 - `.env.example` — the three `NEXT_PUBLIC_*` vars accounts need (Supabase URL +
   anon key, Google client id).
