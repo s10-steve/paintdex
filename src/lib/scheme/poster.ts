@@ -437,8 +437,11 @@ export function layoutPoster({
     const kept = candidates.filter((_, i) => keptSet.has(i));
     const dropped = candidates.filter((_, i) => !keptSet.has(i));
 
-    for (const gap of [GAP, GAP_TIGHT]) {
-      for (const tier of PAINT_TIERS) {
+    // Tier outer, gap inner: every gap is tried before any paint name is cut.
+    // Nested the other way round, all the truncation tiers were exhausted at the
+    // loose gap first, so a callout lost paints to save 12px of whitespace.
+    for (const tier of PAINT_TIERS) {
+      for (const gap of [GAP, GAP_TIGHT]) {
         const make = (side: PosterSide) =>
           kept
             .filter((c) => c.side === side)

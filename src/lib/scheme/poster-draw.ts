@@ -140,6 +140,10 @@ export function drawRampStrip(
   theme: PosterTheme,
 ) {
   ctx.save();
+  // Drawn without the caller's text shadow: a blurred copy of every overlay
+  // band underneath the strip muddies the ramp. The ring below opts back in, so
+  // the strip still separates from a busy photo.
+  setShadow(ctx, null);
   ctx.beginPath();
   ctx.roundRect(x, y, w, h, STRIP_RADIUS);
   ctx.clip();
@@ -183,6 +187,7 @@ export function drawRampStrip(
   ctx.restore();
 
   ctx.save();
+  setShadow(ctx, theme.textShadow);
   ctx.beginPath();
   ctx.roundRect(x + 0.5, y + 0.5, w - 1, h - 1, STRIP_RADIUS - 0.5);
   ctx.strokeStyle = theme.stripRing;

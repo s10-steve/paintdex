@@ -182,6 +182,19 @@ Things to know before changing it:
   but reserves one-line space gets text crushed into the next paint, silently.
 - `ctx.font` can't take a CSS variable — use `resolveFontFamily()` and
   `await document.fonts.ready`, or the export silently ships in system sans.
+- Two renderer caveats worth knowing: `ctx.letterSpacing` is unsupported in
+  older Safari/Firefox, where the tracked text (element names, the credit line)
+  simply renders untracked rather than breaking; and `setShadow` is ambient
+  state, so anything drawn between a `setShadow(ctx, …)` and its reset inherits
+  the blur — `drawRampStrip` clears it deliberately for exactly that reason.
+- **Placing an anchor is pointer-only.** There is no keyboard path to putting a
+  marker on the model. The modal itself is fine (focus trap, Escape, restore),
+  but this is a real accessibility gap, not an oversight — fixing it needs a
+  keyboard nudge mode, e.g. arrow keys moving the armed element's anchor.
+- The photo persists in `localStorage` under `paintdex-poster-photo-v1`, split
+  from the settings key so panning doesn't re-serialise a megabyte per pointer
+  event. On a shared device the last photo survives a reload; **Remove** clears
+  it.
 
 ## Deploying
 

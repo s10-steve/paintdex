@@ -229,6 +229,29 @@ describe("layoutPoster: degradation", () => {
     expect(layout.omitted).toEqual([]);
   });
 
+  it("would rather close the gap than drop a paint name", () => {
+    // The test above can't actually tell the two orders apart: with uniform
+    // 3-paint elements every PAINT_TIERS entry produces the same callout height
+    // (`tier: 2` still costs three rows once the "+N more" row is added), so it
+    // passes whether gaps or truncation are tried first.
+    //
+    // This fixture can. One long element among several short ones overflows at
+    // GAP and fits, whole, at GAP_TIGHT — so truncating it is a strictly worse
+    // outcome that the packer must not reach for first.
+    const elements = [element("long", 8), ...Array.from({ length: 6 }, (_, i) => element(`short${i}`, 1))];
+    const anchors: PosterAnchors = {};
+    elements.forEach((_, i) => {
+      anchors[i] = { x: 0.2, y: (i + 0.5) / elements.length };
+    });
+
+    const layout = layoutPoster({ elements, anchors, options: LEAN });
+
+    expect(layout.gap).toBe(GAP_TIGHT);
+    expect(layout.callouts).toHaveLength(elements.length);
+    expect(layout.callouts.every((c) => c.hiddenCount === 0)).toBe(true);
+    expect(layout.omitted).toEqual([]);
+  });
+
   it("truncates paint lists before dropping a callout, and says how many are hidden", () => {
     const elements = Array.from({ length: 5 }, (_, i) => element(`e${i}`, 8));
     const anchors: PosterAnchors = {};

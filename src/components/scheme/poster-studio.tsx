@@ -54,7 +54,9 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
   const [armed, setArmed] = useState<number | null>(null);
   const [highlight, setHighlight] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -67,6 +69,43 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [armed, onClose]);
+
+  /**
+   * Modal behaviour: lock the background, move focus in, keep Tab inside, and
+   * hand focus back to whatever opened it. Without the trap, tabbing walks off
+   * into the visualiser sitting behind the overlay, which is both confusing and
+   * unreachable-looking.
+   */
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onTab);
+    return () => {
+      window.removeEventListener("keydown", onTab);
+      document.body.style.overflow = overflow;
+      opener?.focus?.();
+    };
+  }, []);
 
   // Memoised, not just derived: a fresh object each render would defeat the
   // `layout` memo below, and the canvas redraws whenever `layout` changes — so
@@ -108,6 +147,7 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
 
   const download = useCallback(async () => {
     setBusy(true);
+    setDownloadError(null);
     try {
       // Geist is loaded through next/font; drawing before it resolves silently
       // exports in the platform sans instead.
@@ -116,7 +156,10 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
       canvas.width = POSTER_SIZE.width * EXPORT_SCALE;
       canvas.height = POSTER_SIZE.height * EXPORT_SCALE;
       const ctx = canvas.getContext("2d");
-      if (!ctx) return;
+      if (!ctx) {
+        setDownloadError("Couldn't render the image in this browser.");
+        return;
+      }
 
       drawPoster(ctx, {
         layout,
@@ -127,7 +170,10 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
       });
 
       const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/png"));
-      if (!blob) return;
+      if (!blob) {
+        setDownloadError("Couldn't render the image — it may be too large for this browser.");
+        return;
+      }
       // Same download idiom as the scheme's JSON export in `scheme-visualiser`.
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -144,6 +190,7 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-label="Share image"
@@ -155,6 +202,7 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
           {placedCount} of {scheme.elements.length} elements labelled
         </span>
         <button
+          ref={closeRef}
           type="button"
           onClick={onClose}
           className="ml-auto rounded-md border border-border px-2.5 py-1 text-xs transition-colors hover:bg-muted"
@@ -407,9 +455,15 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
             >
               {busy ? "Rendering…" : "Download PNG"}
             </button>
-            <p className="mt-1.5 text-center text-[11px] text-muted-foreground">
-              {POSTER_SIZE.width * EXPORT_SCALE} × {POSTER_SIZE.height * EXPORT_SCALE} · 4:5
-            </p>
+            {downloadError ? (
+              <p className="mt-1.5 text-center text-[11px] text-red-600 dark:text-red-400" role="alert">
+                {downloadError}
+              </p>
+            ) : (
+              <p className="mt-1.5 text-center text-[11px] text-muted-foreground">
+                {POSTER_SIZE.width * EXPORT_SCALE} × {POSTER_SIZE.height * EXPORT_SCALE} · 4:5
+              </p>
+            )}
           </div>
         </div>
       </div>

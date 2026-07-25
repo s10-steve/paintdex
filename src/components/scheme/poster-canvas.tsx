@@ -124,8 +124,15 @@ export function PosterCanvas({
     (index: number, pt: { x: number; y: number }) => {
       if (!framing) return;
       const a = unprojectAnchor(pt, framing, POSTER_SIZE.width, POSTER_SIZE.height);
-      // Keep the existing side override, if the user set one.
-      onPlace(index, { ...a, side: anchors[index]?.side });
+      // Clamp to the photo: dragging a marker past the edge would otherwise put
+      // it out of frame, where `layoutPoster` drops the callout entirely and the
+      // label just disappears mid-drag.
+      onPlace(index, {
+        x: Math.max(0, Math.min(1, a.x)),
+        y: Math.max(0, Math.min(1, a.y)),
+        // Keep the existing side override, if the user set one.
+        side: anchors[index]?.side,
+      });
     },
     [framing, anchors, onPlace],
   );
