@@ -17,8 +17,10 @@ export const metadata: Metadata = {
   // `absolute` opts out of the "%s · Paintdex" template so the homepage keeps its
   // full standalone title rather than getting a suffix.
   title: {
-    absolute: "Paintdex — miniature paint database & colour scheme visualiser",
+    absolute: "Paintdex — compare miniature paints & find alternatives",
   },
+  description:
+    "Compare miniature paint colours across brands, find alternatives to any paint with perceptual colour matching, and plan whole paint schemes.",
   alternates: { canonical: "/" },
 };
 
@@ -33,7 +35,7 @@ const websiteJsonLd = {
       url: `${BASE_URL}/`,
       name: "Paintdex",
       description:
-        "Search a database of miniature paints with hex colour values, find visually similar colours across brands, plan and share whole paint schemes.",
+        "Compare miniature paints across brands with hex colour values, find alternatives with perceptual colour matching, plan and share whole paint schemes.",
       publisher: { "@id": `${BASE_URL}/#organization` },
       potentialAction: {
         "@type": "SearchAction",
@@ -88,11 +90,11 @@ export default function Home() {
       <JsonLd data={websiteJsonLd} />
       <section className="mx-auto max-w-4xl px-4 py-10 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          Find the right miniature paint
+          Compare miniature paints & find alternatives
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Search a database of miniature paints with hex colour values, find
-          visually similar colours across brands, plan and share whole paint schemes.
+          Search a database of miniature paints with hex colour values, compare
+          colours across brands to find alternatives, plan and share whole paint schemes.
         </p>
 
         <HomeSearch />

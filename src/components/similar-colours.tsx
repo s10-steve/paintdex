@@ -286,7 +286,7 @@ export function SimilarColours({
     <section aria-labelledby="similar-heading">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <h2 id="similar-heading" className="text-lg font-semibold">
-          Similar colours
+          {target.name} alternatives
         </h2>
         <button
           type="button"
@@ -327,7 +327,7 @@ export function SimilarColours({
             </ul>
           ) : items.length === 0 ? (
             <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-              No similar colours match these filters. Try widening them.
+              No alternatives match these filters. Try widening them.
             </div>
           ) : (
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
