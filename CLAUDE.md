@@ -197,7 +197,15 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   signed-in path asserts `confirm` is *never* called.
 - The share-image section on the homepage uses `public/sample-poster.jpg`, a real
   export from the studio (not a re-render), so it can't drift from what the
-  feature actually produces.
+  feature actually produces. **It is paired with the `death-guard-30k` preset** —
+  the scheme that painted the model in that photo — and its caption and CTA both
+  say so. There is a separate, unrelated `death-guard` (40K) preset, so if you
+  repoint that CTA, check you aren't captioning the photo with a recipe that
+  didn't paint it.
+- `Bar`'s `min-w-[56px]` floor is sized so a one-word element name fits on one
+  line ("Tentacles" needs 54px). Lower it and long names split mid-word, because
+  `break-words` is the only thing stopping them overflowing into the next bar and
+  `hyphens: auto` can't help — hyphenation doesn't apply to an emergency break.
 
 ## Share images (the poster)
 

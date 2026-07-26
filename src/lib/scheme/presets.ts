@@ -119,11 +119,315 @@ const ref = (
  */
 export const SCHEME_PRESETS: PresetSpec[] = [
   {
-    // Contributed by @kasperhawser, who also supplied the sample share image on
-    // the homepage — hence the four brands and the weathering passes. Roles and
-    // the one explicit weight come straight from their exported scheme.
+    // Contributed by @s10-steve. Note "Gold trim" opens on a layer rather than a
+    // base — metallics are often laid straight over a dark undercoat.
+    slug: "ultramarines",
+    title: "Ultramarines",
+    elements: [
+      {
+        name: "Armour plates",
+        paints: [
+          ref("citadel-macragge-blue-base", "base", { name: "Macragge Blue", brand: "Citadel", range: "Base", hex: "#0F3D7C" }),
+          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
+          ref("citadel-calgar-blue", "layer", { name: "Calgar Blue", brand: "Citadel", range: "Layer", hex: "#2A497F" }),
+          ref("citadel-fenrisian-grey", "highlight", { name: "Fenrisian Grey", brand: "Citadel", range: "Layer", hex: "#6D94B3" }),
+        ],
+      },
+      {
+        name: "Gold trim",
+        paints: [
+          ref("citadel-retributor-armour", "layer", { name: "Retributor Armour", brand: "Citadel", range: "Base", hex: "#EDC169" }),
+          ref("citadel-reikland-fleshshade", "wash", { name: "Reikland Fleshshade", brand: "Citadel", range: "Shade", hex: "#7E3226" }),
+          ref("citadel-auric-armour-gold", "layer", { name: "Auric Armour Gold", brand: "Citadel", range: "Layer", hex: "#FFC451" }),
+          ref("citadel-stormhost-silver", "highlight", { name: "Stormhost Silver", brand: "Citadel", range: "Layer", hex: "#DADDDF" }, { weight: 0.3 }),
+        ],
+      },
+      {
+        name: "Bare steel",
+        paints: [
+          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
+          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
+          ref("citadel-runefang-steel", "drybrush", { name: "Runefang Steel", brand: "Citadel", range: "Layer", hex: "#C2C8CC" }),
+        ],
+      },
+      {
+        name: "Black rubber",
+        paints: [
+          ref("citadel-abaddon-black", "base", { name: "Abaddon Black", brand: "Citadel", range: "Base", hex: "#000000" }),
+          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
+          ref("citadel-dawnstone", "layer", { name: "Dawnstone", brand: "Citadel", range: "Layer", hex: "#697068" }),
+        ],
+      },
+      {
+        name: "Warm leather",
+        paints: [
+          ref("citadel-doombull-brown", "base", { name: "Doombull Brown", brand: "Citadel", range: "Layer", hex: "#570003" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-wazdakka-red", "layer", { name: "Wazdakka Red", brand: "Citadel", range: "Layer", hex: "#880804" }),
+          ref("citadel-squig-orange", "highlight", { name: "Squig Orange", brand: "Citadel", range: "Layer", hex: "#A74D42" }),
+        ],
+      },
+      {
+        name: "Purity seals",
+        paints: [
+          ref("citadel-zandri-dust", "base", { name: "Zandri Dust", brand: "Citadel", range: "Base", hex: "#988E56" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-ushabti-bone", "layer", { name: "Ushabti Bone", brand: "Citadel", range: "Layer", hex: "#ABA173" }),
+          ref("citadel-screaming-skull", "highlight", { name: "Screaming Skull", brand: "Citadel", range: "Layer", hex: "#B9C099" }),
+        ],
+      },
+      {
+        name: "Eye lenses",
+        paints: [
+          ref("citadel-mephiston-red", "base", { name: "Mephiston Red", brand: "Citadel", range: "Base", hex: "#960C09" }),
+          ref("citadel-evil-sunz-scarlet", "layer", { name: "Evil Sunz Scarlet", brand: "Citadel", range: "Layer", hex: "#C01411" }),
+          ref("citadel-yriel-yellow", "highlight", { name: "Yriel Yellow", brand: "Citadel", range: "Layer", hex: "#FFD900" }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }, { weight: 0.3 }),
+        ],
+      },
+    ],
+  },
+  {
+    // Contributed by @s10-steve. Ten elements — the widest preset, and the one to
+    // check first if the carousel's bar row ever needs to fit more.
     slug: "death-guard",
     title: "Death Guard",
+    elements: [
+      {
+        name: "Green armour",
+        paints: [
+          ref("citadel-death-guard-green", "base", { name: "Death Guard Green", brand: "Citadel", range: "Spray", hex: "#556229" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-elysian-green", "layer", { name: "Elysian Green", brand: "Citadel", range: "Layer", hex: "#6B8C37" }),
+          ref("citadel-ogryn-camo", "highlight", { name: "Ogryn Camo", brand: "Citadel", range: "Layer", hex: "#96A648" }),
+          ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }, { weight: 1.6 }),
+        ],
+      },
+      {
+        name: "Brass",
+        paints: [
+          ref("scale-75-decayed-metal", "base", { name: "Decayed Metal", brand: "Scale 75", range: "Metal N Alchemy Range", hex: "#5D4038" }, { weight: 1.35 }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("scale-75-old-copper", "layer", { name: "Old Copper", brand: "Scale 75", range: "Metal N Alchemy Range", hex: "#97604C" }, { weight: 1.3 }),
+          ref("citadel-nihilakh-oxide", "layer", { name: "Nihilakh Oxide", brand: "Citadel", range: "Technical", hex: "#66B39A" }, { weight: 0.3 }),
+        ],
+      },
+      {
+        name: "Cloth",
+        paints: [
+          ref("citadel-screamer-pink", "base", { name: "Screamer Pink", brand: "Citadel", range: "Base", hex: "#7A0E44" }),
+          ref("citadel-carroburg-crimson", "wash", { name: "Carroburg Crimson", brand: "Citadel", range: "Shade", hex: "#752455" }),
+          ref("citadel-pink-horror", "layer", { name: "Pink Horror", brand: "Citadel", range: "Layer", hex: "#8E2757" }),
+          ref("citadel-slaanesh-grey", "highlight", { name: "Slaanesh Grey", brand: "Citadel", range: "Layer", hex: "#8B8893" }),
+        ],
+      },
+      {
+        name: "Silver",
+        paints: [
+          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }, { weight: 0.85 }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }, { weight: 1.8 }),
+          ref("citadel-stormhost-silver", "highlight", { name: "Stormhost Silver", brand: "Citadel", range: "Layer", hex: "#DADDDF" }),
+          ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }),
+        ],
+      },
+      {
+        name: "Leather",
+        paints: [
+          ref("citadel-rhinox-hide", "base", { name: "Rhinox Hide", brand: "Citadel", range: "Base", hex: "#462F30" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-doombull-brown", "layer", { name: "Doombull Brown", brand: "Citadel", range: "Layer", hex: "#570003" }),
+          ref("citadel-skrag-brown", "layer", { name: "Skrag Brown", brand: "Citadel", range: "Layer", hex: "#8B4806" }),
+        ],
+      },
+      {
+        name: "Bone",
+        paints: [
+          ref("citadel-zandri-dust", "base", { name: "Zandri Dust", brand: "Citadel", range: "Base", hex: "#988E56" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-ushabti-bone", "layer", { name: "Ushabti Bone", brand: "Citadel", range: "Layer", hex: "#ABA173" }),
+          ref("citadel-screaming-skull", "layer", { name: "Screaming Skull", brand: "Citadel", range: "Layer", hex: "#B9C099" }),
+        ],
+      },
+      {
+        name: "Wood",
+        paints: [
+          ref("citadel-dryad-bark", "base", { name: "Dryad Bark", brand: "Citadel", range: "Base", hex: "#2B2A24" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-gorthor-brown", "layer", { name: "Gorthor Brown", brand: "Citadel", range: "Layer", hex: "#5F463F" }),
+        ],
+      },
+      {
+        name: "Smoke",
+        paints: [
+          ref("citadel-celestra-grey", "base", { name: "Celestra Grey", brand: "Citadel", range: "Base", hex: "#8BA3A3" }),
+          ref("citadel-coelia-greenshade", "wash", { name: "Coelia Greenshade", brand: "Citadel", range: "Shade", hex: "#2B5D58" }, { weight: 1.95 }),
+          ref("citadel-ulthuan-grey", "layer", { name: "Ulthuan Grey", brand: "Citadel", range: "Layer", hex: "#C4DDD5" }),
+          ref("citadel-white-scar", "layer", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }),
+        ],
+      },
+      {
+        name: "Tentacles",
+        paints: [
+          ref("citadel-screamer-pink", "base", { name: "Screamer Pink", brand: "Citadel", range: "Base", hex: "#7A0E44" }),
+          ref("citadel-carroburg-crimson", "wash", { name: "Carroburg Crimson", brand: "Citadel", range: "Shade", hex: "#752455" }),
+          ref("citadel-emperor-children", "layer", { name: "Emperor Children", brand: "Citadel", range: "Layer", hex: "#B74073" }),
+        ],
+      },
+      {
+        name: "Lenses",
+        paints: [
+          ref("citadel-jokaero-orange", "base", { name: "Jokaero Orange", brand: "Citadel", range: "Base", hex: "#ED3814" }),
+          ref("citadel-troll-slayer-orange", "layer", { name: "Troll Slayer Orange", brand: "Citadel", range: "Layer", hex: "#F16C23" }),
+          ref("citadel-fire-dragon-bright", "layer", { name: "Fire Dragon Bright", brand: "Citadel", range: "Layer", hex: "#F4874E" }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }),
+        ],
+      },
+    ],
+  },
+  {
+    // Three reds stacked into a bright crimson ramp, with green lenses for contrast.
+    slug: "blood-angels",
+    title: "Blood Angels",
+    elements: [
+      {
+        name: "Armour plates",
+        paints: [
+          ref("citadel-mephiston-red", "base", { name: "Mephiston Red", brand: "Citadel", range: "Base", hex: "#960C09" }),
+          ref("citadel-carroburg-crimson", "wash", { name: "Carroburg Crimson", brand: "Citadel", range: "Shade", hex: "#752455" }),
+          ref("citadel-evil-sunz-scarlet", "layer", { name: "Evil Sunz Scarlet", brand: "Citadel", range: "Layer", hex: "#C01411" }),
+          ref("citadel-wild-rider-red", "highlight", { name: "Wild Rider Red", brand: "Citadel", range: "Layer", hex: "#E82E1B" }),
+        ],
+      },
+      {
+        name: "Gold trim",
+        paints: [
+          ref("citadel-retributor-armour", "base", { name: "Retributor Armour", brand: "Citadel", range: "Base", hex: "#EDC169" }),
+          ref("citadel-reikland-fleshshade", "wash", { name: "Reikland Fleshshade", brand: "Citadel", range: "Shade", hex: "#7E3226" }),
+          ref("citadel-auric-armour-gold", "layer", { name: "Auric Armour Gold", brand: "Citadel", range: "Layer", hex: "#FFC451" }),
+          ref("citadel-stormhost-silver", "highlight", { name: "Stormhost Silver", brand: "Citadel", range: "Layer", hex: "#DADDDF" }, { weight: 0.3 }),
+        ],
+      },
+      {
+        name: "Weapon casings",
+        paints: [
+          ref("citadel-abaddon-black", "base", { name: "Abaddon Black", brand: "Citadel", range: "Base", hex: "#000000" }),
+          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
+          ref("citadel-eshin-grey", "layer", { name: "Eshin Grey", brand: "Citadel", range: "Layer", hex: "#484B4E" }),
+          ref("citadel-dawnstone", "highlight", { name: "Dawnstone", brand: "Citadel", range: "Layer", hex: "#697068" }),
+        ],
+      },
+      {
+        name: "Bare steel",
+        paints: [
+          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
+          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
+          ref("citadel-runefang-steel", "drybrush", { name: "Runefang Steel", brand: "Citadel", range: "Layer", hex: "#C2C8CC" }),
+        ],
+      },
+      {
+        name: "Parchment",
+        paints: [
+          ref("citadel-zandri-dust", "base", { name: "Zandri Dust", brand: "Citadel", range: "Base", hex: "#988E56" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-ushabti-bone", "layer", { name: "Ushabti Bone", brand: "Citadel", range: "Layer", hex: "#ABA173" }),
+          ref("citadel-screaming-skull", "highlight", { name: "Screaming Skull", brand: "Citadel", range: "Layer", hex: "#B9C099" }),
+        ],
+      },
+      {
+        name: "Bone insignia",
+        paints: [
+          ref("citadel-rakarth-flesh", "base", { name: "Rakarth Flesh", brand: "Citadel", range: "Base", hex: "#9C998D" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-pallid-wych-flesh", "layer", { name: "Pallid Wych Flesh", brand: "Citadel", range: "Layer", hex: "#CACCBB" }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }, { weight: 0.3 }),
+        ],
+      },
+      {
+        name: "Eye lenses",
+        paints: [
+          ref("citadel-caliban-green", "base", { name: "Caliban Green", brand: "Citadel", range: "Base", hex: "#003D15" }),
+          ref("citadel-warpstone-glow", "layer", { name: "Warpstone Glow", brand: "Citadel", range: "Layer", hex: "#0F702A" }),
+          ref("citadel-moot-green", "layer", { name: "Moot Green", brand: "Citadel", range: "Layer", hex: "#3DAF44" }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }, { weight: 0.3 }),
+        ],
+      },
+    ],
+  },
+  {
+    // Almost entirely shades, drybrushes and weathering over metal — the scheme that
+    // best shows what the overlay roles do to a bar.
+    slug: "necrons",
+    title: "Necrons",
+    elements: [
+      {
+        name: "Metal body",
+        paints: [
+          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
+          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
+          ref("citadel-ironbreaker", "layer", { name: "Ironbreaker", brand: "Citadel", range: "Layer", hex: "#899092" }),
+          ref("citadel-runefang-steel", "drybrush", { name: "Runefang Steel", brand: "Citadel", range: "Layer", hex: "#C2C8CC" }, { weight: 0.4 }),
+        ],
+      },
+      {
+        name: "Rusted plating",
+        paints: [
+          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-ryza-rust", "drybrush", { name: "Ryza Rust", brand: "Citadel", range: "Dry", hex: "#F16C23" }),
+          ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }, { weight: 1.4 }),
+        ],
+      },
+      {
+        name: "Tarnished brass",
+        paints: [
+          ref("citadel-balthasar-gold", "base", { name: "Balthasar Gold", brand: "Citadel", range: "Base", hex: "#A77353" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("scale-75-old-copper", "layer", { name: "Old Copper", brand: "Scale 75", range: "Metal N Alchemy Range", hex: "#97604C" }),
+          ref("citadel-nihilakh-oxide", "weathering", { name: "Nihilakh Oxide", brand: "Citadel", range: "Technical", hex: "#66B39A" }, { weight: 0.6 }),
+        ],
+      },
+      {
+        name: "Cabling",
+        paints: [
+          ref("citadel-abaddon-black", "base", { name: "Abaddon Black", brand: "Citadel", range: "Base", hex: "#000000" }),
+          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
+          ref("citadel-skavenblight-dinge", "layer", { name: "Skavenblight Dinge", brand: "Citadel", range: "Layer", hex: "#45413B" }),
+          ref("citadel-dawnstone", "highlight", { name: "Dawnstone", brand: "Citadel", range: "Layer", hex: "#697068" }),
+        ],
+      },
+      {
+        name: "Sand and rubble",
+        paints: [
+          ref("citadel-zandri-dust", "base", { name: "Zandri Dust", brand: "Citadel", range: "Base", hex: "#988E56" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
+          ref("citadel-karak-stone", "layer", { name: "Karak Stone", brand: "Citadel", range: "Layer", hex: "#B7945C" }),
+          ref("citadel-screaming-skull", "drybrush", { name: "Screaming Skull", brand: "Citadel", range: "Layer", hex: "#B9C099" }, { weight: 0.5 }),
+        ],
+      },
+      {
+        name: "Gauss glow",
+        paints: [
+          ref("citadel-caliban-green", "base", { name: "Caliban Green", brand: "Citadel", range: "Base", hex: "#003D15" }),
+          ref("citadel-warpstone-glow", "layer", { name: "Warpstone Glow", brand: "Citadel", range: "Layer", hex: "#0F702A" }),
+          ref("citadel-moot-green", "layer", { name: "Moot Green", brand: "Citadel", range: "Layer", hex: "#3DAF44" }),
+          ref("citadel-flash-gitz-yellow", "highlight", { name: "Flash Gitz Yellow", brand: "Citadel", range: "Layer", hex: "#FFF300" }, { weight: 0.3 }),
+        ],
+      },
+      {
+        name: "Eye lenses",
+        paints: [
+          ref("citadel-warpstone-glow", "base", { name: "Warpstone Glow", brand: "Citadel", range: "Layer", hex: "#0F702A" }),
+          ref("citadel-moot-green", "layer", { name: "Moot Green", brand: "Citadel", range: "Layer", hex: "#3DAF44" }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }, { weight: 0.3 }),
+        ],
+      },
+    ],
+  },
+  {
+    // Contributed by @kasperhawser, and the scheme in the sample share image on the
+    // homepage — the poster section links to this slug, so keep the two together.
+    slug: "death-guard-30k",
+    title: "Death Guard (30K)",
     elements: [
       {
         name: "Bone armour",
@@ -187,112 +491,6 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-wild-rider-red", "layer", { name: "Wild Rider Red", brand: "Citadel", range: "Layer", hex: "#E82E1B" }),
           ref("vallejo-brown-rose", "layer", { name: "Brown Rose", brand: "Vallejo", range: "Model Color", hex: "#AC8786" }),
           ref("citadel-white-scar", "layer", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }),
-        ],
-      },
-    ],
-  },
-  {
-    slug: "ultramarines",
-    title: "Ultramarines",
-    elements: [
-      {
-        name: "Armour plates",
-        paints: [
-          ref("citadel-macragge-blue-base", "base", { name: "Macragge Blue", brand: "Citadel", range: "Base", hex: "#0F3D7C" }),
-          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
-          ref("citadel-fenrisian-grey", "highlight", { name: "Fenrisian Grey", brand: "Citadel", range: "Layer", hex: "#6D94B3" }),
-        ],
-      },
-      {
-        name: "Gold trim",
-        paints: [
-          ref("citadel-balthasar-gold", "base", { name: "Balthasar Gold", brand: "Citadel", range: "Base", hex: "#A77353" }),
-          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
-          ref("citadel-retributor-armour", "highlight", { name: "Retributor Armour", brand: "Citadel", range: "Base", hex: "#EDC169" }),
-        ],
-      },
-      {
-        name: "Bare steel",
-        paints: [
-          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
-          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
-          ref("citadel-runefang-steel", "drybrush", { name: "Runefang Steel", brand: "Citadel", range: "Layer", hex: "#C2C8CC" }),
-        ],
-      },
-      {
-        name: "Eye lenses",
-        paints: [
-          ref("citadel-mephiston-red", "base", { name: "Mephiston Red", brand: "Citadel", range: "Base", hex: "#960C09" }),
-          ref("citadel-averland-sunset", "highlight", { name: "Averland Sunset", brand: "Citadel", range: "Base", hex: "#FBB81C" }),
-        ],
-      },
-    ],
-  },
-  {
-    slug: "blood-angels",
-    title: "Blood Angels",
-    elements: [
-      {
-        name: "Armour plates",
-        paints: [
-          ref("citadel-mephiston-red", "base", { name: "Mephiston Red", brand: "Citadel", range: "Base", hex: "#960C09" }),
-          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
-          ref("citadel-evil-sunz-scarlet", "layer", { name: "Evil Sunz Scarlet", brand: "Citadel", range: "Layer", hex: "#C01411" }),
-          ref("citadel-wild-rider-red", "highlight", { name: "Wild Rider Red", brand: "Citadel", range: "Layer", hex: "#E82E1B" }),
-        ],
-      },
-      {
-        name: "Gold trim",
-        paints: [
-          ref("citadel-balthasar-gold", "base", { name: "Balthasar Gold", brand: "Citadel", range: "Base", hex: "#A77353" }),
-          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
-          ref("citadel-retributor-armour", "highlight", { name: "Retributor Armour", brand: "Citadel", range: "Base", hex: "#EDC169" }),
-        ],
-      },
-      {
-        name: "Bone and parchment",
-        paints: [
-          ref("citadel-ushabti-bone", "base", { name: "Ushabti Bone", brand: "Citadel", range: "Layer", hex: "#ABA173" }),
-          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
-          ref("citadel-screaming-skull", "highlight", { name: "Screaming Skull", brand: "Citadel", range: "Layer", hex: "#B9C099" }),
-        ],
-      },
-      {
-        name: "Black details",
-        paints: [
-          ref("citadel-abaddon-black", "base", { name: "Abaddon Black", brand: "Citadel", range: "Base", hex: "#000000" }),
-          ref("citadel-eshin-grey", "highlight", { name: "Eshin Grey", brand: "Citadel", range: "Layer", hex: "#484B4E" }),
-        ],
-      },
-    ],
-  },
-  {
-    slug: "necrons",
-    title: "Necrons",
-    elements: [
-      {
-        name: "Metal body",
-        paints: [
-          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
-          ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
-          ref("citadel-runefang-steel", "drybrush", { name: "Runefang Steel", brand: "Citadel", range: "Layer", hex: "#C2C8CC" }),
-          ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }),
-        ],
-      },
-      {
-        name: "Verdigris brass",
-        paints: [
-          ref("citadel-balthasar-gold", "base", { name: "Balthasar Gold", brand: "Citadel", range: "Base", hex: "#A77353" }),
-          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
-          ref("citadel-nihilakh-oxide", "weathering", { name: "Nihilakh Oxide", brand: "Citadel", range: "Technical", hex: "#66B39A" }),
-        ],
-      },
-      {
-        name: "Glowing green",
-        paints: [
-          ref("citadel-caliban-green", "base", { name: "Caliban Green", brand: "Citadel", range: "Base", hex: "#003D15" }),
-          ref("citadel-warpstone-glow", "layer", { name: "Warpstone Glow", brand: "Citadel", range: "Layer", hex: "#0F702A" }),
-          ref("citadel-moot-green", "highlight", { name: "Moot Green", brand: "Citadel", range: "Layer", hex: "#3DAF44" }),
         ],
       },
     ],

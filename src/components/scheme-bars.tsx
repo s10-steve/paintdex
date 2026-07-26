@@ -148,10 +148,13 @@ export function Bar({
 
   // Bars share the row's fixed width in proportion to their position — earlier
   // (larger-area) elements read wider, later ones narrower — so the ordering
-  // does the sizing. A min-width keeps the thinnest bars usable.
+  // does the sizing. The min-width keeps the thinnest bars usable, and is set
+  // wide enough for a one-word element name ("Tentacles" needs 54px at this font
+  // size) so the caption below doesn't get split mid-word. Ten bars still fit a
+  // desktop card at this floor; past that the row scrolls, which is intended.
   return (
     <div
-      className="flex min-w-[46px] flex-col items-center gap-2.5"
+      className="flex min-w-[56px] flex-col items-center gap-2.5"
       style={{ flexGrow: elementSize(index), flexBasis: 0 }}
     >
       <div
@@ -222,6 +225,11 @@ export function Bar({
           );
         })}
       </div>
+      {/* `break-words` is the last resort that stops a long element name spilling
+          into the next bar's label. It splits mid-word with no hyphen, which is
+          ugly — `hyphens: auto` does NOT rescue it (hyphenation doesn't apply to
+          an emergency break, and headless Chromium has no dictionary anyway), so
+          the fix is the bar's min-width below, not anything here. */}
       <div className="w-full break-words text-center text-xs font-medium leading-tight [text-wrap:balance]">
         {element.name}
         <span className="mt-0.5 block text-[10.5px] font-normal text-muted-foreground">

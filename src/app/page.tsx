@@ -178,8 +178,10 @@ export default function Home() {
                 links, too.
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-3">
+                {/* Points at the scheme actually pictured — the 30K model, not the
+                    40K one that now owns the `death-guard` slug. */}
                 <Link
-                  href="/visualiser?preset=death-guard"
+                  href="/visualiser?preset=death-guard-30k"
                   className="inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
                 >
                   Try it with this scheme →
@@ -198,7 +200,7 @@ export default function Home() {
                 className="h-auto w-full rounded-lg border border-border"
               />
               <figcaption className="mt-2 text-xs text-muted-foreground">
-                Model painted by {POSTER_CREDIT}. The “Death Guard” example
+                Model painted by {POSTER_CREDIT}. The “Death Guard (30K)” example
                 above is the same scheme.
               </figcaption>
             </figure>

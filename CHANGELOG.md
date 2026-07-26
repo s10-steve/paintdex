@@ -9,13 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Example schemes on the homepage.** A carousel of four real, recognisable
-  schemes — **Death Guard**, **Ultramarines**, **Blood Angels** and **Necrons** —
-  replaces the decorative colour bars that used to sit beside the visualiser
-  pitch. They're drawn by the same component the visualiser itself uses, so what
-  you see on the homepage is genuine output: weighted tonal ramps, translucent
-  wash and weathering bands, and each element's bar sized by its order. Hover a
-  band to name the paint, exactly as in the app.
+- **Example schemes on the homepage.** A carousel of five real, fully worked
+  schemes — **Ultramarines**, **Death Guard**, **Blood Angels**, **Necrons** and
+  **Death Guard (30K)** — replaces the decorative colour bars that used to sit
+  beside the visualiser pitch. Between them they cover 38 elements and 148 paints
+  across four manufacturers, most elements running a full base → shade → layer →
+  highlight recipe with weathering over the top. They're drawn by the same
+  component the visualiser itself uses, so what you see on the homepage is genuine
+  output: weighted tonal ramps, translucent wash and weathering bands, and each
+  element's bar sized by its order. Hover a band to name the paint, exactly as in
+  the app.
 
   Each example opens straight into the designer via `/visualiser?preset=<slug>`,
   so you can start from a finished scheme instead of a blank canvas. Signed in,
@@ -33,9 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   permanently once you use the arrows or dots, and has an explicit pause button.
 
 - **A share-image section on the homepage**, showing a real export from the studio
-  (the Death Guard scheme pictured above it) rather than a mock-up. The feature
-  previously had no mention anywhere outside the visualiser, so nobody who hadn't
-  already built a scheme knew it existed.
+  rather than a mock-up, paired with the **Death Guard (30K)** example — the
+  scheme that actually painted the model pictured. The feature previously had no
+  mention anywhere outside the visualiser, so nobody who hadn't already built a
+  scheme knew it existed.
 
 ### Changed
 
