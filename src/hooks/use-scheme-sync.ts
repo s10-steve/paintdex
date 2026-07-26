@@ -44,6 +44,18 @@ export type SchemeSync = {
   selectScheme: (id: string) => void;
   /** Create a blank scheme on the account and switch to it. */
   newScheme: () => Promise<void>;
+  /**
+   * Save `next` to the account as a **new** row and switch the editor to it.
+   * Nothing already saved is touched — this is how a scheme can be dropped into
+   * a signed-in editor without the autosave writing it over the active row.
+   */
+  adoptScheme: (next: Scheme) => Promise<void>;
+  /**
+   * False while sign-in reconciliation is still in flight. Anything that wants to
+   * *replace* the editor's scheme from outside must wait for this, or it races
+   * the reconciliation and the debounced autosave. See `useSchemePreset`.
+   */
+  ready: boolean;
   /** Apply a partial update to one cached row (used by the share actions). */
   patchRow: (id: string, patch: Partial<SchemeRow>) => void;
 };
@@ -79,6 +91,7 @@ export function useSchemeSync({
   const [savedSchemes, setSavedSchemes] = useState<SchemeRow[]>([]);
   const [activeSchemeId, setActiveSchemeId] = useState<string | null>(null);
   const [syncState, setSyncState] = useState<SyncState>("idle");
+  const [ready, setReady] = useState(false);
 
   const deepLinkedRef = useRef(false);
   const schemeRef = useRef(scheme);
@@ -97,8 +110,14 @@ export function useSchemeSync({
       setSavedSchemes([]);
       setActiveSchemeId(null);
       setSyncState("idle");
+      // Signed out there's nothing to reconcile against, so the editor's scheme
+      // is already settled.
+      setReady(true);
       return;
     }
+    // A new session's schemes are about to load; hold off outside writers until
+    // we know whether the local scheme is being adopted or replaced.
+    setReady(false);
     let cancelled = false;
     (async () => {
       try {
@@ -135,6 +154,9 @@ export function useSchemeSync({
         setSyncState("idle");
       } catch {
         if (!cancelled) setSyncState("error");
+      } finally {
+        // Settled either way — a failed load must not wedge the editor shut.
+        if (!cancelled) setReady(true);
       }
     })();
     return () => {
@@ -195,20 +217,31 @@ export function useSchemeSync({
     if (row) loadSchemeRow(row);
   };
 
-  const newScheme = async () => {
+  /**
+   * Save `next` as a new row and switch the editor to it. Used both for the
+   * "New" button (a blank scheme) and for dropping an example scheme into a
+   * signed-in editor — going through a *new* row is what keeps the debounced
+   * autosave from writing it over whatever was already active.
+   */
+  const adoptScheme = async (next: Scheme) => {
     if (!user) return;
     try {
-      const fresh = emptyScheme();
-      const row = await createScheme(user.id, toExportShape(fresh), "Untitled scheme");
+      const row = await createScheme(
+        user.id,
+        toExportShape(next),
+        next.title || "Untitled scheme",
+      );
       skipSaveRef.current = true;
       setSavedSchemes((rows) => [row, ...rows]);
       setActiveSchemeId(row.id);
-      setScheme(fresh);
+      setScheme(next);
       setSyncState("idle");
     } catch (e) {
       setSyncState(isSchemeLimitError(e) ? "limit" : "error");
     }
   };
+
+  const newScheme = () => adoptScheme(emptyScheme());
 
   // Honour a `?scheme=<id>` deep link once the user's schemes are loaded, so the
   // account page's "Edit" and the viewer's "Save a copy" open the right scheme.
@@ -244,6 +277,8 @@ export function useSchemeSync({
     setSyncState,
     selectScheme,
     newScheme,
+    adoptScheme,
+    ready,
     patchRow,
   };
 }

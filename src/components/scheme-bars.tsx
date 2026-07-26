@@ -129,12 +129,19 @@ export function Bar({
   blend,
   hovered,
   hover,
+  heightPx,
 }: {
   element: SchemeElement;
   index: number;
   blend: boolean;
   hovered?: string | null;
   hover?: HoverHandlers;
+  /**
+   * Override the bar's height. Omit for the standard editor/viewer size; the
+   * homepage carousel runs a shorter bar to fit a card. Set inline so it wins
+   * over the `h-[340px]` class.
+   */
+  heightPx?: number;
 }) {
   const { segs, overlays } = useMemo(() => barModel(element.paints), [element.paints]);
   const empty = element.paints.length === 0;
@@ -149,7 +156,10 @@ export function Bar({
     >
       <div
         className="relative flex h-[340px] w-full flex-col-reverse overflow-hidden rounded-[9px] shadow-sm ring-1 ring-inset ring-black/10 [isolation:isolate]"
-        style={empty ? EMPTY_BAR_STYLE : { background: rampGradient(segs, blend) }}
+        style={{
+          ...(empty ? EMPTY_BAR_STYLE : { background: rampGradient(segs, blend) }),
+          ...(heightPx === undefined ? {} : { height: heightPx }),
+        }}
       >
         {segs.map((s) => (
           <div

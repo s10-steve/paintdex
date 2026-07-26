@@ -65,8 +65,9 @@ export default function RootLayout({
             <div className="flex-1">{children}</div>
             <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
               <p className="mx-auto max-w-2xl px-4">
-                Paintdex is not affiliated with any paint manufacturer. Brand and
-                product names are trademarks of their respective owners.
+                Paintdex is not affiliated with any paint manufacturer or game
+                publisher. Brand, product and faction names are trademarks of their
+                respective owners. Example schemes are unofficial fan recipes.
               </p>
             </footer>
           </AuthProvider>
