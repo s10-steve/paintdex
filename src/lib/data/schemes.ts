@@ -53,6 +53,17 @@ export async function updateScheme(
   if (error) throw error;
 }
 
+/**
+ * Rename a scheme, touching the title only. Deliberately separate from
+ * `updateScheme`: a renamer holds whatever `data` it last read, which can be
+ * stale (the visualiser autosaves the same row on a debounce), so writing it
+ * back would quietly revert edits made elsewhere.
+ */
+export async function renameScheme(id: string, title: string): Promise<void> {
+  const { error } = await client().from("schemes").update({ title }).eq("id", id);
+  if (error) throw error;
+}
+
 /** Delete a scheme by id. */
 export async function deleteScheme(id: string): Promise<void> {
   const { error } = await client().from("schemes").delete().eq("id", id);

@@ -207,6 +207,33 @@ describe("HomeSchemeCarousel", () => {
     expect(screen.queryByText(presets[1].elements[0].name)).toBeNull();
   });
 
+  it("animates the incoming slide in from the direction of travel", async () => {
+    stubMatchMedia(false);
+    render(<HomeSchemeCarousel presets={presets} />);
+    const slide = () => screen.getByRole("group");
+
+    // Nothing to transition from on the first paint.
+    expect(slide().className).not.toContain("carousel-slide-in");
+
+    await act(async () => {
+      vi.advanceTimersByTime(7000);
+    });
+    expect(slide().className).toContain("carousel-slide-in");
+    expect(slide().style.getPropertyValue("--carousel-from")).toBe("1rem");
+
+    // Going back brings the slide in from the other side.
+    fireEvent.click(screen.getByRole("button", { name: "Previous scheme" }));
+    expect(slide().style.getPropertyValue("--carousel-from")).toBe("-1rem");
+  });
+
+  it("does not animate slides under reduced motion", () => {
+    stubMatchMedia(true);
+    render(<HomeSchemeCarousel presets={presets} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Next scheme" }));
+    expect(screen.getByRole("group").className).not.toContain("carousel-slide-in");
+  });
+
   it("renders nothing when given no presets", () => {
     stubMatchMedia(false);
     const { container } = render(<HomeSchemeCarousel presets={[]} />);

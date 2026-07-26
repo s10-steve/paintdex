@@ -16,7 +16,7 @@ import { useAuth } from "@/components/auth/auth-provider";
 import { SignedInGate } from "@/components/profile/signed-in-gate";
 import {
   listSchemes,
-  updateScheme,
+  renameScheme,
   deleteScheme,
   duplicateScheme,
   publishScheme,
@@ -152,7 +152,7 @@ function SchemeCard({
     if (title === row.title) return;
     onError(null);
     try {
-      await updateScheme(row.id, row.data, title);
+      await renameScheme(row.id, title);
       onPatch(row.id, { title });
     } catch {
       onError("Couldn't rename that scheme.");
@@ -252,14 +252,13 @@ function SchemeCard({
               className="w-full rounded-md border border-input bg-background px-2 py-1 text-[15px] font-semibold outline-none focus:border-primary"
             />
           ) : (
-            <button
-              type="button"
-              onClick={startRename}
-              title="Click to rename"
+            <Link
+              href={`/visualiser?scheme=${row.id}`}
+              title="Open in the designer"
               className="block max-w-full truncate text-left text-[15px] font-semibold tracking-tight hover:underline"
             >
               {row.title || "Untitled scheme"}
-            </button>
+            </Link>
           )}
           <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
             {row.is_public ? (
@@ -275,12 +274,15 @@ function SchemeCard({
         </div>
 
         <div className="flex w-full flex-none flex-wrap items-center gap-1.5 sm:w-auto">
-          <Link
-            href={`/visualiser?scheme=${row.id}`}
+          {/* The scheme name itself opens the designer, so this row's job is the
+              one thing that isn't a link. */}
+          <button
+            type="button"
+            onClick={startRename}
             className="rounded-md border border-border px-2.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
           >
-            Edit
-          </Link>
+            Rename
+          </button>
           <button
             type="button"
             onClick={() => void duplicate()}

@@ -21,7 +21,7 @@
  *   keyboard or touch user.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { Bar, useBarHover } from "@/components/scheme-bars";
 import type { ResolvedPreset } from "@/lib/scheme/presets";
@@ -35,6 +35,13 @@ export function HomeSchemeCarousel({ presets }: { presets: ResolvedPreset[] }) {
   /** The visitor took manual control — stop rotating for the rest of the visit. */
   const [sticky, setSticky] = useState(false);
   const [paused, setPaused] = useState(false);
+  /** Direction of the last move, so the incoming slide enters from that side. */
+  const [dir, setDir] = useState(1);
+  /**
+   * The slide has changed at least once. Withholds the enter animation on the
+   * first paint, where there's nothing to transition *from*.
+   */
+  const [moved, setMoved] = useState(false);
   /**
    * Starts `true` so nothing can rotate before the media query is measured, and
    * so the server and first client render agree.
@@ -59,7 +66,11 @@ export function HomeSchemeCarousel({ presets }: { presets: ResolvedPreset[] }) {
     if (!rotating) return;
     // Functional update keeps `i` out of the deps, so the interval isn't torn
     // down and rebuilt on every tick.
-    const timer = setInterval(() => setI((n) => (n + 1) % count), ROTATE_MS);
+    const timer = setInterval(() => {
+      setDir(1);
+      setMoved(true);
+      setI((n) => (n + 1) % count);
+    }, ROTATE_MS);
     return () => clearInterval(timer);
   }, [rotating, count]);
 
@@ -67,11 +78,14 @@ export function HomeSchemeCarousel({ presets }: { presets: ResolvedPreset[] }) {
 
   /** Manual navigation: move, and stop auto-rotating permanently. */
   const go = (next: number) => {
+    setDir(next < i ? -1 : 1);
+    setMoved(true);
     setI(((next % count) + count) % count);
     setSticky(true);
   };
 
   const active = presets[i];
+  const animated = moved && !reduced;
 
   return (
     <section
@@ -93,12 +107,16 @@ export function HomeSchemeCarousel({ presets }: { presets: ResolvedPreset[] }) {
           live region firing every 7s is worse than silence (APG). */}
       <div aria-live={rotating ? "off" : "polite"}>
         {/* Keyed on the index so only the active slide is in the DOM: no hidden
-            focusable links to tab into, no aria-hidden bookkeeping. */}
+            focusable links to tab into, no aria-hidden bookkeeping. The key is
+            also what restarts the enter animation — remounting replays it, so
+            there's no need to track the outgoing slide. */}
         <div
           key={active.slug}
           role="group"
           aria-roledescription="slide"
           aria-label={`${i + 1} of ${count}: ${active.title}`}
+          className={animated ? "carousel-slide-in" : undefined}
+          style={{ "--carousel-from": dir > 0 ? "1rem" : "-1rem" } as CSSProperties}
         >
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <h3 className="text-lg font-semibold tracking-tight">{active.title}</h3>
