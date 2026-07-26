@@ -132,6 +132,29 @@ describe("HomeSchemeCarousel", () => {
     expect(heading()).toBe(presets[1].title);
   });
 
+  // A keyboard user tabs to the pause button (which pauses via focus), presses it
+  // to stop rotation, then presses it again to restart. Focus is still inside the
+  // region at that point, so unless play clears the focus pause too, nothing moves
+  // and the control reads as broken.
+  it("resumes when play is pressed even though the button still holds focus", async () => {
+    stubMatchMedia(false);
+    render(<HomeSchemeCarousel presets={presets} />);
+    const pause = screen.getByRole("button", { name: /rotation/i });
+
+    fireEvent.focus(pause);
+    fireEvent.click(pause); // stop
+    await act(async () => {
+      vi.advanceTimersByTime(20_000);
+    });
+    expect(heading()).toBe(presets[0].title);
+
+    fireEvent.click(screen.getByRole("button", { name: /rotation/i })); // start
+    await act(async () => {
+      vi.advanceTimersByTime(7000);
+    });
+    expect(heading()).toBe(presets[1].title);
+  });
+
   it("wraps backwards from the first scheme", () => {
     stubMatchMedia(false);
     render(<HomeSchemeCarousel presets={presets} />);

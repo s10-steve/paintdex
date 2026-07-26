@@ -157,7 +157,14 @@ export function HomeSchemeCarousel({ presets }: { presets: ResolvedPreset[] }) {
         {!reduced && count > 1 && (
           <CarouselButton
             label={sticky ? "Start automatic rotation" : "Stop automatic rotation"}
-            onClick={() => setSticky((s) => !s)}
+            onClick={() => {
+              // Pressing play also clears the hover/focus pause. Without that, a
+              // keyboard user who tabs to this button and presses it holds focus
+              // inside the region, so `paused` stays true and nothing moves — the
+              // control reads as broken. An explicit request beats an ambient pause.
+              if (sticky) setPaused(false);
+              setSticky(!sticky);
+            }}
             className="ml-1"
           >
             {sticky ? "▶" : "❙❙"}

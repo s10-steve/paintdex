@@ -27,6 +27,12 @@ const PRESET = SCHEME_PRESETS[0];
 /* ---- mocks ------------------------------------------------------------- */
 
 let currentUser: { id: string } | null = null;
+/**
+ * Mirrors the real provider: `loading` starts true when Supabase is configured
+ * and `user` is derived from the session, so there is a window where the visitor
+ * IS signed in but `user` is still null. Tests that don't care set it false.
+ */
+let authLoading = false;
 
 vi.mock("@/components/auth/auth-provider", () => ({
   useAuth: () => ({
@@ -35,7 +41,7 @@ vi.mock("@/components/auth/auth-provider", () => ({
     gisReady: true,
     session: currentUser ? {} : null,
     user: currentUser,
-    loading: false,
+    loading: authLoading,
     signOut: async () => {},
   }),
 }));
@@ -130,6 +136,7 @@ const presetParam = () => new URLSearchParams(window.location.search).get("prese
 
 beforeEach(() => {
   currentUser = null;
+  authLoading = false;
   localStorage.clear();
   window.history.replaceState(null, "", "/visualiser");
   listSchemes.mockReset();
@@ -313,6 +320,45 @@ describe("?preset= while signed in", () => {
     await waitFor(() => expect(editorTitle()).toBe(PRESET.title));
     expect(createScheme).toHaveBeenCalledTimes(1);
     expect(createScheme.mock.calls[0][2]).toBe(PRESET.title);
+  });
+
+  // The nastiest ordering, and the one the `ready` gate has to cover: a hard load
+  // of the deep link while the Supabase session is still being fetched. During
+  // that window the visitor IS signed in but `user` is null, so treating null as
+  // "signed out" runs the destructive branch — prompting, and on accept replacing
+  // unsaved local work that `adoptScheme` was supposed to protect.
+  it("does not take the signed-out path while the session is still loading", async () => {
+    const confirmSpy = vi.fn(() => true);
+    vi.stubGlobal("confirm", confirmSpy);
+    seedLocal(scheme("Unsaved work in progress"));
+    const saved = row("saved-1", "Saved earlier", scheme("Saved earlier"), "2026-01-02T00:00:00.000Z");
+    listSchemes.mockResolvedValue([saved]);
+    withPresetParam(PRESET.slug);
+
+    // Auth still resolving: signed in, but `user` is not known yet.
+    authLoading = true;
+    currentUser = null;
+    const view = render(<SchemeVisualiser />);
+    await waitFor(() => expect(screen.getByLabelText("Scheme name")).toBeTruthy());
+
+    // Nothing may happen yet — no prompt, and the visitor's work is untouched.
+    expect(confirmSpy).not.toHaveBeenCalled();
+    expect(editorTitle()).toBe("Unsaved work in progress");
+
+    // Session arrives.
+    authLoading = false;
+    currentUser = { id: "u1" };
+    await act(async () => {
+      view.rerender(<SchemeVisualiser />);
+    });
+
+    // Now it takes the signed-in path: no prompt, and the example lands as a new
+    // row rather than overwriting anything.
+    await waitFor(() => expect(editorTitle()).toBe(PRESET.title));
+    expect(confirmSpy).not.toHaveBeenCalled();
+    const titles = createScheme.mock.calls.map((c) => c[2]);
+    expect(titles).toContain(PRESET.title);
+    expect(updateScheme.mock.calls.filter((c) => c[0] === "saved-1")).toEqual([]);
   });
 
   it("still strips the param", async () => {

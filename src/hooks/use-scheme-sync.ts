@@ -87,7 +87,7 @@ export function useSchemeSync({
   setScheme: Dispatch<SetStateAction<Scheme>>;
   mounted: boolean;
 }): SchemeSync {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [savedSchemes, setSavedSchemes] = useState<SchemeRow[]>([]);
   const [activeSchemeId, setActiveSchemeId] = useState<string | null>(null);
   const [syncState, setSyncState] = useState<SyncState>("idle");
@@ -110,9 +110,17 @@ export function useSchemeSync({
       setSavedSchemes([]);
       setActiveSchemeId(null);
       setSyncState("idle");
-      // Signed out there's nothing to reconcile against, so the editor's scheme
-      // is already settled.
-      setReady(true);
+      // Signed out there's nothing to reconcile against, so the editor's scheme is
+      // settled — but ONLY once the initial session check has finished. While
+      // `authLoading` is true, `user` is null because we don't know yet, not
+      // because nobody is signed in (`user` derives from `session` in
+      // AuthProvider, and `loading` starts true). Calling that "settled" lets an
+      // outside writer take the signed-out path for a visitor who is actually
+      // signed in — which for `useSchemePreset` means prompting and then
+      // destroying unsaved work that `adoptScheme` exists to protect.
+      // With Supabase unconfigured, `loading` is false from the start, so this
+      // still resolves immediately.
+      setReady(!authLoading);
       return;
     }
     // A new session's schemes are about to load; hold off outside writers until
@@ -163,10 +171,12 @@ export function useSchemeSync({
       cancelled = true;
     };
     /* eslint-enable react-hooks/set-state-in-effect */
-    // Deliberately keyed on the user's identity only: `setScheme` is stable, and
-    // depending on `scheme` would re-run this on every edit.
+    // Deliberately keyed on the user's identity (plus the auth-loading flag, so
+    // the signed-out branch re-settles once the session check resolves):
+    // `setScheme` is stable, and depending on `scheme` would re-run this on every
+    // edit.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id, mounted]);
+  }, [user?.id, mounted, authLoading]);
 
   // Debounced autosave to the account for the active scheme. Blend is a view
   // preference and isn't part of the stored scheme, so it's excluded here.

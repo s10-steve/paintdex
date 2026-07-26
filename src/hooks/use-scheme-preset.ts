@@ -80,7 +80,13 @@ export function useSchemePreset({
     const spec = findPreset(slug);
     if (spec) {
       const byId = new Map<string, PresetPaintData>(paints.map((p) => [p.id, p]));
-      const preset = resolvePreset(spec, (id) => byId.get(id));
+      // `resolvePreset` returns the scheme plus a `slug`, which is metadata about
+      // where it came from rather than part of the document. Drop it here so the
+      // extra key never reaches editor state or `localStorage` — `toExportShape`
+      // would strip it on save anyway, but the in-memory shape should be a
+      // plain `Scheme`.
+      const { title, elements } = resolvePreset(spec, (id) => byId.get(id));
+      const preset: Scheme = { title, elements };
       if (signedIn) {
         // Nothing to warn about: `adoptScheme` saves the example as a NEW row and
         // switches to it, so the scheme they were on is still in the picker,

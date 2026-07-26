@@ -37,13 +37,6 @@ export const clamp = (v: number, lo: number, hi: number): number =>
   Math.max(lo, Math.min(hi, v));
 
 /**
- * Relative width of an element's bar from its position in the list. Elements
- * are ordered by how much of the model they cover (largest area first), so each
- * one is a little narrower than the one before it — a gentle geometric taper
- * that keeps a bounded first-vs-last ratio no matter how many elements there
- * are. Used as a flex-grow, so only the ratios between values matter.
- */
-/**
  * Round a unitless ratio before it goes into an inline style.
  *
  * This is a **hydration** requirement, not cosmetic. `Math.pow(0.8, 4)` is
@@ -60,6 +53,13 @@ const RATIO_PRECISION = 1e6;
 export const cssRatio = (n: number): number =>
   Math.round(n * RATIO_PRECISION) / RATIO_PRECISION;
 
+/**
+ * Relative width of an element's bar from its position in the list. Elements
+ * are ordered by how much of the model they cover (largest area first), so each
+ * one is a little narrower than the one before it — a gentle geometric taper
+ * that keeps a bounded first-vs-last ratio no matter how many elements there
+ * are. Used as a flex-grow, so only the ratios between values matter.
+ */
 export const ELEMENT_SIZE_DECAY = 0.8;
 export const elementSize = (index: number): number =>
   cssRatio(Math.pow(ELEMENT_SIZE_DECAY, Math.max(0, index)));
