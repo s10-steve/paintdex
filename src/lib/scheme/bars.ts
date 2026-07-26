@@ -43,9 +43,26 @@ export const clamp = (v: number, lo: number, hi: number): number =>
  * that keeps a bounded first-vs-last ratio no matter how many elements there
  * are. Used as a flex-grow, so only the ratios between values matter.
  */
+/**
+ * Round a unitless ratio before it goes into an inline style.
+ *
+ * This is a **hydration** requirement, not cosmetic. `Math.pow(0.8, 4)` is
+ * `0.4096000000000002`; the browser's CSS parser normalises that to `0.4096` in
+ * the server-rendered HTML, React compares the full-precision value against it
+ * on the client, and the two disagree — a hydration mismatch on every
+ * server-rendered bar (i.e. the homepage carousel's first slide). Six decimals
+ * is short enough to survive the round trip.
+ *
+ * Every ratio used as a `flex-grow` goes through here. Only the ratios between
+ * values matter to flex, so the rounding costs nothing.
+ */
+const RATIO_PRECISION = 1e6;
+export const cssRatio = (n: number): number =>
+  Math.round(n * RATIO_PRECISION) / RATIO_PRECISION;
+
 export const ELEMENT_SIZE_DECAY = 0.8;
 export const elementSize = (index: number): number =>
-  Math.pow(ELEMENT_SIZE_DECAY, Math.max(0, index));
+  cssRatio(Math.pow(ELEMENT_SIZE_DECAY, Math.max(0, index)));
 
 /**
  * Move the item with `id` one step in `dir` (-1 up / +1 down), returning a new

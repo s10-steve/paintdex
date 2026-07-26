@@ -185,6 +185,17 @@ describe("elementSize", () => {
     // never collapses later bars to zero the way a linear count→1 taper would.
     expect(elementSize(1) / elementSize(0)).toBeCloseTo(elementSize(6) / elementSize(5), 5);
   });
+
+  // Regression: the raw Math.pow gives values like 0.4096000000000002, whose
+  // serialisation into `flex-grow` differs between the server HTML and the
+  // client's style object — a hydration mismatch on every server-rendered bar.
+  // Bounding the decimals is what makes both sides agree.
+  it("returns values short enough to serialise identically on server and client", () => {
+    for (let i = 0; i < 16; i++) {
+      const decimals = String(elementSize(i)).split(".")[1] ?? "";
+      expect(decimals.length).toBeLessThanOrEqual(6);
+    }
+  });
 });
 
 describe("moveItem", () => {

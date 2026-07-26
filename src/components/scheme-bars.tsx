@@ -19,7 +19,14 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import { roleOf, weightOf, type SchemeElement, type SchemePaint } from "@/lib/scheme/types";
-import { barModel, rampGradient, overlayCenter, clamp, elementSize } from "@/lib/scheme/bars";
+import {
+  barModel,
+  rampGradient,
+  overlayCenter,
+  clamp,
+  cssRatio,
+  elementSize,
+} from "@/lib/scheme/bars";
 
 export type HoverHandlers = {
   /** Bar segment: show the tooltip and highlight the matching row. */
@@ -171,7 +178,8 @@ export function Bar({
             aria-label={paintLabel(s.paint)}
             className="relative min-h-0"
             style={{
-              flexGrow: s.frac,
+              // Rounded for the same hydration reason as `elementSize` — see cssRatio.
+              flexGrow: cssRatio(s.frac),
               flexBasis: 0,
               boxShadow: hovered === s.paint.id ? "inset 0 0 0 2px rgba(255,255,255,.7)" : undefined,
             }}
