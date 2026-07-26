@@ -218,6 +218,9 @@ export default function Home() {
           body="Similar colours are ranked with CIEDE2000 — the same maths professionals use to compare colours."
         />
         <Feature
+          // The odd one out in a two-column grid, so it spans both rather than
+          // sitting alone beside an empty cell.
+          className="sm:col-span-2"
           title="Open source"
           body={
             <>
@@ -240,9 +243,17 @@ export default function Home() {
   );
 }
 
-function Feature({ title, body }: { title: string; body: ReactNode }) {
+function Feature({
+  title,
+  body,
+  className = "",
+}: {
+  title: string;
+  body: ReactNode;
+  className?: string;
+}) {
   return (
-    <div className="rounded-lg border border-border bg-card p-5 text-left">
+    <div className={`rounded-lg border border-border bg-card p-5 text-left ${className}`}>
       <h2 className="font-semibold">{title}</h2>
       <p className="mt-1.5 text-sm text-muted-foreground">{body}</p>
     </div>

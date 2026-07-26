@@ -16,6 +16,45 @@ export interface PaintFilters {
 export type SortKey = "name" | "brand" | "lightness";
 
 /**
+ * Split a search box's contents into lowercased words. Every token has to match
+ * for a paint to qualify, which is what lets a half-remembered product name find
+ * its paint: "panel line dark brown" reaches "Panel Line Accent Color: Dark
+ * Brown", where a single contiguous substring test would not.
+ */
+export function searchTokens(search?: string): string[] {
+  const q = search?.trim().toLowerCase();
+  if (!q) return [];
+  return q.split(/\s+/);
+}
+
+/**
+ * How well a paint answers the query, for ordering matches. Higher is better;
+ * the weights only have to be self-consistent, so the tests assert the resulting
+ * order rather than the numbers.
+ */
+function scoreMatch(paint: BrowsePaint, tokens: string[], query: string): number {
+  const name = paint.name.toLowerCase();
+  let score = 0;
+
+  // The whole query typed out as it appears in the name is the strongest signal,
+  // and keeps the pre-token behaviour ("mephiston red" → Mephiston Red) on top.
+  if (name.includes(query)) score += 20;
+  if (name.startsWith(query)) score += 10;
+  else if (name.startsWith(tokens[0])) score += 5;
+
+  for (const t of tokens) {
+    const at = name.indexOf(t);
+    if (at === -1) continue; // matched via brand/range/code only
+    score += 2;
+    // A word-boundary hit ("brown" in "Dark Brown") beats one buried mid-word
+    // ("brown" in "Brownish").
+    if (at === 0 || !/[a-z0-9]/.test(name[at - 1])) score += 1;
+  }
+
+  return score;
+}
+
+/**
  * Filter + sort paints. Facets combine with AND across categories and OR within
  * a category (e.g. brand=Citadel OR Vallejo) AND (type=base OR layer).
  * Pure and synchronous — safe to run on every keystroke over the full dataset.
@@ -25,7 +64,8 @@ export function filterPaints(
   filters: PaintFilters,
   sort: SortKey = "name",
 ): BrowsePaint[] {
-  const q = filters.search?.trim().toLowerCase();
+  const query = filters.search?.trim().toLowerCase() ?? "";
+  const tokens = searchTokens(filters.search);
   const brands = new Set(filters.brands ?? []);
   const ranges = new Set(filters.ranges ?? []);
   const types = new Set(filters.types ?? []);
@@ -39,12 +79,21 @@ export function filterPaints(
     if (ranges.size && !ranges.has(p.range)) return false;
     if (types.size && !types.has(p.type)) return false;
     if (families.size && !families.has(p.family)) return false;
-    if (q) {
+    if (tokens.length) {
       const hay = `${p.name} ${p.brand} ${p.range} ${p.code ?? ""}`.toLowerCase();
-      if (!hay.includes(q)) return false;
+      // indexOf per token, not a regex per paint — this runs over the whole
+      // catalogue on every keystroke.
+      for (const t of tokens) if (hay.indexOf(t) === -1) return false;
     }
     return true;
   });
+
+  // Relevance only displaces the default (name) order: someone who explicitly
+  // picked Brand or Lightness in the browse sort still gets it.
+  const scores =
+    tokens.length && sort === "name"
+      ? new Map(result.map((p) => [p.id, scoreMatch(p, tokens, query)]))
+      : null;
 
   result.sort((a, b) => {
     switch (sort) {
@@ -53,6 +102,10 @@ export function filterPaints(
       case "lightness":
         return a.l - b.l || a.name.localeCompare(b.name);
       default:
+        if (scores) {
+          const d = scores.get(b.id)! - scores.get(a.id)!;
+          if (d) return d;
+        }
         return a.name.localeCompare(b.name);
     }
   });
