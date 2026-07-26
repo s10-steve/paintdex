@@ -45,7 +45,8 @@ npm run build
 - `src/lib/color/` — colour maths (hex → Lab, CIEDE2000, colour families)
 - `src/lib/paints/` — types, zod schema, data loader, search/filter/similarity
 - `src/lib/scheme/` — scheme bar maths, JSON import/export, share-slug helpers,
-  and the share-image layout + Canvas renderer (`poster.ts`, `poster-draw.ts`)
+  the curated example schemes (`presets.ts`), and the share-image layout + Canvas
+  renderer (`poster.ts`, `poster-draw.ts`)
 - `src/lib/data/` — per-table Supabase CRUD (e.g. saved schemes)
 - `src/lib/supabase/` — browser client + the anon server client used only by
   the `/scheme/[slug]` share viewer

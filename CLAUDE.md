@@ -180,12 +180,21 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   every legitimate data correction would go red.
 - **`?preset=` can destroy work, so it's gated.** `use-scheme-preset` waits for
   `mounted` (past the `localStorage` restore) **and** `ready` from
-  `use-scheme-sync` (past sign-in reconciliation), confirms with the user whenever
-  `schemeHasContent`, and for a signed-in user routes through `adoptScheme` so the
-  example becomes a **new** row rather than being autosaved over the active one.
-  Remove any one of those and `test/scheme-preset.test.tsx` goes red — the
-  `ready` gate in particular is covered by a test that holds `listSchemes`
-  open to force the losing ordering.
+  `use-scheme-sync` (past sign-in reconciliation) before it touches the scheme.
+  Then it branches on sign-in state, and the branch is the point:
+  - **Signed in** → `adoptScheme`, which saves the example as a **new** row. The
+    scheme they were on stays saved and selectable, so nothing is lost and
+    **there is no confirm prompt** — one would be asking permission for something
+    that isn't happening. (It also stops the account autosave writing the example
+    over the active row.)
+  - **Signed out** → `localStorage` is the only copy, so loading an example really
+    does destroy the editor's contents. `window.confirm` first, whenever
+    `schemeHasContent`.
+
+  Remove any one of those and `test/scheme-preset.test.tsx` goes red. Two of its
+  cases are deliberately awkward to keep honest: the `ready` gate is covered by a
+  test that holds `listSchemes` open to force the losing ordering, and the
+  signed-in path asserts `confirm` is *never* called.
 - The share-image section on the homepage uses `public/sample-poster.jpg`, a real
   export from the studio (not a re-render), so it can't drift from what the
   feature actually produces.
