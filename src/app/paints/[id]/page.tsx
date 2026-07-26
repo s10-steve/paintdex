@@ -35,7 +35,7 @@ export async function generateMetadata({
   const paint = getPaintById(id);
   if (!paint) return { title: "Paint not found" };
   const title = `${paint.name} — ${paint.brand}`;
-  const description = `${paint.name} by ${paint.brand} (${paint.range}) — hex ${paint.hex}. See visually similar miniature paints across brands.`;
+  const description = `${paint.name} by ${paint.brand} (${paint.range}) — hex ${paint.hex}. Compare ${paint.name} to visually similar alternatives from other brands.`;
   return {
     title,
     description,

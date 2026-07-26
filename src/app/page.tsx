@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   title: {
     absolute: "Paintdex — miniature paint database & colour scheme visualiser",
   },
+  description:
+    "Compare miniature paint colours across brands, find alternatives to any paint with perceptual colour matching, and plan whole paint schemes.",
   alternates: { canonical: "/" },
 };
 
@@ -33,7 +35,7 @@ const websiteJsonLd = {
       url: `${BASE_URL}/`,
       name: "Paintdex",
       description:
-        "Search a database of miniature paints with hex colour values, find visually similar colours across brands, plan and share whole paint schemes.",
+        "Compare miniature paints across brands with hex colour values, find alternatives with perceptual colour matching, plan and share whole paint schemes.",
       publisher: { "@id": `${BASE_URL}/#organization` },
       potentialAction: {
         "@type": "SearchAction",
@@ -91,8 +93,8 @@ export default function Home() {
           Find the right miniature paint
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Search a database of miniature paints with hex colour values, find
-          visually similar colours across brands, plan and share whole paint schemes.
+          Search a database of miniature paints with hex colour values, compare
+          colours across brands, plan and share whole paint schemes.
         </p>
 
         <HomeSearch />
