@@ -61,12 +61,11 @@ export interface PresetSpec {
   /** URL slug — the `?preset=` value. Stable; renaming breaks shared links. */
   slug: string;
   title: string;
-  blurb: string;
   /** Largest-area element first: bar width follows list order (`elementSize`). */
   elements: PresetElementSpec[];
 }
 
-export type ResolvedPreset = Scheme & { slug: string; blurb: string };
+export type ResolvedPreset = Scheme & { slug: string };
 
 /**
  * Resolve one preset against a paint source.
@@ -92,7 +91,7 @@ export function resolvePreset(spec: PresetSpec, lookup: PaintLookup): ResolvedPr
       };
     }),
   }));
-  return { slug: spec.slug, blurb: spec.blurb, title: spec.title, elements };
+  return { slug: spec.slug, title: spec.title, elements };
 }
 
 export function resolvePresets(lookup: PaintLookup): ResolvedPreset[] {
@@ -125,8 +124,6 @@ export const SCHEME_PRESETS: PresetSpec[] = [
     // the one explicit weight come straight from their exported scheme.
     slug: "death-guard",
     title: "Death Guard",
-    blurb:
-      "A 30K plague marine in bone and battle-worn green, mixing Vallejo, AK Interactive, Scale 75 and Citadel across seven elements.",
     elements: [
       {
         name: "Bone armour",
@@ -197,8 +194,6 @@ export const SCHEME_PRESETS: PresetSpec[] = [
   {
     slug: "ultramarines",
     title: "Ultramarines",
-    blurb:
-      "The classic blue-and-gold marine: a Macragge Blue base lifted with Fenrisian Grey, shaded down with Nuln Oil, and trimmed in gold.",
     elements: [
       {
         name: "Armour plates",
@@ -236,8 +231,6 @@ export const SCHEME_PRESETS: PresetSpec[] = [
   {
     slug: "blood-angels",
     title: "Blood Angels",
-    blurb:
-      "Three reds stacked into a bright crimson ramp, held together by gold trim, black detailing and parchment.",
     elements: [
       {
         name: "Armour plates",
@@ -276,8 +269,6 @@ export const SCHEME_PRESETS: PresetSpec[] = [
   {
     slug: "necrons",
     title: "Necrons",
-    blurb:
-      "Tarnished silver over rust, verdigris on the brass, and a hot green glow — a scheme built almost entirely out of shades and weathering.",
     elements: [
       {
         name: "Metal body",

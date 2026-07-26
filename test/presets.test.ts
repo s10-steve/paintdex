@@ -82,11 +82,10 @@ describe("resolvePreset", () => {
     expect(first.role).toBe(spec.elements[0].paints[0].role);
   });
 
-  it("carries the scheme title and blurb through", () => {
+  it("carries the scheme title and slug through", () => {
     const resolved = resolvePreset(spec, getPaintById);
     expect(resolved.title).toBe(spec.title);
     expect(resolved.slug).toBe(spec.slug);
-    expect(resolved.blurb).toBe(spec.blurb);
   });
 
   it("preserves an explicit weight and omits it otherwise", () => {

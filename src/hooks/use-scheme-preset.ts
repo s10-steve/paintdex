@@ -18,14 +18,18 @@ export const PRESET_PARAM = "preset";
  *
  * 1. `useLocalScheme` restores `localStorage` in a mount effect. Seeding before
  *    that lands would simply be overwritten — hence the `mounted` gate.
- * 2. That same hook autosaves every change, so replacing a returning visitor's
- *    in-progress scheme is a silent data loss. Hence the `window.confirm` whenever
+ * 2. Signed out, `localStorage` is the only copy of the visitor's work, so loading
+ *    an example really does destroy it. Hence the `window.confirm` whenever
  *    `schemeHasContent`.
  * 3. Worst: for a signed-in user, a non-blank local scheme makes
  *    `planSignInScheme` choose "adopt-local", and the account autosave can write
  *    it over an existing saved row depending on which effect settles first. Hence
  *    waiting for `ready` (reconciliation finished) and then going through
  *    `adoptScheme`, which creates a *new* row rather than touching the active one.
+ *
+ * Note the confirm is deliberately **signed-out only**: because `adoptScheme`
+ * saves the example as a new row, a signed-in user loses nothing, so a "this can't
+ * be undone" prompt would be both unnecessary and untrue.
  *
  * Read from `window.location` rather than `useSearchParams` so `/visualiser` stays
  * static and needs no Suspense boundary — the same approach as the `?scheme=<id>`
@@ -77,18 +81,22 @@ export function useSchemePreset({
     if (spec) {
       const byId = new Map<string, PresetPaintData>(paints.map((p) => [p.id, p]));
       const preset = resolvePreset(spec, (id) => byId.get(id));
-      const replacing = schemeHasContent(schemeRef.current);
-      const ok =
-        !replacing ||
-        window.confirm(
-          `Replace the scheme you're working on with the “${preset.title}” example? This can't be undone.`,
-        );
-      if (ok) {
-        // Signed in: land as a new saved scheme so nothing already saved is
-        // overwritten. Signed out: localStorage is the only store, and the
-        // confirm above already covered the overwrite.
-        if (signedIn) void adoptRef.current(preset);
-        else setScheme(preset);
+      if (signedIn) {
+        // Nothing to warn about: `adoptScheme` saves the example as a NEW row and
+        // switches to it, so the scheme they were on is still in the picker,
+        // still saved. Prompting here would be asking permission for something
+        // that isn't happening.
+        void adoptRef.current(preset);
+      } else {
+        // Signed out, `localStorage` is the only copy, so loading the example
+        // really does destroy whatever is in the editor. Ask first — same guard
+        // as the Reset button.
+        const ok =
+          !schemeHasContent(schemeRef.current) ||
+          window.confirm(
+            `Replace the scheme you're working on with the “${preset.title}” example? This can't be undone.\n\nSign in first and the example is added alongside your work instead.`,
+          );
+        if (ok) setScheme(preset);
       }
     }
 

@@ -228,6 +228,25 @@ describe("?preset= while signed out", () => {
 /* ---- signed in --------------------------------------------------------- */
 
 describe("?preset= while signed in", () => {
+  // The prompt is signed-out-only on purpose. `adoptScheme` adds the example as a
+  // new row, so a signed-in user loses nothing — asking "this can't be undone"
+  // would be asking permission for something that isn't happening.
+  it("never prompts, because nothing is being replaced", async () => {
+    const confirmSpy = vi.fn(() => true);
+    vi.stubGlobal("confirm", confirmSpy);
+    const mine = row("saved-1", "Mine", scheme("Mine"), "2026-01-02T00:00:00.000Z");
+    listSchemes.mockResolvedValue([mine]);
+    currentUser = { id: "u1" };
+    withPresetParam(PRESET.slug);
+
+    render(<SchemeVisualiser />);
+
+    await waitFor(() => expect(editorTitle()).toBe(PRESET.title));
+    expect(confirmSpy).not.toHaveBeenCalled();
+    // The scheme they were on is still there, still selectable.
+    expect(screen.getByRole("option", { name: "Mine" })).toBeTruthy();
+  });
+
   it("saves the example as a new scheme and never overwrites a saved one", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     vi.stubGlobal("confirm", vi.fn(() => true));

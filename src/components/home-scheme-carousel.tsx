@@ -109,8 +109,6 @@ export function HomeSchemeCarousel({ presets }: { presets: ResolvedPreset[] }) {
               Open in the designer →
             </Link>
           </div>
-          <p className="mt-1 max-w-[70ch] text-sm text-muted-foreground">{active.blurb}</p>
-
           {/* Seven elements is the widest preset; on a narrow viewport the row
               scrolls inside itself rather than stretching the page. */}
           <div className="mt-4 overflow-x-auto pb-1">

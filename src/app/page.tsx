@@ -174,12 +174,8 @@ export default function Home() {
                 leader line to the spot on the model.
               </p>
               <p className="mt-2 text-muted-foreground">
-                It all renders in your browser, so{" "}
-                <b className="font-semibold text-foreground">
-                  your photo never leaves your device
-                </b>{" "}
-                — there&apos;s no upload. Sign in with a Google account to save schemes
-                and share them as links, too.
+                Sign in with a Google account to save schemes and share them as
+                links, too.
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-3">
                 <Link
