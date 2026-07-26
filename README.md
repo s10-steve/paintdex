@@ -23,10 +23,9 @@ schemes, sync them across devices, and share them by link.
   preview every element's colours as aligned, optionally-blended vertical bars.
   Paints carry a role (base, layer, highlight, drybrush, wash, glaze,
   weathering) and a weight; each element's bar is sized by its order —
-  largest-area element first.
-  Search the database to add a paint or enter a custom name + hex. Schemes
-  autosave in your browser and export/import as JSON — or sync to your account
-  when signed in.
+  largest-area element first. Search the database to add a paint or enter a
+  custom name + hex. Schemes autosave in your browser and export/import as JSON
+  — or sync to your account when signed in.
 - **Example schemes.** The homepage carousels through a few real, recognisable
   schemes — rendered by the same component the visualiser uses, not a mock-up —
   and any of them opens straight into the designer to tweak. Each stores
@@ -128,8 +127,7 @@ Brand and product names are trademarks of their respective owners.
 
 ## Roadmap
 
-Ideas we'd love help with — see [`CONTRIBUTING.md`](CONTRIBUTING.md) if you want
-to pick one up. Shipped work is tracked in [`CHANGELOG.md`](CHANGELOG.md).
+Ideas for future features.
 
 ### Social sharing features
 
@@ -141,39 +139,21 @@ is left of that idea:
       the public `/scheme/<slug>` page.
 - [ ] More aspect ratios for the share image — 1:1 for a square feed post, 9:16
       for stories. It is 4:5 only today.
-- [ ] Split a long scheme across several share images instead of truncating the
-      paint lists, so every element stays readable.
 
 ### Paint database and UI features
 
 - [ ] Add more paint brands and ranges
-- [ ] Add
-      [AK Interactive effects](https://ak-interactive.com/product-category/paints/paints-weathering/all-weathering-effects/)
-      range (includes commonly used weathering effects like Rust Streaks and
-      Streaking Grime)
 - [ ] Interactive colour wheel (à la
       [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
       suggests matching paints based on colours you pick. Would be useful if
       you're looking to design custom schemes with colours that work well
       together. Could also be a different way to visualise colour schemes in
       `/visualise`
-- [ ] Is it possible to compute the hue and luminance relationships between
-      paints? It'd be cool if `/paints` showed similar paints arranged in a grid
-      with axes representing hue and luminance. So if you're looking for
-      something slightly different to the paint you have, you can see the
-      options in a more intuitive way than just a list of similar colours.
-
-### Example schemes
-
-Example schemes have shipped — see **Example schemes** above. They went the
-opposite way to what this roadmap guessed: a handful of curated schemes baked
-into the app (storing catalogue paint ids, so they can't drift from the paint
-data) rather than a gallery built on accounts and saved schemes. What is left of
-that idea:
-
-- [ ] A browsable gallery of schemes shared by other users, rather than a fixed
-      set of four — this is the part that does want accounts behind it.
-- [ ] Let people submit a scheme to be featured.
+- [ ] Can we compute the hue and luminance relationships between paints? It'd be
+      cool if `/paints` showed similar paints arranged in a grid with axes
+      representing hue and luminance. So if you're looking for something
+      slightly different to the paint you have, you can see the options in a
+      more intuitive way than just a list of similar colours.
 
 ### My paints feature
 
