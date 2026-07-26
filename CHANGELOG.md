@@ -5,6 +5,47 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2026-07-26
+
+### Added
+
+- **Example schemes on the homepage.** A carousel of five real, fully worked
+  schemes — **Ultramarines**, **Death Guard**, **Blood Angels**, **Necrons** and
+  **Death Guard (30K)** — replaces the decorative colour bars that used to sit
+  beside the visualiser pitch. Between them they cover 38 elements and 148 paints
+  across four manufacturers, most elements running a full base → shade → layer →
+  highlight recipe with weathering over the top. They're drawn by the same
+  component the visualiser itself uses, so what you see on the homepage is genuine
+  output: weighted tonal ramps, translucent wash and weathering bands, and each
+  element's bar sized by its order. Hover a band to name the paint, exactly as in
+  the app.
+
+  Each example opens straight into the designer via `/visualiser?preset=<slug>`,
+  so you can start from a finished scheme instead of a blank canvas. Signed in,
+  the example is added as a **new** saved scheme and whatever you were working on
+  stays untouched; signed out, you're asked first, because your browser holds the
+  only copy.
+
+  Examples store **catalogue paint ids and a role, never hex values**, so
+  correcting a colour in `data/paints/` updates the homepage automatically. A test
+  fails the build if an example ever references a paint that has been renamed or
+  removed.
+
+  The carousel rotates on its own but stays out of your way: it stops for
+  `prefers-reduced-motion`, pauses on hover and on keyboard focus, stops
+  permanently once you use the arrows or dots, and has an explicit pause button.
+
+- **A share-image section on the homepage**, showing a real export from the studio
+  rather than a mock-up, paired with the **Death Guard (30K)** example — the
+  scheme that actually painted the model pictured. The feature previously had no
+  mention anywhere outside the visualiser, so nobody who hadn't already built a
+  scheme knew it existed.
+
+### Changed
+
+- The footer disclaimer now covers **game publishers** as well as paint
+  manufacturers, and notes that the example schemes are unofficial fan recipes.
+
 ## [0.8.0] - 2026-07-25
 
 ### Added

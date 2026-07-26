@@ -8,6 +8,7 @@ import { PosterStudio } from "./scheme/poster-studio";
 import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useLocalScheme } from "@/hooks/use-local-scheme";
+import { useSchemePreset } from "@/hooks/use-scheme-preset";
 import { useSchemeShare } from "@/hooks/use-scheme-share";
 import { useSchemeSync } from "@/hooks/use-scheme-sync";
 import {
@@ -76,6 +77,8 @@ export function SchemeVisualiser() {
     setSyncState,
     selectScheme,
     newScheme,
+    adoptScheme,
+    ready,
     patchRow,
   } = useSchemeSync({ scheme, setScheme, mounted });
   // Publishing the active scheme under an unguessable share link.
@@ -85,6 +88,17 @@ export function SchemeVisualiser() {
     onError: () => setSyncState("error"),
   });
   const { user, configured, googleEnabled } = useAuth();
+  // `?preset=<slug>` — the homepage carousel's "Open in the designer" link. Gated
+  // on `ready` so it can't race the sign-in reconciliation; see the hook.
+  useSchemePreset({
+    scheme,
+    setScheme,
+    paints: dbPaints,
+    mounted,
+    ready,
+    signedIn: Boolean(user),
+    adoptScheme,
+  });
 
   /* ---- immutable scheme updates ---- */
   const mutateElement = (eid: string, fn: (e: SchemeElement) => SchemeElement) =>

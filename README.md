@@ -27,6 +27,11 @@ schemes, sync them across devices, and share them by link.
   Search the database to add a paint or enter a custom name + hex. Schemes
   autosave in your browser and export/import as JSON — or sync to your account
   when signed in.
+- **Example schemes.** The homepage carousels through a few real, recognisable
+  schemes — rendered by the same component the visualiser uses, not a mock-up —
+  and any of them opens straight into the designer to tweak. Each stores
+  catalogue paint ids rather than colours, so a hex correction in the paint data
+  updates the examples automatically.
 - **Accounts (optional).** Sign in with Google to sync your saved schemes across
   devices; without an account, schemes save to your browser. A **My schemes**
   page (`/my-schemes`) manages your schemes — rename, duplicate, delete and
@@ -40,7 +45,6 @@ schemes, sync them across devices, and share them by link.
   social media: drop a marker on each part of the model and it gets a callout
   with that element's colour ramp and paint names, joined by a leader line.
   Frame the photo, add your handle, and optionally show manufacturers and roles.
-  The photo is rendered in your browser and never uploaded.
 - **Light & dark mode**, following your system preference.
 - **Responsive** desktop and mobile layouts.
 - **Plain-JSON data.** The paint database is plain JSON, one file per brand.
@@ -159,12 +163,21 @@ is left of that idea:
       something slightly different to the paint you have, you can see the
       options in a more intuitive way than just a list of similar colours.
 
+### Example schemes
+
+Example schemes have shipped — see **Example schemes** above. They went the
+opposite way to what this roadmap guessed: a handful of curated schemes baked
+into the app (storing catalogue paint ids, so they can't drift from the paint
+data) rather than a gallery built on accounts and saved schemes. What is left of
+that idea:
+
+- [ ] A browsable gallery of schemes shared by other users, rather than a fixed
+      set of four — this is the part that does want accounts behind it.
+- [ ] Let people submit a scheme to be featured.
+
 ### My paints feature
 
 - [ ] Save the paints you own
-- [ ] Example/starter schemes to explore in the visualiser — likely built on top
-      of user accounts and saved schemes (e.g. a curated gallery you can load
-      and tweak), rather than a single scheme baked into the app
 - [ ] Paint schemes can suggest only paints from your collection
 - [ ] Wishlist for paints you don't own yet but want to buy
 

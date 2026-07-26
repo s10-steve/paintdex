@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { getAllPaints, getBrands } from "@/lib/paints/load";
+import Image from "next/image";
+import { getAllPaints, getBrands, getPaintById } from "@/lib/paints/load";
 import { COLOUR_FAMILIES } from "@/lib/color";
+import { resolvePresets } from "@/lib/scheme/presets";
 import { JsonLd } from "@/components/json-ld";
 import { HomeSearch } from "@/components/home-search";
+import { HomeSchemeCarousel } from "@/components/home-scheme-carousel";
+import samplePoster from "@/../public/sample-poster.jpg";
 
 // Keep in sync with `metadataBase` in src/app/layout.tsx.
 const BASE_URL = "https://paintdex.app";
@@ -50,9 +54,23 @@ const websiteJsonLd = {
   ],
 };
 
+/**
+ * The share image is a real export from the studio (statically imported, so a
+ * missing file is a build error rather than a silent 404), which is what stops the
+ * homepage from ever advertising something the feature doesn't actually produce.
+ * The committed file is the 2× export downscaled to the poster's logical size —
+ * 1080×1350, `POSTER_SIZE` in `src/lib/scheme/poster.ts`.
+ *
+ * Painter of the model pictured; the export carries the credit too.
+ */
+const POSTER_CREDIT = "@kasperhawser";
+
 export default function Home() {
   const paints = getAllPaints();
   const brands = getBrands();
+  // Resolved at build time, so the examples always carry current catalogue
+  // hexes and the 4,900-paint catalogue never reaches the client bundle.
+  const presets = resolvePresets(getPaintById);
 
   // One representative vivid swatch per colour family for the hero strip.
   const spectrum = COLOUR_FAMILIES.map((family) => {
@@ -109,16 +127,17 @@ export default function Home() {
 
       <section className="mx-auto max-w-4xl px-4 pb-12">
         <div className="overflow-hidden rounded-2xl border border-border bg-card">
-          <div className="grid gap-6 p-6 sm:grid-cols-[1.4fr_1fr] sm:items-center sm:p-8">
+          <div className="space-y-6 p-6 sm:p-8">
             <div className="text-left">
               <h2 className="text-2xl font-bold tracking-tight">
                 Plan your whole colour scheme
               </h2>
-              <p className="mt-2 text-muted-foreground">
+              <p className="mt-2 max-w-[70ch] text-muted-foreground">
                 The paint scheme visualiser lets you group paints by element —
                 armour, robes, lenses, etc — and preview every colour together as
-                blended vertical bars. Add paints from the database or your own custom
-                values. Save and share your schemes by logging in with a Google account.
+                vertical bars: base at the bottom, highlights at the top, washes and
+                weathering layered over. Add paints from the database or your own
+                custom values.
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-3">
                 <Link
@@ -135,24 +154,56 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div
-              className="hidden h-40 gap-2 sm:flex"
-              aria-hidden="true"
-            >
-              {spectrum.slice(0, 6).map(({ family, paint }, i) => {
-                const next =
-                  spectrum[(i + 1) % Math.min(spectrum.length, 6)].paint.hex;
-                return (
-                  <div
-                    key={family}
-                    className="flex-1 rounded-md border border-border/40"
-                    style={{
-                      background: `linear-gradient(to bottom, ${paint.hex}, ${next})`,
-                    }}
-                  />
-                );
-              })}
+
+            <HomeSchemeCarousel presets={presets} />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 pb-12">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card">
+          <div className="grid gap-6 p-6 sm:grid-cols-[1fr_minmax(0,320px)] sm:items-center sm:p-8">
+            <div className="text-left">
+              <h2 className="text-2xl font-bold tracking-tight">
+                Turn a finished model into a shareable image
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                Drop in a photo of your model and the visualiser lays your scheme over
+                it as a 4:5 image built for social media — one callout per element,
+                each showing its colour ramp and the paints that made it, joined by a
+                leader line to the spot on the model.
+              </p>
+              <p className="mt-2 text-muted-foreground">
+                Sign in with a Google account to save schemes and share them as
+                links, too.
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                {/* Points at the scheme actually pictured — the 30K model, not the
+                    40K one that now owns the `death-guard` slug. */}
+                <Link
+                  href="/visualiser?preset=death-guard-30k"
+                  className="inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+                >
+                  Try it with this scheme →
+                </Link>
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Build a scheme, then hit <b className="font-medium">Create shareable
+                image</b> in the visualiser.
+              </p>
             </div>
+            <figure className="m-0">
+              <Image
+                src={samplePoster}
+                sizes="(min-width: 640px) 320px, 100vw"
+                alt="An example share image: a bone-and-green painted war engine, with six labelled callouts around it naming the paints used for its armour, metallics, rubber and lenses."
+                className="h-auto w-full rounded-lg border border-border"
+              />
+              <figcaption className="mt-2 text-xs text-muted-foreground">
+                Model painted by {POSTER_CREDIT}. The “Death Guard (30K)” example
+                above is the same scheme.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>

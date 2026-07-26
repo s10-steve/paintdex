@@ -19,7 +19,14 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import { roleOf, weightOf, type SchemeElement, type SchemePaint } from "@/lib/scheme/types";
-import { barModel, rampGradient, overlayCenter, clamp, elementSize } from "@/lib/scheme/bars";
+import {
+  barModel,
+  rampGradient,
+  overlayCenter,
+  clamp,
+  cssRatio,
+  elementSize,
+} from "@/lib/scheme/bars";
 
 export type HoverHandlers = {
   /** Bar segment: show the tooltip and highlight the matching row. */
@@ -129,27 +136,40 @@ export function Bar({
   blend,
   hovered,
   hover,
+  heightPx,
 }: {
   element: SchemeElement;
   index: number;
   blend: boolean;
   hovered?: string | null;
   hover?: HoverHandlers;
+  /**
+   * Override the bar's height. Omit for the standard editor/viewer size; the
+   * homepage carousel runs a shorter bar to fit a card. Set inline so it wins
+   * over the `h-[340px]` class.
+   */
+  heightPx?: number;
 }) {
   const { segs, overlays } = useMemo(() => barModel(element.paints), [element.paints]);
   const empty = element.paints.length === 0;
 
   // Bars share the row's fixed width in proportion to their position — earlier
   // (larger-area) elements read wider, later ones narrower — so the ordering
-  // does the sizing. A min-width keeps the thinnest bars usable.
+  // does the sizing. The min-width keeps the thinnest bars usable, and is set
+  // wide enough for a one-word element name ("Tentacles" needs 54px at this font
+  // size) so the caption below doesn't get split mid-word. Ten bars still fit a
+  // desktop card at this floor; past that the row scrolls, which is intended.
   return (
     <div
-      className="flex min-w-[46px] flex-col items-center gap-2.5"
+      className="flex min-w-[56px] flex-col items-center gap-2.5"
       style={{ flexGrow: elementSize(index), flexBasis: 0 }}
     >
       <div
         className="relative flex h-[340px] w-full flex-col-reverse overflow-hidden rounded-[9px] shadow-sm ring-1 ring-inset ring-black/10 [isolation:isolate]"
-        style={empty ? EMPTY_BAR_STYLE : { background: rampGradient(segs, blend) }}
+        style={{
+          ...(empty ? EMPTY_BAR_STYLE : { background: rampGradient(segs, blend) }),
+          ...(heightPx === undefined ? {} : { height: heightPx }),
+        }}
       >
         {segs.map((s) => (
           <div
@@ -158,7 +178,8 @@ export function Bar({
             aria-label={paintLabel(s.paint)}
             className="relative min-h-0"
             style={{
-              flexGrow: s.frac,
+              // Rounded for the same hydration reason as `elementSize` — see cssRatio.
+              flexGrow: cssRatio(s.frac),
               flexBasis: 0,
               boxShadow: hovered === s.paint.id ? "inset 0 0 0 2px rgba(255,255,255,.7)" : undefined,
             }}
@@ -212,6 +233,11 @@ export function Bar({
           );
         })}
       </div>
+      {/* `break-words` is the last resort that stops a long element name spilling
+          into the next bar's label. It splits mid-word with no hyphen, which is
+          ugly — `hyphens: auto` does NOT rescue it (hyphenation doesn't apply to
+          an emergency break, and headless Chromium has no dictionary anyway), so
+          the fix is the bar's min-width below, not anything here. */}
       <div className="w-full break-words text-center text-xs font-medium leading-tight [text-wrap:balance]">
         {element.name}
         <span className="mt-0.5 block text-[10.5px] font-normal text-muted-foreground">

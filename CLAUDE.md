@@ -79,7 +79,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `src/components/` — client components (`paints-browser`, `similar-colours`,
   `scheme-visualiser`, `scheme-bars` (the shared bar visualisation + hover/
   tooltip, used by the editor and the read-only `scheme-view`), `site-header`,
-  `mobile-nav`, `profile-nav` (signed-in-only header links), etc.), plus `auth/`
+  `mobile-nav`, `profile-nav` (signed-in-only header links),
+  `home-scheme-carousel` (the homepage's auto-rotating example schemes — renders
+  the real `Bar`, not a mock), etc.), plus `auth/`
   (`auth-provider` with the `useAuth` hook + Google Identity Services init;
   `sign-in-button`) and `profile/` (`schemes-manager` for `/my-schemes`,
   `paints-placeholder` for `/my-paints`, and the shared `signed-in-gate`), and
@@ -91,7 +93,8 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   one: `use-browse-index` (loads the catalogue; used by all four views that need
   it), and the visualiser's three state layers — `use-local-scheme`
   (`localStorage`), `use-scheme-sync` (accounts, sign-in reconciliation,
-  autosave), `use-scheme-share` (publishing a share link). `use-poster` holds
+  autosave), `use-scheme-share` (publishing a share link), `use-scheme-preset`
+  (loads an example scheme from `?preset=<slug>`). `use-poster` holds
   the share-image state (photo, framing, anchors) in its own `localStorage` key
   — deliberately *not* in the scheme document, which has to stay portable.
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
@@ -103,15 +106,17 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `/scheme/[slug]` route; `scheme/share.ts` holds the pure share-slug helpers.
   `scheme/poster.ts` is the pure layout maths for the share image (callout
   packing, photo framing, anchor projection); `scheme/poster-draw.ts` is its
-  Canvas 2D renderer — see "Share images" below.
+  Canvas 2D renderer — see "Share images" below. `scheme/presets.ts` holds the
+  curated example schemes — see "Example schemes" below.
 - `supabase/schema.sql` — the Postgres tables + Row-Level Security for accounts
   (run in the Supabase SQL editor; not applied automatically).
 - `data/paints/*.json` — the paint catalogue, one file per brand.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
   `validate-data.ts`, `import-source.mjs`.
 - `test/` — Vitest suites for the `src/lib` logic, plus
-  `scheme-visualiser.test.tsx`, which covers the sign-in reconciliation wiring
-  (the one place a bug loses user data). The environment is `node` by default;
+  `scheme-visualiser.test.tsx` and `scheme-preset.test.tsx`, which cover the two
+  places a bug loses user data (sign-in reconciliation; `?preset=` seeding), and
+  `home-scheme-carousel.test.tsx`. The environment is `node` by default;
   component tests opt into jsdom with a per-file `@vitest-environment jsdom`
   docblock, so the pure suites stay fast.
 - `src/types/gis.d.ts` — minimal typings for the Google Identity Services lib.
@@ -142,6 +147,65 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   three together if it ever changes.
 - Paint hex values are best-effort; treat data edits as data, and run
   `npm run validate:data`.
+- The visualiser has **two** deep links, both read from `window.location` in an
+  effect (never `useSearchParams`, so the page stays static and needs no Suspense
+  boundary), and both strip their param with `history.replaceState` once handled:
+  `?scheme=<uuid>` selects one of the signed-in user's saved rows
+  (`use-scheme-sync`), and `?preset=<slug>` loads a curated example
+  (`use-scheme-preset`). See "Example schemes" below for why the second one is
+  the more dangerous of the two.
+
+## Example schemes (the homepage carousel)
+
+`src/lib/scheme/presets.ts` holds a handful of curated schemes, shown by
+`home-scheme-carousel` on the homepage and loadable into the visualiser via
+`/visualiser?preset=<slug>`.
+
+- **Presets store catalogue ids and a hand-picked `SchemeRole`, never hexes.** The
+  role has to be by hand — the catalogue's `range`/`type` vocabulary is a
+  different thing entirely ("Shade" is a product line; `wash` is how a paint reads
+  in a bar). Hexes come from a `PaintLookup` passed in by the caller, so a hex
+  correction in `data/paints/` reaches the homepage for free.
+- `presets.ts` **must not import `@/lib/paints/load`** — that's the whole reason
+  the lookup is a parameter. `page.tsx` passes `getPaintById` at build time and
+  hands plain resolved props to the client; the visualiser passes a map over the
+  browse index it already fetched. Import the loader from a client component and
+  the ~4,900-paint catalogue lands in the browser bundle.
+- Element/paint ids are derived from `slug` + position, **not `uid()`** — that's a
+  session counter, so server and client would disagree and React keys would
+  collide between slides.
+- `test/presets.test.ts` is a **drift guard**: it fails if any preset id has left
+  the catalogue. That's what makes storing ids instead of hexes safe. It
+  deliberately does *not* assert the `fallback` hexes match the catalogue, or
+  every legitimate data correction would go red.
+- **`?preset=` can destroy work, so it's gated.** `use-scheme-preset` waits for
+  `mounted` (past the `localStorage` restore) **and** `ready` from
+  `use-scheme-sync` (past sign-in reconciliation) before it touches the scheme.
+  Then it branches on sign-in state, and the branch is the point:
+  - **Signed in** → `adoptScheme`, which saves the example as a **new** row. The
+    scheme they were on stays saved and selectable, so nothing is lost and
+    **there is no confirm prompt** — one would be asking permission for something
+    that isn't happening. (It also stops the account autosave writing the example
+    over the active row.)
+  - **Signed out** → `localStorage` is the only copy, so loading an example really
+    does destroy the editor's contents. `window.confirm` first, whenever
+    `schemeHasContent`.
+
+  Remove any one of those and `test/scheme-preset.test.tsx` goes red. Two of its
+  cases are deliberately awkward to keep honest: the `ready` gate is covered by a
+  test that holds `listSchemes` open to force the losing ordering, and the
+  signed-in path asserts `confirm` is *never* called.
+- The share-image section on the homepage uses `public/sample-poster.jpg`, a real
+  export from the studio (not a re-render), so it can't drift from what the
+  feature actually produces. **It is paired with the `death-guard-30k` preset** —
+  the scheme that painted the model in that photo — and its caption and CTA both
+  say so. There is a separate, unrelated `death-guard` (40K) preset, so if you
+  repoint that CTA, check you aren't captioning the photo with a recipe that
+  didn't paint it.
+- `Bar`'s `min-w-[56px]` floor is sized so a one-word element name fits on one
+  line ("Tentacles" needs 54px). Lower it and long names split mid-word, because
+  `break-words` is the only thing stopping them overflowing into the next bar and
+  `hyphens: auto` can't help — hyphenation doesn't apply to an emergency break.
 
 ## Share images (the poster)
 

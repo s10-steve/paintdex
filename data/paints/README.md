@@ -74,5 +74,5 @@ team). The import step lives in
 Hex values are approximate and derived from manufacturer/community sources — the
 whole point of keeping them here as open data is that anyone can correct them.
 
-Brand and product names are trademarks of their respective owners. Paintdex is
-not affiliated with any paint manufacturer.
+Brand, product and faction names are trademarks of their respective owners.
+Paintdex is not affiliated with any paint manufacturer or game publisher.
