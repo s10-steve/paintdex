@@ -8,6 +8,7 @@ import { resolvePresets } from "@/lib/scheme/presets";
 import { JsonLd } from "@/components/json-ld";
 import { HomeSearch } from "@/components/home-search";
 import { HomeSchemeCarousel } from "@/components/home-scheme-carousel";
+import samplePoster from "@/../public/sample-poster.jpg";
 
 // Keep in sync with `metadataBase` in src/app/layout.tsx.
 const BASE_URL = "https://paintdex.app";
@@ -54,18 +55,15 @@ const websiteJsonLd = {
 };
 
 /**
- * The share image is a real export from the studio, so what the homepage shows is
- * exactly what the feature produces. Dimensions match the poster format
- * (`POSTER_SIZE` in `src/lib/scheme/poster.ts`) — the committed file is a
- * downscale of the 2× export, keeping the 4:5 ratio.
+ * The share image is a real export from the studio (statically imported, so a
+ * missing file is a build error rather than a silent 404), which is what stops the
+ * homepage from ever advertising something the feature doesn't actually produce.
+ * The committed file is the 2× export downscaled to the poster's logical size —
+ * 1080×1350, `POSTER_SIZE` in `src/lib/scheme/poster.ts`.
+ *
+ * Painter of the model pictured; the export carries the credit too.
  */
-const SAMPLE_POSTER = {
-  src: "/sample-poster.jpg",
-  width: 1080,
-  height: 1350,
-  /** Painter of the model pictured, credited in the export itself too. */
-  credit: "@kasperhawser",
-};
+const POSTER_CREDIT = "@kasperhawser";
 
 export default function Home() {
   const paints = getAllPaints();
@@ -198,15 +196,13 @@ export default function Home() {
             </div>
             <figure className="m-0">
               <Image
-                src={SAMPLE_POSTER.src}
-                width={SAMPLE_POSTER.width}
-                height={SAMPLE_POSTER.height}
+                src={samplePoster}
                 sizes="(min-width: 640px) 320px, 100vw"
                 alt="An example share image: a bone-and-green painted war engine, with six labelled callouts around it naming the paints used for its armour, metallics, rubber and lenses."
                 className="h-auto w-full rounded-lg border border-border"
               />
               <figcaption className="mt-2 text-xs text-muted-foreground">
-                Model painted by {SAMPLE_POSTER.credit}. The “Death Guard” example
+                Model painted by {POSTER_CREDIT}. The “Death Guard” example
                 above is the same scheme.
               </figcaption>
             </figure>
