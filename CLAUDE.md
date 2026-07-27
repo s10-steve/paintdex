@@ -79,7 +79,8 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `src/components/` — client components (`paints-browser`, `similar-colours`
   (the shell: filters + the List/Plot toggle), `similar-list` (the ΔE-ranked
   cards), `similar-plot` (the hue/lightness plot — see "The alternatives plot"
-  below),
+  below), `paint-facets` (the facet sidebar both paint pages render),
+  `back-to-browse` (the paint page's "back" link, which carries the live filters),
   `scheme-visualiser`, `scheme-bars` (the shared bar visualisation + hover/
   tooltip, used by the editor and the read-only `scheme-view`), `site-header`,
   `mobile-nav`, `profile-nav` (signed-in-only header links),
@@ -112,8 +113,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
   contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
   the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
-  shared with the browse page, and `lab-index.ts`, a module-scope memo attaching
-  Lab to the browse index), `scheme/` (bar maths, JSON import/export, types). Also `supabase/` (browser client +
+  shared by both paint pages, `facet-availability.ts`, the shared facet-pruning
+  pass, and `lab-index.ts`, a module-scope memo attaching Lab to the browse
+  index), `scheme/` (bar maths, JSON import/export, types). Also `supabase/` (browser client +
   hand-written row types) and `data/` (per-table CRUD, e.g. `schemes.ts`) — these
   touch the network, so keep them thin and keep the logic in the pure modules.
   `supabase/server.ts` is the anon server-read client used only by the
@@ -130,7 +132,8 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `test/` — Vitest suites for the `src/lib` logic (including `scatter.test.ts`,
   which is where the alternatives plot's behaviour is pinned, and
   `filter-params.test.ts`, which pins the URL codec and guards the comma
-  assumption), plus
+  assumption, and `facet-availability.test.ts`), plus `paint-filters-travel.test.tsx`
+  (the two fiddly halves of the filter round trip) and
   `scheme-visualiser.test.tsx` and `scheme-preset.test.tsx`, which cover the two
   places a bug loses user data (sign-in reconciliation; `?preset=` seeding), and
   `home-scheme-carousel.test.tsx`. The environment is `node` by default;
@@ -149,12 +152,47 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   **not** `router.replace` — `router.replace` is a no-op when the page was
   hard-loaded with query params (e.g. arriving from the homepage search), which
   silently freezes the results. See `src/components/paints-browser.tsx`.
-  - `src/lib/paints/filter-params.ts` holds the shared vocabulary
-    (`brand`/`range`/`type`/`metal`, comma-joined, plus the panel's `match` and
-    `view`) so the two pages can't disagree about what `?brand=` means. They
-    **deliberately share only the spelling, not the state**: browse filters never
-    carry into a paint page. The shared constants are not an invitation to wire
-    them together.
+  - `src/lib/paints/filter-params.ts` owns the **whole** vocabulary for both pages
+    — `brand`, `range`, `type`, `metal`, `disc`, `family`, `q`, `sort`, `match`,
+    `view` — plus `TRAVEL_PARAMS`, the allow-list an internal link may copy.
+  - **Filters travel between the two pages, in both directions**, and the rule for
+    what goes where generalises the one already stated for the plot's `axisChoice`
+    below: **a param that says *which paints you want* is shared and travels; a
+    param that says *how to present this page* stays local.**
+    - `brand`/`range`/`type`/`metal`/`disc` are `SharedFacets`: applied by both
+      pages, and rendered by one component (`paint-facets.tsx`) so the sidebars
+      can't drift apart again — they previously disagreed on the heading, on the
+      wording of the metallic option, and on which groups existed.
+    - `sort` (browse) and `view` (paint page) are presentation and stay put.
+    - `q` and `family` (browse-only) and `match` (panel-only) are filters with a
+      control on one page: **carried in the URL, never applied by the other.**
+  - **`family` is carried but not applied on `/paints/[id]`, deliberately.** Matches
+    all cluster around the reference colour, so applying it would be a no-op most of
+    the time and would silently empty the list at a family boundary, with no
+    checkbox to explain it. Keeping it out of `SimilarParamState` also means an
+    arrival from a family-filtered browse still counts as
+    `isDefaultSimilarParams`, so the panel skips its restore and keeps the
+    fetch-free precomputed first render.
+  - **The two pages read the URL differently on purpose.** Browse uses
+    `useSearchParams()` inside the `<Suspense>` in `src/app/paints/page.tsx`: it
+    never remounts, so a mount-effect read would leave Back/Forward changing the
+    URL with nothing re-reading it — and it has already paid the prerender cost.
+    The panel reads `window.location` in a mount effect and must keep doing so (see
+    "The alternatives plot"). Both write with `history.replaceState`. **The shared
+    module is the codec, not the transport.**
+  - **"Clear all" clears the controls in front of you** and preserves everything
+    else — so browse no longer wipes `sort` (it never counted it as a filter), and
+    the panel never destroys an inbound `q`/`family` the user has no way to restore.
+  - **`?disc=1` on a paint page forces the client re-rank**, because the precomputed
+    `.cache/similar-index.json` is itself built discontinued-free and can't be
+    un-filtered client-side. That's why `hasSharedFacet` counts
+    `includeDiscontinued` — but only when `true`, or every paint page would lose its
+    instant first render.
+  - Both sidebar copies are in the DOM at once (the desktop one is `hidden
+    md:block`, not unmounted), so anything with an `id` or a radio-group `name`
+    needs to differ per copy. `PaintFacets` is a component, so its own `useId`
+    handles the radios; the panel's "Minimum match" select is one JSX value
+    rendered twice, so it takes an explicit per-copy suffix instead.
   - Comma-joining is only safe because no brand or range name contains a comma —
     `test/filter-params.test.ts` has a drift guard that fails if one ever does.
   - Closed vocabularies are validated on read (`type` against `PAINT_TYPES`,
@@ -309,7 +347,8 @@ on at the origin. `src/lib/paints/scatter.ts` is the pure layout maths;
   `useSearchParams` — this page has no Suspense boundary) and written through one
   writer with `history.replaceState`, never `router.replace`. List rows and plot
   marks append the current filter query to their `/paints/<id>` hrefs, which is
-  what makes a filter survive clicking swatch → swatch → swatch. `replaceState`
+  what makes a filter survive clicking swatch → swatch → swatch — and they carry
+  the browse-only params too, so a later "Back to all paints" restores them. `replaceState`
   rather than `pushState`, because the `<Link>` navigation already creates the
   history entry — so Back lands on the previous paint *with its filters* — and
   ticking four facets shouldn't cost four Back presses.

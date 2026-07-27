@@ -27,7 +27,9 @@ schemes, sync them across devices, and share them by link.
   axis switches to saturation. Marks are keyboard-navigable in ΔE order, and the
   plot always reports what it couldn't fit. **Filters stay applied as you click
   through** — narrow to a brand and you can explore that whole range swatch by
-  swatch — and they live in the URL, so a filtered view is a shareable link.
+  swatch, and the same filters carry between the full list and an individual
+  paint in both directions, so nothing is lost on the round trip. They live in
+  the URL, so a filtered view is a shareable link.
 - **Paint scheme visualiser.** Plan a miniature's colour scheme on
   `/visualiser`: Group your paints by element (armour, robes, lenses, etc) and
   preview every element's colours as aligned, optionally-blended vertical bars.

@@ -98,6 +98,16 @@ export function SimilarColours({
   const [mobileOpen, setMobileOpen] = useState(false);
   /** Null = follow the reference paint's chroma; set = the user chose. */
   const [axisChoice, setAxisChoice] = useState<ScatterAxis | null>(null);
+  /**
+   * The params this page arrived with, captured once at mount.
+   *
+   * Needed so outgoing links carry the browse-only params the panel holds but
+   * never applies (`q`, `family`, `sort`) — otherwise a trip back to browse after
+   * clicking through would have lost them. Null until mount, which is what keeps
+   * the prerendered hrefs clean; the panel never writes these params, so a single
+   * capture stays accurate.
+   */
+  const [liveParams, setLiveParams] = useState<URLSearchParams | null>(null);
 
   const { brands: selBrands, types: selTypes, ranges: selRanges } = filters;
   const { metallic, minMatch, view, includeDiscontinued } = filters;
@@ -122,6 +132,7 @@ export function SimilarColours({
     // documented instant, fetch-free first render, and the crawlable ΔE list with
     // it — to spare one frame for the few arriving with params.
     const url = new URL(window.location.href);
+    setLiveParams(url.searchParams);
     const raw = readSimilarParams(url.searchParams);
     const fromUrl = sanitiseSimilarParams(raw, { brands, ranges });
     // Skip the write entirely for a param-free page, which is nearly all of them:
@@ -167,7 +178,7 @@ export function SimilarColours({
   };
 
   /** Query string appended to every match's href so the filters follow the click. */
-  const linkQuery = similarLinkQuery(filters);
+  const linkQuery = similarLinkQuery(filters, liveParams ?? undefined);
 
   // Facet filters drive the re-rank; the match cutoff is a cheap post-filter on
   // distance, so it's tracked separately and never triggers a fetch/re-rank.

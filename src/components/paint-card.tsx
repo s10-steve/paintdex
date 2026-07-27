@@ -2,10 +2,21 @@ import Link from "next/link";
 import type { Paint } from "@/lib/paints/types";
 
 /** Grid card linking to a paint's detail page. Usable in server or client trees. */
-export function PaintCard({ paint }: { paint: Paint }) {
+export function PaintCard({
+  paint,
+  query = "",
+}: {
+  paint: Paint;
+  /**
+   * Query string carrying the browse filters, so they follow the click. Passed in
+   * rather than read from `window` here, which keeps this component usable in a
+   * server tree.
+   */
+  query?: string;
+}) {
   return (
     <Link
-      href={`/paints/${paint.id}`}
+      href={`/paints/${paint.id}${query}`}
       className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <div

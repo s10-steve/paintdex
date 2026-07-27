@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   getAllPaints,
@@ -13,6 +12,7 @@ import { PAINT_TYPES, type Paint, type PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
 import { SimilarColours, type SimilarItem } from "@/components/similar-colours";
 import { JsonLd } from "@/components/json-ld";
+import { BackToBrowse } from "@/components/back-to-browse";
 
 // Keep in sync with `metadataBase` in src/app/layout.tsx.
 const BASE_URL = "https://paintdex.app";
@@ -127,12 +127,7 @@ export default async function PaintDetailPage({
         crossOrigin="anonymous"
       />
       <JsonLd data={jsonLd} />
-      <Link
-        href="/paints"
-        className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
-      >
-        ← Back to all paints
-      </Link>
+      <BackToBrowse />
 
       <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
         <div

@@ -7,6 +7,7 @@ import type { BrowsePaint, PaintType } from "@/lib/paints/types";
 import {
   BROWSE_CLEARABLE,
   FILTER_PARAMS,
+  travelQuery,
   SORT_KEYS,
   clearParams,
   readBrowseParams,
@@ -93,10 +94,25 @@ export function PaintsBrowser({
   }, [searchText, paints]);
   const suggestVisible = suggestOpen && searchText.trim().length >= 2;
 
+  const cancelSearchTimer = () => {
+    if (searchTimer.current) {
+      clearTimeout(searchTimer.current);
+      searchTimer.current = null;
+    }
+  };
+
   const gotoPaint = (p: BrowsePaint) => {
     setSuggestOpen(false);
     setActiveSuggestion(-1);
-    router.push(`/paints/${p.id}`);
+    cancelSearchTimer();
+    // Carry the *live* search text rather than the debounced `q`: the query that
+    // found this paint is the one worth having when you come back.
+    router.push(
+      `/paints/${p.id}${travelQuery(
+        searchParams,
+        new URLSearchParams({ [FILTER_PARAMS.q]: searchText.trim() }),
+      )}`,
+    );
   };
 
   // Keep the latest params in a ref so the debounced commit builds from current
@@ -106,13 +122,6 @@ export function PaintsBrowser({
   useEffect(() => {
     searchParamsRef.current = searchParams;
   }, [searchParams]);
-
-  const cancelSearchTimer = () => {
-    if (searchTimer.current) {
-      clearTimeout(searchTimer.current);
-      searchTimer.current = null;
-    }
-  };
 
   const applyParams = (params: URLSearchParams) => {
     const qs = params.toString();
@@ -232,6 +241,13 @@ export function PaintsBrowser({
     (includeDiscontinued ? 1 : 0) +
     (metallic ? 1 : 0) +
     (q ? 1 : 0);
+
+  /**
+   * The query every card link carries, so browse's filters follow the click. Built
+   * from the allow-list rather than the whole query string, so tracking params and
+   * other features' params don't propagate through internal navigation.
+   */
+  const outgoingQuery = travelQuery(searchParams);
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
@@ -458,7 +474,7 @@ export function PaintsBrowser({
             <>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                 {results.slice(0, visible).map((p) => (
-                  <PaintCard key={p.id} paint={p} />
+                  <PaintCard key={p.id} paint={p} query={outgoingQuery} />
                 ))}
               </div>
               {visible < results.length ? (
