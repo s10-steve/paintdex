@@ -1,0 +1,98 @@
+/**
+ * Which facet options are still worth offering, given the other active filters.
+ *
+ * Both paint pages need this — the browse grid and a paint page's alternatives
+ * panel — and they used to compute it separately, which is how `disc` and `family`
+ * ended up meaning different things on the two sidebars. One pure, node-testable
+ * module instead (see `test/facet-availability.test.ts`).
+ *
+ * Two deliberate omissions, both long-standing behaviour worth keeping:
+ *
+ * - **Search text is not applied.** Typing must never make checkboxes vanish
+ *   underneath the cursor.
+ * - **A paint page's ΔE cutoff is not applied.** So an option can be offered and
+ *   still yield "No alternatives match these filters". Folding the cutoff in would
+ *   make the facet lists a function of a control three rows above them, which is
+ *   worse than the asymmetry.
+ */
+import type { MetallicFilter, SharedFacets } from "./filter-params";
+
+/** One checkbox in a facet group. */
+export interface FacetOption {
+  value: string;
+  label: string;
+}
+
+/** The minimum a record needs for the availability pass. */
+export interface Facetable {
+  brand: string;
+  range: string;
+  type: string;
+  family: string;
+  metallic?: boolean;
+  discontinued?: boolean;
+}
+
+export interface FacetAvailability {
+  brands: Set<string>;
+  ranges: Set<string>;
+  types: Set<string>;
+  families: Set<string>;
+}
+
+/** The selection the pass narrows by. `families` is browse-only; empty elsewhere. */
+export type FacetSelection = SharedFacets & { families: Set<string> };
+
+const matchesMetallic = (p: Facetable, m: MetallicFilter) =>
+  m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
+
+/**
+ * For each facet, the values that still yield at least one result given the
+ * *other* active filters. A facet's own selection is skipped for its own list, so
+ * ticking one brand doesn't hide its siblings.
+ */
+export function computeAvailability(
+  pool: readonly Facetable[],
+  sel: FacetSelection,
+): FacetAvailability {
+  const match = (p: Facetable, skip: "brand" | "range" | "type" | "family") =>
+    (sel.includeDiscontinued || !p.discontinued) &&
+    matchesMetallic(p, sel.metallic) &&
+    (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
+    (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
+    (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
+    (skip === "family" || !sel.families.size || sel.families.has(p.family));
+
+  const brands = new Set<string>();
+  const ranges = new Set<string>();
+  const types = new Set<string>();
+  const families = new Set<string>();
+  for (const p of pool) {
+    if (match(p, "brand")) brands.add(p.brand);
+    if (match(p, "range")) ranges.add(p.range);
+    if (match(p, "type")) types.add(p.type);
+    if (match(p, "family")) families.add(p.family);
+  }
+  return { brands, ranges, types, families };
+}
+
+/**
+ * The options to render for one facet: those still available, plus anything
+ * already selected so it can always be unticked.
+ *
+ * `available === null` means the catalogue hasn't loaded yet and **prunes
+ * nothing** — otherwise a sidebar would start empty and fill in, and a selected
+ * value could briefly have no checkbox.
+ *
+ * Order follows `values`, so the canonical `PAINT_TYPES` / `COLOUR_FAMILIES`
+ * ordering survives rather than being replaced by whatever order the pool is in.
+ */
+export function facetOptions(
+  values: readonly string[],
+  available: Set<string> | null,
+  selected: Set<string>,
+): FacetOption[] {
+  return values
+    .filter((v) => !available || available.has(v) || selected.has(v))
+    .map((v) => ({ value: v, label: v }));
+}

@@ -1,7 +1,24 @@
 import { describe, it, expect } from "vitest";
 import {
+  BROWSE_CLEARABLE,
   DEFAULT_MATCH,
+  DEFAULT_SORT,
   MATCH_VALUES,
+  SIMILAR_CLEARABLE,
+  TRAVEL_PARAMS,
+  clearParams,
+  emptyBrowseParams,
+  emptySharedFacets,
+  hasSharedFacet,
+  parseDisc,
+  parseFamilies,
+  parseSort,
+  readBrowseParams,
+  readSharedFacets,
+  travelParams,
+  travelQuery,
+  writeBrowseParams,
+  type BrowseParamState,
   emptySimilarParams,
   hasFacetFilter,
   isDefaultSimilarParams,
@@ -305,5 +322,255 @@ describe("comma-joining is safe for the real catalogue", () => {
     });
     const url = new URL(`https://paintdex.app/paints/x${similarLinkQuery(original)}`);
     expect(readSimilarParams(url.searchParams)).toEqual(original);
+  });
+});
+
+/* ============ the shared vocabulary: browse + paint page together ============ */
+
+const readBrowse = (qs: string) => readBrowseParams(new URLSearchParams(qs));
+const browseState = (over: Partial<BrowseParamState> = {}): BrowseParamState => ({
+  ...emptyBrowseParams(),
+  ...over,
+});
+const writeBrowse = (s: BrowseParamState, qs = "") =>
+  writeBrowseParams(new URLSearchParams(qs), s).toString();
+
+describe("the new codecs", () => {
+  it("reads disc as a strict 1", () => {
+    expect(parseDisc("1")).toBe(true);
+    for (const v of ["0", "true", "yes", "", null]) expect(parseDisc(v)).toBe(false);
+  });
+
+  it("validates colour families against the vocabulary", () => {
+    expect(parseFamilies("red,neutral")).toEqual(["red", "neutral"]);
+    expect(parseFamilies("red,nonsense")).toEqual(["red"]);
+    // Case-sensitive, like every other closed vocabulary here.
+    expect(parseFamilies("RED")).toEqual([]);
+  });
+
+  it("falls back to the default sort for anything unknown", () => {
+    expect(parseSort("brand")).toBe("brand");
+    expect(parseSort("lightness")).toBe("lightness");
+    for (const v of ["name", "relevance", "", null]) expect(parseSort(v)).toBe(DEFAULT_SORT);
+  });
+});
+
+describe("readSharedFacets", () => {
+  it("is exactly the intersection of the two page readers", () => {
+    // The guard against the two state shapes drifting apart.
+    const qs = "brand=Citadel,Vallejo&range=Base&type=layer&metal=0&disc=1";
+    const shared = readSharedFacets(new URLSearchParams(qs));
+    const fromBrowse = readBrowse(qs);
+    const fromPanel = read(qs);
+    for (const key of Object.keys(shared) as (keyof typeof shared)[]) {
+      expect(fromBrowse[key]).toEqual(shared[key]);
+      expect(fromPanel[key]).toEqual(shared[key]);
+    }
+  });
+
+  it("reads the discontinued flag", () => {
+    expect(readSharedFacets(new URLSearchParams("disc=1")).includeDiscontinued).toBe(true);
+    expect(readSharedFacets(new URLSearchParams("")).includeDiscontinued).toBe(false);
+  });
+});
+
+describe("hasSharedFacet", () => {
+  it("counts an explicit include-discontinued", () => {
+    expect(hasSharedFacet({ ...emptySharedFacets(), includeDiscontinued: true })).toBe(true);
+  });
+
+  it("does NOT count the default, which would cost every paint page its first render", () => {
+    expect(hasSharedFacet(emptySharedFacets())).toBe(false);
+    expect(hasSharedFacet({ ...emptySharedFacets(), includeDiscontinued: false })).toBe(false);
+  });
+
+  it("ignores browse-only and panel-only controls", () => {
+    expect(hasSharedFacet(browseState({ search: "red", sort: "brand" }))).toBe(false);
+    expect(hasSharedFacet(browseState({ families: new Set(["red"]) }))).toBe(false);
+    expect(hasSharedFacet(state({ minMatch: "2", view: "plot" }))).toBe(false);
+  });
+});
+
+describe("carried but not applied", () => {
+  it("leaves a paint page's default state untouched by browse-only params", () => {
+    // THE load-bearing property: arriving from a family-filtered browse must not
+    // flip the panel off its fetch-free precomputed first render.
+    const s = read("q=red&family=red&sort=brand&utm_source=x");
+    expect(isDefaultSimilarParams(s)).toBe(true);
+  });
+
+  it("preserves q/family/sort through a panel write", () => {
+    const out = write(state({ brands: new Set(["Vallejo"]) }), "q=red&family=red&sort=brand");
+    const params = new URLSearchParams(out);
+    expect(params.get("q")).toBe("red");
+    expect(params.get("family")).toBe("red");
+    expect(params.get("sort")).toBe("brand");
+    expect(params.get("brand")).toBe("Vallejo");
+  });
+
+  it("preserves match/view through a browse write", () => {
+    const out = writeBrowse(browseState({ brands: new Set(["Vallejo"]) }), "match=2&view=plot");
+    const params = new URLSearchParams(out);
+    expect(params.get("match")).toBe("2");
+    expect(params.get("view")).toBe("plot");
+    expect(params.get("brand")).toBe("Vallejo");
+  });
+});
+
+describe("writeBrowseParams", () => {
+  it("writes nothing for a default browse state", () => {
+    expect(writeBrowse(browseState())).toBe("");
+  });
+
+  it("omits the default sort, like the default match", () => {
+    expect(writeBrowse(browseState({ sort: DEFAULT_SORT }))).toBe("");
+    expect(writeBrowse(browseState({ sort: "brand" }))).toContain("sort=brand");
+  });
+
+  it("trims and omits an empty search", () => {
+    expect(writeBrowse(browseState({ search: "   " }))).toBe("");
+    expect(new URLSearchParams(writeBrowse(browseState({ search: " red " }))).get("q")).toBe("red");
+  });
+
+  it("round-trips a fully-populated browse state", () => {
+    const original = browseState({
+      brands: new Set(["Citadel"]),
+      ranges: new Set(["D&D Nolzur's Marvelous Pigments"]),
+      types: new Set(["layer"]),
+      families: new Set(["red"]),
+      metallic: "exclude",
+      includeDiscontinued: true,
+      search: "red",
+      sort: "lightness",
+    });
+    expect(readBrowseParams(writeBrowseParams(new URLSearchParams(), original))).toEqual(original);
+  });
+
+  it("sorts multi-value params, so both pages produce the same URL", () => {
+    const a = writeBrowse(browseState({ brands: new Set(["Vallejo", "Citadel"]) }));
+    const b = writeBrowse(browseState({ brands: new Set(["Citadel", "Vallejo"]) }));
+    expect(a).toBe(b);
+    // ...and the panel agrees with browse for the same selection.
+    expect(new URLSearchParams(a).get("brand")).toBe(
+      new URLSearchParams(write(state({ brands: new Set(["Citadel", "Vallejo"]) }))).get("brand"),
+    );
+  });
+
+  it("still reads an old insertion-order bookmark", () => {
+    expect([...readBrowse("brand=Vallejo,Citadel").brands].sort()).toEqual(["Citadel", "Vallejo"]);
+  });
+});
+
+describe("travelParams", () => {
+  const current = new URLSearchParams(
+    "brand=Vallejo&q=red&sort=brand&family=red&match=2&view=plot&disc=1" +
+      "&utm_source=newsletter&fbclid=abc&preset=death-guard&scheme=uuid",
+  );
+
+  it("carries every param the two pages own", () => {
+    const out = travelParams(current);
+    for (const key of ["brand", "q", "sort", "family", "match", "view", "disc"]) {
+      expect(out.get(key)).toBe(current.get(key));
+    }
+  });
+
+  it("drops everything else, so tracking and other features don't propagate", () => {
+    const out = travelParams(current);
+    for (const key of ["utm_source", "fbclid", "preset", "scheme"]) {
+      expect(out.get(key)).toBeNull();
+    }
+  });
+
+  it("lets overrides win", () => {
+    const out = travelParams(current, new URLSearchParams("q=blue"));
+    expect(out.get("q")).toBe("blue");
+    expect(out.get("brand")).toBe("Vallejo");
+  });
+
+  it("treats an empty override as a delete", () => {
+    expect(travelParams(current, new URLSearchParams("q=")).get("q")).toBeNull();
+  });
+
+  it("returns an empty query string when there is nothing to carry", () => {
+    expect(travelQuery(new URLSearchParams("utm_source=x"))).toBe("");
+    expect(travelQuery(new URLSearchParams(""))).toBe("");
+  });
+
+  it("prefixes with ? when there is", () => {
+    expect(travelQuery(new URLSearchParams("brand=Vallejo"))).toBe("?brand=Vallejo");
+  });
+
+  it("has TRAVEL_PARAMS covering exactly the ten owned params", () => {
+    expect([...TRAVEL_PARAMS].sort()).toEqual(
+      [
+        "brand",
+        "range",
+        "type",
+        "metal",
+        "disc",
+        "family",
+        "q",
+        "sort",
+        "match",
+        "view",
+      ].sort(),
+    );
+  });
+});
+
+describe("similarLinkQuery with the current URL", () => {
+  it("carries browse-only params so a later Back restores them", () => {
+    const current = new URLSearchParams("q=red&family=red&sort=brand&utm_source=x");
+    const qs = similarLinkQuery(state({ brands: new Set(["Vallejo"]) }), current);
+    const params = new URLSearchParams(qs.slice(1));
+    expect(params.get("q")).toBe("red");
+    expect(params.get("family")).toBe("red");
+    expect(params.get("sort")).toBe("brand");
+    expect(params.get("brand")).toBe("Vallejo");
+    // But not the tracking param.
+    expect(params.get("utm_source")).toBeNull();
+  });
+
+  it("behaves exactly as before when given no current URL", () => {
+    expect(similarLinkQuery(state({ brands: new Set(["Vallejo"]) }))).toBe("?brand=Vallejo");
+  });
+});
+
+describe("clearParams — clear the controls in front of you", () => {
+  const busy = "q=x&brand=B&range=R&type=layer&metal=1&disc=1&family=red&sort=brand&view=plot&match=2&utm_source=n";
+
+  it("browse keeps sort, the panel's params, and foreign params", () => {
+    const out = clearParams(new URLSearchParams(busy), BROWSE_CLEARABLE);
+    expect([...out.keys()].sort()).toEqual(["match", "sort", "utm_source", "view"]);
+    // The bug this fixes: browse used to wipe `sort` despite never counting it.
+    expect(out.get("sort")).toBe("brand");
+  });
+
+  it("the panel keeps browse's params, sort, view and foreign params", () => {
+    const out = clearParams(new URLSearchParams(busy), SIMILAR_CLEARABLE);
+    expect([...out.keys()].sort()).toEqual(["family", "q", "sort", "utm_source", "view"]);
+    // It must not destroy an inbound filter it gives the user no control for.
+    expect(out.get("family")).toBe("red");
+    expect(out.get("q")).toBe("x");
+  });
+
+  it("does not mutate its input", () => {
+    const input = new URLSearchParams("brand=B&sort=brand");
+    clearParams(input, BROWSE_CLEARABLE);
+    expect(input.toString()).toBe("brand=B&sort=brand");
+  });
+});
+
+describe("sanitiseSharedFacets", () => {
+  it("preserves every non-facet field on both state shapes", () => {
+    const known = { brands: ["Citadel"], ranges: ["Base"] };
+    const panel = sanitiseSimilarParams(
+      state({ brands: new Set(["Gone"]), minMatch: "2", view: "plot", includeDiscontinued: true }),
+      known,
+    );
+    expect([...panel.brands]).toEqual([]);
+    expect(panel.minMatch).toBe("2");
+    expect(panel.view).toBe("plot");
+    expect(panel.includeDiscontinued).toBe(true);
   });
 });
