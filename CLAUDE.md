@@ -76,7 +76,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `sitemap.ts`. Root `layout.tsx` holds metadata (incl. OpenGraph/Twitter),
   wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the header and
   Vercel Analytics/Speed Insights.
-- `src/components/` — client components (`paints-browser`, `similar-colours`,
+- `src/components/` — client components (`paints-browser`, `similar-colours`
+  (the shell: filters + the List/Plot toggle), `similar-list` (the ΔE-ranked
+  cards), `similar-plot` (the hue/lightness plot — see "The alternatives plot"
+  below),
   `scheme-visualiser`, `scheme-bars` (the shared bar visualisation + hover/
   tooltip, used by the editor and the read-only `scheme-view`), `site-header`,
   `mobile-nav`, `profile-nav` (signed-in-only header links),
@@ -91,15 +94,18 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   The theme follows the system setting (no manual toggle).
 - `src/hooks/` — stateful React logic shared between components or lifted out of
   one: `use-browse-index` (loads the catalogue; used by all four views that need
-  it), and the visualiser's three state layers — `use-local-scheme`
+  it), `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
+  out in real pixels, so it needs a measured width), and the visualiser's three
+  state layers — `use-local-scheme`
   (`localStorage`), `use-scheme-sync` (accounts, sign-in reconciliation,
   autosave), `use-scheme-share` (publishing a share link), `use-scheme-preset`
   (loads an example scheme from `?preset=<slug>`). `use-poster` holds
   the share-image state (photo, framing, anchors) in its own `localStorage` key
   — deliberately *not* in the scheme document, which has to stay portable.
-- `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
-  contrast, colour families), `paints/` (load, filter, types), `scheme/` (bar
-  maths, JSON import/export, types). Also `supabase/` (browser client +
+- `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
+  contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
+  the alternatives plot's layout maths), `scheme/` (bar maths, JSON
+  import/export, types). Also `supabase/` (browser client +
   hand-written row types) and `data/` (per-table CRUD, e.g. `schemes.ts`) — these
   touch the network, so keep them thin and keep the logic in the pure modules.
   `supabase/server.ts` is the anon server-read client used only by the
@@ -113,7 +119,8 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `data/paints/*.json` — the paint catalogue, one file per brand.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
   `validate-data.ts`, `import-source.mjs`.
-- `test/` — Vitest suites for the `src/lib` logic, plus
+- `test/` — Vitest suites for the `src/lib` logic (including `scatter.test.ts`,
+  which is where the alternatives plot's behaviour is pinned), plus
   `scheme-visualiser.test.tsx` and `scheme-preset.test.tsx`, which cover the two
   places a bug loses user data (sign-in reconciliation; `?preset=` seeding), and
   `home-scheme-carousel.test.tsx`. The environment is `node` by default;
@@ -206,6 +213,74 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   line ("Tentacles" needs 54px). Lower it and long names split mid-word, because
   `break-words` is the only thing stopping them overflowing into the next bar and
   `hyphens: auto` can't help — hyphenation doesn't apply to an emergency break.
+
+## The alternatives plot
+
+The paint detail page's second view of its matches: the same candidates as the
+ΔE list, placed by hue shift (across) and lightness (up), with the paint you're
+on at the origin. `src/lib/paints/scatter.ts` is the pure layout maths;
+`src/components/similar-plot.tsx` renders it. The list is still the default.
+
+- **x is relative to the reference paint, y is relative lightness.** Both are
+  signed differences, so the reference sits on the zero lines and switching axes
+  never moves it. An absolute 0–360 hue axis was rejected: a paint's ΔE<10
+  neighbourhood spans ±10–35°, which would compress into a ~5% sliver.
+- **Only the hue domain is symmetric.** Hue can shift either way with no bound.
+  Lightness and chroma both have hard limits, and forcing symmetry on them wasted
+  half the plot on the paints that need it most — nothing is *less* saturated than
+  Abaddon Black (C\* = 0) and nothing is darker, so a symmetric domain handed the
+  entire left and bottom halves to values that cannot exist.
+- **Near-neutral targets get a saturation axis, not a hue axis.** Below
+  `NEUTRAL_CHROMA` (10) a Lab hue angle is noise, not merely small — Administratum
+  Grey's near matches span −180…+161° of "hue shift". That's about a quarter of
+  the catalogue, including heavily-visited pages, so `pickScatterAxis` is v1
+  scope, not a refinement. Both axes stay offered; the label says "Saturation"
+  because "chroma" isn't a word miniature painters use. Individual near-neutral
+  candidates in hue mode are flagged `hueUncertain` and drawn with a dashed ring —
+  never hidden, and never damped toward 0, which would be a different lie.
+- **The plot recomputes its candidates; it does not use the precomputed index.**
+  `.cache/similar-index.json` holds 16 per paint, which spans about ±5° of hue —
+  a vertical smear, not a scatter. Don't "fix" that by raising its `LIMIT`: the
+  client never reads that file (the page inlines those records into the RSC
+  payload), so 120 would add ~18KB to each of 4,961 static pages to serve a
+  non-default view. The list's own data path is deliberately left untouched, both
+  because its instant fetch-free first render is a real feature and because the
+  cached distances are rounded to 3dp, so a client recompute reorders ties and
+  visibly reshuffles the default view.
+- **Two caps, and both are reported.** `MAX_POINTS` (120) is the compute ceiling;
+  `capForArea` is the readability one and is what binds on a phone, where 120
+  touch-sized marks tile the plot into a solid block. Whatever is dropped shows up
+  in `layout.omittedCount` and in the caption, like the poster's `layout.omitted`.
+- **Overlap is bounded, not eliminated.** `MAX_DISPLACEMENT_R` caps how far a mark
+  may sit from the truth, and it deliberately outranks clickability: inside 3
+  radii only ~7 marks fit a diameter apart, so dense piles stay partly stacked and
+  `layout.overlapping` says how many. Vallejo White is the case that forces this —
+  203 near matches share only 113 distinct hexes, so ~90 marks start life exactly
+  coincident, which is also why there's a deterministic golden-angle pre-spread
+  (a zero-length separation vector has no gradient to follow). There is no spring
+  pulling marks home: it silently balanced the separation force, so piles settled
+  overlapped while still reporting `converged: true`.
+- Marks may cross x = 0 under relaxation. Clamping the sign would fight the packer
+  exactly where it's needed; the bounded displacement plus a tether line on
+  `displaced` marks is the honest signal instead.
+- `layout.inset` is published for the renderer to read back, for the same reason
+  as `PosterLayout.rowHeight` — a renderer that insets by its own number puts
+  every gridline slightly off its own marks, and nothing looks broken enough to
+  notice.
+- **SVG for the chrome, HTML anchors for the marks.** An `<a>` inside `<svg>` is
+  an `SVGAElement`, which gives up real focus rings, `border-radius` and Tailwind
+  classes for nothing. `prefetch={false}` on those links is load-bearing: App
+  Router prefetches static routes on viewport intersection, so leaving it on fires
+  ~120 RSC requests the moment the plot scrolls into view.
+- **DOM order is the ΔE ranking**, so reading order, link order and keyboard order
+  all match the list. Closest-on-top is done with `z-index`; reversing the DOM to
+  paint it would read the ranking out backwards to a screen reader. Marks are a
+  roving-tabindex group (one tab stop, arrows walk the ranking) and each carries
+  its position in its `aria-label`, so the axes aren't a visual-only channel —
+  this is deliberately *not* the poster's pointer-only anchor problem repeated.
+- `?view=plot` is read from `window.location` in a mount effect (never
+  `useSearchParams` — this page has no Suspense boundary) and written with
+  `history.replaceState`, never `router.replace`.
 
 ## Share images (the poster)
 

@@ -167,6 +167,56 @@ export function ciede2000(lab1: Lab, lab2: Lab): number {
   );
 }
 
+/**
+ * CIE-Lab in cylindrical (LCh) form: the same colour, described as lightness,
+ * chroma (how saturated) and hue angle (which colour) instead of two opponent
+ * axes. Chroma and hue are what people actually reason about — "same blue, less
+ * punchy" is a chroma move; "a bit warmer" is a hue move.
+ */
+export interface Lch {
+  /** L*, same as Lab's first component (0 = black, 100 = white). */
+  l: number;
+  /** C*, distance from the neutral axis. 0 = grey; ~130 is about the maximum. */
+  c: number;
+  /** Hue angle in degrees, normalized to [0, 360). Meaningless when c ~ 0. */
+  h: number;
+}
+
+/**
+ * Below this chroma a colour is close enough to grey that its hue angle is
+ * noise rather than merely small: a ±1 wobble in the a*, b* pair swings it by
+ * roughly 57/C degrees, so at C* = 10 the hue is ±6° and at C* = 5 it's ±11°.
+ * Callers that position or group by hue must gate on this.
+ *
+ * Not a rare case in this catalogue: about a quarter of the paints sit under it,
+ * including heavily-visited pages like Abaddon Black and Administratum Grey.
+ */
+export const NEUTRAL_CHROMA = 10;
+
+/** CIE-Lab -> LCh. Hue is reported as 0 for exact neutrals, which is arbitrary. */
+export function labToLch([l, a, b]: Lab): Lch {
+  const c = Math.hypot(a, b);
+  // atan2(0, 0) is 0 rather than NaN, so exact neutrals fall out as h = 0.
+  const deg = (Math.atan2(b, a) * 180) / Math.PI;
+  return { l, c, h: deg < 0 ? deg + 360 : deg };
+}
+
+/** Chroma (C*) of a hex colour — how far it is from grey. */
+export function chroma(hex: string): number {
+  return labToLch(hexToLab(hex)).c;
+}
+
+/**
+ * Signed shortest way round the hue circle from `from` to `to`, in degrees.
+ * Result is in (-180, 180], so hueDelta(350, 10) is +20, not -340.
+ */
+export function hueDelta(from: number, to: number): number {
+  const d = ((to - from) % 360 + 540) % 360 - 180;
+  // The line above lands exactly-opposite hues on -180; report +180 so the
+  // range is (-180, 180] and the sign of a half-turn is stable.
+  return d === -180 ? 180 : d;
+}
+
 /** WCAG relative luminance (0-1) of a hex colour. */
 export function relativeLuminance(hex: string): number {
   const [r, g, b] = hexToRgb(hex);

@@ -1,13 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import Link from "next/link";
-import { hexToLab } from "@/lib/color";
+import { useEffect, useMemo, useState } from "react";
+import { hexToLab, labToLch } from "@/lib/color";
 import { findSimilar } from "@/lib/paints/filter";
+import {
+  MAX_POINTS,
+  pickScatterAxis,
+  type ScatterAxis,
+  type ScatterCandidate,
+} from "@/lib/paints/scatter";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import type { Paint, PaintType, PaintWithLab } from "@/lib/paints/types";
 import { FacetGroup, type FacetOption } from "./facet-group";
-import { MatchBadge } from "./match-badge";
+import { SimilarList, SimilarListSkeleton, type RenderItem } from "./similar-list";
+import { SimilarPlot } from "./similar-plot";
 
 export interface SimilarItem {
   paint: Paint;
@@ -28,16 +34,7 @@ interface SimilarColoursProps {
 }
 
 type Metallic = "" | "only" | "exclude";
-
-/** Minimal shape the list renders from (shared by precomputed + recomputed). */
-type RenderItem = {
-  id: string;
-  hex: string;
-  name: string;
-  brand: string;
-  range: string;
-  distance: number;
-};
+type View = "list" | "plot";
 
 const toRenderItems = (items: SimilarItem[]): RenderItem[] =>
   items.map(({ paint, distance }) => ({
@@ -65,6 +62,9 @@ const MATCH_OPTIONS = [
 ] as const;
 const DEFAULT_MATCH = "10";
 
+/** Query param carrying the view, so a plot link survives being shared. */
+const VIEW_PARAM = "view";
+
 export function SimilarColours({
   target,
   all,
@@ -79,6 +79,38 @@ export function SimilarColours({
   const [metallic, setMetallic] = useState<Metallic>("");
   const [minMatch, setMinMatch] = useState<string>(DEFAULT_MATCH);
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Always starts on the list so the statically-generated HTML and the first
+  // client render agree; a mount effect promotes it if ?view=plot is present.
+  const [view, setView] = useState<View>("list");
+  /** Null = follow the reference paint's chroma; set = the user chose. */
+  const [axisChoice, setAxisChoice] = useState<ScatterAxis | null>(null);
+
+  const targetLab = useMemo(() => hexToLab(target.hex), [target.hex]);
+  const targetChroma = useMemo(() => labToLch(targetLab).c, [targetLab]);
+  const axis = axisChoice ?? pickScatterAxis(targetChroma);
+
+  // Read ?view= from the URL on mount rather than with useSearchParams, which
+  // would force a Suspense boundary onto this statically-generated page.
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    // The initial state has to match the prerendered HTML, so the URL can only be
+    // honoured after hydration — same reason the scheme hooks gate on `mounted`.
+    const wanted = new URL(window.location.href).searchParams.get(VIEW_PARAM);
+    if (wanted === "plot") setView("plot");
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, []);
+
+  const changeView = (next: View) => {
+    setView(next);
+    const url = new URL(window.location.href);
+    // Empty = absent, matching how the browse page treats its params.
+    if (next === "list") url.searchParams.delete(VIEW_PARAM);
+    else url.searchParams.set(VIEW_PARAM, next);
+    // replaceState, never router.replace — the latter is a no-op on a page that
+    // was hard-loaded with query params. replace rather than push so Back still
+    // means "back a page".
+    window.history.replaceState(null, "", url);
+  };
 
   // Facet filters drive the re-rank; the match cutoff is a cheap post-filter on
   // distance, so it's tracked separately and never triggers a fetch/re-rank.
@@ -140,23 +172,29 @@ export function SimilarColours({
     return { brandSet, typeSet, rangeSet };
   }, [universe, sel]);
 
+  // The one facet predicate both views rank through, so they can't drift apart.
+  const candidatesFor = useMemo(
+    () => (pool: PaintWithLab[]) =>
+      pool.filter(
+        (p) =>
+          (!selBrands.size || selBrands.has(p.brand)) &&
+          (!selTypes.size || selTypes.has(p.type)) &&
+          (!selRanges.size || selRanges.has(p.range)) &&
+          matchMetallic(p, metallic),
+      ),
+    [selBrands, selTypes, selRanges, metallic],
+  );
+
+  const targetWithLab = useMemo<PaintWithLab>(
+    // family isn't needed by findSimilar; a placeholder keeps the type honest.
+    () => ({ ...target, lab: targetLab, family: "neutral" }),
+    [target, targetLab],
+  );
+
   // Recompute the ranked list from the filtered subset when a filter is active.
   const computed = useMemo<RenderItem[] | null>(() => {
     if (!anyFilter || !universe) return null;
-    const candidates = universe.filter(
-      (p) =>
-        (!selBrands.size || selBrands.has(p.brand)) &&
-        (!selTypes.size || selTypes.has(p.type)) &&
-        (!selRanges.size || selRanges.has(p.range)) &&
-        matchMetallic(p, metallic),
-    );
-    const targetWithLab: PaintWithLab = {
-      ...target,
-      lab: hexToLab(target.hex),
-      // family isn't needed by findSimilar; a placeholder keeps the type honest.
-      family: "neutral",
-    };
-    return findSimilar(candidates, targetWithLab, { limit: 16 }).map(
+    return findSimilar(candidatesFor(universe), targetWithLab, { limit: 16 }).map(
       ({ paint, distance }) => ({
         id: paint.id,
         hex: paint.hex,
@@ -166,13 +204,42 @@ export function SimilarColours({
         distance,
       }),
     );
-  }, [anyFilter, universe, selBrands, selTypes, selRanges, metallic, target]);
+  }, [anyFilter, universe, candidatesFor, targetWithLab]);
+
+  /**
+   * The plot's own candidate set, deliberately separate from the list's.
+   *
+   * The precomputed `.cache/similar-index.json` holds only the 16 nearest, which
+   * span roughly ±5° of hue against ±11° for the top 60 — a vertical smear, not a
+   * scatter. So the plot always re-ranks over the fetched index. It is not shared
+   * with the list because the list's instant, fetch-free first render from `all`
+   * is a real feature, and because the cached distances are rounded to 3dp, so a
+   * client recompute can reorder ties and visibly reshuffle the default view.
+   */
+  const plotCandidates = useMemo<ScatterCandidate[] | null>(() => {
+    if (view !== "plot" || !universe) return null;
+    return findSimilar(candidatesFor(universe), targetWithLab, {
+      limit: MAX_POINTS,
+    })
+      .filter(({ distance }) => distance < cutoff)
+      .map(({ paint, distance }) => ({
+        id: paint.id,
+        name: paint.name,
+        brand: paint.brand,
+        range: paint.range,
+        hex: paint.hex,
+        lab: paint.lab,
+        distance,
+      }));
+  }, [view, universe, candidatesFor, targetWithLab, cutoff]);
 
   const items: RenderItem[] = (
     anyFilter ? (computed ?? []) : toRenderItems(all)
   ).filter((i) => i.distance < cutoff);
-  // A filter is set but the dataset (and so the re-rank) isn't ready yet.
-  const awaitingData = anyFilter && !universe && !loadError;
+  // The list only waits on the dataset when a filter forces a re-rank; the plot
+  // always needs it.
+  const awaitingData =
+    !loadError && !universe && (view === "plot" || anyFilter);
 
   const toggle =
     (setter: React.Dispatch<React.SetStateAction<Set<string>>>) =>
@@ -288,18 +355,50 @@ export function SimilarColours({
         <h2 id="similar-heading" className="text-lg font-semibold">
           {target.name} alternatives
         </h2>
-        <button
-          type="button"
-          onClick={() => setMobileOpen((o) => !o)}
-          className="rounded-lg border border-input bg-card px-3 py-1.5 text-sm md:hidden"
-          aria-expanded={mobileOpen}
-        >
-          Filters{activeCount > 0 ? ` (${activeCount})` : ""}
-        </button>
+        <div className="flex items-center gap-2">
+          <div
+            role="group"
+            aria-label="View"
+            className="inline-flex rounded-lg border border-input bg-card p-0.5"
+          >
+            {(
+              [
+                { value: "list", label: "List" },
+                { value: "plot", label: "Plot" },
+              ] as const
+            ).map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                aria-pressed={view === o.value}
+                onClick={() => changeView(o.value)}
+                className={`rounded-md px-2.5 py-1 text-sm ${
+                  view === o.value
+                    ? "bg-muted font-medium"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setMobileOpen((o) => !o)}
+            className="rounded-lg border border-input bg-card px-3 py-1.5 text-sm md:hidden"
+            aria-expanded={mobileOpen}
+          >
+            Filters{activeCount > 0 ? ` (${activeCount})` : ""}
+          </button>
+        </div>
       </div>
 
       <p className="mb-4 text-sm text-muted-foreground">
-        Ranked by perceptual colour distance (CIEDE2000). Lower ΔE = closer match.
+        {view === "list"
+          ? "Ranked by perceptual colour distance (CIEDE2000). Lower ΔE = closer match."
+          : `Every alternative placed by how it differs from ${target.name} — across for ${
+              axis === "hue" ? "hue" : "saturation"
+            }, up for lightness.`}
       </p>
 
       <div className="flex gap-6">
@@ -309,52 +408,31 @@ export function SimilarColours({
         ) : null}
 
         <div className="min-w-0 flex-1">
-          {loadError && anyFilter ? (
+          {loadError && (anyFilter || view === "plot") ? (
             <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-              Couldn’t load the paint database to filter. Try refreshing the page.
+              Couldn’t load the paint database to{" "}
+              {view === "plot" ? "build the plot" : "filter"}. Try refreshing the
+              page.
             </div>
           ) : awaitingData ? (
-            <ul
-              className="grid grid-cols-1 gap-2 sm:grid-cols-2"
-              aria-hidden="true"
-            >
-              {Array.from({ length: 8 }).map((_, i) => (
-                <li
-                  key={i}
-                  className="h-[60px] animate-pulse rounded-lg border border-border bg-muted"
-                />
-              ))}
-            </ul>
+            <SimilarListSkeleton />
+          ) : view === "plot" ? (
+            <SimilarPlot
+              targetName={target.name}
+              targetHex={target.hex}
+              targetLab={targetLab}
+              candidates={plotCandidates ?? []}
+              axis={axis}
+              axisOverridden={axisChoice !== null}
+              onAxisChange={setAxisChoice}
+              targetIsNeutral={pickScatterAxis(targetChroma) === "chroma"}
+            />
           ) : items.length === 0 ? (
             <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
               No alternatives match these filters. Try widening them.
             </div>
           ) : (
-            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {items.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={`/paints/${item.id}`}
-                    className="flex items-center gap-3 rounded-lg border border-border bg-card p-2.5 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    <span
-                      className="h-10 w-10 shrink-0 rounded-md border border-border"
-                      style={{ backgroundColor: item.hex }}
-                      aria-hidden="true"
-                    />
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-medium">
-                        {item.name}
-                      </span>
-                      <span className="block truncate text-xs text-muted-foreground">
-                        {item.brand} · {item.range}
-                      </span>
-                    </span>
-                    <MatchBadge distance={item.distance} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <SimilarList items={items} />
           )}
         </div>
       </div>
