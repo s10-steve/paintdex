@@ -22,13 +22,23 @@ export interface RenderItem {
  * 53, so both lines truncated on well over a quarter of the catalogue. One
  * full-width card fits ~50 characters and the two-line clamp absorbs the tail.
  */
-export function SimilarList({ items }: { items: RenderItem[] }) {
+export function SimilarList({
+  items,
+  linkQuery,
+}: {
+  items: RenderItem[];
+  /**
+   * Query string carrying the panel's filters, so they survive the click. Built
+   * by `similarLinkQuery`; `""` when nothing is filtered.
+   */
+  linkQuery: string;
+}) {
   return (
     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2">
       {items.map((item) => (
         <li key={item.id}>
           <Link
-            href={`/paints/${item.id}`}
+            href={`/paints/${item.id}${linkQuery}`}
             className="flex h-full items-center gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span

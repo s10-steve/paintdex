@@ -9,6 +9,21 @@ import {
   type ScatterAxis,
   type ScatterCandidate,
 } from "@/lib/paints/scatter";
+import {
+  DEFAULT_MATCH,
+  emptySimilarParams,
+  hasFacetFilter,
+  isDefaultSimilarParams,
+  matchCutoff,
+  readSimilarParams,
+  sanitiseSimilarParams,
+  similarLinkQuery,
+  writeSimilarParams,
+  type MatchValue,
+  type MetallicFilter,
+  type SimilarParamState,
+  type SimilarView,
+} from "@/lib/paints/filter-params";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import type { Paint, PaintType, PaintWithLab } from "@/lib/paints/types";
 import { FacetGroup, type FacetOption } from "./facet-group";
@@ -33,9 +48,6 @@ interface SimilarColoursProps {
   ranges: string[];
 }
 
-type Metallic = "" | "only" | "exclude";
-type View = "list" | "plot";
-
 const toRenderItems = (items: SimilarItem[]): RenderItem[] =>
   items.map(({ paint, distance }) => ({
     id: paint.id,
@@ -46,12 +58,10 @@ const toRenderItems = (items: SimilarItem[]): RenderItem[] =>
     distance,
   }));
 
-const matchMetallic = (p: { metallic?: boolean }, m: Metallic) =>
+const matchMetallic = (p: { metallic?: boolean }, m: MetallicFilter) =>
   m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
 
-// Minimum-match cutoffs, keyed to matchLabel()'s ΔE bands. Value is the upper
-// (exclusive) ΔE bound; "all" removes the cap. Defaults to "Close or better",
-// since looser matches aren't much use.
+/** Labels for the ΔE cutoffs in `MATCH_VALUES` order. */
 const MATCH_OPTIONS = [
   { value: "1", label: "Identical only" },
   { value: "2", label: "Near-perfect or better" },
@@ -60,10 +70,6 @@ const MATCH_OPTIONS = [
   { value: "20", label: "Similar or better" },
   { value: "all", label: "Show all" },
 ] as const;
-const DEFAULT_MATCH = "10";
-
-/** Query param carrying the view, so a plot link survives being shared. */
-const VIEW_PARAM = "view";
 
 export function SimilarColours({
   target,
@@ -72,54 +78,97 @@ export function SimilarColours({
   types,
   ranges,
 }: SimilarColoursProps) {
-  // Filter state (multi-select, mirroring the browse sidebar). Empty = no filter.
-  const [selBrands, setSelBrands] = useState<Set<string>>(new Set());
-  const [selTypes, setSelTypes] = useState<Set<string>>(new Set());
-  const [selRanges, setSelRanges] = useState<Set<string>>(new Set());
-  const [metallic, setMetallic] = useState<Metallic>("");
-  const [minMatch, setMinMatch] = useState<string>(DEFAULT_MATCH);
+  /**
+   * Filter state, held as one object because it is also the URL's contents: the
+   * facets, the ΔE cutoff and the view all serialise together, and splitting them
+   * across separate `useState`s let the URL and the panel drift apart.
+   *
+   * Always starts at the defaults so the statically-generated HTML and the first
+   * client render agree; the mount effect below adopts whatever the URL carries.
+   */
+  const [filters, setFilters] = useState<SimilarParamState>(emptySimilarParams);
   const [mobileOpen, setMobileOpen] = useState(false);
-  // Always starts on the list so the statically-generated HTML and the first
-  // client render agree; a mount effect promotes it if ?view=plot is present.
-  const [view, setView] = useState<View>("list");
   /** Null = follow the reference paint's chroma; set = the user chose. */
   const [axisChoice, setAxisChoice] = useState<ScatterAxis | null>(null);
+
+  const { brands: selBrands, types: selTypes, ranges: selRanges } = filters;
+  const { metallic, minMatch, view } = filters;
 
   const targetLab = useMemo(() => hexToLab(target.hex), [target.hex]);
   const targetChroma = useMemo(() => labToLch(targetLab).c, [targetLab]);
   const axis = axisChoice ?? pickScatterAxis(targetChroma);
 
-  // Read ?view= from the URL on mount rather than with useSearchParams, which
-  // would force a Suspense boundary onto this statically-generated page.
+  // Adopt the filters the URL carries. Read from `window.location` rather than
+  // `useSearchParams`, which would force a Suspense boundary onto this
+  // statically-generated page.
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect */
     // The initial state has to match the prerendered HTML, so the URL can only be
     // honoured after hydration — same reason the scheme hooks gate on `mounted`.
-    const wanted = new URL(window.location.href).searchParams.get(VIEW_PARAM);
-    if (wanted === "plot") setView("plot");
+    // This runs again on every paint-to-paint navigation, which is what makes a
+    // filter survive clicking through: the links carry it and this picks it up.
+    //
+    // Rejected: a <Suspense> boundary plus `useSearchParams`, which would give a
+    // filtered *first* render. It would also push the whole alternatives section
+    // out of the prerendered HTML on all 4,961 pages — costing every visitor the
+    // documented instant, fetch-free first render, and the crawlable ΔE list with
+    // it — to spare one frame for the few arriving with params.
+    const url = new URL(window.location.href);
+    const raw = readSimilarParams(url.searchParams);
+    const fromUrl = sanitiseSimilarParams(raw, { brands, ranges });
+    // Skip the write entirely for a param-free page, which is nearly all of them:
+    // that path then renders exactly as it did before filters were shareable.
+    if (!isDefaultSimilarParams(fromUrl)) setFilters(fromUrl);
+
+    // Heal the URL when sanitising dropped something — a brand that has left the
+    // catalogue, say. Without this the address bar keeps advertising a filter that
+    // isn't applied and that the outgoing links don't carry, so re-sharing the
+    // page would pass on a dead param.
+    const healed = writeSimilarParams(url.searchParams, fromUrl).toString();
+    if (healed !== url.searchParams.toString()) {
+      window.history.replaceState(
+        null,
+        "",
+        healed ? `${url.pathname}?${healed}` : url.pathname,
+      );
+    }
     /* eslint-enable react-hooks/set-state-in-effect */
+    // Mount-only. `brands`/`ranges` come from the static build and never change
+    // for a given paint page.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const changeView = (next: View) => {
-    setView(next);
-    const url = new URL(window.location.href);
-    // Empty = absent, matching how the browse page treats its params.
-    if (next === "list") url.searchParams.delete(VIEW_PARAM);
-    else url.searchParams.set(VIEW_PARAM, next);
-    // replaceState, never router.replace — the latter is a no-op on a page that
-    // was hard-loaded with query params. replace rather than push so Back still
-    // means "back a page".
-    window.history.replaceState(null, "", url);
+  /**
+   * The single place filter state reaches the URL. Every control goes through it,
+   * so the address bar can never disagree with the sidebar.
+   *
+   * `replaceState`, never `router.replace` — the latter is a no-op on a page that
+   * was hard-loaded with query params. And replace rather than push so ticking
+   * four facets doesn't cost four Back presses; moving between paints still
+   * pushes history, because that's a real <Link>.
+   */
+  const commit = (mut: (prev: SimilarParamState) => SimilarParamState) => {
+    setFilters((prev) => {
+      const next = mut(prev);
+      const url = new URL(window.location.href);
+      const params = writeSimilarParams(url.searchParams, next);
+      const qs = params.toString();
+      window.history.replaceState(null, "", qs ? `${url.pathname}?${qs}` : url.pathname);
+      return next;
+    });
   };
+
+  /** Query string appended to every match's href so the filters follow the click. */
+  const linkQuery = similarLinkQuery(filters);
 
   // Facet filters drive the re-rank; the match cutoff is a cheap post-filter on
   // distance, so it's tracked separately and never triggers a fetch/re-rank.
   const facetCount =
     selBrands.size + selTypes.size + selRanges.size + (metallic ? 1 : 0);
-  const anyFilter = facetCount > 0;
+  const anyFilter = hasFacetFilter(filters);
   const matchActive = minMatch !== DEFAULT_MATCH;
   const activeCount = facetCount + (matchActive ? 1 : 0);
-  const cutoff = minMatch === "all" ? Infinity : Number(minMatch);
+  const cutoff = matchCutoff(minMatch);
 
   // The precomputed `all` list renders the unfiltered view instantly. The full
   // catalogue (with Lab) is fetched once so we can re-rank on filter AND grey out
@@ -242,22 +291,18 @@ export function SimilarColours({
     !loadError && !universe && (view === "plot" || anyFilter);
 
   const toggle =
-    (setter: React.Dispatch<React.SetStateAction<Set<string>>>) =>
+    (key: "brands" | "types" | "ranges") =>
     (value: string) =>
-      setter((prev) => {
-        const next = new Set(prev);
+      commit((prev) => {
+        const next = new Set(prev[key]);
         if (next.has(value)) next.delete(value);
         else next.add(value);
-        return next;
+        return { ...prev, [key]: next };
       });
 
-  const clearAll = () => {
-    setSelBrands(new Set());
-    setSelTypes(new Set());
-    setSelRanges(new Set());
-    setMetallic("");
-    setMinMatch(DEFAULT_MATCH);
-  };
+  // Clears the URL too — the point of the escape hatch is that the filter stops
+  // following you, which it wouldn't if the params outlived the sidebar state.
+  const clearAll = () => commit((prev) => ({ ...emptySimilarParams(), view: prev.view }));
 
   // Show only values that still yield results given the other selections, plus
   // anything already selected so it can always be unticked.
@@ -291,7 +336,12 @@ export function SimilarColours({
         <select
           id="similar-match"
           value={minMatch}
-          onChange={(e) => setMinMatch(e.target.value)}
+          onChange={(e) =>
+            commit((prev) => ({
+              ...prev,
+              minMatch: e.target.value as MatchValue,
+            }))
+          }
           className="mt-2 w-full rounded-lg border border-input bg-card px-2.5 py-1.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {MATCH_OPTIONS.map((o) => (
@@ -305,13 +355,13 @@ export function SimilarColours({
         title="Brand"
         options={visible(brands, availability?.brandSet, selBrands)}
         selected={selBrands}
-        onToggle={toggle(setSelBrands)}
+        onToggle={toggle("brands")}
       />
       <FacetGroup
         title="Type"
         options={visible(types, availability?.typeSet, selTypes)}
         selected={selTypes}
-        onToggle={toggle(setSelTypes)}
+        onToggle={toggle("types")}
       />
       <div className="border-b border-border py-3">
         <span className="text-sm font-semibold">Finish</span>
@@ -332,7 +382,12 @@ export function SimilarColours({
                 name="similar-finish"
                 className="accent-[var(--primary)]"
                 checked={metallic === o.value}
-                onChange={() => setMetallic(o.value as Metallic)}
+                onChange={() =>
+                  commit((prev) => ({
+                    ...prev,
+                    metallic: o.value as MetallicFilter,
+                  }))
+                }
               />
               {o.label}
             </label>
@@ -343,7 +398,7 @@ export function SimilarColours({
         title="Range"
         options={visible(ranges, availability?.rangeSet, selRanges)}
         selected={selRanges}
-        onToggle={toggle(setSelRanges)}
+        onToggle={toggle("ranges")}
         defaultOpen={false}
       />
     </div>
@@ -371,7 +426,9 @@ export function SimilarColours({
                 key={o.value}
                 type="button"
                 aria-pressed={view === o.value}
-                onClick={() => changeView(o.value)}
+                onClick={() =>
+                  commit((prev) => ({ ...prev, view: o.value as SimilarView }))
+                }
                 className={`rounded-md px-2.5 py-1 text-sm ${
                   view === o.value
                     ? "bg-muted font-medium"
@@ -418,6 +475,7 @@ export function SimilarColours({
             <SimilarListSkeleton />
           ) : view === "plot" ? (
             <SimilarPlot
+              linkQuery={linkQuery}
               targetName={target.name}
               targetHex={target.hex}
               targetLab={targetLab}
@@ -432,7 +490,7 @@ export function SimilarColours({
               No alternatives match these filters. Try widening them.
             </div>
           ) : (
-            <SimilarList items={items} />
+            <SimilarList items={items} linkQuery={linkQuery} />
           )}
         </div>
       </div>

@@ -7,6 +7,7 @@ import {
   getPaintById,
   getSimilarColours,
 } from "@/lib/paints/load";
+import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
 import { contrastText } from "@/lib/color";
 import { PAINT_TYPES, type Paint, type PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
@@ -114,6 +115,17 @@ export default async function PaintDetailPage({
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-6">
+      {/* SimilarColours fetches the browse index unconditionally (to re-rank on
+          filter and to grey out dead facets), so this adds no bytes — it just
+          stops the download waiting on the client component to mount. Matters
+          most for a shared link that already carries filters, where the panel
+          can't render its results until the index lands. Hoisted to <head>. */}
+      <link
+        rel="preload"
+        href={BROWSE_INDEX_URL}
+        as="fetch"
+        crossOrigin="anonymous"
+      />
       <JsonLd data={jsonLd} />
       <Link
         href="/paints"

@@ -94,7 +94,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   The theme follows the system setting (no manual toggle).
 - `src/hooks/` — stateful React logic shared between components or lifted out of
   one: `use-browse-index` (loads the catalogue; used by all four views that need
-  it), `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
+  it — memoized at module scope in `lib/paints/browse-index.ts`, and seeded from
+  that cache **synchronously** via `peekBrowseIndex()`, because awaiting an
+  already-resolved promise still costs a render and that render is a loading
+  skeleton; successes only, so a failed load stays retryable), `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
   out in real pixels, so it needs a measured width), and the visualiser's three
   state layers — `use-local-scheme`
   (`localStorage`), `use-scheme-sync` (accounts, sign-in reconciliation,
@@ -104,8 +107,8 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   — deliberately *not* in the scheme document, which has to stay portable.
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
   contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
-  the alternatives plot's layout maths), `scheme/` (bar maths, JSON
-  import/export, types). Also `supabase/` (browser client +
+  the alternatives plot's layout maths — and `filter-params.ts`, the URL vocabulary
+  shared with the browse page), `scheme/` (bar maths, JSON import/export, types). Also `supabase/` (browser client +
   hand-written row types) and `data/` (per-table CRUD, e.g. `schemes.ts`) — these
   touch the network, so keep them thin and keep the logic in the pure modules.
   `supabase/server.ts` is the anon server-read client used only by the
@@ -120,7 +123,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
   `validate-data.ts`, `import-source.mjs`.
 - `test/` — Vitest suites for the `src/lib` logic (including `scatter.test.ts`,
-  which is where the alternatives plot's behaviour is pinned), plus
+  which is where the alternatives plot's behaviour is pinned, and
+  `filter-params.test.ts`, which pins the URL codec and guards the comma
+  assumption), plus
   `scheme-visualiser.test.tsx` and `scheme-preset.test.tsx`, which cover the two
   places a bug loses user data (sign-in reconciliation; `?preset=` seeding), and
   `home-scheme-carousel.test.tsx`. The environment is `node` by default;
@@ -133,12 +138,28 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 
 ## Conventions & gotchas
 
-- **URL is the source of truth** for browse filters/search (shareable views). On
-  the statically-generated `/paints` page, update the URL with
-  `window.history.replaceState`, **not** `router.replace` — `router.replace` is
-  a no-op when the page was hard-loaded with query params (e.g. arriving from the
-  homepage search), which silently freezes the results. See
-  `src/components/paints-browser.tsx`.
+- **URL is the source of truth** for filters/search (shareable views) — on
+  `/paints` *and* for the alternatives panel on `/paints/[id]`. On these
+  statically-generated pages, update the URL with `window.history.replaceState`,
+  **not** `router.replace` — `router.replace` is a no-op when the page was
+  hard-loaded with query params (e.g. arriving from the homepage search), which
+  silently freezes the results. See `src/components/paints-browser.tsx`.
+  - `src/lib/paints/filter-params.ts` holds the shared vocabulary
+    (`brand`/`range`/`type`/`metal`, comma-joined, plus the panel's `match` and
+    `view`) so the two pages can't disagree about what `?brand=` means. They
+    **deliberately share only the spelling, not the state**: browse filters never
+    carry into a paint page. The shared constants are not an invitation to wire
+    them together.
+  - Comma-joining is only safe because no brand or range name contains a comma —
+    `test/filter-params.test.ts` has a drift guard that fails if one ever does.
+  - Closed vocabularies are validated on read (`type` against `PAINT_TYPES`,
+    `match` against `MATCH_VALUES`, `metal` against `1`/`0`) and unknown values
+    dropped. `match` especially: it used to be `Number()`d straight from state,
+    and `?match=abc` would have produced `distance < NaN` — an empty list with no
+    error. Brands and ranges can't be validated in the pure module (it must not
+    import the catalogue), so the component runs `sanitiseSimilarParams` against
+    its facet props and heals the URL, otherwise a brand that has left the
+    catalogue is an invisible active filter with no checkbox to untick.
 - Keep everything **static** — no server components that read request-time data,
   no API routes — **except the one deliberate `/scheme/[slug]` server route**
   (rich share previews; see "What Paintdex is" above). `getAllPaints()` and
@@ -278,9 +299,30 @@ on at the origin. `src/lib/paints/scatter.ts` is the pure layout maths;
   roving-tabindex group (one tab stop, arrows walk the ranking) and each carries
   its position in its `aria-label`, so the axes aren't a visual-only channel —
   this is deliberately *not* the poster's pointer-only anchor problem repeated.
-- `?view=plot` is read from `window.location` in a mount effect (never
-  `useSearchParams` — this page has no Suspense boundary) and written with
-  `history.replaceState`, never `router.replace`.
+- **The filters live in the URL and ride the links.** `?view=plot` and every
+  filter param are read from `window.location` in one mount effect (never
+  `useSearchParams` — this page has no Suspense boundary) and written through one
+  writer with `history.replaceState`, never `router.replace`. List rows and plot
+  marks append the current filter query to their `/paints/<id>` hrefs, which is
+  what makes a filter survive clicking swatch → swatch → swatch. `replaceState`
+  rather than `pushState`, because the `<Link>` navigation already creates the
+  history entry — so Back lands on the previous paint *with its filters* — and
+  ticking four facets shouldn't cost four Back presses.
+- Two consequences worth knowing. The page is prerendered with default state, so
+  the static HTML always has clean hrefs and nothing query-bearing is crawlable.
+  And the filters can only land on the *second* client render, so there is one
+  frame of the unfiltered list. **Do not "fix" that with a `<Suspense>` boundary
+  plus `useSearchParams`**: it works, but it pushes the whole alternatives section
+  out of the prerendered HTML on all 4,961 pages, costing every visitor the
+  instant fetch-free first render and the crawlable ΔE list, to spare one frame
+  for the few arriving with params. The synchronous browse-index cache is what
+  keeps that one frame from becoming a skeleton.
+- **`axisChoice` deliberately does not persist.** It's derived per paint from the
+  reference paint's chroma, so carrying an override to the next paint would force
+  a decision made about one colour onto another — and with a quarter of the
+  catalogue near-neutral, `axis=hue` on the next paint is exactly the meaningless
+  axis `pickScatterAxis` exists to prevent. A filter says *which paints you want*
+  and travels; the axis says *how to read one paint* and doesn't.
 
 ## Share images (the poster)
 

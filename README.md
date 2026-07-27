@@ -25,7 +25,9 @@ schemes, sync them across devices, and share them by link.
   way each option moves rather than just how close it is. For greys and other
   near-neutrals, where a hue angle carries no real information, the horizontal
   axis switches to saturation. Marks are keyboard-navigable in ΔE order, and the
-  plot always reports what it couldn't fit.
+  plot always reports what it couldn't fit. **Filters stay applied as you click
+  through** — narrow to a brand and you can explore that whole range swatch by
+  swatch — and they live in the URL, so a filtered view is a shareable link.
 - **Paint scheme visualiser.** Plan a miniature's colour scheme on
   `/visualiser`: Group your paints by element (armour, robes, lenses, etc) and
   preview every element's colours as aligned, optionally-blended vertical bars.

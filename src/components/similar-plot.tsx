@@ -17,6 +17,11 @@ import { useElementWidth } from "@/hooks/use-element-width";
 import { MatchBadge } from "./match-badge";
 
 interface SimilarPlotProps {
+  /**
+   * Query string carrying the panel's filters, so they survive clicking a mark.
+   * Built by `similarLinkQuery`; `""` when nothing is filtered.
+   */
+  linkQuery: string;
   targetName: string;
   targetHex: string;
   targetLab: readonly [number, number, number];
@@ -48,6 +53,7 @@ const fmtSigned = (n: number, unit: string) =>
   `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(Math.round(n))}${unit}`;
 
 export function SimilarPlot({
+  linkQuery,
   targetName,
   targetHex,
   targetLab,
@@ -308,7 +314,7 @@ export function SimilarPlot({
                     ref={(el) => {
                       markRefs.current[i] = el;
                     }}
-                    href={`/paints/${p.id}`}
+                    href={`/paints/${p.id}${linkQuery}`}
                     // Load-bearing: App Router prefetches static routes on
                     // viewport intersection, so leaving this on would fire ~120
                     // RSC requests the moment the plot scrolls into view.

@@ -9,6 +9,7 @@ import {
   type PaintType,
 } from "@/lib/paints/types";
 import { COLOUR_FAMILIES } from "@/lib/color";
+import { parseList } from "@/lib/paints/filter-params";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { PaintCard } from "./paint-card";
 import { FacetGroup } from "./facet-group";
@@ -20,10 +21,6 @@ const SORTS: { value: SortKey; label: string }[] = [
   { value: "brand", label: "Brand" },
   { value: "lightness", label: "Lightness" },
 ];
-
-function parseList(v: string | null): string[] {
-  return v ? v.split(",").filter(Boolean) : [];
-}
 
 /** Derive the full facet lists (every present value) from the loaded dataset. */
 function computeFacets(paints: BrowsePaint[]) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchBrowseIndex } from "@/lib/paints/browse-index";
+import { fetchBrowseIndex, peekBrowseIndex } from "@/lib/paints/browse-index";
 import type { BrowsePaint } from "@/lib/paints/types";
 
 export type BrowseIndexState = {
@@ -26,10 +26,21 @@ export type BrowseIndexState = {
  * gate on `loadError`.
  */
 export function useBrowseIndex(): BrowseIndexState {
-  const [paints, setPaints] = useState<BrowsePaint[] | null>(null);
+  // Seeded from the module cache so a second mount — a paint-to-paint navigation,
+  // say — starts with the catalogue already in hand rather than replaying a
+  // loading state for data that never left memory.
+  //
+  // Hydration-safe: nothing fetches at build time, so a server prerender always
+  // sees null, and so does the first client render of the initial document (the
+  // whole tree hydrates in one pass before any effect runs, so no sibling can have
+  // filled the cache mid-hydration). It is only ever non-null on a soft
+  // navigation, where there is no hydration to mismatch.
+  const [paints, setPaints] = useState<BrowsePaint[] | null>(peekBrowseIndex);
   const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
+    // Read the cache rather than `paints`, so this stays a mount-only effect.
+    if (peekBrowseIndex()) return;
     let cancelled = false;
     fetchBrowseIndex()
       .then((data) => {
