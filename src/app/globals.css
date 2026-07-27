@@ -83,6 +83,26 @@ body {
   }
 }
 
+/* ---- Google sign-in button ---------------------------------------------
+   Google Identity Services renders the real button inside an iframe served
+   from accounts.google.com (it briefly shows a locally-rendered HTML button
+   first, then swaps to the iframe once it loads — that swap was the "flicker").
+   That embedded document is always light-scheme, while next-themes sets
+   `color-scheme: dark` on <html> in dark mode. When an iframe's used
+   colour-scheme differs from its embedder's, the browser paints the iframe's
+   canvas opaque instead of leaving it transparent — which drew a white box
+   around the pill in dark mode.
+
+   Matching the embedded document's scheme on the iframe element restores the
+   transparent canvas, so our own background shows through. This only affects
+   the iframe's backdrop: the button inside is still drawn with the
+   `filled_black`/`outline` theme we ask for in `sign-in-button.tsx`, which is
+   also where `.gsi-host` is set. It's a no-op in light mode (the schemes
+   already match), so it's applied unconditionally rather than under `.dark`. */
+.gsi-host iframe {
+  color-scheme: light;
+}
+
 /* ---- Scheme visualiser -------------------------------------------------
    A few bits that are awkward as pure Tailwind: the colour-mixed role tag,
    the range-slider thumb, and the native colour-input swatch. Each reads its

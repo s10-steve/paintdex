@@ -11,6 +11,11 @@
  * mounted (and the avatar as a separate sibling) avoids that. Google renders
  * its own iframe that CSS can't reach, so dark mode is handled by re-rendering
  * the button with the matching `theme` whenever the resolved theme changes.
+ *
+ * The container also carries `gsi-host`, which the one rule we *can* apply to
+ * that iframe hangs off — see the "Google sign-in button" block in
+ * `globals.css` for why it's needed (it stops the browser painting a white box
+ * behind the button in dark mode). Keep the two in step.
  */
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
@@ -82,7 +87,11 @@ export function SignInButton() {
     <div className="flex items-center">
       {/* Google button: rendered once, hidden (not unmounted) when signed in. */}
       {googleEnabled && (
-        <div ref={gsiRef} className={user ? "hidden" : undefined} aria-hidden={Boolean(user)} />
+        <div
+          ref={gsiRef}
+          className={user ? "gsi-host hidden" : "gsi-host"}
+          aria-hidden={Boolean(user)}
+        />
       )}
 
       {/* Account menu, shown when signed in. */}
