@@ -97,7 +97,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   it — memoized at module scope in `lib/paints/browse-index.ts`, and seeded from
   that cache **synchronously** via `peekBrowseIndex()`, because awaiting an
   already-resolved promise still costs a render and that render is a loading
-  skeleton; successes only, so a failed load stays retryable), `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
+  skeleton; successes only, so a failed load stays retryable). Its consumers must
+  memoize derived work at module scope too, not in a `useMemo` — see
+  `paints/lab-index.ts`: re-deriving Lab for 4,961 records on each mount cost ~10ms,
+  more than the JSON parse the fetch cache saves, because a `useMemo` dies with the
+  component and a paint-to-paint navigation remounts. Also `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
   out in real pixels, so it needs a measured width), and the visualiser's three
   state layers — `use-local-scheme`
   (`localStorage`), `use-scheme-sync` (accounts, sign-in reconciliation,
@@ -107,8 +111,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   — deliberately *not* in the scheme document, which has to stay portable.
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
   contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
-  the alternatives plot's layout maths — and `filter-params.ts`, the URL vocabulary
-  shared with the browse page), `scheme/` (bar maths, JSON import/export, types). Also `supabase/` (browser client +
+  the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
+  shared with the browse page, and `lab-index.ts`, a module-scope memo attaching
+  Lab to the browse index), `scheme/` (bar maths, JSON import/export, types). Also `supabase/` (browser client +
   hand-written row types) and `data/` (per-table CRUD, e.g. `schemes.ts`) — these
   touch the network, so keep them thin and keep the logic in the pure modules.
   `supabase/server.ts` is the anon server-read client used only by the

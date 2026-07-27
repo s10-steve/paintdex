@@ -24,6 +24,7 @@ import {
   type SimilarParamState,
   type SimilarView,
 } from "@/lib/paints/filter-params";
+import { withLab } from "@/lib/paints/lab-index";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import type { Paint, PaintType, PaintWithLab } from "@/lib/paints/types";
 import { FacetGroup, type FacetOption } from "./facet-group";
@@ -174,13 +175,13 @@ export function SimilarColours({
   // catalogue (with Lab) is fetched once so we can re-rank on filter AND grey out
   // facet options that would yield nothing. Initial render never waits on it.
   const { paints, loadError } = useBrowseIndex();
-  // Recover the Lab triple (kept out of the shipped index) from hex. Stays null
-  // on a load failure so the facet-availability pass below hides nothing.
+  // Recover the Lab triple (kept out of the shipped index) from hex. Memoized at
+  // module scope by `withLab`, not just here: this useMemo dies with the component,
+  // and re-deriving Lab for 4,961 records on every paint-to-paint navigation costs
+  // more than the JSON parse the fetch cache already saves. Stays null on a load
+  // failure so the facet-availability pass below hides nothing.
   const dataset = useMemo<PaintWithLab[] | null>(
-    () =>
-      paints && !loadError
-        ? paints.map((p) => ({ ...p, lab: hexToLab(p.hex) }))
-        : null,
+    () => (paints && !loadError ? withLab(paints) : null),
     [paints, loadError],
   );
 
