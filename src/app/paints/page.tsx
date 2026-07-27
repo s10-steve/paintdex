@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { PaintsBrowser } from "@/components/paints-browser";
 import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
 import { getAllPaints, getBrands } from "@/lib/paints/load";
+import { PAINT_TYPES } from "@/lib/paints/types";
+import { COLOUR_FAMILIES } from "@/lib/color";
 
 export const metadata: Metadata = {
   title: "Compare paints",
@@ -14,8 +16,21 @@ export const metadata: Metadata = {
 };
 
 export default function PaintsPage() {
-  const total = getAllPaints().length;
-  const brandCount = getBrands().length;
+  const catalogue = getAllPaints();
+  const total = catalogue.length;
+  const brands = getBrands();
+  const brandCount = brands.length;
+
+  // The facet universe, computed at build time and handed to the client. Browse
+  // used to derive these from the fetched index, which left the sidebar empty
+  // until ~1MB of JSON arrived; passing them means it renders immediately, and
+  // matches how /paints/[id] has always supplied its facets. Kept in the
+  // canonical PAINT_TYPES / COLOUR_FAMILIES order.
+  const presentTypes = new Set(catalogue.map((p) => p.type));
+  const presentFamilies = new Set(catalogue.map((p) => p.family));
+  const ranges = [...new Set(catalogue.map((p) => p.range))].sort((a, b) =>
+    a.localeCompare(b),
+  );
   return (
     <main>
       {/* Preload the dataset so it downloads in parallel with the JS bundle
@@ -35,7 +50,12 @@ export default function PaintsPage() {
         </p>
       </div>
       <Suspense>
-        <PaintsBrowser />
+        <PaintsBrowser
+          brands={brands}
+          ranges={ranges}
+          types={PAINT_TYPES.filter((t) => presentTypes.has(t))}
+          families={COLOUR_FAMILIES.filter((f) => presentFamilies.has(f))}
+        />
       </Suspense>
     </main>
   );
