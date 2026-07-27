@@ -7,7 +7,6 @@ import {
   contrastText,
   hueFamily,
   labToLch,
-  chroma,
   hueDelta,
   NEUTRAL_CHROMA,
 } from "@/lib/color";
@@ -112,10 +111,11 @@ describe("labToLch", () => {
   });
 });
 
-describe("chroma / NEUTRAL_CHROMA", () => {
+describe("NEUTRAL_CHROMA", () => {
   it("separates the catalogue's greys from its colours", () => {
-    expect(chroma("#989C94")).toBeLessThan(NEUTRAL_CHROMA); // Administratum Grey
-    expect(chroma("#960C09")).toBeGreaterThan(NEUTRAL_CHROMA); // Mephiston Red
+    const c = (hex: string) => labToLch(hexToLab(hex)).c;
+    expect(c("#989C94")).toBeLessThan(NEUTRAL_CHROMA); // Administratum Grey
+    expect(c("#960C09")).toBeGreaterThan(NEUTRAL_CHROMA); // Mephiston Red
   });
 });
 

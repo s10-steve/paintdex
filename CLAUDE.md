@@ -315,6 +315,10 @@ on at the origin. `src/lib/paints/scatter.ts` is the pure layout maths;
   `capForArea` is the readability one and is what binds on a phone, where 120
   touch-sized marks tile the plot into a solid block. Whatever is dropped shows up
   in `layout.omittedCount` and in the caption, like the poster's `layout.omitted`.
+  **Don't cap the candidate list before handing it to `layoutScatter`** — doing so
+  made `omittedCount` count only what that earlier call dropped, so a phone claimed
+  "60 of 120" for a paint with ~350 matches. `findSimilar` sorts everything
+  regardless of its `limit`, so passing the whole list costs no extra sort.
 - **Overlap is bounded, not eliminated.** `MAX_DISPLACEMENT_R` caps how far a mark
   may sit from the truth, and it deliberately outranks clickability: inside 3
   radii only ~7 marks fit a diameter apart, so dense piles stay partly stacked and
@@ -331,6 +335,19 @@ on at the origin. `src/lib/paints/scatter.ts` is the pure layout maths;
   as `PosterLayout.rowHeight` — a renderer that insets by its own number puts
   every gridline slightly off its own marks, and nothing looks broken enough to
   notice.
+- **Marks are 24px (`markR` 12) at every width**, so WCAG 2.5.8 is met on pointer
+  as well as touch without leaning on its "equivalent control" exception (which the
+  List view would otherwise supply). The packer's `minSep` of `2r + 1` is what
+  guarantees the 24px of centre spacing. It costs nothing: `capForArea` still allows
+  ~140–170 marks at real desktop widths, above `MAX_POINTS`. And `sizeFor` must
+  never floor the width above what it measured — the plot is `overflow-visible`, so
+  a floor would push the page into sideways scrolling with nothing to clip it back.
+- **The renderer reads the data, not the domain, for anything it says in words.**
+  `fitAroundZero` pads *both* ends to the floor when candidates are tightly
+  clustered, so a padded bound can describe a range containing no candidates at
+  all: three slightly-more-saturated paints give `x.min = -2.5` with nothing muted
+  anywhere. Hence the axis-end words gate on `lowEnd.ax < 0` / `highEnd.ax > 0`,
+  and the "all within N" caption uses `max(|ax|)`.
 - **SVG for the chrome, HTML anchors for the marks.** An `<a>` inside `<svg>` is
   an `SVGAElement`, which gives up real focus rings, `border-radius` and Tailwind
   classes for nothing. `prefetch={false}` on those links is load-bearing: App

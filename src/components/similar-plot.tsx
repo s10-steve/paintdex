@@ -4,7 +4,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { matchLabel } from "@/lib/paints/filter";
 import {
-  AXIS_ENDS,
+  CHROMA_ENDS,
   axisUnit,
   describePoint,
   layoutScatter,
@@ -34,14 +34,27 @@ interface SimilarPlotProps {
   targetIsNeutral: boolean;
 }
 
-/** Narrow screens get bigger marks: 2 × 12px clears the WCAG 2.5.8 target size. */
+/**
+ * Plot geometry for a measured container width.
+ *
+ * `markR` is 12 everywhere, so every mark is a 24px target and the packer's
+ * `minSep` of `2r + 1 = 25px` guarantees 24px of centre spacing — WCAG 2.5.8 met
+ * on pointer and touch alike, without leaning on the "equivalent control"
+ * exception the List view would otherwise provide. It costs nothing: the
+ * area-based cap still allows ~140–170 marks at real desktop widths, comfortably
+ * above `MAX_POINTS`, so no mark is dropped for the extra size.
+ *
+ * Never wider than what was measured. A floor here would overflow a narrow
+ * container — the plot is `overflow-visible`, so nothing would clip it back into
+ * place and the page would scroll sideways instead.
+ */
 const sizeFor = (measured: number) => {
-  const width = Math.min(720, Math.max(280, measured));
+  const width = Math.min(720, measured);
   const narrow = width < 480;
   return {
     width,
     height: narrow ? 380 : 440,
-    markR: narrow ? 12 : 9,
+    markR: 12,
     gutterLeft: narrow ? 34 : 44,
     gutterRight: 12,
     gutterTop: 12,
@@ -109,15 +122,22 @@ export function SimilarPlot({
   // End-of-axis swatches: the actual extreme candidates, which say what "left"
   // and "right" mean far better than a word can. "cooler/warmer" would be a lie —
   // from red, increasing hue heads to yellow; from blue, to purple.
-  const [lowEnd, highEnd] = useMemo(() => {
-    if (!points.length) return [null, null] as const;
+  //
+  // `spread` is the largest |ax| in the data, and everything below reads it rather
+  // than `layout.x.max`. The domain is not the data: `fitAroundZero` pads both ends
+  // to the floor when candidates are tightly clustered, so a padded bound describes
+  // a range that may contain no candidates at all.
+  const { lowEnd, highEnd, spread } = useMemo(() => {
+    if (!points.length) return { lowEnd: null, highEnd: null, spread: 0 };
     let lo = points[0];
     let hi = points[0];
+    let max = 0;
     for (const p of points) {
       if (p.ax < lo.ax) lo = p;
       if (p.ax > hi.ax) hi = p;
+      max = Math.max(max, Math.abs(p.ax));
     }
-    return [lo, hi] as const;
+    return { lowEnd: lo, highEnd: hi, spread: max };
   }, [points]);
 
   const unit = axisUnit(axis);
@@ -363,18 +383,19 @@ export function SimilarPlot({
                 aria-hidden="true"
               />
             ) : null}
-            {/* Only claim "more muted" when something actually is: a paint with no
-                saturation left has a one-sided axis starting at zero. */}
-            {axis === "chroma" && layout && layout.x.min < 0
-              ? AXIS_ENDS.chroma[0]
-              : "◀"}
+            {/* Only claim "more muted" when a candidate actually is. Checking the
+                domain instead would lie whenever it was padded to the floor: a set
+                of three slightly-more-saturated paints yields x.min = -2.5 with
+                nothing muted anywhere in it. Both ends need the same guard, since
+                the padding is symmetric. */}
+            {axis === "chroma" && lowEnd && lowEnd.ax < 0 ? CHROMA_ENDS[0] : "◀"}
           </span>
           <span className="font-medium">
             {axisTitle}
             {unit ? ` (${unit})` : ""} · vertical: lightness
           </span>
           <span className="flex items-center gap-1.5">
-            {axis === "chroma" ? AXIS_ENDS.chroma[1] : "▶"}
+            {axis === "chroma" && highEnd && highEnd.ax > 0 ? CHROMA_ENDS[1] : "▶"}
             {highEnd ? (
               <span
                 className="h-3 w-3 rounded-sm border border-border"
@@ -425,7 +446,7 @@ export function SimilarPlot({
               } matches.`
             : ""}
           {layout && layout.x.floored
-            ? ` These are all within ${layout.x.max.toFixed(0)}${unit} of ${
+            ? ` These are all within ${Math.max(1, Math.round(spread))}${unit} of ${
                 axis === "hue" ? "hue" : "saturation"
               }, so marks are spread apart to stay clickable.`
             : ""}

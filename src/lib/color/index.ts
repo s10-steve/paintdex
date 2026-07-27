@@ -201,11 +201,6 @@ export function labToLch([l, a, b]: Lab): Lch {
   return { l, c, h: deg < 0 ? deg + 360 : deg };
 }
 
-/** Chroma (C*) of a hex colour — how far it is from grey. */
-export function chroma(hex: string): number {
-  return labToLch(hexToLab(hex)).c;
-}
-
 /**
  * Signed shortest way round the hue circle from `from` to `to`, in degrees.
  * Result is in (-180, 180], so hueDelta(350, 10) is +20, not -340.

@@ -4,13 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { hexToLab, labToLch } from "@/lib/color";
 import { findSimilar } from "@/lib/paints/filter";
 import {
-  MAX_POINTS,
   pickScatterAxis,
   type ScatterAxis,
   type ScatterCandidate,
 } from "@/lib/paints/scatter";
 import {
   DEFAULT_MATCH,
+  SIMILAR_CLEARABLE,
+  clearParams,
   emptySimilarParams,
   hasFacetFilter,
   isDefaultSimilarParams,
@@ -166,15 +167,23 @@ export function SimilarColours({
    * four facets doesn't cost four Back presses; moving between paints still
    * pushes history, because that's a real <Link>.
    */
+  /** Set the state and mirror it into the URL. The one path from control to URL. */
+  const writeUrl = (next: SimilarParamState) => {
+    setFilters(next);
+    const url = new URL(window.location.href);
+    const qs = writeSimilarParams(url.searchParams, next).toString();
+    window.history.replaceState(
+      null,
+      "",
+      qs ? `${url.pathname}?${qs}` : url.pathname,
+    );
+  };
+
   const commit = (mut: (prev: SimilarParamState) => SimilarParamState) => {
-    setFilters((prev) => {
-      const next = mut(prev);
-      const url = new URL(window.location.href);
-      const params = writeSimilarParams(url.searchParams, next);
-      const qs = params.toString();
-      window.history.replaceState(null, "", qs ? `${url.pathname}?${qs}` : url.pathname);
-      return next;
-    });
+    // Computed outside the updater on purpose. `replaceState` is a side effect, and
+    // updaters must stay pure — StrictMode double-invokes them and a concurrent
+    // re-base can re-run them. `paints-browser`'s commit has the same shape.
+    writeUrl(mut(filters));
   };
 
   /** Query string appended to every match's href so the filters follow the click. */
@@ -283,8 +292,13 @@ export function SimilarColours({
    */
   const plotCandidates = useMemo<ScatterCandidate[] | null>(() => {
     if (view !== "plot" || !universe) return null;
+    // No `limit` here: capping before `layoutScatter` made `omittedCount` count
+    // only what this call dropped, so the caption reported "60 of 120" when Agrax
+    // Earthshade really has ~350 inside the cutoff. `findSimilar` sorts the whole
+    // candidate list regardless of `limit`, so passing everything costs no extra
+    // sort, and `layoutScatter` applies both caps and reports them honestly.
     return findSimilar(candidatesFor(universe), targetWithLab, {
-      limit: MAX_POINTS,
+      limit: Infinity,
       excludeDiscontinued: !includeDiscontinued,
     })
       .filter(({ distance }) => distance < cutoff)
@@ -326,7 +340,25 @@ export function SimilarColours({
 
   // Clears the URL too — the point of the escape hatch is that the filter stops
   // following you, which it wouldn't if the params outlived the sidebar state.
-  const clearAll = () => commit((prev) => ({ ...emptySimilarParams(), view: prev.view }));
+  /**
+   * Clear the controls in front of you, preserve everything else.
+   *
+   * Goes through the same `SIMILAR_CLEARABLE` key list browse uses, rather than
+   * writing an empty state: one documented rule, one mechanism. `view` survives
+   * because it isn't in the list — exactly how `sort` survives on browse — and so
+   * does an inbound `q`/`family` the panel gives the user no way to restore.
+   */
+  const clearAll = () => {
+    const url = new URL(window.location.href);
+    const cleared = clearParams(url.searchParams, SIMILAR_CLEARABLE);
+    setFilters(readSimilarParams(cleared));
+    const qs = cleared.toString();
+    window.history.replaceState(
+      null,
+      "",
+      qs ? `${url.pathname}?${qs}` : url.pathname,
+    );
+  };
 
   /**
    * Both copies of the sidebar are in the DOM at once — the desktop one is

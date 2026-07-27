@@ -556,15 +556,16 @@ export function layoutScatter(
   };
 }
 
-/** Axis end labels, in words. Index 0 is the low (left/bottom) end. */
-export const AXIS_ENDS: Record<ScatterAxis | "lightness", [string, string]> = {
-  // Deliberately not "cooler / warmer": that's false in general. From red, +hue
-  // heads to yellow; from blue, to purple. The plot shows swatches of the
-  // extreme candidates at each end instead, which is honest and instantly read.
-  hue: ["hue −", "hue +"],
-  chroma: ["more muted", "more saturated"],
-  lightness: ["darker", "lighter"],
-};
+/**
+ * Worded ends for the saturation axis. Index 0 is the low (left) end.
+ *
+ * There is deliberately no equivalent for the hue axis: "cooler / warmer" is false
+ * in general — from red, +hue heads to yellow; from blue, to purple — so the plot
+ * shows swatches of the extreme candidates instead, which is honest and instantly
+ * read. The renderer only shows these words when a candidate really sits at that
+ * end, because the domain may have been padded to its floor.
+ */
+export const CHROMA_ENDS: [string, string] = ["more muted", "more saturated"];
 
 /** Unit suffix for a tick value on the x axis. */
 export const axisUnit = (axis: ScatterAxis) => (axis === "hue" ? "°" : "");
@@ -585,7 +586,9 @@ export function describePoint(p: ScatterPoint, axis: ScatterAxis): string {
   } else if (ax === 0) {
     parts.push("same saturation");
   } else {
-    parts.push(`${Math.abs(ax)} ${ax > 0 ? "more" : "less"} saturated`);
+    // Mirrors the hue branch's "hue +12°" rather than reading as prose, so the two
+    // axes are described the same way. Chroma has no unit.
+    parts.push(`saturation ${ax > 0 ? "+" : "−"}${Math.abs(ax)}`);
   }
 
   const dl = Math.round(p.dl);

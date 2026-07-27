@@ -404,9 +404,12 @@ describe("describePoint", () => {
     expect(describePoint(grey, "hue")).toMatch(/hue approximate/);
   });
 
-  it("talks about saturation in chroma mode", () => {
+  it("describes saturation the same way it describes hue", () => {
+    // "saturation +3", mirroring "hue +12°" rather than reading as prose.
     const chromaLayout = layoutScatter({ lab: GREY }, MIXED, { size: SIZE });
-    expect(describePoint(chromaLayout.points[0], "chroma")).toMatch(/saturated/);
+    expect(describePoint(chromaLayout.points[0], "chroma")).toMatch(
+      /saturation [+−]\d+/,
+    );
   });
 });
 
