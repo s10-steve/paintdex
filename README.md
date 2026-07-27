@@ -153,6 +153,21 @@ is left of that idea:
 ### Paint database and UI features
 
 - [ ] Add more paint brands and ranges
+- [ ] **If the catalogue grows a lot, revisit how the browse index is delivered.**
+      `public/browse-index.json` is a single file covering the whole catalogue
+      (~1MB uncompressed at 4,961 paints, well compressed on the wire) and it's
+      fetched by four views: browse, the homepage search, the visualiser's paint
+      picker and the alternatives panel. Both the download and the client-side
+      CIEDE2000 re-rank scale linearly with the catalogue, so adding brands in
+      bulk is what would make this bite.
+      **Not a current problem — Core Web Vitals are fine, and this is a note for
+      later, not a todo.** When it does matter, the options are roughly: drop
+      fields the client never reads, split the index (by brand, or a small search
+      subset plus on-demand detail), or move the parse and the ΔE pass into a Web
+      Worker so they stop touching the main thread. Each trades away some of the
+      current "one static file, no backend" simplicity, so it wants measuring
+      first. Per-page derived work is already memoized at module scope
+      (`src/lib/paints/browse-index.ts`, `lab-index.ts`) — that part is done.
 - [ ] Interactive colour wheel (à la
       [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
       suggests matching paints based on colours you pick. Would be useful if
