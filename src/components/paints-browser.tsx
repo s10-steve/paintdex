@@ -21,7 +21,7 @@ import {
 } from "@/lib/paints/facet-availability";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { PaintCard } from "./paint-card";
-import { FacetGroup } from "./facet-group";
+import { PaintFacets } from "./paint-facets";
 
 const PAGE = 60;
 
@@ -249,71 +249,20 @@ export function PaintsBrowser({
           </button>
         ) : null}
       </div>
-      <FacetGroup
-        title="Brand"
-        options={brandOptions}
-        selected={filters.brands}
-        onToggle={toggleFacet("brands")}
+      <PaintFacets
+        options={{
+          brands: brandOptions,
+          ranges: rangeOptions,
+          types: typeOptions,
+          families: familyOptions,
+        }}
+        selected={filters}
+        onToggle={(key, value) => toggleFacet(key)(value)}
+        onMetallic={(value) => commit((prev) => ({ ...prev, metallic: value }))}
+        onDiscontinued={(value) =>
+          commit((prev) => ({ ...prev, includeDiscontinued: value }))
+        }
       />
-      <FacetGroup
-        title="Colour family"
-        options={familyOptions}
-        selected={filters.families}
-        onToggle={toggleFacet("families")}
-      />
-      <FacetGroup
-        title="Type"
-        options={typeOptions}
-        selected={filters.types}
-        onToggle={toggleFacet("types")}
-      />
-      <div className="border-b border-border py-3">
-        <span className="text-sm font-semibold">Finish</span>
-        <div className="mt-2 flex flex-col gap-1">
-          {(
-            [
-              { value: "", label: "All" },
-              { value: "only", label: "Metallic only" },
-              { value: "exclude", label: "Non-metallic" },
-            ] as const
-          ).map((o) => (
-            <label
-              key={o.value}
-              className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-sm hover:bg-muted"
-            >
-              <input
-                type="radio"
-                name="metallic-filter"
-                className="accent-[var(--primary)]"
-                checked={metallic === o.value}
-                onChange={() => commit((prev) => ({ ...prev, metallic: o.value }))}
-              />
-              {o.label}
-            </label>
-          ))}
-        </div>
-      </div>
-      <FacetGroup
-        title="Range"
-        options={rangeOptions}
-        selected={filters.ranges}
-        onToggle={toggleFacet("ranges")}
-        defaultOpen={false}
-      />
-      <label className="flex cursor-pointer items-center gap-2 py-3 text-sm">
-        <input
-          type="checkbox"
-          className="accent-[var(--primary)]"
-          checked={includeDiscontinued}
-          onChange={() =>
-            commit((prev) => ({
-              ...prev,
-              includeDiscontinued: !prev.includeDiscontinued,
-            }))
-          }
-        />
-        Include discontinued
-      </label>
     </div>
   );
 

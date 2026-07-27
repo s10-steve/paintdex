@@ -25,9 +25,13 @@ import {
   type SimilarView,
 } from "@/lib/paints/filter-params";
 import { withLab } from "@/lib/paints/lab-index";
+import {
+  computeAvailability,
+  facetOptions,
+} from "@/lib/paints/facet-availability";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import type { Paint, PaintType, PaintWithLab } from "@/lib/paints/types";
-import { FacetGroup, type FacetOption } from "./facet-group";
+import { PaintFacets } from "./paint-facets";
 import { SimilarList, SimilarListSkeleton, type RenderItem } from "./similar-list";
 import { SimilarPlot } from "./similar-plot";
 
@@ -58,6 +62,9 @@ const toRenderItems = (items: SimilarItem[]): RenderItem[] =>
     range: paint.range,
     distance,
   }));
+
+/** The panel has no colour-family control, so it never narrows by family. */
+const NO_FAMILIES: Set<string> = new Set();
 
 const matchMetallic = (p: { metallic?: boolean }, m: MetallicFilter) =>
   m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
@@ -93,7 +100,7 @@ export function SimilarColours({
   const [axisChoice, setAxisChoice] = useState<ScatterAxis | null>(null);
 
   const { brands: selBrands, types: selTypes, ranges: selRanges } = filters;
-  const { metallic, minMatch, view } = filters;
+  const { metallic, minMatch, view, includeDiscontinued } = filters;
 
   const targetLab = useMemo(() => hexToLab(target.hex), [target.hex]);
   const targetChroma = useMemo(() => labToLch(targetLab).c, [targetLab]);
@@ -165,7 +172,11 @@ export function SimilarColours({
   // Facet filters drive the re-rank; the match cutoff is a cheap post-filter on
   // distance, so it's tracked separately and never triggers a fetch/re-rank.
   const facetCount =
-    selBrands.size + selTypes.size + selRanges.size + (metallic ? 1 : 0);
+    selBrands.size +
+    selTypes.size +
+    selRanges.size +
+    (metallic ? 1 : 0) +
+    (includeDiscontinued ? 1 : 0);
   const anyFilter = hasFacetFilter(filters);
   const matchActive = minMatch !== DEFAULT_MATCH;
   const activeCount = facetCount + (matchActive ? 1 : 0);
@@ -185,42 +196,32 @@ export function SimilarColours({
     [paints, loadError],
   );
 
-  // Candidate universe: everything a match could be — non-discontinued and not
-  // the paint itself. Filtering + availability both work from this.
+  // Candidate universe: everything a match could be. Filtering *and* availability
+  // both work from this, which is why the discontinued rule is a gate here rather
+  // than being deleted and applied only to the results — otherwise the sidebar
+  // would offer a range whose only members the results exclude.
   const universe = useMemo(
     () =>
       dataset
-        ? dataset.filter((p) => p.id !== target.id && !p.discontinued)
+        ? dataset.filter(
+            (p) =>
+              p.id !== target.id &&
+              (includeDiscontinued || !p.discontinued),
+          )
         : null,
-    [dataset, target.id],
+    [dataset, target.id, includeDiscontinued],
   );
 
-  const sel = useMemo(
-    () => ({ brands: selBrands, types: selTypes, ranges: selRanges, metallic }),
-    [selBrands, selTypes, selRanges, metallic],
+  // Which option values still yield results given the *other* selected facets.
+  // Null until the dataset loads, so nothing is hidden before then. Shared with
+  // browse so the two sidebars can't prune differently.
+  const availability = useMemo(
+    () =>
+      universe
+        ? computeAvailability(universe, { ...filters, families: NO_FAMILIES })
+        : null,
+    [universe, filters],
   );
-
-  // Which option values still yield results given the *other* selected facets
-  // (the metallic finish always constrains). Null until the dataset loads, so
-  // nothing is hidden before then.
-  const availability = useMemo(() => {
-    if (!universe) return null;
-    const match = (p: PaintWithLab, skip: "brand" | "type" | "range") =>
-      (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
-      (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
-      (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
-      matchMetallic(p, sel.metallic);
-
-    const brandSet = new Set<string>();
-    const typeSet = new Set<string>();
-    const rangeSet = new Set<string>();
-    for (const p of universe) {
-      if (match(p, "brand")) brandSet.add(p.brand);
-      if (match(p, "type")) typeSet.add(p.type);
-      if (match(p, "range")) rangeSet.add(p.range);
-    }
-    return { brandSet, typeSet, rangeSet };
-  }, [universe, sel]);
 
   // The one facet predicate both views rank through, so they can't drift apart.
   const candidatesFor = useMemo(
@@ -244,7 +245,10 @@ export function SimilarColours({
   // Recompute the ranked list from the filtered subset when a filter is active.
   const computed = useMemo<RenderItem[] | null>(() => {
     if (!anyFilter || !universe) return null;
-    return findSimilar(candidatesFor(universe), targetWithLab, { limit: 16 }).map(
+    return findSimilar(candidatesFor(universe), targetWithLab, {
+      limit: 16,
+      excludeDiscontinued: !includeDiscontinued,
+    }).map(
       ({ paint, distance }) => ({
         id: paint.id,
         hex: paint.hex,
@@ -254,7 +258,7 @@ export function SimilarColours({
         distance,
       }),
     );
-  }, [anyFilter, universe, candidatesFor, targetWithLab]);
+  }, [anyFilter, universe, candidatesFor, targetWithLab, includeDiscontinued]);
 
   /**
    * The plot's own candidate set, deliberately separate from the list's.
@@ -270,6 +274,7 @@ export function SimilarColours({
     if (view !== "plot" || !universe) return null;
     return findSimilar(candidatesFor(universe), targetWithLab, {
       limit: MAX_POINTS,
+      excludeDiscontinued: !includeDiscontinued,
     })
       .filter(({ distance }) => distance < cutoff)
       .map(({ paint, distance }) => ({
@@ -281,7 +286,14 @@ export function SimilarColours({
         lab: paint.lab,
         distance,
       }));
-  }, [view, universe, candidatesFor, targetWithLab, cutoff]);
+  }, [
+    view,
+    universe,
+    candidatesFor,
+    targetWithLab,
+    cutoff,
+    includeDiscontinued,
+  ]);
 
   const items: RenderItem[] = (
     anyFilter ? (computed ?? []) : toRenderItems(all)
@@ -305,21 +317,18 @@ export function SimilarColours({
   // following you, which it wouldn't if the params outlived the sidebar state.
   const clearAll = () => commit((prev) => ({ ...emptySimilarParams(), view: prev.view }));
 
-  // Show only values that still yield results given the other selections, plus
-  // anything already selected so it can always be unticked.
-  const visible = (
-    values: string[],
-    availSet: Set<string> | undefined,
-    selected: Set<string>,
-  ): FacetOption[] =>
-    values
-      .filter((v) => !availSet || availSet.has(v) || selected.has(v))
-      .map((v) => ({ value: v, label: v }));
-
-  const sidebar = (
+  /**
+   * Both copies of the sidebar are in the DOM at once — the desktop one is
+   * `hidden md:block`, not unmounted — so anything with an `id` needs a distinct
+   * one per copy. `useId` can't do it: this is one JSX value rendered twice, so a
+   * single component instance and therefore a single generated id. Hence the
+   * explicit suffix. (`PaintFacets` is a real component, so its own `useId` does
+   * give the two copies distinct radio-group names.)
+   */
+  const sidebar = (copy: string) => (
     <div className="text-sm">
       <div className="flex items-center justify-between pb-2">
-        <span className="font-semibold">Filter matches</span>
+        <span className="font-semibold">Filters</span>
         {anyFilter || matchActive ? (
           <button
             type="button"
@@ -331,11 +340,11 @@ export function SimilarColours({
         ) : null}
       </div>
       <div className="border-b border-border py-3">
-        <label htmlFor="similar-match" className="text-sm font-semibold">
+        <label htmlFor={`similar-match-${copy}`} className="text-sm font-semibold">
           Minimum match
         </label>
         <select
-          id="similar-match"
+          id={`similar-match-${copy}`}
           value={minMatch}
           onChange={(e) =>
             commit((prev) => ({
@@ -352,55 +361,23 @@ export function SimilarColours({
           ))}
         </select>
       </div>
-      <FacetGroup
-        title="Brand"
-        options={visible(brands, availability?.brandSet, selBrands)}
-        selected={selBrands}
-        onToggle={toggle("brands")}
-      />
-      <FacetGroup
-        title="Type"
-        options={visible(types, availability?.typeSet, selTypes)}
-        selected={selTypes}
-        onToggle={toggle("types")}
-      />
-      <div className="border-b border-border py-3">
-        <span className="text-sm font-semibold">Finish</span>
-        <div className="mt-2 flex flex-col gap-1">
-          {(
-            [
-              { value: "", label: "All" },
-              { value: "only", label: "Metallic" },
-              { value: "exclude", label: "Non-metallic" },
-            ] as const
-          ).map((o) => (
-            <label
-              key={o.value}
-              className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-sm hover:bg-muted"
-            >
-              <input
-                type="radio"
-                name="similar-finish"
-                className="accent-[var(--primary)]"
-                checked={metallic === o.value}
-                onChange={() =>
-                  commit((prev) => ({
-                    ...prev,
-                    metallic: o.value as MetallicFilter,
-                  }))
-                }
-              />
-              {o.label}
-            </label>
-          ))}
-        </div>
-      </div>
-      <FacetGroup
-        title="Range"
-        options={visible(ranges, availability?.rangeSet, selRanges)}
-        selected={selRanges}
-        onToggle={toggle("ranges")}
-        defaultOpen={false}
+      <PaintFacets
+        options={{
+          brands: facetOptions(brands, availability?.brands ?? null, selBrands),
+          ranges: facetOptions(ranges, availability?.ranges ?? null, selRanges),
+          types: facetOptions(types, availability?.types ?? null, selTypes),
+          families: [],
+        }}
+        selected={{ ...filters, families: NO_FAMILIES }}
+        onToggle={(key, value) => {
+          // The panel has no family group, so that key can never arrive.
+          if (key !== "families") toggle(key)(value);
+        }}
+        onMetallic={(value) => commit((prev) => ({ ...prev, metallic: value }))}
+        onDiscontinued={(value) =>
+          commit((prev) => ({ ...prev, includeDiscontinued: value }))
+        }
+        show={{ family: false }}
       />
     </div>
   );
@@ -460,9 +437,9 @@ export function SimilarColours({
       </p>
 
       <div className="flex gap-6">
-        <aside className="hidden w-56 shrink-0 md:block">{sidebar}</aside>
+        <aside className="hidden w-56 shrink-0 md:block">{sidebar("desktop")}</aside>
         {mobileOpen ? (
-          <aside className="mb-4 w-full md:hidden">{sidebar}</aside>
+          <aside className="mb-4 w-full md:hidden">{sidebar("mobile")}</aside>
         ) : null}
 
         <div className="min-w-0 flex-1">
