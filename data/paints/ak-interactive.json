@@ -12029,5 +12029,105 @@
     "hex": "#A07B6C",
     "code": "AK017",
     "discontinued": false
+  },
+  {
+    "id": "ak-interactive-black-purple",
+    "name": "Black Purple",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#1F152B",
+    "code": "AK11270",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-king-purple",
+    "name": "King Purple",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#1E1F3C",
+    "code": "AK11271",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-dragon-blood",
+    "name": "Dragon Blood",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#361835",
+    "code": "AK11272",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-cold-green",
+    "name": "Cold Green",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#12312F",
+    "code": "AK11273",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-greenskin-punch",
+    "name": "Greenskin Punch",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#173E26",
+    "code": "AK11274",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-slime-green",
+    "name": "Slime Green",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#759F45",
+    "code": "AK11275",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-afro-shadow",
+    "name": "Afro Shadow",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#23161B",
+    "code": "AK11276",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-russet-shadow",
+    "name": "Russet Shadow",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#321C12",
+    "code": "AK11277",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-beast-brown",
+    "name": "Beast Brown",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#643121",
+    "code": "AK11278",
+    "discontinued": false
+  },
+  {
+    "id": "ak-interactive-sun-red",
+    "name": "Sun Red",
+    "brand": "AK Interactive",
+    "range": "Color Punch (3rd Gen)",
+    "type": "other",
+    "hex": "#C25744",
+    "code": "AK11279",
+    "discontinued": false
   }
 ]
