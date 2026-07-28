@@ -16,8 +16,10 @@ schemes, sync them across devices, and share them by link.
   metallic finish.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
-  distance — with filters to narrow the matches by brand or type. Great for
-  comparing paints across brands.
+  distance — with filters to narrow the matches by brand, product range, finish
+  type, metallic finish and whether to include discontinued paints. Those are the
+  same filters as the main database page, and they carry between the two. Great
+  for comparing paints across brands.
 - **Alternatives plot.** The same matches, arranged spatially instead of as a
   ranked list: the paint you're on sits at the centre and every alternative is
   placed by how it differs from it — hue shift across, lightness up. So when you
@@ -103,7 +105,7 @@ or updating a dependency (commit the resulting `package.json` **and**
 | `npm run dev`           | Start the dev server                                                                         |
 | `npm run build`         | Production build (statically generates every paint page)                                     |
 | `npm run lint`          | ESLint                                                                                       |
-| `npm run test`          | Unit tests (colour maths + filtering)                                                        |
+| `npm run test`          | Unit and component tests (colour maths, filtering, plot layout, URL state, schemes)          |
 | `npm run validate:data` | Validate `data/paints/*.json` against the schema                                             |
 | `npm run build:index`   | Precompute the browse index + similar-colour lists (runs automatically before `dev`/`build`) |
 | `npm run import:source` | (Re)import paint data from the upstream dataset                                              |

@@ -47,7 +47,8 @@ npm ci                 # install (reproducible; use over `npm install`)
 npm run dev            # dev server on :3000 (predev builds the indexes first)
 npm run build          # production build (prebuild builds the indexes first)
 npm run lint           # ESLint
-npm run test           # Vitest tests (colour maths, filtering, scheme io + sync)
+npm run test           # Vitest (colour maths, filtering, scatter layout, URL
+                       # codec, scheme io + sync, and a few components)
 npm run validate:data  # validate data/paints/*.json against the Zod schema
 ```
 
@@ -132,7 +133,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `test/` — Vitest suites for the `src/lib` logic (including `scatter.test.ts`,
   which is where the alternatives plot's behaviour is pinned, and
   `filter-params.test.ts`, which pins the URL codec and guards the comma
-  assumption, and `facet-availability.test.ts`), plus `paint-filters-travel.test.tsx`
+  assumption, and `facet-availability.test.ts`, and `browse-index.test.ts` and
+  `lab-index.test.ts`, which pin the two module-scope caches — including that a
+  failed load stays retryable), plus `paints-browser.test.tsx` (browse's
+  URL-derived state: the grid is a function of the params, and the controls write
+  the params) and `paint-filters-travel.test.tsx`
   (the two fiddly halves of the filter round trip) and
   `scheme-visualiser.test.tsx` and `scheme-preset.test.tsx`, which cover the two
   places a bug loses user data (sign-in reconciliation; `?preset=` seeding), and
