@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   getAllPaints,
@@ -7,11 +6,13 @@ import {
   getPaintById,
   getSimilarColours,
 } from "@/lib/paints/load";
+import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
 import { contrastText } from "@/lib/color";
 import { PAINT_TYPES, type Paint, type PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
 import { SimilarColours, type SimilarItem } from "@/components/similar-colours";
 import { JsonLd } from "@/components/json-ld";
+import { BackToBrowse } from "@/components/back-to-browse";
 
 // Keep in sync with `metadataBase` in src/app/layout.tsx.
 const BASE_URL = "https://paintdex.app";
@@ -114,13 +115,19 @@ export default async function PaintDetailPage({
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-6">
+      {/* SimilarColours fetches the browse index unconditionally (to re-rank on
+          filter and to grey out dead facets), so this adds no bytes — it just
+          stops the download waiting on the client component to mount. Matters
+          most for a shared link that already carries filters, where the panel
+          can't render its results until the index lands. Hoisted to <head>. */}
+      <link
+        rel="preload"
+        href={BROWSE_INDEX_URL}
+        as="fetch"
+        crossOrigin="anonymous"
+      />
       <JsonLd data={jsonLd} />
-      <Link
-        href="/paints"
-        className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
-      >
-        ← Back to all paints
-      </Link>
+      <BackToBrowse />
 
       <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
         <div

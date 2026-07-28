@@ -6,6 +6,9 @@ import {
   ciede2000,
   contrastText,
   hueFamily,
+  labToLch,
+  hueDelta,
+  NEUTRAL_CHROMA,
 } from "@/lib/color";
 
 describe("hex parsing", () => {
@@ -75,5 +78,73 @@ describe("hueFamily", () => {
   });
   it("classifies brown as a dark/muted orange", () => {
     expect(hueFamily("#5A3A1A")).toBe("brown");
+  });
+});
+
+describe("labToLch", () => {
+  it("keeps L* and derives chroma from a*/b*", () => {
+    const lch = labToLch([50, 3, 4]);
+    expect(lch.l).toBe(50);
+    expect(lch.c).toBeCloseTo(5, 10); // 3-4-5 triangle
+  });
+
+  it("reports hue anticlockwise from +a*, in [0, 360)", () => {
+    expect(labToLch([50, 10, 0]).h).toBeCloseTo(0, 10);
+    expect(labToLch([50, 0, 10]).h).toBeCloseTo(90, 10);
+    expect(labToLch([50, -10, 0]).h).toBeCloseTo(180, 10);
+    // Negative atan2 results are wrapped up, never left negative.
+    expect(labToLch([50, 0, -10]).h).toBeCloseTo(270, 10);
+  });
+
+  it("gives a grey zero chroma", () => {
+    const lch = labToLch(hexToLab("#808080"));
+    expect(lch.c).toBeLessThan(0.5);
+    expect(lch.h).toBeGreaterThanOrEqual(0);
+    expect(lch.h).toBeLessThan(360);
+  });
+
+  it("puts a saturated red near hue 40 with high chroma", () => {
+    const lch = labToLch(hexToLab("#FF0000"));
+    expect(lch.c).toBeGreaterThan(100);
+    expect(lch.h).toBeGreaterThan(30);
+    expect(lch.h).toBeLessThan(45);
+  });
+});
+
+describe("NEUTRAL_CHROMA", () => {
+  it("separates the catalogue's greys from its colours", () => {
+    const c = (hex: string) => labToLch(hexToLab(hex)).c;
+    expect(c("#989C94")).toBeLessThan(NEUTRAL_CHROMA); // Administratum Grey
+    expect(c("#960C09")).toBeGreaterThan(NEUTRAL_CHROMA); // Mephiston Red
+  });
+});
+
+describe("hueDelta", () => {
+  it("is zero for the same hue", () => {
+    expect(hueDelta(200, 200)).toBe(0);
+  });
+
+  it("takes the short way round the wrap point", () => {
+    expect(hueDelta(350, 10)).toBeCloseTo(20, 10);
+    expect(hueDelta(10, 350)).toBeCloseTo(-20, 10);
+  });
+
+  it("signs ordinary moves by direction", () => {
+    expect(hueDelta(0, 90)).toBeCloseTo(90, 10);
+    expect(hueDelta(90, 0)).toBeCloseTo(-90, 10);
+  });
+
+  it("reports a half-turn as +180, keeping the range (-180, 180]", () => {
+    expect(hueDelta(0, 180)).toBe(180);
+    expect(hueDelta(180, 0)).toBe(180);
+  });
+
+  it("never returns a magnitude above 180", () => {
+    for (let from = 0; from < 360; from += 7) {
+      for (let to = 0; to < 360; to += 11) {
+        const d = hueDelta(from, to);
+        expect(Math.abs(d)).toBeLessThanOrEqual(180);
+      }
+    }
   });
 });

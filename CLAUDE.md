@@ -47,7 +47,8 @@ npm ci                 # install (reproducible; use over `npm install`)
 npm run dev            # dev server on :3000 (predev builds the indexes first)
 npm run build          # production build (prebuild builds the indexes first)
 npm run lint           # ESLint
-npm run test           # Vitest tests (colour maths, filtering, scheme io + sync)
+npm run test           # Vitest (colour maths, filtering, scatter layout, URL
+                       # codec, scheme io + sync, and a few components)
 npm run validate:data  # validate data/paints/*.json against the Zod schema
 ```
 
@@ -76,7 +77,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `sitemap.ts`. Root `layout.tsx` holds metadata (incl. OpenGraph/Twitter),
   wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the header and
   Vercel Analytics/Speed Insights.
-- `src/components/` — client components (`paints-browser`, `similar-colours`,
+- `src/components/` — client components (`paints-browser`, `similar-colours`
+  (the shell: filters + the List/Plot toggle), `similar-list` (the ΔE-ranked
+  cards), `similar-plot` (the hue/lightness plot — see "The alternatives plot"
+  below), `paint-facets` (the facet sidebar both paint pages render),
+  `back-to-browse` (the paint page's "back" link, which carries the live filters),
   `scheme-visualiser`, `scheme-bars` (the shared bar visualisation + hover/
   tooltip, used by the editor and the read-only `scheme-view`), `site-header`,
   `mobile-nav`, `profile-nav` (signed-in-only header links),
@@ -91,15 +96,27 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   The theme follows the system setting (no manual toggle).
 - `src/hooks/` — stateful React logic shared between components or lifted out of
   one: `use-browse-index` (loads the catalogue; used by all four views that need
-  it), and the visualiser's three state layers — `use-local-scheme`
+  it — memoized at module scope in `lib/paints/browse-index.ts`, and seeded from
+  that cache **synchronously** via `peekBrowseIndex()`, because awaiting an
+  already-resolved promise still costs a render and that render is a loading
+  skeleton; successes only, so a failed load stays retryable). Its consumers must
+  memoize derived work at module scope too, not in a `useMemo` — see
+  `paints/lab-index.ts`: re-deriving Lab for 4,961 records on each mount cost ~10ms,
+  more than the JSON parse the fetch cache saves, because a `useMemo` dies with the
+  component and a paint-to-paint navigation remounts. Also `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
+  out in real pixels, so it needs a measured width), and the visualiser's three
+  state layers — `use-local-scheme`
   (`localStorage`), `use-scheme-sync` (accounts, sign-in reconciliation,
   autosave), `use-scheme-share` (publishing a share link), `use-scheme-preset`
   (loads an example scheme from `?preset=<slug>`). `use-poster` holds
   the share-image state (photo, framing, anchors) in its own `localStorage` key
   — deliberately *not* in the scheme document, which has to stay portable.
-- `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000,
-  contrast, colour families), `paints/` (load, filter, types), `scheme/` (bar
-  maths, JSON import/export, types). Also `supabase/` (browser client +
+- `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
+  contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
+  the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
+  shared by both paint pages, `facet-availability.ts`, the shared facet-pruning
+  pass, and `lab-index.ts`, a module-scope memo attaching Lab to the browse
+  index), `scheme/` (bar maths, JSON import/export, types). Also `supabase/` (browser client +
   hand-written row types) and `data/` (per-table CRUD, e.g. `schemes.ts`) — these
   touch the network, so keep them thin and keep the logic in the pure modules.
   `supabase/server.ts` is the anon server-read client used only by the
@@ -113,7 +130,15 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `data/paints/*.json` — the paint catalogue, one file per brand.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
   `validate-data.ts`, `import-source.mjs`.
-- `test/` — Vitest suites for the `src/lib` logic, plus
+- `test/` — Vitest suites for the `src/lib` logic (including `scatter.test.ts`,
+  which is where the alternatives plot's behaviour is pinned, and
+  `filter-params.test.ts`, which pins the URL codec and guards the comma
+  assumption, and `facet-availability.test.ts`, and `browse-index.test.ts` and
+  `lab-index.test.ts`, which pin the two module-scope caches — including that a
+  failed load stays retryable), plus `paints-browser.test.tsx` (browse's
+  URL-derived state: the grid is a function of the params, and the controls write
+  the params) and `paint-filters-travel.test.tsx`
+  (the two fiddly halves of the filter round trip) and
   `scheme-visualiser.test.tsx` and `scheme-preset.test.tsx`, which cover the two
   places a bug loses user data (sign-in reconciliation; `?preset=` seeding), and
   `home-scheme-carousel.test.tsx`. The environment is `node` by default;
@@ -126,12 +151,63 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 
 ## Conventions & gotchas
 
-- **URL is the source of truth** for browse filters/search (shareable views). On
-  the statically-generated `/paints` page, update the URL with
-  `window.history.replaceState`, **not** `router.replace` — `router.replace` is
-  a no-op when the page was hard-loaded with query params (e.g. arriving from the
-  homepage search), which silently freezes the results. See
-  `src/components/paints-browser.tsx`.
+- **URL is the source of truth** for filters/search (shareable views) — on
+  `/paints` *and* for the alternatives panel on `/paints/[id]`. On these
+  statically-generated pages, update the URL with `window.history.replaceState`,
+  **not** `router.replace` — `router.replace` is a no-op when the page was
+  hard-loaded with query params (e.g. arriving from the homepage search), which
+  silently freezes the results. See `src/components/paints-browser.tsx`.
+  - `src/lib/paints/filter-params.ts` owns the **whole** vocabulary for both pages
+    — `brand`, `range`, `type`, `metal`, `disc`, `family`, `q`, `sort`, `match`,
+    `view` — plus `TRAVEL_PARAMS`, the allow-list an internal link may copy.
+  - **Filters travel between the two pages, in both directions**, and the rule for
+    what goes where generalises the one already stated for the plot's `axisChoice`
+    below: **a param that says *which paints you want* is shared and travels; a
+    param that says *how to present this page* stays local.**
+    - `brand`/`range`/`type`/`metal`/`disc` are `SharedFacets`: applied by both
+      pages, and rendered by one component (`paint-facets.tsx`) so the sidebars
+      can't drift apart again — they previously disagreed on the heading, on the
+      wording of the metallic option, and on which groups existed.
+    - `sort` (browse) and `view` (paint page) are presentation and stay put.
+    - `q` and `family` (browse-only) and `match` (panel-only) are filters with a
+      control on one page: **carried in the URL, never applied by the other.**
+  - **`family` is carried but not applied on `/paints/[id]`, deliberately.** Matches
+    all cluster around the reference colour, so applying it would be a no-op most of
+    the time and would silently empty the list at a family boundary, with no
+    checkbox to explain it. Keeping it out of `SimilarParamState` also means an
+    arrival from a family-filtered browse still counts as
+    `isDefaultSimilarParams`, so the panel skips its restore and keeps the
+    fetch-free precomputed first render.
+  - **The two pages read the URL differently on purpose.** Browse uses
+    `useSearchParams()` inside the `<Suspense>` in `src/app/paints/page.tsx`: it
+    never remounts, so a mount-effect read would leave Back/Forward changing the
+    URL with nothing re-reading it — and it has already paid the prerender cost.
+    The panel reads `window.location` in a mount effect and must keep doing so (see
+    "The alternatives plot"). Both write with `history.replaceState`. **The shared
+    module is the codec, not the transport.**
+  - **"Clear all" clears the controls in front of you** and preserves everything
+    else — so browse no longer wipes `sort` (it never counted it as a filter), and
+    the panel never destroys an inbound `q`/`family` the user has no way to restore.
+  - **`?disc=1` on a paint page forces the client re-rank**, because the precomputed
+    `.cache/similar-index.json` is itself built discontinued-free and can't be
+    un-filtered client-side. That's why `hasSharedFacet` counts
+    `includeDiscontinued` — but only when `true`, or every paint page would lose its
+    instant first render.
+  - Both sidebar copies are in the DOM at once (the desktop one is `hidden
+    md:block`, not unmounted), so anything with an `id` or a radio-group `name`
+    needs to differ per copy. `PaintFacets` is a component, so its own `useId`
+    handles the radios; the panel's "Minimum match" select is one JSX value
+    rendered twice, so it takes an explicit per-copy suffix instead.
+  - Comma-joining is only safe because no brand or range name contains a comma —
+    `test/filter-params.test.ts` has a drift guard that fails if one ever does.
+  - Closed vocabularies are validated on read (`type` against `PAINT_TYPES`,
+    `match` against `MATCH_VALUES`, `metal` against `1`/`0`) and unknown values
+    dropped. `match` especially: it used to be `Number()`d straight from state,
+    and `?match=abc` would have produced `distance < NaN` — an empty list with no
+    error. Brands and ranges can't be validated in the pure module (it must not
+    import the catalogue), so the component runs `sanitiseSimilarParams` against
+    its facet props and heals the URL, otherwise a brand that has left the
+    catalogue is an invisible active filter with no checkbox to untick.
 - Keep everything **static** — no server components that read request-time data,
   no API routes — **except the one deliberate `/scheme/[slug]` server route**
   (rich share previews; see "What Paintdex is" above). `getAllPaints()` and
@@ -206,6 +282,113 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   line ("Tentacles" needs 54px). Lower it and long names split mid-word, because
   `break-words` is the only thing stopping them overflowing into the next bar and
   `hyphens: auto` can't help — hyphenation doesn't apply to an emergency break.
+
+## The alternatives plot
+
+The paint detail page's second view of its matches: the same candidates as the
+ΔE list, placed by hue shift (across) and lightness (up), with the paint you're
+on at the origin. `src/lib/paints/scatter.ts` is the pure layout maths;
+`src/components/similar-plot.tsx` renders it. The list is still the default.
+
+- **x is relative to the reference paint, y is relative lightness.** Both are
+  signed differences, so the reference sits on the zero lines and switching axes
+  never moves it. An absolute 0–360 hue axis was rejected: a paint's ΔE<10
+  neighbourhood spans ±10–35°, which would compress into a ~5% sliver.
+- **Only the hue domain is symmetric.** Hue can shift either way with no bound.
+  Lightness and chroma both have hard limits, and forcing symmetry on them wasted
+  half the plot on the paints that need it most — nothing is *less* saturated than
+  Abaddon Black (C\* = 0) and nothing is darker, so a symmetric domain handed the
+  entire left and bottom halves to values that cannot exist.
+- **Near-neutral targets get a saturation axis, not a hue axis.** Below
+  `NEUTRAL_CHROMA` (10) a Lab hue angle is noise, not merely small — Administratum
+  Grey's near matches span −180…+161° of "hue shift". That's about a quarter of
+  the catalogue, including heavily-visited pages, so `pickScatterAxis` is v1
+  scope, not a refinement. Both axes stay offered; the label says "Saturation"
+  because "chroma" isn't a word miniature painters use. Individual near-neutral
+  candidates in hue mode are flagged `hueUncertain` and drawn with a dashed ring —
+  never hidden, and never damped toward 0, which would be a different lie.
+- **The plot recomputes its candidates; it does not use the precomputed index.**
+  `.cache/similar-index.json` holds 16 per paint, which spans about ±5° of hue —
+  a vertical smear, not a scatter. Don't "fix" that by raising its `LIMIT`: the
+  client never reads that file (the page inlines those records into the RSC
+  payload), so 120 would add ~18KB to each of 4,961 static pages to serve a
+  non-default view. The list's own data path is deliberately left untouched, both
+  because its instant fetch-free first render is a real feature and because the
+  cached distances are rounded to 3dp, so a client recompute reorders ties and
+  visibly reshuffles the default view.
+- **Two caps, and both are reported.** `MAX_POINTS` (120) is the compute ceiling;
+  `capForArea` is the readability one and is what binds on a phone, where 120
+  touch-sized marks tile the plot into a solid block. Whatever is dropped shows up
+  in `layout.omittedCount` and in the caption, like the poster's `layout.omitted`.
+  **Don't cap the candidate list before handing it to `layoutScatter`** — doing so
+  made `omittedCount` count only what that earlier call dropped, so a phone claimed
+  "60 of 120" for a paint with ~350 matches. `findSimilar` sorts everything
+  regardless of its `limit`, so passing the whole list costs no extra sort.
+- **Overlap is bounded, not eliminated.** `MAX_DISPLACEMENT_R` caps how far a mark
+  may sit from the truth, and it deliberately outranks clickability: inside 3
+  radii only ~7 marks fit a diameter apart, so dense piles stay partly stacked and
+  `layout.overlapping` says how many. Vallejo White is the case that forces this —
+  203 near matches share only 113 distinct hexes, so ~90 marks start life exactly
+  coincident, which is also why there's a deterministic golden-angle pre-spread
+  (a zero-length separation vector has no gradient to follow). There is no spring
+  pulling marks home: it silently balanced the separation force, so piles settled
+  overlapped while still reporting `converged: true`.
+- Marks may cross x = 0 under relaxation. Clamping the sign would fight the packer
+  exactly where it's needed; the bounded displacement plus a tether line on
+  `displaced` marks is the honest signal instead.
+- `layout.inset` is published for the renderer to read back, for the same reason
+  as `PosterLayout.rowHeight` — a renderer that insets by its own number puts
+  every gridline slightly off its own marks, and nothing looks broken enough to
+  notice.
+- **Marks are 24px (`markR` 12) at every width**, so WCAG 2.5.8 is met on pointer
+  as well as touch without leaning on its "equivalent control" exception (which the
+  List view would otherwise supply). The packer's `minSep` of `2r + 1` is what
+  guarantees the 24px of centre spacing. It costs nothing: `capForArea` still allows
+  ~140–170 marks at real desktop widths, above `MAX_POINTS`. And `sizeFor` must
+  never floor the width above what it measured — the plot is `overflow-visible`, so
+  a floor would push the page into sideways scrolling with nothing to clip it back.
+- **The renderer reads the data, not the domain, for anything it says in words.**
+  `fitAroundZero` pads *both* ends to the floor when candidates are tightly
+  clustered, so a padded bound can describe a range containing no candidates at
+  all: three slightly-more-saturated paints give `x.min = -2.5` with nothing muted
+  anywhere. Hence the axis-end words gate on `lowEnd.ax < 0` / `highEnd.ax > 0`,
+  and the "all within N" caption uses `max(|ax|)`.
+- **SVG for the chrome, HTML anchors for the marks.** An `<a>` inside `<svg>` is
+  an `SVGAElement`, which gives up real focus rings, `border-radius` and Tailwind
+  classes for nothing. `prefetch={false}` on those links is load-bearing: App
+  Router prefetches static routes on viewport intersection, so leaving it on fires
+  ~120 RSC requests the moment the plot scrolls into view.
+- **DOM order is the ΔE ranking**, so reading order, link order and keyboard order
+  all match the list. Closest-on-top is done with `z-index`; reversing the DOM to
+  paint it would read the ranking out backwards to a screen reader. Marks are a
+  roving-tabindex group (one tab stop, arrows walk the ranking) and each carries
+  its position in its `aria-label`, so the axes aren't a visual-only channel —
+  this is deliberately *not* the poster's pointer-only anchor problem repeated.
+- **The filters live in the URL and ride the links.** `?view=plot` and every
+  filter param are read from `window.location` in one mount effect (never
+  `useSearchParams` — this page has no Suspense boundary) and written through one
+  writer with `history.replaceState`, never `router.replace`. List rows and plot
+  marks append the current filter query to their `/paints/<id>` hrefs, which is
+  what makes a filter survive clicking swatch → swatch → swatch — and they carry
+  the browse-only params too, so a later "Back to all paints" restores them. `replaceState`
+  rather than `pushState`, because the `<Link>` navigation already creates the
+  history entry — so Back lands on the previous paint *with its filters* — and
+  ticking four facets shouldn't cost four Back presses.
+- Two consequences worth knowing. The page is prerendered with default state, so
+  the static HTML always has clean hrefs and nothing query-bearing is crawlable.
+  And the filters can only land on the *second* client render, so there is one
+  frame of the unfiltered list. **Do not "fix" that with a `<Suspense>` boundary
+  plus `useSearchParams`**: it works, but it pushes the whole alternatives section
+  out of the prerendered HTML on all 4,961 pages, costing every visitor the
+  instant fetch-free first render and the crawlable ΔE list, to spare one frame
+  for the few arriving with params. The synchronous browse-index cache is what
+  keeps that one frame from becoming a skeleton.
+- **`axisChoice` deliberately does not persist.** It's derived per paint from the
+  reference paint's chroma, so carrying an override to the next paint would force
+  a decision made about one colour onto another — and with a quarter of the
+  catalogue near-neutral, `axis=hue` on the next paint is exactly the meaningless
+  axis `pickScatterAxis` exists to prevent. A filter says *which paints you want*
+  and travels; the axis says *how to read one paint* and doesn't.
 
 ## Share images (the poster)
 

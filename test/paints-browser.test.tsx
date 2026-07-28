@@ -1,0 +1,240 @@
+/**
+ * @vitest-environment jsdom
+ *
+ * Browse's URL-derived filter state.
+ *
+ * This page moved from "the URL mirrors state" to "the URL *is* state": every
+ * filter is derived from `useSearchParams()` on each render, and every control
+ * writes through `history.replaceState`. Nothing at the component layer covered
+ * that — the codec suite can't see it, and `paint-filters-travel.test.tsx`
+ * deliberately scopes to `BackToBrowse`/`PaintFacets`. CLAUDE.md records that
+ * `router.replace` silently froze this page once, and the failure mode here is an
+ * empty grid rather than a degraded one, so it's worth pinning.
+ *
+ * Scope, stated honestly: the two halves tested here are **ours** — deriving the
+ * grid from params, and writing the right URL when a control changes. The join
+ * between them (Next re-rendering with a new `useSearchParams` value after a
+ * `replaceState`) is framework behaviour; mocking it would be testing the mock, so
+ * it is verified in a real browser instead. What this suite can do is drive the
+ * resync by hand: re-render with the params the write produced and assert the grid
+ * followed.
+ */
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import type { BrowsePaint } from "@/lib/paints/types";
+
+let currentParams = new URLSearchParams();
+const replaceState = vi.fn();
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/paints",
+  useRouter: () => ({ push: vi.fn() }),
+  useSearchParams: () => currentParams,
+}));
+
+/** A tiny catalogue with one distinguishing feature per record. */
+const paint = (
+  id: string,
+  brand: string,
+  type: string,
+  family: string,
+  extra: Partial<BrowsePaint> = {},
+): BrowsePaint =>
+  ({
+    id,
+    name: id,
+    brand,
+    range: `${brand} Range`,
+    type,
+    hex: "#808080",
+    discontinued: false,
+    family,
+    l: 50,
+    ...extra,
+  }) as BrowsePaint;
+
+const CATALOGUE: BrowsePaint[] = [
+  paint("citadel-a", "Citadel", "layer", "red"),
+  paint("citadel-b", "Citadel", "base", "blue"),
+  paint("vallejo-a", "Vallejo", "layer", "red"),
+  paint("vallejo-metal", "Vallejo", "metallic", "neutral", { metallic: true }),
+  paint("old-paint", "Citadel", "layer", "red", { discontinued: true }),
+];
+
+vi.mock("@/hooks/use-browse-index", () => ({
+  useBrowseIndex: () => ({ paints: CATALOGUE, loadError: false, loading: false }),
+}));
+
+import { PaintsBrowser } from "@/components/paints-browser";
+
+const FACETS = {
+  brands: ["Citadel", "Vallejo"],
+  ranges: ["Citadel Range", "Vallejo Range"],
+  types: ["base", "layer", "metallic"],
+  families: ["red", "blue", "neutral"],
+};
+
+/** Render at a given query string, the way a real visit would arrive. */
+const renderAt = (qs: string) => {
+  currentParams = new URLSearchParams(qs);
+  return render(<PaintsBrowser {...FACETS} />);
+};
+
+/** The ids currently in the grid. */
+const shownIds = () =>
+  screen
+    .getAllByRole("link")
+    .map((a) => a.getAttribute("href") ?? "")
+    .filter((h) => h.startsWith("/paints/"))
+    .map((h) => h.slice("/paints/".length).split("?")[0]);
+
+/** The query string of the most recent replaceState call. */
+const writtenQuery = () => {
+  const url = replaceState.mock.calls.at(-1)?.[2] as string | undefined;
+  return url?.includes("?") ? url.slice(url.indexOf("?") + 1) : "";
+};
+
+beforeEach(() => {
+  replaceState.mockClear();
+  vi.spyOn(window.history, "replaceState").mockImplementation(
+    replaceState as unknown as typeof window.history.replaceState,
+  );
+});
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
+
+describe("deriving the grid from the URL", () => {
+  it("shows everything live when no params are set", () => {
+    renderAt("");
+    // The discontinued paint is excluded by default.
+    expect(shownIds().sort()).toEqual([
+      "citadel-a",
+      "citadel-b",
+      "vallejo-a",
+      "vallejo-metal",
+    ]);
+  });
+
+  it("filters by brand", () => {
+    renderAt("brand=Citadel");
+    expect(shownIds().sort()).toEqual(["citadel-a", "citadel-b"]);
+  });
+
+  it("filters by type", () => {
+    renderAt("type=layer");
+    expect(shownIds().sort()).toEqual(["citadel-a", "vallejo-a"]);
+  });
+
+  it("filters by colour family", () => {
+    renderAt("family=blue");
+    expect(shownIds()).toEqual(["citadel-b"]);
+  });
+
+  it("filters by metallic finish, both ways", () => {
+    renderAt("metal=1");
+    expect(shownIds()).toEqual(["vallejo-metal"]);
+    cleanup();
+    renderAt("metal=0");
+    expect(shownIds()).not.toContain("vallejo-metal");
+  });
+
+  it("includes discontinued only when asked", () => {
+    renderAt("disc=1");
+    expect(shownIds()).toContain("old-paint");
+  });
+
+  it("combines facets with AND", () => {
+    renderAt("brand=Citadel&type=layer");
+    expect(shownIds()).toEqual(["citadel-a"]);
+  });
+
+  it("applies the search text from the URL", () => {
+    renderAt("q=vallejo-metal");
+    expect(shownIds()).toEqual(["vallejo-metal"]);
+  });
+
+  it("ignores a brand that has left the catalogue rather than emptying the grid", () => {
+    // The ghost-filter case: no checkbox can render for it, so it must not filter.
+    renderAt("brand=Gone Paints");
+    expect(shownIds().length).toBe(4);
+  });
+
+  it("drops a paint type outside the vocabulary", () => {
+    renderAt("type=nonsense");
+    expect(shownIds().length).toBe(4);
+  });
+});
+
+describe("writing the URL from the controls", () => {
+  it("adds a facet on tick", () => {
+    renderAt("");
+    fireEvent.click(screen.getByLabelText("Citadel"));
+    expect(new URLSearchParams(writtenQuery()).get("brand")).toBe("Citadel");
+  });
+
+  it("merges into an existing facet, sorted", () => {
+    renderAt("brand=Vallejo");
+    fireEvent.click(screen.getByLabelText("Citadel"));
+    expect(new URLSearchParams(writtenQuery()).get("brand")).toBe(
+      "Citadel,Vallejo",
+    );
+  });
+
+  it("removes a facet on untick, deleting the param entirely", () => {
+    renderAt("brand=Citadel");
+    fireEvent.click(screen.getByLabelText("Citadel"));
+    expect(new URLSearchParams(writtenQuery()).get("brand")).toBeNull();
+  });
+
+  it("writes the finish in the shared 1/0 vocabulary", () => {
+    renderAt("");
+    fireEvent.click(screen.getByLabelText("Metallic only"));
+    expect(new URLSearchParams(writtenQuery()).get("metal")).toBe("1");
+  });
+
+  it("preserves a paint page's params when a facet changes", () => {
+    renderAt("view=plot&match=2");
+    fireEvent.click(screen.getByLabelText("Citadel"));
+    const out = new URLSearchParams(writtenQuery());
+    expect(out.get("view")).toBe("plot");
+    expect(out.get("match")).toBe("2");
+  });
+
+  it("keeps sort through Clear all, and drops the filters", () => {
+    // The bug this pins: clearAll used to wipe the whole query string, including a
+    // sort it never counted as a filter.
+    renderAt("brand=Citadel&q=red&family=blue&sort=lightness&view=plot");
+    fireEvent.click(screen.getAllByRole("button", { name: "Clear all" })[0]);
+    const out = new URLSearchParams(writtenQuery());
+    expect(out.get("sort")).toBe("lightness");
+    expect(out.get("view")).toBe("plot");
+    expect(out.get("brand")).toBeNull();
+    expect(out.get("q")).toBeNull();
+    expect(out.get("family")).toBeNull();
+  });
+
+  it("omits the default sort rather than writing it", () => {
+    renderAt("sort=lightness");
+    fireEvent.change(screen.getByLabelText("Sort"), { target: { value: "name" } });
+    expect(new URLSearchParams(writtenQuery()).get("sort")).toBeNull();
+  });
+});
+
+describe("resync: the grid follows the params the write produced", () => {
+  it("re-renders filtered after a facet write", () => {
+    renderAt("");
+    expect(shownIds().length).toBe(4);
+
+    fireEvent.click(screen.getByLabelText("Citadel"));
+    const produced = writtenQuery();
+
+    // Stand in for Next handing back the new useSearchParams value. The point is
+    // that the grid is a function of the params, with no separate state to go
+    // stale — so re-rendering at the URL the control just wrote is enough.
+    cleanup();
+    renderAt(produced);
+    expect(shownIds().sort()).toEqual(["citadel-a", "citadel-b"]);
+  });
+});

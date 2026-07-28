@@ -2,128 +2,81 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { filterPaints, type SortKey } from "@/lib/paints/filter";
+import { filterPaints } from "@/lib/paints/filter";
+import type { BrowsePaint, PaintType } from "@/lib/paints/types";
 import {
-  PAINT_TYPES,
-  type BrowsePaint,
-  type PaintType,
-} from "@/lib/paints/types";
-import { COLOUR_FAMILIES } from "@/lib/color";
+  BROWSE_CLEARABLE,
+  FILTER_PARAMS,
+  travelQuery,
+  SORT_KEYS,
+  clearParams,
+  readBrowseParams,
+  sanitiseSharedFacets,
+  writeBrowseParams,
+  type BrowseParamState,
+  type SortKey,
+} from "@/lib/paints/filter-params";
+import {
+  computeAvailability,
+  facetOptions,
+} from "@/lib/paints/facet-availability";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { PaintCard } from "./paint-card";
-import { FacetGroup } from "./facet-group";
+import { PaintFacets } from "./paint-facets";
 
 const PAGE = 60;
 
-const SORTS: { value: SortKey; label: string }[] = [
-  { value: "name", label: "Name (A–Z)" },
-  { value: "brand", label: "Brand" },
-  { value: "lightness", label: "Lightness" },
-];
-
-function parseList(v: string | null): string[] {
-  return v ? v.split(",").filter(Boolean) : [];
-}
+/** Labels for `SORT_KEYS`, which is the validated vocabulary. */
+const SORT_LABELS: Record<SortKey, string> = {
+  name: "Name (A–Z)",
+  brand: "Brand",
+  lightness: "Lightness",
+};
 
 /** Derive the full facet lists (every present value) from the loaded dataset. */
-function computeFacets(paints: BrowsePaint[]) {
-  const brands = new Set<string>();
-  const ranges = new Set<string>();
-  const types = new Set<string>();
-  const families = new Set<string>();
-  for (const p of paints) {
-    brands.add(p.brand);
-    types.add(p.type);
-    families.add(p.family);
-    ranges.add(p.range);
-  }
-  return {
-    brands: [...brands].sort(),
-    ranges: [...ranges].sort((a, b) => a.localeCompare(b)),
-    types: PAINT_TYPES.filter((t) => types.has(t)),
-    families: COLOUR_FAMILIES.filter((f) => families.has(f)),
-  };
+interface PaintsBrowserProps {
+  /**
+   * The facet universe, from the build-time catalogue.
+   *
+   * Passed in rather than derived from the fetched index so the sidebar renders
+   * on the first paint instead of appearing once ~1MB of JSON lands — and so the
+   * option sets match the paint page's, which has always taken them as props.
+   * `computeAvailability` then narrows them once the index arrives.
+   */
+  brands: string[];
+  ranges: string[];
+  types: string[];
+  families: string[];
 }
 
-interface FacetSelection {
-  brands: Set<string>;
-  ranges: Set<string>;
-  types: Set<string>;
-  families: Set<string>;
-  metallic?: "only" | "exclude";
-  includeDiscontinued: boolean;
-}
-
-/**
- * For each facet, the values that still yield results given the *other* active
- * filters. A facet's own selection is ignored for its own list, so ticking one
- * value doesn't hide its siblings. Search text is intentionally excluded, so
- * typing never makes filter options disappear.
- */
-function computeAvailable(paints: BrowsePaint[], sel: FacetSelection) {
-  const match = (
-    p: BrowsePaint,
-    skip: "brand" | "range" | "type" | "family",
-  ) =>
-    (sel.includeDiscontinued || !p.discontinued) &&
-    (!sel.metallic ||
-      (sel.metallic === "only" ? !!p.metallic : !p.metallic)) &&
-    (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
-    (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
-    (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
-    (skip === "family" || !sel.families.size || sel.families.has(p.family));
-
-  const brands = new Set<string>();
-  const ranges = new Set<string>();
-  const types = new Set<string>();
-  const families = new Set<string>();
-  for (const p of paints) {
-    if (match(p, "brand")) brands.add(p.brand);
-    if (match(p, "range")) ranges.add(p.range);
-    if (match(p, "type")) types.add(p.type);
-    if (match(p, "family")) families.add(p.family);
-  }
-  return { brands, ranges, types, families };
-}
-
-/** Keep values that are still available, plus any already selected. */
-function keepAvailable(
-  values: string[],
-  available: Set<string>,
-  selected: string[],
-): { value: string; label: string }[] {
-  const sel = new Set(selected);
-  return values
-    .filter((v) => available.has(v) || sel.has(v))
-    .map((v) => ({ value: v, label: v }));
-}
-
-export function PaintsBrowser() {
+export function PaintsBrowser({
+  brands,
+  ranges,
+  types,
+  families,
+}: PaintsBrowserProps) {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
 
   // The dataset is fetched from the static asset once on mount.
   const { paints, loadError, loading } = useBrowseIndex();
-  const facets = useMemo(() => computeFacets(paints ?? []), [paints]);
 
-  // Filters derived from the URL (shareable + back/forward friendly).
-  const q = searchParams.get("q") ?? "";
-  const selBrands = parseList(searchParams.get("brand"));
-  const selRanges = parseList(searchParams.get("range"));
-  // Validate against the known set — the param is user-editable in the URL.
-  const selTypes = parseList(searchParams.get("type")).filter(
-    (t): t is PaintType => (PAINT_TYPES as readonly string[]).includes(t),
-  );
-  const selFamilies = parseList(searchParams.get("family"));
-  const includeDiscontinued = searchParams.get("disc") === "1";
-  const metalParam = searchParams.get("metal");
-  const metallic: "only" | "exclude" | undefined =
-    metalParam === "1" ? "only" : metalParam === "0" ? "exclude" : undefined;
-  const sortParam = searchParams.get("sort");
-  const sort: SortKey = SORTS.some((s) => s.value === sortParam)
-    ? (sortParam as SortKey)
-    : "name";
+  // Filter state is **derived** from the URL every render, never copied into
+  // state. That is what keeps Back/Forward working: this component never
+  // remounts, so a mount-effect read (the pattern the alternatives panel uses,
+  // where a paint-to-paint navigation does remount it) would leave popstate
+  // changing the URL with nothing re-reading it.
+  const filters = useMemo(() => {
+    const fromUrl = readBrowseParams(searchParams);
+    // Drop a brand or range that has left the catalogue. Without this it is an
+    // invisible active filter: no checkbox renders for it, so the grid is empty
+    // with nothing to untick.
+    return sanitiseSharedFacets(fromUrl, { brands, ranges });
+  }, [searchParams, brands, ranges]);
+
+  const { metallic, includeDiscontinued, sort } = filters;
+  const q = filters.search;
 
   // Local search text so typing stays snappy; committed to the URL (debounced).
   const [searchText, setSearchText] = useState(q);
@@ -141,10 +94,25 @@ export function PaintsBrowser() {
   }, [searchText, paints]);
   const suggestVisible = suggestOpen && searchText.trim().length >= 2;
 
+  const cancelSearchTimer = () => {
+    if (searchTimer.current) {
+      clearTimeout(searchTimer.current);
+      searchTimer.current = null;
+    }
+  };
+
   const gotoPaint = (p: BrowsePaint) => {
     setSuggestOpen(false);
     setActiveSuggestion(-1);
-    router.push(`/paints/${p.id}`);
+    cancelSearchTimer();
+    // Carry the *live* search text rather than the debounced `q`: the query that
+    // found this paint is the one worth having when you come back.
+    router.push(
+      `/paints/${p.id}${travelQuery(
+        searchParams,
+        new URLSearchParams({ [FILTER_PARAMS.q]: searchText.trim() }),
+      )}`,
+    );
   };
 
   // Keep the latest params in a ref so the debounced commit builds from current
@@ -154,13 +122,6 @@ export function PaintsBrowser() {
   useEffect(() => {
     searchParamsRef.current = searchParams;
   }, [searchParams]);
-
-  const cancelSearchTimer = () => {
-    if (searchTimer.current) {
-      clearTimeout(searchTimer.current);
-      searchTimer.current = null;
-    }
-  };
 
   const applyParams = (params: URLSearchParams) => {
     const qs = params.toString();
@@ -173,19 +134,35 @@ export function PaintsBrowser() {
     window.history.replaceState(null, "", qs ? `${pathname}?${qs}` : pathname);
   };
 
-  const commit = (mut: (params: URLSearchParams) => void) => {
-    const params = new URLSearchParams(searchParams.toString());
-    mut(params);
-    applyParams(params);
+  /**
+   * The one place filter state reaches the URL.
+   *
+   * Writing the whole state back through `writeBrowseParams` keeps `q` exactly as
+   * it already was (it comes from `filters.search`, the committed value), so this
+   * never disturbs an in-flight search debounce — while guaranteeing every facet
+   * is serialised the same way the paint page serialises it.
+   */
+  const commit = (mut: (prev: BrowseParamState) => BrowseParamState) => {
+    applyParams(writeBrowseParams(searchParams, mut(filters)));
   };
+
+  /** Toggle one value in a multi-select facet. */
+  const toggleFacet =
+    (key: "brands" | "ranges" | "types" | "families") => (value: string) =>
+      commit((prev) => {
+        const next = new Set(prev[key]);
+        if (next.has(value)) next.delete(value);
+        else next.add(value);
+        return { ...prev, [key]: next };
+      });
 
   const onSearchChange = (value: string) => {
     setSearchText(value);
     cancelSearchTimer();
     searchTimer.current = setTimeout(() => {
       const params = new URLSearchParams(searchParamsRef.current.toString());
-      if (value) params.set("q", value);
-      else params.delete("q");
+      if (value) params.set(FILTER_PARAMS.q, value);
+      else params.delete(FILTER_PARAMS.q);
       applyParams(params);
     }, 200);
   };
@@ -193,35 +170,41 @@ export function PaintsBrowser() {
   // Clear any pending debounce on unmount.
   useEffect(() => () => cancelSearchTimer(), []);
 
-  const toggleIn = (key: string, value: string) => {
-    commit((p) => {
-      const current = parseList(p.get(key));
-      const next = current.includes(value)
-        ? current.filter((v) => v !== value)
-        : [...current, value];
-      if (next.length) p.set(key, next.join(","));
-      else p.delete(key);
-    });
-  };
+  // Heal a non-canonical URL: a brand or range that has left the catalogue, an
+  // insertion-order facet list, a `disc=0` that means nothing. Without this the
+  // address bar advertises filters that aren't applied, and a re-shared link
+  // passes the dead param on. Converges in one pass — writing the state back is
+  // idempotent once the URL is canonical, so this cannot loop.
+  useEffect(() => {
+    const healed = writeBrowseParams(searchParams, filters);
+    if (healed.toString() !== searchParams.toString()) applyParams(healed);
+    // `applyParams` closes over `pathname` only, which is stable for this page.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, filters]);
 
   const clearAll = () => {
     cancelSearchTimer();
     setSearchText("");
     setSuggestOpen(false);
     setActiveSuggestion(-1);
-    window.history.replaceState(null, "", pathname);
+    // Clear the controls in front of you, preserve everything else. Notably this
+    // now keeps `sort` — which was always excluded from the active-filter count,
+    // yet was being wiped — along with any `match`/`view` carried in from a paint
+    // page and any param another feature owns.
+    applyParams(clearParams(searchParams, BROWSE_CLEARABLE));
   };
 
   const results = filterPaints(
     paints ?? [],
     {
       search: q,
-      brands: selBrands,
-      ranges: selRanges,
-      types: selTypes,
-      families: selFamilies,
+      brands: [...filters.brands],
+      ranges: [...filters.ranges],
+      types: [...filters.types] as PaintType[],
+      families: [...filters.families],
       includeDiscontinued,
-      metallic,
+      // PaintFilters wants the finish absent rather than empty.
+      metallic: metallic || undefined,
     },
     sort,
   );
@@ -236,36 +219,35 @@ export function PaintsBrowser() {
     setVisible(PAGE);
   }
 
-  // Remove options that would return nothing given the other active filters, so
-  // e.g. picking Vallejo drops Citadel-only types and ranges from the lists.
-  // Cheap (one pass over the dataset) and the selection arrays are rebuilt each
-  // render anyway, so it's computed inline rather than memoized.
-  const available = computeAvailable(paints ?? [], {
-    brands: new Set(selBrands),
-    ranges: new Set(selRanges),
-    types: new Set(selTypes),
-    families: new Set(selFamilies),
-    metallic,
-    includeDiscontinued,
-  });
-
-  const brandOptions = keepAvailable(facets.brands, available.brands, selBrands);
-  const familyOptions = keepAvailable(
-    facets.families,
-    available.families,
-    selFamilies,
+  // Which options still yield results given the *other* active filters, so e.g.
+  // picking Vallejo drops Citadel-only types and ranges. Null until the dataset
+  // lands, which prunes nothing — the sidebar renders in full from the props
+  // immediately and only narrows once it can.
+  const available = useMemo(
+    () => (paints ? computeAvailability(paints, filters) : null),
+    [paints, filters],
   );
-  const typeOptions = keepAvailable(facets.types, available.types, selTypes);
-  const rangeOptions = keepAvailable(facets.ranges, available.ranges, selRanges);
+
+  const brandOptions = facetOptions(brands, available?.brands ?? null, filters.brands);
+  const familyOptions = facetOptions(families, available?.families ?? null, filters.families);
+  const typeOptions = facetOptions(types, available?.types ?? null, filters.types);
+  const rangeOptions = facetOptions(ranges, available?.ranges ?? null, filters.ranges);
 
   const activeFilterCount =
-    selBrands.length +
-    selRanges.length +
-    selTypes.length +
-    selFamilies.length +
+    filters.brands.size +
+    filters.ranges.size +
+    filters.types.size +
+    filters.families.size +
     (includeDiscontinued ? 1 : 0) +
     (metallic ? 1 : 0) +
     (q ? 1 : 0);
+
+  /**
+   * The query every card link carries, so browse's filters follow the click. Built
+   * from the allow-list rather than the whole query string, so tracking params and
+   * other features' params don't propagate through internal navigation.
+   */
+  const outgoingQuery = travelQuery(searchParams);
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
@@ -283,76 +265,20 @@ export function PaintsBrowser() {
           </button>
         ) : null}
       </div>
-      <FacetGroup
-        title="Brand"
-        options={brandOptions}
-        selected={new Set(selBrands)}
-        onToggle={(v) => toggleIn("brand", v)}
+      <PaintFacets
+        options={{
+          brands: brandOptions,
+          ranges: rangeOptions,
+          types: typeOptions,
+          families: familyOptions,
+        }}
+        selected={filters}
+        onToggle={(key, value) => toggleFacet(key)(value)}
+        onMetallic={(value) => commit((prev) => ({ ...prev, metallic: value }))}
+        onDiscontinued={(value) =>
+          commit((prev) => ({ ...prev, includeDiscontinued: value }))
+        }
       />
-      <FacetGroup
-        title="Colour family"
-        options={familyOptions}
-        selected={new Set(selFamilies)}
-        onToggle={(v) => toggleIn("family", v)}
-      />
-      <FacetGroup
-        title="Type"
-        options={typeOptions}
-        selected={new Set(selTypes)}
-        onToggle={(v) => toggleIn("type", v)}
-      />
-      <div className="border-b border-border py-3">
-        <span className="text-sm font-semibold">Finish</span>
-        <div className="mt-2 flex flex-col gap-1">
-          {(
-            [
-              { value: "", label: "All" },
-              { value: "1", label: "Metallic only" },
-              { value: "0", label: "Non-metallic" },
-            ] as const
-          ).map((o) => (
-            <label
-              key={o.value}
-              className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-sm hover:bg-muted"
-            >
-              <input
-                type="radio"
-                name="metallic-filter"
-                className="accent-[var(--primary)]"
-                checked={(metalParam ?? "") === o.value}
-                onChange={() =>
-                  commit((p) => {
-                    if (o.value) p.set("metal", o.value);
-                    else p.delete("metal");
-                  })
-                }
-              />
-              {o.label}
-            </label>
-          ))}
-        </div>
-      </div>
-      <FacetGroup
-        title="Range"
-        options={rangeOptions}
-        selected={new Set(selRanges)}
-        onToggle={(v) => toggleIn("range", v)}
-        defaultOpen={false}
-      />
-      <label className="flex cursor-pointer items-center gap-2 py-3 text-sm">
-        <input
-          type="checkbox"
-          className="accent-[var(--primary)]"
-          checked={includeDiscontinued}
-          onChange={() =>
-            commit((p) => {
-              if (includeDiscontinued) p.delete("disc");
-              else p.set("disc", "1");
-            })
-          }
-        />
-        Include discontinued
-      </label>
     </div>
   );
 
@@ -472,16 +398,13 @@ export function PaintsBrowser() {
             id="sort"
             value={sort}
             onChange={(e) =>
-              commit((p) => {
-                if (e.target.value === "name") p.delete("sort");
-                else p.set("sort", e.target.value);
-              })
+              commit((prev) => ({ ...prev, sort: e.target.value as SortKey }))
             }
             className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            {SORTS.map((s) => (
-              <option key={s.value} value={s.value}>
-                {s.label}
+            {SORT_KEYS.map((key) => (
+              <option key={key} value={key}>
+                {SORT_LABELS[key]}
               </option>
             ))}
           </select>
@@ -551,7 +474,7 @@ export function PaintsBrowser() {
             <>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                 {results.slice(0, visible).map((p) => (
-                  <PaintCard key={p.id} paint={p} />
+                  <PaintCard key={p.id} paint={p} query={outgoingQuery} />
                 ))}
               </div>
               {visible < results.length ? (

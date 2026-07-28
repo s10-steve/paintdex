@@ -16,8 +16,22 @@ schemes, sync them across devices, and share them by link.
   metallic finish.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
-  distance — with filters to narrow the matches by brand or type. Great for
-  comparing paints across brands.
+  distance — with filters to narrow the matches by brand, product range, finish
+  type, metallic finish and whether to include discontinued paints. Those are the
+  same filters as the main database page, and they carry between the two. Great
+  for comparing paints across brands.
+- **Alternatives plot.** The same matches, arranged spatially instead of as a
+  ranked list: the paint you're on sits at the centre and every alternative is
+  placed by how it differs from it — hue shift across, lightness up. So when you
+  want something *slightly* different to the paint you have, you can see which
+  way each option moves rather than just how close it is. For greys and other
+  near-neutrals, where a hue angle carries no real information, the horizontal
+  axis switches to saturation. Marks are keyboard-navigable in ΔE order, and the
+  plot always reports what it couldn't fit. **Filters stay applied as you click
+  through** — narrow to a brand and you can explore that whole range swatch by
+  swatch, and the same filters carry between the full list and an individual
+  paint in both directions, so nothing is lost on the round trip. They live in
+  the URL, so a filtered view is a shareable link.
 - **Paint scheme visualiser.** Plan a miniature's colour scheme on
   `/visualiser`: Group your paints by element (armour, robes, lenses, etc) and
   preview every element's colours as aligned, optionally-blended vertical bars.
@@ -91,7 +105,7 @@ or updating a dependency (commit the resulting `package.json` **and**
 | `npm run dev`           | Start the dev server                                                                         |
 | `npm run build`         | Production build (statically generates every paint page)                                     |
 | `npm run lint`          | ESLint                                                                                       |
-| `npm run test`          | Unit tests (colour maths + filtering)                                                        |
+| `npm run test`          | Unit and component tests (colour maths, filtering, plot layout, URL state, schemes)          |
 | `npm run validate:data` | Validate `data/paints/*.json` against the schema                                             |
 | `npm run build:index`   | Precompute the browse index + similar-colour lists (runs automatically before `dev`/`build`) |
 | `npm run import:source` | (Re)import paint data from the upstream dataset                                              |
@@ -143,17 +157,35 @@ is left of that idea:
 ### Paint database and UI features
 
 - [ ] Add more paint brands and ranges
+- [ ] **If the catalogue grows a lot, revisit how the browse index is delivered.**
+      `public/browse-index.json` is a single file covering the whole catalogue
+      (~1MB uncompressed at 4,961 paints, well compressed on the wire) and it's
+      fetched by four views: browse, the homepage search, the visualiser's paint
+      picker and the alternatives panel. Both the download and the client-side
+      CIEDE2000 re-rank scale linearly with the catalogue, so adding brands in
+      bulk is what would make this bite.
+      **Not a current problem — Core Web Vitals are fine, and this is a note for
+      later, not a todo.** When it does matter, the options are roughly: drop
+      fields the client never reads, split the index (by brand, or a small search
+      subset plus on-demand detail), or move the parse and the ΔE pass into a Web
+      Worker so they stop touching the main thread. Each trades away some of the
+      current "one static file, no backend" simplicity, so it wants measuring
+      first. Per-page derived work is already memoized at module scope
+      (`src/lib/paints/browse-index.ts`, `lab-index.ts`) — that part is done.
 - [ ] Interactive colour wheel (à la
       [Canva's colour wheel](https://www.canva.com/colors/color-wheel/)) that
       suggests matching paints based on colours you pick. Would be useful if
       you're looking to design custom schemes with colours that work well
       together. Could also be a different way to visualise colour schemes in
-      `/visualise`
-- [ ] Can we compute the hue and luminance relationships between paints? It'd be
-      cool if `/paints` showed similar paints arranged in a grid with axes
-      representing hue and luminance. So if you're looking for something
-      slightly different to the paint you have, you can see the options in a
-      more intuitive way than just a list of similar colours.
+      `/visualise`. The LCh helpers in `src/lib/color` (`labToLch`, `hueDelta`)
+      are the reusable part of the alternatives plot for this — but note the wheel
+      wants *absolute* polar hue/chroma over the whole catalogue, not one paint's
+      ΔE neighbourhood, so it needs its own scales rather than `scatter.ts`'s.
+- [x] Hue and luminance relationships between paints — shipped as the
+      **alternatives plot** on each paint page (see Features above). Still open:
+      the same treatment for the whole catalogue on `/paints`, which needs a
+      different axis model (absolute rather than relative to one paint) and has to
+      cope with ~4,900 points instead of ~120.
 
 ### My paints feature
 

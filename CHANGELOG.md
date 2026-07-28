@@ -5,6 +5,70 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - 2026-07-28
+
+### Added
+
+- **The alternatives plot.** Every paint page can now show its matches arranged
+  in space rather than as a ranked list: the paint you're on sits at the centre,
+  and each alternative is placed by how it differs from it — hue shift across,
+  lightness up. When you want something *slightly* different to the paint in your
+  hand, that answers "which way does this one move?" instead of only "how close
+  is it?". Greys and other near-neutrals get a saturation axis instead, because
+  below a certain saturation a hue angle is noise rather than information — and
+  that covers about a quarter of the catalogue, including paints like Abaddon
+  Black and Administratum Grey.
+
+  The marks are keyboard-navigable in the same ΔE order as the list, each
+  announcing its position, so the axes aren't a visual-only channel. Where too
+  many matches would tile into an unreadable block — on a phone especially, or
+  for a paint with hundreds of near matches — the plot drops the furthest and
+  says how many it left out, and flags any marks it had to nudge apart to keep
+  them clickable. The ranked list is still the default view; the toggle sits
+  above the matches and rides along in the URL.
+
+- **Filters that follow you.** Narrow the matches to a brand and the filter stays
+  applied as you click through — swatch to swatch to swatch — so you can explore
+  one manufacturer's range by walking it. The same filters now carry between the
+  full paint list and an individual paint page **in both directions**, losing
+  nothing on the round trip: filter on `/paints`, click into a paint, keep
+  filtering there, and **Back to all paints** returns you to the list exactly as
+  you left it. Everything lives in the URL, so any filtered view is a link you
+  can share or bookmark.
+
+- **Include discontinued paints** is now available on paint pages too, not just
+  browse — useful when you're matching a paint you already own that is no longer
+  made, and it means the box you ticked on browse keeps doing something after you
+  click into a colour.
+
+### Changed
+
+- **Alternative paint cards are bigger and no longer truncate.** Names and the
+  brand · range line wrap to a second line instead of being cut off, which was
+  happening on well over a quarter of the catalogue; the swatches are larger too.
+- **One filter sidebar, used by both pages.** Browse and the paint pages had
+  drifted apart — different heading, different wording for the metallic option,
+  different groups. They now render the same component, so they can't disagree
+  again.
+- **Browse's filter sidebar appears immediately** instead of waiting for the
+  ~1MB catalogue file to download and parse.
+- **Clear all clears the filters in front of you** and nothing else: browse no
+  longer resets your sort order, and a paint page no longer discards a search or
+  colour family you arrived with and have no control to restore.
+
+### Fixed
+
+- On mobile, the filter drawer and the desktop sidebar shared one radio group and
+  one form label, so changing the finish in the drawer silently moved the hidden
+  desktop control, and the **Minimum match** label pointed at the wrong menu.
+- A brand that had been renamed or removed from the catalogue acted as an
+  invisible filter if it was still in a URL — an empty grid with no checkbox to
+  untick it. Unknown brands, ranges and filter values are now dropped on read and
+  cleaned out of the address bar.
+- Moving between paint pages re-downloaded and re-processed the whole catalogue
+  each time. It's now computed once and reused, taking roughly 20ms of blocking
+  work off every hop on a mid-range phone.
+
 ## [0.9.0] - 2026-07-26
 
 ### Added

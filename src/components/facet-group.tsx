@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
-export interface FacetOption {
-  value: string;
-  label: string;
-}
+// Declared alongside the availability maths that produces these; re-exported here
+// because every consumer imports it next to <FacetGroup>.
+export type { FacetOption } from "@/lib/paints/facet-availability";
+import type { FacetOption } from "@/lib/paints/facet-availability";
 
 interface FacetGroupProps {
   title: string;

@@ -1,5 +1,9 @@
 import { ciede2000 } from "@/lib/color";
 import type { BrowsePaint, PaintType, PaintWithLab } from "./types";
+// Re-exported so existing importers don't churn; the canonical definition lives
+// with the other URL vocabularies, since `sort` is validated on read.
+export { SORT_KEYS, DEFAULT_SORT, type SortKey } from "./filter-params";
+import type { SortKey } from "./filter-params";
 
 export interface PaintFilters {
   search?: string;
@@ -12,8 +16,6 @@ export interface PaintFilters {
   /** Restrict by metallic finish: `only` metallics, or `exclude` them. */
   metallic?: "only" | "exclude";
 }
-
-export type SortKey = "name" | "brand" | "lightness";
 
 /**
  * Split a search box's contents into lowercased words. Every token has to match
