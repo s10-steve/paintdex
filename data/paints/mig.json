@@ -2518,5 +2518,410 @@
     "hex": "#9A8B76",
     "code": "AMIG0114",
     "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-black",
+    "name": "Oilbrusher Black",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#0E0E0E",
+    "code": "AMIG3500",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-white",
+    "name": "Oilbrusher White",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#FFFFFF",
+    "code": "AMIG3501",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-yellow",
+    "name": "Oilbrusher Yellow",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#F6D347",
+    "code": "AMIG3502",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-red",
+    "name": "Oilbrusher Red",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#AF251F",
+    "code": "AMIG3503",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-dark-blue",
+    "name": "Oilbrusher Dark Blue",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#163C88",
+    "code": "AMIG3504",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-olive-green",
+    "name": "Oilbrusher Olive Green",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#60712F",
+    "code": "AMIG3505",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-field-green",
+    "name": "Oilbrusher Field Green",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#46481C",
+    "code": "AMIG3506",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-dark-green",
+    "name": "Oilbrusher Dark Green",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#303A26",
+    "code": "AMIG3507",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-dark-mud",
+    "name": "Oilbrusher Dark Mud",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#62471F",
+    "code": "AMIG3508",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-medium-grey",
+    "name": "Oilbrusher Medium Grey",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#ABA9AA",
+    "code": "AMIG3509",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-rust",
+    "name": "Oilbrusher Rust",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#742C1B",
+    "code": "AMIG3510",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-red-primer",
+    "name": "Oilbrusher Red Primer",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#A9543C",
+    "code": "AMIG3511",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-dark-brown",
+    "name": "Oilbrusher Dark Brown",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#391A19",
+    "code": "AMIG3512",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-starship-filth",
+    "name": "Oilbrusher Starship Filth",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#3F3F34",
+    "code": "AMIG3513",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-earth",
+    "name": "Oilbrusher Earth",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#815523",
+    "code": "AMIG3514",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-ochre",
+    "name": "Oilbrusher Ochre",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#BF8033",
+    "code": "AMIG3515",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-dust",
+    "name": "Oilbrusher Dust",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#BBA270",
+    "code": "AMIG3516",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-buff",
+    "name": "Oilbrusher Buff",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#CCBD87",
+    "code": "AMIG3517",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-sunny-flesh",
+    "name": "Oilbrusher Sunny Flesh",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#EDDA9C",
+    "code": "AMIG3518",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-light-flesh",
+    "name": "Oilbrusher Light Flesh",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#EEE3D2",
+    "code": "AMIG3519",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-basic-flesh",
+    "name": "Oilbrusher Basic Flesh",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#EBD9BC",
+    "code": "AMIG3520",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-yellow-bone",
+    "name": "Oilbrusher Yellow Bone",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#F7F1CA",
+    "code": "AMIG3521",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-medium-soil",
+    "name": "Oilbrusher Medium Soil",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#917F58",
+    "code": "AMIG3522",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-dusty-earth",
+    "name": "Oilbrusher Dusty Earth",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#A99C84",
+    "code": "AMIG3523",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-earth-clay",
+    "name": "Oilbrusher Earth Clay",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#5C3C23",
+    "code": "AMIG3524",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-red-tile",
+    "name": "Oilbrusher Red Tile",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#985234",
+    "code": "AMIG3525",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-space-purple",
+    "name": "Oilbrusher Space Purple",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#37243B",
+    "code": "AMIG3526",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-marine-blue",
+    "name": "Oilbrusher Marine Blue",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#31456F",
+    "code": "AMIG3527",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-sky-blue",
+    "name": "Oilbrusher Sky Blue",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#4A6D9A",
+    "code": "AMIG3528",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-mecha-light-green",
+    "name": "Oilbrusher Mecha Light Green",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#69926D",
+    "code": "AMIG3529",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-weed-green",
+    "name": "Oilbrusher Weed Green",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#60834D",
+    "code": "AMIG3530",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-mecha-dark-green",
+    "name": "Oilbrusher Mecha Dark Green",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#143631",
+    "code": "AMIG3531",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-starship-bay-sludge",
+    "name": "Oilbrusher Starship Bay Sludge",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#282117",
+    "code": "AMIG3532",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-raptor-shuttle-turquoise",
+    "name": "Oilbrusher Raptor Shuttle Turquoise",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#142D37",
+    "code": "AMIG3533",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-summer-soil",
+    "name": "Oilbrusher Summer Soil",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#9F8443",
+    "code": "AMIG3534",
+    "discontinued": false
+  },
+  {
+    "id": "mig-oilbrusher-gun-metal",
+    "name": "Oilbrusher Gun Metal",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#4E4E4E",
+    "code": "AMIG3535",
+    "discontinued": false,
+    "metallic": true
+  },
+  {
+    "id": "mig-oilbrusher-steel",
+    "name": "Oilbrusher Steel",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#666666",
+    "code": "AMIG3536",
+    "discontinued": false,
+    "metallic": true
+  },
+  {
+    "id": "mig-oilbrusher-aluminium",
+    "name": "Oilbrusher Aluminium",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#808080",
+    "code": "AMIG3537",
+    "discontinued": false,
+    "metallic": true
+  },
+  {
+    "id": "mig-oilbrusher-silver",
+    "name": "Oilbrusher Silver",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#B2B2B2",
+    "code": "AMIG3538",
+    "discontinued": false,
+    "metallic": true
+  },
+  {
+    "id": "mig-oilbrusher-gold",
+    "name": "Oilbrusher Gold",
+    "brand": "Mig",
+    "range": "Oilbrusher",
+    "type": "oil",
+    "hex": "#D8B960",
+    "code": "AMIG3539",
+    "discontinued": false,
+    "metallic": true
   }
 ]
