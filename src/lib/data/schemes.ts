@@ -40,17 +40,34 @@ export async function createScheme(
   return row;
 }
 
+/**
+ * Whether a write actually hit a row.
+ *
+ * `update`/`delete` with a `where` that matches nothing is a success in
+ * Postgres, so without asking for the affected rows back a write to a scheme
+ * deleted on another device is indistinguishable from a real save — the editor
+ * said "Saved" for the rest of the session and the scheme reappeared on the next
+ * reload. `.select("id")` is what makes "no such row (for me)" observable.
+ *
+ * Deliberately `.select("id")` and **not** `.single()`: `single()` turns zero
+ * rows into a PGRST116 *error*, which callers would report as a generic sync
+ * failure rather than the specific, actionable "this was deleted elsewhere".
+ */
+export type WriteResult = { matched: boolean };
+
 /** Update an existing scheme's data + title. */
 export async function updateScheme(
   id: string,
   data: StoredScheme,
   title: string,
-): Promise<void> {
-  const { error } = await client()
+): Promise<WriteResult> {
+  const { data: rows, error } = await client()
     .from("schemes")
     .update({ data, title })
-    .eq("id", id);
+    .eq("id", id)
+    .select("id");
   if (error) throw error;
+  return { matched: (rows?.length ?? 0) > 0 };
 }
 
 /**
@@ -59,15 +76,48 @@ export async function updateScheme(
  * stale (the visualiser autosaves the same row on a debounce), so writing it
  * back would quietly revert edits made elsewhere.
  */
-export async function renameScheme(id: string, title: string): Promise<void> {
-  const { error } = await client().from("schemes").update({ title }).eq("id", id);
+export async function renameScheme(id: string, title: string): Promise<WriteResult> {
+  const { data: rows, error } = await client()
+    .from("schemes")
+    .update({ title })
+    .eq("id", id)
+    .select("id");
   if (error) throw error;
+  return { matched: (rows?.length ?? 0) > 0 };
 }
 
-/** Delete a scheme by id. */
-export async function deleteScheme(id: string): Promise<void> {
-  const { error } = await client().from("schemes").delete().eq("id", id);
+/**
+ * Delete a scheme by id. `matched: false` means it was already gone — for a
+ * delete that's the desired end state, not a failure.
+ */
+export async function deleteScheme(id: string): Promise<WriteResult> {
+  const { data: rows, error } = await client()
+    .from("schemes")
+    .delete()
+    .eq("id", id)
+    .select("id");
   if (error) throw error;
+  return { matched: (rows?.length ?? 0) > 0 };
+}
+
+/**
+ * Whether a scheme is still readable by the current session.
+ *
+ * Used to disambiguate a `matched: false` write. Zero affected rows means
+ * "no such row" *or* "RLS no longer matches me" — and the second happens
+ * whenever the session quietly lapses to the anon key, where `auth.uid()` is
+ * null and every row of ours becomes invisible. Announcing a deletion on that
+ * basis would blank a scheme that is alive and well, so the caller confirms
+ * here first and only treats an empty, error-free answer as gone.
+ */
+export async function schemeExists(id: string): Promise<boolean> {
+  const { data, error } = await client()
+    .from("schemes")
+    .select("id")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw error;
+  return data !== null;
 }
 
 /**

@@ -106,9 +106,13 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   component and a paint-to-paint navigation remounts. Also `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
   out in real pixels, so it needs a measured width), and the visualiser's three
   state layers — `use-local-scheme`
-  (`localStorage`), `use-scheme-sync` (accounts, sign-in reconciliation,
-  autosave), `use-scheme-share` (publishing a share link), `use-scheme-preset`
-  (loads an example scheme from `?preset=<slug>`). `use-poster` holds
+  (`localStorage`), `use-scheme-sync` (accounts, reconciliation, autosave,
+  tab-focus refetch), `use-scheme-share` (publishing a share link),
+  `use-scheme-preset` (loads an example scheme from `?preset=<slug>`) and
+  `use-scheme-new` (`?new=1`, a blank scheme). `use-initial-search` snapshots the
+  query string at mount, which is what lets those three deep links agree on
+  precedence — each strips its own param, so the live URL can't be asked who else
+  was there. See "Which saved scheme is this?" below. `use-poster` holds
   the share-image state (photo, framing, anchors) in its own `localStorage` key
   — deliberately *not* in the scheme document, which has to stay portable.
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
@@ -116,7 +120,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
   shared by both paint pages, `facet-availability.ts`, the shared facet-pruning
   pass, and `lab-index.ts`, a module-scope memo attaching Lab to the browse
-  index), `scheme/` (bar maths, JSON import/export, types). Also `supabase/` (browser client +
+  index), `scheme/` (bar maths, JSON import/export, types, plus `local-store.ts`,
+  the sole owner of the visualiser's `localStorage` document and its **binding**
+  — see "Which saved scheme is this?" below — and `sync.ts`, the pure
+  reconciliation decisions `planReload`/`planSignInScheme`). Also `supabase/` (browser client +
   hand-written row types) and `data/` (per-table CRUD, e.g. `schemes.ts`) — these
   touch the network, so keep them thin and keep the logic in the pure modules.
   `supabase/server.ts` is the anon server-read client used only by the
@@ -139,9 +146,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   URL-derived state: the grid is a function of the params, and the controls write
   the params) and `paint-filters-travel.test.tsx`
   (the two fiddly halves of the filter round trip) and
-  `scheme-visualiser.test.tsx` and `scheme-preset.test.tsx`, which cover the two
-  places a bug loses user data (sign-in reconciliation; `?preset=` seeding), and
-  `home-scheme-carousel.test.tsx`. The environment is `node` by default;
+  `scheme-visualiser.test.tsx`, `scheme-preset.test.tsx` and
+  `scheme-new.test.tsx`, which cover the places a bug loses user data
+  (reconciliation, including every multi-device case; `?preset=` seeding; `?new=1`),
+  plus `local-store.test.ts` and `schemes-manager.test.tsx` (a delete has to
+  stick), and `home-scheme-carousel.test.tsx`. The environment is `node` by default;
   component tests opt into jsdom with a per-file `@vitest-environment jsdom`
   docblock, so the pure suites stay fast.
 - `src/types/gis.d.ts` — minimal typings for the Google Identity Services lib.
@@ -223,13 +232,61 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   three together if it ever changes.
 - Paint hex values are best-effort; treat data edits as data, and run
   `npm run validate:data`.
-- The visualiser has **two** deep links, both read from `window.location` in an
+- The visualiser has **three** deep links, all read from `window.location` in an
   effect (never `useSearchParams`, so the page stays static and needs no Suspense
-  boundary), and both strip their param with `history.replaceState` once handled:
+  boundary), and all strip their param with `history.replaceState` once handled:
   `?scheme=<uuid>` selects one of the signed-in user's saved rows
-  (`use-scheme-sync`), and `?preset=<slug>` loads a curated example
-  (`use-scheme-preset`). See "Example schemes" below for why the second one is
-  the more dangerous of the two.
+  (`use-scheme-sync`), `?new=1` starts a blank one (`use-scheme-new`), and
+  `?preset=<slug>` loads a curated example (`use-scheme-preset`). See "Example
+  schemes" below for why the last one is the most dangerous.
+  - **Precedence is `?scheme=` > `?new=1` > `?preset=`**, and each hook checks it
+    against `useInitialSearch()` — the query string as it arrived — not the live
+    URL. Higher-precedence hooks run first and delete their own param, so by the
+    time the next one looks, the evidence is gone: `?new=1&preset=x` loaded the
+    preset and `?new=1&scheme=y` created a stray blank row.
+  - `+ New scheme` on `/my-schemes` **must** carry `?new=1`. A bare link to
+    `/visualiser` opens whatever the editor last held — nothing in the load path
+    asks for a blank document — so the button reopened your last scheme.
+
+## Which saved scheme is this? (the binding)
+
+The visualiser's `localStorage` document (`paintdex-scheme-v1`, owned by
+`src/lib/scheme/local-store.ts`) carries a **binding**: `{ id, userId,
+syncedCanon }` — which saved row it came from, and the canonical form of what we
+last successfully wrote to it.
+
+**Identity used to be inferred from content** (`planSignInScheme` compares
+canonical JSON, and `title` is part of it), and all three multi-device bugs came
+from that one guess: a scheme renamed on another device, or deleted on another
+device, stopped matching anything saved, looked like unsaved work, and was
+inserted as a **new row**. Don't reintroduce content-matching for a document that
+has a binding — `planReload` in `scheme/sync.ts` is the decision, and it's pure
+and unit-tested.
+
+Four things hold this together, and removing any one reopens a bug:
+
+- **`syncedCanon` decides who wins**, not a timestamp (`updated_at` is the
+  server's clock, ours is not). Equal to the document ⇒ nothing unflushed ⇒ the
+  server's copy wins, which is how a remote rename lands. Different ⇒ the editor
+  holds edits that never reached Supabase (the autosave is a 1s debounce with no
+  `pagehide` flush) ⇒ keep them and let the autosave push them to the same row.
+- **A row known to be gone clears the document, not just the binding**
+  (`clearBoundScheme`). Clearing the binding alone leaves the content for the
+  unbound path to adopt — the resurrection bug, one step further along. The user
+  is told, and the most recent survivor is opened; nothing is ever re-created.
+- **Writes report whether they matched a row.** `updateScheme`/`renameScheme`/
+  `deleteScheme` end in `.select("id")` for that reason. Zero rows is ambiguous —
+  it also happens when a session lapses to the anon key and RLS stops matching —
+  so the autosave confirms with `schemeExists()` before concluding a deletion.
+- **The binding is dropped on sign-out, but only once `authLoading` is false.**
+  `user` is null during every cold load too, and clearing there would take every
+  signed-in visitor back to guessing from content. The document itself stays, so
+  signed-out editing is unchanged; the accepted trade-off is that sign out → edit
+  → sign back in adopts a new row rather than clobbering the old one.
+
+The autosave also waits for `ready`: a save that lands before the row list does
+would push a stale copy over a remote rename. Known and out of scope: two
+`/visualiser` tabs in the *same* browser still ping-pong writes to one row.
 
 ## Example schemes (the homepage carousel)
 

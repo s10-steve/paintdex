@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
+import { useInitialSearch } from "@/hooks/use-initial-search";
+import { hasNewParam } from "@/hooks/use-scheme-new";
 import { findPreset, resolvePreset, type PresetPaintData } from "@/lib/scheme/presets";
 import { schemeHasContent } from "@/lib/scheme/sync";
 import type { Scheme } from "@/lib/scheme/types";
@@ -55,6 +57,7 @@ export function useSchemePreset({
   adoptScheme: (next: Scheme) => Promise<void>;
 }): void {
   const seededRef = useRef(false);
+  const initialSearch = useInitialSearch();
   // Live handles, so the seeding effect isn't keyed on the scheme (which would
   // re-run it on every keystroke) — same trick as `schemeRef` in `useSchemeSync`.
   const schemeRef = useRef(scheme);
@@ -71,6 +74,19 @@ export function useSchemePreset({
     if (!slug) {
       // Nothing asked for; don't re-check on later renders.
       seededRef.current = true;
+      return;
+    }
+    // Three params can ask to replace the document. `?scheme=` names a specific
+    // saved row and `?new=1` asks for a blank one; both outrank an example, so
+    // an odd combination lands on one document rather than fighting over it.
+    // Read from the arrival URL: both of those hooks run first and strip their
+    // own param, so the live one no longer says who else was asking.
+    const arrived = initialSearch();
+    if (hasNewParam(arrived) || new URLSearchParams(arrived).get("scheme") !== null) {
+      seededRef.current = true;
+      const url = new URL(window.location.href);
+      url.searchParams.delete(PRESET_PARAM);
+      window.history.replaceState(null, "", url.pathname + url.search);
       return;
     }
     // Wait for the catalogue: resolving early would produce fallback hexes.

@@ -77,6 +77,9 @@ vi.mock("@/lib/data/schemes", () => ({
   listSchemes: (...args: unknown[]) => listSchemes(...(args as [])),
   createScheme: (...args: unknown[]) => createScheme(...args),
   updateScheme: (...args: unknown[]) => updateScheme(...args),
+  schemeExists: async () => true,
+  renameScheme: vi.fn(),
+  deleteScheme: vi.fn(),
   publishScheme: vi.fn(),
   unpublishScheme: vi.fn(),
 }));
@@ -146,7 +149,7 @@ beforeEach(() => {
   createScheme.mockImplementation(async (_uid: string, _data: unknown, title: string) =>
     row("new-row", title, scheme(title), "2026-01-03T00:00:00.000Z"),
   );
-  updateScheme.mockResolvedValue(undefined);
+  updateScheme.mockResolvedValue({ matched: true });
 });
 
 afterEach(() => {

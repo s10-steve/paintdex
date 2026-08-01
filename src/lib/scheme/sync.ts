@@ -4,7 +4,9 @@
  * component so it can be unit-tested (see `test/scheme.test.ts`).
  */
 import { importSchemeObject, toExportShape } from "./io";
+import type { SchemeBinding } from "./local-store";
 import type { Scheme } from "./types";
+import type { SchemeRow } from "@/lib/supabase/types";
 
 /**
  * A stable, order-independent JSON string for a scheme or a stored export
@@ -47,4 +49,68 @@ export function planSignInScheme(
     }
   });
   return alreadySaved ? "load-latest" : "adopt-local";
+}
+
+/**
+ * What to do with the editor's document when the user's saved schemes arrive —
+ * on sign-in, on a reload, and on the tab-focus refetch.
+ *
+ * This supersedes `planSignInScheme` *when there's a binding* (see
+ * `./local-store.ts`). With one, identity is known, so the answer never depends
+ * on comparing content to every saved row — which is what used to duplicate a
+ * scheme renamed on another device and resurrect one deleted on another device.
+ *
+ * Without a usable binding it defers to `planSignInScheme` unchanged. That's the
+ * signed-out case, and the guarantee it protects (work built signed out is
+ * adopted as a NEW row, never overwritten) is unaffected by any of this.
+ */
+export type ReloadPlan =
+  /** The bound row exists and we have nothing unflushed: take the server's copy. */
+  | { kind: "load-row"; row: SchemeRow }
+  /**
+   * The bound row exists but the editor holds edits that never reached the
+   * server. Keep them — the autosave will push them to the same row, so this
+   * still can't duplicate anything.
+   */
+  | { kind: "keep-local"; row: SchemeRow }
+  /**
+   * The bound row is gone (deleted on another device). `next` is the row to open
+   * instead, or null if the account has none left. Never "adopt-local": that is
+   * precisely the branch that used to undo the delete.
+   */
+  | { kind: "deleted-elsewhere"; next: SchemeRow | null }
+  /** No usable binding — `planSignInScheme`'s answer, unchanged. */
+  | { kind: "adopt-local" }
+  | { kind: "load-latest" };
+
+export function planReload({
+  rows,
+  binding,
+  local,
+  userId,
+}: {
+  /** The user's saved schemes, most-recently-updated first. */
+  rows: SchemeRow[];
+  binding: SchemeBinding | null;
+  local: Scheme;
+  userId: string;
+}): ReloadPlan {
+  // A binding from a different account (a shared browser) says nothing about
+  // this user's rows — treating its id as missing would announce a deletion
+  // that never happened.
+  if (!binding || binding.userId !== userId) {
+    return { kind: planSignInScheme(rows.map((r) => r.data), local) };
+  }
+  const row = rows.find((r) => r.id === binding.id);
+  if (!row) return { kind: "deleted-elsewhere", next: rows[0] ?? null };
+  // Nothing unflushed → the server's copy is at least as new as ours, so a
+  // rename or an edit made elsewhere lands here rather than being clobbered.
+  const clean = (() => {
+    try {
+      return canonicalScheme(local) === binding.syncedCanon;
+    } catch {
+      return false;
+    }
+  })();
+  return clean ? { kind: "load-row", row } : { kind: "keep-local", row };
 }

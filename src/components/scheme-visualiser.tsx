@@ -8,6 +8,7 @@ import { PosterStudio } from "./scheme/poster-studio";
 import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useLocalScheme } from "@/hooks/use-local-scheme";
+import { useSchemeNew } from "@/hooks/use-scheme-new";
 import { useSchemePreset } from "@/hooks/use-scheme-preset";
 import { useSchemeShare } from "@/hooks/use-scheme-share";
 import { useSchemeSync } from "@/hooks/use-scheme-sync";
@@ -18,6 +19,7 @@ import {
   type SchemeRole,
 } from "@/lib/scheme/types";
 import { moveItem } from "@/lib/scheme/bars";
+import { schemeHasContent } from "@/lib/scheme/sync";
 import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
 import { uid } from "@/lib/scheme/uid";
 /**
@@ -75,6 +77,8 @@ export function SchemeVisualiser() {
     activeRow,
     syncState,
     setSyncState,
+    notice,
+    dismissNotice,
     selectScheme,
     newScheme,
     adoptScheme,
@@ -88,6 +92,15 @@ export function SchemeVisualiser() {
     onError: () => setSyncState("error"),
   });
   const { user, configured, googleEnabled } = useAuth();
+  // `?new=1` — "+ New scheme" on /my-schemes. Same gates as the preset hook.
+  useSchemeNew({
+    setScheme,
+    mounted,
+    ready,
+    signedIn: Boolean(user),
+    newScheme,
+    hasContent: () => schemeHasContent(scheme),
+  });
   // `?preset=<slug>` — the homepage carousel's "Open in the designer" link. Gated
   // on `ready` so it can't race the sign-in reconciliation; see the hook.
   useSchemePreset({
@@ -272,6 +285,26 @@ export function SchemeVisualiser() {
                   )}
                 </span>
               </div>
+
+              {/* Something happened to this user's data on another device.
+                  Deliberately not part of the sync status above, which the next
+                  keystroke overwrites with "Saving…" a second later. */}
+              {notice && (
+                <div
+                  role="status"
+                  className="flex items-start gap-2 border-t border-border px-3 py-2 text-xs text-foreground"
+                >
+                  <span aria-hidden className="text-sm leading-none">⚠️</span>
+                  <span className="min-w-0 flex-1">{notice}</span>
+                  <button
+                    type="button"
+                    onClick={dismissNotice}
+                    className="flex-none rounded-md px-1.5 py-0.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
