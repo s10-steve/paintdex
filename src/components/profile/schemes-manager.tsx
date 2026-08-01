@@ -12,6 +12,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { AlertBanner } from "@/components/alert-banner";
 import { useAuth } from "@/components/auth/auth-provider";
 import { SignedInGate } from "@/components/profile/signed-in-gate";
 import {
@@ -86,11 +87,11 @@ function SchemesList() {
         </Link>
       </div>
 
-      {error && (
-        <p className="mb-3 text-sm text-red-600 dark:text-red-400" role="alert">
-          {error}
-        </p>
-      )}
+      {/* Every failure on this page funnels through one `error` state (the cards
+          lift theirs via `onError`), so one banner covers the lot. Pinned to the
+          viewport rather than inline: a delete that fails from a card near the
+          bottom of a long list used to report itself off-screen at the top. */}
+      {error && <AlertBanner message={error} onDismiss={() => setError(null)} />}
 
       {loading ? (
         <Panel><p className="text-sm text-muted-foreground">Loading your schemes…</p></Panel>

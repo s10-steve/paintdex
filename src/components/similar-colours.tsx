@@ -10,6 +10,7 @@ import {
 } from "@/lib/paints/scatter";
 import {
   DEFAULT_MATCH,
+  MATCH_OPTIONS,
   SIMILAR_CLEARABLE,
   clearParams,
   emptySimilarParams,
@@ -30,8 +31,13 @@ import {
   computeAvailability,
   facetOptions,
 } from "@/lib/paints/facet-availability";
+import {
+  describeSimilarFilters,
+  type ActiveFilterChip,
+} from "@/lib/paints/active-filters";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import type { Paint, PaintType, PaintWithLab } from "@/lib/paints/types";
+import { ActiveFilters } from "./active-filters";
 import { PaintFacets } from "./paint-facets";
 import { SimilarList, SimilarListSkeleton, type RenderItem } from "./similar-list";
 import { SimilarPlot } from "./similar-plot";
@@ -69,16 +75,6 @@ const NO_FAMILIES: Set<string> = new Set();
 
 const matchMetallic = (p: { metallic?: boolean }, m: MetallicFilter) =>
   m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
-
-/** Labels for the ΔE cutoffs in `MATCH_VALUES` order. */
-const MATCH_OPTIONS = [
-  { value: "1", label: "Identical only" },
-  { value: "2", label: "Near-perfect or better" },
-  { value: "5", label: "Very close or better" },
-  { value: "10", label: "Close or better" },
-  { value: "20", label: "Similar or better" },
-  { value: "all", label: "Show all" },
-] as const;
 
 export function SimilarColours({
   target,
@@ -338,6 +334,37 @@ export function SimilarColours({
         return { ...prev, [key]: next };
       });
 
+  /**
+   * The applied filters as chips, and the undo for one. Every branch reuses a
+   * writer that already exists, so the summary is a second view of the filter
+   * state and never a second way to write it.
+   */
+  const chips = describeSimilarFilters(filters);
+  const removeChip = (c: ActiveFilterChip) => {
+    switch (c.kind) {
+      case "brands":
+      case "ranges":
+      case "types":
+        toggle(c.kind)(c.value);
+        break;
+      case "metallic":
+        commit((prev) => ({ ...prev, metallic: "" }));
+        break;
+      case "discontinued":
+        commit((prev) => ({ ...prev, includeDiscontinued: false }));
+        break;
+      case "minMatch":
+        commit((prev) => ({ ...prev, minMatch: DEFAULT_MATCH }));
+        break;
+      // Browse-only, and the panel has a control for neither — `q` and `family`
+      // are carried in the URL but never applied here, so
+      // `describeSimilarFilters` emits no chip the user couldn't act on.
+      case "search":
+      case "families":
+        break;
+    }
+  };
+
   // Clears the URL too — the point of the escape hatch is that the filter stops
   // following you, which it wouldn't if the params outlived the sidebar state.
   /**
@@ -382,6 +409,8 @@ export function SimilarColours({
           </button>
         ) : null}
       </div>
+      {/* Above the groups, so what's applied is visible without scrolling. */}
+      <ActiveFilters chips={chips} onRemove={removeChip} className="pb-3" />
       <div className="border-b border-border py-3">
         <label htmlFor={`similar-match-${copy}`} className="text-sm font-semibold">
           Minimum match
@@ -486,6 +515,15 @@ export function SimilarColours({
         ) : null}
 
         <div className="min-w-0 flex-1">
+          {/* Mobile only, and only while the drawer is shut: the sidebar copy is
+              unmounted there, so the chips inside it can't do their job. */}
+          {mobileOpen ? null : (
+            <ActiveFilters
+              chips={chips}
+              onRemove={removeChip}
+              className="mb-3 md:hidden"
+            />
+          )}
           {loadError && (anyFilter || view === "plot") ? (
             <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
               Couldn’t load the paint database to{" "}

@@ -30,6 +30,7 @@ import {
   writeSimilarParams,
   type SimilarParamState,
 } from "@/lib/paints/filter-params";
+import { PAINT_TYPES } from "@/lib/paints/types";
 
 const read = (qs: string) => readSimilarParams(new URLSearchParams(qs));
 const write = (state: SimilarParamState, qs = "") =>
@@ -306,6 +307,20 @@ describe("comma-joining is safe for the real catalogue", () => {
       }
     }
     expect([...offenders]).toEqual([]);
+  });
+
+  /**
+   * Both paint pages build the Type facet as `PAINT_TYPES.filter((t) =>
+   * presentTypes.has(t))`, so a value in the enum with no paint behind it is a
+   * checkbox nobody can ever see. That's the failure mode `enamel` and `oil`
+   * would have had if the enum had been extended without the data landing —
+   * and the one a future type will have. Unreachable is not an error the app
+   * can report, so assert it here.
+   */
+  it("has at least one paint for every PAINT_TYPES value", async () => {
+    const { getAllPaints } = await import("@/lib/paints/load");
+    const present = new Set(getAllPaints().map((p) => p.type));
+    expect(PAINT_TYPES.filter((t) => !present.has(t))).toEqual([]);
   });
 
   it("round-trips every real brand and range name through the URL", () => {

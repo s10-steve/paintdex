@@ -57,6 +57,11 @@ function mapType(set, name) {
   if (s.includes("dry")) return "dry";
   if (s.includes("glaze") || n.includes("glaze")) return "glaze";
   if (s.includes("ink") || n.endsWith(" ink")) return "ink";
+  // Enamels and oils come after the finish rules above so an "Enamel Wash" is
+  // still a wash. `\boil` rather than `includes("oil")`: Scale 75's "Soil Works"
+  // range would otherwise import as 14 oils.
+  if (s.includes("enamel")) return "enamel";
+  if (/\boil/.test(s) || s.includes("oilbrusher")) return "oil";
   if (s.includes("metal")) return "metallic";
   if (s.includes("primer")) return "primer";
   if (s.includes("spray")) return "spray";
@@ -78,6 +83,8 @@ const TYPE_RANK = {
   technical: 4,
   glaze: 5,
   other: 5,
+  enamel: 5,
+  oil: 5,
   dry: 6,
   primer: 7,
   air: 8,

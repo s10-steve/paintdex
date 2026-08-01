@@ -39,22 +39,29 @@ export function SimilarList({
         <li key={item.id}>
           <Link
             href={`/paints/${item.id}${linkQuery}`}
-            className="flex h-full items-center gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-full items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span
               className="h-12 w-12 shrink-0 rounded-md border border-border"
               style={{ backgroundColor: item.hex }}
               aria-hidden="true"
             />
+            {/* The name gets the whole width beside the swatch, with the badge
+                dropped to the second row alongside `brand · range`. Sharing one
+                row with the badge left names like "Xb-518 Zashchitniy Zeleno
+                (russian Postwar Green)" about 12 characters a line, wrapping to
+                six lines against a vertically-centred pill. */}
             <span className="min-w-0 flex-1">
               <span className="block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2">
                 {item.name}
               </span>
-              <span className="mt-0.5 block text-xs text-muted-foreground [overflow-wrap:anywhere] line-clamp-2">
-                {item.brand} · {item.range}
+              <span className="mt-1 flex items-start justify-between gap-2">
+                <span className="min-w-0 text-xs text-muted-foreground [overflow-wrap:anywhere] line-clamp-2">
+                  {item.brand} · {item.range}
+                </span>
+                <MatchBadge distance={item.distance} />
               </span>
             </span>
-            <MatchBadge distance={item.distance} />
           </Link>
         </li>
       ))}
