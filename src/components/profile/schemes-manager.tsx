@@ -22,6 +22,7 @@ import {
   publishScheme,
   unpublishScheme,
 } from "@/lib/data/schemes";
+import { clearBoundScheme } from "@/lib/scheme/local-store";
 import { makeShareSlug, makeShareToken, shareUrl } from "@/lib/scheme/share";
 import type { SchemeRow } from "@/lib/supabase/types";
 
@@ -40,18 +41,20 @@ function SchemesList() {
   const [schemes, setSchemes] = useState<SchemeRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const userId = user?.id;
 
   const reload = useCallback(async () => {
+    if (!userId) return;
     setLoading(true);
     setError(null);
     try {
-      setSchemes(await listSchemes());
+      setSchemes(await listSchemes(userId));
     } catch {
       setError("Couldn't load your schemes. Please try again.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -73,8 +76,10 @@ function SchemesList() {
             ({schemes.length})
           </span>
         </h2>
+        {/* `?new=1`, not a bare link: /visualiser opens whatever the editor was
+            last holding, so without it "New scheme" reopens your last one. */}
         <Link
-          href="/visualiser"
+          href="/visualiser?new=1"
           className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
         >
           + New scheme
@@ -152,7 +157,20 @@ function SchemeCard({
     if (title === row.title) return;
     onError(null);
     try {
-      await renameScheme(row.id, title);
+      const { matched } = await renameScheme(row.id, title);
+      if (!matched) {
+        // Deleted on another device between this list loading and the rename.
+        // Note this does NOT `clearBoundScheme` the way the delete below does,
+        // and the asymmetry is deliberate: "no rows matched" also happens when a
+        // session lapses (see `hasLiveSession`), and blanking a live document on
+        // a maybe is the destructive direction. Dropping the card is reversible
+        // — a reload brings it back if it was really there — and the visualiser
+        // confirms properly before touching anything. Delete is different: the
+        // user just asked for that one.
+        onError("That scheme no longer exists — it was deleted on another device.");
+        onRemoved(row.id);
+        return;
+      }
       onPatch(row.id, { title });
     } catch {
       onError("Couldn't rename that scheme.");
@@ -185,7 +203,13 @@ function SchemeCard({
     setBusy(true);
     onError(null);
     try {
+      // A delete that matched nothing means it was already gone — for a delete
+      // that's the desired end state, so it's still a success.
       await deleteScheme(row.id);
+      // If the visualiser in this browser is holding this scheme, forget it:
+      // otherwise its localStorage copy is unaccounted for on the next visit and
+      // the sign-in path adopts it as a new row — the delete undone.
+      clearBoundScheme(row.id);
       onRemoved(row.id);
     } catch {
       onError("Couldn't delete that scheme.");

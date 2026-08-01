@@ -8,7 +8,9 @@ import {
   toExportShape,
   SCHEME_FORMAT,
 } from "@/lib/scheme/io";
-import { planSignInScheme } from "@/lib/scheme/sync";
+import { canonicalScheme, planReload, planSignInScheme } from "@/lib/scheme/sync";
+import type { SchemeBinding } from "@/lib/scheme/local-store";
+import type { SchemeRow } from "@/lib/supabase/types";
 import {
   makeShareToken,
   makeShareSlug,
@@ -364,6 +366,116 @@ describe("planSignInScheme (sign-in reconciliation)", () => {
       format: shape.format,
     };
     expect(planSignInScheme([reordered], built)).toBe("load-latest");
+  });
+});
+
+describe("planReload (reconciling a bound document)", () => {
+  const built: Scheme = {
+    title: "White Templars",
+    elements: [
+      {
+        id: "e1",
+        name: "Armour",
+        paints: [
+          { id: "p1", name: "Grey Seer", brand: "Citadel", range: "Base", hex: "#C6C6C4", role: "base" },
+        ],
+      },
+    ],
+  };
+  const edited: Scheme = { ...built, title: "White Templars (wip)" };
+
+  const asRow = (id: string, s: Scheme, title = s.title): SchemeRow =>
+    ({
+      id,
+      user_id: "u1",
+      title,
+      data: toExportShape(s),
+      is_public: false,
+      share_slug: null,
+      created_at: "2026-01-01T00:00:00.000Z",
+      updated_at: "2026-01-01T00:00:00.000Z",
+    }) as SchemeRow;
+
+  const bound = (id: string, synced: Scheme, userId = "u1"): SchemeBinding => ({
+    id,
+    userId,
+    syncedCanon: canonicalScheme(synced),
+  });
+
+  it("takes the server's copy when the editor holds nothing unflushed", () => {
+    // The rename-on-another-device case: same row, different title. It must
+    // resolve to the server's row, not to a second copy of ours.
+    const renamed = asRow("row-1", built, "Renamed on the phone");
+    const plan = planReload({
+      rows: [renamed],
+      binding: bound("row-1", built),
+      local: built,
+      userId: "u1",
+    });
+    expect(plan).toEqual({ kind: "load-row", row: renamed });
+  });
+
+  it("keeps local edits that never reached the server", () => {
+    // Autosave is debounced, so a tab closed mid-edit leaves the document ahead
+    // of the row. Taking the server's copy here would be silent data loss.
+    const plan = planReload({
+      rows: [asRow("row-1", built)],
+      binding: bound("row-1", built),
+      local: edited,
+      userId: "u1",
+    });
+    expect(plan.kind).toBe("keep-local");
+  });
+
+  it("reports a deleted row instead of re-creating it, and offers the next one", () => {
+    const other = asRow("row-2", built, "Something else");
+    const plan = planReload({
+      rows: [other],
+      binding: bound("row-1", built),
+      local: built,
+      userId: "u1",
+    });
+    // The id comes back with the plan so the caller doesn't have to re-derive it
+    // from a binding it only knows is non-null by how this branch is reached.
+    expect(plan).toEqual({ kind: "deleted-elsewhere", id: "row-1", next: other });
+  });
+
+  it("reports a deleted row with nothing to fall back to", () => {
+    const plan = planReload({
+      rows: [],
+      binding: bound("row-1", built),
+      local: built,
+      userId: "u1",
+    });
+    // Emphatically not "adopt-local": that is the branch that used to undo the
+    // delete, by inserting the local copy as a brand-new row.
+    expect(plan).toEqual({ kind: "deleted-elsewhere", id: "row-1", next: null });
+  });
+
+  it("ignores a binding belonging to another account on a shared browser", () => {
+    // u2's rows say nothing about u1's binding, so announcing a deletion would
+    // be a lie — fall back to the content path.
+    const plan = planReload({
+      rows: [asRow("row-9", { ...built, title: "u2's own scheme" })],
+      binding: bound("row-1", built, "u1"),
+      local: built,
+      userId: "u2",
+    });
+    // Not "deleted-elsewhere" — the content path's answer for unsaved local work.
+    expect(plan.kind).toBe("adopt-local");
+  });
+
+  it("defers to planSignInScheme when there is no binding", () => {
+    const rows = [asRow("row-1", built)];
+    const blank: Scheme = { title: "", elements: [] };
+    for (const local of [built, blank, { ...built, title: "Unsaved" }]) {
+      expect(planReload({ rows, binding: null, local, userId: "u1" }).kind).toBe(
+        planSignInScheme(rows.map((r) => r.data), local),
+      );
+    }
+    expect(planReload({ rows: [], binding: null, local: built, userId: "u1" }).kind).toBe(
+      "adopt-local",
+    );
   });
 });
 

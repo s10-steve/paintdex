@@ -15,11 +15,23 @@ function client() {
   return supabase;
 }
 
-/** All of the signed-in user's schemes, most recently updated first. */
-export async function listSchemes(): Promise<SchemeRow[]> {
+/**
+ * All of the given user's schemes, most recently updated first.
+ *
+ * The `user_id` filter is **not** redundant with RLS. Multiple permissive SELECT
+ * policies are OR-combined, and `schemes` has two (`supabase/schema.sql`):
+ * "select own" *and* "select public". So an unfiltered `select("*")` returns the
+ * caller's rows **plus every public scheme in the database**, including other
+ * people's — they'd show up in the picker and in `/my-schemes`, and the sync
+ * layer would reconcile against them (a stranger's row could be the one opened
+ * after a deletion). The policy is the security boundary; this is the query
+ * actually asking for what we want.
+ */
+export async function listSchemes(userId: string): Promise<SchemeRow[]> {
   const { data, error } = await client()
     .from("schemes")
     .select("*")
+    .eq("user_id", userId)
     .order("updated_at", { ascending: false });
   if (error) throw error;
   return data ?? [];
@@ -40,17 +52,34 @@ export async function createScheme(
   return row;
 }
 
+/**
+ * Whether a write actually hit a row.
+ *
+ * `update`/`delete` with a `where` that matches nothing is a success in
+ * Postgres, so without asking for the affected rows back a write to a scheme
+ * deleted on another device is indistinguishable from a real save — the editor
+ * said "Saved" for the rest of the session and the scheme reappeared on the next
+ * reload. `.select("id")` is what makes "no such row (for me)" observable.
+ *
+ * Deliberately `.select("id")` and **not** `.single()`: `single()` turns zero
+ * rows into a PGRST116 *error*, which callers would report as a generic sync
+ * failure rather than the specific, actionable "this was deleted elsewhere".
+ */
+export type WriteResult = { matched: boolean };
+
 /** Update an existing scheme's data + title. */
 export async function updateScheme(
   id: string,
   data: StoredScheme,
   title: string,
-): Promise<void> {
-  const { error } = await client()
+): Promise<WriteResult> {
+  const { data: rows, error } = await client()
     .from("schemes")
     .update({ data, title })
-    .eq("id", id);
+    .eq("id", id)
+    .select("id");
   if (error) throw error;
+  return { matched: (rows?.length ?? 0) > 0 };
 }
 
 /**
@@ -59,15 +88,49 @@ export async function updateScheme(
  * stale (the visualiser autosaves the same row on a debounce), so writing it
  * back would quietly revert edits made elsewhere.
  */
-export async function renameScheme(id: string, title: string): Promise<void> {
-  const { error } = await client().from("schemes").update({ title }).eq("id", id);
+export async function renameScheme(id: string, title: string): Promise<WriteResult> {
+  const { data: rows, error } = await client()
+    .from("schemes")
+    .update({ title })
+    .eq("id", id)
+    .select("id");
   if (error) throw error;
+  return { matched: (rows?.length ?? 0) > 0 };
 }
 
-/** Delete a scheme by id. */
-export async function deleteScheme(id: string): Promise<void> {
-  const { error } = await client().from("schemes").delete().eq("id", id);
+/**
+ * Delete a scheme by id. `matched: false` means it was already gone — for a
+ * delete that's the desired end state, not a failure.
+ */
+export async function deleteScheme(id: string): Promise<WriteResult> {
+  const { data: rows, error } = await client()
+    .from("schemes")
+    .delete()
+    .eq("id", id)
+    .select("id");
   if (error) throw error;
+  return { matched: (rows?.length ?? 0) > 0 };
+}
+
+/**
+ * Whether a scheme is still readable by the current session.
+ *
+ * Used as the *second* half of disambiguating a `matched: false` write. Note
+ * what this can and cannot tell you: it runs under the same RLS policies as the
+ * write, so a lapsed session gets an empty, error-free answer here too, exactly
+ * like a deleted row. On its own it therefore proves nothing about deletion.
+ *
+ * The caller must establish the session is good first — `hasLiveSession()` in
+ * `@/lib/supabase/session` — and only then read an empty result as "gone".
+ */
+export async function schemeExists(id: string): Promise<boolean> {
+  const { data, error } = await client()
+    .from("schemes")
+    .select("id")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw error;
+  return data !== null;
 }
 
 /**

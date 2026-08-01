@@ -8,14 +8,23 @@ import {
   type SetStateAction,
 } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
-import { createScheme, listSchemes, updateScheme } from "@/lib/data/schemes";
+import { createScheme, listSchemes, schemeExists, updateScheme } from "@/lib/data/schemes";
 import { importSchemeObject, toExportShape } from "@/lib/scheme/io";
-import { planSignInScheme } from "@/lib/scheme/sync";
+import { clearBinding, clearBoundScheme, patchLocalDoc, readLocalDoc } from "@/lib/scheme/local-store";
+import { canonicalScheme, planReload } from "@/lib/scheme/sync";
+import { hasLiveSession } from "@/lib/supabase/session";
 import { uid } from "@/lib/scheme/uid";
 import { emptyScheme, type Scheme } from "@/lib/scheme/types";
 import type { SchemeRow } from "@/lib/supabase/types";
 
 export type SyncState = "idle" | "saving" | "saved" | "error" | "limit";
+
+/** Shown when a scheme this browser was holding turns out to be gone. */
+const DELETED_NOTICE =
+  "That scheme was deleted on another device, so it hasn't been restored here.";
+
+/** How long to leave between tab-focus refetches. */
+const REFETCH_INTERVAL_MS = 10_000;
 
 /**
  * True when a Supabase error is the per-account scheme-count cap firing (the
@@ -40,6 +49,14 @@ export type SchemeSync = {
   activeRow: SchemeRow | null;
   syncState: SyncState;
   setSyncState: Dispatch<SetStateAction<SyncState>>;
+  /**
+   * A one-off message about something that happened to the user's data
+   * elsewhere (currently: a scheme deleted on another device). Deliberately not
+   * a `SyncState`: that one is overwritten by "Saving…" a second after the next
+   * keystroke, and this needs to stay until it's read.
+   */
+  notice: string | null;
+  dismissNotice: () => void;
   /** Switch the editor to one of the saved schemes. */
   selectScheme: (id: string) => void;
   /** Create a blank scheme on the account and switch to it. */
@@ -65,18 +82,32 @@ export type SchemeSync = {
  * schemes, reconciles them with whatever the editor already holds, and keeps the
  * active one autosaved.
  *
- * The reconciliation *decision* is pure and unit-tested — `planSignInScheme` in
- * `src/lib/scheme/sync.ts`. The guarantee it exists to protect: a scheme built
- * while signed out that isn't already saved is adopted as a NEW row, never
- * overwritten by a saved one. `test/scheme-visualiser.test.tsx` covers the
- * wiring here that acts on that decision.
+ * The reconciliation *decision* is pure and unit-tested — `planReload` (and the
+ * `planSignInScheme` it defers to) in `src/lib/scheme/sync.ts`. Two guarantees
+ * it exists to protect:
  *
- * Three refs keep the effects from re-firing:
- * - `schemeRef` — a live handle, so the sign-in effect can migrate the current
- *   scheme without depending on `scheme` (which would re-run it on every edit).
+ * 1. A scheme built while signed out that isn't already saved is adopted as a
+ *    NEW row, never overwritten by a saved one.
+ * 2. A scheme is **never re-created**. The local document carries a *binding* —
+ *    which row it came from, and the canonical form of what we last successfully
+ *    wrote (see `@/lib/scheme/local-store`) — so identity is a fact rather than
+ *    something inferred by comparing content. Inferring it is what used to
+ *    duplicate a scheme renamed on another device and undo a delete made on
+ *    another device: any divergence looked like "unsaved work" and was inserted
+ *    as a new row.
+ *
+ * `test/scheme-visualiser.test.tsx` pins both.
+ *
+ * Refs, and why each exists:
+ * - `schemeRef` — a live handle, so the reconcile paths can read the current
+ *   scheme without depending on `scheme` (which would re-run them on every edit).
  * - `skipSaveRef` — set just before a programmatic `setScheme`, so the debounced
- *   autosave doesn't immediately write back what was just fetched.
+ *   autosave doesn't immediately write back what was just fetched. Note the
+ *   autosave's guards run *before* the flag is consumed, so anything that leaves
+ *   the editor unbound must clear it too, or it swallows a later real save.
  * - `deepLinkedRef` — honours `?scheme=<id>` exactly once.
+ * - `reqRef` / `inflightRef` / `lastFetchRef` — ordering, mutual exclusion and
+ *   throttling for the tab-focus refetch.
  */
 export function useSchemeSync({
   scheme,
@@ -91,6 +122,7 @@ export function useSchemeSync({
   const [savedSchemes, setSavedSchemes] = useState<SchemeRow[]>([]);
   const [activeSchemeId, setActiveSchemeId] = useState<string | null>(null);
   const [syncState, setSyncState] = useState<SyncState>("idle");
+  const [notice, setNotice] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
   const deepLinkedRef = useRef(false);
@@ -99,6 +131,99 @@ export function useSchemeSync({
     schemeRef.current = scheme;
   }, [scheme]);
   const skipSaveRef = useRef(false);
+  const readyRef = useRef(false);
+  const reqRef = useRef(0);
+  const inflightRef = useRef(false);
+  const lastFetchRef = useRef(0);
+  /** Bumped by every completed save, so a refetch can tell its rows went stale. */
+  const saveSeqRef = useRef(0);
+  /** The live active id, for async work that must not act on a stale one. */
+  const activeIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    activeIdRef.current = activeSchemeId;
+  }, [activeSchemeId]);
+
+  /* ---- binding helpers ------------------------------------------------- */
+
+  /**
+   * Record which row the document belongs to, and what we last had in sync with
+   * it. `syncedCanon` is taken from the editor's scheme rather than the row's
+   * `data`, because a rename from `/my-schemes` writes the `title` column only —
+   * so a freshly-loaded row can legitimately hold a stale `data.title`, and
+   * canonicalising the column would make every load look like unsaved work.
+   */
+  const bind = (id: string, userId: string, synced: Scheme) => {
+    setActiveSchemeId(id);
+    patchLocalDoc({ binding: { id, userId, syncedCanon: canonicalScheme(synced) } });
+  };
+
+  const unbind = () => {
+    setActiveSchemeId(null);
+    // The guard above the flag's consumption means an armed flag would otherwise
+    // sit here and eat the next genuine save.
+    skipSaveRef.current = false;
+  };
+
+  const loadRow = (row: SchemeRow, userId: string) => {
+    const restored = importSchemeObject(row.data, uid);
+    restored.title = row.title;
+    skipSaveRef.current = true;
+    setScheme(restored);
+    bind(row.id, userId, restored);
+    setSyncState("idle");
+  };
+
+  /**
+   * The bound row is gone. Open the most recent survivor (or a blank scheme) and
+   * say so — never re-create it, which is exactly what used to undo the delete.
+   */
+  const openAfterDeletion = (deletedId: string, rows: SchemeRow[], userId: string) => {
+    // Clears the binding *and* the stored document: leaving the deleted scheme's
+    // content behind would let the unbound content path adopt it right back.
+    clearBoundScheme(deletedId);
+    unbind();
+    setNotice(DELETED_NOTICE);
+    setSyncState("idle");
+    if (rows[0]) loadRow(rows[0], userId);
+    else setScheme(emptyScheme());
+  };
+
+  /* ---- reconcile a fresh row list against the editor ------------------- */
+
+  const applyRows = (rows: SchemeRow[], userId: string, initial: boolean) => {
+    const plan = planReload({
+      rows,
+      binding: readLocalDoc().binding,
+      local: schemeRef.current,
+      userId,
+    });
+    setSavedSchemes(rows);
+    switch (plan.kind) {
+      case "load-row":
+        loadRow(plan.row, userId);
+        break;
+      case "keep-local":
+        // Unflushed local edits. Leave the editor alone and make sure it's bound,
+        // so the autosave pushes them to the same row — still no new row.
+        setActiveSchemeId(plan.row.id);
+        break;
+      case "deleted-elsewhere":
+        openAfterDeletion(plan.id, rows, userId);
+        break;
+      case "adopt-local":
+      case "load-latest":
+        // The unbound paths only make sense the first time: on a refetch the
+        // document is already bound, and running "adopt-local" again would
+        // insert a copy on every tab focus.
+        if (!initial) break;
+        if (plan.kind === "adopt-local") return "adopt" as const;
+        // Safe: planSignInScheme only returns "load-latest" when `rows` is
+        // non-empty (it returns "adopt-local" for an empty list).
+        loadRow(rows[0], userId);
+        break;
+    }
+    return "done" as const;
+  };
 
   // On sign-in: load the user's schemes (migrating the local one the first
   // time). On sign-out: drop server state; the localStorage path takes over
@@ -108,7 +233,7 @@ export function useSchemeSync({
     if (!mounted) return;
     if (!user) {
       setSavedSchemes([]);
-      setActiveSchemeId(null);
+      unbind();
       setSyncState("idle");
       // Signed out there's nothing to reconcile against, so the editor's scheme is
       // settled — but ONLY once the initial session check has finished. While
@@ -120,25 +245,36 @@ export function useSchemeSync({
       // destroying unsaved work that `adoptScheme` exists to protect.
       // With Supabase unconfigured, `loading` is false from the start, so this
       // still resolves immediately.
+      // The same distinction decides the binding: dropping it here whenever
+      // `user` is null would drop it on every cold load, before the session
+      // resolves, and take every signed-in visitor back to guessing identity
+      // from content. Only a settled "nobody is signed in" clears it. (The
+      // document itself stays, so signed-out editing still works; the trade-off
+      // is that sign out → edit → sign back in adopts a new row rather than
+      // clobbering the old one, which is the safe direction.)
+      if (!authLoading) clearBinding();
       setReady(!authLoading);
+      readyRef.current = !authLoading;
       return;
     }
     // A new session's schemes are about to load; hold off outside writers until
     // we know whether the local scheme is being adopted or replaced.
     setReady(false);
+    readyRef.current = false;
+    const userId = user.id;
+    const req = ++reqRef.current;
     let cancelled = false;
     (async () => {
       try {
-        const rows = await listSchemes();
-        if (cancelled) return;
-        const local = schemeRef.current;
-        // Decide what to do with the scheme currently in the editor. Crucially,
-        // if the user built something while signed out that isn't already
-        // saved, we adopt it as a NEW scheme rather than overwriting it with a
-        // saved one — otherwise that work would be silently lost on sign-in.
-        if (planSignInScheme(rows.map((r) => r.data), local) === "adopt-local") {
+        const rows = await listSchemes(userId);
+        if (cancelled || req !== reqRef.current) return;
+        lastFetchRef.current = Date.now();
+        if (applyRows(rows, userId, true) === "adopt") {
+          // Work built while signed out that isn't saved anywhere: adopt it as a
+          // NEW scheme rather than overwriting it with a saved one.
+          const local = schemeRef.current;
           const row = await createScheme(
-            user.id,
+            userId,
             toExportShape(local),
             local.title || "Untitled scheme",
           );
@@ -147,24 +283,17 @@ export function useSchemeSync({
           // make the new row the active, top-of-list saved scheme.
           skipSaveRef.current = true;
           setSavedSchemes([row, ...rows]);
-          setActiveSchemeId(row.id);
-        } else {
-          setSavedSchemes(rows);
-          // Safe: planSignInScheme only returns "load-latest" when `rows` is
-          // non-empty (it returns "adopt-local" for an empty `savedData`).
-          const first = rows[0];
-          const restored = importSchemeObject(first.data, uid);
-          restored.title = first.title;
-          skipSaveRef.current = true;
-          setScheme(restored);
-          setActiveSchemeId(first.id);
+          bind(row.id, userId, local);
         }
         setSyncState("idle");
       } catch {
         if (!cancelled) setSyncState("error");
       } finally {
         // Settled either way — a failed load must not wedge the editor shut.
-        if (!cancelled) setReady(true);
+        if (!cancelled) {
+          setReady(true);
+          readyRef.current = true;
+        }
       }
     })();
     return () => {
@@ -178,53 +307,131 @@ export function useSchemeSync({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, mounted, authLoading]);
 
+  // Pick up other devices' changes when the tab comes back to the foreground —
+  // without this, a delete or rename made on a phone only lands on the laptop
+  // after a manual reload.
+  useEffect(() => {
+    if (!mounted || !user) return;
+    const userId = user.id;
+    const onVisible = () => {
+      if (document.visibilityState !== "visible") return;
+      if (!readyRef.current || inflightRef.current) return;
+      // `visibilitychange` fires constantly on mobile, and each refetch is a
+      // select over every row.
+      if (Date.now() - lastFetchRef.current < REFETCH_INTERVAL_MS) return;
+      lastFetchRef.current = Date.now();
+      const req = ++reqRef.current;
+      const seq = saveSeqRef.current;
+      void (async () => {
+        try {
+          const rows = await listSchemes(userId);
+          // Fast tab switching can leave two of these in flight; only the newest
+          // may touch the editor.
+          if (req !== reqRef.current) return;
+          // A save that started *after* this fetch did, and landed before it
+          // came back, makes these rows older than what the server now holds —
+          // and it moved `syncedCanon` forward, so the document would look clean
+          // and the pre-save copy would quietly replace the visible edits.
+          if (seq !== saveSeqRef.current || inflightRef.current) return;
+          applyRows(rows, userId, false);
+        } catch {
+          /* a failed background refresh is not worth an error state */
+        }
+      })();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, mounted]);
+
   // Debounced autosave to the account for the active scheme. Blend is a view
   // preference and isn't part of the stored scheme, so it's excluded here.
   useEffect(() => {
     if (!mounted || !user || !activeSchemeId) return;
+    // Never write before reconciliation has decided what this document is: an
+    // early save would push a stale copy over a rename made elsewhere.
+    if (!ready) return;
     if (skipSaveRef.current) {
       skipSaveRef.current = false;
       return;
     }
+    const userId = user.id;
+    const id = activeSchemeId;
     setSyncState("saving");
     const title = scheme.title || "Untitled scheme";
+    const saved = scheme;
+    let cancelled = false;
     const timer = setTimeout(async () => {
+      inflightRef.current = true;
       try {
-        await updateScheme(activeSchemeId, toExportShape(scheme), title);
+        const { matched } = await updateScheme(id, toExportShape(saved), title);
+        if (!matched) {
+          // Either the row is gone, or this session quietly lost its identity —
+          // an anon-key request has `auth.uid() = null`, so RLS matches none of
+          // our rows and a live scheme looks exactly like a deleted one. Reading
+          // the row back can't separate those (same policies), so ask about the
+          // session first and only then treat "unreadable" as "deleted".
+          const live = await hasLiveSession();
+          const gone =
+            live &&
+            (await schemeExists(id).then(
+              (exists) => !exists,
+              () => false,
+            ));
+          // Only the destructive branch is gated: by now the user may have
+          // switched schemes or signed out, and replacing what they're looking
+          // at on the strength of a stale in-flight write is its own bug.
+          if (gone && !cancelled && activeIdRef.current === id) {
+            const rows = await listSchemes(userId).catch(() => [] as SchemeRow[]);
+            openAfterDeletion(id, rows, userId);
+            setSavedSchemes(rows);
+          } else if (!gone) {
+            setSyncState("error");
+          }
+          return;
+        }
+        saveSeqRef.current++;
         setSyncState("saved");
+        // We and the server now agree; record that, so a later reload knows the
+        // editor holds nothing unflushed and can safely take the server's copy.
+        patchLocalDoc({
+          binding: { id, userId, syncedCanon: canonicalScheme(saved) },
+        });
         // Reflect the new title and bump updated_at so the picker keeps the
         // same most-recently-updated-first order a reload would show.
         setSavedSchemes((rows) => {
           const now = new Date().toISOString();
           return rows
-            .map((r) => (r.id === activeSchemeId ? { ...r, title, updated_at: now } : r))
+            .map((r) => (r.id === id ? { ...r, title, updated_at: now } : r))
             .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1));
         });
       } catch {
         setSyncState("error");
+      } finally {
+        inflightRef.current = false;
       }
     }, 1000);
-    return () => clearTimeout(timer);
-  }, [scheme, user, activeSchemeId, mounted]);
+    return () => {
+      clearTimeout(timer);
+      // Clearing the timer only helps while it's still pending; once the write
+      // is away, `cancelled` is what stops its completion acting on an editor
+      // that has moved on. Deliberately narrow — a completed write's
+      // `syncedCanon` is still a fact worth recording.
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scheme, user, activeSchemeId, mounted, ready]);
 
   /* ---- saved-scheme picker handlers ---- */
-  const loadSchemeRow = (row: SchemeRow) => {
+  const selectScheme = (id: string) => {
+    if (id === activeSchemeId || !user) return;
+    const row = savedSchemes.find((r) => r.id === id);
+    if (!row) return;
     try {
-      const restored = importSchemeObject(row.data, uid);
-      restored.title = row.title;
-      skipSaveRef.current = true;
-      setScheme(restored);
-      setActiveSchemeId(row.id);
-      setSyncState("idle");
+      loadRow(row, user.id);
     } catch {
       setSyncState("error");
     }
-  };
-
-  const selectScheme = (id: string) => {
-    if (id === activeSchemeId) return;
-    const row = savedSchemes.find((r) => r.id === id);
-    if (row) loadSchemeRow(row);
   };
 
   /**
@@ -243,8 +450,8 @@ export function useSchemeSync({
       );
       skipSaveRef.current = true;
       setSavedSchemes((rows) => [row, ...rows]);
-      setActiveSchemeId(row.id);
       setScheme(next);
+      bind(row.id, user.id, next);
       setSyncState("idle");
     } catch (e) {
       setSyncState(isSchemeLimitError(e) ? "limit" : "error");
@@ -256,17 +463,19 @@ export function useSchemeSync({
   // Honour a `?scheme=<id>` deep link once the user's schemes are loaded, so the
   // account page's "Edit" and the viewer's "Save a copy" open the right scheme.
   // Read from window.location (client-only) to avoid a Suspense boundary.
+  //
+  // Gated on `ready` — which is what "reconciliation has finished" actually
+  // means. The old proxy for it, `savedSchemes.length > 0`, never terminated for
+  // a user with no rows (so `?scheme=` stayed in the URL), and the tab-focus
+  // refetch replaces `savedSchemes` often enough to make that matter.
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect */
-    if (!user || deepLinkedRef.current || savedSchemes.length === 0) return;
-    const wanted = new URLSearchParams(window.location.search).get("scheme");
-    if (!wanted) {
-      deepLinkedRef.current = true;
-      return;
-    }
-    const row = savedSchemes.find((r) => r.id === wanted);
-    if (row && row.id !== activeSchemeId) loadSchemeRow(row);
+    if (!user || !ready || deepLinkedRef.current) return;
     deepLinkedRef.current = true;
+    const wanted = new URLSearchParams(window.location.search).get("scheme");
+    if (!wanted) return;
+    const row = savedSchemes.find((r) => r.id === wanted);
+    if (row && row.id !== activeSchemeId) loadRow(row, user.id);
     // Drop the param so a later reload doesn't force-reselect over the user's
     // subsequent picks.
     const url = new URL(window.location.href);
@@ -274,7 +483,7 @@ export function useSchemeSync({
     window.history.replaceState(null, "", url.pathname + url.search);
     /* eslint-enable react-hooks/set-state-in-effect */
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, savedSchemes]);
+  }, [user, ready, savedSchemes]);
 
   const patchRow = (id: string, patch: Partial<SchemeRow>) =>
     setSavedSchemes((rows) => rows.map((r) => (r.id === id ? { ...r, ...patch } : r)));
@@ -285,6 +494,8 @@ export function useSchemeSync({
     activeRow: savedSchemes.find((r) => r.id === activeSchemeId) ?? null,
     syncState,
     setSyncState,
+    notice,
+    dismissNotice: () => setNotice(null),
     selectScheme,
     newScheme,
     adoptScheme,

@@ -2,11 +2,11 @@
 
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { importSchemeObject } from "@/lib/scheme/io";
+import { patchLocalDoc, readLocalDoc, SCHEME_STORE_KEY } from "@/lib/scheme/local-store";
 import { uid } from "@/lib/scheme/uid";
 import { emptyScheme, type Scheme } from "@/lib/scheme/types";
 
-/** localStorage key holding the visualiser's working scheme. */
-export const SCHEME_STORE_KEY = "paintdex-scheme-v1";
+export { SCHEME_STORE_KEY };
 
 export type LocalScheme = {
   /** The scheme being edited. */
@@ -30,6 +30,11 @@ export type LocalScheme = {
  * fallback and the source the account sync migrates from on first login. The
  * account layer lives in `useSchemeSync`, which shares this `scheme`/`setScheme`
  * pair rather than keeping a second copy.
+ *
+ * Two hooks write the stored document and they own different fields: this one
+ * owns `scheme`/`blend`, `useSchemeSync` owns `binding` (which saved row the
+ * document belongs to). Hence `patchLocalDoc` rather than a whole-payload write
+ * — see `@/lib/scheme/local-store`.
  */
 export function useLocalScheme(): LocalScheme {
   const [scheme, setScheme] = useState<Scheme>(() => emptyScheme());
@@ -42,19 +47,16 @@ export function useLocalScheme(): LocalScheme {
     /* eslint-disable react-hooks/set-state-in-effect */
     setMounted(true);
     try {
-      const raw = localStorage.getItem(SCHEME_STORE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as { scheme?: Scheme; blend?: boolean };
-        if (parsed?.scheme) {
-          // Route restored data through the same sanitiser the file-import path
-          // uses, so a corrupted shape can't reach `.map(...)` during render and
-          // white-screen the page — it throws here and we fall back to the seed.
-          const restored = importSchemeObject(parsed.scheme, uid);
-          if (typeof parsed.scheme.title === "string") restored.title = parsed.scheme.title;
-          setScheme(restored);
-        }
-        if (typeof parsed?.blend === "boolean") setBlend(parsed.blend);
+      const stored = readLocalDoc();
+      if (stored.scheme) {
+        // Route restored data through the same sanitiser the file-import path
+        // uses, so a corrupted shape can't reach `.map(...)` during render and
+        // white-screen the page — it throws here and we fall back to the seed.
+        const restored = importSchemeObject(stored.scheme, uid);
+        if (typeof stored.scheme.title === "string") restored.title = stored.scheme.title;
+        setScheme(restored);
       }
+      if (typeof stored.blend === "boolean") setBlend(stored.blend);
     } catch {
       /* ignore corrupt storage */
     }
@@ -64,11 +66,7 @@ export function useLocalScheme(): LocalScheme {
   // Autosave. Stays on when signed in, per the note above.
   useEffect(() => {
     if (!mounted) return;
-    try {
-      localStorage.setItem(SCHEME_STORE_KEY, JSON.stringify({ scheme, blend }));
-    } catch {
-      /* quota / private mode — non-fatal */
-    }
+    patchLocalDoc({ scheme, blend });
   }, [scheme, blend, mounted]);
 
   return { scheme, setScheme, blend, setBlend, mounted };

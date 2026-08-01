@@ -48,8 +48,10 @@ schemes, sync them across devices, and share them by link.
 - **Accounts (optional).** Sign in with Google to sync your saved schemes across
   devices; without an account, schemes save to your browser. A **My schemes**
   page (`/my-schemes`) manages your schemes — rename, duplicate, delete and
-  share. A placeholder **My paints** page (`/my-paints`) marks where owned-paint
-  inventories will go.
+  share. Edit on your phone and your laptop picks it up when you switch back to
+  it; rename or delete on one device and the others follow rather than ending up
+  with a second copy. A placeholder **My paints** page (`/my-paints`) marks where
+  owned-paint inventories will go.
 - **Shareable scheme links.** Publish any saved scheme to an unguessable
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
   the full paint recipe, with a rich colour preview when pasted on social sites.
