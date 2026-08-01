@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { AlertBanner } from "./alert-banner";
 import { Bar, useBarHover } from "./scheme-bars";
 import { ElementCard, type ElementHandlers } from "./scheme/element-card";
 import { PosterStudio } from "./scheme/poster-studio";
@@ -286,25 +287,6 @@ export function SchemeVisualiser() {
                 </span>
               </div>
 
-              {/* Something happened to this user's data on another device.
-                  Deliberately not part of the sync status above, which the next
-                  keystroke overwrites with "Saving…" a second later. */}
-              {notice && (
-                <div
-                  role="status"
-                  className="flex items-start gap-2 border-t border-border px-3 py-2 text-xs text-foreground"
-                >
-                  <span aria-hidden className="text-sm leading-none">⚠️</span>
-                  <span className="min-w-0 flex-1">{notice}</span>
-                  <button
-                    type="button"
-                    onClick={dismissNotice}
-                    className="flex-none rounded-md px-1.5 py-0.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  >
-                    Dismiss
-                  </button>
-                </div>
-              )}
             </div>
           )}
 
@@ -545,6 +527,19 @@ export function SchemeVisualiser() {
       </div>
 
       {studioOpen && <PosterStudio scheme={scheme} onClose={() => setStudioOpen(false)} />}
+
+      {/* Something happened to this user's data on another device. Deliberately
+          not part of the sync status, which the next keystroke overwrites with
+          "Saving…" a second later — and deliberately out here rather than inside
+          the signed-in-only "My schemes" card, which is often scrolled off.
+
+          Not while the studio is open: it's a `fixed inset-0` modal on the same
+          layer, so a later-in-DOM banner painted over it, and the modal's Tab
+          trap cycles within its own subtree — leaving Dismiss on screen with no
+          keyboard path to it. `notice` is state, so it reappears on close. */}
+      {notice && !studioOpen && (
+        <AlertBanner message={notice} tone="warning" onDismiss={dismissNotice} />
+      )}
 
       {/* Shared hover tooltip (positioned imperatively; see useBarHover). */}
       {tooltip}

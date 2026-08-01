@@ -567,6 +567,16 @@ export function layoutScatter(
  */
 export const CHROMA_ENDS: [string, string] = ["more muted", "more saturated"];
 
+/**
+ * Worded ends for the lightness axis. Index 0 is the low (bottom) end.
+ *
+ * Unlike hue, the direction here is unambiguous, so words work — but the same
+ * guard applies: the renderer only shows them when a candidate really is darker
+ * or lighter than the reference, because `fitAroundZero` pads both ends to the
+ * floor and a padded bound can describe a range containing nothing.
+ */
+export const LIGHTNESS_ENDS: [string, string] = ["darker", "lighter"];
+
 /** Unit suffix for a tick value on the x axis. */
 export const axisUnit = (axis: ScatterAxis) => (axis === "hue" ? "°" : "");
 

@@ -5,6 +5,40 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2026-08-01
+
+### Added
+
+- **The filters you have applied are now listed at the top of the filter panel.**
+  Now that filters follow you from the paint list into a paint page and back, you
+  could arrive somewhere with four of them already applied and no way to see what
+  they were — the ticked boxes could be several groups down a scrolling sidebar,
+  and on a phone they were behind a closed **Filters** drawer. Each applied filter
+  is now a chip at the top of the panel, next to **Clear all**, and clicking one
+  removes just that filter. On a phone the same list sits above the results, so
+  you can see and undo a filter without opening the drawer at all.
+
+### Changed
+
+- **The alternatives plot's vertical axis is labelled.** It now says "Lightness"
+  down the side, with a swatch of the darkest and the lightest match at each end —
+  the same treatment the horizontal axis already had. Previously the only mention
+  of what "up" meant was tucked into the caption underneath.
+- **Alternative paint cards give the name the full width.** The match badge
+  ("Very close ΔE 2.7") now sits below the name alongside the brand and range,
+  rather than beside it. Sharing a line with the badge left long names — "Xb-518
+  Zashchitniy Zeleno (russian Postwar Green)" and the like — wrapping to five or
+  six words-per-line, with a squashed badge next to them.
+
+### Fixed
+
+- **Notices about your saved schemes are no longer easy to miss.** "That scheme
+  was deleted on another device" appeared inside the **My schemes** panel, which
+  is often scrolled off the screen — so the thing that explained why your scheme
+  had changed was frequently invisible. Messages like this now appear in a box at
+  the bottom of the screen, wherever you happen to be on the page, and can be
+  dismissed. The same format is used for failures on **My schemes**.
+
 ## [0.10.1] - 2026-08-01
 
 ### Fixed

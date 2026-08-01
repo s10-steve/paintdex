@@ -20,7 +20,12 @@ import {
   computeAvailability,
   facetOptions,
 } from "@/lib/paints/facet-availability";
+import {
+  describeBrowseFilters,
+  type ActiveFilterChip,
+} from "@/lib/paints/active-filters";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
+import { ActiveFilters } from "./active-filters";
 import { PaintCard } from "./paint-card";
 import { PaintFacets } from "./paint-facets";
 
@@ -233,6 +238,42 @@ export function PaintsBrowser({
   const typeOptions = facetOptions(types, available?.types ?? null, filters.types);
   const rangeOptions = facetOptions(ranges, available?.ranges ?? null, filters.ranges);
 
+  /**
+   * Undo one chip. Every branch goes through a writer that already exists, so
+   * the summary is a second *view* of the filter state, never a second way to
+   * write it.
+   */
+  const chips = describeBrowseFilters(filters);
+  const removeChip = (c: ActiveFilterChip) => {
+    switch (c.kind) {
+      case "brands":
+      case "ranges":
+      case "types":
+      case "families":
+        toggleFacet(c.kind)(c.value);
+        break;
+      case "metallic":
+        commit((prev) => ({ ...prev, metallic: "" }));
+        break;
+      case "discontinued":
+        commit((prev) => ({ ...prev, includeDiscontinued: false }));
+        break;
+      case "search":
+        // Same three steps `clearAll` takes: the input is uncontrolled by the
+        // URL between debounces, so dropping `q` alone would leave the typed
+        // text sitting in the box and the pending timer about to put it back.
+        cancelSearchTimer();
+        setSearchText("");
+        setSuggestOpen(false);
+        commit((prev) => ({ ...prev, search: "" }));
+        break;
+      // The panel's ΔE cutoff has no control on this page, so it can't be a chip
+      // here. `describeBrowseFilters` never emits one.
+      case "minMatch":
+        break;
+    }
+  };
+
   const activeFilterCount =
     filters.brands.size +
     filters.ranges.size +
@@ -265,6 +306,9 @@ export function PaintsBrowser({
           </button>
         ) : null}
       </div>
+      {/* Above the groups, so what's applied is visible without scrolling past
+          a few hundred brand and range checkboxes to find the ticks. */}
+      <ActiveFilters chips={chips} onRemove={removeChip} className="pb-3" />
       <PaintFacets
         options={{
           brands: brandOptions,
@@ -425,6 +469,21 @@ export function PaintsBrowser({
         <aside className="hidden w-60 shrink-0 md:block">{sidebar}</aside>
 
         <div className="min-w-0 flex-1">
+          {/* Mobile only: the sidebar is behind a closed drawer there, so the
+              chips inside it can't do their job. The desktop copy lives in the
+              sidebar, next to the controls they undo.
+
+              Suppressed while the drawer is open, which renders its own copy of
+              the sidebar — the drawer is a plain overlay with no `aria-modal`, so
+              both copies stay in the accessibility tree and Tab order, giving two
+              identical "Remove filter: X" buttons for every chip. */}
+          {mobileFiltersOpen ? null : (
+            <ActiveFilters
+              chips={chips}
+              onRemove={removeChip}
+              className="mb-3 md:hidden"
+            />
+          )}
           <p className="mb-3 text-sm text-muted-foreground" aria-live="polite">
             {loading
               ? "Loading paints…"

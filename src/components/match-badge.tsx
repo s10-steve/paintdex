@@ -14,7 +14,12 @@ export function MatchBadge({ distance }: { distance: number }) {
           : "bg-muted text-muted-foreground";
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${tone}`}
+      // `shrink-0 whitespace-nowrap`: the badge sits in flex rows next to paint
+      // names and `brand · range`, both of which run long. Without these the
+      // badge is the thing that gives way, and its two children (the label and
+      // the ΔE figure) wrap independently — a squashed two-line pill next to a
+      // clamped name, which is what made the alternatives cards look broken.
+      className={`inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ${tone}`}
       title={`ΔE ${distance.toFixed(1)}`}
     >
       {label}

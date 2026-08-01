@@ -84,6 +84,26 @@ export type MatchValue = (typeof MATCH_VALUES)[number];
 /** Looser matches aren't much use, so the panel opens at "Close or better". */
 export const DEFAULT_MATCH: MatchValue = "10";
 
+/**
+ * The wording for each cutoff, in the order the select offers them.
+ *
+ * Here rather than in the panel because the active-filter chips need the same
+ * words: a chip reading "Match: 2" would make the user translate a ΔE bound they
+ * only ever chose by name.
+ */
+export const MATCH_OPTIONS: readonly { value: MatchValue; label: string }[] = [
+  { value: "1", label: "Identical only" },
+  { value: "2", label: "Near-perfect or better" },
+  { value: "5", label: "Very close or better" },
+  { value: "10", label: "Close or better" },
+  { value: "20", label: "Similar or better" },
+  { value: "all", label: "Show all" },
+];
+
+/** What a `MatchValue` reads as. Falls back to the raw value if one is ever added. */
+export const matchOptionLabel = (v: MatchValue): string =>
+  MATCH_OPTIONS.find((o) => o.value === v)?.label ?? v;
+
 /** The numeric cutoff a `MatchValue` means. `"all"` is unbounded. */
 export const matchCutoff = (v: string): number =>
   v === "all" ? Infinity : Number(v);

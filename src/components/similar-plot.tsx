@@ -5,6 +5,7 @@ import Link from "next/link";
 import { matchLabel } from "@/lib/paints/filter";
 import {
   CHROMA_ENDS,
+  LIGHTNESS_ENDS,
   axisUnit,
   describePoint,
   layoutScatter,
@@ -61,6 +62,17 @@ const sizeFor = (measured: number) => {
     gutterBottom: narrow ? 52 : 44,
   };
 };
+
+/**
+ * The y-axis label column's width and its gap to the plot.
+ *
+ * Real numbers rather than Tailwind classes because the x-axis caption has to
+ * indent by exactly their sum to line up with the plot. Hand-summing them into
+ * an `ml-[26px]` made changing either class silently misalign the caption — the
+ * same trap `layout.inset` and `PosterLayout.rowHeight` exist to avoid.
+ */
+const Y_LABEL_W = 20;
+const Y_LABEL_GAP = 6;
 
 const fmtSigned = (n: number, unit: string) =>
   `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(Math.round(n))}${unit}`;
@@ -127,17 +139,26 @@ export function SimilarPlot({
   // than `layout.x.max`. The domain is not the data: `fitAroundZero` pads both ends
   // to the floor when candidates are tightly clustered, so a padded bound describes
   // a range that may contain no candidates at all.
-  const { lowEnd, highEnd, spread } = useMemo(() => {
-    if (!points.length) return { lowEnd: null, highEnd: null, spread: 0 };
+  //
+  // The lightness axis gets the same treatment for the same reasons: `darkEnd`
+  // and `lightEnd` come from the candidates, never from `layout.y`.
+  const { lowEnd, highEnd, spread, darkEnd, lightEnd } = useMemo(() => {
+    if (!points.length) {
+      return { lowEnd: null, highEnd: null, spread: 0, darkEnd: null, lightEnd: null };
+    }
     let lo = points[0];
     let hi = points[0];
+    let dark = points[0];
+    let light = points[0];
     let max = 0;
     for (const p of points) {
       if (p.ax < lo.ax) lo = p;
       if (p.ax > hi.ax) hi = p;
+      if (p.dl < dark.dl) dark = p;
+      if (p.dl > light.dl) light = p;
       max = Math.max(max, Math.abs(p.ax));
     }
-    return { lowEnd: lo, highEnd: hi, spread: max };
+    return { lowEnd: lo, highEnd: hi, spread: max, darkEnd: dark, lightEnd: light };
   }, [points]);
 
   const unit = axisUnit(axis);
@@ -192,189 +213,252 @@ export function SimilarPlot({
       ) : null}
 
       <figure className="m-0">
-        <div ref={boxRef} className="relative w-full">
-          {layout ? (
-            <div
-              className="relative mx-auto"
-              style={{ width: layout.width, height: layout.height }}
-            >
-              {/* Chrome only: frame, gridlines, ticks, tethers. The marks are real
-                  HTML anchors in the overlay below, so this carries no semantics. */}
-              <svg
-                width={layout.width}
-                height={layout.height}
-                aria-hidden="true"
-                className="absolute inset-0 overflow-visible"
+        {/* The y-axis label is a sibling of the measured box, never a wrapper:
+            `boxRef` must keep measuring the plot column alone, or `sizeFor`
+            would size the plot to a width that includes this strip and the
+            `overflow-visible` plot would push the page into sideways scroll. */}
+        <div className="flex items-stretch" style={{ gap: Y_LABEL_GAP }}>
+          <div
+            className="flex flex-none flex-col items-center justify-between py-1 text-xs text-muted-foreground"
+            style={{ width: Y_LABEL_W }}
+          >
+            {/* End words and swatches only once there are candidates to describe:
+                with everything filtered out there is no darkest or lightest, and
+                bare ▲/▼ beside an empty plot label nothing. */}
+            {points.length ? (
+              <span className="flex flex-col items-center gap-1">
+                {lightEnd ? (
+                  <span
+                    className="h-3 w-3 rounded-sm border border-border"
+                    style={{ backgroundColor: lightEnd.hex }}
+                    aria-hidden="true"
+                  />
+                ) : null}
+                {/* Same guard as the chroma ends: only claim "lighter" when a
+                    candidate actually is. The word runs vertically; the fallback
+                    arrow does not, or it would be rotated onto its side. */}
+                {lightEnd && lightEnd.dl > 0 ? (
+                  <span className="[writing-mode:vertical-rl] rotate-180">
+                    {LIGHTNESS_ENDS[1]}
+                  </span>
+                ) : (
+                  <span>▲</span>
+                )}
+              </span>
+            ) : null}
+            <span className="[writing-mode:vertical-rl] rotate-180 font-medium">
+              Lightness
+            </span>
+            {points.length ? (
+              <span className="flex flex-col items-center gap-1">
+                {darkEnd && darkEnd.dl < 0 ? (
+                  <span className="[writing-mode:vertical-rl] rotate-180">
+                    {LIGHTNESS_ENDS[0]}
+                  </span>
+                ) : (
+                  <span>▼</span>
+                )}
+                {darkEnd ? (
+                  <span
+                    className="h-3 w-3 rounded-sm border border-border"
+                    style={{ backgroundColor: darkEnd.hex }}
+                    aria-hidden="true"
+                  />
+                ) : null}
+              </span>
+            ) : null}
+          </div>
+          <div ref={boxRef} className="relative min-w-0 flex-1">
+            {layout ? (
+              <div
+                className="relative mx-auto"
+                style={{ width: layout.width, height: layout.height }}
               >
-                <rect
-                  x={layout.plot.x}
-                  y={layout.plot.y}
-                  width={layout.plot.width}
-                  height={layout.plot.height}
-                  rx={8}
-                  className="fill-card stroke-border"
-                />
+                {/* Chrome only: frame, gridlines, ticks, tethers. The marks are real
+                    HTML anchors in the overlay below, so this carries no semantics. */}
+                <svg
+                  width={layout.width}
+                  height={layout.height}
+                  aria-hidden="true"
+                  className="absolute inset-0 overflow-visible"
+                >
+                  <rect
+                    x={layout.plot.x}
+                    y={layout.plot.y}
+                    width={layout.plot.width}
+                    height={layout.plot.height}
+                    rx={8}
+                    className="fill-card stroke-border"
+                  />
 
-                {layout.x.ticks.map((t) => {
-                  const x =
-                    layout.plot.x +
-                    layout.inset +
-                    ((t - layout.x.min) / (layout.x.max - layout.x.min || 1)) *
-                      (layout.plot.width - 2 * layout.inset);
-                  return (
-                    <g key={`x${t}`}>
+                  {layout.x.ticks.map((t) => {
+                    const x =
+                      layout.plot.x +
+                      layout.inset +
+                      ((t - layout.x.min) / (layout.x.max - layout.x.min || 1)) *
+                        (layout.plot.width - 2 * layout.inset);
+                    return (
+                      <g key={`x${t}`}>
+                        <line
+                          x1={x}
+                          x2={x}
+                          y1={layout.plot.y}
+                          y2={layout.plot.y + layout.plot.height}
+                          className="stroke-border"
+                          strokeDasharray={t === 0 ? undefined : "2 4"}
+                          strokeOpacity={t === 0 ? 0.9 : 0.5}
+                        />
+                        <text
+                          x={x}
+                          y={layout.plot.y + layout.plot.height + 14}
+                          textAnchor="middle"
+                          className="fill-[var(--muted-foreground)] text-[10px]"
+                        >
+                          {fmtSigned(t, unit)}
+                        </text>
+                      </g>
+                    );
+                  })}
+
+                  {layout.y.ticks.map((t) => {
+                    const y =
+                      layout.plot.y +
+                      layout.inset +
+                      (1 -
+                        (t - layout.y.min) / (layout.y.max - layout.y.min || 1)) *
+                        (layout.plot.height - 2 * layout.inset);
+                    return (
+                      <g key={`y${t}`}>
+                        <line
+                          x1={layout.plot.x}
+                          x2={layout.plot.x + layout.plot.width}
+                          y1={y}
+                          y2={y}
+                          className="stroke-border"
+                          strokeDasharray={t === 0 ? undefined : "2 4"}
+                          strokeOpacity={t === 0 ? 0.9 : 0.5}
+                        />
+                        <text
+                          x={layout.plot.x - 6}
+                          y={y + 3}
+                          textAnchor="end"
+                          className="fill-[var(--muted-foreground)] text-[10px]"
+                        >
+                          {fmtSigned(t, "")}
+                        </text>
+                      </g>
+                    );
+                  })}
+
+                  {/* Tethers for marks the packer had to nudge, so a displaced
+                      swatch still points at where it really belongs. */}
+                  {points.map((p) =>
+                    p.displaced ? (
                       <line
-                        x1={x}
-                        x2={x}
-                        y1={layout.plot.y}
-                        y2={layout.plot.y + layout.plot.height}
+                        key={`t${p.id}`}
+                        x1={p.trueX}
+                        y1={p.trueY}
+                        x2={p.x}
+                        y2={p.y}
                         className="stroke-border"
-                        strokeDasharray={t === 0 ? undefined : "2 4"}
-                        strokeOpacity={t === 0 ? 0.9 : 0.5}
+                        strokeOpacity={0.7}
                       />
-                      <text
-                        x={x}
-                        y={layout.plot.y + layout.plot.height + 14}
-                        textAnchor="middle"
-                        className="fill-[var(--muted-foreground)] text-[10px]"
-                      >
-                        {fmtSigned(t, unit)}
-                      </text>
-                    </g>
-                  );
-                })}
+                    ) : null,
+                  )}
 
-                {layout.y.ticks.map((t) => {
-                  const y =
-                    layout.plot.y +
-                    layout.inset +
-                    (1 -
-                      (t - layout.y.min) / (layout.y.max - layout.y.min || 1)) *
-                      (layout.plot.height - 2 * layout.inset);
-                  return (
-                    <g key={`y${t}`}>
-                      <line
-                        x1={layout.plot.x}
-                        x2={layout.plot.x + layout.plot.width}
-                        y1={y}
-                        y2={y}
-                        className="stroke-border"
-                        strokeDasharray={t === 0 ? undefined : "2 4"}
-                        strokeOpacity={t === 0 ? 0.9 : 0.5}
-                      />
-                      <text
-                        x={layout.plot.x - 6}
-                        y={y + 3}
-                        textAnchor="end"
-                        className="fill-[var(--muted-foreground)] text-[10px]"
-                      >
-                        {fmtSigned(t, "")}
-                      </text>
-                    </g>
-                  );
-                })}
-
-                {/* Tethers for marks the packer had to nudge, so a displaced
-                    swatch still points at where it really belongs. */}
-                {points.map((p) =>
-                  p.displaced ? (
-                    <line
-                      key={`t${p.id}`}
-                      x1={p.trueX}
-                      y1={p.trueY}
-                      x2={p.x}
-                      y2={p.y}
-                      className="stroke-border"
+                  {/* The reference paint. Not a link — you're already on its page. */}
+                  <g>
+                    <circle
+                      cx={layout.target.x}
+                      cy={layout.target.y}
+                      r={layout.markR + TARGET_RING}
+                      className="fill-none stroke-[var(--foreground)]"
+                      strokeOpacity={0.45}
+                      strokeDasharray="3 3"
+                    />
+                    <rect
+                      x={layout.target.x - layout.markR - 2}
+                      y={layout.target.y - layout.markR - 2}
+                      width={(layout.markR + 2) * 2}
+                      height={(layout.markR + 2) * 2}
+                      rx={4}
+                      fill={targetHex}
+                      className="stroke-[var(--foreground)]"
                       strokeOpacity={0.7}
                     />
-                  ) : null,
-                )}
+                  </g>
+                </svg>
 
-                {/* The reference paint. Not a link — you're already on its page. */}
-                <g>
-                  <circle
-                    cx={layout.target.x}
-                    cy={layout.target.y}
-                    r={layout.markR + TARGET_RING}
-                    className="fill-none stroke-[var(--foreground)]"
-                    strokeOpacity={0.45}
-                    strokeDasharray="3 3"
-                  />
-                  <rect
-                    x={layout.target.x - layout.markR - 2}
-                    y={layout.target.y - layout.markR - 2}
-                    width={(layout.markR + 2) * 2}
-                    height={(layout.markR + 2) * 2}
-                    rx={4}
-                    fill={targetHex}
-                    className="stroke-[var(--foreground)]"
-                    strokeOpacity={0.7}
-                  />
-                </g>
-              </svg>
+                {/* Marks. HTML anchors rather than <a> inside <svg>: SVGAElement
+                    gives up real focus rings, border-radius, and Tailwind classes
+                    for nothing in return.
 
-              {/* Marks. HTML anchors rather than <a> inside <svg>: SVGAElement
-                  gives up real focus rings, border-radius, and Tailwind classes
-                  for nothing in return.
-
-                  DOM order is the ΔE ranking, so reading order, link order and
-                  keyboard order all agree with the list view. Closest-on-top is
-                  done with z-index instead — reversing the DOM to paint it would
-                  read the ranking out backwards to a screen reader. */}
-              <div
-                className="absolute inset-0"
-                onKeyDown={onKeyDown}
-                onMouseLeave={() => setHovered(null)}
-                role="group"
-                aria-label={`${points.length} alternatives to ${targetName}, closest first`}
-              >
-                {points.map((p, i) => (
-                  <Link
-                    key={p.id}
-                    ref={(el) => {
-                      markRefs.current[i] = el;
-                    }}
-                    href={`/paints/${p.id}${linkQuery}`}
-                    // Load-bearing: App Router prefetches static routes on
-                    // viewport intersection, so leaving this on would fire ~120
-                    // RSC requests the moment the plot scrolls into view.
-                    prefetch={false}
-                    tabIndex={i === activeIndex ? 0 : -1}
-                    aria-label={`${p.name}, ${p.brand}, ${p.range}. ${matchLabel(
-                      p.distance,
-                    )}, ΔE ${p.distance.toFixed(1)}. ${describePoint(p, axis)}.`}
-                    onFocus={() => {
-                      setActive(i);
-                      setHovered(i);
-                    }}
-                    onBlur={() => setHovered(null)}
-                    onMouseEnter={() => setHovered(i)}
-                    className={`absolute rounded-md border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                      p.hueUncertain
-                        ? "border-dashed border-[var(--foreground)]/60"
-                        : "border-border"
-                    } ${hovered === i ? "ring-2 ring-ring" : ""}`}
-                    style={{
-                      left: p.x - layout.markR,
-                      top: p.y - layout.markR,
-                      width: layout.markR * 2,
-                      height: layout.markR * 2,
-                      backgroundColor: p.hex,
-                      // Closest match highest, and whatever is hovered above all.
-                      zIndex: hovered === i ? points.length + 1 : points.length - i,
-                    }}
-                  />
-                ))}
+                    DOM order is the ΔE ranking, so reading order, link order and
+                    keyboard order all agree with the list view. Closest-on-top is
+                    done with z-index instead — reversing the DOM to paint it would
+                    read the ranking out backwards to a screen reader. */}
+                <div
+                  className="absolute inset-0"
+                  onKeyDown={onKeyDown}
+                  onMouseLeave={() => setHovered(null)}
+                  role="group"
+                  aria-label={`${points.length} alternatives to ${targetName}, closest first`}
+                >
+                  {points.map((p, i) => (
+                    <Link
+                      key={p.id}
+                      ref={(el) => {
+                        markRefs.current[i] = el;
+                      }}
+                      href={`/paints/${p.id}${linkQuery}`}
+                      // Load-bearing: App Router prefetches static routes on
+                      // viewport intersection, so leaving this on would fire ~120
+                      // RSC requests the moment the plot scrolls into view.
+                      prefetch={false}
+                      tabIndex={i === activeIndex ? 0 : -1}
+                      aria-label={`${p.name}, ${p.brand}, ${p.range}. ${matchLabel(
+                        p.distance,
+                      )}, ΔE ${p.distance.toFixed(1)}. ${describePoint(p, axis)}.`}
+                      onFocus={() => {
+                        setActive(i);
+                        setHovered(i);
+                      }}
+                      onBlur={() => setHovered(null)}
+                      onMouseEnter={() => setHovered(i)}
+                      className={`absolute rounded-md border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        p.hueUncertain
+                          ? "border-dashed border-[var(--foreground)]/60"
+                          : "border-border"
+                      } ${hovered === i ? "ring-2 ring-ring" : ""}`}
+                      style={{
+                        left: p.x - layout.markR,
+                        top: p.y - layout.markR,
+                        width: layout.markR * 2,
+                        height: layout.markR * 2,
+                        backgroundColor: p.hex,
+                        // Closest match highest, and whatever is hovered above all.
+                        zIndex: hovered === i ? points.length + 1 : points.length - i,
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ) : (
-            // Pre-measurement: reserve the taller of the two heights so the first
-            // real paint doesn't shift the page.
-            <div className="h-[440px] w-full animate-pulse rounded-lg border border-border bg-muted" />
-          )}
+            ) : (
+              // Pre-measurement: reserve the taller of the two heights so the first
+              // real paint doesn't shift the page.
+              <div className="h-[440px] w-full animate-pulse rounded-lg border border-border bg-muted" />
+            )}
+          </div>
         </div>
 
-        <div className="mt-2 flex items-center justify-between gap-3 text-xs text-muted-foreground">
+        {/* The x-axis label sits below the whole row, indented by the y strip's
+            width plus the gap so it spans the plot and not the label column —
+            which also keeps the y strip's own end swatches level with the plot
+            rather than with this row. */}
+        <div
+          className="mt-2 flex items-center justify-between gap-3 text-xs text-muted-foreground"
+          style={{ marginLeft: Y_LABEL_W + Y_LABEL_GAP }}
+        >
           <span className="flex items-center gap-1.5">
             {lowEnd ? (
               <span
@@ -392,7 +476,7 @@ export function SimilarPlot({
           </span>
           <span className="font-medium">
             {axisTitle}
-            {unit ? ` (${unit})` : ""} · vertical: lightness
+            {unit ? ` (${unit})` : ""}
           </span>
           <span className="flex items-center gap-1.5">
             {axis === "chroma" && highEnd && highEnd.ax > 0 ? CHROMA_ENDS[1] : "▶"}
@@ -410,7 +494,10 @@ export function SimilarPlot({
             the plot, and hover, focus and touch all drive the same thing. */}
         <div className="mt-3 min-h-[76px] rounded-lg border border-border bg-card p-3">
           {detail ? (
-            <div className="flex items-center gap-3">
+            // Same shape as a list card: the name takes the full width beside
+            // the swatch and the badge drops to the row below, so a long name
+            // can't squeeze the pill.
+            <div className="flex items-start gap-3">
               <span
                 className="h-10 w-10 shrink-0 rounded-md border border-border"
                 style={{ backgroundColor: detail.hex }}
@@ -420,14 +507,16 @@ export function SimilarPlot({
                 <span className="block text-sm font-medium [overflow-wrap:anywhere]">
                   {detail.name}
                 </span>
-                <span className="block text-xs text-muted-foreground [overflow-wrap:anywhere]">
-                  {detail.brand} · {detail.range}
+                <span className="mt-1 flex items-start justify-between gap-2">
+                  <span className="min-w-0 text-xs text-muted-foreground [overflow-wrap:anywhere]">
+                    {detail.brand} · {detail.range}
+                  </span>
+                  <MatchBadge distance={detail.distance} />
                 </span>
                 <span className="mt-0.5 block text-xs text-muted-foreground">
                   {describePoint(detail, axis)}
                 </span>
               </span>
-              <MatchBadge distance={detail.distance} />
             </div>
           ) : (
             <p className="text-sm text-muted-foreground">

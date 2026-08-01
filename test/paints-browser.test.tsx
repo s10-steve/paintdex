@@ -238,3 +238,104 @@ describe("resync: the grid follows the params the write produced", () => {
     expect(shownIds().sort()).toEqual(["citadel-a", "citadel-b"]);
   });
 });
+
+/**
+ * The applied-filter summary. Its whole reason to exist is that the ticks in the
+ * sidebar can be scrolled or drawered out of sight, so the two things worth
+ * pinning are that a chip appears for what's applied and that removing one
+ * writes the same URL unticking the box would.
+ */
+describe("the active-filter chips", () => {
+  /** Chip buttons, identified by the label the component gives them. */
+  const chipLabels = () =>
+    screen
+      .getAllByRole("button", { name: /^Remove filter: / })
+      .map((b) => (b.getAttribute("aria-label") ?? "").replace("Remove filter: ", ""));
+
+  it("shows nothing when nothing is filtered", () => {
+    renderAt("");
+    expect(screen.queryAllByRole("button", { name: /^Remove filter: / })).toEqual([]);
+  });
+
+  it("summarises every applied filter, and not sort", () => {
+    renderAt("brand=Citadel&type=layer&family=red&metal=1&disc=1&q=ork&sort=lightness");
+    // Both sidebar copies are in the DOM at once (desktop `hidden md:block`) plus
+    // the mobile row above the grid, so each chip appears more than once — the
+    // set is what matters, not the count.
+    expect(new Set(chipLabels())).toEqual(
+      new Set([
+        "Citadel",
+        "Red",
+        "Layer",
+        "Metallic only",
+        "Including discontinued",
+        "Search: ork",
+      ]),
+    );
+  });
+
+  it("removing a facet chip writes the same URL as unticking the box", () => {
+    renderAt("brand=Citadel,Vallejo");
+    fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: Citadel" })[0]);
+    expect(new URLSearchParams(writtenQuery()).get("brand")).toBe("Vallejo");
+  });
+
+  it("removing the finish chip clears only the finish", () => {
+    renderAt("brand=Citadel&metal=1");
+    fireEvent.click(
+      screen.getAllByRole("button", { name: "Remove filter: Metallic only" })[0],
+    );
+    const out = new URLSearchParams(writtenQuery());
+    expect(out.get("metal")).toBeNull();
+    expect(out.get("brand")).toBe("Citadel");
+  });
+
+  it("removing the search chip empties the box as well as the param", () => {
+    // Dropping `q` alone would leave the typed text in the input with a pending
+    // debounce about to put it straight back.
+    renderAt("q=ork");
+    const box = screen.getByLabelText("Search paints") as HTMLInputElement;
+    expect(box.value).toBe("ork");
+    fireEvent.click(
+      screen.getAllByRole("button", { name: "Remove filter: Search: ork" })[0],
+    );
+    expect(new URLSearchParams(writtenQuery()).get("q")).toBeNull();
+    expect(box.value).toBe("");
+  });
+
+  it("drops the chip once the grid re-renders at the URL the removal wrote", () => {
+    renderAt("brand=Citadel&type=layer");
+    fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: Layer" })[0]);
+    const produced = writtenQuery();
+    cleanup();
+    renderAt(produced);
+    expect(new Set(chipLabels())).toEqual(new Set(["Citadel"]));
+  });
+});
+
+/**
+ * The mobile chip row and the mobile drawer both render chips, and the drawer is
+ * a plain overlay — no `aria-modal`, no focus trap — so both stay in the
+ * accessibility tree and the Tab order when it's open. Two identical
+ * "Remove filter: X" buttons per chip is the regression this pins.
+ */
+describe("the mobile chip row and the filters drawer don't double up", () => {
+  const removeButtons = (name: string) =>
+    screen.queryAllByRole("button", { name: `Remove filter: ${name}` });
+
+  it("shows one chip per filter with the drawer shut", () => {
+    renderAt("brand=Citadel");
+    // The sidebar copy (`hidden md:block`, so display:none but still queryable
+    // by role in jsdom) plus the mobile row.
+    expect(removeButtons("Citadel").length).toBe(2);
+  });
+
+  it("does not add a third copy when the drawer opens", () => {
+    renderAt("brand=Citadel");
+    const before = removeButtons("Citadel").length;
+    fireEvent.click(screen.getByRole("button", { name: /^Filters/ }));
+    // The drawer mounts its own sidebar copy; the mobile row steps aside so the
+    // total doesn't grow.
+    expect(removeButtons("Citadel").length).toBe(before);
+  });
+});
