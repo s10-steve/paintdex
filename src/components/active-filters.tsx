@@ -30,11 +30,11 @@ export function ActiveFilters({
             aria-label={`Remove filter: ${c.label}`}
             className="inline-flex max-w-full items-center gap-1 rounded-full border border-border bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            {/* `first-letter:uppercase`, not `capitalize`: the facet checkboxes
-                title-case single-word vocabulary values ("oil" → "Oil"), but
-                `capitalize` would also rewrite the sentences — "Metallic Only",
-                "Search: Green" — and mangle a user's own search text. */}
-            <span className="truncate first-letter:uppercase">{c.label}</span>
+            {/* No CSS casing: the label arrives display-ready from
+                `active-filters.ts`, so this text and the `aria-label` above are
+                the same string. `capitalize` would also have rewritten the
+                sentences — "Metallic Only" — and mangled a user's search text. */}
+            <span className="truncate">{c.label}</span>
             <span aria-hidden className="text-muted-foreground">
               ×
             </span>

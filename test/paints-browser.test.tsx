@@ -265,8 +265,8 @@ describe("the active-filter chips", () => {
     expect(new Set(chipLabels())).toEqual(
       new Set([
         "Citadel",
-        "red",
-        "layer",
+        "Red",
+        "Layer",
         "Metallic only",
         "Including discontinued",
         "Search: ork",
@@ -305,10 +305,37 @@ describe("the active-filter chips", () => {
 
   it("drops the chip once the grid re-renders at the URL the removal wrote", () => {
     renderAt("brand=Citadel&type=layer");
-    fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: layer" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: Layer" })[0]);
     const produced = writtenQuery();
     cleanup();
     renderAt(produced);
     expect(new Set(chipLabels())).toEqual(new Set(["Citadel"]));
+  });
+});
+
+/**
+ * The mobile chip row and the mobile drawer both render chips, and the drawer is
+ * a plain overlay — no `aria-modal`, no focus trap — so both stay in the
+ * accessibility tree and the Tab order when it's open. Two identical
+ * "Remove filter: X" buttons per chip is the regression this pins.
+ */
+describe("the mobile chip row and the filters drawer don't double up", () => {
+  const removeButtons = (name: string) =>
+    screen.queryAllByRole("button", { name: `Remove filter: ${name}` });
+
+  it("shows one chip per filter with the drawer shut", () => {
+    renderAt("brand=Citadel");
+    // The sidebar copy (`hidden md:block`, so display:none but still queryable
+    // by role in jsdom) plus the mobile row.
+    expect(removeButtons("Citadel").length).toBe(2);
+  });
+
+  it("does not add a third copy when the drawer opens", () => {
+    renderAt("brand=Citadel");
+    const before = removeButtons("Citadel").length;
+    fireEvent.click(screen.getByRole("button", { name: /^Filters/ }));
+    // The drawer mounts its own sidebar copy; the mobile row steps aside so the
+    // total doesn't grow.
+    expect(removeButtons("Citadel").length).toBe(before);
   });
 });

@@ -52,8 +52,8 @@ describe("describeBrowseFilters", () => {
     // Brand → family → type → finish → range → discontinued → search.
     expect(labels(chips)).toEqual([
       "Vallejo",
-      "red",
-      "oil",
+      "Red",
+      "Oil",
       "Metallic only",
       "Model Color",
       "Including discontinued",
@@ -65,7 +65,10 @@ describe("describeBrowseFilters", () => {
     const chips = describeBrowseFilters(
       browse({ brands: new Set(["Citadel"]), types: new Set(["base"]) }),
     );
+    // The key keeps the raw catalogue value; only the label is display-cased, so
+    // a page can hand `value` straight back to its toggle.
     expect(keys(chips)).toEqual(["brands:Citadel", "types:base"]);
+    expect(labels(chips)).toEqual(["Citadel", "Base"]);
     expect(chips[0]).toMatchObject({ kind: "brands", value: "Citadel" });
   });
 

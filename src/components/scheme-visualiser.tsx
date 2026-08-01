@@ -531,8 +531,13 @@ export function SchemeVisualiser() {
       {/* Something happened to this user's data on another device. Deliberately
           not part of the sync status, which the next keystroke overwrites with
           "Saving…" a second later — and deliberately out here rather than inside
-          the signed-in-only "My schemes" card, which is often scrolled off. */}
-      {notice && (
+          the signed-in-only "My schemes" card, which is often scrolled off.
+
+          Not while the studio is open: it's a `fixed inset-0` modal on the same
+          layer, so a later-in-DOM banner painted over it, and the modal's Tab
+          trap cycles within its own subtree — leaving Dismiss on screen with no
+          keyboard path to it. `notice` is state, so it reappears on close. */}
+      {notice && !studioOpen && (
         <AlertBanner message={notice} tone="warning" onDismiss={dismissNotice} />
       )}
 

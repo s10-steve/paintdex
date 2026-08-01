@@ -471,12 +471,19 @@ export function PaintsBrowser({
         <div className="min-w-0 flex-1">
           {/* Mobile only: the sidebar is behind a closed drawer there, so the
               chips inside it can't do their job. The desktop copy lives in the
-              sidebar, next to the controls they undo. */}
-          <ActiveFilters
-            chips={chips}
-            onRemove={removeChip}
-            className="mb-3 md:hidden"
-          />
+              sidebar, next to the controls they undo.
+
+              Suppressed while the drawer is open, which renders its own copy of
+              the sidebar — the drawer is a plain overlay with no `aria-modal`, so
+              both copies stay in the accessibility tree and Tab order, giving two
+              identical "Remove filter: X" buttons for every chip. */}
+          {mobileFiltersOpen ? null : (
+            <ActiveFilters
+              chips={chips}
+              onRemove={removeChip}
+              className="mb-3 md:hidden"
+            />
+          )}
           <p className="mb-3 text-sm text-muted-foreground" aria-live="polite">
             {loading
               ? "Loading paints…"

@@ -254,6 +254,34 @@ describe("SchemeVisualiser multi-device reconciliation", () => {
     expect(storedBinding()).toBeNull();
   });
 
+  /**
+   * The banner is `fixed` and outside the poster studio, which is a `fixed
+   * inset-0` modal on the same stacking layer whose Tab handler cycles within its
+   * own subtree. Left rendered, it painted over the modal and put Dismiss on
+   * screen with no keyboard route to it.
+   */
+  it("hides the notice while the share-image studio is open, and brings it back", async () => {
+    // A survivor, so the editor holds a scheme with elements — "Create shareable
+    // image" is disabled for an empty one.
+    seedBound(scheme("Deleted on the phone"), "row-1");
+    await renderSignedIn([
+      row("row-2", "Still here", scheme("Still here"), "2026-01-04T00:00:00.000Z"),
+    ]);
+    await waitFor(() => expect(screen.getByRole("status")).toBeTruthy());
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Create shareable image" }));
+    });
+    expect(screen.getByRole("dialog")).toBeTruthy();
+    expect(screen.queryByRole("status")).toBeNull();
+
+    // `notice` is state, not something the studio consumed.
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Close" }));
+    });
+    expect(screen.getByRole("status").textContent).toMatch(/deleted on another device/i);
+  });
+
   it("opens the most recent survivor when the bound scheme was deleted", async () => {
     seedBound(scheme("Deleted on the phone"), "row-1");
     await renderSignedIn([

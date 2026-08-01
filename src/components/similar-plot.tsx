@@ -63,6 +63,17 @@ const sizeFor = (measured: number) => {
   };
 };
 
+/**
+ * The y-axis label column's width and its gap to the plot.
+ *
+ * Real numbers rather than Tailwind classes because the x-axis caption has to
+ * indent by exactly their sum to line up with the plot. Hand-summing them into
+ * an `ml-[26px]` made changing either class silently misalign the caption — the
+ * same trap `layout.inset` and `PosterLayout.rowHeight` exist to avoid.
+ */
+const Y_LABEL_W = 20;
+const Y_LABEL_GAP = 6;
+
 const fmtSigned = (n: number, unit: string) =>
   `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(Math.round(n))}${unit}`;
 
@@ -206,46 +217,56 @@ export function SimilarPlot({
             `boxRef` must keep measuring the plot column alone, or `sizeFor`
             would size the plot to a width that includes this strip and the
             `overflow-visible` plot would push the page into sideways scroll. */}
-        <div className="flex items-stretch gap-1.5">
-          <div className="flex w-5 flex-none flex-col items-center justify-between py-1 text-xs text-muted-foreground">
-            <span className="flex flex-col items-center gap-1">
-              {lightEnd ? (
-                <span
-                  className="h-3 w-3 rounded-sm border border-border"
-                  style={{ backgroundColor: lightEnd.hex }}
-                  aria-hidden="true"
-                />
-              ) : null}
-              {/* Same guard as the chroma ends: only claim "lighter" when a
-                  candidate actually is. The word runs vertically; the fallback
-                  arrow does not, or it would be rotated onto its side. */}
-              {lightEnd && lightEnd.dl > 0 ? (
-                <span className="[writing-mode:vertical-rl] rotate-180">
-                  {LIGHTNESS_ENDS[1]}
-                </span>
-              ) : (
-                <span>▲</span>
-              )}
-            </span>
+        <div className="flex items-stretch" style={{ gap: Y_LABEL_GAP }}>
+          <div
+            className="flex flex-none flex-col items-center justify-between py-1 text-xs text-muted-foreground"
+            style={{ width: Y_LABEL_W }}
+          >
+            {/* End words and swatches only once there are candidates to describe:
+                with everything filtered out there is no darkest or lightest, and
+                bare ▲/▼ beside an empty plot label nothing. */}
+            {points.length ? (
+              <span className="flex flex-col items-center gap-1">
+                {lightEnd ? (
+                  <span
+                    className="h-3 w-3 rounded-sm border border-border"
+                    style={{ backgroundColor: lightEnd.hex }}
+                    aria-hidden="true"
+                  />
+                ) : null}
+                {/* Same guard as the chroma ends: only claim "lighter" when a
+                    candidate actually is. The word runs vertically; the fallback
+                    arrow does not, or it would be rotated onto its side. */}
+                {lightEnd && lightEnd.dl > 0 ? (
+                  <span className="[writing-mode:vertical-rl] rotate-180">
+                    {LIGHTNESS_ENDS[1]}
+                  </span>
+                ) : (
+                  <span>▲</span>
+                )}
+              </span>
+            ) : null}
             <span className="[writing-mode:vertical-rl] rotate-180 font-medium">
               Lightness
             </span>
-            <span className="flex flex-col items-center gap-1">
-              {darkEnd && darkEnd.dl < 0 ? (
-                <span className="[writing-mode:vertical-rl] rotate-180">
-                  {LIGHTNESS_ENDS[0]}
-                </span>
-              ) : (
-                <span>▼</span>
-              )}
-              {darkEnd ? (
-                <span
-                  className="h-3 w-3 rounded-sm border border-border"
-                  style={{ backgroundColor: darkEnd.hex }}
-                  aria-hidden="true"
-                />
-              ) : null}
-            </span>
+            {points.length ? (
+              <span className="flex flex-col items-center gap-1">
+                {darkEnd && darkEnd.dl < 0 ? (
+                  <span className="[writing-mode:vertical-rl] rotate-180">
+                    {LIGHTNESS_ENDS[0]}
+                  </span>
+                ) : (
+                  <span>▼</span>
+                )}
+                {darkEnd ? (
+                  <span
+                    className="h-3 w-3 rounded-sm border border-border"
+                    style={{ backgroundColor: darkEnd.hex }}
+                    aria-hidden="true"
+                  />
+                ) : null}
+              </span>
+            ) : null}
           </div>
           <div ref={boxRef} className="relative min-w-0 flex-1">
             {layout ? (
@@ -269,7 +290,7 @@ export function SimilarPlot({
                     rx={8}
                     className="fill-card stroke-border"
                   />
-  
+
                   {layout.x.ticks.map((t) => {
                     const x =
                       layout.plot.x +
@@ -298,7 +319,7 @@ export function SimilarPlot({
                       </g>
                     );
                   })}
-  
+
                   {layout.y.ticks.map((t) => {
                     const y =
                       layout.plot.y +
@@ -328,7 +349,7 @@ export function SimilarPlot({
                       </g>
                     );
                   })}
-  
+
                   {/* Tethers for marks the packer had to nudge, so a displaced
                       swatch still points at where it really belongs. */}
                   {points.map((p) =>
@@ -344,7 +365,7 @@ export function SimilarPlot({
                       />
                     ) : null,
                   )}
-  
+
                   {/* The reference paint. Not a link — you're already on its page. */}
                   <g>
                     <circle
@@ -367,11 +388,11 @@ export function SimilarPlot({
                     />
                   </g>
                 </svg>
-  
+
                 {/* Marks. HTML anchors rather than <a> inside <svg>: SVGAElement
                     gives up real focus rings, border-radius, and Tailwind classes
                     for nothing in return.
-  
+
                     DOM order is the ΔE ranking, so reading order, link order and
                     keyboard order all agree with the list view. Closest-on-top is
                     done with z-index instead — reversing the DOM to paint it would
@@ -434,36 +455,39 @@ export function SimilarPlot({
             width plus the gap so it spans the plot and not the label column —
             which also keeps the y strip's own end swatches level with the plot
             rather than with this row. */}
-        <div className="ml-[26px] mt-2 flex items-center justify-between gap-3 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1.5">
-                {lowEnd ? (
-                  <span
-                    className="h-3 w-3 rounded-sm border border-border"
-                    style={{ backgroundColor: lowEnd.hex }}
-                    aria-hidden="true"
-                  />
-                ) : null}
-                {/* Only claim "more muted" when a candidate actually is. Checking the
-                    domain instead would lie whenever it was padded to the floor: a set
-                    of three slightly-more-saturated paints yields x.min = -2.5 with
-                    nothing muted anywhere in it. Both ends need the same guard, since
-                    the padding is symmetric. */}
-                {axis === "chroma" && lowEnd && lowEnd.ax < 0 ? CHROMA_ENDS[0] : "◀"}
-              </span>
-              <span className="font-medium">
-                {axisTitle}
-                {unit ? ` (${unit})` : ""}
-              </span>
-              <span className="flex items-center gap-1.5">
-                {axis === "chroma" && highEnd && highEnd.ax > 0 ? CHROMA_ENDS[1] : "▶"}
-                {highEnd ? (
-                  <span
-                    className="h-3 w-3 rounded-sm border border-border"
-                    style={{ backgroundColor: highEnd.hex }}
-                    aria-hidden="true"
-                  />
-                ) : null}
-              </span>
+        <div
+          className="mt-2 flex items-center justify-between gap-3 text-xs text-muted-foreground"
+          style={{ marginLeft: Y_LABEL_W + Y_LABEL_GAP }}
+        >
+          <span className="flex items-center gap-1.5">
+            {lowEnd ? (
+              <span
+                className="h-3 w-3 rounded-sm border border-border"
+                style={{ backgroundColor: lowEnd.hex }}
+                aria-hidden="true"
+              />
+            ) : null}
+            {/* Only claim "more muted" when a candidate actually is. Checking the
+                domain instead would lie whenever it was padded to the floor: a set
+                of three slightly-more-saturated paints yields x.min = -2.5 with
+                nothing muted anywhere in it. Both ends need the same guard, since
+                the padding is symmetric. */}
+            {axis === "chroma" && lowEnd && lowEnd.ax < 0 ? CHROMA_ENDS[0] : "◀"}
+          </span>
+          <span className="font-medium">
+            {axisTitle}
+            {unit ? ` (${unit})` : ""}
+          </span>
+          <span className="flex items-center gap-1.5">
+            {axis === "chroma" && highEnd && highEnd.ax > 0 ? CHROMA_ENDS[1] : "▶"}
+            {highEnd ? (
+              <span
+                className="h-3 w-3 rounded-sm border border-border"
+                style={{ backgroundColor: highEnd.hex }}
+                aria-hidden="true"
+              />
+            ) : null}
+          </span>
         </div>
 
         {/* Fixed detail panel rather than a floating tooltip: it can't overflow

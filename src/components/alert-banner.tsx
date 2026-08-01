@@ -26,9 +26,16 @@ export function AlertBanner({
 }: {
   message: string;
   /**
-   * `error` is announced assertively; `warning` is for "something happened to
-   * your data elsewhere" — worth interrupting for, but not a failure the user
-   * caused. Both look the same; only the ARIA role differs.
+   * How it's announced, and only that: `error` is assertive (`role="alert"`),
+   * `warning` is polite (`role="status"`) — it waits for a pause rather than
+   * cutting in, which is right for "something changed on another device" and is
+   * what the prior inline markup did.
+   *
+   * Both tones are styled the same, deliberately: a red box pinned to the bottom
+   * of the page is the format that was asked for, including for the
+   * deleted-elsewhere notice. So this parameter buys announcement semantics, not
+   * appearance — if a genuinely lower-key look is ever wanted, that's a new tone
+   * with its own colours rather than a reinterpretation of this one.
    */
   tone?: AlertTone;
   onDismiss?: () => void;
