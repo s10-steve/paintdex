@@ -12,6 +12,7 @@ import { createScheme, listSchemes, schemeExists, updateScheme } from "@/lib/dat
 import { importSchemeObject, toExportShape } from "@/lib/scheme/io";
 import { clearBinding, clearBoundScheme, patchLocalDoc, readLocalDoc } from "@/lib/scheme/local-store";
 import { canonicalScheme, planReload } from "@/lib/scheme/sync";
+import { hasLiveSession } from "@/lib/supabase/session";
 import { uid } from "@/lib/scheme/uid";
 import { emptyScheme, type Scheme } from "@/lib/scheme/types";
 import type { SchemeRow } from "@/lib/supabase/types";
@@ -134,6 +135,13 @@ export function useSchemeSync({
   const reqRef = useRef(0);
   const inflightRef = useRef(false);
   const lastFetchRef = useRef(0);
+  /** Bumped by every completed save, so a refetch can tell its rows went stale. */
+  const saveSeqRef = useRef(0);
+  /** The live active id, for async work that must not act on a stale one. */
+  const activeIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    activeIdRef.current = activeSchemeId;
+  }, [activeSchemeId]);
 
   /* ---- binding helpers ------------------------------------------------- */
 
@@ -183,8 +191,12 @@ export function useSchemeSync({
   /* ---- reconcile a fresh row list against the editor ------------------- */
 
   const applyRows = (rows: SchemeRow[], userId: string, initial: boolean) => {
-    const binding = readLocalDoc().binding;
-    const plan = planReload({ rows, binding, local: schemeRef.current, userId });
+    const plan = planReload({
+      rows,
+      binding: readLocalDoc().binding,
+      local: schemeRef.current,
+      userId,
+    });
     setSavedSchemes(rows);
     switch (plan.kind) {
       case "load-row":
@@ -196,7 +208,7 @@ export function useSchemeSync({
         setActiveSchemeId(plan.row.id);
         break;
       case "deleted-elsewhere":
-        openAfterDeletion(binding?.id ?? "", rows, userId);
+        openAfterDeletion(plan.id, rows, userId);
         break;
       case "adopt-local":
       case "load-latest":
@@ -254,7 +266,7 @@ export function useSchemeSync({
     let cancelled = false;
     (async () => {
       try {
-        const rows = await listSchemes();
+        const rows = await listSchemes(userId);
         if (cancelled || req !== reqRef.current) return;
         lastFetchRef.current = Date.now();
         if (applyRows(rows, userId, true) === "adopt") {
@@ -309,12 +321,18 @@ export function useSchemeSync({
       if (Date.now() - lastFetchRef.current < REFETCH_INTERVAL_MS) return;
       lastFetchRef.current = Date.now();
       const req = ++reqRef.current;
+      const seq = saveSeqRef.current;
       void (async () => {
         try {
-          const rows = await listSchemes();
+          const rows = await listSchemes(userId);
           // Fast tab switching can leave two of these in flight; only the newest
           // may touch the editor.
           if (req !== reqRef.current) return;
+          // A save that started *after* this fetch did, and landed before it
+          // came back, makes these rows older than what the server now holds —
+          // and it moved `syncedCanon` forward, so the document would look clean
+          // and the pre-save copy would quietly replace the visible edits.
+          if (seq !== saveSeqRef.current || inflightRef.current) return;
           applyRows(rows, userId, false);
         } catch {
           /* a failed background refresh is not worth an error state */
@@ -342,27 +360,37 @@ export function useSchemeSync({
     setSyncState("saving");
     const title = scheme.title || "Untitled scheme";
     const saved = scheme;
+    let cancelled = false;
     const timer = setTimeout(async () => {
       inflightRef.current = true;
       try {
         const { matched } = await updateScheme(id, toExportShape(saved), title);
         if (!matched) {
-          // Either the row is gone, or this session quietly lost its identity
-          // (an anon-key request matches no rows under RLS). Only the first is
-          // worth destroying state over, so confirm before concluding it.
-          const gone = await schemeExists(id).then(
-            (exists) => !exists,
-            () => false,
-          );
-          if (gone) {
-            const rows = await listSchemes().catch(() => [] as SchemeRow[]);
+          // Either the row is gone, or this session quietly lost its identity —
+          // an anon-key request has `auth.uid() = null`, so RLS matches none of
+          // our rows and a live scheme looks exactly like a deleted one. Reading
+          // the row back can't separate those (same policies), so ask about the
+          // session first and only then treat "unreadable" as "deleted".
+          const live = await hasLiveSession();
+          const gone =
+            live &&
+            (await schemeExists(id).then(
+              (exists) => !exists,
+              () => false,
+            ));
+          // Only the destructive branch is gated: by now the user may have
+          // switched schemes or signed out, and replacing what they're looking
+          // at on the strength of a stale in-flight write is its own bug.
+          if (gone && !cancelled && activeIdRef.current === id) {
+            const rows = await listSchemes(userId).catch(() => [] as SchemeRow[]);
             openAfterDeletion(id, rows, userId);
             setSavedSchemes(rows);
-          } else {
+          } else if (!gone) {
             setSyncState("error");
           }
           return;
         }
+        saveSeqRef.current++;
         setSyncState("saved");
         // We and the server now agree; record that, so a later reload knows the
         // editor holds nothing unflushed and can safely take the server's copy.
@@ -383,7 +411,14 @@ export function useSchemeSync({
         inflightRef.current = false;
       }
     }, 1000);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      // Clearing the timer only helps while it's still pending; once the write
+      // is away, `cancelled` is what stops its completion acting on an editor
+      // that has moved on. Deliberately narrow — a completed write's
+      // `syncedCanon` is still a fact worth recording.
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheme, user, activeSchemeId, mounted, ready]);
 

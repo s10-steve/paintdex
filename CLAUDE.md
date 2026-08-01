@@ -227,6 +227,13 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   only read public rows).
 - Colour and scheme logic in `src/lib` is pure (no React/DOM) so it stays
   unit-testable; add tests in `test/` when changing it.
+- **RLS is the security boundary, not the query.** Permissive SELECT policies are
+  OR-combined, and `schemes` has two — "select own" *and* "select public" — so an
+  unfiltered `select("*")` returns your rows **plus every public scheme in the
+  database, other people's included**. `listSchemes(userId)` filters on
+  `user_id` for that reason; don't drop it on the grounds that RLS "already
+  scopes it". Anything reconciling against that list (see the binding, below)
+  would otherwise treat a stranger's row as one of the user's own.
 - The canonical site URL (`https://paintdex.app`) is hardcoded in
   `layout.tsx` (`metadataBase`), `robots.ts`, and `sitemap.ts` — update all
   three together if it ever changes.
@@ -276,8 +283,14 @@ Four things hold this together, and removing any one reopens a bug:
   is told, and the most recent survivor is opened; nothing is ever re-created.
 - **Writes report whether they matched a row.** `updateScheme`/`renameScheme`/
   `deleteScheme` end in `.select("id")` for that reason. Zero rows is ambiguous —
-  it also happens when a session lapses to the anon key and RLS stops matching —
-  so the autosave confirms with `schemeExists()` before concluding a deletion.
+  it also happens when a session lapses to the anon key, where `auth.uid()` is
+  null and RLS hides every row of ours — and **reading the row back cannot settle
+  it**, because that select runs under the same policies. So the autosave asks
+  `hasLiveSession()` (`supabase/session.ts`, a real `auth.getUser()` round trip,
+  not `getSession()`) *first*, and only then reads `schemeExists()` as evidence.
+  `/my-schemes` deliberately does **not** blank the local document when a rename
+  reports zero rows — same ambiguity, and dropping a card is reversible where
+  blanking a document isn't.
 - **The binding is dropped on sign-out, but only once `authLoading` is false.**
   `user` is null during every cold load too, and clearing there would take every
   signed-in visitor back to guessing from content. The document itself stays, so

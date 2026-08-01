@@ -74,11 +74,13 @@ export type ReloadPlan =
    */
   | { kind: "keep-local"; row: SchemeRow }
   /**
-   * The bound row is gone (deleted on another device). `next` is the row to open
-   * instead, or null if the account has none left. Never "adopt-local": that is
-   * precisely the branch that used to undo the delete.
+   * The bound row is gone (deleted on another device). `id` is the row that went
+   * — carried here so the caller doesn't have to re-derive it from a binding it
+   * only knows is present because of how this branch is reached. `next` is the
+   * row to open instead, or null if the account has none left. Never
+   * "adopt-local": that is precisely the branch that used to undo the delete.
    */
-  | { kind: "deleted-elsewhere"; next: SchemeRow | null }
+  | { kind: "deleted-elsewhere"; id: string; next: SchemeRow | null }
   /** No usable binding — `planSignInScheme`'s answer, unchanged. */
   | { kind: "adopt-local" }
   | { kind: "load-latest" };
@@ -102,7 +104,7 @@ export function planReload({
     return { kind: planSignInScheme(rows.map((r) => r.data), local) };
   }
   const row = rows.find((r) => r.id === binding.id);
-  if (!row) return { kind: "deleted-elsewhere", next: rows[0] ?? null };
+  if (!row) return { kind: "deleted-elsewhere", id: binding.id, next: rows[0] ?? null };
   // Nothing unflushed → the server's copy is at least as new as ours, so a
   // rename or an edit made elsewhere lands here rather than being clobbered.
   const clean = (() => {

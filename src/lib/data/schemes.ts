@@ -15,11 +15,23 @@ function client() {
   return supabase;
 }
 
-/** All of the signed-in user's schemes, most recently updated first. */
-export async function listSchemes(): Promise<SchemeRow[]> {
+/**
+ * All of the given user's schemes, most recently updated first.
+ *
+ * The `user_id` filter is **not** redundant with RLS. Multiple permissive SELECT
+ * policies are OR-combined, and `schemes` has two (`supabase/schema.sql`):
+ * "select own" *and* "select public". So an unfiltered `select("*")` returns the
+ * caller's rows **plus every public scheme in the database**, including other
+ * people's — they'd show up in the picker and in `/my-schemes`, and the sync
+ * layer would reconcile against them (a stranger's row could be the one opened
+ * after a deletion). The policy is the security boundary; this is the query
+ * actually asking for what we want.
+ */
+export async function listSchemes(userId: string): Promise<SchemeRow[]> {
   const { data, error } = await client()
     .from("schemes")
     .select("*")
+    .eq("user_id", userId)
     .order("updated_at", { ascending: false });
   if (error) throw error;
   return data ?? [];
@@ -103,12 +115,13 @@ export async function deleteScheme(id: string): Promise<WriteResult> {
 /**
  * Whether a scheme is still readable by the current session.
  *
- * Used to disambiguate a `matched: false` write. Zero affected rows means
- * "no such row" *or* "RLS no longer matches me" — and the second happens
- * whenever the session quietly lapses to the anon key, where `auth.uid()` is
- * null and every row of ours becomes invisible. Announcing a deletion on that
- * basis would blank a scheme that is alive and well, so the caller confirms
- * here first and only treats an empty, error-free answer as gone.
+ * Used as the *second* half of disambiguating a `matched: false` write. Note
+ * what this can and cannot tell you: it runs under the same RLS policies as the
+ * write, so a lapsed session gets an empty, error-free answer here too, exactly
+ * like a deleted row. On its own it therefore proves nothing about deletion.
+ *
+ * The caller must establish the session is good first — `hasLiveSession()` in
+ * `@/lib/supabase/session` — and only then read an empty result as "gone".
  */
 export async function schemeExists(id: string): Promise<boolean> {
   const { data, error } = await client()

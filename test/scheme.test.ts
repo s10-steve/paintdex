@@ -435,7 +435,9 @@ describe("planReload (reconciling a bound document)", () => {
       local: built,
       userId: "u1",
     });
-    expect(plan).toEqual({ kind: "deleted-elsewhere", next: other });
+    // The id comes back with the plan so the caller doesn't have to re-derive it
+    // from a binding it only knows is non-null by how this branch is reached.
+    expect(plan).toEqual({ kind: "deleted-elsewhere", id: "row-1", next: other });
   });
 
   it("reports a deleted row with nothing to fall back to", () => {
@@ -447,7 +449,7 @@ describe("planReload (reconciling a bound document)", () => {
     });
     // Emphatically not "adopt-local": that is the branch that used to undo the
     // delete, by inserting the local copy as a brand-new row.
-    expect(plan).toEqual({ kind: "deleted-elsewhere", next: null });
+    expect(plan).toEqual({ kind: "deleted-elsewhere", id: "row-1", next: null });
   });
 
   it("ignores a binding belonging to another account on a shared browser", () => {

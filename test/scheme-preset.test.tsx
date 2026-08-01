@@ -69,12 +69,12 @@ vi.mock("@/hooks/use-browse-index", () => ({
   useBrowseIndex: () => ({ paints: catalogue, loadError: false, loading: false }),
 }));
 
-const listSchemes = vi.fn<() => Promise<SchemeRow[]>>();
+const listSchemes = vi.fn<(userId: string) => Promise<SchemeRow[]>>();
 const createScheme = vi.fn();
 const updateScheme = vi.fn();
 
 vi.mock("@/lib/data/schemes", () => ({
-  listSchemes: (...args: unknown[]) => listSchemes(...(args as [])),
+  listSchemes: (...args: unknown[]) => listSchemes(...(args as [string])),
   createScheme: (...args: unknown[]) => createScheme(...args),
   updateScheme: (...args: unknown[]) => updateScheme(...args),
   schemeExists: async () => true,

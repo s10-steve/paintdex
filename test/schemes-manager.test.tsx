@@ -38,12 +38,12 @@ vi.mock("@/components/profile/signed-in-gate", () => ({
   SignedInGate: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
-const listSchemes = vi.fn<() => Promise<SchemeRow[]>>();
+const listSchemes = vi.fn<(userId: string) => Promise<SchemeRow[]>>();
 const deleteScheme = vi.fn<(id: string) => Promise<{ matched: boolean }>>();
 const renameScheme = vi.fn<(id: string, title: string) => Promise<{ matched: boolean }>>();
 
 vi.mock("@/lib/data/schemes", () => ({
-  listSchemes: (...args: unknown[]) => listSchemes(...(args as [])),
+  listSchemes: (...args: unknown[]) => listSchemes(...(args as [string])),
   deleteScheme: (...args: unknown[]) => deleteScheme(...(args as [string])),
   renameScheme: (...args: unknown[]) => renameScheme(...(args as [string, string])),
   duplicateScheme: vi.fn(),
@@ -159,6 +159,29 @@ describe("deleting a scheme", () => {
 });
 
 describe("renaming a scheme", () => {
+  it("leaves the local document alone when the rename matched no row", async () => {
+    // Deliberately unlike delete: "no rows matched" is also what a lapsed
+    // session looks like, and blanking a live document on a maybe is the
+    // destructive direction. Dropping the card is reversible; this isn't.
+    renameScheme.mockResolvedValue({ matched: false });
+    const doc = scheme("Open in the visualiser");
+    bindLocal(doc, "row-1");
+    await renderManager([row("row-1", "Open in the visualiser")]);
+
+    await act(async () => {
+      fireEvent.click(screen.getAllByRole("button", { name: "Rename" })[0]);
+    });
+    const input = screen.getByLabelText("Scheme name") as HTMLInputElement;
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "New name" } });
+      fireEvent.keyDown(input, { key: "Enter" });
+    });
+
+    await waitFor(() => expect(renameScheme).toHaveBeenCalled());
+    expect(readLocalDoc().scheme?.title).toBe("Open in the visualiser");
+    expect(readLocalDoc().binding?.id).toBe("row-1");
+  });
+
   it("says so, and drops the card, when the row no longer exists", async () => {
     renameScheme.mockResolvedValue({ matched: false });
     await renderManager([row("row-1", "Deleted on the phone")]);

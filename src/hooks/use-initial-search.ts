@@ -18,8 +18,12 @@ import { useEffect, useRef } from "react";
  */
 export function useInitialSearch(): () => string {
   const ref = useRef<string | null>(null);
-  // Runs on the first commit, before any of the deep-link effects act (they all
-  // wait for `mounted`/`ready`, which arrive in a later commit).
+  // Runs on the first commit, which is before any deep-link effect *acts* — they
+  // all wait on `mounted`/`ready`, and those arrive in a later commit. Note the
+  // guarantee is that timing, NOT hook order: `useSchemeSync` is called before
+  // `useSchemeNew` in `scheme-visualiser.tsx`, so its effects run first. A future
+  // hook that consumed the URL on its very first commit would need to capture
+  // the query string itself rather than rely on this.
   useEffect(() => {
     if (ref.current === null) ref.current = window.location.search;
   }, []);

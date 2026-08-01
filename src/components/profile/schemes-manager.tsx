@@ -41,18 +41,20 @@ function SchemesList() {
   const [schemes, setSchemes] = useState<SchemeRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const userId = user?.id;
 
   const reload = useCallback(async () => {
+    if (!userId) return;
     setLoading(true);
     setError(null);
     try {
-      setSchemes(await listSchemes());
+      setSchemes(await listSchemes(userId));
     } catch {
       setError("Couldn't load your schemes. Please try again.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -158,6 +160,13 @@ function SchemeCard({
       const { matched } = await renameScheme(row.id, title);
       if (!matched) {
         // Deleted on another device between this list loading and the rename.
+        // Note this does NOT `clearBoundScheme` the way the delete below does,
+        // and the asymmetry is deliberate: "no rows matched" also happens when a
+        // session lapses (see `hasLiveSession`), and blanking a live document on
+        // a maybe is the destructive direction. Dropping the card is reversible
+        // — a reload brings it back if it was really there — and the visualiser
+        // confirms properly before touching anything. Delete is different: the
+        // user just asked for that one.
         onError("That scheme no longer exists — it was deleted on another device.");
         onRemoved(row.id);
         return;

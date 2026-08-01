@@ -45,13 +45,13 @@ vi.mock("@/hooks/use-browse-index", () => ({
   useBrowseIndex: () => ({ paints: [], loadError: false, loading: false }),
 }));
 
-const listSchemes = vi.fn<() => Promise<SchemeRow[]>>();
+const listSchemes = vi.fn<(userId: string) => Promise<SchemeRow[]>>();
 const createScheme = vi.fn();
 const updateScheme = vi.fn();
 const schemeExists = vi.fn<(id: string) => Promise<boolean>>();
 
 vi.mock("@/lib/data/schemes", () => ({
-  listSchemes: (...args: unknown[]) => listSchemes(...(args as [])),
+  listSchemes: (...args: unknown[]) => listSchemes(...(args as [string])),
   createScheme: (...args: unknown[]) => createScheme(...args),
   updateScheme: (...args: unknown[]) => updateScheme(...args),
   schemeExists: (...args: unknown[]) => schemeExists(...(args as [string])),
@@ -59,6 +59,14 @@ vi.mock("@/lib/data/schemes", () => ({
   deleteScheme: vi.fn(),
   publishScheme: vi.fn(),
   unpublishScheme: vi.fn(),
+}));
+
+// Whether the browser's session is still valid. A write matching no rows means
+// "deleted elsewhere" ONLY if this says yes — a lapsed session produces exactly
+// the same empty result under RLS.
+const hasLiveSession = vi.fn<() => Promise<boolean>>();
+vi.mock("@/lib/supabase/session", () => ({
+  hasLiveSession: () => hasLiveSession(),
 }));
 
 // Imported after the mocks are registered.
@@ -144,6 +152,8 @@ beforeEach(() => {
   );
   updateScheme.mockResolvedValue({ matched: true });
   schemeExists.mockResolvedValue(true);
+  hasLiveSession.mockReset();
+  hasLiveSession.mockResolvedValue(true);
 });
 
 afterEach(() => {
@@ -343,9 +353,120 @@ describe("SchemeVisualiser multi-device reconciliation", () => {
     expect(storedBinding()).toBeNull();
   });
 
+  it("does not claim a deletion when the session has lapsed", async () => {
+    // The ambiguity that makes `schemeExists` alone insufficient: an anon-key
+    // request has `auth.uid() = null`, so RLS matches none of our rows and a
+    // live scheme reads back exactly like a deleted one. Only the session check
+    // separates them — without it this blanks a scheme that is alive and well.
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const doc = scheme("Alive and well");
+    seedBound(doc, "row-1");
+    await renderSignedIn([row("row-1", "Alive and well", doc, "2026-01-04T00:00:00.000Z")]);
+    await waitFor(() => expect(editorTitle()).toBe("Alive and well"));
+
+    updateScheme.mockResolvedValue({ matched: false });
+    // Same empty answer a deletion gives — the row is invisible either way.
+    schemeExists.mockResolvedValue(false);
+    hasLiveSession.mockResolvedValue(false);
+
+    const input = screen.getByLabelText("Scheme name") as HTMLInputElement;
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "Alive and well!" } });
+    });
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+
+    expect(screen.queryByRole("status")).toBeNull();
+    expect(storedBinding()?.id).toBe("row-1");
+    expect(editorTitle()).toBe("Alive and well!");
+    expect(createScheme).not.toHaveBeenCalled();
+  });
+
+  it("does not clobber a scheme selected while a save was in flight", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const doc = scheme("First");
+    seedBound(doc, "row-1");
+    await renderSignedIn([
+      row("row-1", "First", doc, "2026-01-04T00:00:00.000Z"),
+      row("row-2", "Second", scheme("Second"), "2026-01-03T00:00:00.000Z"),
+    ]);
+    await waitFor(() => expect(editorTitle()).toBe("First"));
+
+    // A write that will come back "deleted", released only after the user has
+    // moved on to another scheme.
+    let finish!: (v: { matched: boolean }) => void;
+    updateScheme.mockImplementation(() => new Promise((res) => (finish = res)));
+    schemeExists.mockResolvedValue(false);
+    // Deliberately headed by a row the user did NOT pick: an ungated completion
+    // would open this one, so the assertion can tell the two apart.
+    listSchemes.mockResolvedValue([
+      row("row-3", "Third", scheme("Third"), "2026-01-05T00:00:00.000Z"),
+      row("row-2", "Second", scheme("Second"), "2026-01-03T00:00:00.000Z"),
+    ]);
+
+    const input = screen.getByLabelText("Scheme name") as HTMLInputElement;
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "First edited" } });
+    });
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+
+    // Switch schemes while that write is still out.
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText("My schemes"), { target: { value: "row-2" } });
+    });
+    await waitFor(() => expect(editorTitle()).toBe("Second"));
+
+    await act(async () => {
+      finish({ matched: false });
+    });
+
+    // The stale completion must not swap the editor out from under them.
+    expect(editorTitle()).toBe("Second");
+    expect(screen.queryByRole("status")).toBeNull();
+  });
+
+  it("discards refetched rows that a save has already overtaken", async () => {
+    const doc = scheme("Before");
+    seedBound(doc, "row-1");
+    await renderSignedIn([row("row-1", "Before", doc, "2026-01-04T00:00:00.000Z")]);
+    await waitFor(() => expect(editorTitle()).toBe("Before"));
+
+    // The refetch is in flight when a save lands. Its rows predate that write,
+    // and the write moved `syncedCanon` on, so applying them would look "clean"
+    // and quietly replace the visible edits with the pre-save copy.
+    let releaseRows!: (rows: SchemeRow[]) => void;
+    listSchemes.mockImplementation(() => new Promise((res) => (releaseRows = res)));
+    vi.setSystemTime(Date.now() + 60_000);
+    await act(async () => {
+      document.dispatchEvent(new Event("visibilitychange"));
+    });
+
+    const input = screen.getByLabelText("Scheme name") as HTMLInputElement;
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "Edited after the refetch started" } });
+    });
+    await waitFor(() => expect(updateScheme).toHaveBeenCalled());
+
+    await act(async () => {
+      releaseRows([row("row-1", "Before", doc, "2026-01-04T00:00:00.000Z")]);
+    });
+
+    expect(editorTitle()).toBe("Edited after the refetch started");
+  });
+
+  it("asks only for the signed-in user's own rows", async () => {
+    // RLS ORs "select own" with "select public", so an unfiltered query also
+    // returns strangers' published schemes — which would then be reconciled
+    // against, and could be the row opened after a deletion.
+    seedBound(scheme("Mine"), "row-1");
+    await renderSignedIn([row("row-1", "Mine", scheme("Mine"), "2026-01-04T00:00:00.000Z")]);
+    await waitFor(() => expect(listSchemes).toHaveBeenCalledWith("u1"));
+  });
+
   it("keeps saving when a write matches no row but the scheme still exists", async () => {
-    // Zero affected rows also happens when the session quietly lapses, and
-    // blanking a live scheme on that basis would be its own data-loss bug.
     vi.useFakeTimers({ shouldAdvanceTime: true });
     const doc = scheme("Still there");
     seedBound(doc, "row-1");
