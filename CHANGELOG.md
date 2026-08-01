@@ -5,6 +5,42 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.1] - 2026-08-01
+
+### Fixed
+
+- **Deleting a saved scheme now sticks.** With the same account open on two
+  devices, deleting a scheme on one and refreshing the other quietly re-created
+  it — and refreshing the first brought it back, so a scheme could only really be
+  deleted when nothing else had it open. Each device now knows *which* saved
+  scheme it is holding rather than trying to recognise it by its contents, so a
+  deletion made elsewhere is reported and the most recent remaining scheme opens
+  instead. Nothing is ever re-created.
+- **Renaming a scheme no longer duplicates it.** Renaming on one device while
+  another had it open produced a second copy, and the other device would then
+  write its old name back over yours. The new name now lands everywhere, and
+  there is still exactly one scheme.
+- **+ New scheme starts a new scheme.** On **My schemes** it opened whichever
+  scheme you last had in the designer.
+- **Editing a scheme deleted on another device no longer reports "Saved" into
+  nothing.** It now tells you what happened and moves you to a scheme that still
+  exists — and, importantly, it makes sure the scheme really is gone before
+  saying so, rather than mistaking an expired sign-in for a deletion.
+- **Your scheme list could include other people's published schemes.** Anything
+  shared by link was visible in every signed-in user's **My schemes** and in the
+  designer's scheme picker. Only ever schemes their owners had deliberately
+  published, and never editable by anyone else — but they were never meant to
+  appear there.
+- Unsaved edits are no longer at risk when a scheme changes elsewhere: if the
+  editor is holding changes that haven't reached the server yet, they're kept and
+  saved to the same scheme rather than being replaced by the stored copy.
+
+### Changed
+
+- **Schemes refresh when you come back to the tab.** A rename or delete made on
+  your phone shows up on your laptop when you switch back to it, instead of only
+  after a manual reload.
+
 ## [0.10.0] - 2026-07-28
 
 ### Added
