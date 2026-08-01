@@ -31,7 +31,9 @@ schemes, sync them across devices, and share them by link.
   through** — narrow to a brand and you can explore that whole range swatch by
   swatch, and the same filters carry between the full list and an individual
   paint in both directions, so nothing is lost on the round trip. They live in
-  the URL, so a filtered view is a shareable link.
+  the URL, so a filtered view is a shareable link — and because they follow you,
+  whatever is currently applied is listed as removable chips at the top of the
+  filter panel, so an inherited filter is never invisible.
 - **Paint scheme visualiser.** Plan a miniature's colour scheme on
   `/visualiser`: Group your paints by element (armour, robes, lenses, etc) and
   preview every element's colours as aligned, optionally-blended vertical bars.

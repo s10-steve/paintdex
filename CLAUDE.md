@@ -81,6 +81,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   (the shell: filters + the List/Plot toggle), `similar-list` (the ΔE-ranked
   cards), `similar-plot` (the hue/lightness plot — see "The alternatives plot"
   below), `paint-facets` (the facet sidebar both paint pages render),
+  `active-filters` (the removable chips summarising what's applied, rendered above
+  the facet groups on both pages — see "The applied-filter chips" below),
+  `alert-banner` (the app's one notice format — see "Notices" below),
   `back-to-browse` (the paint page's "back" link, which carries the live filters),
   `scheme-visualiser`, `scheme-bars` (the shared bar visualisation + hover/
   tooltip, used by the editor and the read-only `scheme-view`), `site-header`,
@@ -119,8 +122,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
   the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
   shared by both paint pages, `facet-availability.ts`, the shared facet-pruning
-  pass, and `lab-index.ts`, a module-scope memo attaching Lab to the browse
-  index), `scheme/` (bar maths, JSON import/export, types, plus `local-store.ts`,
+  pass, `active-filters.ts`, which turns either page's param state into the
+  removable chip list, and `lab-index.ts`, a module-scope memo attaching Lab to
+  the browse index), `scheme/` (bar maths, JSON import/export, types, plus `local-store.ts`,
   the sole owner of the visualiser's `localStorage` document and its **binding**
   — see "Which saved scheme is this?" below — and `sync.ts`, the pure
   reconciliation decisions `planReload`/`planSignInScheme`). Also `supabase/` (browser client +
@@ -136,11 +140,16 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   (run in the Supabase SQL editor; not applied automatically).
 - `data/paints/*.json` — the paint catalogue, one file per brand.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
-  `validate-data.ts`, `import-source.mjs`.
+  `validate-data.ts`, `import-source.mjs`. The importer's `mapType` is ordered
+  most-specific-first, so an "Enamel Wash" stays a `wash`; its `oil` rule is
+  `/\boil/` rather than a substring, or Scale 75's "Soil Works" range imports as
+  14 oils.
 - `test/` — Vitest suites for the `src/lib` logic (including `scatter.test.ts`,
   which is where the alternatives plot's behaviour is pinned, and
-  `filter-params.test.ts`, which pins the URL codec and guards the comma
-  assumption, and `facet-availability.test.ts`, and `browse-index.test.ts` and
+  `filter-params.test.ts`, which pins the URL codec, guards the comma
+  assumption and fails if a `PAINT_TYPES` value has no paint behind it, and
+  `facet-availability.test.ts`, and `active-filters.test.ts`, which pins what does
+  and doesn't count as a chip, and `browse-index.test.ts` and
   `lab-index.test.ts`, which pin the two module-scope caches — including that a
   failed load stays retryable), plus `paints-browser.test.tsx` (browse's
   URL-derived state: the grid is a function of the params, and the controls write
@@ -459,6 +468,69 @@ on at the origin. `src/lib/paints/scatter.ts` is the pure layout maths;
   catalogue near-neutral, `axis=hue` on the next paint is exactly the meaningless
   axis `pickScatterAxis` exists to prevent. A filter says *which paints you want*
   and travels; the axis says *how to read one paint* and doesn't.
+
+## The applied-filter chips
+
+`src/lib/paints/active-filters.ts` turns either page's param state into a flat
+list of removable chips, rendered by `components/active-filters.tsx` above the
+facet groups on both sidebars. They exist because filters persist and travel:
+you can arrive with four applied and no way to see them — several groups down a
+scrolling sidebar, or behind a closed drawer on a phone.
+
+- **A chip is a second *view* of the filter state, never a second writer.** Every
+  `removeChip` branch routes through the `commit`/`toggle`/`toggleFacet` the page
+  already owns, so the URL stays the single source of truth and there's one write
+  path to audit.
+- **What counts as a chip is what counts as a filter**, so the chips, the
+  `Filters (N)` badge and "Clear all" can't disagree: `sort` and `view` never
+  chip (presentation, and absent from the `*_CLEARABLE` lists), and neither does a
+  default — `includeDiscontinued: false` or `minMatch === DEFAULT_MATCH` — or the
+  summary would announce filters on an unfiltered page.
+- **The panel emits no `q`/`family` chip.** It carries both in the URL but applies
+  neither and has no control to restore them, so a chip would offer to remove a
+  filter that isn't doing anything.
+- **Labels arrive display-ready from the pure module**, not cased by CSS. The
+  visible text and the `aria-label` have to be the same string, and CSS can't
+  reach an attribute — `first-letter:uppercase` gave "Remove filter: oil" beside a
+  chip reading "Oil". Only `type` and `family` are cased (lowercase internal
+  vocabulary); brands and ranges carry their own. The chip's `value` keeps the raw
+  catalogue string, which is what goes back to the toggle.
+- **One ordered pass, not a splice.** `families` is gated by a flag rather than
+  spliced in at `brands.size`, which was correct only while brands happened to be
+  emitted first.
+- **The mobile copy is suppressed while that page's drawer is open.** Both
+  drawers render a second copy of the sidebar and neither is a real modal (no
+  `aria-modal`, no focus trap), so leaving the mobile row mounted put two
+  identical "Remove filter: X" buttons per chip in the tree and the Tab order.
+  Browse and the panel both need this guard; browse shipped without it once.
+
+## Notices
+
+`components/alert-banner.tsx` is the app's one notice format: a red box fixed to
+the bottom-centre of the viewport, `role="alert"` for `error` and `role="status"`
+for `warning`.
+
+- **It's presentational, deliberately not a toast provider.** Every caller already
+  owns the state (`use-scheme-sync` has `notice`, `schemes-manager` has `error`),
+  so a context would add runtime plumbing to a static site and buy nothing. The
+  accepted trade-off: two banners from two owners would stack, and nothing renders
+  two today.
+- **Fixed positioning is the point.** The deleted-elsewhere notice used to render
+  inside the signed-in-only "My schemes" card — set by a hook that runs whether or
+  not that card is on screen, so on a scrolled page it was announced to nobody.
+  Where a message is *owned* and where it is *seen* are now separate questions.
+- **`tone` buys announcement semantics, not appearance.** Both tones are red on
+  purpose; that's the format that was asked for, including for the
+  deleted-elsewhere notice. A lower-key look should be a new tone with its own
+  colours rather than a reinterpretation of `warning`.
+- **Suppress it while a modal is open.** `PosterStudio` is `fixed inset-0 z-50`
+  and traps Tab within its own subtree, so a banner rendered after it painted over
+  the modal *and* put Dismiss on screen with no keyboard route to it. Raising the
+  modal's z-index is not enough — that leaves a tabbable button behind an opaque
+  backdrop. `notice` is state, so it reappears on close.
+- `test/scheme-visualiser.test.tsx` and `test/schemes-manager.test.tsx` query these
+  messages by role (`status` and `alert` respectively), so changing a tone changes
+  what those suites find.
 
 ## Share images (the poster)
 
