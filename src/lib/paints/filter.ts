@@ -4,6 +4,7 @@ import type { BrowsePaint, PaintType, PaintWithLab } from "./types";
 // with the other URL vocabularies, since `sort` is validated on read.
 export { SORT_KEYS, DEFAULT_SORT, type SortKey } from "./filter-params";
 import type { SortKey } from "./filter-params";
+import { matchesFacets, type FacetSelection } from "./facet-availability";
 
 export interface PaintFilters {
   search?: string;
@@ -15,6 +16,21 @@ export interface PaintFilters {
   includeDiscontinued?: boolean;
   /** Restrict by metallic finish: `only` metallics, or `exclude` them. */
   metallic?: "only" | "exclude";
+}
+
+/**
+ * `PaintFilters` (arrays, optional `metallic`) → the `FacetSelection` the shared
+ * predicate takes (sets, `""` for "any finish").
+ */
+function toFacetSelection(filters: PaintFilters): FacetSelection {
+  return {
+    brands: new Set(filters.brands ?? []),
+    ranges: new Set(filters.ranges ?? []),
+    types: new Set(filters.types ?? []),
+    families: new Set(filters.families ?? []),
+    includeDiscontinued: Boolean(filters.includeDiscontinued),
+    metallic: filters.metallic ?? "",
+  };
 }
 
 /**
@@ -68,19 +84,14 @@ export function filterPaints(
 ): BrowsePaint[] {
   const query = filters.search?.trim().toLowerCase() ?? "";
   const tokens = searchTokens(filters.search);
-  const brands = new Set(filters.brands ?? []);
-  const ranges = new Set(filters.ranges ?? []);
-  const types = new Set(filters.types ?? []);
-  const families = new Set(filters.families ?? []);
+  // The facet half of the test is `matchesFacets`, shared with the availability
+  // pass and the alternatives panel — see its doc comment for why there is
+  // exactly one of these. Everything below is the part unique to browse: the
+  // free-text search and the relevance ordering.
+  const selection = toFacetSelection(filters);
 
   const result = paints.filter((p) => {
-    if (!filters.includeDiscontinued && p.discontinued) return false;
-    if (filters.metallic === "only" && !p.metallic) return false;
-    if (filters.metallic === "exclude" && p.metallic) return false;
-    if (brands.size && !brands.has(p.brand)) return false;
-    if (ranges.size && !ranges.has(p.range)) return false;
-    if (types.size && !types.has(p.type)) return false;
-    if (families.size && !families.has(p.family)) return false;
+    if (!matchesFacets(p, selection)) return false;
     if (tokens.length) {
       const hay = `${p.name} ${p.brand} ${p.range} ${p.code ?? ""}`.toLowerCase();
       // indexOf per token, not a regex per paint — this runs over the whole

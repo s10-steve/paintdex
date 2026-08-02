@@ -10,7 +10,7 @@
  * user); nothing here runs on the server. It's rendered inside `SignedInGate`,
  * so it can assume there's a signed-in user.
  */
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AlertBanner } from "@/components/alert-banner";
 import { useAuth } from "@/components/auth/auth-provider";
@@ -20,14 +20,11 @@ import {
   renameScheme,
   deleteScheme,
   duplicateScheme,
-  publishScheme,
-  unpublishScheme,
 } from "@/lib/data/schemes";
+import { MAX_SCHEME_TITLE } from "@/lib/scheme/types";
+import { useShareActions } from "@/hooks/use-share-actions";
 import { clearBoundScheme } from "@/lib/scheme/local-store";
-import { makeShareSlug, makeShareToken, shareUrl } from "@/lib/scheme/share";
 import type { SchemeRow } from "@/lib/supabase/types";
-
-const freshShareToken = () => makeShareToken(crypto.getRandomValues(new Uint8Array(8)));
 
 export function SchemesManager() {
   return (
@@ -44,23 +41,30 @@ function SchemesList() {
   const [error, setError] = useState<string | null>(null);
   const userId = user?.id;
 
-  const reload = useCallback(async () => {
+  useEffect(() => {
     if (!userId) return;
+    // Guarded like every other fetch in this feature. Without it a slow response
+    // arriving after sign-out (or after a second load overtook it) still wrote
+    // its rows into state — including, on an account switch, someone else's.
+    let cancelled = false;
+    /* eslint-disable react-hooks/set-state-in-effect */
     setLoading(true);
     setError(null);
-    try {
-      setSchemes(await listSchemes(userId));
-    } catch {
-      setError("Couldn't load your schemes. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    void (async () => {
+      try {
+        const rows = await listSchemes(userId);
+        if (!cancelled) setSchemes(rows);
+      } catch {
+        if (!cancelled) setError("Couldn't load your schemes. Please try again.");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    /* eslint-enable react-hooks/set-state-in-effect */
+    return () => {
+      cancelled = true;
+    };
   }, [userId]);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    void reload();
-  }, [reload]);
 
   const patch = (id: string, p: Partial<SchemeRow>) =>
     setSchemes((rows) => rows.map((r) => (r.id === id ? { ...r, ...p } : r)));
@@ -142,7 +146,13 @@ function SchemeCard({
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(row.title);
   const [busy, setBusy] = useState(false);
-  const [copied, setCopied] = useState(false);
+  // Publishing, unpublishing and copying are shared with the visualiser's share
+  // card — see `useShareActions`.
+  const { shareBusy, copied, togglePublished, copyShareLink } = useShareActions({
+    row,
+    onPatch,
+    onError,
+  });
   const inputRef = useRef<HTMLInputElement>(null);
 
   const startRename = () => {
@@ -218,39 +228,6 @@ function SchemeCard({
     }
   };
 
-  const toggleShare = async () => {
-    if (busy) return;
-    setBusy(true);
-    onError(null);
-    try {
-      if (row.is_public) {
-        await unpublishScheme(row.id);
-        onPatch(row.id, { is_public: false });
-      } else {
-        const slug = row.share_slug ?? makeShareSlug(row.title, freshShareToken());
-        const stored = await publishScheme(row.id, slug, () =>
-          makeShareSlug(row.title, freshShareToken()),
-        );
-        onPatch(row.id, { is_public: true, share_slug: stored });
-      }
-    } catch {
-      onError("Couldn't update sharing for that scheme.");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const copyLink = async () => {
-    if (!row.share_slug) return;
-    try {
-      await navigator.clipboard.writeText(shareUrl(window.location.origin, row.share_slug));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* clipboard blocked — non-fatal */
-    }
-  };
-
   const swatches = deriveSwatches(row);
 
   return (
@@ -274,6 +251,7 @@ function SchemeCard({
                 if (e.key === "Escape") setEditing(false);
               }}
               aria-label="Scheme name"
+              maxLength={MAX_SCHEME_TITLE}
               className="w-full rounded-md border border-input bg-background px-2 py-1 text-[15px] font-semibold outline-none focus:border-primary"
             />
           ) : (
@@ -318,8 +296,8 @@ function SchemeCard({
           </button>
           <button
             type="button"
-            onClick={() => void toggleShare()}
-            disabled={busy}
+            onClick={() => void togglePublished()}
+            disabled={busy || shareBusy}
             className="rounded-md border border-border px-2.5 py-1.5 text-xs text-foreground transition-colors hover:bg-muted disabled:opacity-50"
           >
             {row.is_public ? "Stop sharing" : "Share"}
@@ -327,7 +305,7 @@ function SchemeCard({
           {row.is_public && row.share_slug && (
             <button
               type="button"
-              onClick={() => void copyLink()}
+              onClick={() => void copyShareLink()}
               className="rounded-md border border-border px-2.5 py-1.5 text-xs text-foreground transition-colors hover:bg-muted"
             >
               {copied ? "Copied!" : "Copy link"}

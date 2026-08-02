@@ -119,6 +119,20 @@ export function clearBoundScheme(id: string): void {
   writeLocalDoc({ scheme: emptyScheme(), blend: doc.blend, binding: null });
 }
 
+/**
+ * Blank an unreadable document: drop the scheme **and** the binding, keeping
+ * only the view preference.
+ *
+ * The unconditional sibling of `clearBoundScheme`, for the case where the stored
+ * scheme won't parse so there is no way to know which row it claimed to be. The
+ * binding has to go with it for the same reason it does there — the restore
+ * falls back to a blank seed, and a surviving binding would let the autosave
+ * present that blank as row X's latest content and flush it over the real one.
+ */
+export function clearStoredScheme(): void {
+  writeLocalDoc({ scheme: emptyScheme(), blend: readLocalDoc().blend, binding: null });
+}
+
 /** Drop the binding but keep the document — what signing out does. */
 export function clearBinding(): void {
   const doc = readLocalDoc();

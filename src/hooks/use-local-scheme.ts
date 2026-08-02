@@ -2,7 +2,12 @@
 
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { importSchemeObject } from "@/lib/scheme/io";
-import { patchLocalDoc, readLocalDoc, SCHEME_STORE_KEY } from "@/lib/scheme/local-store";
+import {
+  clearStoredScheme,
+  patchLocalDoc,
+  readLocalDoc,
+  SCHEME_STORE_KEY,
+} from "@/lib/scheme/local-store";
 import { uid } from "@/lib/scheme/uid";
 import { emptyScheme, type Scheme } from "@/lib/scheme/types";
 
@@ -58,7 +63,12 @@ export function useLocalScheme(): LocalScheme {
       }
       if (typeof stored.blend === "boolean") setBlend(stored.blend);
     } catch {
-      /* ignore corrupt storage */
+      // The stored scheme is unusable, so the editor stays on the blank seed.
+      // Drop the whole document, not just the scheme: the autosave below writes
+      // `{ scheme, blend }` through `patchLocalDoc`, which *preserves* the
+      // binding — so leaving it behind claimed the empty seed was row X's
+      // content, and the next sign-in flushed a blank scheme over row X.
+      clearStoredScheme();
     }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);

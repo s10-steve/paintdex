@@ -339,3 +339,81 @@ describe("the mobile chip row and the filters drawer don't double up", () => {
     expect(removeButtons("Citadel").length).toBe(before);
   });
 });
+
+/**
+ * Two accessibility contracts that were quietly broken.
+ *
+ * Both are the kind that no visual check catches: the page looks and behaves
+ * correctly with a mouse, and is either silent or inescapable without one.
+ */
+describe("the search combobox announces its suggestions", () => {
+  const input = () => screen.getByRole("combobox", { name: "Search paints" });
+
+  it("points aria-activedescendant at an element that is actually an option", () => {
+    // The id used to sit on a <button> inside the <li> that carried
+    // role="option". `aria-activedescendant` only announces if what it finds is
+    // an option of the controlled listbox, so arrowing through the list said
+    // nothing at all.
+    renderAt("");
+    fireEvent.change(input(), { target: { value: "citadel" } });
+    fireEvent.focus(input());
+    fireEvent.keyDown(input(), { key: "ArrowDown" });
+
+    const active = input().getAttribute("aria-activedescendant");
+    expect(active).toBeTruthy();
+    const target = document.getElementById(active!);
+    expect(target).not.toBeNull();
+    expect(target!.getAttribute("role")).toBe("option");
+  });
+
+  it("puts no focusable control inside an option", () => {
+    // An option containing a focusable descendant is invalid, and it put every
+    // suggestion into the Tab order behind the input.
+    renderAt("");
+    fireEvent.change(input(), { target: { value: "citadel" } });
+    fireEvent.focus(input());
+
+    for (const option of screen.getAllByRole("option")) {
+      expect(option.querySelector("button, a[href], input")).toBeNull();
+    }
+  });
+
+  it("reports itself expanded whenever a listbox is on screen", () => {
+    renderAt("");
+    expect(input().getAttribute("aria-expanded")).toBe("false");
+    fireEvent.change(input(), { target: { value: "citadel" } });
+    fireEvent.focus(input());
+    expect(input().getAttribute("aria-expanded")).toBe("true");
+  });
+});
+
+describe("the mobile filters drawer is a real dialog", () => {
+  const open = () => fireEvent.click(screen.getByRole("button", { name: /^Filters/ }));
+
+  it("is announced as a modal dialog", () => {
+    // It is `fixed inset-0` over the page with a scrim, and had no dialog
+    // semantics at all — so a screen reader gave no indication the page behind
+    // it had gone away.
+    renderAt("");
+    open();
+    const dialog = screen.getByRole("dialog", { name: "Filters" });
+    expect(dialog.getAttribute("aria-modal")).toBe("true");
+  });
+
+  it("moves focus into the drawer and closes on Escape", () => {
+    renderAt("");
+    const trigger = screen.getByRole("button", { name: /^Filters/ });
+    // `fireEvent.click` doesn't move focus the way a real click does, and the
+    // opener is read from `document.activeElement`.
+    trigger.focus();
+    open();
+
+    // Focus must not be left behind on the trigger, outside the dialog.
+    expect(screen.getByRole("dialog").contains(document.activeElement)).toBe(true);
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.queryByRole("dialog")).toBeNull();
+    // …and it comes back to whatever opened it.
+    expect(document.activeElement).toBe(trigger);
+  });
+});

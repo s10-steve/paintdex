@@ -292,6 +292,7 @@ export function hueFamily(hex: string): ColourFamily {
   if (h < 200) return "cyan";
   if (h < 255) return "blue";
   if (h < 290) return "purple";
-  if (h < 345) return "pink";
-  return "red";
+  // Everything from 345 up was already claimed by the `h >= 345` test above, so
+  // this closes out 290–345 and the ladder is total.
+  return "pink";
 }

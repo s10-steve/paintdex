@@ -15,6 +15,11 @@ export const alt = "A miniature paint scheme shared from Paintdex";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Segment config is per-file, so this does NOT inherit the page's `revalidate`.
+// Without it the image and the page it illustrates cache on different terms,
+// and an edited scheme can show a stale palette beside a fresh title.
+export const revalidate = 60;
+
 const BG = "#0c0a09";
 const FG = "#fafaf9";
 const MUTED = "#a8a29e";

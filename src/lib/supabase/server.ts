@@ -4,14 +4,14 @@
  * other page stays static and talks to Supabase from the browser (see
  * `./client`).
  *
- * This client has **no user session** — it reads as the anonymous role, so it
- * can only ever see rows the RLS policy "schemes select public" exposes
- * (`is_public = true`). That's exactly what a share link should surface. The
- * `NEXT_PUBLIC_*` env vars are readable server-side too, and shipping the anon
- * key is safe precisely because RLS does the gatekeeping.
+ * This client has **no user session** — it reads as the anonymous role, so RLS
+ * on `schemes` matches none of its rows. The one thing it can reach is the
+ * `get_public_scheme` RPC, which is `security definer` and takes an exact share
+ * slug. The `NEXT_PUBLIC_*` env vars are readable server-side too, and shipping
+ * the anon key is safe precisely because the database does the gatekeeping.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import type { Database, SchemeRow } from "./types";
+import type { Database, PublicSchemeRow } from "./types";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -28,21 +28,25 @@ export function getServerSupabase(): SupabaseClient<Database> | null {
 }
 
 /**
- * Fetch a single public scheme by its share slug, or null when it doesn't
- * exist, isn't public, or Supabase isn't configured. RLS guarantees a private
- * or unknown slug returns no row rather than leaking anything.
+ * Fetch a single published scheme by its share slug, or null when it doesn't
+ * exist, isn't public, or Supabase isn't configured.
+ *
+ * Goes through the `get_public_scheme` RPC rather than selecting the table.
+ * There is deliberately no policy that would let this client read `schemes`
+ * directly: the old one (`using (is_public = true)`) made every published
+ * scheme readable by anyone who asked, slug or no slug, which is not what a
+ * share link means. The function's body — an equality match on `share_slug`
+ * plus `is_public` — is now the whole of the anonymous read surface.
  */
 export async function getPublicSchemeBySlug(
   slug: string,
-): Promise<SchemeRow | null> {
+): Promise<PublicSchemeRow | null> {
   const supabase = getServerSupabase();
   if (!supabase) return null;
-  const { data, error } = await supabase
-    .from("schemes")
-    .select("*")
-    .eq("share_slug", slug)
-    .eq("is_public", true)
-    .maybeSingle();
+  // A blank slug can't match `share_slug` (it's null on unpublished rows and a
+  // real token otherwise), but there's no reason to ask.
+  if (!slug) return null;
+  const { data, error } = await supabase.rpc("get_public_scheme", { p_slug: slug });
   if (error) return null;
-  return data ?? null;
+  return data?.[0] ?? null;
 }

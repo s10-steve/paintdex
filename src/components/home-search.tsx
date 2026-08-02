@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { filterPaints } from "@/lib/paints/filter";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import type { BrowsePaint } from "@/lib/paints/types";
+import { PaintSuggestions } from "./paint-suggestions";
 
 /**
  * Homepage search box. Mirrors the live autocomplete dropdown in
@@ -76,7 +77,7 @@ export function HomeSearch() {
           placeholder="Search paints — e.g. Mephiston Red, black, teal…"
           aria-label="Search paints"
           role="combobox"
-          aria-expanded={suggestVisible && suggestions.length > 0}
+          aria-expanded={Boolean(suggestVisible && (paints?.length || loadError))}
           aria-controls="home-search-suggestions"
           aria-autocomplete="list"
           aria-activedescendant={
@@ -86,51 +87,15 @@ export function HomeSearch() {
         />
 
         {suggestVisible && (paints?.length || loadError) ? (
-          <ul
+          <PaintSuggestions
             id="home-search-suggestions"
-            role="listbox"
-            className="absolute inset-x-0 top-[calc(100%+4px)] z-30 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl"
-          >
-            {suggestions.length === 0 ? (
-              <li className="p-3 text-center text-[12.5px] text-muted-foreground">
-                {loadError ? "Paint database unavailable." : "No matching paints."}
-              </li>
-            ) : (
-              suggestions.map((p, i) => (
-                <li key={p.id} role="option" aria-selected={i === activeSuggestion}>
-                  <button
-                    type="button"
-                    id={`home-suggestion-${i}`}
-                    // onMouseDown (not onClick) so it fires before the input's blur closes the list.
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      gotoPaint(p);
-                    }}
-                    onMouseEnter={() => setActiveSuggestion(i)}
-                    className={`flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${
-                      i === activeSuggestion ? "bg-muted" : "hover:bg-muted"
-                    }`}
-                  >
-                    <span
-                      className="h-[22px] w-[22px] flex-none rounded-md ring-1 ring-inset ring-black/15"
-                      style={{ background: p.hex }}
-                    />
-                    <span className="min-w-0">
-                      <span className="block truncate text-[13px] font-medium">
-                        {p.name}
-                      </span>
-                      <span className="block truncate text-[11.5px] text-muted-foreground">
-                        {p.brand} · {p.range}
-                      </span>
-                    </span>
-                    <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
-                      {p.hex}
-                    </span>
-                  </button>
-                </li>
-              ))
-            )}
-          </ul>
+            optionId={(i) => `home-suggestion-${i}`}
+            suggestions={suggestions}
+            activeIndex={activeSuggestion}
+            loadError={loadError}
+            onPick={gotoPaint}
+            onHover={setActiveSuggestion}
+          />
         ) : null}
       </div>
       <button

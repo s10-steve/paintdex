@@ -92,12 +92,30 @@ export interface Scheme {
   elements: SchemeElement[];
 }
 
+/**
+ * Longest scheme title we'll store.
+ *
+ * Must match the `schemes_title_length` check in `supabase/schema.sql` — the
+ * database is the one that has to hold the line (the browser writes rows
+ * directly), and this is what stops a legitimate user hitting that constraint
+ * as an opaque sync error.
+ */
+export const MAX_SCHEME_TITLE = 200;
+
 /** A blank scheme — the starting point for the visualiser and the Reset target. */
 export const emptyScheme = (): Scheme => ({ title: "", elements: [] });
 
 export const roleOf = (p: SchemePaint): RoleMeta => ROLES[p.role] ?? ROLES.layer;
+/**
+ * The weight a paint contributes to its bar's ramp.
+ *
+ * `Number.isFinite` rather than `typeof === "number"`: this is the single read
+ * point for the override, and an `Infinity` reaching `barModel` turns every
+ * ramp stop into `NaN%`. `io.ts` already rejects those on the way in — this is
+ * the second line, for any scheme that reaches a renderer another way.
+ */
 export const weightOf = (p: SchemePaint): number =>
-  typeof p.weight === "number" ? p.weight : roleOf(p).weight;
+  Number.isFinite(p.weight) ? (p.weight as number) : roleOf(p).weight;
 
 /**
  * A colour the user mixed or picked themselves, rather than one from the

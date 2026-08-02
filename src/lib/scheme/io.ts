@@ -9,6 +9,7 @@
  * throws when the input plainly isn't a scheme.
  */
 import {
+  MAX_SCHEME_TITLE,
   ROLES,
   type Scheme,
   type SchemeElement,
@@ -93,6 +94,24 @@ function cleanHex(v: unknown): string {
 const str = (v: unknown, fallback: string): string =>
   typeof v === "string" && v.length ? v : fallback;
 
+/** Upper bound on a weight override. Role defaults are 0.55–1.4. */
+const MAX_WEIGHT = 100;
+
+/**
+ * A usable weight override, or `undefined` to fall back to the role default.
+ *
+ * `typeof v === "number"` alone let `Infinity` and `NaN` through, and
+ * `JSON.parse("1e400")` produces the former from perfectly well-formed JSON.
+ * One of those in a scheme makes `barModel` compute `Infinity / Infinity`, so
+ * every ramp stop is `NaN%` — which renders as a blank bar in CSS, throws from
+ * `addColorStop` on the poster canvas, and reaches Satori as `flexGrow: NaN` in
+ * the OpenGraph image, where it can 500 a public route.
+ */
+function weight(v: unknown): number | undefined {
+  if (typeof v !== "number" || !Number.isFinite(v) || v < 0) return undefined;
+  return Math.min(v, MAX_WEIGHT);
+}
+
 /**
  * Parse and sanitise a scheme from JSON text, assigning fresh ids via `newId`.
  * Throws a user-facing Error only when the text isn't JSON or isn't a scheme.
@@ -134,7 +153,7 @@ export function importSchemeObject(data: unknown, newId: () => string): Scheme {
         hex: cleanHex(p.hex),
         role: isRole(p.role) ? p.role : "layer",
         ...(p.custom === true ? { custom: true } : {}),
-        ...(typeof p.weight === "number" ? { weight: p.weight } : {}),
+        ...(weight(p.weight) !== undefined ? { weight: weight(p.weight) } : {}),
       };
     });
     return {
@@ -144,5 +163,11 @@ export function importSchemeObject(data: unknown, newId: () => string): Scheme {
     };
   });
 
-  return { title: str(obj.title, "Imported scheme"), elements };
+  // Trimmed to the column's limit: an over-long title from a file would
+  // otherwise be rejected by the database as an opaque sync failure, well after
+  // the import appeared to succeed.
+  return {
+    title: str(obj.title, "Imported scheme").slice(0, MAX_SCHEME_TITLE),
+    elements,
+  };
 }

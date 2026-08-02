@@ -60,18 +60,64 @@ create policy "profiles read self"   on public.profiles for select using (auth.u
 create policy "profiles upsert self" on public.profiles for insert with check (auth.uid() = id);
 create policy "profiles update self" on public.profiles for update using (auth.uid() = id);
 
--- schemes: owner has full CRUD; anyone (incl. logged-out) can read public ones.
--- The two SELECT policies are OR-combined, giving "own rows OR public rows".
+-- schemes: the owner has full CRUD, and that is the ONLY select policy.
+--
+-- There used to be a second one — `using (is_public = true)` — so that the
+-- share viewer could read a published scheme anonymously. Permissive SELECT
+-- policies are OR-combined, so that policy did not mean "readable via its
+-- link"; it meant "readable by anyone who asks". With the shipped anon key,
+-- `from('schemes').select('*')` returned every published scheme in the
+-- database — title, full `data` and `user_id` — with no slug required. The
+-- share UI promises "anyone with the link can view", and a 40-bit unguessable
+-- token is pointless if enumeration isn't needed to get the whole table.
+--
+-- Published schemes are therefore *unlisted*: reachable only by slug, through
+-- `public.get_public_scheme` below, which is `security definer` and so is the
+-- one and only way an anonymous reader can see someone else's row.
 drop policy if exists "schemes select own"    on public.schemes;
 drop policy if exists "schemes select public" on public.schemes;
 drop policy if exists "schemes insert self"   on public.schemes;
 drop policy if exists "schemes update self"   on public.schemes;
 drop policy if exists "schemes delete self"   on public.schemes;
 create policy "schemes select own"    on public.schemes for select using (auth.uid() = user_id);
-create policy "schemes select public" on public.schemes for select using (is_public = true);
 create policy "schemes insert self"   on public.schemes for insert with check (auth.uid() = user_id);
 create policy "schemes update self"   on public.schemes for update using (auth.uid() = user_id);
 create policy "schemes delete self"   on public.schemes for delete using (auth.uid() = user_id);
+
+-- The single slug-scoped read: one published scheme, by exact share slug.
+--
+-- `security definer` bypasses RLS, which is the point — it's what lets this
+-- return a row the caller has no policy for. That makes its body the security
+-- boundary, so keep it exactly this narrow: an equality match on `share_slug`,
+-- an `is_public` check, and no way to ask for anything else. There is no
+-- pattern match, no ordering and no offset, so it cannot be walked.
+--
+-- `user_id` is deliberately not in the result: the viewer never displays an
+-- author, and the old blanket policy exposed it to anyone who asked.
+create or replace function public.get_public_scheme(p_slug text)
+  returns table (
+    id         uuid,
+    title      text,
+    data       jsonb,
+    share_slug text,
+    created_at timestamptz,
+    updated_at timestamptz
+  )
+  language sql
+  stable
+  security definer
+  set search_path = public
+as $$
+  select s.id, s.title, s.data, s.share_slug, s.created_at, s.updated_at
+  from public.schemes s
+  where s.share_slug = p_slug
+    and s.is_public = true
+  limit 1;
+$$;
+
+-- `public` here is the SQL pseudo-role (everyone), not the `public` schema.
+revoke all on function public.get_public_scheme(text) from public;
+grant execute on function public.get_public_scheme(text) to anon, authenticated;
 
 -- ---------------------------------------------------------------------------
 -- Triggers
@@ -98,6 +144,7 @@ create trigger on_auth_user_created
 create or replace function public.touch_updated_at()
   returns trigger
   language plpgsql
+  set search_path = public
 as $$
 begin
   new.updated_at = now();
@@ -123,6 +170,13 @@ create trigger schemes_touch
 alter table public.schemes drop constraint if exists schemes_data_size;
 alter table public.schemes
   add constraint schemes_data_size check (octet_length(data::text) <= 100000);
+
+-- Cap the title too. It's client-supplied and was unbounded, which defeated the
+-- size cap above — a single row could hold megabytes in `title` alone, and that
+-- string is what the share page and the generated OpenGraph image render.
+alter table public.schemes drop constraint if exists schemes_title_length;
+alter table public.schemes
+  add constraint schemes_title_length check (length(title) <= 200);
 
 -- Cap the number of schemes per account. A count can't be expressed as a CHECK
 -- (it references other rows), so it runs as a BEFORE INSERT trigger. The

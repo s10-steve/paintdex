@@ -6,13 +6,19 @@ import { getAllPaints, getBrands } from "@/lib/paints/load";
 import { PAINT_TYPES } from "@/lib/paints/types";
 import { COLOUR_FAMILIES } from "@/lib/color";
 
+const TITLE = "Compare paints";
+const DESCRIPTION =
+  "Compare miniature paints by brand, range, type, colour family and hex value — filter the database to find alternatives.";
+
 export const metadata: Metadata = {
-  title: "Compare paints",
-  description:
-    "Compare miniature paints by brand, range, type, colour family and hex value — filter the database to find alternatives.",
+  title: TITLE,
+  description: DESCRIPTION,
   // Filters/search live in query params (?q=, ?brand=…); canonicalise to the
   // bare path so those permutations don't fragment as duplicate content.
   alternates: { canonical: "/paints" },
+  // Without this the root layout's `openGraph` is inherited whole, so a shared
+  // link previewed as the homepage pointing at "/".
+  openGraph: { title: TITLE, description: DESCRIPTION, url: "/paints" },
 };
 
 export default function PaintsPage() {
@@ -36,12 +42,11 @@ export default function PaintsPage() {
       {/* Preload the dataset so it downloads in parallel with the JS bundle
           instead of waiting for the client component to mount and fetch it
           (avoids a request waterfall on first load). Hoisted to <head>. */}
-      <link
-        rel="preload"
-        href={BROWSE_INDEX_URL}
-        as="fetch"
-        crossOrigin="anonymous"
-      />
+      {/* No `crossOrigin`: this is a same-origin asset and `fetchBrowseIndex`
+          requests it with default (same-origin) credentials. The two must match
+          or the browser keeps two cache entries — and a credentialled request is
+          the one that works behind Vercel's Deployment Protection. */}
+      <link rel="preload" href={BROWSE_INDEX_URL} as="fetch" />
       <div className="mx-auto max-w-6xl px-4 pt-6">
         <h1 className="text-2xl font-bold tracking-tight">Compare paints</h1>
         <p className="mt-1 text-sm text-muted-foreground">

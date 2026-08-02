@@ -2,8 +2,9 @@
  * Public shared-scheme page — the ONE intentionally server-rendered route (see
  * CLAUDE.md). Rendering on the server lets us emit per-scheme OpenGraph title,
  * description and a generated colour-bar image (see `opengraph-image.tsx`), so
- * links pasted on Reddit/Instagram get a rich preview. The scheme itself is
- * read anonymously via RLS (`is_public = true`), so no login is needed to view.
+ * links pasted on Reddit/Instagram get a rich preview. The scheme is read
+ * anonymously through the slug-scoped `get_public_scheme` RPC, so no login is
+ * needed to view — and no one can enumerate published schemes without a link.
  *
  * Every other page in the app stays static/client-rendered; this is the
  * deliberate exception, and it's free within Vercel's Hobby allowance.
@@ -26,9 +27,10 @@ const loadScheme = cache(getPublicSchemeBySlug);
 /**
  * Parse a stored scheme into the runtime shape, assigning throwaway ids.
  * Returns null on a malformed `data` shape (importSchemeObject throws when
- * `elements` isn't an array) — the anon insert policy only checks size, not
- * shape, so a public row could carry junk; we degrade to the not-available
- * fallback rather than throwing into the error boundary.
+ * `elements` isn't an array). Nothing validates that shape on the way in — the
+ * column is `jsonb` and the only constraint on it is a size cap — so a
+ * published row can carry junk; we degrade to the not-available fallback
+ * rather than throwing into the error boundary.
  */
 function parse(data: unknown): Scheme | null {
   try {

@@ -61,7 +61,10 @@ export function FacetGroup({
                   checked={selected.has(o.value)}
                   onChange={() => onToggle(o.value)}
                 />
-                <span className="capitalize">{o.label}</span>
+                {/* Not `capitalize`: the accessible name comes from this
+                    label's text, and CSS can't reach it — the checkbox read
+                    "oil" while showing "Oil". `facetOptions` cases the label. */}
+                <span>{o.label}</span>
               </label>
             </li>
           ))}

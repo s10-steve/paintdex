@@ -1,25 +1,22 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import { AlertBanner } from "./alert-banner";
 import { Bar, useBarHover } from "./scheme-bars";
-import { ElementCard, type ElementHandlers } from "./scheme/element-card";
+import { ElementCard } from "./scheme/element-card";
 import { PosterStudio } from "./scheme/poster-studio";
+import { SchemePicker } from "./scheme/scheme-picker";
+import { ShareCard } from "./scheme/share-card";
 import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useLocalScheme } from "@/hooks/use-local-scheme";
+import { LOCAL_POSTER_SCOPE } from "@/hooks/use-poster";
+import { useSchemeEditor } from "@/hooks/use-scheme-editor";
 import { useSchemeNew } from "@/hooks/use-scheme-new";
 import { useSchemePreset } from "@/hooks/use-scheme-preset";
 import { useSchemeShare } from "@/hooks/use-scheme-share";
 import { useSchemeSync } from "@/hooks/use-scheme-sync";
-import {
-  emptyScheme,
-  type SchemeElement,
-  type SchemePaint,
-  type SchemeRole,
-} from "@/lib/scheme/types";
-import { moveItem } from "@/lib/scheme/bars";
+import { emptyScheme, MAX_SCHEME_TITLE, type Scheme } from "@/lib/scheme/types";
 import { schemeHasContent } from "@/lib/scheme/sync";
 import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
 import { uid } from "@/lib/scheme/uid";
@@ -114,61 +111,41 @@ export function SchemeVisualiser() {
     adoptScheme,
   });
 
-  /* ---- immutable scheme updates ---- */
-  const mutateElement = (eid: string, fn: (e: SchemeElement) => SchemeElement) =>
-    setScheme((s) => ({ ...s, elements: s.elements.map((e) => (e.id === eid ? fn(e) : e)) }));
-  const mutatePaints = (eid: string, fn: (paints: SchemePaint[]) => SchemePaint[]) =>
-    mutateElement(eid, (e) => ({ ...e, paints: fn(e.paints) }));
+  // The twelve immutable updates to the document, lifted into their own hook —
+  // they touch nothing but the scheme.
+  const { setTitle, addElement, elementHandlers } = useSchemeEditor(setScheme);
 
-  const setTitle = (title: string) => setScheme((s) => ({ ...s, title }));
-  const renameElement = (eid: string, name: string) => mutateElement(eid, (e) => ({ ...e, name }));
-  const removeElement = (eid: string) =>
-    setScheme((s) => ({ ...s, elements: s.elements.filter((e) => e.id !== eid) }));
-  const moveElement = (eid: string, dir: -1 | 1) =>
-    setScheme((s) => ({ ...s, elements: moveItem(s.elements, eid, dir) }));
-  const addElement = () =>
-    setScheme((s) => ({
-      ...s,
-      elements: [...s.elements, { id: uid(), name: "New element", paints: [] }],
-    }));
-
-  const addPaint = (eid: string, paint: Omit<SchemePaint, "id">) =>
-    mutatePaints(eid, (paints) => [...paints, { ...paint, id: uid() }]);
-  const removePaint = (eid: string, pid: string) =>
-    mutatePaints(eid, (paints) => paints.filter((p) => p.id !== pid));
-  const movePaint = (eid: string, pid: string, dir: -1 | 1) =>
-    mutatePaints(eid, (paints) => moveItem(paints, pid, dir));
-  const setRole = (eid: string, pid: string, role: SchemeRole) =>
-    mutatePaints(eid, (paints) =>
-      paints.map((p) => (p.id === pid ? { ...p, role, weight: undefined } : p)),
-    );
-  const setWeight = (eid: string, pid: string, weight: number) =>
-    mutatePaints(eid, (paints) => paints.map((p) => (p.id === pid ? { ...p, weight } : p)));
-
-  // Handed to every `ElementCard` as one object. Deliberately not memoised: the
-  // updaters above are re-created each render anyway (they only ever call
-  // `setScheme` with an updater, so they never go stale) and `ElementCard` isn't
-  // memoised either, so this is exactly what the per-row arrow props cost before.
-  const elementHandlers: ElementHandlers = {
-    rename: renameElement,
-    move: moveElement,
-    remove: removeElement,
-    addPaint,
-    movePaint,
-    removePaint,
-    setRole,
-    setWeight,
-  };
-
-  const reset = () => {
-    // Guard against wiping real work: only confirm when there's something to lose.
-    const hasContent = scheme.title.trim() !== "" || scheme.elements.length > 0;
-    if (hasContent && !window.confirm("Clear this scheme and start fresh? This can't be undone.")) {
+  /**
+   * Replace the editor's document with `next`.
+   *
+   * The signed-in branch is the important one, and it's the same rule
+   * `useSchemePreset` and `useSchemeNew` already follow: go through
+   * `adoptScheme`, which saves `next` as a **new** row. Calling `setScheme`
+   * directly leaves the debounced autosave to write `next` over whatever row is
+   * active — so "Reset" silently blanked a saved scheme and "Import" silently
+   * replaced one with the contents of a file.
+   *
+   * It also decides who needs a confirm. Signed in, nothing is lost (the old
+   * scheme stays saved and selectable), so prompting would be asking permission
+   * for something that isn't happening. Signed out, `localStorage` is the only
+   * copy and this really is destructive.
+   */
+  const replaceScheme = (next: Scheme, confirmMessage: string) => {
+    if (user && activeSchemeId) {
+      void adoptScheme(next);
+      setBlend(false);
       return;
     }
-    setScheme(emptyScheme());
+    if (schemeHasContent(scheme) && !window.confirm(confirmMessage)) return;
+    setScheme(next);
     setBlend(false);
   };
+
+  const reset = () =>
+    replaceScheme(
+      emptyScheme(),
+      "Clear this scheme and start fresh? It isn't saved to an account, so this can't be undone.",
+    );
 
   /* ---- export / import (no accounts — a JSON file is the save format) ---- */
   const fileRef = useRef<HTMLInputElement>(null);
@@ -193,8 +170,12 @@ export function SchemeVisualiser() {
     const reader = new FileReader();
     reader.onload = () => {
       try {
-        setScheme(importScheme(String(reader.result), uid));
+        const imported = importScheme(String(reader.result), uid);
         setImportError(null);
+        replaceScheme(
+          imported,
+          "Replace the scheme you're working on with this file? It isn't saved to an account, so this can't be undone.",
+        );
       } catch (err) {
         setImportError(err instanceof Error ? err.message : "Couldn't import that file.");
       }
@@ -243,122 +224,25 @@ export function SchemeVisualiser() {
           className="order-3 lg:order-none lg:col-start-1 lg:row-start-2"
         >
           {user && (
-            // Wider bottom margin than the rest of the column: this is what
-            // holds the share calls to action apart from the scheme picker, so
-            // they read as their own thing rather than part of "My schemes".
-            <div className="mb-6 rounded-md border border-border bg-card">
-              {/* Pick / create the scheme being edited. */}
-              <div className="flex flex-wrap items-center gap-2 px-3 py-2">
-                <label htmlFor="saved-schemes" className="text-xs font-medium text-muted-foreground">
-                  My schemes
-                </label>
-                <select
-                  id="saved-schemes"
-                  value={activeSchemeId ?? ""}
-                  onChange={(e) => selectScheme(e.target.value)}
-                  disabled={savedSchemes.length === 0}
-                  className="min-w-0 flex-1 rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {savedSchemes.length === 0 && <option value="">No saved schemes</option>}
-                  {savedSchemes.map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.title || "Untitled scheme"}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={() => void newScheme()}
-                  className="rounded-md border border-border px-2 py-1 text-xs text-foreground transition-colors hover:bg-muted"
-                >
-                  New
-                </button>
-                <span className="ml-auto text-xs text-muted-foreground" aria-live="polite">
-                  {syncState === "saving" && "Saving…"}
-                  {syncState === "saved" && "Saved"}
-                  {syncState === "error" && (
-                    <span className="text-red-600 dark:text-red-400">Sync error</span>
-                  )}
-                  {syncState === "limit" && (
-                    <span className="text-red-600 dark:text-red-400">
-                      Scheme limit reached — delete one to add another.
-                    </span>
-                  )}
-                </span>
-              </div>
-
-            </div>
+            <SchemePicker
+              savedSchemes={savedSchemes}
+              activeSchemeId={activeSchemeId}
+              syncState={syncState}
+              onSelect={selectScheme}
+              onNew={() => void newScheme()}
+            />
           )}
 
-          {/* Share — its own card, deliberately separated from "My schemes"
-              above so the two calls to action are the first thing you see.
-              Always rendered: the image studio works signed out (it reads the
-              localStorage scheme), so gating the whole box on an account would
-              hide the feature from exactly the people most likely to try it. */}
-          <div className="mb-5 rounded-md border border-border bg-card px-3 py-3">
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => setStudioOpen(true)}
-                disabled={scheme.elements.length === 0}
-                className="flex-1 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Create shareable image
-              </button>
-              <button
-                type="button"
-                onClick={() => void togglePublished()}
-                disabled={!activeRow || shareBusy || activeRow.is_public}
-                className="flex-1 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Create shareable link
-              </button>
-            </div>
-
-            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-              {!activeRow && (
-                <span className="text-muted-foreground">
-                  A shareable image is made in your browser.{" "}
-                  {user
-                    ? "Save this scheme to create a link as well."
-                    : "Sign in to create a shareable link as well."}
-                </span>
-              )}
-              {activeRow?.is_public && activeRow.share_slug && (
-                <>
-                  <span className="inline-flex items-center gap-1 text-green-700 dark:text-green-400">
-                    <span aria-hidden>●</span> Public — anyone with the link can view
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => void copyShareLink()}
-                    className="rounded-md border border-border px-2 py-1 text-foreground transition-colors hover:bg-muted"
-                  >
-                    {copied ? "Copied!" : "Copy link"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void togglePublished()}
-                    disabled={shareBusy}
-                    className="rounded-md px-2 py-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    Stop sharing
-                  </button>
-                </>
-              )}
-              {activeRow && !activeRow.is_public && (
-                <span className="text-muted-foreground">Private to your account.</span>
-              )}
-              {activeRow && (
-                <Link
-                  href="/my-schemes"
-                  className="ml-auto text-primary underline-offset-2 hover:underline"
-                >
-                  Manage in My schemes →
-                </Link>
-              )}
-            </div>
-          </div>
+          <ShareCard
+            activeRow={activeRow}
+            signedIn={Boolean(user)}
+            canMakeImage={scheme.elements.length > 0}
+            shareBusy={shareBusy}
+            copied={copied}
+            onOpenStudio={() => setStudioOpen(true)}
+            onTogglePublished={() => void togglePublished()}
+            onCopyLink={() => void copyShareLink()}
+          />
 
           {mounted && configured && googleEnabled && !user && (
             <div className="mb-3.5 flex items-start gap-2 rounded-md border border-border bg-card px-3 py-2 text-xs text-muted-foreground">
@@ -377,6 +261,9 @@ export function SchemeVisualiser() {
               value={scheme.title}
               onChange={(e) => setTitle(e.target.value)}
               aria-label="Scheme name"
+              // Matches the column's check constraint, so a long title is
+              // stopped here rather than coming back as an opaque sync error.
+              maxLength={MAX_SCHEME_TITLE}
               spellCheck={false}
               placeholder="Untitled scheme"
               className="w-full bg-transparent py-0.5 text-3xl font-bold tracking-tight outline-none sm:text-4xl"
@@ -526,7 +413,17 @@ export function SchemeVisualiser() {
         </section>
       </div>
 
-      {studioOpen && <PosterStudio scheme={scheme} onClose={() => setStudioOpen(false)} />}
+      {studioOpen && (
+        <PosterStudio
+          scheme={scheme}
+          // Poster state (photo, framing, anchors) is stored per scheme. The
+          // unbound document shares one scope, which is all a signed-out editor
+          // has; a saved scheme gets its own, so anchors can't land on another
+          // model's photo via a shared element name.
+          scope={activeSchemeId ?? LOCAL_POSTER_SCOPE}
+          onClose={() => setStudioOpen(false)}
+        />
+      )}
 
       {/* Something happened to this user's data on another device. Deliberately
           not part of the sync status, which the next keystroke overwrites with

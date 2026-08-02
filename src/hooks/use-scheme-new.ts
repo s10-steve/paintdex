@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
+import { hasSchemeParam } from "@/hooks/use-scheme-sync";
 import { useInitialSearch } from "@/hooks/use-initial-search";
 import { emptyScheme, type Scheme } from "@/lib/scheme/types";
 
@@ -57,7 +58,8 @@ export function useSchemeNew({
   useEffect(() => {
     if (handledRef.current || !mounted || !ready) return;
 
-    const params = new URLSearchParams(initialSearch());
+    const arrived = initialSearch();
+    const params = new URLSearchParams(arrived);
     if (params.get(NEW_PARAM) === null) {
       handledRef.current = true;
       return;
@@ -65,7 +67,7 @@ export function useSchemeNew({
     handledRef.current = true;
 
     // `?scheme=` names a specific row and wins; `useSchemeSync` handles it.
-    const deferring = params.get("scheme") !== null;
+    const deferring = hasSchemeParam(arrived);
     if (!deferring) {
       if (signedIn) {
         void newSchemeRef.current();

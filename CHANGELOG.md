@@ -5,6 +5,87 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0] - 2026-08-02
+
+A code-review pass over everything added since accounts landed, rather than a
+feature release. Most of it is things that were quietly wrong.
+
+### Security
+
+- **Schemes you share by link are no longer readable by anyone who asks.**
+  Publishing a scheme is meant to make it reachable *by its link* — the link
+  carries a long random token precisely so nobody can guess it. In fact the
+  database rule behind it said "readable by anyone", full stop: with the public
+  key the site ships, it was possible to ask for every published scheme at once
+  and get back each one's title, full contents and the id of the account that
+  owned it, without needing any link. A shared scheme is now genuinely unlisted —
+  reachable only by its own slug, and the owner's account id is no longer part of
+  what a viewer receives. **This needs a database change applied before the
+  update goes live** (see `supabase/schema.sql`).
+
+### Added
+
+- **You can place a photo label without a mouse.** The share-image studio let you
+  choose an element from the keyboard but not say where on the model it points,
+  which made the feature's central step mouse-only. With an element armed, Enter
+  now drops its marker in the middle of the photo and the arrow keys move it —
+  hold Shift to move further.
+
+### Fixed
+
+- **Importing a scheme file no longer overwrites the scheme you had saved.** When
+  signed in, importing a `.json` replaced whatever scheme was open — including in
+  your account — with no warning and no way back. Import now saves the file as a
+  *new* scheme, leaving the one you were on untouched. **Reset** behaved the same
+  way and is fixed the same way.
+- **Switching schemes mid-save no longer copies one over another.** If you
+  changed to a different scheme in the second or so after an edit, the save
+  landing afterwards could attach your new scheme's contents to the old one's
+  name — and the next reload would write it over the top.
+- **A corrupted browser copy of a scheme can no longer wipe the saved one.** If
+  the scheme stored in your browser became unreadable, the editor fell back to a
+  blank one and then saved *that* over your account's copy at the next sign-in.
+- **Shared links now show a preview on social media.** Facebook and Twitter check
+  a site's `robots.txt` before fetching a page, and ours told them not to look at
+  shared schemes — so the preview image and description that the share page
+  exists to provide were never fetched. Shared links still stay out of search
+  results.
+- **Sharing a scheme deleted on another device now says so**, instead of
+  reporting success and handing you a link that leads nowhere.
+- **The paint search box no longer shows one thing while the results show
+  another.** Going back to a previous search left the box holding the old text.
+- **The search suggestions are readable by a screen reader.** Arrowing down the
+  list announced nothing at all, on both the homepage and the paints page.
+- **⌘-click on "Back to all paints" opens a new tab again**, rather than
+  navigating the current one.
+- **The filters drawer on a phone behaves like a proper dialog** — Escape closes
+  it, the keyboard stays inside it while it's open, and focus returns to the
+  button that opened it.
+- **Each scheme keeps its own share photo.** Every scheme shared a single photo
+  and set of labels, so opening the studio for one scheme showed another's photo,
+  with labels landing wherever an element of the same name — "Armour", "Lenses" —
+  had been placed on a different model.
+- **A photo too large to store now tells you**, instead of disappearing at the
+  next reload. Labels pushed off the edge of the frame can also be dragged back
+  in rather than being stranded.
+- **The "Download PNG" button reports a failure** rather than silently doing
+  nothing.
+- **Reaching the saved-scheme limit is explained properly.** The message appeared
+  in a spot that the next keystroke overwrote a second later, which was most of
+  the time.
+- Filters could be lost by ticking a facet at the moment a search was being
+  applied, and a very long scheme name could be rejected by the server with no
+  explanation. Both fixed.
+
+### Changed
+
+- **The paints list is faster to type in.** Every keystroke re-filtered and
+  re-sorted all 5,011 paints twice over; it now does that only when the query
+  actually changes. The paint database is also downloaded once per visit rather
+  than twice.
+- The filter checkboxes now read the same aloud as they look on screen — "Oil",
+  not "oil".
+
 ## [0.11.0] - 2026-08-01
 
 ### Added

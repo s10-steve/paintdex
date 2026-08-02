@@ -3,6 +3,7 @@
 import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 import { useInitialSearch } from "@/hooks/use-initial-search";
 import { hasNewParam } from "@/hooks/use-scheme-new";
+import { hasSchemeParam } from "@/hooks/use-scheme-sync";
 import { findPreset, resolvePreset, type PresetPaintData } from "@/lib/scheme/presets";
 import { schemeHasContent } from "@/lib/scheme/sync";
 import type { Scheme } from "@/lib/scheme/types";
@@ -82,7 +83,7 @@ export function useSchemePreset({
     // Read from the arrival URL: both of those hooks run first and strip their
     // own param, so the live one no longer says who else was asking.
     const arrived = initialSearch();
-    if (hasNewParam(arrived) || new URLSearchParams(arrived).get("scheme") !== null) {
+    if (hasNewParam(arrived) || hasSchemeParam(arrived)) {
       seededRef.current = true;
       const url = new URL(window.location.href);
       url.searchParams.delete(PRESET_PARAM);

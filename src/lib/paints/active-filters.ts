@@ -26,6 +26,7 @@ import {
   type SharedFacets,
   type SimilarParamState,
 } from "./filter-params";
+import { facetLabel, type FacetKind } from "./facet-availability";
 
 /**
  * The facet a chip belongs to. Doubles as the discriminator a page switches on
@@ -65,24 +66,14 @@ const chip = (kind: ChipKind, value: string, label: string): ActiveFilterChip =>
 /**
  * A chip for one value of a multi-select facet.
  *
- * `type` and `family` are a lowercase internal vocabulary ("oil", "red") that the
- * facet checkboxes title-case for display. Doing it here rather than with a CSS
- * `first-letter:uppercase` keeps the accessible name and the visible text the
- * same string — "Remove filter: oil" beside a chip reading "Oil" is a small lie,
- * and CSS can't reach the `aria-label`. Brand and range names carry their own
- * case and are left alone.
+ * The label is cased by `facetLabel`, the same helper the facet checkboxes use,
+ * so a chip and the control it mirrors always read identically. Casing in JS
+ * rather than with CSS is what keeps the accessible name and the visible text
+ * the same string — "Remove filter: oil" beside a chip reading "Oil" is a small
+ * lie, and CSS can't reach an `aria-label`.
  */
-const valueChip = (
-  kind: "brands" | "ranges" | "types" | "families",
-  value: string,
-): ActiveFilterChip =>
-  chip(
-    kind,
-    value,
-    kind === "types" || kind === "families"
-      ? value.charAt(0).toUpperCase() + value.slice(1)
-      : value,
-  );
+const valueChip = (kind: FacetKind, value: string): ActiveFilterChip =>
+  chip(kind, value, facetLabel(kind, value));
 
 /**
  * Every chip, in the sidebar's group order, so scanning the chips and scanning

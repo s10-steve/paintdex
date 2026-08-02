@@ -25,7 +25,9 @@ import {
   type ActiveFilterChip,
 } from "@/lib/paints/active-filters";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
+import { useModalDialog } from "@/hooks/use-modal-dialog";
 import { ActiveFilters } from "./active-filters";
+import { PaintSearchBox } from "./paint-search-box";
 import { PaintCard } from "./paint-card";
 import { PaintFacets } from "./paint-facets";
 
@@ -86,18 +88,8 @@ export function PaintsBrowser({
   // Local search text so typing stays snappy; committed to the URL (debounced).
   const [searchText, setSearchText] = useState(q);
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Autocomplete suggestions: matches computed live from the typed text (not the
-  // debounced `q`) so the dropdown stays in step with keystrokes. Mirrors the
-  // scheme visualiser's add-paint search. Picking one jumps to that paint's page.
-  const [suggestOpen, setSuggestOpen] = useState(false);
-  const [activeSuggestion, setActiveSuggestion] = useState(-1);
-  const suggestions = useMemo(() => {
-    const term = searchText.trim();
-    if (term.length < 2 || !paints) return [];
-    return filterPaints(paints, { search: term }).slice(0, 8);
-  }, [searchText, paints]);
-  const suggestVisible = suggestOpen && searchText.trim().length >= 2;
+  /** Mirrors "a search debounce is in flight" into state, for the resync below. */
+  const [searchPending, setSearchPending] = useState(false);
 
   const cancelSearchTimer = () => {
     if (searchTimer.current) {
@@ -107,9 +99,8 @@ export function PaintsBrowser({
   };
 
   const gotoPaint = (p: BrowsePaint) => {
-    setSuggestOpen(false);
-    setActiveSuggestion(-1);
     cancelSearchTimer();
+    setSearchPending(false);
     // Carry the *live* search text rather than the debounced `q`: the query that
     // found this paint is the one worth having when you come back.
     router.push(
@@ -148,7 +139,12 @@ export function PaintsBrowser({
    * is serialised the same way the paint page serialises it.
    */
   const commit = (mut: (prev: BrowseParamState) => BrowseParamState) => {
-    applyParams(writeBrowseParams(searchParams, mut(filters)));
+    // The ref, not `searchParams` — which lags a `replaceState` by a render.
+    // With the prop, a facet toggled in the gap between a search debounce
+    // firing and React re-rendering rebuilt `q` from the pre-debounce
+    // `filters.search` and wiped the search that had just been committed. That
+    // is the mirror image of the bug this ref was added to fix.
+    applyParams(writeBrowseParams(searchParamsRef.current, mut(filters)));
   };
 
   /** Toggle one value in a multi-select facet. */
@@ -164,7 +160,12 @@ export function PaintsBrowser({
   const onSearchChange = (value: string) => {
     setSearchText(value);
     cancelSearchTimer();
+    setSearchPending(true);
     searchTimer.current = setTimeout(() => {
+      searchTimer.current = null;
+      // Cleared before the write, so the render that picks up the new `q` sees
+      // no pending search and lets the resync below adopt it.
+      setSearchPending(false);
       const params = new URLSearchParams(searchParamsRef.current.toString());
       if (value) params.set(FILTER_PARAMS.q, value);
       else params.delete(FILTER_PARAMS.q);
@@ -174,6 +175,27 @@ export function PaintsBrowser({
 
   // Clear any pending debounce on unmount.
   useEffect(() => () => cancelSearchTimer(), []);
+
+  /**
+   * Keep the box in step with the URL.
+   *
+   * `useState(q)` seeds it once and nothing put a later `q` back, so the search
+   * box was the one control on this page not derived from the URL — the rule
+   * the file's header comment says keeps Back/Forward working. Two ways it
+   * drifted: the heal effect can rewrite `q` (`writeBrowseParams` trims it), and
+   * Back after `gotoPaint` can land on a different one. Either left the input
+   * showing text the grid wasn't filtering by.
+   *
+   * Skipped while a debounce is pending, or this would fight the typing that
+   * hasn't reached the URL yet. That flag is state rather than the timer ref
+   * because a ref can't be read during render. Set-during-render, as with
+   * `visible` below.
+   */
+  const [syncedQ, setSyncedQ] = useState(q);
+  if (q !== syncedQ) {
+    setSyncedQ(q);
+    if (!searchPending) setSearchText(q);
+  }
 
   // Heal a non-canonical URL: a brand or range that has left the catalogue, an
   // insertion-order facet list, a `disc=0` that means nothing. Without this the
@@ -189,9 +211,8 @@ export function PaintsBrowser({
 
   const clearAll = () => {
     cancelSearchTimer();
+    setSearchPending(false);
     setSearchText("");
-    setSuggestOpen(false);
-    setActiveSuggestion(-1);
     // Clear the controls in front of you, preserve everything else. Notably this
     // now keeps `sort` — which was always excluded from the active-filter count,
     // yet was being wiped — along with any `match`/`view` carried in from a paint
@@ -199,19 +220,29 @@ export function PaintsBrowser({
     applyParams(clearParams(searchParams, BROWSE_CLEARABLE));
   };
 
-  const results = filterPaints(
-    paints ?? [],
-    {
-      search: q,
-      brands: [...filters.brands],
-      ranges: [...filters.ranges],
-      types: [...filters.types] as PaintType[],
-      families: [...filters.families],
-      includeDiscontinued,
-      // PaintFilters wants the finish absent rather than empty.
-      metallic: metallic || undefined,
-    },
-    sort,
+  // Memoised on the two things it actually depends on. Unmemoised, a full pass
+  // over ~4,900 records plus a `localeCompare` sort re-ran on *every* render —
+  // including every keystroke in the search box (twice, since `suggestions`
+  // filters too), every suggestion highlight, every "Show more", and every
+  // drawer toggle. `filters` is already memoised on the params, so this only
+  // recomputes when the query or the dataset genuinely changes.
+  const results = useMemo(
+    () =>
+      filterPaints(
+        paints ?? [],
+        {
+          search: q,
+          brands: [...filters.brands],
+          ranges: [...filters.ranges],
+          types: [...filters.types] as PaintType[],
+          families: [...filters.families],
+          includeDiscontinued,
+          // PaintFilters wants the finish absent rather than empty.
+          metallic: metallic || undefined,
+        },
+        sort,
+      ),
+    [paints, q, filters, includeDiscontinued, metallic, sort],
   );
 
   // Incremental rendering; reset to the first page whenever the query changes.
@@ -233,10 +264,10 @@ export function PaintsBrowser({
     [paints, filters],
   );
 
-  const brandOptions = facetOptions(brands, available?.brands ?? null, filters.brands);
-  const familyOptions = facetOptions(families, available?.families ?? null, filters.families);
-  const typeOptions = facetOptions(types, available?.types ?? null, filters.types);
-  const rangeOptions = facetOptions(ranges, available?.ranges ?? null, filters.ranges);
+  const brandOptions = facetOptions(brands, available?.brands ?? null, filters.brands, "brands");
+  const familyOptions = facetOptions(families, available?.families ?? null, filters.families, "families");
+  const typeOptions = facetOptions(types, available?.types ?? null, filters.types, "types");
+  const rangeOptions = facetOptions(ranges, available?.ranges ?? null, filters.ranges, "ranges");
 
   /**
    * Undo one chip. Every branch goes through a writer that already exists, so
@@ -259,12 +290,12 @@ export function PaintsBrowser({
         commit((prev) => ({ ...prev, includeDiscontinued: false }));
         break;
       case "search":
-        // Same three steps `clearAll` takes: the input is uncontrolled by the
-        // URL between debounces, so dropping `q` alone would leave the typed
-        // text sitting in the box and the pending timer about to put it back.
+        // Same steps `clearAll` takes: the input is uncontrolled by the URL
+        // between debounces, so dropping `q` alone would leave the typed text
+        // sitting in the box and the pending timer about to put it back.
         cancelSearchTimer();
+        setSearchPending(false);
         setSearchText("");
-        setSuggestOpen(false);
         commit((prev) => ({ ...prev, search: "" }));
         break;
       // The panel's ΔE cutoff has no control on this page, so it can't be a chip
@@ -330,110 +361,13 @@ export function PaintsBrowser({
     <div className="mx-auto max-w-6xl px-4 py-6">
       {/* Search + sort bar */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="relative flex-1">
-          <input
-            type="search"
-            value={searchText}
-            onChange={(e) => {
-              onSearchChange(e.target.value);
-              setSuggestOpen(true);
-              setActiveSuggestion(-1);
-            }}
-            onFocus={() => setSuggestOpen(true)}
-            // Delay the close so a click (mousedown) on a suggestion registers first.
-            onBlur={() => setTimeout(() => setSuggestOpen(false), 120)}
-            onKeyDown={(e) => {
-              if (!suggestVisible || !suggestions.length) return;
-              if (e.key === "ArrowDown") {
-                e.preventDefault();
-                setActiveSuggestion((a) =>
-                  Math.min(a + 1, suggestions.length - 1),
-                );
-              } else if (e.key === "ArrowUp") {
-                e.preventDefault();
-                setActiveSuggestion((a) => Math.max(a - 1, 0));
-              } else if (e.key === "Enter" && activeSuggestion >= 0) {
-                // Enter with a highlighted suggestion jumps to that paint; Enter
-                // with none highlighted falls through to the normal (debounced)
-                // grid-filtering behaviour.
-                e.preventDefault();
-                gotoPaint(suggestions[activeSuggestion]);
-              } else if (e.key === "Escape") {
-                setSuggestOpen(false);
-                setActiveSuggestion(-1);
-              }
-            }}
-            placeholder="Search by name, brand, range or code…"
-            aria-label="Search paints"
-            role="combobox"
-            aria-expanded={suggestVisible && suggestions.length > 0}
-            aria-controls="paint-search-suggestions"
-            aria-autocomplete="list"
-            aria-activedescendant={
-              activeSuggestion >= 0
-                ? `paint-suggestion-${activeSuggestion}`
-                : undefined
-            }
-            className="w-full rounded-lg border border-input bg-card px-4 py-2.5 pl-10 text-base shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-sm"
-          />
-          <svg
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
-          </svg>
-
-          {suggestVisible && (paints?.length || loadError) ? (
-            <ul
-              id="paint-search-suggestions"
-              role="listbox"
-              className="absolute inset-x-0 top-[calc(100%+4px)] z-30 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl"
-            >
-              {suggestions.length === 0 ? (
-                <li className="p-3 text-center text-[12.5px] text-muted-foreground">
-                  {loadError
-                    ? "Paint database unavailable."
-                    : "No matching paints."}
-                </li>
-              ) : (
-                suggestions.map((p, i) => (
-                  <li key={p.id} role="option" aria-selected={i === activeSuggestion}>
-                    <button
-                      type="button"
-                      id={`paint-suggestion-${i}`}
-                      // onMouseDown (not onClick) so it fires before the input's blur closes the list.
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        gotoPaint(p);
-                      }}
-                      onMouseEnter={() => setActiveSuggestion(i)}
-                      className={`flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${
-                        i === activeSuggestion ? "bg-muted" : "hover:bg-muted"
-                      }`}
-                    >
-                      <span
-                        className="h-[22px] w-[22px] flex-none rounded-md ring-1 ring-inset ring-black/15"
-                        style={{ background: p.hex }}
-                      />
-                      <span className="min-w-0">
-                        <span className="block truncate text-[13px] font-medium">
-                          {p.name}
-                        </span>
-                        <span className="block truncate text-[11.5px] text-muted-foreground">
-                          {p.brand} · {p.range}
-                        </span>
-                      </span>
-                      <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
-                        {p.hex}
-                      </span>
-                    </button>
-                  </li>
-                ))
-              )}
-            </ul>
-          ) : null}
-        </div>
+        <PaintSearchBox
+          value={searchText}
+          onChange={onSearchChange}
+          onPick={gotoPaint}
+          paints={paints}
+          loadError={loadError}
+        />
         <div className="flex items-center gap-2">
           <label htmlFor="sort" className="sr-only">
             Sort
@@ -554,27 +488,64 @@ export function PaintsBrowser({
 
       {/* Mobile filter drawer */}
       {mobileFiltersOpen ? (
-        <div className="fixed inset-0 z-40 md:hidden">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setMobileFiltersOpen(false)}
-            aria-hidden="true"
-          />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85%] overflow-y-auto border-l border-border bg-background p-4 shadow-xl">
-            <div className="mb-2 flex items-center justify-between">
-              <span className="font-semibold">Filters</span>
-              <button
-                type="button"
-                onClick={() => setMobileFiltersOpen(false)}
-                className="rounded-md border border-border px-3 py-1 text-sm"
-              >
-                Done
-              </button>
-            </div>
-            {sidebar}
-          </div>
-        </div>
+        <MobileFilterDrawer onClose={() => setMobileFiltersOpen(false)}>
+          {sidebar}
+        </MobileFilterDrawer>
       ) : null}
+    </div>
+  );
+}
+
+/**
+ * The filter sidebar as an overlay, for narrow screens.
+ *
+ * A real dialog: it is `fixed inset-0` over the page with a scrim, and used to
+ * have none of the behaviour that implies — no `role`, no `aria-modal`, no
+ * focus trap, no Escape, no focus restore. A keyboard user tabbed straight out
+ * of the drawer into the grid behind the scrim, which is both invisible and
+ * unreachable-looking.
+ *
+ * (The alternatives panel's mobile filters are deliberately *not* this: they
+ * expand inline in the flow rather than overlaying the page, so a disclosure
+ * with `aria-expanded` is the right pattern there and it already uses it.)
+ */
+function MobileFilterDrawer({
+  onClose,
+  children,
+}: {
+  onClose: () => void;
+  children: React.ReactNode;
+}) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useModalDialog({ onClose, initialFocus: closeRef });
+
+  return (
+    <div className="fixed inset-0 z-40 md:hidden">
+      <div
+        className="absolute inset-0 bg-black/50"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Filters"
+        className="absolute right-0 top-0 h-full w-80 max-w-[85%] overflow-y-auto border-l border-border bg-background p-4 shadow-xl"
+      >
+        <div className="mb-2 flex items-center justify-between">
+          <span className="font-semibold">Filters</span>
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            className="rounded-md border border-border px-3 py-1 text-sm"
+          >
+            Done
+          </button>
+        </div>
+        {children}
+      </div>
     </div>
   );
 }

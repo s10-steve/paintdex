@@ -24,6 +24,12 @@ describe("fetchBrowseIndex", () => {
     const fetchMock = ok();
     vi.stubGlobal("fetch", fetchMock);
     await fetchBrowseIndex();
+    // No second argument: default (same-origin) credentials, matching the
+    // `crossorigin`-less preloads on the pages that use this. Both halves have
+    // to agree or the browser keeps two cache entries and downloads ~1MB twice —
+    // and they have to agree on *sending* the cookie, because Vercel's
+    // Deployment Protection 401s an uncredentialled request for this file and
+    // the page falls back to "Couldn't load the paint database".
     expect(fetchMock).toHaveBeenCalledWith(BROWSE_INDEX_URL);
   });
 
@@ -52,6 +58,19 @@ describe("fetchBrowseIndex", () => {
       vi.fn(async () => ({ ok: false, status: 503, json: async () => [] })),
     );
     await expect(fetchBrowseIndex()).rejects.toThrow("HTTP 503");
+  });
+
+  it("rejects a 200 whose body isn't the index", async () => {
+    // A CDN error page that happens to be JSON, an SPA fallback, a truncated
+    // deploy. Cast straight to `BrowsePaint[]`, this resolved "successfully"
+    // and then threw out of `filterPaints(...)` during render — a white screen,
+    // with no error boundary on either page, instead of the "Couldn't load the
+    // paint database" state that already exists.
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => ({ ok: true, status: 200, json: async () => ({ error: "nope" }) })),
+    );
+    await expect(fetchBrowseIndex()).rejects.toThrow(/malformed/i);
   });
 
   it("does not cache a failure, so one blip offline isn't permanent", async () => {

@@ -33,7 +33,18 @@ const cache = new WeakMap<readonly BrowsePaint[], BrowsePaintWithLab[]>();
 export function withLab(paints: readonly BrowsePaint[]): BrowsePaintWithLab[] {
   const hit = cache.get(paints);
   if (hit) return hit;
-  const enriched = paints.map((p) => ({ ...p, lab: hexToLab(p.hex) }));
+  // `hexToLab` *throws* on a malformed hex, and this runs over the whole
+  // catalogue — so one bad record used to take the entire alternatives panel
+  // down rather than costing us one candidate. Best-effort data deserves
+  // best-effort handling: drop what won't parse and rank the rest.
+  const enriched: BrowsePaintWithLab[] = [];
+  for (const p of paints) {
+    try {
+      enriched.push({ ...p, lab: hexToLab(p.hex) });
+    } catch {
+      /* unparseable hex — it simply can't take part in colour matching */
+    }
+  }
   cache.set(paints, enriched);
   return enriched;
 }

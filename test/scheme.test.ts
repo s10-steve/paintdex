@@ -17,7 +17,7 @@ import {
   shareUrl,
   SHARE_TOKEN_LENGTH,
 } from "@/lib/scheme/share";
-import { ROLES, roleOf, weightOf } from "@/lib/scheme/types";
+import { MAX_SCHEME_TITLE, ROLES, roleOf, weightOf } from "@/lib/scheme/types";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
@@ -321,6 +321,40 @@ describe("scheme import/export", () => {
     const s = importSchemeObject(obj, newId);
     expect(s.elements[0].paints[0].hex).toBe("#AABBCC");
     expect(s.elements[0].paints[0].role).toBe("layer");
+  });
+
+  /**
+   * A weight override reaches the ramp maths, where a non-finite value makes
+   * every stop `NaN%` — a blank bar in CSS, a throw from `addColorStop` on the
+   * poster canvas, and `flexGrow: NaN` in the OpenGraph image, which can 500 a
+   * public route. `1e400` is the nasty one: valid JSON, parses to `Infinity`.
+   */
+  it("rejects a non-finite weight rather than passing it to the ramp", () => {
+    const withWeight = (w: string) =>
+      importScheme(
+        `{"elements":[{"name":"E","paints":[{"name":"P","hex":"#AABBCC","role":"base","weight":${w}}]}]}`,
+        newId,
+      ).elements[0].paints[0];
+
+    expect(withWeight("1e400").weight).toBeUndefined();
+    expect(withWeight("-1").weight).toBeUndefined();
+    // Clamped, not dropped — a large finite weight is merely unreasonable.
+    expect(withWeight("1e6").weight).toBe(100);
+    expect(withWeight("0.5").weight).toBe(0.5);
+  });
+
+  it("falls back to the role's weight when the override is unusable", () => {
+    // `weightOf` is the single read point, so it holds the line for any scheme
+    // that reaches a renderer without going through the importer.
+    expect(weightOf(p("base", Infinity))).toBe(ROLES.base.weight);
+    expect(weightOf(p("base", NaN))).toBe(ROLES.base.weight);
+    expect(weightOf(p("base", 0.9))).toBe(0.9);
+  });
+
+  it("trims a title to the database's limit", () => {
+    const long = "x".repeat(MAX_SCHEME_TITLE + 50);
+    const s = importScheme(JSON.stringify({ title: long, elements: [] }), newId);
+    expect(s.title).toHaveLength(MAX_SCHEME_TITLE);
   });
 });
 

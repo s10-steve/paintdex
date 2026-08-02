@@ -51,9 +51,27 @@ export function fetchBrowseIndex(): Promise<BrowsePaint[]> {
   if (inFlight) return inFlight;
 
   inFlight = (async () => {
+    // Default credentials (`same-origin`), deliberately. This is a same-origin
+    // static asset, and the preloads that point at it carry no `crossorigin`
+    // for the same reason — the two have to agree or the browser keeps two
+    // cache entries and downloads ~1MB twice.
+    //
+    // Agreeing the *other* way, on `credentials: "omit"` plus a
+    // `crossOrigin="anonymous"` preload, also matches — but it breaks every
+    // protected deployment. Vercel's Deployment Protection gates preview URLs on
+    // a cookie, so an uncredentialled request for this file gets a 401 and the
+    // page shows "Couldn't load the paint database". Production is unprotected
+    // and was fine, which is what made it easy to miss.
     const res = await fetch(BROWSE_INDEX_URL);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return (await res.json()) as BrowsePaint[];
+    const data = await res.json();
+    // A 200 whose body isn't the index at all — a CDN error page that happens
+    // to be JSON, an SPA fallback, a truncated deploy. Cast alone, this resolved
+    // "successfully" and then threw out of `filterPaints(...)` during render,
+    // with no error boundary on either page: a white screen instead of the
+    // "Couldn't load the paint database" state that already exists.
+    if (!Array.isArray(data)) throw new Error("Malformed browse index");
+    return data as BrowsePaint[];
   })()
     .then((data) => {
       cached = data;

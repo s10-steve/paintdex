@@ -34,8 +34,8 @@ A future contributor can revisit this on purpose.
 viewer — which *is* server-rendered so it can emit per-scheme OpenGraph title,
 description and a generated colour-bar preview image (`opengraph-image.tsx`),
 giving shared links a rich preview on Reddit/Instagram/etc. It reads the scheme
-anonymously via RLS (`is_public = true`) with a server anon client
-(`src/lib/supabase/server.ts`). This was a considered call: it's free within
+anonymously through the slug-scoped `get_public_scheme` RPC with a server anon
+client (`src/lib/supabase/server.ts`). This was a considered call: it's free within
 Vercel's Hobby allowance and the rich preview is the whole point of the feature.
 Everything else stays static/client-rendered — don't add more server routes
 without the same kind of deliberate reason.
@@ -53,7 +53,7 @@ npm run validate:data  # validate data/paints/*.json against the Zod schema
 ```
 
 CI (`.github/workflows/ci.yml`, Node 24) runs lint → validate:data → test →
-build on every PR. Run these before pushing.
+build → `npm audit --audit-level=high` on every PR. Run these before pushing.
 
 ## Build-time index generation (important)
 
@@ -84,6 +84,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `active-filters` (the removable chips summarising what's applied, rendered above
   the facet groups on both pages — see "The applied-filter chips" below),
   `alert-banner` (the app's one notice format — see "Notices" below),
+  `paint-search-box` + `paint-suggestions` (the browse combobox and the
+  autocomplete listbox the homepage search shares — they were two copies of the
+  same markup, which is why one ARIA defect had to be fixed twice),
   `back-to-browse` (the paint page's "back" link, which carries the live filters),
   `scheme-visualiser`, `scheme-bars` (the shared bar visualisation + hover/
   tooltip, used by the editor and the read-only `scheme-view`), `site-header`,
@@ -106,7 +109,16 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   memoize derived work at module scope too, not in a `useMemo` — see
   `paints/lab-index.ts`: re-deriving Lab for 4,961 records on each mount cost ~10ms,
   more than the JSON parse the fetch cache saves, because a `useMemo` dies with the
-  component and a paint-to-paint navigation remounts. Also `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
+  component and a paint-to-paint navigation remounts. Also `use-similar-candidates`
+  (the alternatives panel's three derivations of "which paints count" — sidebar
+  availability, the re-ranked ΔE list, and the plot's own candidate set — in one
+  place with the reasons they differ), `use-scheme-editor` (the visualiser's
+  twelve immutable document updates), `use-share-actions` (publish / unpublish /
+  copy link, shared by the visualiser's share card and `/my-schemes`;
+  `use-scheme-share` is a thin adapter over it for the sync-indicator error
+  sink), `use-modal-dialog` (scroll lock, focus trap, Escape, focus restore —
+  used by `PosterStudio` and browse's filter drawer),
+  and `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
   out in real pixels, so it needs a measured width), and the visualiser's three
   state layers — `use-local-scheme`
   (`localStorage`), `use-scheme-sync` (accounts, reconciliation, autosave,
@@ -121,8 +133,12 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
   contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
   the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
-  shared by both paint pages, `facet-availability.ts`, the shared facet-pruning
-  pass, `active-filters.ts`, which turns either page's param state into the
+  shared by both paint pages, `facet-availability.ts`, which owns the
+  shared facet-pruning pass, `matchesFacets` — **the** facet predicate, used by
+  `filterPaints`, the availability pass and the alternatives panel alike (there
+  were three implementations of it) — and `facetLabel`, which cases a facet value
+  for display so the visible text and the accessible name can't diverge;
+  `active-filters.ts`, which turns either page's param state into the
   removable chip list, and `lab-index.ts`, a module-scope memo attaching Lab to
   the browse index), `scheme/` (bar maths, JSON import/export, types, plus `local-store.ts`,
   the sole owner of the visualiser's `localStorage` document and its **binding**
@@ -138,7 +154,12 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   curated example schemes — see "Example schemes" below.
 - `supabase/schema.sql` — the Postgres tables + Row-Level Security for accounts
   (run in the Supabase SQL editor; not applied automatically).
-- `data/paints/*.json` — the paint catalogue, one file per brand.
+- `data/paints/*.json` — the paint catalogue, one file per brand. **Adding one
+  means adding its `import` to `src/lib/paints/load.ts` too**: that file
+  hardcodes the list while the build scripts and the validator `readdirSync` the
+  directory, so a new brand would reach the browse grid but not
+  `generateStaticParams`, and with `dynamicParams = false` every one of its cards
+  would be a hard 404. `test/catalogue-sources.test.ts` is the drift guard.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
   `validate-data.ts`, `import-source.mjs`. The importer's `mapType` is ordered
   most-specific-first, so an "Enamel Wash" stays a `wash`; its `oil` rule is
@@ -159,7 +180,12 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `scheme-new.test.tsx`, which cover the places a bug loses user data
   (reconciliation, including every multi-device case; `?preset=` seeding; `?new=1`),
   plus `local-store.test.ts` and `schemes-manager.test.tsx` (a delete has to
-  stick), and `home-scheme-carousel.test.tsx`. The environment is `node` by default;
+  stick), and `home-scheme-carousel.test.tsx`. Also `use-poster.test.tsx` (the
+  poster's storage: per-scheme scoping, the legacy-key migration, and a
+  `localStorage` that throws on every access, which is Safari with cookies
+  blocked), `site-metadata.test.ts` (robots + sitemap — `/scheme/` was disallowed
+  and nothing noticed) and `catalogue-sources.test.ts` (the `load.ts` drift
+  guard). The environment is `node` by default;
   component tests opt into jsdom with a per-file `@vitest-environment jsdom`
   docblock, so the pure suites stay fast.
 - `src/types/gis.d.ts` — minimal typings for the Google Identity Services lib.
@@ -237,12 +263,25 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 - Colour and scheme logic in `src/lib` is pure (no React/DOM) so it stays
   unit-testable; add tests in `test/` when changing it.
 - **RLS is the security boundary, not the query.** Permissive SELECT policies are
-  OR-combined, and `schemes` has two — "select own" *and* "select public" — so an
-  unfiltered `select("*")` returns your rows **plus every public scheme in the
-  database, other people's included**. `listSchemes(userId)` filters on
-  `user_id` for that reason; don't drop it on the grounds that RLS "already
-  scopes it". Anything reconciling against that list (see the binding, below)
-  would otherwise treat a stranger's row as one of the user's own.
+  OR-combined, so a second one widens access rather than narrowing it.
+  `listSchemes(userId)` filters on `user_id` for that reason; don't drop it on
+  the grounds that RLS "already scopes it". Anything reconciling against that
+  list (see the binding, below) would otherwise treat a stranger's row as one of
+  the user's own.
+- **Published schemes are *unlisted*, not public.** `schemes` has exactly one
+  SELECT policy — "select own". There used to be a second, `using (is_public =
+  true)`, so the share viewer could read anonymously; because permissive policies
+  OR together, that did not mean "readable via its link", it meant **readable by
+  anyone who asks** — `select('*')` with the shipped anon key returned every
+  published scheme in the database, title, full `data` and `user_id`, no slug
+  required. The 40-bit token in `share.ts` is pointless if enumeration isn't
+  needed. The only anonymous read is now `public.get_public_scheme(p_slug)`, a
+  `security definer` function whose body *is* the security boundary: an equality
+  match on `share_slug` plus `is_public`, no pattern match, no ordering, no
+  offset, and `user_id` left out of the result. Keep it that narrow.
+- **`supabase/schema.sql` is not applied automatically.** It has to be run in the
+  Supabase SQL editor, and for the RPC above that must happen **before** the
+  code deploys or `/scheme/[slug]` breaks.
 - The canonical site URL (`https://paintdex.app`) is hardcoded in
   `layout.tsx` (`metadataBase`), `robots.ts`, and `sitemap.ts` — update all
   three together if it ever changes.
@@ -421,8 +460,11 @@ on at the origin. `src/lib/paints/scatter.ts` is the pure layout maths;
   notice.
 - **Marks are 24px (`markR` 12) at every width**, so WCAG 2.5.8 is met on pointer
   as well as touch without leaning on its "equivalent control" exception (which the
-  List view would otherwise supply). The packer's `minSep` of `2r + 1` is what
-  guarantees the 24px of centre spacing. It costs nothing: `capForArea` still allows
+  List view would otherwise supply). The packer's `minSep` of `2r + 1` is the
+  spacing it *aims* for — best-effort, not a guarantee: `relax` can exit at
+  `MAX_ITERATIONS`, and `MAX_DISPLACEMENT_R` deliberately leaves dense piles
+  overlapped (see the bullet below). What is guaranteed is that the remainder is
+  counted and reported in `layout.overlapping`. It costs nothing: `capForArea` still allows
   ~140–170 marks at real desktop widths, above `MAX_POINTS`. And `sizeFor` must
   never floor the width above what it measured — the plot is `overflow-visible`, so
   a floor would push the page into sideways scrolling with nothing to clip it back.
@@ -494,7 +536,10 @@ scrolling sidebar, or behind a closed drawer on a phone.
   reach an attribute — `first-letter:uppercase` gave "Remove filter: oil" beside a
   chip reading "Oil". Only `type` and `family` are cased (lowercase internal
   vocabulary); brands and ranges carry their own. The chip's `value` keeps the raw
-  catalogue string, which is what goes back to the toggle.
+  catalogue string, which is what goes back to the toggle. The facet checkboxes
+  had the opposite defect on the same page — a CSS `capitalize`, so the control
+  announced "oil" while showing "Oil" — and both now go through the one
+  `facetLabel`.
 - **One ordered pass, not a splice.** `families` is gated by a flag rather than
   spliced in at `brands.size`, which was correct only while brands happened to be
   emitted first.
@@ -515,6 +560,12 @@ for `warning`.
   so a context would add runtime plumbing to a static site and buy nothing. The
   accepted trade-off: two banners from two owners would stack, and nothing renders
   two today.
+- **Anything the user must act on goes through `notice`, not `syncState`.** The
+  sync indicator is a small `aria-live` span that the next keystroke overwrites
+  with "Saving…" a second later. The scheme cap used to live there, so a capped
+  user clicking "Open in the designer" saw the only explanation flash past —
+  with `?preset=` already stripped and no example loaded. `SyncState` has no
+  "limit" member any more; use `notice`, which stays until dismissed.
 - **Fixed positioning is the point.** The deleted-elsewhere notice used to render
   inside the signed-in-only "My schemes" card — set by a hook that runs whether or
   not that card is on screen, so on a scrolled page it was announced to nobody.
@@ -576,19 +627,31 @@ Things to know before changing it:
   simply renders untracked rather than breaking; and `setShadow` is ambient
   state, so anything drawn between a `setShadow(ctx, …)` and its reset inherits
   the blur — `drawRampStrip` clears it deliberately for exactly that reason.
-- **Placing an anchor is pointer-only.** There is no keyboard path to putting a
-  marker on the model. The modal itself is fine (focus trap, Escape, restore),
-  but this is a real accessibility gap, not an oversight — fixing it needs a
-  keyboard nudge mode, e.g. arrow keys moving the armed element's anchor.
-- The photo persists in `localStorage` under `paintdex-poster-photo-v1`, split
-  from the settings key so panning doesn't re-serialise a megabyte per pointer
-  event. On a shared device the last photo survives a reload; **Remove** clears
-  it.
+- **Placing an anchor works from the keyboard.** The canvas is focusable (and
+  deliberately not `role="img"` — it's an editing surface): with an element
+  armed, Enter drops its marker mid-frame and the arrows walk it, Shift for a
+  coarser step. Arming from the Labels list moves focus to the canvas so the
+  sequence flows. This was pointer-only, a WCAG 2.1.1 failure on the feature's
+  central interaction; don't regress it by making the canvas inert again.
+- **Poster state is per scheme.** `paintdex-poster-v1:<scope>` and
+  `paintdex-poster-photo-v1:<scope>`, where the scope is the saved row's id, or
+  `local` for a document with no row. Two fixed keys meant every scheme shared
+  one photo, and `reconcileAnchors` then name-matched the old anchors onto any
+  element of the new scheme with a matching name — "Armour" and "Lenses" being
+  exactly what people reuse. The unscoped keys are still read for the `local`
+  scope, so existing state migrates.
+- The photo is split from the settings key so panning doesn't re-serialise a
+  megabyte per pointer event. On a shared device the last photo survives a
+  reload; **Remove** clears it. A photo too big to store says so rather than
+  vanishing at the next reload.
 
 ## Deploying
 
 Vercel builds `main` for production and gives every PR a preview URL — it's a
-zero-config static Next.js app. The **core site needs no configuration**;
+zero-config static Next.js app. **`supabase/schema.sql` is not part of that**:
+it is applied by hand in the Supabase SQL editor, and a change to it that the
+code depends on (the `get_public_scheme` RPC, say) has to be run *before* the
+deploy that needs it. The **core site needs no configuration**;
 **accounts** additionally need the three `NEXT_PUBLIC_*` env vars (see
 `.env.example`) set in Vercel (Production/Preview/Development) — they're inlined
 at build time, so add them and redeploy. Google sign-in also requires the site's
