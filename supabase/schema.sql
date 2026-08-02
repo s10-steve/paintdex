@@ -5,6 +5,18 @@
 -- enabled — a table without RLS is world-readable/writable with the public
 -- anon key.
 --
+-- **This file is for bootstrapping a fresh project.** To change an existing
+-- one, write a delta in `supabase/migrations/` and run that instead.
+--
+-- The reason is not style. The SQL editor runs a pasted script as a single
+-- transaction, so any statement failing rolls back every other statement with
+-- it — including the change you came to make. Pasting this whole file to apply
+-- a two-line change means betting that all hundred-odd statements still succeed
+-- against the live database, and losing that bet quietly. v0.12.0 lost it: the
+-- run aborted somewhere, `get_public_scheme` was never created, and production
+-- served "Scheme not available" for every share link while the permissive
+-- policy the release existed to remove stayed exactly where it was.
+--
 -- Run this in the Supabase SQL editor (or `supabase db push`). It is
 -- idempotent-ish: safe to re-run on a fresh project. Paint references are
 -- stored as plain text slugs (Paint.id from data/paints/*.json) — paints live

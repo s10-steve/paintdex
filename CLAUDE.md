@@ -279,9 +279,14 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `security definer` function whose body *is* the security boundary: an equality
   match on `share_slug` plus `is_public`, no pattern match, no ordering, no
   offset, and `user_id` left out of the result. Keep it that narrow.
-- **`supabase/schema.sql` is not applied automatically.** It has to be run in the
-  Supabase SQL editor, and for the RPC above that must happen **before** the
-  code deploys or `/scheme/[slug]` breaks.
+- **`supabase/schema.sql` is not applied automatically**, and on an existing
+  project you do **not** paste the whole file. Write a delta in
+  `supabase/migrations/` and run that. The SQL editor wraps a pasted script in
+  one transaction, so an unrelated statement failing rolls your change back with
+  it, silently — v0.12.0 shipped that way, leaving every share link on
+  production broken *and* the policy it was removing still in place. Schema
+  changes the code depends on must also run **before** the deploy that needs
+  them.
 - The canonical site URL (`https://paintdex.app`) is hardcoded in
   `layout.tsx` (`metadataBase`), `robots.ts`, and `sitemap.ts` — update all
   three together if it ever changes.
@@ -648,10 +653,13 @@ Things to know before changing it:
 ## Deploying
 
 Vercel builds `main` for production and gives every PR a preview URL — it's a
-zero-config static Next.js app. **`supabase/schema.sql` is not part of that**:
-it is applied by hand in the Supabase SQL editor, and a change to it that the
-code depends on (the `get_public_scheme` RPC, say) has to be run *before* the
-deploy that needs it. The **core site needs no configuration**;
+zero-config static Next.js app. **The database is not part of that**:
+schema changes are applied by hand in the Supabase SQL editor — as a delta from
+`supabase/migrations/`, never by re-pasting `schema.sql`, which is the bootstrap
+for a fresh project and will take your change down with it if any of its other
+statements fails. A change the code depends on (the `get_public_scheme` RPC,
+say) has to be run *before* the deploy that needs it, and confirmed rather than
+assumed. The **core site needs no configuration**;
 **accounts** additionally need the three `NEXT_PUBLIC_*` env vars (see
 `.env.example`) set in Vercel (Production/Preview/Development) — they're inlined
 at build time, so add them and redeploy. Google sign-in also requires the site's
