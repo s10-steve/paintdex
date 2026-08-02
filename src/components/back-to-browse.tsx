@@ -40,6 +40,15 @@ export function BackToBrowse() {
     <Link
       href={href}
       onClick={(e) => {
+        // Leave modified and non-primary clicks entirely alone. `href` is
+        // stale by design between facet changes, so `live !== href` is the
+        // *normal* case after any interaction — which meant this branch ran on
+        // nearly every click, and ⌘-click navigated the current tab instead of
+        // opening a new one. That defeats the whole reason the href is kept up
+        // to date in the first place (see the effect above): the browser needs
+        // it for "open in new tab" and "copy link address", and it can only use
+        // it if we don't intercept.
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
         // The effect runs once per navigation, but the panel keeps rewriting the
         // URL as facets are ticked. Recompute at click time so a filter set after
         // mount still travels.

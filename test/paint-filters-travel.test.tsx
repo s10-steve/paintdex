@@ -86,6 +86,30 @@ describe("BackToBrowse", () => {
     // Nothing to correct, so it lets the <Link> do its normal job.
     expect(push).not.toHaveBeenCalled();
   });
+
+  /**
+   * The intercept above exists so a filter ticked after mount still travels —
+   * but it fired on *every* modified click too, because a stale href is the
+   * normal state after any facet change. So ⌘-click navigated the current tab
+   * instead of opening a new one, defeating the very reason the href is kept up
+   * to date: the browser needs it for "open in new tab" and "copy link
+   * address", and can only use it if we don't preventDefault.
+   */
+  it.each([
+    ["meta (⌘-click)", { metaKey: true }],
+    ["ctrl", { ctrlKey: true }],
+    ["shift", { shiftKey: true }],
+    ["alt", { altKey: true }],
+    ["middle button", { button: 1 }],
+  ])("lets the browser handle a %s click", (_label, modifier) => {
+    render(<BackToBrowse />);
+    // A filter set after mount, so the href is stale — the case that used to
+    // make the intercept fire.
+    setSearch("?brand=Citadel");
+
+    fireEvent.click(screen.getByRole("link"), modifier);
+    expect(push).not.toHaveBeenCalled();
+  });
 });
 
 describe("PaintFacets", () => {

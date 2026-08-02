@@ -24,7 +24,10 @@ describe("fetchBrowseIndex", () => {
     const fetchMock = ok();
     vi.stubGlobal("fetch", fetchMock);
     await fetchBrowseIndex();
-    expect(fetchMock).toHaveBeenCalledWith(BROWSE_INDEX_URL);
+    // `credentials: "omit"` must match the `crossOrigin="anonymous"` preload on
+    // the pages that use this, or the two are different HTTP cache keys and the
+    // ~1MB index is downloaded twice.
+    expect(fetchMock).toHaveBeenCalledWith(BROWSE_INDEX_URL, { credentials: "omit" });
   });
 
   it("parses the catalogue once and reuses it", async () => {
@@ -52,6 +55,19 @@ describe("fetchBrowseIndex", () => {
       vi.fn(async () => ({ ok: false, status: 503, json: async () => [] })),
     );
     await expect(fetchBrowseIndex()).rejects.toThrow("HTTP 503");
+  });
+
+  it("rejects a 200 whose body isn't the index", async () => {
+    // A CDN error page that happens to be JSON, an SPA fallback, a truncated
+    // deploy. Cast straight to `BrowsePaint[]`, this resolved "successfully"
+    // and then threw out of `filterPaints(...)` during render — a white screen,
+    // with no error boundary on either page, instead of the "Couldn't load the
+    // paint database" state that already exists.
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => ({ ok: true, status: 200, json: async () => ({ error: "nope" }) })),
+    );
+    await expect(fetchBrowseIndex()).rejects.toThrow(/malformed/i);
   });
 
   it("does not cache a failure, so one blip offline isn't permanent", async () => {

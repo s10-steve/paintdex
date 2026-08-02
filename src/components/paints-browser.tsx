@@ -87,6 +87,8 @@ export function PaintsBrowser({
   // Local search text so typing stays snappy; committed to the URL (debounced).
   const [searchText, setSearchText] = useState(q);
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** Mirrors "a search debounce is in flight" into state, for the resync below. */
+  const [searchPending, setSearchPending] = useState(false);
 
   // Autocomplete suggestions: matches computed live from the typed text (not the
   // debounced `q`) so the dropdown stays in step with keystrokes. Mirrors the
@@ -111,6 +113,7 @@ export function PaintsBrowser({
     setSuggestOpen(false);
     setActiveSuggestion(-1);
     cancelSearchTimer();
+    setSearchPending(false);
     // Carry the *live* search text rather than the debounced `q`: the query that
     // found this paint is the one worth having when you come back.
     router.push(
@@ -149,7 +152,12 @@ export function PaintsBrowser({
    * is serialised the same way the paint page serialises it.
    */
   const commit = (mut: (prev: BrowseParamState) => BrowseParamState) => {
-    applyParams(writeBrowseParams(searchParams, mut(filters)));
+    // The ref, not `searchParams` — which lags a `replaceState` by a render.
+    // With the prop, a facet toggled in the gap between a search debounce
+    // firing and React re-rendering rebuilt `q` from the pre-debounce
+    // `filters.search` and wiped the search that had just been committed. That
+    // is the mirror image of the bug this ref was added to fix.
+    applyParams(writeBrowseParams(searchParamsRef.current, mut(filters)));
   };
 
   /** Toggle one value in a multi-select facet. */
@@ -165,7 +173,12 @@ export function PaintsBrowser({
   const onSearchChange = (value: string) => {
     setSearchText(value);
     cancelSearchTimer();
+    setSearchPending(true);
     searchTimer.current = setTimeout(() => {
+      searchTimer.current = null;
+      // Cleared before the write, so the render that picks up the new `q` sees
+      // no pending search and lets the resync below adopt it.
+      setSearchPending(false);
       const params = new URLSearchParams(searchParamsRef.current.toString());
       if (value) params.set(FILTER_PARAMS.q, value);
       else params.delete(FILTER_PARAMS.q);
@@ -175,6 +188,27 @@ export function PaintsBrowser({
 
   // Clear any pending debounce on unmount.
   useEffect(() => () => cancelSearchTimer(), []);
+
+  /**
+   * Keep the box in step with the URL.
+   *
+   * `useState(q)` seeds it once and nothing put a later `q` back, so the search
+   * box was the one control on this page not derived from the URL — the rule
+   * the file's header comment says keeps Back/Forward working. Two ways it
+   * drifted: the heal effect can rewrite `q` (`writeBrowseParams` trims it), and
+   * Back after `gotoPaint` can land on a different one. Either left the input
+   * showing text the grid wasn't filtering by.
+   *
+   * Skipped while a debounce is pending, or this would fight the typing that
+   * hasn't reached the URL yet. That flag is state rather than the timer ref
+   * because a ref can't be read during render. Set-during-render, as with
+   * `visible` below.
+   */
+  const [syncedQ, setSyncedQ] = useState(q);
+  if (q !== syncedQ) {
+    setSyncedQ(q);
+    if (!searchPending) setSearchText(q);
+  }
 
   // Heal a non-canonical URL: a brand or range that has left the catalogue, an
   // insertion-order facet list, a `disc=0` that means nothing. Without this the
@@ -190,6 +224,7 @@ export function PaintsBrowser({
 
   const clearAll = () => {
     cancelSearchTimer();
+    setSearchPending(false);
     setSearchText("");
     setSuggestOpen(false);
     setActiveSuggestion(-1);
@@ -200,19 +235,29 @@ export function PaintsBrowser({
     applyParams(clearParams(searchParams, BROWSE_CLEARABLE));
   };
 
-  const results = filterPaints(
-    paints ?? [],
-    {
-      search: q,
-      brands: [...filters.brands],
-      ranges: [...filters.ranges],
-      types: [...filters.types] as PaintType[],
-      families: [...filters.families],
-      includeDiscontinued,
-      // PaintFilters wants the finish absent rather than empty.
-      metallic: metallic || undefined,
-    },
-    sort,
+  // Memoised on the two things it actually depends on. Unmemoised, a full pass
+  // over ~4,900 records plus a `localeCompare` sort re-ran on *every* render —
+  // including every keystroke in the search box (twice, since `suggestions`
+  // filters too), every suggestion highlight, every "Show more", and every
+  // drawer toggle. `filters` is already memoised on the params, so this only
+  // recomputes when the query or the dataset genuinely changes.
+  const results = useMemo(
+    () =>
+      filterPaints(
+        paints ?? [],
+        {
+          search: q,
+          brands: [...filters.brands],
+          ranges: [...filters.ranges],
+          types: [...filters.types] as PaintType[],
+          families: [...filters.families],
+          includeDiscontinued,
+          // PaintFilters wants the finish absent rather than empty.
+          metallic: metallic || undefined,
+        },
+        sort,
+      ),
+    [paints, q, filters, includeDiscontinued, metallic, sort],
   );
 
   // Incremental rendering; reset to the first page whenever the query changes.

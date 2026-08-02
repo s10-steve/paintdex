@@ -51,9 +51,20 @@ export function fetchBrowseIndex(): Promise<BrowsePaint[]> {
   if (inFlight) return inFlight;
 
   inFlight = (async () => {
-    const res = await fetch(BROWSE_INDEX_URL);
+    // `credentials: "omit"` matches the `crossOrigin="anonymous"` preload on
+    // both pages that fetch this. Bare `fetch` defaults to `same-origin`, which
+    // is a different HTTP cache key from the preload's CORS-mode request — so
+    // the browser warned "preloaded but not used" and downloaded ~1MB twice.
+    const res = await fetch(BROWSE_INDEX_URL, { credentials: "omit" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return (await res.json()) as BrowsePaint[];
+    const data = await res.json();
+    // A 200 whose body isn't the index at all — a CDN error page that happens
+    // to be JSON, an SPA fallback, a truncated deploy. Cast alone, this resolved
+    // "successfully" and then threw out of `filterPaints(...)` during render,
+    // with no error boundary on either page: a white screen instead of the
+    // "Couldn't load the paint database" state that already exists.
+    if (!Array.isArray(data)) throw new Error("Malformed browse index");
+    return data as BrowsePaint[];
   })()
     .then((data) => {
       cached = data;

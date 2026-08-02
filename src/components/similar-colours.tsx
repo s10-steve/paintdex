@@ -76,6 +76,14 @@ const NO_FAMILIES: Set<string> = new Set();
 const matchMetallic = (p: { metallic?: boolean }, m: MetallicFilter) =>
   m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
 
+/**
+ * Stable empty array for the plot's `candidates` prop. A fresh `[]` literal is a
+ * new identity every render, which would invalidate `SimilarPlot`'s O(n²) layout
+ * memo — unreachable today because `awaitingData` gates this branch, but one
+ * condition away from being a real stall.
+ */
+const NO_CANDIDATES: ScatterCandidate[] = [];
+
 export function SimilarColours({
   target,
   all,
@@ -316,9 +324,16 @@ export function SimilarColours({
     includeDiscontinued,
   ]);
 
-  const items: RenderItem[] = (
-    anyFilter ? (computed ?? []) : toRenderItems(all)
-  ).filter((i) => i.distance < cutoff);
+  // Memoised like `computed` and `plotCandidates` above: this is the array that
+  // actually renders, and `toRenderItems` allocates a fresh object per record
+  // every time it runs.
+  const items: RenderItem[] = useMemo(
+    () =>
+      (anyFilter ? (computed ?? []) : toRenderItems(all)).filter(
+        (i) => i.distance < cutoff,
+      ),
+    [anyFilter, computed, all, cutoff],
+  );
   // The list only waits on the dataset when a filter forces a re-rank; the plot
   // always needs it.
   const awaitingData =
@@ -378,7 +393,10 @@ export function SimilarColours({
   const clearAll = () => {
     const url = new URL(window.location.href);
     const cleared = clearParams(url.searchParams, SIMILAR_CLEARABLE);
-    setFilters(readSimilarParams(cleared));
+    // Sanitised like every other write. Nothing survives clearing that could
+    // name a dead brand today, but this was the one state-write path skipping
+    // the healing the mount effect treats as mandatory.
+    setFilters(sanitiseSimilarParams(readSimilarParams(cleared), { brands, ranges }));
     const qs = cleared.toString();
     window.history.replaceState(
       null,
@@ -538,7 +556,7 @@ export function SimilarColours({
               targetName={target.name}
               targetHex={target.hex}
               targetLab={targetLab}
-              candidates={plotCandidates ?? []}
+              candidates={plotCandidates ?? NO_CANDIDATES}
               axis={axis}
               axisOverridden={axisChoice !== null}
               onAxisChange={setAxisChoice}
