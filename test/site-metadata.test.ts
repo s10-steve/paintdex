@@ -51,14 +51,20 @@ describe("sitemap", () => {
 
   it("lists every paint page, and nothing robots.txt disallows", () => {
     expect(urls).toHaveLength(3 + getAllPaints().length);
-    for (const path of disallowed()) {
-      expect(urls.some((u) => u.startsWith(BASE_URL + path))).toBe(false);
+    const paths = urls.map((u) => new URL(u).pathname);
+    for (const disallowedPath of disallowed()) {
+      expect(paths.some((p) => p.startsWith(disallowedPath))).toBe(false);
     }
   });
 
   it("uses the same origin as robots.txt", () => {
     // The canonical URL is hardcoded in three places (layout, robots, sitemap);
     // this is the drift guard for two of them.
-    for (const url of urls) expect(url.startsWith(BASE_URL)).toBe(true);
+    //
+    // Compared as a parsed origin, not a string prefix: `startsWith(BASE_URL)`
+    // also accepts `https://paintdex.app.example.com/…`, so it would pass on
+    // exactly the drift it exists to catch. (CodeQL flags the prefix form for
+    // the same reason, which is how this got noticed.)
+    for (const url of urls) expect(new URL(url).origin).toBe(BASE_URL);
   });
 });
