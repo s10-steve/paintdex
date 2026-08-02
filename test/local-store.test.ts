@@ -15,6 +15,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import {
   clearBinding,
   clearBoundScheme,
+  clearStoredScheme,
   patchLocalDoc,
   readLocalDoc,
   writeLocalDoc,
@@ -116,6 +117,23 @@ describe("clearBoundScheme", () => {
     writeLocalDoc({ scheme: scheme("Signed out work"), blend: false, binding: null });
     clearBoundScheme("row-1");
     expect(readLocalDoc().scheme?.title).toBe("Signed out work");
+  });
+});
+
+describe("clearStoredScheme", () => {
+  it("drops the scheme and the binding, whatever row it named", () => {
+    // The corrupt-restore case: the stored scheme won't parse, so there is no
+    // way to know which row it claimed to be — unlike `clearBoundScheme`, this
+    // can't and shouldn't check.
+    writeLocalDoc({ scheme: scheme("Unreadable"), blend: true, binding: binding("row-1") });
+    clearStoredScheme();
+
+    const doc = readLocalDoc();
+    expect(doc.binding).toBeNull();
+    // Both halves matter: a surviving binding would let the autosave present
+    // this blank as row-1's latest content and flush it over the real one.
+    expect(doc.scheme).toEqual({ title: "", elements: [] });
+    expect(doc.blend).toBe(true);
   });
 });
 

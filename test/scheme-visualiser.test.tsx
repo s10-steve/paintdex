@@ -625,6 +625,178 @@ describe("SchemeVisualiser autosave suppression", () => {
   });
 });
 
+/**
+ * Replacing the editor's whole document while a saved row is active.
+ *
+ * `?preset=` and `?new=1` have always gone through `adoptScheme` for this
+ * reason, and both hooks document why. Import and Reset did not: they called
+ * `setScheme` directly, so the debounced autosave wrote the replacement over
+ * whatever row was active — a file import silently destroyed a saved scheme,
+ * with no confirmation anywhere in the path.
+ */
+describe("SchemeVisualiser whole-document replacement", () => {
+  const activeRow = () =>
+    row("row-1", "Saved work", scheme("Saved work"), "2026-01-04T00:00:00.000Z");
+
+  it("imports as a new row rather than over the active saved scheme", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    seedBound(scheme("Saved work"), "row-1");
+    await renderSignedIn([activeRow()]);
+    await waitFor(() => expect(editorTitle()).toBe("Saved work"));
+
+    const incoming = scheme("From a file", "Cloak");
+    await act(async () => {
+      fireEvent.change(document.querySelector('input[type="file"]')!, {
+        target: {
+          files: [
+            new File([JSON.stringify(toExportShape(incoming))], "s.json", {
+              type: "application/json",
+            }),
+          ],
+        },
+      });
+    });
+
+    await waitFor(() => expect(createScheme).toHaveBeenCalledTimes(1));
+    expect(createScheme.mock.calls[0][2]).toBe("From a file");
+    // The saved row must be untouched — that's the whole point.
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(updateScheme).not.toHaveBeenCalledWith(
+      "row-1",
+      expect.anything(),
+      expect.stringContaining("From a file"),
+    );
+  });
+
+  it("resets to a new row rather than blanking the active saved scheme", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    seedBound(scheme("Saved work"), "row-1");
+    await renderSignedIn([activeRow()]);
+    await waitFor(() => expect(editorTitle()).toBe("Saved work"));
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Reset"));
+    });
+
+    await waitFor(() => expect(createScheme).toHaveBeenCalledTimes(1));
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+    // Nothing may have written a blank document to the row that was active.
+    for (const call of updateScheme.mock.calls) expect(call[0]).not.toBe("row-1");
+  });
+
+  it("does not prompt a signed-in user, whose old scheme stays saved", async () => {
+    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true);
+    seedBound(scheme("Saved work"), "row-1");
+    await renderSignedIn([activeRow()]);
+    await waitFor(() => expect(editorTitle()).toBe("Saved work"));
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Reset"));
+    });
+
+    expect(confirmSpy).not.toHaveBeenCalled();
+    confirmSpy.mockRestore();
+  });
+
+  it("prompts a signed-out user, for whom localStorage is the only copy", async () => {
+    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
+    seedLocal(scheme("Only copy"));
+    render(<SchemeVisualiser />);
+    await waitFor(() => expect(editorTitle()).toBe("Only copy"));
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Reset"));
+    });
+
+    expect(confirmSpy).toHaveBeenCalled();
+    // Declined, so nothing was destroyed.
+    expect(editorTitle()).toBe("Only copy");
+    confirmSpy.mockRestore();
+  });
+});
+
+/**
+ * A stored document whose scheme won't parse. The restore falls back to a blank
+ * seed, and the binding has to go with it: `patchLocalDoc` *preserves* the
+ * binding, so leaving it behind presented that blank seed as the bound row's
+ * latest content, and the next reconciliation flushed it over the real one.
+ */
+describe("SchemeVisualiser corrupt local document", () => {
+  // Note: there is deliberately no signed-out "binding is cleared" case here —
+  // signing out clears the binding anyway, so such a test passes with or without
+  // the fix. `local-store.test.ts` covers `clearStoredScheme` directly instead.
+  it("does not flush the blank seed over the bound row on the next sign-in", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const real = scheme("The real saved scheme");
+    localStorage.setItem(
+      STORE,
+      JSON.stringify({
+        scheme: { title: "Corrupt", elements: 42 },
+        blend: true,
+        binding: { id: "row-1", userId: "u1", syncedCanon: canonicalScheme(real) },
+      }),
+    );
+
+    await renderSignedIn([row("row-1", "The real saved scheme", real, "2026-01-04T00:00:00.000Z")]);
+
+    // With the binding gone, the saved row is simply loaded — never overwritten.
+    await waitFor(() => expect(editorTitle()).toBe("The real saved scheme"));
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+    for (const call of updateScheme.mock.calls) {
+      expect(call[1]).not.toEqual(toExportShape({ title: "", elements: [] }));
+    }
+  });
+});
+
+/**
+ * A save that completes after the user has moved to another scheme used to
+ * re-point the binding at the row it wrote, while the document held the row
+ * they'd switched to. `planReload` then read that as "unflushed edits to the old
+ * row" and pushed the new row's content over the old one.
+ */
+describe("SchemeVisualiser binding after a stale save", () => {
+  it("does not re-point the binding at a scheme the editor has left", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    seedBound(scheme("First"), "row-1");
+    await renderSignedIn([
+      row("row-1", "First", scheme("First"), "2026-01-04T00:00:00.000Z"),
+      row("row-2", "Second", scheme("Second"), "2026-01-03T00:00:00.000Z"),
+    ]);
+    await waitFor(() => expect(editorTitle()).toBe("First"));
+
+    // A successful write to row-1, held open until after the switch.
+    let finish!: (v: { matched: boolean }) => void;
+    updateScheme.mockImplementation(() => new Promise((res) => (finish = res)));
+
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText("Scheme name"), {
+        target: { value: "First edited" },
+      });
+    });
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText("My schemes"), { target: { value: "row-2" } });
+    });
+    await waitFor(() => expect(editorTitle()).toBe("Second"));
+
+    await act(async () => {
+      finish({ matched: true });
+    });
+
+    // The document is row-2's; the binding must say so, not row-1.
+    expect(storedBinding()?.id).toBe("row-2");
+  });
+});
+
 describe("SchemeVisualiser sign-out", () => {
   it("keeps the editor and localStorage intact when the user signs out", async () => {
     seedLocal(scheme("Still mine"));

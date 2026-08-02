@@ -133,7 +133,14 @@ export function useSchemeSync({
   const skipSaveRef = useRef(false);
   const readyRef = useRef(false);
   const reqRef = useRef(0);
-  const inflightRef = useRef(false);
+  /**
+   * How many autosave writes are currently out. A count rather than a flag: the
+   * effect's cleanup clears the pending *timer*, not a request already away, so
+   * a second save can start while the first is still in flight — and with a
+   * boolean the first one's `finally` would clear it while the second was still
+   * running, reopening the refetch guard this exists to close.
+   */
+  const inflightRef = useRef(0);
   const lastFetchRef = useRef(0);
   /** Bumped by every completed save, so a refetch can tell its rows went stale. */
   const saveSeqRef = useRef(0);
@@ -315,7 +322,7 @@ export function useSchemeSync({
     const userId = user.id;
     const onVisible = () => {
       if (document.visibilityState !== "visible") return;
-      if (!readyRef.current || inflightRef.current) return;
+      if (!readyRef.current || inflightRef.current > 0) return;
       // `visibilitychange` fires constantly on mobile, and each refetch is a
       // select over every row.
       if (Date.now() - lastFetchRef.current < REFETCH_INTERVAL_MS) return;
@@ -323,20 +330,25 @@ export function useSchemeSync({
       const req = ++reqRef.current;
       const seq = saveSeqRef.current;
       void (async () => {
+        let rows: SchemeRow[];
         try {
-          const rows = await listSchemes(userId);
-          // Fast tab switching can leave two of these in flight; only the newest
-          // may touch the editor.
-          if (req !== reqRef.current) return;
-          // A save that started *after* this fetch did, and landed before it
-          // came back, makes these rows older than what the server now holds —
-          // and it moved `syncedCanon` forward, so the document would look clean
-          // and the pre-save copy would quietly replace the visible edits.
-          if (seq !== saveSeqRef.current || inflightRef.current) return;
-          applyRows(rows, userId, false);
+          rows = await listSchemes(userId);
         } catch {
           /* a failed background refresh is not worth an error state */
+          return;
         }
+        // Fast tab switching can leave two of these in flight; only the newest
+        // may touch the editor.
+        if (req !== reqRef.current) return;
+        // A save that started *after* this fetch did, and landed before it
+        // came back, makes these rows older than what the server now holds —
+        // and it moved `syncedCanon` forward, so the document would look clean
+        // and the pre-save copy would quietly replace the visible edits.
+        if (seq !== saveSeqRef.current || inflightRef.current > 0) return;
+        // Deliberately outside the catch above: `applyRows` reaches
+        // `importSchemeObject`, which throws on a malformed row. Swallowing that
+        // here made one bad row silently disable tab-focus refresh for good.
+        applyRows(rows, userId, false);
       })();
     };
     document.addEventListener("visibilitychange", onVisible);
@@ -362,7 +374,7 @@ export function useSchemeSync({
     const saved = scheme;
     let cancelled = false;
     const timer = setTimeout(async () => {
-      inflightRef.current = true;
+      inflightRef.current++;
       try {
         const { matched } = await updateScheme(id, toExportShape(saved), title);
         if (!matched) {
@@ -381,11 +393,18 @@ export function useSchemeSync({
           // Only the destructive branch is gated: by now the user may have
           // switched schemes or signed out, and replacing what they're looking
           // at on the strength of a stale in-flight write is its own bug.
-          if (gone && !cancelled && activeIdRef.current === id) {
-            const rows = await listSchemes(userId).catch(() => [] as SchemeRow[]);
-            openAfterDeletion(id, rows, userId);
-            setSavedSchemes(rows);
-          } else if (!gone) {
+          if (gone) {
+            if (!cancelled && activeIdRef.current === id) {
+              const rows = await listSchemes(userId).catch(() => [] as SchemeRow[]);
+              openAfterDeletion(id, rows, userId);
+              setSavedSchemes(rows);
+            } else {
+              // The row is gone but the editor has moved on, so there is nothing
+              // to say about it — just don't leave the indicator stuck on
+              // "Saving…", which nothing else would reset until the next edit.
+              setSyncState("idle");
+            }
+          } else {
             setSyncState("error");
           }
           return;
@@ -394,9 +413,17 @@ export function useSchemeSync({
         setSyncState("saved");
         // We and the server now agree; record that, so a later reload knows the
         // editor holds nothing unflushed and can safely take the server's copy.
-        patchLocalDoc({
-          binding: { id, userId, syncedCanon: canonicalScheme(saved) },
-        });
+        //
+        // Gated on the editor still being on this row, like the destructive
+        // branch above. Ungated, a save of scheme A completing after the user
+        // switched to B re-pointed the binding at A while the document held B —
+        // so the next `planReload` saw "unflushed edits to A", kept B, and
+        // pushed B's content over row A.
+        if (!cancelled && activeIdRef.current === id) {
+          patchLocalDoc({
+            binding: { id, userId, syncedCanon: canonicalScheme(saved) },
+          });
+        }
         // Reflect the new title and bump updated_at so the picker keeps the
         // same most-recently-updated-first order a reload would show.
         setSavedSchemes((rows) => {
@@ -408,7 +435,7 @@ export function useSchemeSync({
       } catch {
         setSyncState("error");
       } finally {
-        inflightRef.current = false;
+        inflightRef.current--;
       }
     }, 1000);
     return () => {
@@ -419,8 +446,14 @@ export function useSchemeSync({
       // `syncedCanon` is still a fact worth recording.
       cancelled = true;
     };
+    // Keyed on `user?.id`, not `user`, like every other effect here.
+    // `AuthProvider` calls `setSession` on every `onAuthStateChange` event, so a
+    // token refresh (roughly hourly) hands us a fresh `user` object with the
+    // same id. Depending on the object re-ran this on each one: a redundant
+    // write, a spurious "Saving…", and — worse — a chance to consume
+    // `skipSaveRef` on a run it was never armed for.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheme, user, activeSchemeId, mounted, ready]);
+  }, [scheme, user?.id, activeSchemeId, mounted, ready]);
 
   /* ---- saved-scheme picker handlers ---- */
   const selectScheme = (id: string) => {

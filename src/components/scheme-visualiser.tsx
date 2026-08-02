@@ -15,6 +15,7 @@ import { useSchemeShare } from "@/hooks/use-scheme-share";
 import { useSchemeSync } from "@/hooks/use-scheme-sync";
 import {
   emptyScheme,
+  type Scheme,
   type SchemeElement,
   type SchemePaint,
   type SchemeRole,
@@ -160,15 +161,37 @@ export function SchemeVisualiser() {
     setWeight,
   };
 
-  const reset = () => {
-    // Guard against wiping real work: only confirm when there's something to lose.
-    const hasContent = scheme.title.trim() !== "" || scheme.elements.length > 0;
-    if (hasContent && !window.confirm("Clear this scheme and start fresh? This can't be undone.")) {
+  /**
+   * Replace the editor's document with `next`.
+   *
+   * The signed-in branch is the important one, and it's the same rule
+   * `useSchemePreset` and `useSchemeNew` already follow: go through
+   * `adoptScheme`, which saves `next` as a **new** row. Calling `setScheme`
+   * directly leaves the debounced autosave to write `next` over whatever row is
+   * active — so "Reset" silently blanked a saved scheme and "Import" silently
+   * replaced one with the contents of a file.
+   *
+   * It also decides who needs a confirm. Signed in, nothing is lost (the old
+   * scheme stays saved and selectable), so prompting would be asking permission
+   * for something that isn't happening. Signed out, `localStorage` is the only
+   * copy and this really is destructive.
+   */
+  const replaceScheme = (next: Scheme, confirmMessage: string) => {
+    if (user && activeSchemeId) {
+      void adoptScheme(next);
+      setBlend(false);
       return;
     }
-    setScheme(emptyScheme());
+    if (schemeHasContent(scheme) && !window.confirm(confirmMessage)) return;
+    setScheme(next);
     setBlend(false);
   };
+
+  const reset = () =>
+    replaceScheme(
+      emptyScheme(),
+      "Clear this scheme and start fresh? It isn't saved to an account, so this can't be undone.",
+    );
 
   /* ---- export / import (no accounts — a JSON file is the save format) ---- */
   const fileRef = useRef<HTMLInputElement>(null);
@@ -193,8 +216,12 @@ export function SchemeVisualiser() {
     const reader = new FileReader();
     reader.onload = () => {
       try {
-        setScheme(importScheme(String(reader.result), uid));
+        const imported = importScheme(String(reader.result), uid);
         setImportError(null);
+        replaceScheme(
+          imported,
+          "Replace the scheme you're working on with this file? It isn't saved to an account, so this can't be undone.",
+        );
       } catch (err) {
         setImportError(err instanceof Error ? err.message : "Couldn't import that file.");
       }
