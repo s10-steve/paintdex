@@ -87,30 +87,40 @@ describe("facetOptions", () => {
   const values = ["Citadel", "Vallejo", "Tamiya"];
 
   it("prunes nothing before the catalogue has loaded", () => {
-    const out = facetOptions(values, null, new Set());
+    const out = facetOptions(values, null, new Set(), "brands");
     expect(out.map((o) => o.value)).toEqual(values);
   });
 
   it("keeps only available values once it has", () => {
-    const out = facetOptions(values, new Set(["Citadel", "Tamiya"]), new Set());
+    const out = facetOptions(values, new Set(["Citadel", "Tamiya"]), new Set(), "brands");
     expect(out.map((o) => o.value)).toEqual(["Citadel", "Tamiya"]);
   });
 
   it("always keeps a selected value, even when unavailable", () => {
     // Otherwise a filter you set becomes impossible to untick.
-    const out = facetOptions(values, new Set(["Citadel"]), new Set(["Vallejo"]));
+    const out = facetOptions(values, new Set(["Citadel"]), new Set(["Vallejo"]), "brands");
     expect(out.map((o) => o.value)).toEqual(["Citadel", "Vallejo"]);
   });
 
   it("follows the order of `values`, not the availability set", () => {
     // So PAINT_TYPES / COLOUR_FAMILIES ordering survives.
-    const out = facetOptions(values, new Set(["Tamiya", "Citadel"]), new Set());
+    const out = facetOptions(values, new Set(["Tamiya", "Citadel"]), new Set(), "brands");
     expect(out.map((o) => o.value)).toEqual(["Citadel", "Tamiya"]);
   });
 
-  it("labels each option with its own value", () => {
-    expect(facetOptions(["Citadel"], null, new Set())).toEqual([
+  it("leaves a brand's own casing alone", () => {
+    expect(facetOptions(["Citadel"], null, new Set(), "brands")).toEqual([
       { value: "Citadel", label: "Citadel" },
     ]);
+  });
+
+  it("title-cases the lowercase internal vocabularies", () => {
+    // The label is the accessible name as well as the visible text — it used to
+    // be cased by a CSS `capitalize`, which a screen reader can't see, so the
+    // checkbox announced "oil" while showing "Oil".
+    expect(facetOptions(["oil"], null, new Set(), "types")[0].label).toBe("Oil");
+    expect(facetOptions(["red"], null, new Set(), "families")[0].label).toBe("Red");
+    // The value stays the raw catalogue string — it's what goes back to toggle.
+    expect(facetOptions(["oil"], null, new Set(), "types")[0].value).toBe("oil");
   });
 });

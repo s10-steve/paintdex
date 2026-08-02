@@ -76,7 +76,7 @@ export function HomeSearch() {
           placeholder="Search paints — e.g. Mephiston Red, black, teal…"
           aria-label="Search paints"
           role="combobox"
-          aria-expanded={suggestVisible && suggestions.length > 0}
+          aria-expanded={Boolean(suggestVisible && (paints?.length || loadError))}
           aria-controls="home-search-suggestions"
           aria-autocomplete="list"
           aria-activedescendant={
@@ -92,25 +92,31 @@ export function HomeSearch() {
             className="absolute inset-x-0 top-[calc(100%+4px)] z-30 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl"
           >
             {suggestions.length === 0 ? (
-              <li className="p-3 text-center text-[12.5px] text-muted-foreground">
+              <li
+                role="presentation"
+                className="p-3 text-center text-[12.5px] text-muted-foreground"
+              >
                 {loadError ? "Paint database unavailable." : "No matching paints."}
               </li>
             ) : (
               suggestions.map((p, i) => (
-                <li key={p.id} role="option" aria-selected={i === activeSuggestion}>
-                  <button
-                    type="button"
-                    id={`home-suggestion-${i}`}
-                    // onMouseDown (not onClick) so it fires before the input's blur closes the list.
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      gotoPaint(p);
-                    }}
-                    onMouseEnter={() => setActiveSuggestion(i)}
-                    className={`flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${
-                      i === activeSuggestion ? "bg-muted" : "hover:bg-muted"
-                    }`}
-                  >
+                // `id` and `role="option"` on one element, and no focusable
+                // descendant inside it — see the same fix in `paints-browser`.
+                <li
+                  key={p.id}
+                  id={`home-suggestion-${i}`}
+                  role="option"
+                  aria-selected={i === activeSuggestion}
+                  // onMouseDown (not onClick) so it fires before the input's blur closes the list.
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    gotoPaint(p);
+                  }}
+                  onMouseEnter={() => setActiveSuggestion(i)}
+                  className={`flex w-full cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${
+                    i === activeSuggestion ? "bg-muted" : "hover:bg-muted"
+                  }`}
+                >
                     <span
                       className="h-[22px] w-[22px] flex-none rounded-md ring-1 ring-inset ring-black/15"
                       style={{ background: p.hex }}
@@ -126,7 +132,6 @@ export function HomeSearch() {
                     <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
                       {p.hex}
                     </span>
-                  </button>
                 </li>
               ))
             )}

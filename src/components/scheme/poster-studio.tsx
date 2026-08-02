@@ -8,9 +8,10 @@
  * in `usePoster`; the pixels come from `drawPoster`, shared with `PosterCanvas`
  * so the preview and the export cannot diverge.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { PosterCanvas } from "./poster-canvas";
 import { usePoster } from "@/hooks/use-poster";
+import { useModalDialog } from "@/hooks/use-modal-dialog";
 import {
   layoutPoster,
   POSTER_SIZE,
@@ -66,60 +67,21 @@ export function PosterStudio({
   const [downloadError, setDownloadError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      // Escape backs out of placement first, so it can't be a one-way trip that
-      // closes the whole studio mid-task.
-      if (armed !== null) setArmed(null);
-      else onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [armed, onClose]);
-
-  /**
-   * Modal behaviour: lock the background, move focus in, keep Tab inside, and
-   * hand focus back to whatever opened it. Without the trap, tabbing walks off
-   * into the visualiser sitting behind the overlay, which is both confusing and
-   * unreachable-looking.
-   */
-  const dialogRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const opener = document.activeElement as HTMLElement | null;
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
-    closeRef.current?.focus();
-
-    const onTab = (e: KeyboardEvent) => {
-      if (e.key !== "Tab" || !dialogRef.current) return;
-      const focusable = [
-        ...dialogRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        ),
-        // `offsetParent` is null for anything `display: none`, which the hidden
-        // file input is. `focus()` on it is a no-op, so if it were ever first or
-        // last in the list the wrap would land nowhere.
-      ].filter((el) => el.offsetParent !== null);
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    };
-    window.addEventListener("keydown", onTab);
-    return () => {
-      window.removeEventListener("keydown", onTab);
-      document.body.style.overflow = overflow;
-      opener?.focus?.();
-    };
-  }, []);
+  // Modal behaviour — scroll lock, focus trap, Escape, focus restore — lives in
+  // `useModalDialog`, shared with the browse page's filter drawer.
+  const dialogRef = useModalDialog({
+    onClose,
+    initialFocus: closeRef,
+    // Escape backs out of placement first, so it can't be a one-way trip that
+    // closes the whole studio mid-task.
+    onEscape: () => {
+      if (armed === null) return false;
+      setArmed(null);
+      return true;
+    },
+  });
 
   // Memoised, not just derived: a fresh object each render would defeat the
   // `layout` memo below, and the canvas redraws whenever `layout` changes — so
@@ -239,6 +201,7 @@ export function PosterStudio({
         <div className="mx-auto w-full max-w-[520px]">
           {photo ? (
             <PosterCanvas
+              canvasRef={canvasRef}
               layout={layout}
               options={options}
               photo={posterPhoto}
@@ -409,6 +372,11 @@ export function PosterStudio({
                     key={element.id}
                     onPointerEnter={() => setHighlight(i)}
                     onPointerLeave={() => setHighlight(null)}
+                    // Keyboard equivalent of the hover highlight: tabbing onto
+                    // any control in this row lights up the matching callout,
+                    // and selects it for the canvas's arrow-key nudges.
+                    onFocus={() => setHighlight(i)}
+                    onBlur={() => setHighlight(null)}
                     className="flex items-center gap-1.5 rounded-md px-1.5 py-1 hover:bg-muted"
                   >
                     <span className="min-w-0 flex-1 truncate text-xs">
@@ -427,6 +395,12 @@ export function PosterStudio({
                             key={side}
                             type="button"
                             title={`Put this callout on the ${side}`}
+                            // The visible text is a single letter, so the name
+                            // has to come from here — and it has to say which
+                            // element, since the row's name isn't announced
+                            // with it.
+                            aria-label={`Put the ${element.name} callout on the ${side}`}
+                            aria-pressed={anchors[i]?.side === side}
                             onClick={() => setSide(i, anchors[i]?.side === side ? undefined : side)}
                             className={`px-1.5 py-0.5 text-[10px] uppercase transition-colors ${
                               anchors[i]?.side === side
@@ -443,14 +417,21 @@ export function PosterStudio({
                     <button
                       type="button"
                       disabled={!photo || element.paints.length === 0}
-                      onClick={() => setArmed(armed === i ? null : i)}
+                      onClick={() => {
+                        const next = armed === i ? null : i;
+                        setArmed(next);
+                        // Move focus to the surface the next step happens on,
+                        // so "Place" → Enter → arrows works without hunting for
+                        // it. Pointer users are unaffected.
+                        if (next !== null) canvasRef.current?.focus();
+                      }}
                       className={`flex-none rounded border px-1.5 py-0.5 text-[10px] transition-colors disabled:opacity-40 ${
                         armed === i
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-border text-muted-foreground hover:bg-muted"
                       }`}
                     >
-                      {armed === i ? "Click model" : placed ? "Move" : "Place"}
+                      {armed === i ? "Pick a spot" : placed ? "Move" : "Place"}
                     </button>
 
                     {placed && (
@@ -458,6 +439,7 @@ export function PosterStudio({
                         type="button"
                         onClick={() => clearAnchor(i)}
                         title="Remove this label"
+                        aria-label={`Remove the ${element.name} label`}
                         className="flex-none rounded px-1 py-0.5 text-[10px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                       >
                         ✕

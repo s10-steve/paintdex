@@ -91,8 +91,29 @@ export function facetOptions(
   values: readonly string[],
   available: Set<string> | null,
   selected: Set<string>,
+  kind: FacetKind,
 ): FacetOption[] {
   return values
     .filter((v) => !available || available.has(v) || selected.has(v))
-    .map((v) => ({ value: v, label: v }));
+    .map((v) => ({ value: v, label: facetLabel(kind, v) }));
 }
+
+/** The four multi-select facets, named as they are in the URL state. */
+export type FacetKind = "brands" | "ranges" | "types" | "families";
+
+/**
+ * Display form of a facet value.
+ *
+ * `type` and `family` are a lowercase internal vocabulary ("oil", "red");
+ * brands and ranges carry their own casing and must be left alone.
+ *
+ * Done here rather than with a CSS `capitalize` on the control, because the
+ * accessible name comes from the label's text content and CSS can't reach it —
+ * so the checkbox read "oil" to a screen reader while showing "Oil". The chips
+ * already case in JS for exactly this reason; this is the same rule, shared, so
+ * the two can't drift.
+ */
+export const facetLabel = (kind: FacetKind, value: string): string =>
+  kind === "types" || kind === "families"
+    ? value.charAt(0).toUpperCase() + value.slice(1)
+    : value;

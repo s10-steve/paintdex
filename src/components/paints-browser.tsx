@@ -25,6 +25,7 @@ import {
   type ActiveFilterChip,
 } from "@/lib/paints/active-filters";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
+import { useModalDialog } from "@/hooks/use-modal-dialog";
 import { ActiveFilters } from "./active-filters";
 import { PaintCard } from "./paint-card";
 import { PaintFacets } from "./paint-facets";
@@ -233,10 +234,10 @@ export function PaintsBrowser({
     [paints, filters],
   );
 
-  const brandOptions = facetOptions(brands, available?.brands ?? null, filters.brands);
-  const familyOptions = facetOptions(families, available?.families ?? null, filters.families);
-  const typeOptions = facetOptions(types, available?.types ?? null, filters.types);
-  const rangeOptions = facetOptions(ranges, available?.ranges ?? null, filters.ranges);
+  const brandOptions = facetOptions(brands, available?.brands ?? null, filters.brands, "brands");
+  const familyOptions = facetOptions(families, available?.families ?? null, filters.families, "families");
+  const typeOptions = facetOptions(types, available?.types ?? null, filters.types, "types");
+  const rangeOptions = facetOptions(ranges, available?.ranges ?? null, filters.ranges, "ranges");
 
   /**
    * Undo one chip. Every branch goes through a writer that already exists, so
@@ -366,7 +367,10 @@ export function PaintsBrowser({
             placeholder="Search by name, brand, range or code…"
             aria-label="Search paints"
             role="combobox"
-            aria-expanded={suggestVisible && suggestions.length > 0}
+            // Matches when the listbox is actually in the DOM, including the
+            // "No matching paints" state — it was reporting `false` while a
+            // listbox was on screen.
+            aria-expanded={Boolean(suggestVisible && (paints?.length || loadError))}
             aria-controls="paint-search-suggestions"
             aria-autocomplete="list"
             aria-activedescendant={
@@ -391,27 +395,42 @@ export function PaintsBrowser({
               className="absolute inset-x-0 top-[calc(100%+4px)] z-30 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl"
             >
               {suggestions.length === 0 ? (
-                <li className="p-3 text-center text-[12.5px] text-muted-foreground">
+                // Not an option — it's a status, and a listbox child with no
+                // role is invalid.
+                <li
+                  role="presentation"
+                  className="p-3 text-center text-[12.5px] text-muted-foreground"
+                >
                   {loadError
                     ? "Paint database unavailable."
                     : "No matching paints."}
                 </li>
               ) : (
                 suggestions.map((p, i) => (
-                  <li key={p.id} role="option" aria-selected={i === activeSuggestion}>
-                    <button
-                      type="button"
-                      id={`paint-suggestion-${i}`}
-                      // onMouseDown (not onClick) so it fires before the input's blur closes the list.
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        gotoPaint(p);
-                      }}
-                      onMouseEnter={() => setActiveSuggestion(i)}
-                      className={`flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${
-                        i === activeSuggestion ? "bg-muted" : "hover:bg-muted"
-                      }`}
-                    >
+                  // The `id` and `role="option"` must be on the SAME element:
+                  // `aria-activedescendant` on the input above points at this
+                  // id, and it only announces if what it finds is an option of
+                  // the controlled listbox. They used to be split — role here,
+                  // id on an inner <button> — so arrowing through the list said
+                  // nothing at all in NVDA and VoiceOver. An option must not
+                  // contain a focusable descendant either, which is why this is
+                  // no longer a button: the keyboard path is the input's arrow
+                  // keys and Enter, which is how a combobox is meant to work.
+                  <li
+                    key={p.id}
+                    id={`paint-suggestion-${i}`}
+                    role="option"
+                    aria-selected={i === activeSuggestion}
+                    // onMouseDown (not onClick) so it fires before the input's blur closes the list.
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      gotoPaint(p);
+                    }}
+                    onMouseEnter={() => setActiveSuggestion(i)}
+                    className={`flex w-full cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${
+                      i === activeSuggestion ? "bg-muted" : "hover:bg-muted"
+                    }`}
+                  >
                       <span
                         className="h-[22px] w-[22px] flex-none rounded-md ring-1 ring-inset ring-black/15"
                         style={{ background: p.hex }}
@@ -427,7 +446,6 @@ export function PaintsBrowser({
                       <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
                         {p.hex}
                       </span>
-                    </button>
                   </li>
                 ))
               )}
@@ -554,27 +572,64 @@ export function PaintsBrowser({
 
       {/* Mobile filter drawer */}
       {mobileFiltersOpen ? (
-        <div className="fixed inset-0 z-40 md:hidden">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setMobileFiltersOpen(false)}
-            aria-hidden="true"
-          />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85%] overflow-y-auto border-l border-border bg-background p-4 shadow-xl">
-            <div className="mb-2 flex items-center justify-between">
-              <span className="font-semibold">Filters</span>
-              <button
-                type="button"
-                onClick={() => setMobileFiltersOpen(false)}
-                className="rounded-md border border-border px-3 py-1 text-sm"
-              >
-                Done
-              </button>
-            </div>
-            {sidebar}
-          </div>
-        </div>
+        <MobileFilterDrawer onClose={() => setMobileFiltersOpen(false)}>
+          {sidebar}
+        </MobileFilterDrawer>
       ) : null}
+    </div>
+  );
+}
+
+/**
+ * The filter sidebar as an overlay, for narrow screens.
+ *
+ * A real dialog: it is `fixed inset-0` over the page with a scrim, and used to
+ * have none of the behaviour that implies — no `role`, no `aria-modal`, no
+ * focus trap, no Escape, no focus restore. A keyboard user tabbed straight out
+ * of the drawer into the grid behind the scrim, which is both invisible and
+ * unreachable-looking.
+ *
+ * (The alternatives panel's mobile filters are deliberately *not* this: they
+ * expand inline in the flow rather than overlaying the page, so a disclosure
+ * with `aria-expanded` is the right pattern there and it already uses it.)
+ */
+function MobileFilterDrawer({
+  onClose,
+  children,
+}: {
+  onClose: () => void;
+  children: React.ReactNode;
+}) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useModalDialog({ onClose, initialFocus: closeRef });
+
+  return (
+    <div className="fixed inset-0 z-40 md:hidden">
+      <div
+        className="absolute inset-0 bg-black/50"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Filters"
+        className="absolute right-0 top-0 h-full w-80 max-w-[85%] overflow-y-auto border-l border-border bg-background p-4 shadow-xl"
+      >
+        <div className="mb-2 flex items-center justify-between">
+          <span className="font-semibold">Filters</span>
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            className="rounded-md border border-border px-3 py-1 text-sm"
+          >
+            Done
+          </button>
+        </div>
+        {children}
+      </div>
     </div>
   );
 }

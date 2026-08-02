@@ -15,6 +15,7 @@ import {
   useMemo,
   useRef,
   type PointerEvent as ReactPointerEvent,
+  type RefObject,
 } from "react";
 import {
   POSTER_SIZE,
@@ -31,6 +32,17 @@ import { drawPoster, resolveFontFamily, type PosterPhoto } from "@/lib/scheme/po
 /** Grab radius for an anchor handle, in logical poster px. */
 const HIT_RADIUS = 26;
 
+/** Arrow-key directions, in logical poster px per step. */
+const NUDGE: Record<string, { x: number; y: number } | undefined> = {
+  ArrowLeft: { x: -1, y: 0 },
+  ArrowRight: { x: 1, y: 0 },
+  ArrowUp: { x: 0, y: -1 },
+  ArrowDown: { x: 0, y: 1 },
+};
+const NUDGE_FINE = 4;
+/** With Shift held — enough to cross the poster in a sensible number of presses. */
+const NUDGE_COARSE = 24;
+
 export interface PosterCanvasProps {
   layout: PosterLayout;
   options: PosterOptions;
@@ -45,6 +57,11 @@ export interface PosterCanvasProps {
   onHighlight: (index: number | null) => void;
   /** Called once an armed placement has been consumed. */
   onPlaced: () => void;
+  /**
+   * Lets the studio focus the canvas when an element is armed, so the keyboard
+   * placement path starts on the surface it happens on.
+   */
+  canvasRef?: RefObject<HTMLCanvasElement | null>;
 }
 
 type Drag =
@@ -64,8 +81,10 @@ export function PosterCanvas({
   onPan,
   onHighlight,
   onPlaced,
+  canvasRef,
 }: PosterCanvasProps) {
-  const ref = useRef<HTMLCanvasElement>(null);
+  const ownRef = useRef<HTMLCanvasElement>(null);
+  const ref = canvasRef ?? ownRef;
   const drag = useRef<Drag>(null);
 
   /**
@@ -127,6 +146,9 @@ export function PosterCanvas({
       cancelled = true;
       cancelAnimationFrame(frame);
     };
+    // `ref` is either this component's own ref or the studio's, and neither
+    // identity changes for the life of the mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout, options, photo, armed, highlight, handles]);
 
   /** Client coordinates → logical poster pixels. */
@@ -208,6 +230,41 @@ export function PosterCanvas({
     d.lastY = pt.y;
   };
 
+  /**
+   * The keyboard route to placing and moving an anchor.
+   *
+   * Placement used to be pointer-only: arming an element was reachable from the
+   * keyboard, but "now click the model" had no equivalent, and neither did
+   * nudging one already placed — a WCAG 2.1.1 failure on the feature's central
+   * interaction. Enter places the armed element's anchor in the middle of the
+   * frame; the arrows walk it from there.
+   */
+  const onKeyDown = (e: React.KeyboardEvent<HTMLCanvasElement>) => {
+    if (!framing) return;
+
+    if (armed !== null && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      place(armed, { x: POSTER_SIZE.width / 2, y: POSTER_SIZE.height / 2 });
+      onHighlight(armed);
+      onPlaced();
+      return;
+    }
+
+    const step = NUDGE[e.key];
+    if (!step) return;
+    // The armed element if there is one, else whatever is highlighted — which
+    // is what Enter above leaves behind, so place-then-nudge flows in one go.
+    const target = armed ?? highlight;
+    if (target === null) return;
+    const current = anchors[target];
+    if (!current) return;
+
+    e.preventDefault();
+    const scale = e.shiftKey ? NUDGE_COARSE : NUDGE_FINE;
+    const at = projectAnchor(current, framing, POSTER_SIZE.width, POSTER_SIZE.height);
+    place(target, { x: at.x + step.x * scale, y: at.y + step.y * scale });
+  };
+
   const endDrag = (e: ReactPointerEvent<HTMLCanvasElement>) => {
     drag.current = null;
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
@@ -218,8 +275,16 @@ export function PosterCanvas({
   return (
     <canvas
       ref={ref}
-      role="img"
-      aria-label="Poster preview"
+      // Focusable, and deliberately not `role="img"` — this is an editing
+      // surface, not a picture. The label carries the keyboard contract, since
+      // there's nothing on the canvas a screen reader can read.
+      tabIndex={0}
+      aria-label={
+        armed !== null
+          ? "Poster preview. Press Enter to place the marker in the middle of the photo, then use the arrow keys to move it."
+          : "Poster preview. Arrow keys move the selected marker; hold Shift to move further."
+      }
+      onKeyDown={onKeyDown}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}

@@ -435,9 +435,9 @@ export function SimilarColours({
       </div>
       <PaintFacets
         options={{
-          brands: facetOptions(brands, availability?.brands ?? null, selBrands),
-          ranges: facetOptions(ranges, availability?.ranges ?? null, selRanges),
-          types: facetOptions(types, availability?.types ?? null, selTypes),
+          brands: facetOptions(brands, availability?.brands ?? null, selBrands, "brands"),
+          ranges: facetOptions(ranges, availability?.ranges ?? null, selRanges, "ranges"),
+          types: facetOptions(types, availability?.types ?? null, selTypes, "types"),
           families: [],
         }}
         selected={{ ...filters, families: NO_FAMILIES }}
