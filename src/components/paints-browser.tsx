@@ -27,6 +27,7 @@ import {
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useModalDialog } from "@/hooks/use-modal-dialog";
 import { ActiveFilters } from "./active-filters";
+import { PaintSearchBox } from "./paint-search-box";
 import { PaintCard } from "./paint-card";
 import { PaintFacets } from "./paint-facets";
 
@@ -90,18 +91,6 @@ export function PaintsBrowser({
   /** Mirrors "a search debounce is in flight" into state, for the resync below. */
   const [searchPending, setSearchPending] = useState(false);
 
-  // Autocomplete suggestions: matches computed live from the typed text (not the
-  // debounced `q`) so the dropdown stays in step with keystrokes. Mirrors the
-  // scheme visualiser's add-paint search. Picking one jumps to that paint's page.
-  const [suggestOpen, setSuggestOpen] = useState(false);
-  const [activeSuggestion, setActiveSuggestion] = useState(-1);
-  const suggestions = useMemo(() => {
-    const term = searchText.trim();
-    if (term.length < 2 || !paints) return [];
-    return filterPaints(paints, { search: term }).slice(0, 8);
-  }, [searchText, paints]);
-  const suggestVisible = suggestOpen && searchText.trim().length >= 2;
-
   const cancelSearchTimer = () => {
     if (searchTimer.current) {
       clearTimeout(searchTimer.current);
@@ -110,8 +99,6 @@ export function PaintsBrowser({
   };
 
   const gotoPaint = (p: BrowsePaint) => {
-    setSuggestOpen(false);
-    setActiveSuggestion(-1);
     cancelSearchTimer();
     setSearchPending(false);
     // Carry the *live* search text rather than the debounced `q`: the query that
@@ -226,8 +213,6 @@ export function PaintsBrowser({
     cancelSearchTimer();
     setSearchPending(false);
     setSearchText("");
-    setSuggestOpen(false);
-    setActiveSuggestion(-1);
     // Clear the controls in front of you, preserve everything else. Notably this
     // now keeps `sort` — which was always excluded from the active-filter count,
     // yet was being wiped — along with any `match`/`view` carried in from a paint
@@ -305,12 +290,12 @@ export function PaintsBrowser({
         commit((prev) => ({ ...prev, includeDiscontinued: false }));
         break;
       case "search":
-        // Same three steps `clearAll` takes: the input is uncontrolled by the
-        // URL between debounces, so dropping `q` alone would leave the typed
-        // text sitting in the box and the pending timer about to put it back.
+        // Same steps `clearAll` takes: the input is uncontrolled by the URL
+        // between debounces, so dropping `q` alone would leave the typed text
+        // sitting in the box and the pending timer about to put it back.
         cancelSearchTimer();
+        setSearchPending(false);
         setSearchText("");
-        setSuggestOpen(false);
         commit((prev) => ({ ...prev, search: "" }));
         break;
       // The panel's ΔE cutoff has no control on this page, so it can't be a chip
@@ -376,127 +361,13 @@ export function PaintsBrowser({
     <div className="mx-auto max-w-6xl px-4 py-6">
       {/* Search + sort bar */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="relative flex-1">
-          <input
-            type="search"
-            value={searchText}
-            onChange={(e) => {
-              onSearchChange(e.target.value);
-              setSuggestOpen(true);
-              setActiveSuggestion(-1);
-            }}
-            onFocus={() => setSuggestOpen(true)}
-            // Delay the close so a click (mousedown) on a suggestion registers first.
-            onBlur={() => setTimeout(() => setSuggestOpen(false), 120)}
-            onKeyDown={(e) => {
-              if (!suggestVisible || !suggestions.length) return;
-              if (e.key === "ArrowDown") {
-                e.preventDefault();
-                setActiveSuggestion((a) =>
-                  Math.min(a + 1, suggestions.length - 1),
-                );
-              } else if (e.key === "ArrowUp") {
-                e.preventDefault();
-                setActiveSuggestion((a) => Math.max(a - 1, 0));
-              } else if (e.key === "Enter" && activeSuggestion >= 0) {
-                // Enter with a highlighted suggestion jumps to that paint; Enter
-                // with none highlighted falls through to the normal (debounced)
-                // grid-filtering behaviour.
-                e.preventDefault();
-                gotoPaint(suggestions[activeSuggestion]);
-              } else if (e.key === "Escape") {
-                setSuggestOpen(false);
-                setActiveSuggestion(-1);
-              }
-            }}
-            placeholder="Search by name, brand, range or code…"
-            aria-label="Search paints"
-            role="combobox"
-            // Matches when the listbox is actually in the DOM, including the
-            // "No matching paints" state — it was reporting `false` while a
-            // listbox was on screen.
-            aria-expanded={Boolean(suggestVisible && (paints?.length || loadError))}
-            aria-controls="paint-search-suggestions"
-            aria-autocomplete="list"
-            aria-activedescendant={
-              activeSuggestion >= 0
-                ? `paint-suggestion-${activeSuggestion}`
-                : undefined
-            }
-            className="w-full rounded-lg border border-input bg-card px-4 py-2.5 pl-10 text-base shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-sm"
-          />
-          <svg
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
-          </svg>
-
-          {suggestVisible && (paints?.length || loadError) ? (
-            <ul
-              id="paint-search-suggestions"
-              role="listbox"
-              className="absolute inset-x-0 top-[calc(100%+4px)] z-30 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl"
-            >
-              {suggestions.length === 0 ? (
-                // Not an option — it's a status, and a listbox child with no
-                // role is invalid.
-                <li
-                  role="presentation"
-                  className="p-3 text-center text-[12.5px] text-muted-foreground"
-                >
-                  {loadError
-                    ? "Paint database unavailable."
-                    : "No matching paints."}
-                </li>
-              ) : (
-                suggestions.map((p, i) => (
-                  // The `id` and `role="option"` must be on the SAME element:
-                  // `aria-activedescendant` on the input above points at this
-                  // id, and it only announces if what it finds is an option of
-                  // the controlled listbox. They used to be split — role here,
-                  // id on an inner <button> — so arrowing through the list said
-                  // nothing at all in NVDA and VoiceOver. An option must not
-                  // contain a focusable descendant either, which is why this is
-                  // no longer a button: the keyboard path is the input's arrow
-                  // keys and Enter, which is how a combobox is meant to work.
-                  <li
-                    key={p.id}
-                    id={`paint-suggestion-${i}`}
-                    role="option"
-                    aria-selected={i === activeSuggestion}
-                    // onMouseDown (not onClick) so it fires before the input's blur closes the list.
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      gotoPaint(p);
-                    }}
-                    onMouseEnter={() => setActiveSuggestion(i)}
-                    className={`flex w-full cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${
-                      i === activeSuggestion ? "bg-muted" : "hover:bg-muted"
-                    }`}
-                  >
-                      <span
-                        className="h-[22px] w-[22px] flex-none rounded-md ring-1 ring-inset ring-black/15"
-                        style={{ background: p.hex }}
-                      />
-                      <span className="min-w-0">
-                        <span className="block truncate text-[13px] font-medium">
-                          {p.name}
-                        </span>
-                        <span className="block truncate text-[11.5px] text-muted-foreground">
-                          {p.brand} · {p.range}
-                        </span>
-                      </span>
-                      <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
-                        {p.hex}
-                      </span>
-                  </li>
-                ))
-              )}
-            </ul>
-          ) : null}
-        </div>
+        <PaintSearchBox
+          value={searchText}
+          onChange={onSearchChange}
+          onPick={gotoPaint}
+          paints={paints}
+          loadError={loadError}
+        />
         <div className="flex items-center gap-2">
           <label htmlFor="sort" className="sr-only">
             Sort
