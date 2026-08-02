@@ -31,6 +31,23 @@ export type SchemeRow = {
   updated_at: string;
 };
 
+/**
+ * What `public.get_public_scheme(p_slug)` returns — the only way an anonymous
+ * reader can see someone else's scheme, now that the blanket `is_public = true`
+ * SELECT policy is gone.
+ *
+ * A strict subset of `SchemeRow`: no `user_id` (the viewer never shows an
+ * author) and no `is_public` (a returned row is public by definition).
+ */
+export type PublicSchemeRow = {
+  id: string;
+  title: string;
+  data: StoredScheme;
+  share_slug: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 /** Shape passed to the typed Supabase client's generics. Matches the structure
  * `supabase gen types` would emit (each table needs `Relationships`). */
 export type Database = {
@@ -65,7 +82,14 @@ export type Database = {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      get_public_scheme: {
+        Args: { p_slug: string };
+        // `returns table (...)` is a set, so postgrest hands back an array even
+        // though the body is `limit 1`.
+        Returns: PublicSchemeRow[];
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };

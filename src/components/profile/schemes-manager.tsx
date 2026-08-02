@@ -23,6 +23,7 @@ import {
   publishScheme,
   unpublishScheme,
 } from "@/lib/data/schemes";
+import { MAX_SCHEME_TITLE } from "@/lib/scheme/types";
 import { clearBoundScheme } from "@/lib/scheme/local-store";
 import { makeShareSlug, makeShareToken, shareUrl } from "@/lib/scheme/share";
 import type { SchemeRow } from "@/lib/supabase/types";
@@ -274,6 +275,7 @@ function SchemeCard({
                 if (e.key === "Escape") setEditing(false);
               }}
               aria-label="Scheme name"
+              maxLength={MAX_SCHEME_TITLE}
               className="w-full rounded-md border border-input bg-background px-2 py-1 text-[15px] font-semibold outline-none focus:border-primary"
             />
           ) : (

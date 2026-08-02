@@ -15,6 +15,7 @@ import { useSchemeShare } from "@/hooks/use-scheme-share";
 import { useSchemeSync } from "@/hooks/use-scheme-sync";
 import {
   emptyScheme,
+  MAX_SCHEME_TITLE,
   type Scheme,
   type SchemeElement,
   type SchemePaint,
@@ -404,6 +405,9 @@ export function SchemeVisualiser() {
               value={scheme.title}
               onChange={(e) => setTitle(e.target.value)}
               aria-label="Scheme name"
+              // Matches the column's check constraint, so a long title is
+              // stopped here rather than coming back as an opaque sync error.
+              maxLength={MAX_SCHEME_TITLE}
               spellCheck={false}
               placeholder="Untitled scheme"
               className="w-full bg-transparent py-0.5 text-3xl font-bold tracking-tight outline-none sm:text-4xl"

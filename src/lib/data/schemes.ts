@@ -147,11 +147,15 @@ export async function duplicateScheme(
 }
 
 /**
- * Publish a scheme under a share slug (making it readable via its public link;
- * RLS policy "schemes select public" then serves it to anyone). Returns the
- * slug actually stored — on the rare chance the generated slug collides with
- * the table's unique constraint, `regenerate` is called once for a fresh token
- * and we retry, so callers get back the value that stuck.
+ * Publish a scheme under a share slug, making it readable through the
+ * slug-scoped `get_public_scheme` RPC. Returns the slug actually stored — on the
+ * rare chance the generated slug collides with the table's unique constraint,
+ * `regenerate` is called once for a fresh token and we retry, so callers get
+ * back the value that stuck.
+ *
+ * Throws if the write matched no row: like `updateScheme`, "success" on a
+ * `where` that hit nothing is indistinguishable from a real publish, and the
+ * caller would go on to show a copyable link that resolves to nothing.
  */
 export async function publishScheme(
   id: string,
@@ -159,35 +163,53 @@ export async function publishScheme(
   regenerate: () => string,
 ): Promise<string> {
   const first = await trySetSlug(id, slug);
-  if (first) return slug;
+  if (first === "ok") return slug;
+  if (first === "gone") throw new Error(GONE_MESSAGE);
   // Unique-violation: try once more with a new token.
   const retry = regenerate();
   const second = await trySetSlug(id, retry);
-  if (second) return retry;
+  if (second === "ok") return retry;
+  if (second === "gone") throw new Error(GONE_MESSAGE);
   throw new Error("Couldn't create a share link. Please try again.");
 }
 
-/** Set is_public + share_slug; returns false on a unique-violation, throws otherwise. */
-async function trySetSlug(id: string, slug: string): Promise<boolean> {
-  const { error } = await client()
+/** What a caller is told when a share write finds no row of theirs to write to. */
+const GONE_MESSAGE =
+  "That scheme is no longer available — it may have been deleted on another device.";
+
+/**
+ * Set is_public + share_slug. `taken` on a unique-violation (retryable with a
+ * fresh token), `gone` when the update matched no row, `ok` otherwise.
+ */
+async function trySetSlug(id: string, slug: string): Promise<"ok" | "taken" | "gone"> {
+  const { data: rows, error } = await client()
     .from("schemes")
     .update({ is_public: true, share_slug: slug })
-    .eq("id", id);
-  if (!error) return true;
-  // 23505 = unique_violation (share_slug already taken).
-  if ((error as { code?: string }).code === "23505") return false;
-  throw error;
+    .eq("id", id)
+    .select("id");
+  if (error) {
+    // 23505 = unique_violation (share_slug already taken).
+    if ((error as { code?: string }).code === "23505") return "taken";
+    throw error;
+  }
+  return (rows?.length ?? 0) > 0 ? "ok" : "gone";
 }
 
 /**
  * Stop sharing a scheme. We keep `share_slug` set so re-publishing restores the
- * same link; flipping `is_public` off is enough to block access (RLS no longer
- * matches the row for anonymous readers).
+ * same link; flipping `is_public` off is enough to block access (the RPC only
+ * returns rows with `is_public = true`).
+ *
+ * Reports whether it matched a row, like the other writes. Unlike publishing
+ * this doesn't throw: a row that can't be found is already not shared, which is
+ * the end state the caller asked for.
  */
-export async function unpublishScheme(id: string): Promise<void> {
-  const { error } = await client()
+export async function unpublishScheme(id: string): Promise<WriteResult> {
+  const { data: rows, error } = await client()
     .from("schemes")
     .update({ is_public: false })
-    .eq("id", id);
+    .eq("id", id)
+    .select("id");
   if (error) throw error;
+  return { matched: (rows?.length ?? 0) > 0 };
 }
