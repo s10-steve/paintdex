@@ -24,10 +24,13 @@ describe("fetchBrowseIndex", () => {
     const fetchMock = ok();
     vi.stubGlobal("fetch", fetchMock);
     await fetchBrowseIndex();
-    // `credentials: "omit"` must match the `crossOrigin="anonymous"` preload on
-    // the pages that use this, or the two are different HTTP cache keys and the
-    // ~1MB index is downloaded twice.
-    expect(fetchMock).toHaveBeenCalledWith(BROWSE_INDEX_URL, { credentials: "omit" });
+    // No second argument: default (same-origin) credentials, matching the
+    // `crossorigin`-less preloads on the pages that use this. Both halves have
+    // to agree or the browser keeps two cache entries and downloads ~1MB twice —
+    // and they have to agree on *sending* the cookie, because Vercel's
+    // Deployment Protection 401s an uncredentialled request for this file and
+    // the page falls back to "Couldn't load the paint database".
+    expect(fetchMock).toHaveBeenCalledWith(BROWSE_INDEX_URL);
   });
 
   it("parses the catalogue once and reuses it", async () => {

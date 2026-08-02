@@ -124,7 +124,6 @@ export default async function PaintDetailPage({
         rel="preload"
         href={BROWSE_INDEX_URL}
         as="fetch"
-        crossOrigin="anonymous"
       />
       <JsonLd data={jsonLd} />
       <BackToBrowse />

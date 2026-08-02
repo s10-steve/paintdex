@@ -21,7 +21,7 @@ export default function VisualiserPage() {
     <main>
       {/* Preload the paint database so it downloads alongside the JS bundle
           (same cached asset the browse page uses). */}
-      <link rel="preload" href={BROWSE_INDEX_URL} as="fetch" crossOrigin="anonymous" />
+      <link rel="preload" href={BROWSE_INDEX_URL} as="fetch" />
       <div className="mx-auto max-w-[1420px] px-4 pt-6">
         {/* The descriptive intro lives with the guidance block in
             scheme-visualiser.tsx (one place, consistent spacing, correct

@@ -42,12 +42,11 @@ export default function PaintsPage() {
       {/* Preload the dataset so it downloads in parallel with the JS bundle
           instead of waiting for the client component to mount and fetch it
           (avoids a request waterfall on first load). Hoisted to <head>. */}
-      <link
-        rel="preload"
-        href={BROWSE_INDEX_URL}
-        as="fetch"
-        crossOrigin="anonymous"
-      />
+      {/* No `crossOrigin`: this is a same-origin asset and `fetchBrowseIndex`
+          requests it with default (same-origin) credentials. The two must match
+          or the browser keeps two cache entries — and a credentialled request is
+          the one that works behind Vercel's Deployment Protection. */}
+      <link rel="preload" href={BROWSE_INDEX_URL} as="fetch" />
       <div className="mx-auto max-w-6xl px-4 pt-6">
         <h1 className="text-2xl font-bold tracking-tight">Compare paints</h1>
         <p className="mt-1 text-sm text-muted-foreground">

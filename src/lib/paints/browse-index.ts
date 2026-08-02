@@ -51,11 +51,18 @@ export function fetchBrowseIndex(): Promise<BrowsePaint[]> {
   if (inFlight) return inFlight;
 
   inFlight = (async () => {
-    // `credentials: "omit"` matches the `crossOrigin="anonymous"` preload on
-    // both pages that fetch this. Bare `fetch` defaults to `same-origin`, which
-    // is a different HTTP cache key from the preload's CORS-mode request — so
-    // the browser warned "preloaded but not used" and downloaded ~1MB twice.
-    const res = await fetch(BROWSE_INDEX_URL, { credentials: "omit" });
+    // Default credentials (`same-origin`), deliberately. This is a same-origin
+    // static asset, and the preloads that point at it carry no `crossorigin`
+    // for the same reason — the two have to agree or the browser keeps two
+    // cache entries and downloads ~1MB twice.
+    //
+    // Agreeing the *other* way, on `credentials: "omit"` plus a
+    // `crossOrigin="anonymous"` preload, also matches — but it breaks every
+    // protected deployment. Vercel's Deployment Protection gates preview URLs on
+    // a cookie, so an uncredentialled request for this file gets a 401 and the
+    // page shows "Couldn't load the paint database". Production is unprotected
+    // and was fine, which is what made it easy to miss.
+    const res = await fetch(BROWSE_INDEX_URL);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     // A 200 whose body isn't the index at all — a CDN error page that happens
