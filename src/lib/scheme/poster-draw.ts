@@ -37,7 +37,7 @@ import {
 } from "./poster";
 
 /** The credit line. Quiet by design — a signature, not a watermark. */
-export const CREDIT = "GENERATED WITH PAINTDEX.APP";
+const CREDIT = "GENERATED WITH PAINTDEX.APP";
 
 const STRIP_RADIUS = 6;
 const LEADER_STUB = 18;
@@ -129,7 +129,7 @@ function drawScrims(ctx: Ctx, theme: PosterTheme, w: number, h: number) {
  * it. Always banded — hard steps at each segment boundary — matching
  * `rampGradient(segs, false)`.
  */
-export function drawRampStrip(
+function drawRampStrip(
   ctx: Ctx,
   x: number,
   y: number,

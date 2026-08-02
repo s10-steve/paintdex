@@ -9,6 +9,7 @@ import { PosterStudio } from "./scheme/poster-studio";
 import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useLocalScheme } from "@/hooks/use-local-scheme";
+import { LOCAL_POSTER_SCOPE } from "@/hooks/use-poster";
 import { useSchemeNew } from "@/hooks/use-scheme-new";
 import { useSchemePreset } from "@/hooks/use-scheme-preset";
 import { useSchemeShare } from "@/hooks/use-scheme-share";
@@ -557,7 +558,17 @@ export function SchemeVisualiser() {
         </section>
       </div>
 
-      {studioOpen && <PosterStudio scheme={scheme} onClose={() => setStudioOpen(false)} />}
+      {studioOpen && (
+        <PosterStudio
+          scheme={scheme}
+          // Poster state (photo, framing, anchors) is stored per scheme. The
+          // unbound document shares one scope, which is all a signed-out editor
+          // has; a saved scheme gets its own, so anchors can't land on another
+          // model's photo via a shared element name.
+          scope={activeSchemeId ?? LOCAL_POSTER_SCOPE}
+          onClose={() => setStudioOpen(false)}
+        />
+      )}
 
       {/* Something happened to this user's data on another device. Deliberately
           not part of the sync status, which the next keystroke overwrites with

@@ -7,6 +7,7 @@ import {
   paintRowHeight,
   photoRect,
   projectAnchor,
+  reconcileAnchors,
   COLUMN_W,
   FOOTER_H,
   GAP,
@@ -288,6 +289,71 @@ describe("layoutPoster: degradation", () => {
     const keptMax = Math.max(...layout.callouts.map((c) => c.elementIndex));
     const droppedMin = Math.min(...dropped.map((o) => o.elementIndex));
     expect(keptMax).toBeLessThan(droppedMin);
+  });
+});
+
+/**
+ * The function that decides whether a leader line still points at the part it
+ * was placed on. Anchors are stored by index beside the element name in force
+ * at the time, because `SchemeElement.id` is regenerated every session — so
+ * every edit to the element list has to be reinterpreted here.
+ */
+describe("reconcileAnchors", () => {
+  const at = (y: number) => ({ x: 0.5, y });
+
+  it("keeps an anchor where nothing has changed", () => {
+    const out = reconcileAnchors({ 0: at(0.1), 1: at(0.2) }, ["Armour", "Cloak"], [
+      element("Armour"),
+      element("Cloak"),
+    ]);
+    expect(out).toEqual({ 0: at(0.1), 1: at(0.2) });
+  });
+
+  it("follows an element that moved, rather than staying on the index", () => {
+    // Reordering in the editor must carry the anchors along.
+    const out = reconcileAnchors({ 0: at(0.1), 1: at(0.2) }, ["Armour", "Cloak"], [
+      element("Cloak"),
+      element("Armour"),
+    ]);
+    expect(out).toEqual({ 0: at(0.2), 1: at(0.1) });
+  });
+
+  it("drops an anchor whose element was renamed", () => {
+    // The dangerous case: silently keeping it would put the "Shoulder Pads"
+    // label on whatever now occupies that slot.
+    const out = reconcileAnchors({ 0: at(0.1) }, ["Shoulder Pads"], [element("Eye Lenses")]);
+    expect(out).toEqual({});
+  });
+
+  it("drops an anchor whose element was deleted", () => {
+    const out = reconcileAnchors({ 0: at(0.1), 1: at(0.2) }, ["Armour", "Cloak"], [
+      element("Armour"),
+    ]);
+    expect(out).toEqual({ 0: at(0.1) });
+  });
+
+  it("gives a duplicated name to one element only, in order", () => {
+    // Two elements can legitimately share a name; `claimed` stops the first
+    // anchor being matched onto both.
+    const out = reconcileAnchors({ 0: at(0.1), 1: at(0.2) }, ["Armour", "Armour"], [
+      element("Armour"),
+      element("Armour"),
+    ]);
+    expect(out).toEqual({ 0: at(0.1), 1: at(0.2) });
+  });
+
+  it("ignores an anchor with no recorded name", () => {
+    // A stored entry with no matching name can't be verified against anything,
+    // so it must not be placed by index alone.
+    expect(reconcileAnchors({ 3: at(0.4) }, ["Armour"], [element("Armour")])).toEqual({});
+  });
+
+  it("reattaches by name when an element is inserted above", () => {
+    const out = reconcileAnchors({ 0: at(0.1) }, ["Armour"], [
+      element("Base"),
+      element("Armour"),
+    ]);
+    expect(out).toEqual({ 1: at(0.1) });
   });
 });
 

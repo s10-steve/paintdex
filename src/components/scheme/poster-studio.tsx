@@ -35,7 +35,16 @@ const OMISSION_TEXT: Record<PosterOmission["reason"], string> = {
   "no-space": "no room left on the poster",
 };
 
-export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () => void }) {
+export function PosterStudio({
+  scheme,
+  scope,
+  onClose,
+}: {
+  scheme: Scheme;
+  /** Which scheme's poster state to load — see `usePoster`. */
+  scope?: string;
+  onClose: () => void;
+}) {
   const {
     photo,
     framing,
@@ -49,7 +58,7 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
     loadPhoto,
     clearPhoto,
     error,
-  } = usePoster(scheme.elements);
+  } = usePoster(scheme.elements, scope);
 
   const [armed, setArmed] = useState<number | null>(null);
   const [highlight, setHighlight] = useState<number | null>(null);
@@ -85,9 +94,14 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
 
     const onTab = (e: KeyboardEvent) => {
       if (e.key !== "Tab" || !dialogRef.current) return;
-      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
+      const focusable = [
+        ...dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+        // `offsetParent` is null for anything `display: none`, which the hidden
+        // file input is. `focus()` on it is a no-op, so if it were ever first or
+        // last in the list the wrap would land nowhere.
+      ].filter((el) => el.offsetParent !== null);
       if (focusable.length === 0) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -182,7 +196,16 @@ export function PosterStudio({ scheme, onClose }: { scheme: Scheme; onClose: () 
       document.body.appendChild(a);
       a.click();
       a.remove();
-      URL.revokeObjectURL(url);
+      // Deferred: revoking synchronously after `click()` has historically
+      // aborted the download in Firefox and Safari, which read the blob
+      // asynchronously.
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    } catch {
+      // There was `try/finally` but no `catch`, and the call site is
+      // `void download()` — so a rejection from `document.fonts.ready` or a
+      // throw inside `drawPoster` flipped the button back from "Rendering…"
+      // with no PNG and no message, which reads as the button not working.
+      setDownloadError("Couldn't render the image. Please try again.");
     } finally {
       setBusy(false);
     }

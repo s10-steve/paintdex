@@ -9,9 +9,16 @@
  * download is exactly what this shows minus the handles — the affordances can
  * never leak into the PNG, and the two can never drift apart.
  */
-import { useCallback, useEffect, useRef, type PointerEvent as ReactPointerEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import {
   POSTER_SIZE,
+  projectAnchor,
   unprojectAnchor,
   type PhotoFraming,
   type PosterAnchor,
@@ -61,12 +68,34 @@ export function PosterCanvas({
   const ref = useRef<HTMLCanvasElement>(null);
   const drag = useRef<Drag>(null);
 
+  /**
+   * Every placed anchor's position on the poster — not just the ones that got a
+   * callout.
+   *
+   * `layout.callouts` omits an element whose label wouldn't fit (`no-space`) or
+   * whose anchor sits outside the current framing (`off-frame`). Hit-testing
+   * that list alone meant such an anchor had no handle and no grab target, so
+   * zooming until a label was pushed off-frame stranded it: the only way back
+   * was to clear it and start again.
+   */
+  const handles = useMemo(() => {
+    if (!framing) return [];
+    return Object.entries(anchors).map(([index, a]) => ({
+      index: Number(index),
+      point: projectAnchor(a, framing, POSTER_SIZE.width, POSTER_SIZE.height),
+      // Laid out = has a callout; the rest are drawn dimmer, as "still here,
+      // just not shown".
+      placed: layout.callouts.some((c) => c.elementIndex === Number(index)),
+    }));
+  }, [anchors, framing, layout]);
+
   useEffect(() => {
     const canvas = ref.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
     let cancelled = false;
+    let frame = 0;
     const paint = () => {
       if (cancelled) return;
       // Cap the device ratio: a 3x preview of a 1080x1350 poster is 12 MP of
@@ -83,17 +112,22 @@ export function PosterCanvas({
         scale: dpr,
         highlight,
       });
-      drawHandles(ctx, layout, dpr, armed, highlight);
+      drawHandles(ctx, dpr, armed, highlight, handles);
     };
 
-    paint();
+    // Coalesced into a frame. Dragging an anchor and panning the photo both
+    // fire `pointermove` faster than the display refreshes, and each one
+    // changes `layout`, so without this a fast drag queues several full
+    // redraws — photo, scrims and every callout — between two painted frames.
+    frame = requestAnimationFrame(paint);
     // Geist arrives asynchronously; without the second pass the first render
     // measures and draws in the fallback face.
     void document.fonts.ready.then(paint);
     return () => {
       cancelled = true;
+      cancelAnimationFrame(frame);
     };
-  }, [layout, options, photo, armed, highlight]);
+  }, [layout, options, photo, armed, highlight, handles]);
 
   /** Client coordinates → logical poster pixels. */
   const toLogical = useCallback((e: ReactPointerEvent<HTMLCanvasElement>) => {
@@ -108,16 +142,16 @@ export function PosterCanvas({
     (pt: { x: number; y: number }) => {
       let best = -1;
       let bestD = HIT_RADIUS;
-      for (const c of layout.callouts) {
-        const d = Math.hypot(c.anchor.x - pt.x, c.anchor.y - pt.y);
+      for (const h of handles) {
+        const d = Math.hypot(h.point.x - pt.x, h.point.y - pt.y);
         if (d <= bestD) {
           bestD = d;
-          best = c.elementIndex;
+          best = h.index;
         }
       }
       return best;
     },
-    [layout],
+    [handles],
   );
 
   const place = useCallback(
@@ -203,22 +237,34 @@ export function PosterCanvas({
  * Editor-only chrome, drawn after the poster and never exported: a soft halo
  * around each anchor so it can be found and grabbed, brighter on the one being
  * hovered or dragged.
+ *
+ * Drawn for every placed anchor, including those whose callout the layout
+ * dropped — a dashed ring rather than a filled one, so it reads as "placed, but
+ * not on the poster right now" and can still be dragged back into frame.
  */
 function drawHandles(
   ctx: CanvasRenderingContext2D,
-  layout: PosterLayout,
   scale: number,
   armed: number | null,
   highlight: number | null,
+  handles: { index: number; point: { x: number; y: number }; placed: boolean }[],
 ) {
   ctx.save();
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
-  for (const c of layout.callouts) {
-    const on = highlight === c.elementIndex || armed === c.elementIndex;
+  for (const h of handles) {
+    const on = highlight === h.index || armed === h.index;
     ctx.beginPath();
-    ctx.arc(c.anchor.x, c.anchor.y, on ? 18 : 13, 0, Math.PI * 2);
-    ctx.fillStyle = on ? "rgba(56,189,248,.34)" : "rgba(255,255,255,.14)";
-    ctx.fill();
+    ctx.arc(h.point.x, h.point.y, on ? 18 : 13, 0, Math.PI * 2);
+    if (h.placed) {
+      ctx.fillStyle = on ? "rgba(56,189,248,.34)" : "rgba(255,255,255,.14)";
+      ctx.fill();
+    } else {
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = on ? "rgba(56,189,248,.8)" : "rgba(255,255,255,.5)";
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
   }
   ctx.restore();
 }

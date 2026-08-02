@@ -428,14 +428,12 @@ export function layoutPoster({
 
   outer: for (let dropCount = 0; dropCount <= candidates.length; dropCount++) {
     // Drop from the end of scheme order: elements are ordered by how much of the
-    // model they cover, so the last ones matter least.
-    const keptIdx = candidates
-      .map((_, i) => i)
-      .sort((a, b) => candidates[a].elementIndex - candidates[b].elementIndex)
-      .slice(0, candidates.length - dropCount);
-    const keptSet = new Set(keptIdx);
-    const kept = candidates.filter((_, i) => keptSet.has(i));
-    const dropped = candidates.filter((_, i) => !keptSet.has(i));
+    // model they cover, so the last ones matter least. `candidates` is built by
+    // walking `elements` in order, so it is already sorted by `elementIndex` —
+    // there used to be a sort here saying so, which did nothing.
+    const keep = candidates.length - dropCount;
+    const kept = candidates.slice(0, keep);
+    const dropped = candidates.slice(keep);
 
     // Tier outer, gap inner: every gap is tried before any paint name is cut.
     // Nested the other way round, all the truncation tiers were exhausted at the
