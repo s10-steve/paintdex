@@ -6,13 +6,19 @@ import { getAllPaints, getBrands } from "@/lib/paints/load";
 import { PAINT_TYPES } from "@/lib/paints/types";
 import { COLOUR_FAMILIES } from "@/lib/color";
 
+const TITLE = "Compare paints";
+const DESCRIPTION =
+  "Compare miniature paints by brand, range, type, colour family and hex value — filter the database to find alternatives.";
+
 export const metadata: Metadata = {
-  title: "Compare paints",
-  description:
-    "Compare miniature paints by brand, range, type, colour family and hex value — filter the database to find alternatives.",
+  title: TITLE,
+  description: DESCRIPTION,
   // Filters/search live in query params (?q=, ?brand=…); canonicalise to the
   // bare path so those permutations don't fragment as duplicate content.
   alternates: { canonical: "/paints" },
+  // Without this the root layout's `openGraph` is inherited whole, so a shared
+  // link previewed as the homepage pointing at "/".
+  openGraph: { title: TITLE, description: DESCRIPTION, url: "/paints" },
 };
 
 export default function PaintsPage() {

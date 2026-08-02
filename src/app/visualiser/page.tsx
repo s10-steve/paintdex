@@ -2,11 +2,18 @@ import type { Metadata } from "next";
 import { SchemeVisualiser } from "@/components/scheme-visualiser";
 import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
 
+const TITLE = "Scheme visualiser";
+const DESCRIPTION =
+  "Plan a miniature paint scheme: group paints by element and see every element's colours as blended vertical bars, side by side.";
+
 export const metadata: Metadata = {
-  title: "Scheme visualiser",
-  description:
-    "Plan a miniature paint scheme: group paints by element and see every element's colours as blended vertical bars, side by side.",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: "/visualiser" },
+  // `openGraph` is inherited wholesale from the root layout when a page omits
+  // it, so without this a shared /visualiser link previewed as the homepage —
+  // its title, and its `url: "/"`. `/paints/[id]` has always done this.
+  openGraph: { title: TITLE, description: DESCRIPTION, url: "/visualiser" },
 };
 
 export default function VisualiserPage() {
