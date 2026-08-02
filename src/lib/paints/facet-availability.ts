@@ -43,8 +43,40 @@ export interface FacetAvailability {
 /** The selection the pass narrows by. `families` is browse-only; empty elsewhere. */
 export type FacetSelection = SharedFacets & { families: Set<string> };
 
-const matchesMetallic = (p: Facetable, m: MetallicFilter) =>
+export const matchesMetallic = (p: { metallic?: boolean }, m: MetallicFilter) =>
   m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
+
+/** Which facet a caller wants left out of the test. */
+export type FacetAxis = "brand" | "range" | "type" | "family";
+
+/**
+ * Does this record survive the facet selection?
+ *
+ * **The** facet predicate. There were three independent implementations of this
+ * rule — here, in `filterPaints`, and hand-rolled inside the alternatives panel
+ * — plus a verbatim second copy of `matchesMetallic`. `facet-availability`'s own
+ * header records that computing availability separately is how `disc` and
+ * `family` came to mean different things on the two pages; that centralisation
+ * covered which options are *offered*, not which records are *kept*, so the
+ * likeliest place to drift was still open.
+ *
+ * `skip` leaves one facet out, which is what lets the availability pass ask
+ * "what else would still be available?" without a facet hiding its own siblings.
+ */
+export function matchesFacets(
+  p: Facetable,
+  sel: FacetSelection,
+  skip?: FacetAxis,
+): boolean {
+  return (
+    (sel.includeDiscontinued || !p.discontinued) &&
+    matchesMetallic(p, sel.metallic) &&
+    (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
+    (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
+    (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
+    (skip === "family" || !sel.families.size || sel.families.has(p.family))
+  );
+}
 
 /**
  * For each facet, the values that still yield at least one result given the
@@ -55,13 +87,7 @@ export function computeAvailability(
   pool: readonly Facetable[],
   sel: FacetSelection,
 ): FacetAvailability {
-  const match = (p: Facetable, skip: "brand" | "range" | "type" | "family") =>
-    (sel.includeDiscontinued || !p.discontinued) &&
-    matchesMetallic(p, sel.metallic) &&
-    (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
-    (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
-    (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
-    (skip === "family" || !sel.families.size || sel.families.has(p.family));
+  const match = (p: Facetable, skip: FacetAxis) => matchesFacets(p, sel, skip);
 
   const brands = new Set<string>();
   const ranges = new Set<string>();

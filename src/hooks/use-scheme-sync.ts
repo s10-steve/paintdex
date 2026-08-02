@@ -17,11 +17,31 @@ import { uid } from "@/lib/scheme/uid";
 import { emptyScheme, type Scheme } from "@/lib/scheme/types";
 import type { SchemeRow } from "@/lib/supabase/types";
 
-export type SyncState = "idle" | "saving" | "saved" | "error" | "limit";
+// No "limit" member: the scheme cap goes through `notice`, which persists until
+// dismissed, rather than a transient indicator state. See `adoptScheme`.
+export type SyncState = "idle" | "saving" | "saved" | "error";
+
+/** `?scheme=<uuid>` — open one of the signed-in user's saved rows. */
+export const SCHEME_PARAM = "scheme";
+
+/**
+ * Whether a query string asks for a specific saved scheme.
+ *
+ * Mirrors `hasNewParam`. The precedence rule (`?scheme=` > `?new=1` >
+ * `?preset=`) was enforced by three separate `"scheme"` string literals in three
+ * files, which is a poor way to hold a rule that decides whether a user's work
+ * survives a deep link.
+ */
+export const hasSchemeParam = (search: string): boolean =>
+  new URLSearchParams(search).get(SCHEME_PARAM) !== null;
 
 /** Shown when a scheme this browser was holding turns out to be gone. */
 const DELETED_NOTICE =
   "That scheme was deleted on another device, so it hasn't been restored here.";
+
+/** Shown when an insert is refused by the per-account scheme cap. */
+const SCHEME_LIMIT_NOTICE =
+  "You've reached the maximum number of saved schemes. Delete one from My schemes to make room.";
 
 /** How long to leave between tab-focus refetches. */
 const REFETCH_INTERVAL_MS = 10_000;
@@ -144,6 +164,8 @@ export function useSchemeSync({
   const lastFetchRef = useRef(0);
   /** Bumped by every completed save, so a refetch can tell its rows went stale. */
   const saveSeqRef = useRef(0);
+  /** True while a row insert is out, so a double-click can't create two. */
+  const creatingRef = useRef(false);
   /** The live active id, for async work that must not act on a stale one. */
   const activeIdRef = useRef<string | null>(null);
   useEffect(() => {
@@ -475,6 +497,10 @@ export function useSchemeSync({
    */
   const adoptScheme = async (next: Scheme) => {
     if (!user) return;
+    // Double-clicking "New" created two rows. `useShareActions` guards with
+    // `shareBusy` and `SchemeCard` with `busy`; this was the one that didn't.
+    if (creatingRef.current) return;
+    creatingRef.current = true;
     try {
       const row = await createScheme(
         user.id,
@@ -487,7 +513,20 @@ export function useSchemeSync({
       bind(row.id, user.id, next);
       setSyncState("idle");
     } catch (e) {
-      setSyncState(isSchemeLimitError(e) ? "limit" : "error");
+      if (isSchemeLimitError(e)) {
+        // Through `notice`, not `syncState`. The state lives in a small
+        // aria-live span that the very next scheme change overwrites with
+        // "Saving…" — so a capped user clicking "Open in the designer" on the
+        // homepage carousel saw the only explanation flash past, with the
+        // `?preset=` param already stripped and no example loaded. `notice` is
+        // the field that exists for exactly this: it stays until it's read.
+        setNotice(SCHEME_LIMIT_NOTICE);
+        setSyncState("idle");
+      } else {
+        setSyncState("error");
+      }
+    } finally {
+      creatingRef.current = false;
     }
   };
 
@@ -505,14 +544,14 @@ export function useSchemeSync({
     /* eslint-disable react-hooks/set-state-in-effect */
     if (!user || !ready || deepLinkedRef.current) return;
     deepLinkedRef.current = true;
-    const wanted = new URLSearchParams(window.location.search).get("scheme");
+    const wanted = new URLSearchParams(window.location.search).get(SCHEME_PARAM);
     if (!wanted) return;
     const row = savedSchemes.find((r) => r.id === wanted);
     if (row && row.id !== activeSchemeId) loadRow(row, user.id);
     // Drop the param so a later reload doesn't force-reselect over the user's
     // subsequent picks.
     const url = new URL(window.location.href);
-    url.searchParams.delete("scheme");
+    url.searchParams.delete(SCHEME_PARAM);
     window.history.replaceState(null, "", url.pathname + url.search);
     /* eslint-enable react-hooks/set-state-in-effect */
     // eslint-disable-next-line react-hooks/exhaustive-deps

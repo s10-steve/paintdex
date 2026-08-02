@@ -22,7 +22,6 @@ import {
   similarLinkQuery,
   writeSimilarParams,
   type MatchValue,
-  type MetallicFilter,
   type SimilarParamState,
   type SimilarView,
 } from "@/lib/paints/filter-params";
@@ -30,6 +29,8 @@ import { withLab } from "@/lib/paints/lab-index";
 import {
   computeAvailability,
   facetOptions,
+  matchesFacets,
+  type FacetSelection,
 } from "@/lib/paints/facet-availability";
 import {
   describeSimilarFilters,
@@ -72,9 +73,6 @@ const toRenderItems = (items: SimilarItem[]): RenderItem[] =>
 
 /** The panel has no colour-family control, so it never narrows by family. */
 const NO_FAMILIES: Set<string> = new Set();
-
-const matchMetallic = (p: { metallic?: boolean }, m: MetallicFilter) =>
-  m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
 
 /**
  * Stable empty array for the plot's `candidates` prop. A fresh `[]` literal is a
@@ -247,18 +245,29 @@ export function SimilarColours({
     [universe, filters],
   );
 
-  // The one facet predicate both views rank through, so they can't drift apart.
-  const candidatesFor = useMemo(
-    () => (pool: PaintWithLab[]) =>
-      pool.filter(
-        (p) =>
-          (!selBrands.size || selBrands.has(p.brand)) &&
-          (!selTypes.size || selTypes.has(p.type)) &&
-          (!selRanges.size || selRanges.has(p.range)) &&
-          matchMetallic(p, metallic),
-      ),
-    [selBrands, selTypes, selRanges, metallic],
-  );
+  /**
+   * The facet predicate both views rank through — now the same `matchesFacets`
+   * browse and the availability pass use, rather than a third hand-rolled copy.
+   *
+   * Two deliberate differences from browse, encoded in the selection rather
+   * than in the predicate: `families` is empty because the panel carries `family`
+   * in the URL but never applies it (matches cluster round the reference colour,
+   * so it would be a no-op or an unexplained empty list), and
+   * `includeDiscontinued` is true because `universe` has already applied that
+   * gate — applying it here as well would be harmless but says the rule lives in
+   * two places.
+   */
+  const candidatesFor = useMemo(() => {
+    const selection: FacetSelection = {
+      brands: selBrands,
+      types: selTypes,
+      ranges: selRanges,
+      families: NO_FAMILIES,
+      metallic,
+      includeDiscontinued: true,
+    };
+    return (pool: PaintWithLab[]) => pool.filter((p) => matchesFacets(p, selection));
+  }, [selBrands, selTypes, selRanges, metallic]);
 
   const targetWithLab = useMemo<PaintWithLab>(
     // family isn't needed by findSimilar; a placeholder keeps the type honest.

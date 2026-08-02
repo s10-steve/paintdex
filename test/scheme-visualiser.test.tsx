@@ -16,7 +16,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, screen, act, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import type { SchemeRow } from "@/lib/supabase/types";
-import type { Scheme } from "@/lib/scheme/types";
+import { emptyScheme, type Scheme } from "@/lib/scheme/types";
 import { toExportShape } from "@/lib/scheme/io";
 import { canonicalScheme } from "@/lib/scheme/sync";
 
@@ -794,6 +794,59 @@ describe("SchemeVisualiser binding after a stale save", () => {
 
     // The document is row-2's; the binding must say so, not row-1.
     expect(storedBinding()?.id).toBe("row-2");
+  });
+});
+
+/**
+ * The per-account scheme cap.
+ *
+ * Detected by matching the `enforce_scheme_quota` trigger's message, so this
+ * suite is also the drift guard on that string: change the wording in
+ * `supabase/schema.sql` without changing `isSchemeLimitError` and the user gets
+ * a generic "Sync error" instead of something actionable.
+ */
+describe("SchemeVisualiser scheme limit", () => {
+  const limitError = Object.assign(
+    new Error("Scheme limit reached (max 100 per account)."),
+    { code: "23514" },
+  );
+
+  it("reports the cap where it will still be there a second later", async () => {
+    // Deliberately `notice` (the banner) rather than `syncState` (the small
+    // aria-live span): that span is overwritten by "Saving…" one second after
+    // the next keystroke, so the message the user most needs was the one most
+    // likely to be missed.
+    seedLocal(scheme("Doesn't matter"));
+    createScheme.mockRejectedValue(limitError);
+    await renderSignedIn([
+      row("row-1", "Existing", scheme("Existing"), "2026-01-04T00:00:00.000Z"),
+    ]);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("New"));
+    });
+
+    await waitFor(() => expect(screen.getByRole("status")).toBeTruthy());
+    expect(screen.getByRole("status").textContent).toMatch(/maximum number of saved schemes/i);
+  });
+
+  it("does not create two rows when New is double-clicked", async () => {
+    let release!: (row: SchemeRow) => void;
+    createScheme.mockImplementation(() => new Promise((res) => (release = res)));
+    await renderSignedIn([
+      row("row-1", "Existing", scheme("Existing"), "2026-01-04T00:00:00.000Z"),
+    ]);
+
+    const button = screen.getByText("New");
+    await act(async () => {
+      fireEvent.click(button);
+      fireEvent.click(button);
+    });
+
+    expect(createScheme).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      release(row("new-row", "Untitled scheme", emptyScheme(), "2026-01-06T00:00:00.000Z"));
+    });
   });
 });
 

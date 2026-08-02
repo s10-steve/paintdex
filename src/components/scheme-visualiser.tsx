@@ -308,11 +308,11 @@ export function SchemeVisualiser() {
                   {syncState === "error" && (
                     <span className="text-red-600 dark:text-red-400">Sync error</span>
                   )}
-                  {syncState === "limit" && (
-                    <span className="text-red-600 dark:text-red-400">
-                      Scheme limit reached — delete one to add another.
-                    </span>
-                  )}
+                  {/* The scheme cap is reported through `notice` (the alert
+                      banner), not here: this span is overwritten by "Saving…"
+                      one second after the next keystroke, so the message the
+                      user most needs to act on was the one most likely to be
+                      missed. */}
                 </span>
               </div>
 

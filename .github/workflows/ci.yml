@@ -22,3 +22,7 @@ jobs:
       - run: npm run validate:data
       - run: npm run test
       - run: npm run build
+      # The whole security model is client-side libraries plus Postgres RLS, so
+      # a known-vulnerable dependency is a first-order concern rather than a
+      # background chore. High and above only, to keep this actionable.
+      - run: npm audit --audit-level=high
