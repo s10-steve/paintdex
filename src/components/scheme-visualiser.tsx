@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertBanner } from "./alert-banner";
 import { Bar, useBarHover } from "./scheme-bars";
 import { ElementCard } from "./scheme/element-card";
@@ -10,7 +10,7 @@ import { ShareCard } from "./scheme/share-card";
 import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useLocalScheme } from "@/hooks/use-local-scheme";
-import { LOCAL_POSTER_SCOPE } from "@/hooks/use-poster";
+import { hasLocalPosterPhoto, LOCAL_POSTER_SCOPE } from "@/hooks/use-poster";
 import { useSchemeEditor } from "@/hooks/use-scheme-editor";
 import { useSchemeNew } from "@/hooks/use-scheme-new";
 import { useSchemePreset } from "@/hooks/use-scheme-preset";
@@ -131,9 +131,36 @@ export function SchemeVisualiser() {
    * for something that isn't happening. Signed out, `localStorage` is the only
    * copy and this really is destructive.
    */
+  const replaceScheme = (next: Scheme, confirmMessage: string) => {
+    if (user && activeSchemeId) {
+      void adoptScheme(next);
+      setBlend(false);
+      return;
+    }
+    if (schemeHasContent(scheme) && !window.confirm(confirmMessage)) return;
+    setScheme(next);
+    setBlend(false);
+  };
+
+  const reset = () =>
+    replaceScheme(
+      emptyScheme(),
+      "Clear this scheme and start fresh? It isn't saved to an account, so this can't be undone.",
+    );
+
+  /* ---- export / import (no accounts — a JSON file is the save format) ---- */
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [importError, setImportError] = useState<string | null>(null);
+  // The share-image studio. Mounted only while open so its canvas, its photo
+  // and the localStorage read behind it cost nothing on a normal visit.
+  const [studioOpen, setStudioOpen] = useState(false);
+
+  /** Which scheme's poster state the studio should load — see `usePoster`. */
+  const posterScope = activeSchemeId ?? LOCAL_POSTER_SCOPE;
+
   /**
-   * Where the share-image studio should keep its photo: the account when there's
-   * a user and a saved row, this browser otherwise.
+   * Where the studio should keep its photo: the account when there's a user and
+   * a saved row, this browser otherwise.
    *
    * Memoised because `usePoster` keys effects off the object's fields — and
    * because writing `photo_path` goes through `patchRow`, exactly as publishing
@@ -159,29 +186,26 @@ export function SchemeVisualiser() {
     [user, activeRow, patchRow],
   );
 
-  const replaceScheme = (next: Scheme, confirmMessage: string) => {
-    if (user && activeSchemeId) {
-      void adoptScheme(next);
-      setBlend(false);
-      return;
-    }
-    if (schemeHasContent(scheme) && !window.confirm(confirmMessage)) return;
-    setScheme(next);
-    setBlend(false);
-  };
-
-  const reset = () =>
-    replaceScheme(
-      emptyScheme(),
-      "Clear this scheme and start fresh? It isn't saved to an account, so this can't be undone.",
-    );
-
-  /* ---- export / import (no accounts — a JSON file is the save format) ---- */
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [importError, setImportError] = useState<string | null>(null);
-  // The share-image studio. Mounted only while open so its canvas, its photo
-  // and the localStorage read behind it cost nothing on a normal visit.
-  const [studioOpen, setStudioOpen] = useState(false);
+  /**
+   * Whether this scheme already has a share image, for the button's verb.
+   *
+   * Two sources, because the photo has two homes. The row's `photo_path` is
+   * reactive — `patchRow` re-renders on upload — but `localStorage` isn't, so the
+   * local half is re-read when the studio *closes*, which is the only moment it
+   * can have changed while this component is mounted.
+   */
+  const [hasLocalImage, setHasLocalImage] = useState(false);
+  useEffect(() => {
+    if (studioOpen) return;
+    // `localStorage` is an external store and can't be read during render
+    // without a hydration mismatch — the same reason the rest of this feature
+    // gates on `mounted`. It isn't reactive either, and it emits no event for a
+    // same-tab write, so there is nothing to subscribe to: closing the studio is
+    // the signal. Runs twice per studio visit, not per render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setHasLocalImage(hasLocalPosterPhoto(posterScope));
+  }, [posterScope, studioOpen]);
+  const hasPosterImage = Boolean(activeRow?.photo_path) || hasLocalImage;
 
   const doExport = () => {
     const blob = new Blob([exportSchemeJSON(scheme)], { type: "application/json" });
@@ -266,6 +290,7 @@ export function SchemeVisualiser() {
             activeRow={activeRow}
             signedIn={Boolean(user)}
             canMakeImage={scheme.elements.length > 0}
+            hasImage={hasPosterImage}
             shareBusy={shareBusy}
             copied={copied}
             onOpenStudio={() => setStudioOpen(true)}
@@ -449,7 +474,7 @@ export function SchemeVisualiser() {
           // unbound document shares one scope, which is all a signed-out editor
           // has; a saved scheme gets its own, so anchors can't land on another
           // model's photo via a shared element name.
-          scope={activeSchemeId ?? LOCAL_POSTER_SCOPE}
+          scope={posterScope}
           // With both a user and a saved row, the photo belongs in the account
           // rather than this browser. Null otherwise — a signed-out or unbound
           // document has nowhere to put it, so the studio stays local-only.

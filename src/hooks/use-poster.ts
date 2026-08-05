@@ -83,6 +83,23 @@ function remove(key: string): void {
   }
 }
 
+/**
+ * Whether a photo is already stored *locally* for this scope.
+ *
+ * For labelling a button, not for loading anything — the studio owns the real
+ * read. Client-only (it touches `localStorage`), and it deliberately answers only
+ * the local half: a signed-in scheme's photo lives in the bucket, and the caller
+ * already knows about that from the row's `photo_path`.
+ *
+ * Mirrors the restore effect's key resolution, including the legacy unscoped key
+ * for the unbound document, so a returning user isn't told they have no image
+ * when the studio is about to show them one.
+ */
+export function hasLocalPosterPhoto(scope: string = LOCAL_POSTER_SCOPE): boolean {
+  if (read(keysFor(scope).photo)) return true;
+  return scope === LOCAL_POSTER_SCOPE && Boolean(read(POSTER_PHOTO_KEY));
+}
+
 /** Long edge the uploaded photo is downscaled to before anything else touches it. */
 const WORKING_MAX = 2400;
 /**

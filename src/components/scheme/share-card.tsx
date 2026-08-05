@@ -16,6 +16,7 @@ export function ShareCard({
   activeRow,
   signedIn,
   canMakeImage,
+  hasImage,
   shareBusy,
   copied,
   onOpenStudio,
@@ -26,6 +27,12 @@ export function ShareCard({
   signedIn: boolean;
   /** False for an empty scheme — there'd be nothing on the poster. */
   canMakeImage: boolean;
+  /**
+   * Whether this scheme already has a photo, in the account or in this browser.
+   * Only changes the verb: "Create" promises a blank studio, and opening one
+   * with your model already in it is a small surprise every time.
+   */
+  hasImage: boolean;
   shareBusy: boolean;
   copied: boolean;
   onOpenStudio: () => void;
@@ -41,7 +48,7 @@ export function ShareCard({
           disabled={!canMakeImage}
           className="flex-1 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Create shareable image
+          {hasImage ? "Edit shareable image" : "Create shareable image"}
         </button>
         <button
           type="button"

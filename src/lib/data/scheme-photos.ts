@@ -100,7 +100,15 @@ export async function signSchemePhoto(
     .from(SCHEME_PHOTO_BUCKET)
     .createSignedUrl(path, expiresIn);
   if (error) {
-    console.error("[scheme] createSignedUrl failed", { path, message: error.message });
+    // One interpolated string, not an object argument: Next's dev overlay
+    // renders a trailing object as `{}`, so the first time this fired in anger
+    // it reported nothing but its own name. Everything worth knowing goes in
+    // the message itself.
+    const status = (error as { status?: number }).status;
+    console.error(
+      `[scheme] createSignedUrl failed for ${path}` +
+        `${status ? ` (${status})` : ""}: ${error.message || error.name || "unknown error"}`,
+    );
     return null;
   }
   return data?.signedUrl ?? null;

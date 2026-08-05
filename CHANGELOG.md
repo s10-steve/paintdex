@@ -11,10 +11,11 @@ Finishes the two social-sharing items left on the roadmap after the share-image
 studio shipped.
 
 **This needs database changes applied before the update goes live** — run
-`0002-v0.13.0-migration-tracking.sql` then `0003-v0.13.0-scheme-photos.sql` in
-the Supabase SQL editor, and each one's `-- Verify` block, *then* deploy. The
-second adds the photo bucket and changes what the share page's lookup returns,
-and the code has no fallback for either.
+`0002-v0.13.0-migration-tracking.sql`, `0003-v0.13.0-scheme-photos.sql` and
+`0004-v0.13.0-fix-published-photo-read.sql` in the Supabase SQL editor, in that
+order, running each one's `-- Verify` block, *then* deploy. They add the photo
+bucket and change what the share page's lookup returns, and the code has no
+fallback for either.
 
 ### Added
 
@@ -33,6 +34,9 @@ and the code has no fallback for either.
 
 ### Changed
 
+- The **Create shareable image** button says **Edit shareable image** once the
+  scheme has one. "Create" promised a blank studio and then opened onto your own
+  model.
 - Removing a photo, or deleting a scheme, now removes the stored image too.
 - The studio's note about where your photo goes now says which of the two it is,
   rather than always claiming the photo never leaves your device.
@@ -44,7 +48,7 @@ Not user-facing, but the reason the above is safe to ship.
 - **A staging database, separate from production.** Development and PR previews
   ran against the same Supabase project as the live site, so testing a schema
   change meant making it to production first. There are now two projects, wired
-  to Vercel's Production and Preview/Development scopes respectively.
+  to Vercel's Production and Preview scopes respectively.
   [`supabase/README.md`](supabase/README.md) is the runbook for setting the
   second one up and for how a change reaches production.
 - **Applied migrations are recorded.** A `schema_migrations` table each migration

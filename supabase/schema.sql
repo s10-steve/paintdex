@@ -193,21 +193,58 @@ create policy "scheme photos delete own" on storage.objects
   for delete to authenticated
   using (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
 
+-- Is this object the photo of a currently-published scheme?
+--
+-- `security definer`, and that is not incidental — it is the whole reason this
+-- is a function. The policy below is evaluated as `anon`, and a subquery inside
+-- a policy runs with the calling role's privileges, so reading `public.schemes`
+-- inline would be subject to that table's own RLS: "select own", which for anon
+-- matches nothing. The check would be false for every object, forever. (Shipped
+-- exactly that way in 0003; fixed in 0004.)
+--
+-- So the body is the security boundary, and it is kept as narrow as
+-- `get_public_scheme`'s: exact equality on `photo_path`, an `is_public` check,
+-- and a bare boolean out. No pattern match, nothing walkable, and you must
+-- already hold the full `<user_id>/<scheme_id>.jpg` path — two uuids — to ask at
+-- all. Depends on `public.schemes` not having `force row level security`, which
+-- would apply RLS to the owner too and reintroduce the original bug.
+create or replace function public.is_published_scheme_photo(p_path text)
+  returns boolean
+  language sql
+  stable
+  security definer
+  set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.schemes s
+    where s.photo_path = p_path
+      and s.is_public = true
+  );
+$$;
+
+revoke all on function public.is_published_scheme_photo(text) from public;
+grant execute on function public.is_published_scheme_photo(text) to anon, authenticated;
+
+-- Runs on every anonymous object read, so index it. Partial, like
+-- `schemes_share_idx`: most rows have no photo.
+create index if not exists schemes_photo_path_idx
+  on public.schemes (photo_path) where photo_path is not null;
+
 -- The anonymous read, for the public share page. A SECOND permissive SELECT
 -- policy, and permissive policies OR together — so it widens access. That is
 -- only acceptable because of how narrow it is: readable if and only if some
 -- scheme currently points at the object *and* that scheme is published.
 -- Unpublishing revokes it immediately. The bucket is still private, so the page
 -- mints a short-lived signed URL, and signing is gated on this policy passing.
+--
+-- `to anon` only: the share page is server-rendered with the anon client
+-- whoever is viewing, so no other role ever signs one of these.
 create policy "scheme photos read published" on storage.objects
   for select to anon
   using (
     bucket_id = 'scheme-photos'
-    and exists (
-      select 1 from public.schemes s
-      where s.photo_path = storage.objects.name
-        and s.is_public = true
-    )
+    and public.is_published_scheme_photo(name)
   );
 
 -- ---------------------------------------------------------------------------
@@ -334,5 +371,6 @@ create trigger schemes_quota
 insert into public.schema_migrations (filename) values
   ('0001-v0.12.0-unlisted-share-links.sql'),
   ('0002-v0.13.0-migration-tracking.sql'),
-  ('0003-v0.13.0-scheme-photos.sql')
+  ('0003-v0.13.0-scheme-photos.sql'),
+  ('0004-v0.13.0-fix-published-photo-read.sql')
 on conflict (filename) do nothing;

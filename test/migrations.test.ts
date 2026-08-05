@@ -91,6 +91,28 @@ describe("supabase migrations", () => {
     }
   });
 
+  it("never reads an RLS-protected table inline from a storage policy", () => {
+    // The bug 0004 fixed, and one that cannot be caught by reading the SQL or by
+    // any test that doesn't have a live Postgres: a subquery inside a policy is
+    // evaluated with the *calling* role's privileges, so `select … from
+    // public.schemes` inside a policy granted `to anon` is itself filtered by
+    // `schemes`'s own RLS — which for anon matches nothing. The policy silently
+    // becomes "always false".
+    //
+    // The fix is to ask through a `security definer` function, so this guard
+    // just insists the policy body doesn't name the table directly.
+    // Anchored on the policy name so a match can't start at some earlier
+    // `create policy` and swallow the security-definer function in between —
+    // whose body names the table legitimately, and must.
+    const policies = [
+      ...schemaSql.matchAll(/create policy\s+"[^"]+"\s+on storage\.objects[\s\S]*?;/g),
+    ];
+    expect(policies.length).toBeGreaterThan(0);
+    for (const [policy] of policies) {
+      expect(policy).not.toMatch(/from\s+public\.schemes/);
+    }
+  });
+
   it("claims no migration in schema.sql that doesn't exist", () => {
     // The other direction: a renamed or deleted file left behind here would
     // mark a migration applied that nobody can read.

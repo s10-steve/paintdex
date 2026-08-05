@@ -195,8 +195,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   isn't echoed back up), `scheme-view.test.tsx` (the share page renders no
   `<img>` when there's no photo), `site-metadata.test.ts` (robots + sitemap — `/scheme/` was disallowed
   and nothing noticed), `catalogue-sources.test.ts` (the `load.ts` drift guard)
-  and `migrations.test.ts` (the migration-bookkeeping drift guard — see
-  "Deploying"). The environment is `node` by default;
+  and `migrations.test.ts` (the migration-bookkeeping drift guard, plus the
+  "no RLS-protected table inline in a storage policy" guard — see "Deploying"
+  and "Share images"), and `share-card.test.tsx`.
+  The environment is `node` by default;
   component tests opt into jsdom with a per-file `@vitest-environment jsdom`
   docblock, so the pure suites stay fast.
 - `src/types/gis.d.ts` — minimal typings for the Google Identity Services lib.
@@ -649,6 +651,15 @@ Things to know before changing it:
     at the object *and* that scheme is published. Unpublishing revokes it with
     nothing to invalidate. A public bucket would have left the photo readable
     forever, which is the hole v0.12.0 closed for scheme rows.
+  - **That policy asks via `is_published_scheme_photo()`, a `security definer`
+    function, and it has to.** A subquery inside a policy runs with the *calling*
+    role's privileges, so `select … from public.schemes` inline is filtered by
+    `schemes`'s own RLS — "select own", which for `anon` matches nothing. The
+    check is then false for every object, forever: shipped that way in `0003`,
+    fixed in `0004`, and invisible until a real database refused to sign a URL.
+    `test/migrations.test.ts` now fails if a `storage.objects` policy names the
+    table directly. Note it also depends on `schemes` never getting
+    `force row level security`, which would apply RLS to the owner too.
   - **Three refs, three different questions, and merging any two reopens a bug.**
     `savedPhotoRef` is "the `localStorage` key holds this"; `remoteUrlRef` is
     "the bucket holds this"; `loadedPathRef` is "these bytes came from that
