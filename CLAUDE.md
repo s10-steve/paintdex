@@ -706,8 +706,8 @@ Things to know before changing it:
 Vercel builds `main` for production and gives every PR a preview URL — it's a
 zero-config static Next.js app. **The database is not part of that**, and there
 are **two Supabase projects**, one per environment: production is wired to
-Vercel's Production scope only, staging to Preview + Development and to your
-`.env.local`, so local work and PR previews cannot reach a real user's scheme.
+Vercel's Production scope only, staging to Preview and to your `.env.local`, so
+local work and PR previews cannot reach a real user's scheme.
 Rehearse every migration against staging first. Full runbook in
 `supabase/README.md`. As for applying them:
 schema changes are applied by hand in the Supabase SQL editor — as a delta from
@@ -734,8 +734,11 @@ in exchange — deliberately not taken on.
 
 The **core site needs no configuration**;
 **accounts** additionally need the three `NEXT_PUBLIC_*` env vars (see
-`.env.example`) set in Vercel (Production/Preview/Development) — they're inlined
-at build time, so add them and redeploy. Google sign-in also requires the site's
-origins in the OAuth client's Authorized JavaScript origins, and the client id
-listed under Supabase → Auth → Providers → Google. With the env vars absent, the
+`.env.example`) set in Vercel, production's values scoped to Production and
+staging's to Preview — they're inlined at build time, so add them and redeploy.
+(Vercel's Development scope is unused: `npm run dev` reads `.env.local`.) Google
+sign-in also requires the site's origins in the OAuth client's Authorized
+JavaScript origins — no redirect URIs, since it's the `signInWithIdToken` flow —
+and the client id listed under Supabase → Auth → Providers → Google, which is
+per-project. With the env vars absent, the
 build still succeeds and ships the site without accounts.
