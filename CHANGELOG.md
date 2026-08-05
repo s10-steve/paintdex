@@ -5,6 +5,37 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+Finishes the two social-sharing items left on the roadmap after the share-image
+studio shipped.
+
+**This needs a database change applied before the update goes live** — run
+`supabase/migrations/0002-v0.13.0-scheme-photos.sql` in the Supabase SQL editor
+and its `-- Verify` block, *then* deploy. It adds the photo bucket and changes
+what the share page's lookup returns, and the code has no fallback for either.
+
+### Added
+
+- **Your model photo is saved with the scheme.** Signed in, the photo you add in
+  the share-image studio now goes with your account rather than staying in one
+  browser: open the same scheme on your phone and the photo, framing and labels
+  are already there. Signed out, nothing changes — the photo stays on your device
+  and is never uploaded.
+- **A shared scheme's page shows the photo.** If you've added one and published
+  the scheme, `/scheme/<slug>` shows your model above the colours. It's visible
+  only while the scheme is published; unpublish and it's private again
+  immediately.
+- **Three shapes for the share image.** 4:5 for the feed as before, plus 1:1 for
+  a square post and 9:16 for a story. A shorter image has less room for labels,
+  and the studio lists anything that no longer fits, as it already did.
+
+### Changed
+
+- Removing a photo, or deleting a scheme, now removes the stored image too.
+- The studio's note about where your photo goes now says which of the two it is,
+  rather than always claiming the photo never leaves your device.
+
 ## [0.12.0] - 2026-08-02
 
 A code-review pass over everything added since accounts landed, rather than a

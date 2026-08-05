@@ -16,7 +16,18 @@ import { paintMeta, roleOf, type Scheme } from "@/lib/scheme/types";
 import { toExportShape } from "@/lib/scheme/io";
 import { duplicateScheme } from "@/lib/data/schemes";
 
-export function SchemeView({ scheme }: { scheme: Scheme }) {
+export function SchemeView({
+  scheme,
+  photoUrl,
+}: {
+  scheme: Scheme;
+  /**
+   * A signed URL for the owner's photo of the model, when they added one in the
+   * share-image studio and this scheme is published. Signed rather than public
+   * because the bucket is private — see `@/lib/data/scheme-photos`.
+   */
+  photoUrl?: string | null;
+}) {
   const paintCount = scheme.elements.reduce((n, e) => n + e.paints.length, 0);
 
   return (
@@ -32,6 +43,20 @@ export function SchemeView({ scheme }: { scheme: Scheme }) {
         </div>
         <SaveCopyButton scheme={scheme} />
       </div>
+
+      {photoUrl && (
+        <div className="mb-4 overflow-hidden rounded-xl border border-border bg-muted shadow-sm">
+          {/* A plain <img>, like everything else outside the homepage: the URL is
+              signed and short-lived, so it has no stable key for `next/image` to
+              optimise against, and no `remotePatterns` entry to permit it. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={photoUrl}
+            alt={`The painted model for ${scheme.title || "this scheme"}`}
+            className="mx-auto max-h-[60vh] w-auto max-w-full object-contain"
+          />
+        </div>
+      )}
 
       <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
         {scheme.elements.length > 0 ? (

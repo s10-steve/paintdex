@@ -12,7 +12,8 @@
 import { cache } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getPublicSchemeBySlug } from "@/lib/supabase/server";
+import { getPublicSchemeBySlug, getServerSupabase } from "@/lib/supabase/server";
+import { signSchemePhoto } from "@/lib/data/scheme-photos";
 import { importSchemeObject } from "@/lib/scheme/io";
 import type { Scheme } from "@/lib/scheme/types";
 import { SchemeView } from "@/components/scheme-view";
@@ -110,9 +111,24 @@ export default async function SharedSchemePage({
     );
   }
 
+  // The bucket is private, so the photo needs a signed URL. Signing is gated on
+  // the "read published" storage policy, which is why an unpublished scheme
+  // can't produce one — and why a failure here just means no photo, never a 500.
+  const photoUrl = row?.photo_path ? await photoUrlFor(row.photo_path) : null;
+
   return (
     <main className="pt-6">
-      <SchemeView scheme={scheme} />
+      <SchemeView scheme={scheme} photoUrl={photoUrl} />
     </main>
   );
+}
+
+async function photoUrlFor(path: string): Promise<string | null> {
+  const supabase = getServerSupabase();
+  if (!supabase) return null;
+  try {
+    return await signSchemePhoto(supabase, path);
+  } catch {
+    return null;
+  }
 }

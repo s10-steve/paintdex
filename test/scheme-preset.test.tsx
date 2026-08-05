@@ -118,7 +118,7 @@ function row(id: string, title: string, data: Scheme, updated: string): SchemeRo
     data: toExportShape(data),
     is_public: false,
     share_slug: null,
-    share_token_hash: null,
+    photo_path: null,
     created_at: updated,
     updated_at: updated,
   } as SchemeRow;

@@ -61,7 +61,8 @@ const websiteJsonLd = {
  * missing file is a build error rather than a silent 404), which is what stops the
  * homepage from ever advertising something the feature doesn't actually produce.
  * The committed file is the 2× export downscaled to the poster's logical size —
- * 1080×1350, `POSTER_SIZE` in `src/lib/scheme/poster.ts`.
+ * 1080×1350, the 4:5 entry in `POSTER_FORMATS` (`src/lib/scheme/poster.ts`). If
+ * it is ever re-exported at another aspect, this caption's framing goes with it.
  *
  * Painter of the model pictured; the export carries the credit too.
  */
@@ -171,9 +172,9 @@ export default function Home() {
               </h2>
               <p className="mt-2 text-muted-foreground">
                 Drop in a photo of your model and the visualiser lays your scheme over
-                it as a 4:5 image built for social media — one callout per element,
-                each showing its colour ramp and the paints that made it, joined by a
-                leader line to the spot on the model.
+                it as an image built for social media — square, feed or story shaped,
+                with one callout per element, each showing its colour ramp and the
+                paints that made it, joined by a leader line to the spot on the model.
               </p>
               <p className="mt-2 text-muted-foreground">
                 Sign in with a Google account to save schemes and share them as

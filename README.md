@@ -58,10 +58,14 @@ schemes, sync them across devices, and share them by link.
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
   the full paint recipe, with a rich colour preview when pasted on social sites.
   Signed-in viewers can save a copy to their own account.
-- **Share images.** Turn a scheme plus a photo of your model into a 4:5 PNG for
-  social media: drop a marker on each part of the model and it gets a callout
-  with that element's colour ramp and paint names, joined by a leader line.
-  Frame the photo, add your handle, and optionally show manufacturers and roles.
+- **Share images.** Turn a scheme plus a photo of your model into a PNG for
+  social media — 4:5 for the feed, 1:1 for a square post, 9:16 for a story. Drop
+  a marker on each part of the model and it gets a callout with that element's
+  colour ramp and paint names, joined by a leader line. Frame the photo, add your
+  handle, and optionally show manufacturers and roles. Signed in, the photo is
+  saved to your account, so it follows you between devices and shows on the
+  scheme's public share page if you publish it; signed out, it stays in your
+  browser and is never uploaded.
 - **Light & dark mode**, following your system preference.
 - **Responsive** desktop and mobile layouts.
 - **Plain-JSON data.** The paint database is plain JSON, one file per brand.
@@ -149,14 +153,21 @@ Ideas for future features.
 
 ### Social sharing features
 
-Generating a labelled share image has shipped — see **Share images** above. What
-is left of that idea:
+Generating a labelled share image has shipped — see **Share images** above, along
+with the two follow-ups that were open here:
 
-- [ ] Store the uploaded photo against the scheme (Supabase Storage) rather than
+- [x] Store the uploaded photo against the scheme (Supabase Storage) rather than
       in the browser only, so it follows you across devices and can appear on
       the public `/scheme/<slug>` page.
-- [ ] More aspect ratios for the share image — 1:1 for a square feed post, 9:16
-      for stories. It is 4:5 only today.
+- [x] More aspect ratios for the share image — 1:1 for a square feed post, 9:16
+      for stories.
+
+Still open:
+
+- [ ] Show the *composed* poster on the share page and in its OpenGraph image,
+      rather than the bare photo. The layout maths is client-side Canvas, so this
+      needs either a stored render or a server-side redraw — see the `next/og`
+      note in `src/lib/scheme/poster-draw.ts` for why Satori can't do it directly.
 
 ### Paint database and UI features
 

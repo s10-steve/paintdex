@@ -14,6 +14,24 @@ import type { NextConfig } from "next";
  * If the Google/Supabase integrations move to different hosts, update the
  * matching directives here.
  */
+/**
+ * The Supabase project's origin, for `img-src`.
+ *
+ * Derived from the env var rather than wildcarded to `*.supabase.co`, so the
+ * allow-list names one host rather than every project on the platform. It is
+ * inlined at build time like the rest of the `NEXT_PUBLIC_*` vars, and is simply
+ * absent when accounts aren't configured — in which case there are no remote
+ * images to permit either.
+ */
+const supabaseImgSrc = (() => {
+  try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    return url ? ` ${new URL(url).origin}` : "";
+  } catch {
+    return "";
+  }
+})();
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -27,12 +45,12 @@ const contentSecurityPolicy = [
   // browser — no origin is contacted. `data:` covers the canvas re-encode and the
   // stored photo.
   //
-  // Deliberately no blanket `https:`: the site loads no remote images at all
-  // (every asset is local, and Google sign-in renders no avatar), so allowing
-  // any HTTPS origin only ever gave a future markup-injection bug a free
-  // exfiltration channel — an <img> pointing anywhere is a GET the CSP would
-  // otherwise refuse. Add specific origins here if remote images ever land.
-  "img-src 'self' data: blob:",
+  // Deliberately no blanket `https:`: an <img> pointing anywhere is a GET the
+  // CSP would otherwise refuse, so allowing any HTTPS origin would hand a future
+  // markup-injection bug a free exfiltration channel. The Supabase project's own
+  // origin is named because the public share page renders the owner's photo of
+  // the model from a signed Storage URL. Keep adding *specific* origins here.
+  `img-src 'self' data: blob:${supabaseImgSrc}`,
   "font-src 'self' data:",
   "frame-src https://accounts.google.com/gsi/",
   "connect-src 'self' https://accounts.google.com/gsi/ https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com",

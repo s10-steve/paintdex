@@ -44,6 +44,11 @@ create table if not exists public.schemes (
   data       jsonb not null,
   is_public  boolean not null default false,
   share_slug text unique,
+  -- Object name in the `scheme-photos` bucket, always `<user_id>/<scheme_id>.jpg`.
+  -- A column rather than a field inside `data`, because `data` is stringified by
+  -- `canonicalScheme()` to detect unflushed edits, and is what `duplicateScheme`
+  -- copies wholesale.
+  photo_path text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -106,12 +111,14 @@ create policy "schemes delete self"   on public.schemes for delete using (auth.u
 --
 -- `user_id` is deliberately not in the result: the viewer never displays an
 -- author, and the old blanket policy exposed it to anyone who asked.
-create or replace function public.get_public_scheme(p_slug text)
+drop function if exists public.get_public_scheme(text);
+create function public.get_public_scheme(p_slug text)
   returns table (
     id         uuid,
     title      text,
     data       jsonb,
     share_slug text,
+    photo_path text,
     created_at timestamptz,
     updated_at timestamptz
   )
@@ -120,7 +127,7 @@ create or replace function public.get_public_scheme(p_slug text)
   security definer
   set search_path = public
 as $$
-  select s.id, s.title, s.data, s.share_slug, s.created_at, s.updated_at
+  select s.id, s.title, s.data, s.share_slug, s.photo_path, s.created_at, s.updated_at
   from public.schemes s
   where s.share_slug = p_slug
     and s.is_public = true
@@ -130,6 +137,60 @@ $$;
 -- `public` here is the SQL pseudo-role (everyone), not the `public` schema.
 revoke all on function public.get_public_scheme(text) from public;
 grant execute on function public.get_public_scheme(text) to anon, authenticated;
+
+-- ---------------------------------------------------------------------------
+-- Storage: model photos for the share-image studio
+-- ---------------------------------------------------------------------------
+-- Private bucket. A public one serves its objects with no auth at all, so a
+-- photo would stay readable after the scheme was unpublished or deleted — the
+-- same hole the `is_public` SELECT policy above turned out to be for rows.
+--
+-- The size and MIME limits are the storage equivalent of `schemes_data_size`
+-- below: uploads go straight from the browser with the anon key, so the cap has
+-- to be here. One object per scheme, times the 100-scheme cap, bounds an account.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('scheme-photos', 'scheme-photos', false, 2097152, array['image/jpeg', 'image/webp'])
+on conflict (id) do update
+  set public             = excluded.public,
+      file_size_limit    = excluded.file_size_limit,
+      allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "scheme photos read own"      on storage.objects;
+drop policy if exists "scheme photos insert own"    on storage.objects;
+drop policy if exists "scheme photos update own"    on storage.objects;
+drop policy if exists "scheme photos delete own"    on storage.objects;
+drop policy if exists "scheme photos read published" on storage.objects;
+
+-- The owner works inside their own folder, keyed on the first path segment.
+create policy "scheme photos read own" on storage.objects
+  for select to authenticated
+  using (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "scheme photos insert own" on storage.objects
+  for insert to authenticated
+  with check (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "scheme photos update own" on storage.objects
+  for update to authenticated
+  using (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "scheme photos delete own" on storage.objects
+  for delete to authenticated
+  using (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+
+-- The anonymous read, for the public share page. A SECOND permissive SELECT
+-- policy, and permissive policies OR together — so it widens access. That is
+-- only acceptable because of how narrow it is: readable if and only if some
+-- scheme currently points at the object *and* that scheme is published.
+-- Unpublishing revokes it immediately. The bucket is still private, so the page
+-- mints a short-lived signed URL, and signing is gated on this policy passing.
+create policy "scheme photos read published" on storage.objects
+  for select to anon
+  using (
+    bucket_id = 'scheme-photos'
+    and exists (
+      select 1 from public.schemes s
+      where s.photo_path = storage.objects.name
+        and s.is_public = true
+    )
+  );
 
 -- ---------------------------------------------------------------------------
 -- Triggers
@@ -168,6 +229,30 @@ drop trigger if exists schemes_touch on public.schemes;
 create trigger schemes_touch
   before update on public.schemes
   for each row execute function public.touch_updated_at();
+
+-- Deleting a scheme deletes its photo. The client can't be the one to do this:
+-- a scheme deleted on another device, or cascaded away with the account, never
+-- runs any of our code. security definer because `storage.objects` has its own
+-- RLS and the deleting session may not be allowed to touch the row directly.
+create or replace function public.delete_scheme_photo()
+  returns trigger
+  language plpgsql
+  security definer
+  set search_path = public
+as $$
+begin
+  if old.photo_path is not null then
+    delete from storage.objects
+    where bucket_id = 'scheme-photos' and name = old.photo_path;
+  end if;
+  return old;
+end;
+$$;
+
+drop trigger if exists schemes_delete_photo on public.schemes;
+create trigger schemes_delete_photo
+  after delete on public.schemes
+  for each row execute function public.delete_scheme_photo();
 
 -- ---------------------------------------------------------------------------
 -- Quotas / abuse limits

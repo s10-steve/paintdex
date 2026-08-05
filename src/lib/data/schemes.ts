@@ -19,12 +19,13 @@ function client() {
  * All of the given user's schemes, most recently updated first.
  *
  * The `user_id` filter is **not** redundant with RLS. Multiple permissive SELECT
- * policies are OR-combined, and `schemes` has two (`supabase/schema.sql`):
- * "select own" *and* "select public". So an unfiltered `select("*")` returns the
- * caller's rows **plus every public scheme in the database**, including other
- * people's — they'd show up in the picker and in `/my-schemes`, and the sync
- * layer would reconcile against them (a stranger's row could be the one opened
- * after a deletion). The policy is the security boundary; this is the query
+ * policies are OR-combined, so a second one widens access rather than narrowing
+ * it. `schemes` had exactly that — "select own" *and* `using (is_public = true)`
+ * — and an unfiltered `select("*")` returned the caller's rows **plus every
+ * public scheme in the database**: they showed up in the picker and in
+ * `/my-schemes`, and the sync layer reconciled against them, so a stranger's row
+ * could be the one opened after a deletion. That policy is gone (v0.12.0), but
+ * the filter stays: the policy is the security boundary, and this is the query
  * actually asking for what we want.
  */
 export async function listSchemes(userId: string): Promise<SchemeRow[]> {
@@ -99,8 +100,33 @@ export async function renameScheme(id: string, title: string): Promise<WriteResu
 }
 
 /**
+ * Point a scheme at its photo in Storage, or clear the pointer.
+ *
+ * Separate from `updateScheme` for the same reason `renameScheme` is: the
+ * studio holds no `data`, and the visualiser is autosaving the same row on a
+ * debounce. It works the other way round too — `updateScheme` writes only
+ * `{ data, title }`, so an autosave can never blank a photo the studio just set.
+ */
+export async function setSchemePhotoPath(
+  id: string,
+  photoPath: string | null,
+): Promise<WriteResult> {
+  const { data: rows, error } = await client()
+    .from("schemes")
+    .update({ photo_path: photoPath })
+    .eq("id", id)
+    .select("id");
+  if (error) throw error;
+  return { matched: (rows?.length ?? 0) > 0 };
+}
+
+/**
  * Delete a scheme by id. `matched: false` means it was already gone — for a
  * delete that's the desired end state, not a failure.
+ *
+ * The photo object goes with it, via the `schemes_delete_photo` trigger — the
+ * client can't be responsible for that, since a delete from another device
+ * never runs this code.
  */
 export async function deleteScheme(id: string): Promise<WriteResult> {
   const { data: rows, error } = await client()

@@ -27,6 +27,12 @@ export type SchemeRow = {
   data: StoredScheme;
   is_public: boolean;
   share_slug: string | null;
+  /**
+   * Object name in the `scheme-photos` bucket, or null. A column rather than a
+   * field inside `data`, so it stays out of `canonicalScheme()`'s dirty check
+   * and out of what `duplicateScheme` copies.
+   */
+  photo_path: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -44,6 +50,7 @@ export type PublicSchemeRow = {
   title: string;
   data: StoredScheme;
   share_slug: string | null;
+  photo_path: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -74,6 +81,7 @@ export type Database = {
           data: StoredScheme;
           is_public?: boolean;
           share_slug?: string | null;
+          photo_path?: string | null;
           created_at?: string;
           updated_at?: string;
         };

@@ -16,6 +16,7 @@ import { useSchemeNew } from "@/hooks/use-scheme-new";
 import { useSchemePreset } from "@/hooks/use-scheme-preset";
 import { useSchemeShare } from "@/hooks/use-scheme-share";
 import { useSchemeSync } from "@/hooks/use-scheme-sync";
+import { setSchemePhotoPath } from "@/lib/data/schemes";
 import { emptyScheme, MAX_SCHEME_TITLE, type Scheme } from "@/lib/scheme/types";
 import { schemeHasContent } from "@/lib/scheme/sync";
 import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
@@ -130,6 +131,34 @@ export function SchemeVisualiser() {
    * for something that isn't happening. Signed out, `localStorage` is the only
    * copy and this really is destructive.
    */
+  /**
+   * Where the share-image studio should keep its photo: the account when there's
+   * a user and a saved row, this browser otherwise.
+   *
+   * Memoised because `usePoster` keys effects off the object's fields — and
+   * because writing `photo_path` goes through `patchRow`, exactly as publishing
+   * writes `is_public`/`share_slug`. The row's own `photo_path` is the input, so
+   * a photo added on another device arrives with the next refetch.
+   */
+  const remotePoster = useMemo(
+    () =>
+      user && activeRow
+        ? {
+            schemeId: activeRow.id,
+            userId: user.id,
+            photoPath: activeRow.photo_path,
+            onPhotoPath: (path: string | null) => {
+              patchRow(activeRow.id, { photo_path: path });
+              // The write can miss — the row may have been deleted on another
+              // device — but that is not worth a message here: the sync layer
+              // already owns that conversation, and the photo itself is fine.
+              void setSchemePhotoPath(activeRow.id, path).catch(() => {});
+            },
+          }
+        : null,
+    [user, activeRow, patchRow],
+  );
+
   const replaceScheme = (next: Scheme, confirmMessage: string) => {
     if (user && activeSchemeId) {
       void adoptScheme(next);
@@ -421,6 +450,10 @@ export function SchemeVisualiser() {
           // has; a saved scheme gets its own, so anchors can't land on another
           // model's photo via a shared element name.
           scope={activeSchemeId ?? LOCAL_POSTER_SCOPE}
+          // With both a user and a saved row, the photo belongs in the account
+          // rather than this browser. Null otherwise — a signed-out or unbound
+          // document has nowhere to put it, so the studio stays local-only.
+          remote={remotePoster}
           onClose={() => setStudioOpen(false)}
         />
       )}

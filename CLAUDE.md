@@ -128,8 +128,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   query string at mount, which is what lets those three deep links agree on
   precedence — each strips its own param, so the live URL can't be asked who else
   was there. See "Which saved scheme is this?" below. `use-poster` holds
-  the share-image state (photo, framing, anchors) in its own `localStorage` key
-  — deliberately *not* in the scheme document, which has to stay portable.
+  the share-image state — deliberately *not* in the scheme document, which has to
+  stay portable. Framing, anchors and options live in its own `localStorage` key;
+  the photo goes to Supabase Storage when signed in on a saved scheme and to
+  `localStorage` otherwise (see "Share images" below).
 - `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
   contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
   the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
@@ -148,12 +150,16 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   touch the network, so keep them thin and keep the logic in the pure modules.
   `supabase/server.ts` is the anon server-read client used only by the
   `/scheme/[slug]` route; `scheme/share.ts` holds the pure share-slug helpers.
+  `data/scheme-photos.ts` is the `scheme-photos` bucket — upload, owner download,
+  delete, and the signed URL the share page needs.
   `scheme/poster.ts` is the pure layout maths for the share image (callout
-  packing, photo framing, anchor projection); `scheme/poster-draw.ts` is its
-  Canvas 2D renderer — see "Share images" below. `scheme/presets.ts` holds the
+  packing, photo framing, anchor projection, and `POSTER_FORMATS`);
+  `scheme/poster-draw.ts` is its Canvas 2D renderer — see "Share images" below. `scheme/presets.ts` holds the
   curated example schemes — see "Example schemes" below.
-- `supabase/schema.sql` — the Postgres tables + Row-Level Security for accounts
-  (run in the Supabase SQL editor; not applied automatically).
+- `supabase/schema.sql` — the Postgres tables, Row-Level Security and the
+  `scheme-photos` storage bucket for accounts (run in the Supabase SQL editor;
+  not applied automatically). `supabase/migrations/` holds the deltas to apply to
+  an existing project — never re-paste `schema.sql` at one.
 - `data/paints/*.json` — the paint catalogue, one file per brand. **Adding one
   means adding its `import` to `src/lib/paints/load.ts` too**: that file
   hardcodes the list while the build scripts and the validator `readdirSync` the
@@ -181,9 +187,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   (reconciliation, including every multi-device case; `?preset=` seeding; `?new=1`),
   plus `local-store.test.ts` and `schemes-manager.test.tsx` (a delete has to
   stick), and `home-scheme-carousel.test.tsx`. Also `use-poster.test.tsx` (the
-  poster's storage: per-scheme scoping, the legacy-key migration, and a
-  `localStorage` that throws on every access, which is Safari with cookies
-  blocked), `site-metadata.test.ts` (robots + sitemap — `/scheme/` was disallowed
+  poster's storage, both modes: per-scheme scoping, the legacy-key migration, a
+  `localStorage` that throws on every access — Safari with cookies blocked — and
+  the Storage path, including that an upload isn't re-downloaded and a download
+  isn't echoed back up), `scheme-view.test.tsx` (the share page renders no
+  `<img>` when there's no photo), `site-metadata.test.ts` (robots + sitemap — `/scheme/` was disallowed
   and nothing noticed) and `catalogue-sources.test.ts` (the `load.ts` drift
   guard). The environment is `node` by default;
   component tests opt into jsdom with a per-file `@vitest-environment jsdom`
@@ -591,17 +599,25 @@ for `warning`.
 ## Share images (the poster)
 
 The visualiser's **Share image** button opens a studio that renders the scheme
-over a photo of the model as a 4:5 PNG (1080×1350 logical, exported at 2×) for
-social media: one callout per element, each with the element's banded ramp and
-its paint names, joined by a leader line to a point on the model.
+over a photo of the model as a PNG for social media: one callout per element,
+each with the element's banded ramp and its paint names, joined by a leader line
+to a point on the model.
+
+Three aspects, in `POSTER_FORMATS` — 4:5 feed (1080×1350), 1:1 square and 9:16
+story — all **1080 logical px wide**, exported at 2×. The width is fixed on
+purpose: `COLUMN_W` and `MARGIN` are horizontal constants, so a narrower poster
+would push the two callout columns onto the model rather than beside it. Only the
+height varies, which is only a change to how tall the packing band is, and
+`layoutPoster` already degrades against that.
 
 Things to know before changing it:
 
 - **Canvas 2D, hand-rolled, no dependencies.** `next/og` (Satori) was rejected:
   it supports neither CSS gradients nor blend modes, which is why
   `opengraph-image.tsx` already draws banded solids and drops overlays entirely.
-  Canvas does both, and running client-side means **the photo never leaves the
-  browser** — there is no upload and no server route.
+  Canvas does both, and running client-side means **the composite is never built
+  on a server** — there is no render route, and for a signed-out editor the photo
+  never leaves the browser at all.
 - **One renderer for preview and export.** `drawPoster()` takes a `scale`; the
   preview passes `devicePixelRatio`, the export passes 2. Don't add a second
   drawing path. Editor-only chrome (grab handles) is drawn by `poster-canvas`
@@ -612,19 +628,47 @@ Things to know before changing it:
 - Anchors persist by element **index plus name** (`reconcileAnchors`), because
   `SchemeElement.id` comes from `uid.ts` and is regenerated every session.
 - Poster state is **not** part of `ExportShape` — schemes stay portable and
-  `canonicalScheme` comparison is unaffected. The photo lives in `localStorage`
-  under `paintdex-poster-v1`, degrading to a smaller re-encode and then to
-  no-photo-at-all rather than losing the anchors to a quota error. Supabase
-  Storage is a later phase.
+  `canonicalScheme` comparison is unaffected. Neither is the photo reference:
+  `photo_path` is a **column on `schemes`**, for the same reason. Put it inside
+  `data` and every existing `syncedCanon` stops matching at once, so every
+  document looks dirty on its next load — and `duplicateScheme` copies the whole
+  of `data`, so "save a copy" would point at the original owner's photo.
+- **The photo has two homes, and `usePoster`'s `remote` argument picks which.**
+  Signed out, or on a document not yet bound to a row: `localStorage`, with the
+  quota ladder (smaller re-encode, then no-photo-at-all rather than losing the
+  anchors). Signed in on a saved scheme: the `scheme-photos` bucket. The
+  *settings* — framing, anchors, options — stay local under either mode; they're
+  a few hundred bytes that change on every pointermove.
+  - The bucket is **private**, and access is a `storage.objects` policy, not an
+    unguessable URL. Owners read their own folder (`<user_id>/<scheme_id>.jpg`)
+    with their session; the share page gets a short-lived **signed URL**, and
+    signing is gated on a second policy that passes only while some scheme points
+    at the object *and* that scheme is published. Unpublishing revokes it with
+    nothing to invalidate. A public bucket would have left the photo readable
+    forever, which is the hole v0.12.0 closed for scheme rows.
+  - **Three refs, three different questions, and merging any two reopens a bug.**
+    `savedPhotoRef` is "the `localStorage` key holds this"; `remoteUrlRef` is
+    "the bucket holds this"; `loadedPathRef` is "these bytes came from that
+    object path". Sharing the first two made the migration a no-op — a photo read
+    out of `localStorage` looked already-saved and was never uploaded — and
+    dropping the third makes a freshly *downloaded* photo get echoed straight
+    back up, and the upload get re-downloaded.
+  - A scheme's photo object is deleted by the `schemes_delete_photo` trigger, not
+    by the client. A scheme deleted on another device, or cascaded away with the
+    account, never runs any of our code.
+  - Displaying it needed the Supabase origin adding to `img-src` in
+    `next.config.ts` — it's the first remote image the site loads.
 - Layout degrades deterministically when callouts don't fit (tighten the gap →
   truncate paint lists with `+N more` → drop from the end of scheme order) and
   **always reports what it left out** in `layout.omitted`. Keep it that way; the
   studio surfaces those reasons to the user.
-- `layoutPoster` takes the whole `PosterOptions` and derives the paint-row pitch
-  itself (`paintRowHeight`), publishing it as `layout.rowHeight` for the renderer
-  to read back. Don't pass a pre-computed pitch alongside the options: showing
-  manufacturers makes rows two lines tall, and a caller that sets `showBrands`
-  but reserves one-line space gets text crushed into the next paint, silently.
+- `layoutPoster` takes the whole `PosterOptions` and derives from it both the
+  paint-row pitch (`paintRowHeight`, published as `layout.rowHeight`) and the
+  poster's `width`/`height` (from `format`). Don't pass either alongside the
+  options: showing manufacturers makes rows two lines tall, and a caller that
+  sets `showBrands` but reserves one-line space gets text crushed into the next
+  paint, silently — a caller that picks a format but forgets to resize packs into
+  the wrong band and reports phantom `no-space` omissions the same way.
 - `ctx.font` can't take a CSS variable — use `resolveFontFamily()` and
   `await document.fonts.ready`, or the export silently ships in system sans.
 - Two renderer caveats worth knowing: `ctx.letterSpacing` is unsupported in
@@ -649,6 +693,10 @@ Things to know before changing it:
   megabyte per pointer event. On a shared device the last photo survives a
   reload; **Remove** clears it. A photo too big to store says so rather than
   vanishing at the next reload.
+- **Read `layout.width`/`layout.height`, never `POSTER_SIZE`.** That constant is
+  just the 4:5 entry, and a renderer or hit-test that reaches for it pins itself
+  to one aspect while everything else moves — `poster-canvas` had seven such
+  reads, which is every coordinate the pointer and keyboard paths use.
 
 ## Deploying
 
@@ -657,9 +705,11 @@ zero-config static Next.js app. **The database is not part of that**:
 schema changes are applied by hand in the Supabase SQL editor — as a delta from
 `supabase/migrations/`, never by re-pasting `schema.sql`, which is the bootstrap
 for a fresh project and will take your change down with it if any of its other
-statements fails. A change the code depends on (the `get_public_scheme` RPC,
-say) has to be run *before* the deploy that needs it, and confirmed rather than
-assumed. The **core site needs no configuration**;
+statements fails. A change the code depends on (the `get_public_scheme` RPC, or
+the `scheme-photos` bucket and its policies) has to be run *before* the deploy
+that needs it, and confirmed rather than assumed — the storage migration also
+changes the RPC's return columns, so the two move together. Each migration ends
+in a `-- Verify` block; run it. The **core site needs no configuration**;
 **accounts** additionally need the three `NEXT_PUBLIC_*` env vars (see
 `.env.example`) set in Vercel (Production/Preview/Development) — they're inlined
 at build time, so add them and redeploy. Google sign-in also requires the site's

@@ -10,8 +10,26 @@
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, act, cleanup, waitFor } from "@testing-library/react";
+import { useState } from "react";
 import { usePoster, LOCAL_POSTER_SCOPE } from "@/hooks/use-poster";
+import {
+  deleteSchemePhoto,
+  downloadSchemePhoto,
+  uploadSchemePhoto,
+} from "@/lib/data/scheme-photos";
 import type { SchemeElement } from "@/lib/scheme/types";
+
+vi.mock("@/lib/data/scheme-photos", () => ({
+  schemePhotoPath: (userId: string, schemeId: string) => `${userId}/${schemeId}.jpg`,
+  uploadSchemePhoto: vi.fn(async (userId: string, schemeId: string) => `${userId}/${schemeId}.jpg`),
+  downloadSchemePhoto: vi.fn(async () => null),
+  deleteSchemePhoto: vi.fn(async () => {}),
+  signSchemePhoto: vi.fn(async () => null),
+}));
+
+const mockUpload = vi.mocked(uploadSchemePhoto);
+const mockDownload = vi.mocked(downloadSchemePhoto);
+const mockDelete = vi.mocked(deleteSchemePhoto);
 
 const SETTINGS = "paintdex-poster-v1";
 const PHOTO = "paintdex-poster-photo-v1";
@@ -36,12 +54,49 @@ function harness(scope?: string) {
   return seen;
 }
 
+/**
+ * The same, in remote mode, wired the way `scheme-visualiser` wires it: the
+ * caller owns `photo_path` and feeds it back in. That loop is the point — it's
+ * what tells the hook the upload it just made is the row's photo, so the fetch
+ * effect doesn't turn round and download it again.
+ */
+function remoteHarness(schemeId = "row-1", initialPath: string | null = null) {
+  const seen: { current: ReturnType<typeof usePoster> | null } = { current: null };
+  const paths: (string | null)[] = [];
+  function Probe() {
+    const [photoPath, setPhotoPath] = useState(initialPath);
+    seen.current = usePoster(elements, schemeId, {
+      schemeId,
+      userId: "u1",
+      photoPath,
+      onPhotoPath: (p) => {
+        paths.push(p);
+        setPhotoPath(p);
+      },
+    });
+    return null;
+  }
+  render(<Probe />);
+  return { seen, paths };
+}
+
+const choosePhoto = (seen: { current: ReturnType<typeof usePoster> | null }) =>
+  act(async () => {
+    await seen.current?.loadPhoto(new File(["x"], "m.jpg", { type: "image/jpeg" }));
+  });
+
 let failWritesLargerThan = Infinity;
 let realSetItem: typeof Storage.prototype.setItem;
 
 beforeEach(() => {
   localStorage.clear();
   failWritesLargerThan = Infinity;
+
+  // `vi.mock` factory fns aren't spies, so `restoreAllMocks` leaves their call
+  // history in place and a later test sees an earlier one's uploads.
+  mockUpload.mockClear();
+  mockDownload.mockClear();
+  mockDelete.mockClear();
 
   // jsdom has no image decoder: resolve `onload` on the next tick so the
   // restore path completes, and report a size so `downscale` has something to
@@ -215,5 +270,125 @@ describe("usePoster storage failures", () => {
       await new Promise((r) => setTimeout(r, 0));
     });
     expect(seen.current?.photo).toBeNull();
+  });
+});
+
+describe("usePoster remote storage", () => {
+  it("uploads a chosen photo and hands the caller its path", async () => {
+    const { seen, paths } = remoteHarness();
+    await act(async () => {});
+    await choosePhoto(seen);
+
+    await waitFor(() => expect(paths).toEqual(["u1/row-1.jpg"]));
+    expect(mockUpload).toHaveBeenCalledTimes(1);
+    expect(seen.current?.photo).not.toBeNull();
+    expect(seen.current?.error).toBeNull();
+  });
+
+  it("does not re-download the photo it just uploaded", async () => {
+    // The caller feeds `photo_path` straight back in, so without a guard the
+    // fetch effect would immediately pull down the bytes still in memory.
+    const { seen } = remoteHarness();
+    await act(async () => {});
+    await choosePhoto(seen);
+
+    await waitFor(() => expect(mockUpload).toHaveBeenCalled());
+    await act(async () => {});
+    expect(mockDownload).not.toHaveBeenCalled();
+  });
+
+  it("keeps the photo in memory, and says so, when the upload fails", async () => {
+    mockUpload.mockRejectedValueOnce(new Error("offline"));
+    const { seen, paths } = remoteHarness();
+    await act(async () => {});
+    await choosePhoto(seen);
+
+    await waitFor(() => expect(seen.current?.error).toMatch(/couldn't save that photo/i));
+    // The studio stays usable — same posture as the local "too large" path.
+    expect(seen.current?.photo).not.toBeNull();
+    expect(paths).toEqual([]);
+  });
+
+  it("loads the photo the row points at", async () => {
+    mockDownload.mockResolvedValueOnce(new Blob(["jpeg-bytes"], { type: "image/jpeg" }));
+    const { seen } = remoteHarness("row-1", "u1/row-1.jpg");
+
+    await waitFor(() => expect(seen.current?.photo).not.toBeNull());
+    expect(mockDownload).toHaveBeenCalledWith("u1/row-1.jpg");
+    expect(seen.current?.photo?.dataUrl).toMatch(/^data:/);
+  });
+
+  it("opens empty rather than broken when the object has gone", async () => {
+    mockDownload.mockResolvedValueOnce(null);
+    const { seen, paths } = remoteHarness("row-1", "u1/row-1.jpg");
+    await act(async () => {});
+
+    expect(seen.current?.photo).toBeNull();
+    // A row pointing at a missing object isn't something the user can act on.
+    expect(seen.current?.error).toBeNull();
+    // And "no photo in state" must not be read as "the user removed it" — that
+    // is also what every moment before the fetch resolves looks like, so a save
+    // effect that acted on it would clear `photo_path` on a slow connection.
+    expect(mockDelete).not.toHaveBeenCalled();
+    expect(paths).toEqual([]);
+  });
+
+  it("moves an existing localStorage photo into the account, then drops the local copy", async () => {
+    localStorage.setItem(`${PHOTO}:row-1`, DATA_URL);
+    const { seen, paths } = remoteHarness();
+
+    await waitFor(() => expect(paths).toEqual(["u1/row-1.jpg"]));
+    expect(seen.current?.photo?.dataUrl).toBe(DATA_URL);
+    // Kept in one place, not two — the local copy would spend the quota on a
+    // cache nothing reads.
+    await waitFor(() => expect(localStorage.getItem(`${PHOTO}:row-1`)).toBeNull());
+  });
+
+  it("never writes the photo to localStorage in remote mode", async () => {
+    const { seen } = remoteHarness();
+    await act(async () => {});
+    await choosePhoto(seen);
+
+    await waitFor(() => expect(mockUpload).toHaveBeenCalled());
+    expect(localStorage.getItem(`${PHOTO}:row-1`)).toBeNull();
+    // The settings still are, though — they never left the device.
+    expect(localStorage.getItem(`${SETTINGS}:row-1`)).not.toBeNull();
+  });
+
+  it("deletes the object and clears the path when the photo is removed", async () => {
+    mockDownload.mockResolvedValueOnce(new Blob(["jpeg-bytes"], { type: "image/jpeg" }));
+    const { seen, paths } = remoteHarness("row-1", "u1/row-1.jpg");
+    await waitFor(() => expect(seen.current?.photo).not.toBeNull());
+
+    act(() => seen.current?.clearPhoto());
+
+    await waitFor(() => expect(mockDelete).toHaveBeenCalledWith("u1/row-1.jpg"));
+    await waitFor(() => expect(paths).toEqual([null]));
+    expect(seen.current?.photo).toBeNull();
+  });
+
+  it("issues no delete for a scheme that never had a photo", async () => {
+    const { seen } = remoteHarness();
+    await act(async () => {});
+    act(() => seen.current?.clearPhoto());
+    await act(async () => {});
+
+    expect(mockDelete).not.toHaveBeenCalled();
+  });
+
+  it("keeps the anchors when the photo is removed", async () => {
+    // The two are separate keys precisely so losing one can't cost the other.
+    localStorage.setItem(
+      `${SETTINGS}:row-1`,
+      JSON.stringify({ anchors: { 0: { x: 0.4, y: 0.6 } }, names: ["Armour"] }),
+    );
+    mockDownload.mockResolvedValueOnce(new Blob(["jpeg-bytes"], { type: "image/jpeg" }));
+    const { seen } = remoteHarness("row-1", "u1/row-1.jpg");
+    await waitFor(() => expect(seen.current?.photo).not.toBeNull());
+
+    act(() => seen.current?.clearPhoto());
+    await act(async () => {});
+
+    expect(seen.current?.anchors).toEqual({ 0: { x: 0.4, y: 0.6 } });
   });
 });
