@@ -87,7 +87,9 @@ schemes, sync them across devices, and share them by link.
 The core site (paint database, matching, visualiser) needs no backend — it's
 statically generated and the paint data ships in the repo. **Accounts are
 optional**: the browser talks to Supabase directly, so the site stays static and
-free to host.
+free to host. There are two Supabase projects, production and staging, and
+development runs against staging — see
+[`supabase/README.md`](supabase/README.md).
 
 ## Getting started
 

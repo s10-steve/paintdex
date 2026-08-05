@@ -23,6 +23,24 @@
 -- in the repo, not the DB, so there is no foreign key to a paints table.
 
 -- ---------------------------------------------------------------------------
+-- schema_migrations: which files in supabase/migrations/ have been applied.
+--
+-- A project bootstrapped from this file already has everything those deltas
+-- would do, so they are all recorded as applied at the bottom of this file —
+-- otherwise a fresh project would look years behind and someone would helpfully
+-- "catch it up" by replaying them.
+-- ---------------------------------------------------------------------------
+create table if not exists public.schema_migrations (
+  filename   text primary key,
+  applied_at timestamptz not null default now()
+);
+-- No policies, so none can be OR-combined into something wider later. This is
+-- deployment bookkeeping; the browser has no reason to read it.
+alter table public.schema_migrations enable row level security;
+comment on table public.schema_migrations is
+  'Which files in supabase/migrations/ have been applied. Written by hand as the last statement of each migration.';
+
+-- ---------------------------------------------------------------------------
 -- profiles: 1:1 with auth.users, created automatically on signup.
 -- ---------------------------------------------------------------------------
 create table if not exists public.profiles (
@@ -301,3 +319,20 @@ drop trigger if exists schemes_quota on public.schemes;
 create trigger schemes_quota
   before insert on public.schemes
   for each row execute function public.enforce_scheme_quota();
+
+-- ---------------------------------------------------------------------------
+-- Migration bookkeeping
+-- ---------------------------------------------------------------------------
+-- Everything above already includes what each delta in `supabase/migrations/`
+-- does, so a project built from this file is up to date by construction. Record
+-- them, or the next person to compare the directory against the table will
+-- conclude a fresh project is missing every migration ever written.
+--
+-- **Add a line here whenever you add a migration**, or a newly bootstrapped
+-- project (a staging one, say) will diverge from production the first time
+-- someone runs the "pending" list against it.
+insert into public.schema_migrations (filename) values
+  ('0001-v0.12.0-unlisted-share-links.sql'),
+  ('0002-v0.13.0-migration-tracking.sql'),
+  ('0003-v0.13.0-scheme-photos.sql')
+on conflict (filename) do nothing;

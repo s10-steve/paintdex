@@ -10,7 +10,10 @@
 -- Every statement here is idempotent, so re-running it is safe, including
 -- part-way through.
 --
--- Run it BEFORE deploying the v0.13.0 code: the studio uploads to the bucket
+-- Run `0002-…` first: this file's last statement records itself in the table
+-- that one creates.
+--
+-- Run both BEFORE deploying the v0.13.0 code: the studio uploads to the bucket
 -- below and the share page selects the new column, and neither has a fallback.
 
 -- ---------------------------------------------------------------------------
@@ -165,6 +168,14 @@ create trigger schemes_delete_photo
   for each row execute function public.delete_scheme_photo();
 
 -- ---------------------------------------------------------------------------
+-- 6. Record that this ran.
+-- ---------------------------------------------------------------------------
+-- Last statement, so a file that fails part-way through doesn't claim success.
+insert into public.schema_migrations (filename)
+values ('0003-v0.13.0-scheme-photos.sql')
+on conflict (filename) do nothing;
+
+-- ---------------------------------------------------------------------------
 -- Verify
 -- ---------------------------------------------------------------------------
 --   -- the new column comes back, and only for a published slug
@@ -177,3 +188,6 @@ create trigger schemes_delete_photo
 --   -- the table itself is still unreadable anonymously
 --   set local role anon;
 --   select count(*) from public.schemes;                             -- 0
+--
+--   -- and everything in supabase/migrations/ is now accounted for
+--   select filename from public.schema_migrations order by filename;

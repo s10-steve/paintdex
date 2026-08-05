@@ -156,10 +156,12 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   packing, photo framing, anchor projection, and `POSTER_FORMATS`);
   `scheme/poster-draw.ts` is its Canvas 2D renderer — see "Share images" below. `scheme/presets.ts` holds the
   curated example schemes — see "Example schemes" below.
-- `supabase/schema.sql` — the Postgres tables, Row-Level Security and the
-  `scheme-photos` storage bucket for accounts (run in the Supabase SQL editor;
-  not applied automatically). `supabase/migrations/` holds the deltas to apply to
-  an existing project — never re-paste `schema.sql` at one.
+- `supabase/` — the database. `schema.sql` is the bootstrap for a **fresh**
+  project (tables, RLS, the `scheme-photos` bucket); `migrations/` holds the
+  deltas to apply to an existing one, in order, by hand — never re-paste
+  `schema.sql` at a live project. **`supabase/README.md` is the runbook**: the
+  two projects, how a change reaches production, and the dashboard setup that
+  isn't in any file.
 - `data/paints/*.json` — the paint catalogue, one file per brand. **Adding one
   means adding its `import` to `src/lib/paints/load.ts` too**: that file
   hardcodes the list while the build scripts and the validator `readdirSync` the
@@ -192,8 +194,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   the Storage path, including that an upload isn't re-downloaded and a download
   isn't echoed back up), `scheme-view.test.tsx` (the share page renders no
   `<img>` when there's no photo), `site-metadata.test.ts` (robots + sitemap — `/scheme/` was disallowed
-  and nothing noticed) and `catalogue-sources.test.ts` (the `load.ts` drift
-  guard). The environment is `node` by default;
+  and nothing noticed), `catalogue-sources.test.ts` (the `load.ts` drift guard)
+  and `migrations.test.ts` (the migration-bookkeeping drift guard — see
+  "Deploying"). The environment is `node` by default;
   component tests opt into jsdom with a per-file `@vitest-environment jsdom`
   docblock, so the pure suites stay fast.
 - `src/types/gis.d.ts` — minimal typings for the Google Identity Services lib.
@@ -701,7 +704,12 @@ Things to know before changing it:
 ## Deploying
 
 Vercel builds `main` for production and gives every PR a preview URL — it's a
-zero-config static Next.js app. **The database is not part of that**:
+zero-config static Next.js app. **The database is not part of that**, and there
+are **two Supabase projects**, one per environment: production is wired to
+Vercel's Production scope only, staging to Preview + Development and to your
+`.env.local`, so local work and PR previews cannot reach a real user's scheme.
+Rehearse every migration against staging first. Full runbook in
+`supabase/README.md`. As for applying them:
 schema changes are applied by hand in the Supabase SQL editor — as a delta from
 `supabase/migrations/`, never by re-pasting `schema.sql`, which is the bootstrap
 for a fresh project and will take your change down with it if any of its other
@@ -709,7 +717,22 @@ statements fails. A change the code depends on (the `get_public_scheme` RPC, or
 the `scheme-photos` bucket and its policies) has to be run *before* the deploy
 that needs it, and confirmed rather than assumed — the storage migration also
 changes the RPC's return columns, so the two move together. Each migration ends
-in a `-- Verify` block; run it. The **core site needs no configuration**;
+in a `-- Verify` block; run it, and end every new migration with one.
+
+Which migrations a project has had is recorded in `public.schema_migrations` —
+each file's **last** statement inserts its own filename, so a half-failed run
+doesn't claim success, and `select filename from public.schema_migrations order
+by filename` compared against `ls supabase/migrations/` answers "is prod up to
+date?" without relying on memory. A new migration must also be added to the
+block at the bottom of `schema.sql`, or a freshly bootstrapped project looks like
+it is missing everything. The database can't enforce either habit, so
+`test/migrations.test.ts` does — it fails on a migration that doesn't record
+itself, records itself anywhere but last, or is absent from `schema.sql`. What
+nothing can check is whether you actually ran the file. Enforcing *that* means
+adopting the Supabase CLI's migration system, which would own the whole workflow
+in exchange — deliberately not taken on.
+
+The **core site needs no configuration**;
 **accounts** additionally need the three `NEXT_PUBLIC_*` env vars (see
 `.env.example`) set in Vercel (Production/Preview/Development) — they're inlined
 at build time, so add them and redeploy. Google sign-in also requires the site's
