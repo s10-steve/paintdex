@@ -44,28 +44,45 @@ export function SchemeView({
         <SaveCopyButton scheme={scheme} />
       </div>
 
-      {photoUrl && (
-        <div className="mb-4 overflow-hidden rounded-xl border border-border bg-muted shadow-sm">
-          {/* A plain <img>, like everything else outside the homepage: the URL is
-              signed and short-lived, so it has no stable key for `next/image` to
-              optimise against, and no `remotePatterns` entry to permit it. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={photoUrl}
-            alt={`The painted model for ${scheme.title || "this scheme"}`}
-            className="mx-auto max-h-[60vh] w-auto max-w-full object-contain"
-          />
-        </div>
-      )}
-
-      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-        {scheme.elements.length > 0 ? (
-          <SchemeBars elements={scheme.elements} blend={false} />
-        ) : (
-          <p className="px-4 py-10 text-center text-sm text-muted-foreground">
-            This scheme has no elements yet.
-          </p>
+      {/* Photo and bars side by side once there's room, stacked below that.
+          `items-start` so the shorter of the two doesn't stretch to match the
+          taller — the bars size themselves from their content, and a photo is
+          whatever aspect the owner shot it at. The photo column is capped rather
+          than an even split: past about a third of a wide screen it starts
+          crowding out the thing people came for. */}
+      <div
+        className={
+          photoUrl
+            ? "grid gap-4 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:items-start"
+            : undefined
+        }
+      >
+        {photoUrl && (
+          <div className="overflow-hidden rounded-xl border border-border bg-muted shadow-sm">
+            {/* A plain <img>, like everything else outside the homepage: the URL
+                is signed and short-lived, so it has no stable key for
+                `next/image` to optimise against, and no `remotePatterns` entry
+                to permit it. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={photoUrl}
+              alt={`The painted model for ${scheme.title || "this scheme"}`}
+              // Capped shorter on desktop than stacked: side by side it only has
+              // to hold its own against the bars, not fill the fold on its own.
+              className="mx-auto max-h-[60vh] w-auto max-w-full object-contain lg:max-h-[52vh]"
+            />
+          </div>
         )}
+
+        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+          {scheme.elements.length > 0 ? (
+            <SchemeBars elements={scheme.elements} blend={false} />
+          ) : (
+            <p className="px-4 py-10 text-center text-sm text-muted-foreground">
+              This scheme has no elements yet.
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Full recipe — the point of a shareable link. */}
