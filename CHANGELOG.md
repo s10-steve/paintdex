@@ -21,13 +21,15 @@ fallback for either.
 
 - **Your model photo is saved with the scheme.** Signed in, the photo you add in
   the share-image studio now goes with your account rather than staying in one
-  browser: open the same scheme on your phone and the photo, framing and labels
-  are already there. Signed out, nothing changes — the photo stays on your device
-  and is never uploaded.
+  browser: open the same scheme on another device and the photo is already there.
+  Signed out, nothing changes — the photo stays on your device and is never
+  uploaded. Note the photo is all that travels for now: where you placed the
+  labels, and how you framed and cropped the shot, are still stored per browser,
+  so you'd re-place those on a second device.
 - **A shared scheme's page shows the photo.** If you've added one and published
-  the scheme, `/scheme/<slug>` shows your model above the colours. It's visible
+  the scheme, `/scheme/<slug>` shows your model beside the colours. It's visible
   only while the scheme is published; unpublish and it's private again
-  immediately.
+  immediately. It's the photo itself, not the labelled share image.
 - **Three shapes for the share image.** 4:5 for the feed as before, plus 1:1 for
   a square post and 9:16 for a story. A shorter image has less room for labels,
   and the studio lists anything that no longer fits, as it already did.
@@ -37,6 +39,9 @@ fallback for either.
 - The **Create shareable image** button says **Edit shareable image** once the
   scheme has one. "Create" promised a blank studio and then opened onto your own
   model.
+- On a shared scheme's page, the photo and the colour bars now sit **side by side
+  on a desktop screen** rather than stacked, which pushed the colours below the
+  fold. Still stacked on narrower screens.
 - Removing a photo, or deleting a scheme, now removes the stored image too.
 - The studio's note about where your photo goes now says which of the two it is,
   rather than always claiming the photo never leaves your device.
