@@ -5,7 +5,6 @@ import {
   ROLE_KEYS,
   paintMeta,
   roleOf,
-  weightOf,
   type SchemePaint,
   type SchemeRole,
 } from "@/lib/scheme/types";
@@ -13,7 +12,7 @@ import type { HoverHandlers } from "../scheme-bars";
 import { IconBtn } from "./icon-btn";
 import { RoleTag } from "./role-tag";
 
-/** One paint within an element: swatch, name/meta, role + weight, row actions. */
+/** One paint within an element: swatch, name/meta, role, row actions. */
 export function LayerRow({
   paint,
   index,
@@ -23,7 +22,6 @@ export function LayerRow({
   onMove,
   onRemove,
   onSetRole,
-  onSetWeight,
 }: {
   paint: SchemePaint;
   index: number;
@@ -33,7 +31,6 @@ export function LayerRow({
   onMove: (dir: -1 | 1) => void;
   onRemove: () => void;
   onSetRole: (role: SchemeRole) => void;
-  onSetWeight: (weight: number) => void;
 }) {
   const role = roleOf(paint);
   const meta = paintMeta(paint);
@@ -74,21 +71,6 @@ export function LayerRow({
               </option>
             ))}
           </select>
-          <div className="flex min-w-0 max-w-[150px] flex-1 items-center gap-1.5">
-            <span className="whitespace-nowrap text-[10px] tracking-wide text-muted-foreground">
-              {role.solid ? "weight" : "amount"}
-            </span>
-            <input
-              type="range"
-              min={0.3}
-              max={2.5}
-              step={0.05}
-              value={weightOf(paint)}
-              onChange={(e) => onSetWeight(parseFloat(e.target.value))}
-              aria-label="Layer weight"
-              className="sv-weight w-full"
-            />
-          </div>
         </div>
       </div>
       <div className="flex flex-none gap-0.5 opacity-40 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">

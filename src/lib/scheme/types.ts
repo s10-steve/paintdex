@@ -77,8 +77,6 @@ export interface SchemePaint {
   role: SchemeRole;
   /** True when entered by hand rather than picked from the database. */
   custom?: boolean;
-  /** Explicit weight override; falls back to the role default when unset. */
-  weight?: number;
 }
 
 export interface SchemeElement {
@@ -106,16 +104,19 @@ export const MAX_SCHEME_TITLE = 200;
 export const emptyScheme = (): Scheme => ({ title: "", elements: [] });
 
 export const roleOf = (p: SchemePaint): RoleMeta => ROLES[p.role] ?? ROLES.layer;
+
 /**
  * The weight a paint contributes to its bar's ramp.
  *
- * `Number.isFinite` rather than `typeof === "number"`: this is the single read
- * point for the override, and an `Infinity` reaching `barModel` turns every
- * ramp stop into `NaN%`. `io.ts` already rejects those on the way in — this is
- * the second line, for any scheme that reaches a renderer another way.
+ * Role is the only thing that sizes a band. There used to be a per-paint
+ * `weight` override with a slider behind it, which said the same thing the role
+ * already said — base thick, highlight thin — at the cost of a line in every
+ * editor row. It was removed, along with the whole class of bug its docblock
+ * used to warn about: a non-finite override reaching `barModel` turned every
+ * ramp stop into `NaN%`. A role can only be one of seven known keys, so there
+ * is nothing left to sanitise.
  */
-export const weightOf = (p: SchemePaint): number =>
-  Number.isFinite(p.weight) ? (p.weight as number) : roleOf(p).weight;
+export const weightOf = (p: SchemePaint): number => roleOf(p).weight;
 
 /**
  * A colour the user mixed or picked themselves, rather than one from the

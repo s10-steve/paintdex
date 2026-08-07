@@ -27,7 +27,6 @@ export type ElementHandlers = {
   movePaint: (elementId: string, paintId: string, dir: -1 | 1) => void;
   removePaint: (elementId: string, paintId: string) => void;
   setRole: (elementId: string, paintId: string, role: SchemeRole) => void;
-  setWeight: (elementId: string, paintId: string, weight: number) => void;
 };
 
 /** First paint in an element is a base; subsequent additions default to layer. */
@@ -118,7 +117,6 @@ export function ElementCard({
             onMove={(dir) => handlers.movePaint(id, paint.id, dir)}
             onRemove={() => handlers.removePaint(id, paint.id)}
             onSetRole={(role) => handlers.setRole(id, paint.id, role)}
-            onSetWeight={(w) => handlers.setWeight(id, paint.id, w)}
           />
         ))}
       </ul>

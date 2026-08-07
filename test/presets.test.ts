@@ -88,14 +88,10 @@ describe("resolvePreset", () => {
     expect(resolved.slug).toBe(spec.slug);
   });
 
-  it("preserves an explicit weight and omits it otherwise", () => {
+  it("emits no bar-share override — role is the only thing sizing a band", () => {
     const resolved = resolvePreset(spec, getPaintById);
-    for (const [i, el] of spec.elements.entries()) {
-      for (const [j, ref] of el.paints.entries()) {
-        const out = resolved.elements[i].paints[j];
-        if (ref.weight === undefined) expect("weight" in out).toBe(false);
-        else expect(out.weight).toBe(ref.weight);
-      }
+    for (const el of resolved.elements) {
+      for (const out of el.paints) expect("weight" in out).toBe(false);
     }
   });
 

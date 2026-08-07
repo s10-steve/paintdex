@@ -21,16 +21,8 @@ import { MAX_SCHEME_TITLE, ROLES, roleOf, weightOf } from "@/lib/scheme/types";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
-function p(role: SchemeRole, weight?: number): SchemePaint {
-  return {
-    id: `p${seq++}`,
-    name: role,
-    brand: "custom",
-    range: "custom",
-    hex: "#808080",
-    role,
-    weight,
-  };
+function p(role: SchemeRole): SchemePaint {
+  return { id: `p${seq++}`, name: role, brand: "custom", range: "custom", hex: "#808080", role };
 }
 
 describe("roles", () => {
@@ -95,16 +87,18 @@ describe("barModel", () => {
   });
 
   it("weights segments proportionally and the fractions sum to 1", () => {
-    const { segs } = barModel([p("base", 3), p("highlight", 1)]);
-    expect(segs[0].frac).toBeCloseTo(0.75, 5);
-    expect(segs[1].frac).toBeCloseTo(0.25, 5);
+    // Role is the only thing that sizes a band: base 1.4 against highlight 0.55.
+    const { segs } = barModel([p("base"), p("highlight")]);
+    const total = ROLES.base.weight + ROLES.highlight.weight;
+    expect(segs[0].frac).toBeCloseTo(ROLES.base.weight / total, 5);
+    expect(segs[1].frac).toBeCloseTo(ROLES.highlight.weight / total, 5);
     expect(segs.reduce((n, s) => n + s.frac, 0)).toBeCloseTo(1, 5);
     // First segment sits at the bottom (start 0), last reaches the top (end 1).
     expect(segs[0].start).toBeCloseTo(0, 5);
     expect(segs[segs.length - 1].end).toBeCloseTo(1, 5);
   });
 
-  it("uses role default weights when a paint has no explicit weight", () => {
+  it("orders the ramp by role weight, largest at the base", () => {
     const { segs } = barModel([p("base"), p("layer"), p("highlight")]);
     // Defaults 1.4 / 1.0 / 0.55 → base is the largest, highlight the smallest.
     expect(segs[0].frac).toBeGreaterThan(segs[1].frac);
@@ -233,7 +227,7 @@ describe("scheme import/export", () => {
         name: "Armour",
         paints: [
           { id: "a1", name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
-          { id: "a2", name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+          { id: "a2", name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true },
         ],
       },
     ],
@@ -247,7 +241,7 @@ describe("scheme import/export", () => {
     expect(back.elements[0].name).toBe("Armour");
     expect(back.elements[0].paints.map((p) => ({ ...p, id: undefined }))).toEqual([
       { id: undefined, name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
-      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true },
     ]);
   });
 
@@ -312,7 +306,7 @@ describe("scheme import/export", () => {
     expect(back.title).toBe("Test Scheme");
     expect(back.elements[0].paints.map((p) => ({ ...p, id: undefined }))).toEqual([
       { id: undefined, name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
-      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true },
     ]);
   });
 
@@ -324,31 +318,27 @@ describe("scheme import/export", () => {
   });
 
   /**
-   * A weight override reaches the ramp maths, where a non-finite value makes
-   * every stop `NaN%` — a blank bar in CSS, a throw from `addColorStop` on the
-   * poster canvas, and `flexGrow: NaN` in the OpenGraph image, which can 500 a
-   * public route. `1e400` is the nasty one: valid JSON, parses to `Infinity`.
+   * The per-paint `weight` override is gone — role alone sizes a band. An older
+   * file or row still carrying one must import cleanly and simply lose it, not
+   * carry a stray key into the document (which would leave every affected
+   * scheme permanently unequal to its stored `syncedCanon`).
    */
-  it("rejects a non-finite weight rather than passing it to the ramp", () => {
-    const withWeight = (w: string) =>
-      importScheme(
-        `{"elements":[{"name":"E","paints":[{"name":"P","hex":"#AABBCC","role":"base","weight":${w}}]}]}`,
-        newId,
-      ).elements[0].paints[0];
+  it("drops a legacy weight override rather than carrying it through", () => {
+    const paint = importScheme(
+      `{"elements":[{"name":"E","paints":[{"name":"P","hex":"#AABBCC","role":"base","weight":1e400}]}]}`,
+      newId,
+    ).elements[0].paints[0];
 
-    expect(withWeight("1e400").weight).toBeUndefined();
-    expect(withWeight("-1").weight).toBeUndefined();
-    // Clamped, not dropped — a large finite weight is merely unreasonable.
-    expect(withWeight("1e6").weight).toBe(100);
-    expect(withWeight("0.5").weight).toBe(0.5);
+    expect("weight" in paint).toBe(false);
+    expect(weightOf(paint)).toBe(ROLES.base.weight);
   });
 
-  it("falls back to the role's weight when the override is unusable", () => {
-    // `weightOf` is the single read point, so it holds the line for any scheme
-    // that reaches a renderer without going through the importer.
-    expect(weightOf(p("base", Infinity))).toBe(ROLES.base.weight);
-    expect(weightOf(p("base", NaN))).toBe(ROLES.base.weight);
-    expect(weightOf(p("base", 0.9))).toBe(0.9);
+  it("sizes every band from its role, with nothing left to sanitise", () => {
+    // `weightOf` is the single read point, and a role can only be one of seven
+    // known keys — an unknown one falls back to `layer` in `roleOf`.
+    expect(weightOf(p("base"))).toBe(ROLES.base.weight);
+    expect(weightOf(p("highlight"))).toBe(ROLES.highlight.weight);
+    expect(weightOf({ ...p("base"), role: "nonsense" as SchemeRole })).toBe(ROLES.layer.weight);
   });
 
   it("trims a title to the database's limit", () => {

@@ -35,8 +35,6 @@ export interface PresetPaintRef {
   id: string;
   /** Hand-picked: how this paint reads in the bar. */
   role: SchemeRole;
-  /** Explicit bar-share override; falls back to the role default when unset. */
-  weight?: number;
   /**
    * Used verbatim only if `id` has left the catalogue. Keeps a preset rendering
    * something sensible in a degraded state; the drift test is what stops us
@@ -87,7 +85,6 @@ export function resolvePreset(spec: PresetSpec, lookup: PaintLookup): ResolvedPr
         range: found.range,
         hex: (ref.hexOverride ?? found.hex).toUpperCase(),
         role: ref.role,
-        ...(ref.weight === undefined ? {} : { weight: ref.weight }),
       };
     }),
   }));
@@ -109,7 +106,7 @@ const ref = (
   id: string,
   role: SchemeRole,
   fallback: PresetPaintData,
-  extra?: { weight?: number; hexOverride?: string },
+  extra?: { hexOverride?: string },
 ): PresetPaintRef => ({ id, role, fallback, ...extra });
 
 /**
@@ -139,7 +136,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-retributor-armour", "layer", { name: "Retributor Armour", brand: "Citadel", range: "Base", hex: "#EDC169" }),
           ref("citadel-reikland-fleshshade", "wash", { name: "Reikland Fleshshade", brand: "Citadel", range: "Shade", hex: "#7E3226" }),
           ref("citadel-auric-armour-gold", "layer", { name: "Auric Armour Gold", brand: "Citadel", range: "Layer", hex: "#FFC451" }),
-          ref("citadel-stormhost-silver", "highlight", { name: "Stormhost Silver", brand: "Citadel", range: "Layer", hex: "#DADDDF" }, { weight: 0.3 }),
+          ref("citadel-stormhost-silver", "highlight", { name: "Stormhost Silver", brand: "Citadel", range: "Layer", hex: "#DADDDF" }),
         ],
       },
       {
@@ -182,7 +179,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-mephiston-red", "base", { name: "Mephiston Red", brand: "Citadel", range: "Base", hex: "#960C09" }),
           ref("citadel-evil-sunz-scarlet", "layer", { name: "Evil Sunz Scarlet", brand: "Citadel", range: "Layer", hex: "#C01411" }),
           ref("citadel-yriel-yellow", "highlight", { name: "Yriel Yellow", brand: "Citadel", range: "Layer", hex: "#FFD900" }),
-          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }, { weight: 0.3 }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }),
         ],
       },
     ],
@@ -200,16 +197,16 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
           ref("citadel-elysian-green", "layer", { name: "Elysian Green", brand: "Citadel", range: "Layer", hex: "#6B8C37" }),
           ref("citadel-ogryn-camo", "highlight", { name: "Ogryn Camo", brand: "Citadel", range: "Layer", hex: "#96A648" }),
-          ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }, { weight: 1.6 }),
+          ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }),
         ],
       },
       {
         name: "Brass",
         paints: [
-          ref("scale-75-decayed-metal", "base", { name: "Decayed Metal", brand: "Scale 75", range: "Metal N Alchemy Range", hex: "#5D4038" }, { weight: 1.35 }),
+          ref("scale-75-decayed-metal", "base", { name: "Decayed Metal", brand: "Scale 75", range: "Metal N Alchemy Range", hex: "#5D4038" }),
           ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
-          ref("scale-75-old-copper", "layer", { name: "Old Copper", brand: "Scale 75", range: "Metal N Alchemy Range", hex: "#97604C" }, { weight: 1.3 }),
-          ref("citadel-nihilakh-oxide", "layer", { name: "Nihilakh Oxide", brand: "Citadel", range: "Technical", hex: "#66B39A" }, { weight: 0.3 }),
+          ref("scale-75-old-copper", "layer", { name: "Old Copper", brand: "Scale 75", range: "Metal N Alchemy Range", hex: "#97604C" }),
+          ref("citadel-nihilakh-oxide", "layer", { name: "Nihilakh Oxide", brand: "Citadel", range: "Technical", hex: "#66B39A" }),
         ],
       },
       {
@@ -224,8 +221,8 @@ export const SCHEME_PRESETS: PresetSpec[] = [
       {
         name: "Silver",
         paints: [
-          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }, { weight: 0.85 }),
-          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }, { weight: 1.8 }),
+          ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
+          ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
           ref("citadel-stormhost-silver", "highlight", { name: "Stormhost Silver", brand: "Citadel", range: "Layer", hex: "#DADDDF" }),
           ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }),
         ],
@@ -260,7 +257,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
         name: "Smoke",
         paints: [
           ref("citadel-celestra-grey", "base", { name: "Celestra Grey", brand: "Citadel", range: "Base", hex: "#8BA3A3" }),
-          ref("citadel-coelia-greenshade", "wash", { name: "Coelia Greenshade", brand: "Citadel", range: "Shade", hex: "#2B5D58" }, { weight: 1.95 }),
+          ref("citadel-coelia-greenshade", "wash", { name: "Coelia Greenshade", brand: "Citadel", range: "Shade", hex: "#2B5D58" }),
           ref("citadel-ulthuan-grey", "layer", { name: "Ulthuan Grey", brand: "Citadel", range: "Layer", hex: "#C4DDD5" }),
           ref("citadel-white-scar", "layer", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }),
         ],
@@ -304,7 +301,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-retributor-armour", "base", { name: "Retributor Armour", brand: "Citadel", range: "Base", hex: "#EDC169" }),
           ref("citadel-reikland-fleshshade", "wash", { name: "Reikland Fleshshade", brand: "Citadel", range: "Shade", hex: "#7E3226" }),
           ref("citadel-auric-armour-gold", "layer", { name: "Auric Armour Gold", brand: "Citadel", range: "Layer", hex: "#FFC451" }),
-          ref("citadel-stormhost-silver", "highlight", { name: "Stormhost Silver", brand: "Citadel", range: "Layer", hex: "#DADDDF" }, { weight: 0.3 }),
+          ref("citadel-stormhost-silver", "highlight", { name: "Stormhost Silver", brand: "Citadel", range: "Layer", hex: "#DADDDF" }),
         ],
       },
       {
@@ -339,7 +336,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-rakarth-flesh", "base", { name: "Rakarth Flesh", brand: "Citadel", range: "Base", hex: "#9C998D" }),
           ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
           ref("citadel-pallid-wych-flesh", "layer", { name: "Pallid Wych Flesh", brand: "Citadel", range: "Layer", hex: "#CACCBB" }),
-          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }, { weight: 0.3 }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }),
         ],
       },
       {
@@ -348,7 +345,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-caliban-green", "base", { name: "Caliban Green", brand: "Citadel", range: "Base", hex: "#003D15" }),
           ref("citadel-warpstone-glow", "layer", { name: "Warpstone Glow", brand: "Citadel", range: "Layer", hex: "#0F702A" }),
           ref("citadel-moot-green", "layer", { name: "Moot Green", brand: "Citadel", range: "Layer", hex: "#3DAF44" }),
-          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }, { weight: 0.3 }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }),
         ],
       },
     ],
@@ -365,7 +362,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
           ref("citadel-nuln-oil", "wash", { name: "Nuln Oil", brand: "Citadel", range: "Shade", hex: "#393944" }),
           ref("citadel-ironbreaker", "layer", { name: "Ironbreaker", brand: "Citadel", range: "Layer", hex: "#899092" }),
-          ref("citadel-runefang-steel", "drybrush", { name: "Runefang Steel", brand: "Citadel", range: "Layer", hex: "#C2C8CC" }, { weight: 0.4 }),
+          ref("citadel-runefang-steel", "drybrush", { name: "Runefang Steel", brand: "Citadel", range: "Layer", hex: "#C2C8CC" }),
         ],
       },
       {
@@ -374,7 +371,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-leadbelcher-base", "base", { name: "Leadbelcher", brand: "Citadel", range: "Base", hex: "#969696" }),
           ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
           ref("citadel-ryza-rust", "drybrush", { name: "Ryza Rust", brand: "Citadel", range: "Dry", hex: "#F16C23" }),
-          ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }, { weight: 1.4 }),
+          ref("ak-interactive-rust-streaks", "weathering", { name: "Rust Streaks", brand: "AK Interactive", range: "Effects", hex: "#7B532A" }),
         ],
       },
       {
@@ -383,7 +380,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-balthasar-gold", "base", { name: "Balthasar Gold", brand: "Citadel", range: "Base", hex: "#A77353" }),
           ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
           ref("scale-75-old-copper", "layer", { name: "Old Copper", brand: "Scale 75", range: "Metal N Alchemy Range", hex: "#97604C" }),
-          ref("citadel-nihilakh-oxide", "weathering", { name: "Nihilakh Oxide", brand: "Citadel", range: "Technical", hex: "#66B39A" }, { weight: 0.6 }),
+          ref("citadel-nihilakh-oxide", "weathering", { name: "Nihilakh Oxide", brand: "Citadel", range: "Technical", hex: "#66B39A" }),
         ],
       },
       {
@@ -401,7 +398,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-zandri-dust", "base", { name: "Zandri Dust", brand: "Citadel", range: "Base", hex: "#988E56" }),
           ref("citadel-agrax-earthshade", "wash", { name: "Agrax Earthshade", brand: "Citadel", range: "Shade", hex: "#3C3C28" }),
           ref("citadel-karak-stone", "layer", { name: "Karak Stone", brand: "Citadel", range: "Layer", hex: "#B7945C" }),
-          ref("citadel-screaming-skull", "drybrush", { name: "Screaming Skull", brand: "Citadel", range: "Layer", hex: "#B9C099" }, { weight: 0.5 }),
+          ref("citadel-screaming-skull", "drybrush", { name: "Screaming Skull", brand: "Citadel", range: "Layer", hex: "#B9C099" }),
         ],
       },
       {
@@ -410,7 +407,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
           ref("citadel-caliban-green", "base", { name: "Caliban Green", brand: "Citadel", range: "Base", hex: "#003D15" }),
           ref("citadel-warpstone-glow", "layer", { name: "Warpstone Glow", brand: "Citadel", range: "Layer", hex: "#0F702A" }),
           ref("citadel-moot-green", "layer", { name: "Moot Green", brand: "Citadel", range: "Layer", hex: "#3DAF44" }),
-          ref("citadel-flash-gitz-yellow", "highlight", { name: "Flash Gitz Yellow", brand: "Citadel", range: "Layer", hex: "#FFF300" }, { weight: 0.3 }),
+          ref("citadel-flash-gitz-yellow", "highlight", { name: "Flash Gitz Yellow", brand: "Citadel", range: "Layer", hex: "#FFF300" }),
         ],
       },
       {
@@ -418,7 +415,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
         paints: [
           ref("citadel-warpstone-glow", "base", { name: "Warpstone Glow", brand: "Citadel", range: "Layer", hex: "#0F702A" }),
           ref("citadel-moot-green", "layer", { name: "Moot Green", brand: "Citadel", range: "Layer", hex: "#3DAF44" }),
-          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }, { weight: 0.3 }),
+          ref("citadel-white-scar", "highlight", { name: "White Scar", brand: "Citadel", range: "Layer", hex: "#FFFFFF" }),
         ],
       },
     ],
@@ -443,7 +440,7 @@ export const SCHEME_PRESETS: PresetSpec[] = [
       {
         name: "Green armour",
         paints: [
-          ref("vallejo-russian-green-4bo-model-air", "base", { name: "Russian Green 4BO", brand: "Vallejo", range: "Model Air", hex: "#52543F" }, { weight: 1 }),
+          ref("vallejo-russian-green-4bo-model-air", "base", { name: "Russian Green 4BO", brand: "Vallejo", range: "Model Air", hex: "#52543F" }),
           ref("ak-interactive-winter-streaking-grime", "wash", { name: "Winter Streaking Grime", brand: "AK Interactive", range: "Effects", hex: "#3A3A2B" }),
           ref("citadel-elysian-green", "layer", { name: "Elysian Green", brand: "Citadel", range: "Layer", hex: "#6B8C37" }),
           ref("citadel-ogryn-camo", "layer", { name: "Ogryn Camo", brand: "Citadel", range: "Layer", hex: "#96A648" }),

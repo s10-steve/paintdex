@@ -53,11 +53,7 @@ export function useSchemeEditor(
   const movePaint = (eid: string, pid: string, dir: -1 | 1) =>
     mutatePaints(eid, (paints) => moveItem(paints, pid, dir));
   const setRole = (eid: string, pid: string, role: SchemeRole) =>
-    mutatePaints(eid, (paints) =>
-      paints.map((p) => (p.id === pid ? { ...p, role, weight: undefined } : p)),
-    );
-  const setWeight = (eid: string, pid: string, weight: number) =>
-    mutatePaints(eid, (paints) => paints.map((p) => (p.id === pid ? { ...p, weight } : p)));
+    mutatePaints(eid, (paints) => paints.map((p) => (p.id === pid ? { ...p, role } : p)));
 
   return {
     setTitle,
@@ -70,7 +66,6 @@ export function useSchemeEditor(
       movePaint,
       removePaint,
       setRole,
-      setWeight,
     },
   };
 }
