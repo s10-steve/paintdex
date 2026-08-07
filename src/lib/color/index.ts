@@ -77,6 +77,114 @@ export function hexToLab(hex: string): Lab {
   return xyzToLab(rgbToXyz(hexToRgb(hex)));
 }
 
+/*
+ * The inverse path. It lives here rather than next to its one caller (the paint
+ * mix blend, `src/lib/scheme/mix.ts`) because it shares the D65 white point and
+ * the sRGB matrix with the forward path above — a forward and inverse transform
+ * split across two modules is exactly the pair that drifts silently.
+ */
+
+/** CIE-Lab -> CIE XYZ (D65). Exact inverse of `xyzToLab`. */
+export function labToXyz([l, a, b]: Lab): Lab {
+  const xn = 0.95047;
+  const yn = 1.0;
+  const zn = 1.08883;
+  const fy = (l + 16) / 116;
+  const fx = fy + a / 500;
+  const fz = fy - b / 200;
+  // Inverse of `xyzToLab`'s `f`, including its linear segment below the knee.
+  const inv = (t: number) => (t > 0.206893 ? t * t * t : (t - 16 / 116) / 7.787);
+  return [inv(fx) * xn, inv(fy) * yn, inv(fz) * zn];
+}
+
+/**
+ * CIE XYZ (D65) -> sRGB (0-255), rounded.
+ *
+ * Each channel is clamped **after** the linear->sRGB transfer, not before: a
+ * weighted mean of two in-gamut Lab colours can land outside sRGB, and an
+ * unclamped negative survives `Math.round` into `(-3).toString(16) === "-3"` —
+ * a malformed hex, which is what eventually throws from canvas `addColorStop`.
+ */
+export function xyzToRgb([x, y, z]: Lab): Rgb {
+  const rl = x * 3.2404542 + y * -1.5371385 + z * -0.4985314;
+  const gl = x * -0.969266 + y * 1.8760108 + z * 0.041556;
+  const bl = x * 0.0556434 + y * -0.2040259 + z * 1.0572252;
+  const toSrgb = (c: number) =>
+    c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
+  const clamp255 = (c: number) =>
+    Number.isFinite(c) ? Math.min(255, Math.max(0, Math.round(c * 255))) : 0;
+  return [clamp255(toSrgb(rl)), clamp255(toSrgb(gl)), clamp255(toSrgb(bl))];
+}
+
+/** sRGB (0-255) -> canonical uppercase "#RRGGBB". */
+export function rgbToHex([r, g, b]: Rgb): string {
+  return (
+    "#" +
+    [r, g, b]
+      .map((v) => Math.min(255, Math.max(0, Math.round(v))).toString(16).padStart(2, "0"))
+      .join("")
+      .toUpperCase()
+  );
+}
+
+/** Convenience: CIE-Lab -> canonical uppercase "#RRGGBB". */
+export function labToHex(lab: Lab): string {
+  return rgbToHex(xyzToRgb(labToXyz(lab)));
+}
+
+/**
+ * Weighted mean of some colours in CIE-Lab, as "#RRGGBB".
+ *
+ * Total and never throws. It is called from the Satori OpenGraph route and from
+ * the poster's canvas renderer, the two places `io.ts` identifies as able to
+ * 500 a public route or throw mid-draw — so a malformed entry is dropped rather
+ * than propagated. Entries with a non-finite or non-positive weight go, as do
+ * unparseable hexes; nothing left falls back to `#808080`, matching `cleanHex`.
+ *
+ * A single surviving entry short-circuits with no Lab round trip, so a plain
+ * paint's colour is returned bit-identical rather than shifted by a rounding
+ * step it never needed.
+ *
+ * Note this is an *additive* mean: it models light, not pigment, so blue and
+ * yellow average to grey rather than green. Real paint mixing is subtractive
+ * and needs Kubelka-Munk; Lab is the honest cheap approximation and reuses the
+ * transforms already here.
+ */
+export function blendHexLab(
+  entries: ReadonlyArray<{ hex: string; weight: number }>,
+): string {
+  const usable: Array<{ lab: Lab; weight: number }> = [];
+  let single: string | undefined;
+
+  for (const e of entries) {
+    if (!Number.isFinite(e.weight) || e.weight <= 0) continue;
+    let lab: Lab;
+    try {
+      lab = hexToLab(e.hex);
+    } catch {
+      continue;
+    }
+    if (usable.length === 0) single = normalizeHex(e.hex);
+    usable.push({ lab, weight: e.weight });
+  }
+
+  if (usable.length === 0) return "#808080";
+  if (usable.length === 1) return single as string;
+
+  // Normalising after the filter guarantees a positive divisor.
+  const total = usable.reduce((n, e) => n + e.weight, 0);
+  let l = 0;
+  let a = 0;
+  let b = 0;
+  for (const e of usable) {
+    const w = e.weight / total;
+    l += e.lab[0] * w;
+    a += e.lab[1] * w;
+    b += e.lab[2] * w;
+  }
+  return labToHex([l, a, b]);
+}
+
 /**
  * CIEDE2000 colour-difference (ΔE00) between two Lab colours.
  * Returns 0 for identical colours; typical "just noticeable" ~1-2.

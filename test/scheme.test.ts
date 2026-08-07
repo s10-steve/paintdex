@@ -17,7 +17,14 @@ import {
   shareUrl,
   SHARE_TOKEN_LENGTH,
 } from "@/lib/scheme/share";
-import { MAX_SCHEME_TITLE, ROLES, roleOf, weightOf } from "@/lib/scheme/types";
+import {
+  MAX_MIX_COMPONENTS,
+  MAX_NOTE,
+  MAX_SCHEME_TITLE,
+  ROLES,
+  roleOf,
+  weightOf,
+} from "@/lib/scheme/types";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
@@ -339,6 +346,112 @@ describe("scheme import/export", () => {
     expect(weightOf(p("base"))).toBe(ROLES.base.weight);
     expect(weightOf(p("highlight"))).toBe(ROLES.highlight.weight);
     expect(weightOf({ ...p("base"), role: "nonsense" as SchemeRole })).toBe(ROLES.layer.weight);
+  });
+
+  describe("mixes and notes", () => {
+    const withPaint = (fields: string) =>
+      importScheme(`{"elements":[{"name":"E","paints":[{"name":"P","hex":"#AABBCC","role":"base"${fields}}]}]}`, newId)
+        .elements[0].paints[0];
+    const mixOf = (components: string) => withPaint(`,"mix":[${components}]`);
+
+    it("keeps a usable share and clamps an unreasonable one", () => {
+      expect(mixOf('{"name":"M","hex":"#FFFFFF","parts":2}').mix?.[0].parts).toBe(2);
+      expect(mixOf('{"name":"M","hex":"#FFFFFF","parts":1e6}').mix?.[0].parts).toBe(100);
+    });
+
+    /**
+     * Shares are normalised by their total, so an all-zero mix divides by zero
+     * and every Lab channel comes out NaN — a malformed hex reaching
+     * `addColorStop` and the public OpenGraph route. Zero is therefore rejected
+     * outright rather than clamped, and defaults to a single share.
+     */
+    it("rejects an unusable share rather than passing it to the blend", () => {
+      for (const bad of ["0", "-1", "1e400", '"2"', "null"]) {
+        expect(mixOf(`{"name":"M","hex":"#FFFFFF","parts":${bad}}`).mix?.[0].parts).toBe(1);
+      }
+    });
+
+    it("sanitises each component like a paint", () => {
+      const c = mixOf('{"hex":"not a colour"}').mix?.[0];
+      expect(c).toEqual({ name: "Untitled", brand: "custom", range: "custom", hex: "#808080", parts: 1 });
+    });
+
+    it("caps the component list", () => {
+      const many = Array.from({ length: 9 }, () => '{"name":"M","hex":"#FFFFFF"}').join(",");
+      expect(mixOf(many).mix).toHaveLength(MAX_MIX_COMPONENTS);
+    });
+
+    it("ignores a mix that isn't a list", () => {
+      expect("mix" in withPaint(',"mix":"1:1"')).toBe(false);
+    });
+
+    it("carries the medium flag on both the primary and a component", () => {
+      const p = withPaint(',"medium":true,"mix":[{"name":"M","hex":"#F9F9F9","medium":true}]');
+      expect(p.medium).toBe(true);
+      expect(p.mix?.[0].medium).toBe(true);
+    });
+
+    /**
+     * `parts`/`medium` ride with `mix`. Without this rule a de-mixed entry
+     * keeps a stray key, so its document never again equals the `syncedCanon`
+     * it was saved with — every load looks like unflushed edits.
+     */
+    it("drops parts and medium when there is no mix", () => {
+      const p = withPaint(',"parts":3,"medium":true');
+      expect("parts" in p).toBe(false);
+      expect("medium" in p).toBe(false);
+      expect("parts" in toExportShape({ title: "", elements: [{ id: "e", name: "E", paints: [{ ...p, parts: 3, medium: true }] }] }).elements[0].paints[0]).toBe(false);
+    });
+
+    it("trims a note and caps it at the column's budget", () => {
+      expect(withPaint(',"note":"  airbrush the top 75%  "').note).toBe("airbrush the top 75%");
+      expect(withPaint(`,"note":"${"x".repeat(500)}"`).note).toHaveLength(MAX_NOTE);
+    });
+
+    it("drops an empty or non-string note", () => {
+      for (const bad of ['""', '"   "', "42", "null"]) {
+        expect("note" in withPaint(`,"note":${bad}`)).toBe(false);
+      }
+    });
+
+    it("round-trips a mix and a note through export → import", () => {
+      const before = mixOf('{"name":"Lahmian Medium","brand":"Citadel","range":"Technical","hex":"#F9F9F9","parts":1,"medium":true}');
+      const scheme: Scheme = { title: "T", elements: [{ id: "e", name: "E", paints: [{ ...before, parts: 2, note: "glaze into the lips" }] }] };
+      const after = importScheme(exportSchemeJSON(scheme), newId).elements[0].paints[0];
+      expect(after.parts).toBe(2);
+      expect(after.note).toBe("glaze into the lips");
+      expect(after.mix).toEqual(before.mix);
+    });
+  });
+
+  /**
+   * The one that matters most. `canonicalScheme` is compared byte-for-byte
+   * against the `syncedCanon` stored with a saved scheme, so a single
+   * unconditional key added to `toExportShape` would make every document in
+   * existence look dirty on its next load — and start a 1s-debounce autosave
+   * for every signed-in user at once. Frozen literal, deliberately.
+   */
+  it("emits byte-identical canonical JSON for a scheme with no mix or note", () => {
+    const legacy = {
+      format: 1,
+      app: "paintdex",
+      title: "Test Scheme",
+      elements: [
+        {
+          name: "Armour",
+          paints: [
+            { name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
+            { name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true },
+          ],
+        },
+      ],
+    };
+    expect(canonicalScheme(legacy)).toBe(
+      '{"format":1,"app":"paintdex","title":"Test Scheme","elements":[{"name":"Armour","paints":[' +
+        '{"name":"Base Grey","brand":"Vallejo","range":"Model Color","hex":"#404040","role":"base"},' +
+        '{"name":"My Mix","brand":"custom","range":"custom","hex":"#AABBCC","role":"highlight","custom":true}' +
+        "]}]}",
+    );
   });
 
   it("trims a title to the database's limit", () => {
