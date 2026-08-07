@@ -51,6 +51,15 @@ const updateScheme = vi.fn();
 const schemeExists = vi.fn<(id: string) => Promise<boolean>>();
 const publishScheme = vi.fn<(id: string, slug: string) => Promise<string>>();
 
+/**
+ * Stands in for the data layer's marker class, and *is* the one the hook uses:
+ * `useShareActions` imports it from this mocked module, so both sides of the
+ * `instanceof` that decides whether a failure's message is fit to show the user
+ * are this declaration. A test throwing some other error class would prove
+ * nothing about it.
+ */
+class SchemeShareError extends Error {}
+
 vi.mock("@/lib/data/schemes", () => ({
   listSchemes: (...args: unknown[]) => listSchemes(...(args as [string])),
   createScheme: (...args: unknown[]) => createScheme(...args),
@@ -64,6 +73,7 @@ vi.mock("@/lib/data/schemes", () => ({
   setSchemePhotoPath: vi.fn(),
   publishScheme: (...args: unknown[]) => publishScheme(...(args as [string, string])),
   unpublishScheme: vi.fn(),
+  SchemeShareError,
 }));
 
 // Whether the browser's session is still valid. A write matching no rows means
@@ -152,6 +162,9 @@ beforeEach(() => {
   createScheme.mockReset();
   updateScheme.mockReset();
   schemeExists.mockReset();
+  // Carries both a queued rejection and its call count into the next test
+  // otherwise — the publish suites assert on both.
+  publishScheme.mockReset();
   createScheme.mockImplementation(async (_uid: string, data: unknown, title: string) =>
     row("new-row", title, scheme(title), "2026-01-03T00:00:00.000Z"),
   );
@@ -285,6 +298,49 @@ describe("SchemeVisualiser multi-device reconciliation", () => {
       fireEvent.click(screen.getByRole("button", { name: "Close" }));
     });
     expect(screen.getByRole("status").textContent).toMatch(/deleted on another device/i);
+  });
+
+  /**
+   * A publish that matches no row has something specific to say, and the
+   * visualiser used to say none of it: `useSchemeShare` dropped the message and
+   * set `syncState: "error"`, a small `aria-live` span the next keystroke
+   * overwrites with "Saving…". It goes to `notice` now, which stays until read.
+   */
+  describe("a publish that finds no row of ours", () => {
+    /** Seed a saved, unpublished scheme and click "Create shareable link". */
+    async function tryPublish() {
+      const doc = scheme("Shared");
+      seedBound(doc, "row-1");
+      await renderSignedIn([row("row-1", "Shared", doc, "2026-01-04T00:00:00.000Z")]);
+      await waitFor(() => expect(editorTitle()).toBe("Shared"));
+      await act(async () => {
+        fireEvent.click(screen.getByRole("button", { name: "Create shareable link" }));
+      });
+    }
+
+    it("says it may have been deleted elsewhere", async () => {
+      publishScheme.mockRejectedValue(
+        new SchemeShareError(
+          "That scheme is no longer available — it may have been deleted on another device.",
+        ),
+      );
+      await tryPublish();
+
+      await waitFor(() => expect(screen.getByRole("status")).toBeTruthy());
+      expect(screen.getByRole("status").textContent).toMatch(/deleted on another device/i);
+    });
+
+    it("keeps a raw failure generic", async () => {
+      // Not ours: a PostgREST/network error, whose own message tells the user
+      // nothing and must not be put in front of them.
+      publishScheme.mockRejectedValue(new Error("TypeError: Failed to fetch"));
+      await tryPublish();
+
+      await waitFor(() => expect(screen.getByRole("status")).toBeTruthy());
+      const text = screen.getByRole("status").textContent ?? "";
+      expect(text).toMatch(/couldn't update sharing/i);
+      expect(text).not.toMatch(/failed to fetch/i);
+    });
   });
 
   it("opens the most recent survivor when the bound scheme was deleted", async () => {

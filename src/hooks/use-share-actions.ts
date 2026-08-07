@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { publishScheme, unpublishScheme } from "@/lib/data/schemes";
+import { publishScheme, unpublishScheme, SchemeShareError } from "@/lib/data/schemes";
 import { makeShareSlug, makeShareToken, shareUrl } from "@/lib/scheme/share";
 import type { SchemeRow } from "@/lib/supabase/types";
 
@@ -77,8 +77,17 @@ export function useShareActions({
         );
         onPatch(row.id, { is_public: true, share_slug: stored });
       }
-    } catch {
-      onError("Couldn't update sharing for that scheme.");
+    } catch (err) {
+      // A `SchemeShareError` was written for the user — "deleted on another
+      // device", "your session may have expired" — and saying so is the point of
+      // the data layer distinguishing them. This `catch` used to flatten all of
+      // it to the generic line. Anything else is a raw PostgREST/network error,
+      // whose own message tells the user nothing.
+      onError(
+        err instanceof SchemeShareError
+          ? err.message
+          : "Couldn't update sharing for that scheme.",
+      );
     } finally {
       setShareBusy(false);
     }

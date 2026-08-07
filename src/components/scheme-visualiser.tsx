@@ -78,6 +78,7 @@ export function SchemeVisualiser() {
     setSyncState,
     notice,
     dismissNotice,
+    showNotice,
     selectScheme,
     newScheme,
     adoptScheme,
@@ -88,7 +89,14 @@ export function SchemeVisualiser() {
   const { shareBusy, copied, togglePublished, copyShareLink } = useSchemeShare({
     activeRow,
     patchRow,
-    onError: () => setSyncState("error"),
+    // The indicator reflects that something failed; the banner carries what.
+    // A publish failure can be "deleted on another device" or "your session may
+    // have expired" — both need acting on, and `syncState` is overwritten by
+    // "Saving…" a second after the next keystroke.
+    onError: (message) => {
+      setSyncState("error");
+      showNotice(message);
+    },
   });
   const { user, configured, googleEnabled } = useAuth();
   // `?new=1` — "+ New scheme" on /my-schemes. Same gates as the preset hook.

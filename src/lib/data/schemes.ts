@@ -7,6 +7,7 @@
  * these are effectively unreachable (the UI never calls them).
  */
 import { getSupabase } from "@/lib/supabase/client";
+import { hasLiveSession } from "@/lib/supabase/session";
 import type { SchemeRow, StoredScheme } from "@/lib/supabase/types";
 
 function client() {
@@ -190,18 +191,55 @@ export async function publishScheme(
 ): Promise<string> {
   const first = await trySetSlug(id, slug);
   if (first === "ok") return slug;
-  if (first === "gone") throw new Error(GONE_MESSAGE);
+  if (first === "gone") throw await shareGoneError();
   // Unique-violation: try once more with a new token.
   const retry = regenerate();
   const second = await trySetSlug(id, retry);
   if (second === "ok") return retry;
-  if (second === "gone") throw new Error(GONE_MESSAGE);
-  throw new Error("Couldn't create a share link. Please try again.");
+  if (second === "gone") throw await shareGoneError();
+  throw new SchemeShareError("Couldn't create a share link. Please try again.");
+}
+
+/**
+ * An error whose message is written *for the user*, so a caller may show it
+ * verbatim.
+ *
+ * The type is the permission. Publishing's failures are specific and actionable
+ * — which is the whole reason `trySetSlug` reports `gone` separately from
+ * `taken` — but `useShareActions` could only ever replace them with one generic
+ * line, because a bare `catch` can't tell them from a raw PostgREST error whose
+ * message is no use to anybody. Marking ours makes the distinction survive.
+ */
+export class SchemeShareError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "SchemeShareError";
+  }
 }
 
 /** What a caller is told when a share write finds no row of theirs to write to. */
 const GONE_MESSAGE =
   "That scheme is no longer available — it may have been deleted on another device.";
+
+/** …and when it turns out we simply weren't asking as anybody. */
+const SESSION_MESSAGE =
+  "Couldn't share that scheme — your session may have expired. Please sign in again.";
+
+/**
+ * Which of the two things a `gone` from `trySetSlug` actually was.
+ *
+ * "Matched no row" is ambiguous: the row may be gone, or this session may have
+ * lapsed to the anon key, where `auth.uid()` is null and RLS hides every row we
+ * own. Reading the row back can't separate them — that select runs under the
+ * same policies (see `schemeExists`) — so only asking about the *session* can.
+ * This is the two-step the autosave already does; without it, un-swallowing
+ * `GONE_MESSAGE` would tell users with a merely-expired session that their
+ * scheme had been deleted on another device, which is worse than the generic
+ * message it replaces because it is confidently wrong.
+ */
+async function shareGoneError(): Promise<SchemeShareError> {
+  return new SchemeShareError((await hasLiveSession()) ? GONE_MESSAGE : SESSION_MESSAGE);
+}
 
 /**
  * Set is_public + share_slug. `taken` on a unique-violation (retryable with a
