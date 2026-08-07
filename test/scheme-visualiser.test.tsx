@@ -49,6 +49,7 @@ const listSchemes = vi.fn<(userId: string) => Promise<SchemeRow[]>>();
 const createScheme = vi.fn();
 const updateScheme = vi.fn();
 const schemeExists = vi.fn<(id: string) => Promise<boolean>>();
+const publishScheme = vi.fn<(id: string, slug: string) => Promise<string>>();
 
 vi.mock("@/lib/data/schemes", () => ({
   listSchemes: (...args: unknown[]) => listSchemes(...(args as [string])),
@@ -57,7 +58,11 @@ vi.mock("@/lib/data/schemes", () => ({
   schemeExists: (...args: unknown[]) => schemeExists(...(args as [string])),
   renameScheme: vi.fn(),
   deleteScheme: vi.fn(),
-  publishScheme: vi.fn(),
+  // The visualiser imports this for the share-image studio's photo. Absent from
+  // the factory it is `undefined`, and any test that reaches an upload dies on a
+  // call to it rather than on whatever it was actually asserting.
+  setSchemePhotoPath: vi.fn(),
+  publishScheme: (...args: unknown[]) => publishScheme(...(args as [string, string])),
   unpublishScheme: vi.fn(),
 }));
 
@@ -483,6 +488,49 @@ describe("SchemeVisualiser multi-device reconciliation", () => {
     });
 
     expect(editorTitle()).toBe("Edited after the refetch started");
+  });
+
+  it("does not let a stale refetch revert a publish, and cost the shared link", async () => {
+    // `patchRow` is how every non-autosave column write reports itself, and it
+    // has to move `saveSeqRef` — otherwise a refetch already in flight returns
+    // pre-publish rows and reverts `share_slug` to null in the cache. The damage
+    // isn't the stale cache: it re-enables the publish control, and
+    // `useShareActions` reads `row.share_slug ?? makeShareSlug(…)`, so the next
+    // click mints a NEW slug over the old one and kills a link already sent.
+    const doc = scheme("Shared");
+    const stale = row("row-1", "Shared", doc, "2026-01-04T00:00:00.000Z");
+    seedBound(doc, "row-1");
+    await renderSignedIn([stale]);
+    await waitFor(() => expect(editorTitle()).toBe("Shared"));
+
+    let releaseRows!: (rows: SchemeRow[]) => void;
+    listSchemes.mockImplementation(() => new Promise((res) => (releaseRows = res)));
+    vi.setSystemTime(Date.now() + 60_000);
+    await act(async () => {
+      document.dispatchEvent(new Event("visibilitychange"));
+    });
+
+    publishScheme.mockResolvedValue("shared-a1b2c3d4e5");
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Create shareable link" }));
+    });
+    await waitFor(() => expect(screen.getByRole("button", { name: "Copy link" })).toBeTruthy());
+
+    // The refetch comes back holding the row as it was before the publish.
+    await act(async () => {
+      releaseRows([stale]);
+    });
+
+    // Still published, so the link the user just copied is still the live one,
+    // and the publish control stays disabled — which is what stops a second
+    // click minting a second slug over the top of it.
+    expect(screen.getByRole("button", { name: "Copy link" })).toBeTruthy();
+    const publishButton = screen.getByRole("button", { name: "Create shareable link" });
+    expect((publishButton as HTMLButtonElement).disabled).toBe(true);
+    await act(async () => {
+      fireEvent.click(publishButton);
+    });
+    expect(publishScheme).toHaveBeenCalledTimes(1);
   });
 
   it("asks only for the signed-in user's own rows", async () => {

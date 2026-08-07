@@ -128,6 +128,10 @@ export type SchemeSync = {
  * - `deepLinkedRef` — honours `?scheme=<id>` exactly once.
  * - `reqRef` / `inflightRef` / `lastFetchRef` — ordering, mutual exclusion and
  *   throttling for the tab-focus refetch.
+ * - `saveSeqRef` — "the cache is ahead of any fetch that started before now".
+ *   Bumped by the autosave *and* by `patchRow`; the invariant is that **any
+ *   writer of a `schemes` column reports through `patchRow`**, or the refetch
+ *   reverts it. See that function for what it cost when it didn't.
  */
 export function useSchemeSync({
   scheme,
@@ -557,8 +561,33 @@ export function useSchemeSync({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, ready, savedSchemes]);
 
-  const patchRow = (id: string, patch: Partial<SchemeRow>) =>
+  /**
+   * Reflect a server write into the cached row list.
+   *
+   * **Every writer of a `schemes` column must report through here**, and here
+   * must move `saveSeqRef`, or the tab-focus refetch will quietly undo it. That
+   * refetch guards itself by capturing `saveSeqRef` before it fetches and
+   * bailing if it moved — but only the autosave was bumping it, so the writers
+   * that go through this function (`renameScheme`, `publishScheme` /
+   * `unpublishScheme`, `setSchemePhotoPath`) were invisible to it. A refetch
+   * already in flight when one of those landed returned pre-write rows and
+   * reverted the column.
+   *
+   * For `photo_path` that is cosmetic until the next refetch. For publishing it
+   * is not: a reverted `share_slug` re-enables the publish control, and
+   * `useShareActions` reads `row.share_slug ?? makeShareSlug(…)` — so the next
+   * click mints a *new* slug and overwrites the old one, killing a link the user
+   * has already copied and sent. The `??` exists precisely so republishing keeps
+   * the link, which a stale cache defeats.
+   *
+   * The cost of the bump is that an in-flight refetch is discarded and retried
+   * on the next focus. That is the right trade: "our cache is ahead of any fetch
+   * that started before now" is exactly what `saveSeqRef` already means.
+   */
+  const patchRow = (id: string, patch: Partial<SchemeRow>) => {
+    saveSeqRef.current++;
     setSavedSchemes((rows) => rows.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  };
 
   return {
     savedSchemes,

@@ -392,3 +392,113 @@ describe("usePoster remote storage", () => {
     expect(seen.current?.anchors).toEqual({ 0: { x: 0.4, y: 0.6 } });
   });
 });
+
+describe("usePoster legacy photo cleanup", () => {
+  it("does not resurrect a photo the user removed", async () => {
+    // The unscoped key was read as a migration fallback but never deleted, so
+    // `clearPhoto` removed only the scoped copy and the next visit fell back to
+    // the old one and handed it straight back.
+    localStorage.setItem(PHOTO, DATA_URL);
+    const first = harness(LOCAL_POSTER_SCOPE);
+    await waitFor(() => expect(first.current?.photo).not.toBeNull());
+
+    act(() => first.current?.clearPhoto());
+    await waitFor(() => expect(localStorage.getItem(`${PHOTO}:${LOCAL_POSTER_SCOPE}`)).toBeNull());
+    expect(localStorage.getItem(PHOTO)).toBeNull();
+
+    cleanup();
+    const second = harness(LOCAL_POSTER_SCOPE);
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 0));
+    });
+    expect(second.current?.photo).toBeNull();
+  });
+
+  it("keeps one copy after migrating, not two", async () => {
+    // The same bytes in both keys is a megabyte-plus of a ~5 MB budget spent on
+    // a copy nothing reads — and on a big photo, enough to be why the next
+    // write is the one that won't fit.
+    localStorage.setItem(PHOTO, DATA_URL);
+    const seen = harness(LOCAL_POSTER_SCOPE);
+
+    await waitFor(() =>
+      expect(localStorage.getItem(`${PHOTO}:${LOCAL_POSTER_SCOPE}`)).toBe(DATA_URL),
+    );
+    await waitFor(() => expect(localStorage.getItem(PHOTO)).toBeNull());
+    expect(seen.current?.photo?.dataUrl).toBe(DATA_URL);
+  });
+
+  it("clears the photo out of the pre-split settings blob too", async () => {
+    // The oldest layout kept it inside the settings entry. Left there, it is the
+    // same resurrection by a different route.
+    localStorage.setItem(SETTINGS, JSON.stringify({ photo: DATA_URL, framing: { zoom: 2 } }));
+
+    const seen = harness(LOCAL_POSTER_SCOPE);
+    await waitFor(() => expect(seen.current?.photo?.dataUrl).toBe(DATA_URL));
+    await waitFor(() => {
+      const blob = JSON.parse(localStorage.getItem(SETTINGS) ?? "{}");
+      expect(blob.photo).toBeUndefined();
+      // Only the photo is stripped — the rest of that entry is still someone's
+      // unmigrated framing and anchors.
+      expect(blob.framing).toEqual({ zoom: 2 });
+    });
+  });
+
+  it("keeps the legacy copy when the new one could not be written", async () => {
+    // Deleting the only copy on the strength of a write that failed would be
+    // the worst outcome available.
+    localStorage.setItem(PHOTO, DATA_URL);
+    failWritesLargerThan = 10;
+
+    const seen = harness(LOCAL_POSTER_SCOPE);
+    await waitFor(() => expect(seen.current?.error).toMatch(/too large/i));
+    expect(localStorage.getItem(PHOTO)).toBe(DATA_URL);
+  });
+});
+
+describe("usePoster restore window", () => {
+  it("does not delete the stored photo while it is still decoding", async () => {
+    // State says "no photo" for as long as the decode takes, and the save
+    // effect's `!photo` branch used to read that as "the user removed it" and
+    // delete the key. It wrote itself back when the decode finished — unless the
+    // studio closed first, or the decode failed, in which case the photo was
+    // gone for good.
+    localStorage.setItem(`${PHOTO}:row-1`, DATA_URL);
+
+    const seen = harness("row-1");
+    // Flush the restore effect but NOT the queued image `onload`.
+    await act(async () => {});
+    expect(seen.current?.photo).toBeNull();
+    expect(localStorage.getItem(`${PHOTO}:row-1`)).toBe(DATA_URL);
+
+    // Closing the studio inside that window must leave it intact.
+    cleanup();
+    expect(localStorage.getItem(`${PHOTO}:row-1`)).toBe(DATA_URL);
+  });
+
+  it("keeps the stored photo when it fails to decode", async () => {
+    vi.stubGlobal(
+      "Image",
+      class {
+        onload: (() => void) | null = null;
+        onerror: (() => void) | null = null;
+        naturalWidth = 0;
+        naturalHeight = 0;
+        set src(_v: string) {
+          setTimeout(() => this.onerror?.(), 0);
+        }
+      },
+    );
+    localStorage.setItem(`${PHOTO}:row-1`, OTHER_URL);
+
+    const seen = harness("row-1");
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 0));
+    });
+
+    expect(seen.current?.photo).toBeNull();
+    // A photo this browser can't decode may still be readable elsewhere, and
+    // throwing it away is not ours to do.
+    expect(localStorage.getItem(`${PHOTO}:row-1`)).toBe(OTHER_URL);
+  });
+});

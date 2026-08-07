@@ -84,6 +84,36 @@ function remove(key: string): void {
 }
 
 /**
+ * Drop the pre-scoping photo, from both places it could be.
+ *
+ * Called only once the photo is safely somewhere else — the scoped key, or
+ * nowhere because the user removed it. Leaving it behind did two things: a photo
+ * the user *deleted* came back on the next visit, because the scoped key was
+ * empty and the restore fell through to this one; and after a migration the same
+ * multi-megabyte data URL sat in storage twice, against a ~5 MB quota, which on a
+ * large photo is enough to make the second copy the one that won't fit.
+ *
+ * Deliberately not called when a write failed: at that point the legacy copy is
+ * the only copy there is.
+ */
+function clearLegacyPhoto(): void {
+  remove(POSTER_PHOTO_KEY);
+  // The oldest layout kept the photo inside the settings blob. Strip that field
+  // rather than dropping the whole entry, which still holds framing and anchors
+  // for anyone who hasn't been migrated yet.
+  const raw = read(POSTER_STORE_KEY);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw) as StoredPoster;
+    if (parsed.photo === undefined) return;
+    delete parsed.photo;
+    localStorage.setItem(POSTER_STORE_KEY, JSON.stringify(parsed));
+  } catch {
+    /* unreadable or unwritable — nothing safe to strip */
+  }
+}
+
+/**
  * Whether a photo is already stored *locally* for this scope.
  *
  * For labelling a button, not for loading anything — the studio owns the real
@@ -330,7 +360,10 @@ export function usePoster(
         () => {
           // A truncated data URL is exactly what a partial quota write leaves
           // behind. Start with no photo rather than an unhandled rejection.
-          if (!cancelled) savedPhotoRef.current = null;
+          // Leave storage alone: a photo this browser couldn't decode may still
+          // be the only copy, and discarding it isn't ours to do.
+          if (cancelled) return;
+          savedPhotoRef.current = null;
         },
       );
     }
@@ -462,10 +495,40 @@ export function usePoster(
     }
   }, []);
 
+  /**
+   * Remove the photo, everywhere it is.
+   *
+   * Deletion lives here rather than being inferred by the save effects from
+   * `photo === null`, because that state means three different things: the user
+   * removed it, the restore hasn't finished decoding it yet, and the scope just
+   * changed to a different scheme. Only the first is a removal, and treating the
+   * other two as one is how a stored photo got deleted a frame after mount —
+   * normally rewritten when the decode landed, but gone for good if the studio
+   * closed first or the decode failed.
+   *
+   * A user action is unambiguous, so it is the only thing that deletes.
+   */
   const clearPhoto = useCallback(() => {
     setPhoto(null);
     setFraming(defaultFraming());
-  }, []);
+    savedPhotoRef.current = null;
+    remoteUrlRef.current = null;
+
+    remove(keysFor(scope).photo);
+    // Otherwise the restore falls back to the pre-scoping key next time and
+    // hands back the photo that was just removed.
+    if (scope === LOCAL_POSTER_SCOPE) clearLegacyPhoto();
+
+    const bound = remoteRef.current;
+    const path = loadedPathRef.current ?? bound?.photoPath ?? null;
+    loadedPathRef.current = null;
+    if (!bound || !path) return;
+    setPhotoBusy(true);
+    void deleteSchemePhoto(path)
+      .then(() => bound.onPhotoPath(null))
+      .catch(() => setError("Couldn't remove that photo from your account."))
+      .finally(() => setPhotoBusy(false));
+  }, [scope]);
 
   // Autosave, in two halves keyed separately.
   //
@@ -505,22 +568,8 @@ export function usePoster(
     // over a photo added on another device.
     if (remotePath && loadedPathRef.current !== remotePath) return;
 
-    if (!photo) {
-      // Only if there is something to remove. A scheme that never had a photo
-      // would otherwise issue a delete every time the studio opened.
-      if (!remotePath) return;
-      const gone = remotePath;
-      loadedPathRef.current = null;
-      remoteUrlRef.current = null;
-      /* eslint-disable-next-line react-hooks/set-state-in-effect */
-      setPhotoBusy(true);
-      void deleteSchemePhoto(gone)
-        .then(() => remoteRef.current?.onPhotoPath(null))
-        .catch(() => setError("Couldn't remove that photo from your account."))
-        .finally(() => setPhotoBusy(false));
-      return;
-    }
-
+    // Removal is `clearPhoto`'s job, not this effect's — see there for why.
+    if (!photo) return;
     if (remoteUrlRef.current === photo.dataUrl) return;
 
     let cancelled = false;
@@ -580,21 +629,23 @@ export function usePoster(
   // Skipped entirely in remote mode — the effect above owns the photo there, and
   // keeping a second megabyte-sized copy in `localStorage` would spend the quota
   // on a cache nothing reads.
+  //
+  // It only ever *writes*. Removal is `clearPhoto`'s — see there.
   useEffect(() => {
     if (!mounted) return;
     const key = keysFor(scope).photo;
+    const legacy = scope === LOCAL_POSTER_SCOPE;
     if (remoteUserId) {
-      // Drop the pre-migration leftover, but only once the row actually points
-      // at an object — until the upload lands, that local copy is still the
-      // only one there is.
-      if (remotePath) remove(key);
+      // Drop the pre-migration leftovers, but only once the row actually points
+      // at an object — until the upload lands, those local copies are still the
+      // only ones there are.
+      if (remotePath) {
+        remove(key);
+        if (legacy) clearLegacyPhoto();
+      }
       return;
     }
-    if (!photo) {
-      remove(key);
-      savedPhotoRef.current = null;
-      return;
-    }
+    if (!photo) return;
     if (savedPhotoRef.current === photo.dataUrl) return;
 
     // Thunks, not values: an array literal evaluates both entries up front, so
@@ -610,6 +661,9 @@ export function usePoster(
       try {
         localStorage.setItem(key, value);
         savedPhotoRef.current = photo.dataUrl;
+        // Safely in the scoped key now, so the old copy is pure cost — and on a
+        // big photo, enough of the quota to be why the next write fails.
+        if (legacy) clearLegacyPhoto();
         return;
       } catch {
         /* quota — fall through to the smaller re-encode */
