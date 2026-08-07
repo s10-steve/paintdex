@@ -16,7 +16,8 @@
  * Layout decisions live in `./poster`; this module only paints.
  */
 import { overlayCenter, type Overlay, type Seg } from "./bars";
-import { brandLabel, roleOf, type SchemePaint } from "./types";
+import { displayHex, mixBrandLabel, mixTitle } from "./mix";
+import { roleOf, type SchemePaint } from "./types";
 import {
   BRAND_LINE_H,
   COLUMN_W,
@@ -149,12 +150,13 @@ function drawRampStrip(
   ctx.clip();
 
   if (segs.length === 1) {
-    ctx.fillStyle = segs[0].paint.hex;
+    ctx.fillStyle = displayHex(segs[0].paint);
   } else if (segs.length > 1) {
     const g = ctx.createLinearGradient(x, 0, x + w, 0);
     for (const s of segs) {
-      g.addColorStop(s.start, s.paint.hex);
-      g.addColorStop(s.end, s.paint.hex);
+      const hex = displayHex(s.paint);
+      g.addColorStop(s.start, hex);
+      g.addColorStop(s.end, hex);
     }
     ctx.fillStyle = g;
   } else {
@@ -173,7 +175,7 @@ function drawRampStrip(
 
     ctx.globalAlpha = meta.opacity ?? 1;
     ctx.globalCompositeOperation = meta.blendMode === "normal" ? "source-over" : "multiply";
-    ctx.fillStyle = ov.paint.hex;
+    ctx.fillStyle = displayHex(ov.paint);
     ctx.fillRect(bx, y, OVERLAY_W, h);
 
     // Hairline either side, at full opacity in normal blending, so a dark wash
@@ -296,7 +298,7 @@ function drawPaintRow(
 ) {
   ctx.beginPath();
   ctx.arc(x + DOT_RADIUS + 1, cy, DOT_RADIUS, 0, Math.PI * 2);
-  ctx.fillStyle = paint.hex;
+  ctx.fillStyle = displayHex(paint);
   ctx.fill();
   // Without a ring a near-black paint (Nuln Oil, Abaddon Black) is an invisible
   // dot on the dark scrim — the row reads as though it had no swatch at all.
@@ -335,7 +337,7 @@ function drawPaintRow(
     const available = full - (role ? roleWidth() + 8 : 0);
     ctx.font = `400 19px ${ff}`;
     ctx.fillStyle = theme.paintText;
-    const name = ellipsize(ctx, paint.name, available);
+    const name = ellipsize(ctx, mixTitle(paint), available);
     const nameW = ctx.measureText(name).width;
     ctx.fillText(name, textX, cy);
     drawRole(textX + nameW + 8, cy + 1);
@@ -346,10 +348,10 @@ function drawPaintRow(
   // second line, so the two secondary facts don't compete for the same space.
   ctx.font = `400 19px ${ff}`;
   ctx.fillStyle = theme.paintText;
-  ctx.fillText(ellipsize(ctx, paint.name, full), textX, cy);
+  ctx.fillText(ellipsize(ctx, mixTitle(paint), full), textX, cy);
 
   const subY = cy + BRAND_LINE_H;
-  const brand = brandLabel(paint);
+  const brand = mixBrandLabel(paint);
   ctx.font = `400 14px ${ff}`;
   ctx.fillStyle = theme.roleText;
   const shown = ellipsize(ctx, brand, full - (role ? roleWidth() + 8 : 0));

@@ -8,6 +8,7 @@
  *
  * No React, no DOM — safe to unit-test in node and to call during render.
  */
+import { displayHex } from "./mix";
 import { roleOf, weightOf, type SchemePaint } from "./types";
 
 /** A solid paint's slot in the ramp, as fractions of the bar height (0..1). */
@@ -114,14 +115,15 @@ export function barModel(paints: SchemePaint[]): BarModel {
  */
 export function rampGradient(segs: Seg[], blend: boolean): string {
   if (!segs.length) return "";
-  if (segs.length === 1) return segs[0].paint.hex;
+  if (segs.length === 1) return displayHex(segs[0].paint);
   const stops: string[] = [];
   if (blend) {
-    for (const s of segs) stops.push(`${s.paint.hex} ${(s.center * 100).toFixed(2)}%`);
+    for (const s of segs) stops.push(`${displayHex(s.paint)} ${(s.center * 100).toFixed(2)}%`);
   } else {
     for (const s of segs) {
-      stops.push(`${s.paint.hex} ${(s.start * 100).toFixed(2)}%`);
-      stops.push(`${s.paint.hex} ${(s.end * 100).toFixed(2)}%`);
+      const hex = displayHex(s.paint);
+      stops.push(`${hex} ${(s.start * 100).toFixed(2)}%`);
+      stops.push(`${hex} ${(s.end * 100).toFixed(2)}%`);
     }
   }
   return `linear-gradient(to top, ${stops.join(", ")})`;

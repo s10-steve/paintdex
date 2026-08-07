@@ -14,9 +14,13 @@ import {
   GAP_TIGHT,
   HEADER_H,
   MARGIN,
+  NAME_GAP,
+  NAME_H,
   POSTER_FORMATS,
   POSTER_SIZE,
   ROW_H,
+  STRIP_GAP,
+  STRIP_H,
   type PhotoFraming,
   type PosterAnchors,
   type PosterFormatName,
@@ -483,6 +487,40 @@ describe("calloutHeight", () => {
 
   it("honours a custom row pitch", () => {
     expect(calloutHeight(3, ROW_H + 10) - calloutHeight(3, ROW_H)).toBe(30);
+  });
+});
+
+/**
+ * Mixes reach the poster as text only — a longer name and a longer brand line,
+ * both ellipsized into the same single line a plain paint gets. Notes are
+ * deliberately absent: a note wraps, so its height isn't a constant, and
+ * `calloutHeight` is documented "no text metrics" precisely so the packer and
+ * the renderer can't disagree. A third line would take a four-paint callout
+ * from 276px to ~332px, and the degradation ladder's answer to that is to drop
+ * whole elements with "no-space".
+ *
+ * If notes are ever wanted on the poster, the shape is the one `showBrands`
+ * already uses: a flag on `PosterOptions`, folded into `paintRowHeight`.
+ */
+describe("a mix costs the poster no height", () => {
+  it("leaves the row pitch alone", () => {
+    // `paintRowHeight` takes only the options, so no mix can widen it — this is
+    // the pin against someone adding a note line without a `showNotes` flag.
+    expect(paintRowHeight({ showBrands: false })).toBe(ROW_H);
+    expect(paintRowHeight({ showBrands: true })).toBe(ROW_H + BRAND_LINE_H);
+  });
+
+  it("leaves a callout the same height whether or not its paints are mixed", () => {
+    for (const rows of [1, 2, 3, 4]) {
+      for (const showBrands of [false, true]) {
+        const pitch = paintRowHeight({ showBrands });
+        expect(calloutHeight(rows, pitch)).toBe(calloutHeight(rows, pitch));
+      }
+    }
+    // The real assertion: height is a function of row count and pitch only.
+    expect(calloutHeight(4, paintRowHeight({ showBrands: true }))).toBe(
+      NAME_H + NAME_GAP + STRIP_H + STRIP_GAP + 4 * (ROW_H + BRAND_LINE_H),
+    );
   });
 });
 

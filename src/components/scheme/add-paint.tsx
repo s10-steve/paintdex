@@ -9,17 +9,28 @@ import type { SchemePaint, SchemeRole } from "@/lib/scheme/types";
  * The per-element "add a paint" form: a search box over the browse index with
  * keyboard navigation, plus a custom-colour entry for paints not in the
  * database. Added paints inherit `defaultRole` from the element's current stack.
+ *
+ * `LayerRow` reuses this nested inside a paint row to add a mix component, via
+ * `compact`; that caller keeps the four colour fields and discards the `role`,
+ * which a mix component has no use for.
  */
 export function AddPaint({
   dbPaints,
   loadError,
   defaultRole: role,
   onAdd,
+  compact = false,
+  placeholder,
+  autoFocus = false,
 }: {
   dbPaints: BrowsePaint[] | null;
   loadError: boolean;
   defaultRole: SchemeRole;
   onAdd: (p: Omit<SchemePaint, "id">) => void;
+  /** Row-sized padding and type, for the nested mix picker. */
+  compact?: boolean;
+  placeholder?: string;
+  autoFocus?: boolean;
 }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -56,7 +67,7 @@ export function AddPaint({
   };
 
   return (
-    <div className="relative px-2.5 pb-3 pt-1.5">
+    <div className={`relative ${compact ? "px-0 py-1" : "px-2.5 pb-3 pt-1.5"}`}>
       <div className="flex items-center gap-2">
         <input
           type="text"
@@ -86,10 +97,13 @@ export function AddPaint({
           placeholder={
             loading
               ? "Loading paint database…"
-              : "Add a paint — search across 11 brands…"
+              : (placeholder ?? "Add a paint — search across 11 brands…")
           }
-          aria-label="Search paints to add"
-          className="min-w-0 flex-1 rounded-lg border border-input bg-background px-3 py-2 text-base outline-none focus:border-primary focus:ring-2 focus:ring-accent sm:text-[13px]"
+          aria-label={compact ? "Search paints to mix in" : "Search paints to add"}
+          autoFocus={autoFocus}
+          className={`min-w-0 flex-1 rounded-lg border border-input bg-background outline-none focus:border-primary focus:ring-2 focus:ring-accent ${
+            compact ? "px-2 py-1 text-[12.5px]" : "px-3 py-2 text-base sm:text-[13px]"
+          }`}
         />
         <button
           onClick={() => setShowCustom((v) => !v)}
@@ -101,7 +115,9 @@ export function AddPaint({
       </div>
 
       {open && query.trim().length >= 2 && (
-        <div className="absolute inset-x-2.5 top-[calc(100%-6px)] z-20 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl">
+        <div
+          className={`absolute ${compact ? "inset-x-0 top-full" : "inset-x-2.5 top-[calc(100%-6px)]"} z-20 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl`}
+        >
           {results.length === 0 ? (
             <div className="p-3 text-center text-[12.5px] text-muted-foreground">
               {loadError

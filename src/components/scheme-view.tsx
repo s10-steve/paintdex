@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { SchemeBars } from "./scheme-bars";
 import { RoleTag } from "./scheme/role-tag";
 import { useAuth } from "./auth/auth-provider";
+import { components, displayHex, mixName, ratioLabel } from "@/lib/scheme/mix";
 import { paintMeta, roleOf, type Scheme } from "@/lib/scheme/types";
 import { toExportShape } from "@/lib/scheme/io";
 import { duplicateScheme } from "@/lib/data/schemes";
@@ -97,7 +98,7 @@ export function SchemeView({
               >
                 <div className="mb-2 flex items-center gap-2.5 border-b border-border pb-2">
                   <span className="flex h-[22px] w-10 flex-none overflow-hidden rounded-md ring-1 ring-inset ring-black/10">
-                    {(element.paints.length ? element.paints.map((p) => p.hex) : ["var(--muted)"]).map(
+                    {(element.paints.length ? element.paints.map(displayHex) : ["var(--muted)"]).map(
                       (hex, i) => (
                         <i key={i} className="flex-1" style={{ background: hex }} />
                       ),
@@ -117,23 +118,55 @@ export function SchemeView({
                     {element.paints.map((paint) => {
                       const role = roleOf(paint);
                       const meta = paintMeta(paint);
+                      const ratio = ratioLabel(paint);
+                      const hex = displayHex(paint);
                       return (
                         <li key={paint.id} className="flex items-start gap-2.5 px-1">
                           <span
                             className="mt-0.5 h-[26px] w-[26px] flex-none rounded-md ring-1 ring-inset ring-black/15"
-                            style={{ background: paint.hex }}
+                            style={{ background: hex }}
                           />
                           <div className="min-w-0">
-                            <div className="flex min-w-0 items-center gap-1.5 text-[13.5px] font-medium">
-                              <span className="min-w-0 truncate">{paint.name}</span>
+                            <div className="flex min-w-0 flex-wrap items-center gap-1.5 text-[13.5px] font-medium">
+                              <span className="min-w-0">{mixName(paint)}</span>
+                              {ratio && (
+                                <span className="flex-none rounded bg-muted-foreground/15 px-1 font-mono text-[10px] tabular-nums text-muted-foreground">
+                                  {ratio}
+                                </span>
+                              )}
                               <RoleTag role={role} />
                             </div>
-                            <div className="truncate text-[11.5px] text-muted-foreground">
+                            <div className="text-[11.5px] text-muted-foreground">
                               {meta}{" "}
                               <span className="font-mono tabular-nums text-muted-foreground/80">
-                                {paint.hex.toUpperCase()}
+                                {hex.toUpperCase()}
                               </span>
                             </div>
+                            {paint.mix?.length ? (
+                              <ul className="mt-1 space-y-0.5 border-l border-border pl-2">
+                                {components(paint).map((c, i) => (
+                                  <li
+                                    key={i}
+                                    className="flex items-center gap-1.5 text-[11px] text-muted-foreground"
+                                  >
+                                    <span
+                                      className={`h-2.5 w-2.5 flex-none rounded-sm ring-1 ring-inset ring-black/15 ${c.medium ? "opacity-40" : ""}`}
+                                      style={{ background: c.hex }}
+                                    />
+                                    <span className="min-w-0 truncate">{c.name}</span>
+                                    <span className="flex-none font-mono tabular-nums opacity-70">
+                                      ×{c.parts}
+                                    </span>
+                                    {c.medium && <span className="flex-none opacity-70">thins</span>}
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : null}
+                            {paint.note && (
+                              <p className="mt-1 text-[11.5px] italic text-muted-foreground">
+                                {paint.note}
+                              </p>
+                            )}
                           </div>
                         </li>
                       );

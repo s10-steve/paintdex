@@ -267,7 +267,9 @@ export function SchemeVisualiser() {
           <p>
             Give each a  <b className="font-semibold text-foreground">role</b>: base, layer,
             highlight and drybrush build the tonal ramp; wash, glaze and weathering sit over
-            it. The role also sets how much of the bar a layer takes.
+            it. The role also sets how much of the bar a layer takes. A layer can hold a{" "}
+            <b className="font-semibold text-foreground">mix</b> — add a second paint and set
+            the parts — and carry a short note on how you applied it.
           </p>
           <p>
             Order elements by how much of the model they cover —{" "}
