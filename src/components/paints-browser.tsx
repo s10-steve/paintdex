@@ -519,6 +519,36 @@ function MobileFilterDrawer({
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useModalDialog({ onClose, initialFocus: closeRef });
 
+  // Latest `onClose` without re-subscribing: the parent passes an inline arrow.
+  // Same reason `useModalDialog` keeps its handlers in a ref.
+  const closeHandler = useRef(onClose);
+  useEffect(() => {
+    closeHandler.current = onClose;
+  }, [onClose]);
+
+  // Close when the viewport crosses `md`.
+  //
+  // The mount is state but the visibility is CSS (`md:hidden` below), so
+  // widening past the breakpoint used to leave the drawer mounted and
+  // `display: none` — still holding `useModalDialog`'s `overflow: hidden` on
+  // `<body>`, with nothing on screen to release it. The `Filters` button that
+  // would close it is `md:hidden` too, so the page simply could not be
+  // scrolled. (Escape still worked, its listener being on `window`, but nothing
+  // said so.) The rule this restores: one system decides whether the drawer is
+  // here, not two.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    if (mq.matches) {
+      closeHandler.current();
+      return;
+    }
+    const update = () => {
+      if (mq.matches) closeHandler.current();
+    };
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
   return (
     <div className="fixed inset-0 z-40 md:hidden">
       <div

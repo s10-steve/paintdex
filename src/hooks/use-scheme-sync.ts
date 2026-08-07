@@ -77,6 +77,13 @@ export type SchemeSync = {
    */
   notice: string | null;
   dismissNotice: () => void;
+  /**
+   * Raise one from outside the hook. The share actions need it: their failures
+   * ("deleted on another device", "your session may have expired") are things
+   * the user has to act on, and the sync indicator is exactly the wrong place —
+   * the next keystroke overwrites it with "Saving…".
+   */
+  showNotice: (message: string) => void;
   /** Switch the editor to one of the saved schemes. */
   selectScheme: (id: string) => void;
   /** Create a blank scheme on the account and switch to it. */
@@ -597,6 +604,7 @@ export function useSchemeSync({
     setSyncState,
     notice,
     dismissNotice: () => setNotice(null),
+    showNotice: setNotice,
     selectScheme,
     newScheme,
     adoptScheme,

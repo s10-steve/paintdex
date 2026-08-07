@@ -20,7 +20,7 @@
  * followed.
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent, act } from "@testing-library/react";
 import type { BrowsePaint } from "@/lib/paints/types";
 
 let currentParams = new URLSearchParams();
@@ -94,14 +94,48 @@ const writtenQuery = () => {
   return url?.includes("?") ? url.slice(url.indexOf("?") + 1) : "";
 };
 
+/**
+ * jsdom has no `matchMedia`, so it has to be supplied — the drawer watches
+ * `(min-width: 768px)` to unmount itself when the viewport crosses `md`.
+ *
+ * `matches` starts false (a phone-width viewport, which is the only width the
+ * drawer opens at) and the `change` listeners are captured so a test can drive
+ * the crossing by hand.
+ */
+const viewport = { wide: false, listeners: [] as Array<() => void> };
+const crossToWide = () =>
+  // `act` because the listener is outside React's event system: the drawer's
+  // unmount is a state update the assertions need flushed.
+  act(() => {
+    viewport.wide = true;
+    viewport.listeners.forEach((fn) => fn());
+  });
+
 beforeEach(() => {
   replaceState.mockClear();
   vi.spyOn(window.history, "replaceState").mockImplementation(
     replaceState as unknown as typeof window.history.replaceState,
   );
+  viewport.wide = false;
+  viewport.listeners = [];
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn(() => ({
+      get matches() {
+        return viewport.wide;
+      },
+      addEventListener: (_: string, fn: () => void) => {
+        viewport.listeners.push(fn);
+      },
+      removeEventListener: (_: string, fn: () => void) => {
+        viewport.listeners = viewport.listeners.filter((l) => l !== fn);
+      },
+    })),
+  );
 });
 afterEach(() => {
   cleanup();
+  vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
 
@@ -415,5 +449,20 @@ describe("the mobile filters drawer is a real dialog", () => {
     expect(screen.queryByRole("dialog")).toBeNull();
     // …and it comes back to whatever opened it.
     expect(document.activeElement).toBe(trigger);
+  });
+
+  it("closes itself when the viewport crosses md, releasing the scroll lock", () => {
+    // The mount is state, the visibility is CSS (`md:hidden`). Widening past
+    // the breakpoint used to leave the drawer mounted but `display: none`,
+    // still holding `overflow: hidden` on `<body>` — an unscrollable page whose
+    // only escape route (the `Filters` button) is itself `md:hidden`.
+    renderAt("");
+    open();
+    expect(document.body.style.overflow).toBe("hidden");
+
+    crossToWide();
+
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(document.body.style.overflow).not.toBe("hidden");
   });
 });
