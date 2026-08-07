@@ -18,7 +18,6 @@ import {
   type RefObject,
 } from "react";
 import {
-  POSTER_SIZE,
   projectAnchor,
   unprojectAnchor,
   type PhotoFraming,
@@ -101,7 +100,7 @@ export function PosterCanvas({
     if (!framing) return [];
     return Object.entries(anchors).map(([index, a]) => ({
       index: Number(index),
-      point: projectAnchor(a, framing, POSTER_SIZE.width, POSTER_SIZE.height),
+      point: projectAnchor(a, framing, layout.width, layout.height),
       // Laid out = has a callout; the rest are drawn dimmer, as "still here,
       // just not shown".
       placed: layout.callouts.some((c) => c.elementIndex === Number(index)),
@@ -117,11 +116,11 @@ export function PosterCanvas({
     let frame = 0;
     const paint = () => {
       if (cancelled) return;
-      // Cap the device ratio: a 3x preview of a 1080x1350 poster is 12 MP of
-      // canvas redrawn on every pointer move for no visible gain.
+      // Cap the device ratio: a 3x preview of a 1080x1920 poster is nearly 19 MP
+      // of canvas redrawn on every pointer move for no visible gain.
       const dpr = Math.min(typeof window === "undefined" ? 1 : window.devicePixelRatio || 1, 2);
-      canvas.width = POSTER_SIZE.width * dpr;
-      canvas.height = POSTER_SIZE.height * dpr;
+      canvas.width = layout.width * dpr;
+      canvas.height = layout.height * dpr;
 
       drawPoster(ctx, {
         layout,
@@ -152,13 +151,16 @@ export function PosterCanvas({
   }, [layout, options, photo, armed, highlight, handles]);
 
   /** Client coordinates → logical poster pixels. */
-  const toLogical = useCallback((e: ReactPointerEvent<HTMLCanvasElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    return {
-      x: ((e.clientX - rect.left) / rect.width) * POSTER_SIZE.width,
-      y: ((e.clientY - rect.top) / rect.height) * POSTER_SIZE.height,
-    };
-  }, []);
+  const toLogical = useCallback(
+    (e: ReactPointerEvent<HTMLCanvasElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      return {
+        x: ((e.clientX - rect.left) / rect.width) * layout.width,
+        y: ((e.clientY - rect.top) / rect.height) * layout.height,
+      };
+    },
+    [layout.width, layout.height],
+  );
 
   const anchorAt = useCallback(
     (pt: { x: number; y: number }) => {
@@ -179,7 +181,7 @@ export function PosterCanvas({
   const place = useCallback(
     (index: number, pt: { x: number; y: number }) => {
       if (!framing) return;
-      const a = unprojectAnchor(pt, framing, POSTER_SIZE.width, POSTER_SIZE.height);
+      const a = unprojectAnchor(pt, framing, layout.width, layout.height);
       // Clamp to the photo: dragging a marker past the edge would otherwise put
       // it out of frame, where `layoutPoster` drops the callout entirely and the
       // label just disappears mid-drag.
@@ -190,7 +192,7 @@ export function PosterCanvas({
         side: anchors[index]?.side,
       });
     },
-    [framing, anchors, onPlace],
+    [framing, anchors, onPlace, layout.width, layout.height],
   );
 
   const onPointerDown = (e: ReactPointerEvent<HTMLCanvasElement>) => {
@@ -244,7 +246,7 @@ export function PosterCanvas({
 
     if (armed !== null && (e.key === "Enter" || e.key === " ")) {
       e.preventDefault();
-      place(armed, { x: POSTER_SIZE.width / 2, y: POSTER_SIZE.height / 2 });
+      place(armed, { x: layout.width / 2, y: layout.height / 2 });
       onHighlight(armed);
       onPlaced();
       return;
@@ -261,7 +263,7 @@ export function PosterCanvas({
 
     e.preventDefault();
     const scale = e.shiftKey ? NUDGE_COARSE : NUDGE_FINE;
-    const at = projectAnchor(current, framing, POSTER_SIZE.width, POSTER_SIZE.height);
+    const at = projectAnchor(current, framing, layout.width, layout.height);
     place(target, { x: at.x + step.x * scale, y: at.y + step.y * scale });
   };
 
@@ -293,7 +295,7 @@ export function PosterCanvas({
       className={`block w-full touch-none rounded-lg ring-1 ring-border ${
         armed !== null ? "cursor-crosshair" : "cursor-grab active:cursor-grabbing"
       }`}
-      style={{ aspectRatio: `${POSTER_SIZE.width} / ${POSTER_SIZE.height}` }}
+      style={{ aspectRatio: `${layout.width} / ${layout.height}` }}
     />
   );
 }

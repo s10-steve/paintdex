@@ -47,9 +47,14 @@ npm run build
 - `src/lib/scheme/` — scheme bar maths, JSON import/export, share-slug helpers,
   the curated example schemes (`presets.ts`), and the share-image layout + Canvas
   renderer (`poster.ts`, `poster-draw.ts`)
-- `src/lib/data/` — per-table Supabase CRUD (e.g. saved schemes)
+- `src/lib/data/` — per-table Supabase CRUD (e.g. saved schemes) and the
+  `scheme-photos` storage bucket
 - `src/lib/supabase/` — browser client + the anon server client used only by
   the `/scheme/[slug]` share viewer
+- `supabase/` — the database: `schema.sql` (fresh projects only), `migrations/`
+  (deltas applied by hand), and `README.md`, the runbook for both. Changing the
+  schema means reading that first — RLS is the whole security boundary, and
+  production is a separate project from the one you develop against.
 - `src/components/` — UI components
 - `src/app/` — routes: `/`, `/paints`, `/paints/[id]`, `/visualiser`,
   `/my-schemes`, `/my-paints`, `/scheme/[slug]` (the one server-rendered route)

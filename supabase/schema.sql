@@ -23,6 +23,24 @@
 -- in the repo, not the DB, so there is no foreign key to a paints table.
 
 -- ---------------------------------------------------------------------------
+-- schema_migrations: which files in supabase/migrations/ have been applied.
+--
+-- A project bootstrapped from this file already has everything those deltas
+-- would do, so they are all recorded as applied at the bottom of this file —
+-- otherwise a fresh project would look years behind and someone would helpfully
+-- "catch it up" by replaying them.
+-- ---------------------------------------------------------------------------
+create table if not exists public.schema_migrations (
+  filename   text primary key,
+  applied_at timestamptz not null default now()
+);
+-- No policies, so none can be OR-combined into something wider later. This is
+-- deployment bookkeeping; the browser has no reason to read it.
+alter table public.schema_migrations enable row level security;
+comment on table public.schema_migrations is
+  'Which files in supabase/migrations/ have been applied. Written by hand as the last statement of each migration.';
+
+-- ---------------------------------------------------------------------------
 -- profiles: 1:1 with auth.users, created automatically on signup.
 -- ---------------------------------------------------------------------------
 create table if not exists public.profiles (
@@ -44,6 +62,11 @@ create table if not exists public.schemes (
   data       jsonb not null,
   is_public  boolean not null default false,
   share_slug text unique,
+  -- Object name in the `scheme-photos` bucket, always `<user_id>/<scheme_id>.jpg`.
+  -- A column rather than a field inside `data`, because `data` is stringified by
+  -- `canonicalScheme()` to detect unflushed edits, and is what `duplicateScheme`
+  -- copies wholesale.
+  photo_path text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -106,12 +129,14 @@ create policy "schemes delete self"   on public.schemes for delete using (auth.u
 --
 -- `user_id` is deliberately not in the result: the viewer never displays an
 -- author, and the old blanket policy exposed it to anyone who asked.
-create or replace function public.get_public_scheme(p_slug text)
+drop function if exists public.get_public_scheme(text);
+create function public.get_public_scheme(p_slug text)
   returns table (
     id         uuid,
     title      text,
     data       jsonb,
     share_slug text,
+    photo_path text,
     created_at timestamptz,
     updated_at timestamptz
   )
@@ -120,7 +145,7 @@ create or replace function public.get_public_scheme(p_slug text)
   security definer
   set search_path = public
 as $$
-  select s.id, s.title, s.data, s.share_slug, s.created_at, s.updated_at
+  select s.id, s.title, s.data, s.share_slug, s.photo_path, s.created_at, s.updated_at
   from public.schemes s
   where s.share_slug = p_slug
     and s.is_public = true
@@ -130,6 +155,97 @@ $$;
 -- `public` here is the SQL pseudo-role (everyone), not the `public` schema.
 revoke all on function public.get_public_scheme(text) from public;
 grant execute on function public.get_public_scheme(text) to anon, authenticated;
+
+-- ---------------------------------------------------------------------------
+-- Storage: model photos for the share-image studio
+-- ---------------------------------------------------------------------------
+-- Private bucket. A public one serves its objects with no auth at all, so a
+-- photo would stay readable after the scheme was unpublished or deleted — the
+-- same hole the `is_public` SELECT policy above turned out to be for rows.
+--
+-- The size and MIME limits are the storage equivalent of `schemes_data_size`
+-- below: uploads go straight from the browser with the anon key, so the cap has
+-- to be here. One object per scheme, times the 100-scheme cap, bounds an account.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('scheme-photos', 'scheme-photos', false, 2097152, array['image/jpeg', 'image/webp'])
+on conflict (id) do update
+  set public             = excluded.public,
+      file_size_limit    = excluded.file_size_limit,
+      allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "scheme photos read own"      on storage.objects;
+drop policy if exists "scheme photos insert own"    on storage.objects;
+drop policy if exists "scheme photos update own"    on storage.objects;
+drop policy if exists "scheme photos delete own"    on storage.objects;
+drop policy if exists "scheme photos read published" on storage.objects;
+
+-- The owner works inside their own folder, keyed on the first path segment.
+create policy "scheme photos read own" on storage.objects
+  for select to authenticated
+  using (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "scheme photos insert own" on storage.objects
+  for insert to authenticated
+  with check (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "scheme photos update own" on storage.objects
+  for update to authenticated
+  using (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "scheme photos delete own" on storage.objects
+  for delete to authenticated
+  using (bucket_id = 'scheme-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+
+-- Is this object the photo of a currently-published scheme?
+--
+-- `security definer`, and that is not incidental — it is the whole reason this
+-- is a function. The policy below is evaluated as `anon`, and a subquery inside
+-- a policy runs with the calling role's privileges, so reading `public.schemes`
+-- inline would be subject to that table's own RLS: "select own", which for anon
+-- matches nothing. The check would be false for every object, forever. (Shipped
+-- exactly that way in 0003; fixed in 0004.)
+--
+-- So the body is the security boundary, and it is kept as narrow as
+-- `get_public_scheme`'s: exact equality on `photo_path`, an `is_public` check,
+-- and a bare boolean out. No pattern match, nothing walkable, and you must
+-- already hold the full `<user_id>/<scheme_id>.jpg` path — two uuids — to ask at
+-- all. Depends on `public.schemes` not having `force row level security`, which
+-- would apply RLS to the owner too and reintroduce the original bug.
+create or replace function public.is_published_scheme_photo(p_path text)
+  returns boolean
+  language sql
+  stable
+  security definer
+  set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.schemes s
+    where s.photo_path = p_path
+      and s.is_public = true
+  );
+$$;
+
+revoke all on function public.is_published_scheme_photo(text) from public;
+grant execute on function public.is_published_scheme_photo(text) to anon, authenticated;
+
+-- Runs on every anonymous object read, so index it. Partial, like
+-- `schemes_share_idx`: most rows have no photo.
+create index if not exists schemes_photo_path_idx
+  on public.schemes (photo_path) where photo_path is not null;
+
+-- The anonymous read, for the public share page. A SECOND permissive SELECT
+-- policy, and permissive policies OR together — so it widens access. That is
+-- only acceptable because of how narrow it is: readable if and only if some
+-- scheme currently points at the object *and* that scheme is published.
+-- Unpublishing revokes it immediately. The bucket is still private, so the page
+-- mints a short-lived signed URL, and signing is gated on this policy passing.
+--
+-- `to anon` only: the share page is server-rendered with the anon client
+-- whoever is viewing, so no other role ever signs one of these.
+create policy "scheme photos read published" on storage.objects
+  for select to anon
+  using (
+    bucket_id = 'scheme-photos'
+    and public.is_published_scheme_photo(name)
+  );
 
 -- ---------------------------------------------------------------------------
 -- Triggers
@@ -168,6 +284,30 @@ drop trigger if exists schemes_touch on public.schemes;
 create trigger schemes_touch
   before update on public.schemes
   for each row execute function public.touch_updated_at();
+
+-- Deleting a scheme deletes its photo. The client can't be the one to do this:
+-- a scheme deleted on another device, or cascaded away with the account, never
+-- runs any of our code. security definer because `storage.objects` has its own
+-- RLS and the deleting session may not be allowed to touch the row directly.
+create or replace function public.delete_scheme_photo()
+  returns trigger
+  language plpgsql
+  security definer
+  set search_path = public
+as $$
+begin
+  if old.photo_path is not null then
+    delete from storage.objects
+    where bucket_id = 'scheme-photos' and name = old.photo_path;
+  end if;
+  return old;
+end;
+$$;
+
+drop trigger if exists schemes_delete_photo on public.schemes;
+create trigger schemes_delete_photo
+  after delete on public.schemes
+  for each row execute function public.delete_scheme_photo();
 
 -- ---------------------------------------------------------------------------
 -- Quotas / abuse limits
@@ -216,3 +356,21 @@ drop trigger if exists schemes_quota on public.schemes;
 create trigger schemes_quota
   before insert on public.schemes
   for each row execute function public.enforce_scheme_quota();
+
+-- ---------------------------------------------------------------------------
+-- Migration bookkeeping
+-- ---------------------------------------------------------------------------
+-- Everything above already includes what each delta in `supabase/migrations/`
+-- does, so a project built from this file is up to date by construction. Record
+-- them, or the next person to compare the directory against the table will
+-- conclude a fresh project is missing every migration ever written.
+--
+-- **Add a line here whenever you add a migration**, or a newly bootstrapped
+-- project (a staging one, say) will diverge from production the first time
+-- someone runs the "pending" list against it.
+insert into public.schema_migrations (filename) values
+  ('0001-v0.12.0-unlisted-share-links.sql'),
+  ('0002-v0.13.0-migration-tracking.sql'),
+  ('0003-v0.13.0-scheme-photos.sql'),
+  ('0004-v0.13.0-fix-published-photo-read.sql')
+on conflict (filename) do nothing;

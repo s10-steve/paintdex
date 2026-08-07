@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertBanner } from "./alert-banner";
 import { Bar, useBarHover } from "./scheme-bars";
 import { ElementCard } from "./scheme/element-card";
@@ -10,12 +10,13 @@ import { ShareCard } from "./scheme/share-card";
 import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useLocalScheme } from "@/hooks/use-local-scheme";
-import { LOCAL_POSTER_SCOPE } from "@/hooks/use-poster";
+import { hasLocalPosterPhoto, LOCAL_POSTER_SCOPE } from "@/hooks/use-poster";
 import { useSchemeEditor } from "@/hooks/use-scheme-editor";
 import { useSchemeNew } from "@/hooks/use-scheme-new";
 import { useSchemePreset } from "@/hooks/use-scheme-preset";
 import { useSchemeShare } from "@/hooks/use-scheme-share";
 import { useSchemeSync } from "@/hooks/use-scheme-sync";
+import { setSchemePhotoPath } from "@/lib/data/schemes";
 import { emptyScheme, MAX_SCHEME_TITLE, type Scheme } from "@/lib/scheme/types";
 import { schemeHasContent } from "@/lib/scheme/sync";
 import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
@@ -154,6 +155,58 @@ export function SchemeVisualiser() {
   // and the localStorage read behind it cost nothing on a normal visit.
   const [studioOpen, setStudioOpen] = useState(false);
 
+  /** Which scheme's poster state the studio should load — see `usePoster`. */
+  const posterScope = activeSchemeId ?? LOCAL_POSTER_SCOPE;
+
+  /**
+   * Where the studio should keep its photo: the account when there's a user and
+   * a saved row, this browser otherwise.
+   *
+   * Memoised because `usePoster` keys effects off the object's fields — and
+   * because writing `photo_path` goes through `patchRow`, exactly as publishing
+   * writes `is_public`/`share_slug`. The row's own `photo_path` is the input, so
+   * a photo added on another device arrives with the next refetch.
+   */
+  const remotePoster = useMemo(
+    () =>
+      user && activeRow
+        ? {
+            schemeId: activeRow.id,
+            userId: user.id,
+            photoPath: activeRow.photo_path,
+            onPhotoPath: (path: string | null) => {
+              patchRow(activeRow.id, { photo_path: path });
+              // The write can miss — the row may have been deleted on another
+              // device — but that is not worth a message here: the sync layer
+              // already owns that conversation, and the photo itself is fine.
+              void setSchemePhotoPath(activeRow.id, path).catch(() => {});
+            },
+          }
+        : null,
+    [user, activeRow, patchRow],
+  );
+
+  /**
+   * Whether this scheme already has a share image, for the button's verb.
+   *
+   * Two sources, because the photo has two homes. The row's `photo_path` is
+   * reactive — `patchRow` re-renders on upload — but `localStorage` isn't, so the
+   * local half is re-read when the studio *closes*, which is the only moment it
+   * can have changed while this component is mounted.
+   */
+  const [hasLocalImage, setHasLocalImage] = useState(false);
+  useEffect(() => {
+    if (studioOpen) return;
+    // `localStorage` is an external store and can't be read during render
+    // without a hydration mismatch — the same reason the rest of this feature
+    // gates on `mounted`. It isn't reactive either, and it emits no event for a
+    // same-tab write, so there is nothing to subscribe to: closing the studio is
+    // the signal. Runs twice per studio visit, not per render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setHasLocalImage(hasLocalPosterPhoto(posterScope));
+  }, [posterScope, studioOpen]);
+  const hasPosterImage = Boolean(activeRow?.photo_path) || hasLocalImage;
+
   const doExport = () => {
     const blob = new Blob([exportSchemeJSON(scheme)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -237,6 +290,7 @@ export function SchemeVisualiser() {
             activeRow={activeRow}
             signedIn={Boolean(user)}
             canMakeImage={scheme.elements.length > 0}
+            hasImage={hasPosterImage}
             shareBusy={shareBusy}
             copied={copied}
             onOpenStudio={() => setStudioOpen(true)}
@@ -420,7 +474,11 @@ export function SchemeVisualiser() {
           // unbound document shares one scope, which is all a signed-out editor
           // has; a saved scheme gets its own, so anchors can't land on another
           // model's photo via a shared element name.
-          scope={activeSchemeId ?? LOCAL_POSTER_SCOPE}
+          scope={posterScope}
+          // With both a user and a saved row, the photo belongs in the account
+          // rather than this browser. Null otherwise — a signed-out or unbound
+          // document has nowhere to put it, so the studio stays local-only.
+          remote={remotePoster}
           onClose={() => setStudioOpen(false)}
         />
       )}

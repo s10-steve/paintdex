@@ -14,10 +14,12 @@ import {
   GAP_TIGHT,
   HEADER_H,
   MARGIN,
+  POSTER_FORMATS,
   POSTER_SIZE,
   ROW_H,
   type PhotoFraming,
   type PosterAnchors,
+  type PosterFormatName,
 } from "@/lib/scheme/poster";
 import { brandLabel } from "@/lib/scheme/types";
 import type { SchemeElement, SchemePaint, SchemeRole } from "@/lib/scheme/types";
@@ -89,6 +91,119 @@ describe("photo framing", () => {
     // And it lands exactly where the same fraction of the drawn photo now sits.
     const r = photoRect({ ...square, zoom: 1.4, offsetY: -60 }, W, H);
     expect(b.y).toBeCloseTo(r.dy + eye.y * r.dh);
+  });
+});
+
+describe("poster formats", () => {
+  it("defaults to 4:5 and sizes the layout from the chosen format", () => {
+    const { width, height } = POSTER_FORMATS["4:5"];
+    expect(layoutPoster({ elements: [], anchors: {} })).toMatchObject({ width, height });
+
+    for (const name of Object.keys(POSTER_FORMATS) as PosterFormatName[]) {
+      const layout = layoutPoster({ elements: [], anchors: {}, options: { ...LEAN, format: name } });
+      expect(layout.width).toBe(POSTER_FORMATS[name].width);
+      expect(layout.height).toBe(POSTER_FORMATS[name].height);
+    }
+  });
+
+  it("keeps every format the same width, so the callout columns never move", () => {
+    // `COLUMN_W` and `MARGIN` are horizontal constants. A narrower format would
+    // push the two columns onto the model instead of beside it.
+    const widths = Object.values(POSTER_FORMATS).map((f) => f.width);
+    expect(new Set(widths).size).toBe(1);
+
+    const xs = (Object.keys(POSTER_FORMATS) as PosterFormatName[]).map((format) => {
+      const layout = layoutPoster({
+        elements: [element("right")],
+        anchors: { 0: { x: 0.9, y: 0.5 } },
+        options: { ...LEAN, format },
+      });
+      return layout.callouts[0].x;
+    });
+    expect(new Set(xs)).toEqual(new Set([W - MARGIN - COLUMN_W]));
+  });
+
+  it("covers the poster at every aspect, never letterboxing", () => {
+    const square: PhotoFraming = {
+      naturalWidth: 1000,
+      naturalHeight: 1000,
+      zoom: 1,
+      offsetX: 0,
+      offsetY: 0,
+    };
+    for (const { width, height } of Object.values(POSTER_FORMATS)) {
+      const r = photoRect(square, width, height);
+      // Whichever way a square photo has to overflow — sideways at 4:5, not at
+      // all at 1:1, vertically at 9:16 — it must never leave a gap.
+      expect(r.dw).toBeGreaterThanOrEqual(width - 0.001);
+      expect(r.dh).toBeGreaterThanOrEqual(height - 0.001);
+    }
+  });
+
+  it("trades labels for the shorter band rather than overflowing it", () => {
+    // 6 three-paint callouts down one side fit 4:5's 1134px band at the tight
+    // gap, but not 1:1's 864px. The extras must be reported, not spilled.
+    const { elements, anchors } = stack(6, 0.2);
+
+    const feed = layoutPoster({ elements, anchors, options: { ...LEAN, format: "4:5" } });
+    expect(feed.callouts).toHaveLength(6);
+    expect(feed.omitted).toEqual([]);
+
+    const square = layoutPoster({ elements, anchors, options: { ...LEAN, format: "1:1" } });
+    expect(square.callouts.length).toBeLessThan(6);
+    expect(square.omitted.map((o) => o.reason)).toEqual(
+      Array(6 - square.callouts.length).fill("no-space"),
+    );
+    for (const c of square.callouts) {
+      expect(c.y).toBeGreaterThanOrEqual(HEADER_H);
+      expect(c.y + c.height).toBeLessThanOrEqual(square.height - FOOTER_H);
+    }
+  });
+
+  it("spends 9:16's extra height on labels 4:5 had no room for", () => {
+    const { elements, anchors } = stack(8, 0.2);
+    expect(layoutPoster({ elements, anchors, options: { ...LEAN, format: "4:5" } }).omitted.length)
+      .toBeGreaterThan(0);
+    expect(layoutPoster({ elements, anchors, options: { ...LEAN, format: "9:16" } }).omitted)
+      .toEqual([]);
+  });
+
+  it("leaves anchors on the same part of the model when the format changes", () => {
+    // Anchors are photo-space, so switching aspect re-projects them rather than
+    // stranding them — that is the whole reason they are not poster-space.
+    const photo: PhotoFraming = {
+      naturalWidth: 1200,
+      naturalHeight: 1600,
+      zoom: 1,
+      offsetX: 0,
+      offsetY: 0,
+    };
+    const eye = { x: 0.5, y: 0.3 };
+
+    for (const { width, height } of Object.values(POSTER_FORMATS)) {
+      const layout = layoutPoster({
+        elements: [element("eyes")],
+        anchors: { 0: eye },
+        photo,
+        options: LEAN,
+        width,
+        height,
+      });
+      const r = photoRect(photo, width, height);
+      expect(layout.callouts[0].anchor.x).toBeCloseTo(r.dx + eye.x * r.dw);
+      expect(layout.callouts[0].anchor.y).toBeCloseTo(r.dy + eye.y * r.dh);
+    }
+  });
+
+  it("lets an explicit size override the format", () => {
+    const layout = layoutPoster({
+      elements: [],
+      anchors: {},
+      options: { ...LEAN, format: "9:16" },
+      width: 500,
+      height: 400,
+    });
+    expect(layout).toMatchObject({ width: 500, height: 400 });
   });
 });
 

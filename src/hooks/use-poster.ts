@@ -7,8 +7,20 @@
  * Kept out of the scheme document on purpose. A `Scheme` is portable — it round
  * trips through `toExportShape`, syncs to Supabase and is compared byte-for-byte
  * by `canonicalScheme` — and a megabyte of photo has no business in any of that.
- * Poster state lives in its own `localStorage` key instead, and will move to
- * Supabase Storage when the backend phase lands.
+ *
+ * **Two homes for the photo, picked by whether the caller passes `remote`.**
+ *
+ * - No `remote` (signed out, or a document not yet bound to a saved row):
+ *   `localStorage`, exactly as before, with the quota ladder that implies. It is
+ *   the only storage those users have, so none of it goes away.
+ * - With `remote` (signed in, on a saved scheme): the `scheme-photos` bucket, so
+ *   the photo follows the user across devices and the published share page can
+ *   show it. The ~5 MB quota, the fallback re-encode and the "too large to keep"
+ *   warning all stop applying to the photo.
+ *
+ * The *settings* — framing, anchors, options — stay in `localStorage` under
+ * either mode. They're a few hundred bytes that change on every pointermove, and
+ * nothing about them needs to leave the device.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -19,6 +31,11 @@ import {
   type PosterAnchors,
   type PosterOptions,
 } from "@/lib/scheme/poster";
+import {
+  deleteSchemePhoto,
+  downloadSchemePhoto,
+  uploadSchemePhoto,
+} from "@/lib/data/scheme-photos";
 import type { SchemeElement } from "@/lib/scheme/types";
 
 const POSTER_STORE_KEY = "paintdex-poster-v1";
@@ -66,10 +83,67 @@ function remove(key: string): void {
   }
 }
 
+/**
+ * Drop the pre-scoping photo, from both places it could be.
+ *
+ * Called only once the photo is safely somewhere else — the scoped key, or
+ * nowhere because the user removed it. Leaving it behind did two things: a photo
+ * the user *deleted* came back on the next visit, because the scoped key was
+ * empty and the restore fell through to this one; and after a migration the same
+ * multi-megabyte data URL sat in storage twice, against a ~5 MB quota, which on a
+ * large photo is enough to make the second copy the one that won't fit.
+ *
+ * Deliberately not called when a write failed: at that point the legacy copy is
+ * the only copy there is.
+ */
+function clearLegacyPhoto(): void {
+  remove(POSTER_PHOTO_KEY);
+  // The oldest layout kept the photo inside the settings blob. Strip that field
+  // rather than dropping the whole entry, which still holds framing and anchors
+  // for anyone who hasn't been migrated yet.
+  const raw = read(POSTER_STORE_KEY);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw) as StoredPoster;
+    if (parsed.photo === undefined) return;
+    delete parsed.photo;
+    localStorage.setItem(POSTER_STORE_KEY, JSON.stringify(parsed));
+  } catch {
+    /* unreadable or unwritable — nothing safe to strip */
+  }
+}
+
+/**
+ * Whether a photo is already stored *locally* for this scope.
+ *
+ * For labelling a button, not for loading anything — the studio owns the real
+ * read. Client-only (it touches `localStorage`), and it deliberately answers only
+ * the local half: a signed-in scheme's photo lives in the bucket, and the caller
+ * already knows about that from the row's `photo_path`.
+ *
+ * Mirrors the restore effect's key resolution, including the legacy unscoped key
+ * for the unbound document, so a returning user isn't told they have no image
+ * when the studio is about to show them one.
+ */
+export function hasLocalPosterPhoto(scope: string = LOCAL_POSTER_SCOPE): boolean {
+  if (read(keysFor(scope).photo)) return true;
+  return scope === LOCAL_POSTER_SCOPE && Boolean(read(POSTER_PHOTO_KEY));
+}
+
 /** Long edge the uploaded photo is downscaled to before anything else touches it. */
 const WORKING_MAX = 2400;
-/** Smaller re-encode tried when the working image won't fit in localStorage. */
+/**
+ * Smaller re-encode tried when the working image won't fit — the `localStorage`
+ * quota locally, the bucket's `file_size_limit` remotely.
+ */
 const FALLBACK_MAX = 1400;
+
+/**
+ * Upload ceiling, matching the bucket's `file_size_limit` in
+ * `supabase/schema.sql`. Checked here as well so an oversized photo is
+ * re-encoded before the round trip, rather than after a rejected one.
+ */
+const MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
 
 export interface LoadedPhoto {
   image: HTMLImageElement;
@@ -77,6 +151,22 @@ export interface LoadedPhoto {
   naturalHeight: number;
   /** JPEG data URL — what gets persisted, and what the image element holds. */
   dataUrl: string;
+}
+
+/**
+ * Where the photo lives when the editor is signed in and bound to a saved row.
+ *
+ * `onPhotoPath` is how the row's `photo_path` gets written — the hook doesn't
+ * call `setSchemePhotoPath` itself, because the caller also has to patch its
+ * cached copy of the row, and that's the same split `useShareActions` already
+ * uses for `is_public`/`share_slug`.
+ */
+export interface PosterRemote {
+  schemeId: string;
+  userId: string;
+  /** The row's current `photo_path`, or null when it has no photo. */
+  photoPath: string | null;
+  onPhotoPath: (path: string | null) => void;
 }
 
 export const defaultFraming = (): Omit<PhotoFraming, "naturalWidth" | "naturalHeight"> => ({
@@ -129,12 +219,52 @@ function downscale(img: HTMLImageElement, max: number, quality: number): string 
   return canvas.toDataURL("image/jpeg", quality);
 }
 
-export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTER_SCOPE) {
+/**
+ * A JPEG data URL as a `Blob`, for upload.
+ *
+ * Decoded by hand rather than with `fetch(dataUrl)`: the site's CSP restricts
+ * `connect-src` to a named list, and a `data:` fetch is a request like any
+ * other. This is also the only place that needs the bytes — everything else
+ * works off the data URL the `<img>` already holds.
+ */
+function dataUrlToBlob(dataUrl: string): Blob | null {
+  const comma = dataUrl.indexOf(",");
+  if (comma < 0 || !dataUrl.startsWith("data:")) return null;
+  const meta = dataUrl.slice(5, comma);
+  if (!meta.endsWith(";base64")) return null;
+  const type = meta.slice(0, -";base64".length) || "image/jpeg";
+  try {
+    const binary = atob(dataUrl.slice(comma + 1));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new Blob([bytes], { type });
+  } catch {
+    return null;
+  }
+}
+
+/** Read a `Blob` back as a data URL, so a downloaded photo looks like an uploaded one. */
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error("Couldn't read that image."));
+    reader.readAsDataURL(blob);
+  });
+}
+
+export function usePoster(
+  elements: SchemeElement[],
+  scope: string = LOCAL_POSTER_SCOPE,
+  remote: PosterRemote | null = null,
+) {
   const [photo, setPhoto] = useState<LoadedPhoto | null>(null);
   const [framing, setFraming] = useState(defaultFraming);
   const [options, setOptions] = useState<PosterOptions>(defaultPosterOptions);
   const [error, setError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  /** True while the photo is being fetched from or pushed to Storage. */
+  const [photoBusy, setPhotoBusy] = useState(false);
 
   // Stored exactly as persisted — by the index and element name in force when
   // each anchor was placed. Reconciled against the live elements on read.
@@ -143,6 +273,32 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
   // What is currently in the photo key, so the save effect can skip a rewrite
   // and the restore effect can seed it without triggering one.
   const savedPhotoRef = useRef<string | null>(null);
+
+  // The remote equivalents, and deliberately NOT `savedPhotoRef`: that one means
+  // "the localStorage key holds this", which the restore effect sets whenever it
+  // reads a local photo. Sharing it made the migration a no-op — a photo read
+  // out of `localStorage` looked already-saved, so it was never uploaded.
+  //
+  // `loadedPathRef` is the object path whose bytes are in state, set on download
+  // *and* on upload, so the fetch effect doesn't re-download what was just sent.
+  // `remoteUrlRef` is the data URL known to be in the bucket, which stops the
+  // save effect echoing a freshly downloaded photo straight back up.
+  const loadedPathRef = useRef<string | null>(null);
+  const remoteUrlRef = useRef<string | null>(null);
+
+  // `remote` is rebuilt on every render by the caller, so effects key off its
+  // primitive fields and reach for the callback through a ref. Keying on the
+  // object would re-run the fetch on every keystroke in the handle field.
+  const remoteRef = useRef(remote);
+  // Declared before the effects that read it, so within a commit it is refreshed
+  // first. No dependency array on purpose — every render, including the ones
+  // where only the callback's identity changed.
+  useEffect(() => {
+    remoteRef.current = remote;
+  });
+  const remoteUserId = remote?.userId ?? null;
+  const remoteSchemeId = remote?.schemeId ?? null;
+  const remotePath = remote?.photoPath ?? null;
 
   // Restore. localStorage is client-only, so this has to wait for mount.
   useEffect(() => {
@@ -163,6 +319,8 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
     setStoredAnchors({});
     setStoredNames([]);
     savedPhotoRef.current = null;
+    loadedPathRef.current = null;
+    remoteUrlRef.current = null;
 
     let parsed: StoredPoster = {};
     const raw = read(keys.settings) ?? (legacy ? read(POSTER_STORE_KEY) : null);
@@ -202,7 +360,10 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
         () => {
           // A truncated data URL is exactly what a partial quota write leaves
           // behind. Start with no photo rather than an unhandled rejection.
-          if (!cancelled) savedPhotoRef.current = null;
+          // Leave storage alone: a photo this browser couldn't decode may still
+          // be the only copy, and discarding it isn't ours to do.
+          if (cancelled) return;
+          savedPhotoRef.current = null;
         },
       );
     }
@@ -211,6 +372,58 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
     };
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [scope]);
+
+  /**
+   * Fetch the photo the saved row points at.
+   *
+   * Runs after the local restore above and overwrites whatever that found, which
+   * is the right precedence: the row is the shared copy, and a stale local one is
+   * this browser's leftover. It is skipped once `loadedPathRef` matches, so
+   * uploading doesn't immediately re-download what was just sent.
+   *
+   * Keyed on the path, so a scheme that gains a photo on another device picks it
+   * up on the next refetch rather than only on a full reload.
+   */
+  useEffect(() => {
+    if (!remoteUserId || !remotePath) return;
+    if (loadedPathRef.current === remotePath) return;
+
+    let cancelled = false;
+    setPhotoBusy(true);
+    void (async () => {
+      try {
+        const blob = await downloadSchemePhoto(remotePath);
+        // A row pointing at an object that isn't there is survivable — the
+        // studio opens empty rather than broken — so it isn't an error the user
+        // needs to see.
+        if (!blob || cancelled) return;
+        const dataUrl = await blobToDataUrl(blob);
+        const image = await loadImage(dataUrl);
+        if (cancelled) return;
+        loadedPathRef.current = remotePath;
+        // These bytes came *from* the bucket, so record that — otherwise the
+        // save effect sees a photo it has never uploaded and sends it straight
+        // back. Nothing is written locally: the bucket is the store now, and
+        // seeding `savedPhotoRef` would claim a `localStorage` entry that
+        // doesn't exist.
+        remoteUrlRef.current = dataUrl;
+        setPhoto({
+          image,
+          naturalWidth: image.naturalWidth,
+          naturalHeight: image.naturalHeight,
+          dataUrl,
+        });
+      } catch {
+        if (!cancelled) setError("Couldn't load the photo saved with this scheme.");
+      } finally {
+        if (!cancelled) setPhotoBusy(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [remoteUserId, remotePath]);
 
   /**
    * The anchors to actually draw, keyed by *current* element index. Derived
@@ -282,10 +495,40 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
     }
   }, []);
 
+  /**
+   * Remove the photo, everywhere it is.
+   *
+   * Deletion lives here rather than being inferred by the save effects from
+   * `photo === null`, because that state means three different things: the user
+   * removed it, the restore hasn't finished decoding it yet, and the scope just
+   * changed to a different scheme. Only the first is a removal, and treating the
+   * other two as one is how a stored photo got deleted a frame after mount —
+   * normally rewritten when the decode landed, but gone for good if the studio
+   * closed first or the decode failed.
+   *
+   * A user action is unambiguous, so it is the only thing that deletes.
+   */
   const clearPhoto = useCallback(() => {
     setPhoto(null);
     setFraming(defaultFraming());
-  }, []);
+    savedPhotoRef.current = null;
+    remoteUrlRef.current = null;
+
+    remove(keysFor(scope).photo);
+    // Otherwise the restore falls back to the pre-scoping key next time and
+    // hands back the photo that was just removed.
+    if (scope === LOCAL_POSTER_SCOPE) clearLegacyPhoto();
+
+    const bound = remoteRef.current;
+    const path = loadedPathRef.current ?? bound?.photoPath ?? null;
+    loadedPathRef.current = null;
+    if (!bound || !path) return;
+    setPhotoBusy(true);
+    void deleteSchemePhoto(path)
+      .then(() => bound.onPhotoPath(null))
+      .catch(() => setError("Couldn't remove that photo from your account."))
+      .finally(() => setPhotoBusy(false));
+  }, [scope]);
 
   // Autosave, in two halves keyed separately.
   //
@@ -310,18 +553,99 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
     }
   }, [framing, storedAnchors, storedNames, options, mounted, scope]);
 
+  /**
+   * Push the photo to Storage — upload on change, delete on clear.
+   *
+   * The local ladder below still runs for a signed-out or unbound document; this
+   * effect owns the photo whenever there's a row to hang it on, and returns
+   * before that ladder can also write a copy into `localStorage`.
+   */
+  useEffect(() => {
+    if (!mounted || !remoteUserId || !remoteSchemeId) return;
+
+    // Nothing to do until the fetch effect has told us what the row already
+    // holds — uploading first would race it and could push the local leftover
+    // over a photo added on another device.
+    if (remotePath && loadedPathRef.current !== remotePath) return;
+
+    // Removal is `clearPhoto`'s job, not this effect's — see there for why.
+    if (!photo) return;
+    if (remoteUrlRef.current === photo.dataUrl) return;
+
+    let cancelled = false;
+    // Claim it before the round trip: without this the effect re-runs on the
+    // `photoBusy` render and starts a second upload of the same bytes.
+    remoteUrlRef.current = photo.dataUrl;
+    setPhotoBusy(true);
+
+    void (async () => {
+      try {
+        // Same shape as the quota ladder below, against the bucket's size limit
+        // rather than localStorage's: the working image, then a smaller
+        // re-encode. Thunks so the fallback's canvas pass only happens if the
+        // first one is actually too big.
+        const candidates = [
+          () => photo.dataUrl,
+          () => downscale(photo.image, FALLBACK_MAX, 0.8),
+        ];
+        let blob: Blob | null = null;
+        for (const candidate of candidates) {
+          const value = candidate();
+          const encoded = value ? dataUrlToBlob(value) : null;
+          if (encoded && encoded.size <= MAX_UPLOAD_BYTES) {
+            blob = encoded;
+            break;
+          }
+        }
+        if (!blob) {
+          setError("This photo is too large to save to your account.");
+          return;
+        }
+        const path = await uploadSchemePhoto(remoteUserId, remoteSchemeId, blob);
+        if (cancelled) return;
+        loadedPathRef.current = path;
+        remoteRef.current?.onPhotoPath(path);
+      } catch {
+        if (cancelled) return;
+        // Let the next change retry, and say so — the photo is still in memory,
+        // so the studio keeps working, but it won't be there tomorrow.
+        remoteUrlRef.current = null;
+        setError("Couldn't save that photo to your account. It'll work until you reload.");
+      } finally {
+        if (!cancelled) setPhotoBusy(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [photo, mounted, remoteUserId, remoteSchemeId, remotePath]);
+
   // The photo is the only part that can realistically blow the ~5 MB quota, so
   // it degrades on its own: the working image, then a smaller re-encode, then
   // nothing. Because it lives in its own key, a photo that won't fit can never
   // cost the user their anchors.
+  //
+  // Skipped entirely in remote mode — the effect above owns the photo there, and
+  // keeping a second megabyte-sized copy in `localStorage` would spend the quota
+  // on a cache nothing reads.
+  //
+  // It only ever *writes*. Removal is `clearPhoto`'s — see there.
   useEffect(() => {
     if (!mounted) return;
     const key = keysFor(scope).photo;
-    if (!photo) {
-      remove(key);
-      savedPhotoRef.current = null;
+    const legacy = scope === LOCAL_POSTER_SCOPE;
+    if (remoteUserId) {
+      // Drop the pre-migration leftovers, but only once the row actually points
+      // at an object — until the upload lands, those local copies are still the
+      // only ones there are.
+      if (remotePath) {
+        remove(key);
+        if (legacy) clearLegacyPhoto();
+      }
       return;
     }
+    if (!photo) return;
     if (savedPhotoRef.current === photo.dataUrl) return;
 
     // Thunks, not values: an array literal evaluates both entries up front, so
@@ -337,6 +661,9 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
       try {
         localStorage.setItem(key, value);
         savedPhotoRef.current = photo.dataUrl;
+        // Safely in the scoped key now, so the old copy is pure cost — and on a
+        // big photo, enough of the quota to be why the next write fails.
+        if (legacy) clearLegacyPhoto();
         return;
       } catch {
         /* quota — fall through to the smaller re-encode */
@@ -353,7 +680,7 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
     // above means it runs once per photo, not per render.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setError("This photo is too large to keep for next time. It'll work until you reload.");
-  }, [photo, mounted, scope]);
+  }, [photo, mounted, scope, remoteUserId, remotePath]);
 
   return {
     photo,
@@ -369,5 +696,8 @@ export function usePoster(elements: SchemeElement[], scope: string = LOCAL_POSTE
     clearPhoto,
     error,
     mounted,
+    photoBusy,
+    /** Whether the photo is being kept in the user's account rather than the browser. */
+    photoRemote: Boolean(remoteUserId),
   };
 }

@@ -1,22 +1,47 @@
 /**
- * Layout maths for the shareable "poster" image — a 4:5 portrait card showing a
- * photo of the painted model with a callout per scheme element, each callout
- * holding that element's banded ramp strip and its paint names, joined to a
- * point on the model by a leader line.
+ * Layout maths for the shareable "poster" image — a card showing a photo of the
+ * painted model with a callout per scheme element, each callout holding that
+ * element's banded ramp strip and its paint names, joined to a point on the
+ * model by a leader line.
  *
  * This module is **pure**: no canvas, no DOM, no React, so the packing rules can
  * be unit-tested in node (see `test/poster.test.ts`). The actual pixels are
  * painted by `./poster-draw`, which consumes the `PosterLayout` produced here.
  *
- * Geometry is expressed in *logical* poster pixels (1080 × 1350). The renderer
- * multiplies everything by a `scale` factor — 2 for export, devicePixelRatio for
- * the on-screen preview — so one set of numbers drives both.
+ * Geometry is expressed in *logical* poster pixels. The renderer multiplies
+ * everything by a `scale` factor — 2 for export, devicePixelRatio for the
+ * on-screen preview — so one set of numbers drives both.
  */
 import type { SchemeElement, SchemePaint } from "./types";
 import { barModel, type Overlay, type Seg } from "./bars";
 
-/** Logical poster size. 4:5 — the best-performing Instagram feed aspect. */
-export const POSTER_SIZE = { width: 1080, height: 1350 } as const;
+export type PosterFormatName = "4:5" | "1:1" | "9:16";
+
+/**
+ * The aspects the studio can export.
+ *
+ * **Every format is 1080 logical px wide**, and that is load-bearing rather than
+ * incidental: `COLUMN_W` and `MARGIN` are horizontal constants, so a narrower
+ * poster would squeeze the two callout columns onto the model instead of beside
+ * it. Changing the height changes only how tall the packing band is, which
+ * `layoutPoster` already degrades against.
+ */
+export const POSTER_FORMATS: Record<
+  PosterFormatName,
+  { width: number; height: number; label: string }
+> = {
+  "4:5": { width: 1080, height: 1350, label: "Feed" },
+  "1:1": { width: 1080, height: 1080, label: "Square" },
+  "9:16": { width: 1080, height: 1920, label: "Story" },
+};
+
+/**
+ * Default logical poster size. 4:5 — the best-performing Instagram feed aspect,
+ * and what the studio opens on. Prefer reading `layout.width`/`layout.height`:
+ * a renderer or hit-test that reaches for this constant instead silently pins
+ * itself to 4:5 and misplaces everything on the other two formats.
+ */
+export const POSTER_SIZE = POSTER_FORMATS["4:5"];
 
 /** Safe margin kept clear of content on all four sides. */
 export const MARGIN = 56;
@@ -188,6 +213,12 @@ export interface PosterOptions {
   /** Append a small role label ("BASE", "WASH") after each paint. */
   showRoles: boolean;
   theme: PosterThemeName;
+  /**
+   * Which aspect to export. Part of the options rather than a separate piece of
+   * studio state so it persists with the rest of them, and so the `layout` memo
+   * that already depends on `options` picks a format change up for free.
+   */
+  format: PosterFormatName;
 }
 
 export const defaultPosterOptions = (): PosterOptions => ({
@@ -195,6 +226,7 @@ export const defaultPosterOptions = (): PosterOptions => ({
   showBrands: true,
   showRoles: false,
   theme: "dark",
+  format: "4:5",
 });
 
 export type PosterThemeName = "dark" | "light";
@@ -368,8 +400,8 @@ export function layoutPoster({
   anchors,
   photo,
   options = defaultPosterOptions(),
-  width = POSTER_SIZE.width,
-  height = POSTER_SIZE.height,
+  width = POSTER_FORMATS[options.format ?? "4:5"].width,
+  height = POSTER_FORMATS[options.format ?? "4:5"].height,
 }: {
   elements: SchemeElement[];
   anchors: PosterAnchors;
@@ -380,8 +412,12 @@ export function layoutPoster({
    * `showBrands` makes every paint row taller, and if the packer and the renderer
    * were told separately they could disagree — reserving one-line space while
    * drawing two-line rows, which silently crushes the text together.
+   *
+   * `format` is here for the same reason, and `width`/`height` default off it:
+   * a caller that picks a format but forgets to resize packs a 9:16 scheme into
+   * a 4:5 band and reports phantom `no-space` omissions.
    */
-  options?: Pick<PosterOptions, "showBrands">;
+  options?: Pick<PosterOptions, "showBrands"> & Partial<Pick<PosterOptions, "format">>;
   width?: number;
   height?: number;
 }): PosterLayout {

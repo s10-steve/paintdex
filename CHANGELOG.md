@@ -5,6 +5,62 @@ All notable changes to Paintdex are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+Finishes the two social-sharing items left on the roadmap after the share-image
+studio shipped.
+
+**This needs database changes applied before the update goes live** — run
+`0002-v0.13.0-migration-tracking.sql`, `0003-v0.13.0-scheme-photos.sql` and
+`0004-v0.13.0-fix-published-photo-read.sql` in the Supabase SQL editor, in that
+order, running each one's `-- Verify` block, *then* deploy. They add the photo
+bucket and change what the share page's lookup returns, and the code has no
+fallback for either.
+
+### Added
+
+- **Your model photo is saved with the scheme.** Signed in, the photo you add in
+  the share-image studio now goes with your account rather than staying in one
+  browser: open the same scheme on another device and the photo is already there.
+  Signed out, nothing changes — the photo stays on your device and is never
+  uploaded. Note the photo is all that travels for now: where you placed the
+  labels, and how you framed and cropped the shot, are still stored per browser,
+  so you'd re-place those on a second device.
+- **A shared scheme's page shows the photo.** If you've added one and published
+  the scheme, `/scheme/<slug>` shows your model beside the colours. It's visible
+  only while the scheme is published; unpublish and it's private again
+  immediately. It's the photo itself, not the labelled share image.
+- **Three shapes for the share image.** 4:5 for the feed as before, plus 1:1 for
+  a square post and 9:16 for a story. A shorter image has less room for labels,
+  and the studio lists anything that no longer fits, as it already did.
+
+### Changed
+
+- The **Create shareable image** button says **Edit shareable image** once the
+  scheme has one. "Create" promised a blank studio and then opened onto your own
+  model.
+- On a shared scheme's page, the photo and the colour bars now sit **side by side
+  on a desktop screen** rather than stacked, which pushed the colours below the
+  fold. Still stacked on narrower screens.
+- Removing a photo, or deleting a scheme, now removes the stored image too.
+- The studio's note about where your photo goes now says which of the two it is,
+  rather than always claiming the photo never leaves your device.
+
+### Development
+
+Not user-facing, but the reason the above is safe to ship.
+
+- **A staging database, separate from production.** Development and PR previews
+  ran against the same Supabase project as the live site, so testing a schema
+  change meant making it to production first. There are now two projects, wired
+  to Vercel's Production and Preview scopes respectively.
+  [`supabase/README.md`](supabase/README.md) is the runbook for setting the
+  second one up and for how a change reaches production.
+- **Applied migrations are recorded.** A `schema_migrations` table each migration
+  writes its own filename into, so "is production up to date?" is a query rather
+  than a memory. That question had no answer at all when v0.12.0's migration
+  silently rolled back.
+
 ## [0.12.0] - 2026-08-02
 
 A code-review pass over everything added since accounts landed, rather than a

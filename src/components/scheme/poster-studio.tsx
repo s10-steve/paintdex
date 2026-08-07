@@ -2,20 +2,25 @@
 
 /**
  * The share-image studio: a modal over the visualiser that turns the current
- * scheme plus one photo of the model into a 4:5 PNG for social media.
+ * scheme plus one photo of the model into a PNG for social media, in whichever
+ * of `POSTER_FORMATS` the user picks.
  *
- * Everything happens in the browser — the photo is never uploaded. State lives
+ * All the *rendering* happens in the browser: the composite is never built on a
+ * server, and for a signed-out editor the photo never leaves the device at all.
+ * Signed in on a saved scheme, the photo itself is kept in the user's account so
+ * it follows them between devices — see `usePoster`'s `remote` mode. State lives
  * in `usePoster`; the pixels come from `drawPoster`, shared with `PosterCanvas`
  * so the preview and the export cannot diverge.
  */
 import { useCallback, useMemo, useRef, useState } from "react";
 import { PosterCanvas } from "./poster-canvas";
-import { usePoster } from "@/hooks/use-poster";
+import { usePoster, type PosterRemote } from "@/hooks/use-poster";
 import { useModalDialog } from "@/hooks/use-modal-dialog";
 import {
   layoutPoster,
-  POSTER_SIZE,
+  POSTER_FORMATS,
   type PhotoFraming,
+  type PosterFormatName,
   type PosterOmission,
   type PosterSide,
 } from "@/lib/scheme/poster";
@@ -23,8 +28,11 @@ import { drawPoster, resolveFontFamily, type PosterPhoto } from "@/lib/scheme/po
 import { schemeSlug } from "@/lib/scheme/io";
 import type { Scheme } from "@/lib/scheme/types";
 
-/** Logical → exported pixels. 2 gives 2160×2700, comfortably above Instagram's 1080. */
+/** Logical → exported pixels. 2 gives 2160px across, comfortably above Instagram's 1080. */
 const EXPORT_SCALE = 2;
+
+/** The aspect picker's options, in the order they appear. */
+const FORMAT_ORDER: PosterFormatName[] = ["4:5", "1:1", "9:16"];
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
@@ -39,11 +47,14 @@ const OMISSION_TEXT: Record<PosterOmission["reason"], string> = {
 export function PosterStudio({
   scheme,
   scope,
+  remote,
   onClose,
 }: {
   scheme: Scheme;
   /** Which scheme's poster state to load — see `usePoster`. */
   scope?: string;
+  /** Where the photo is kept: the user's account, or null for this browser only. */
+  remote?: PosterRemote | null;
   onClose: () => void;
 }) {
   const {
@@ -59,7 +70,9 @@ export function PosterStudio({
     loadPhoto,
     clearPhoto,
     error,
-  } = usePoster(scheme.elements, scope);
+    photoBusy,
+    photoRemote,
+  } = usePoster(scheme.elements, scope, remote);
 
   const [armed, setArmed] = useState<number | null>(null);
   const [highlight, setHighlight] = useState<number | null>(null);
@@ -106,9 +119,11 @@ export function PosterStudio({
         // Anchors are meaningless without a photo to hang them on.
         anchors: photoFraming ? anchors : {},
         photo: photoFraming,
-        // Showing manufacturers makes every paint row taller, so the packer
-        // needs the options too — it derives the row pitch the renderer reads
-        // back off `layout.rowHeight`.
+        // Showing manufacturers makes every paint row taller, and the format
+        // sets the poster's size, so the packer needs the options whole — it
+        // derives both the row pitch the renderer reads back off
+        // `layout.rowHeight` and the `width`/`height` everything else measures
+        // against.
         options,
       }),
     [scheme.elements, anchors, photoFraming, options],
@@ -129,8 +144,11 @@ export function PosterStudio({
       // exports in the platform sans instead.
       await document.fonts.ready;
       const canvas = document.createElement("canvas");
-      canvas.width = POSTER_SIZE.width * EXPORT_SCALE;
-      canvas.height = POSTER_SIZE.height * EXPORT_SCALE;
+      // From the layout, not the format: the two agree, but reading the layout
+      // means the canvas can never be allocated at one aspect while `drawPoster`
+      // — which measures everything off `layout` — draws at another.
+      canvas.width = layout.width * EXPORT_SCALE;
+      canvas.height = layout.height * EXPORT_SCALE;
       const ctx = canvas.getContext("2d");
       if (!ctx) {
         setDownloadError("Couldn't render the image in this browser.");
@@ -221,12 +239,14 @@ export function PosterStudio({
               type="button"
               onClick={() => fileRef.current?.click()}
               className="flex w-full flex-col items-center justify-center gap-2 rounded-lg border-[1.5px] border-dashed border-input px-6 text-center transition-colors hover:border-primary hover:bg-accent"
-              style={{ aspectRatio: `${POSTER_SIZE.width} / ${POSTER_SIZE.height}` }}
+              style={{ aspectRatio: `${layout.width} / ${layout.height}` }}
             >
-              <span className="text-sm font-medium">Upload a photo of your model</span>
+              <span className="text-sm font-medium">Add a photo of your model</span>
               <span className="max-w-[34ch] text-xs text-muted-foreground">
-                A plain, evenly lit background works best. The photo stays on your device — it
-                is never uploaded.
+                A plain, evenly lit background works best.{" "}
+                {photoRemote
+                  ? "It's saved to your account so it follows you between devices, and is only visible to other people if you publish this scheme."
+                  : "The photo stays on your device — it is never uploaded."}
               </span>
             </button>
           )}
@@ -273,6 +293,11 @@ export function PosterStudio({
                   Remove
                 </button>
               )}
+              {/* Polite, not an alert: the studio stays usable throughout, so
+                  this is progress rather than something to interrupt for. */}
+              <span className="text-xs text-muted-foreground" aria-live="polite">
+                {photoBusy ? "Syncing photo…" : ""}
+              </span>
             </div>
             {error && (
               <p className="text-xs text-red-600 dark:text-red-400" role="alert">
@@ -303,6 +328,47 @@ export function PosterStudio({
                 </button>
               </div>
             )}
+          </section>
+
+          {/* A radiogroup rather than three toggle buttons: these are mutually
+              exclusive, so arrow keys should move between them and only the
+              selected one should be a tab stop. */}
+          <section
+            className="space-y-2 border-t border-border pt-4"
+            role="radiogroup"
+            aria-label="Image shape"
+          >
+            <h3 className="text-xs font-medium">Shape</h3>
+            <div className="flex overflow-hidden rounded-md border border-border">
+              {FORMAT_ORDER.map((name) => {
+                const format = POSTER_FORMATS[name];
+                const selected = options.format === name;
+                return (
+                  <button
+                    key={name}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    // The visible text is two short lines, and a screen reader
+                    // would run them together as "4:5 Feed". Say what it's for.
+                    aria-label={`${name} — ${format.label.toLowerCase()} post`}
+                    onClick={() => setOptions((o) => ({ ...o, format: name }))}
+                    className={`flex-1 px-2 py-1.5 text-center text-[11px] leading-tight transition-colors ${
+                      selected
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <span className="block font-medium">{name}</span>
+                    <span className="block opacity-75">{format.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              A shorter image has less room for labels — anything that no longer fits is listed
+              below.
+            </p>
           </section>
 
           <section className="space-y-2 border-t border-border pt-4">
@@ -466,7 +532,7 @@ export function PosterStudio({
               </p>
             ) : (
               <p className="mt-1.5 text-center text-[11px] text-muted-foreground">
-                {POSTER_SIZE.width * EXPORT_SCALE} × {POSTER_SIZE.height * EXPORT_SCALE} · 4:5
+                {layout.width * EXPORT_SCALE} × {layout.height * EXPORT_SCALE} · {options.format}
               </p>
             )}
           </div>

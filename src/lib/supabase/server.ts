@@ -57,11 +57,13 @@ export async function getPublicSchemeBySlug(
     // the site returned "Scheme not available" with nothing anywhere saying why.
     // This line is the difference between reading the answer off the Vercel
     // logs and guessing at it.
-    console.error("[scheme] get_public_scheme failed", {
-      slug,
-      code: error.code,
-      message: error.message,
-    });
+    //
+    // Interpolated into one string rather than passed as an object: Next's dev
+    // overlay renders a trailing object argument as `{}`, which turns a
+    // carefully-assembled diagnostic into no diagnostic at all.
+    console.error(
+      `[scheme] get_public_scheme failed for "${slug}" (${error.code}): ${error.message}`,
+    );
     return null;
   }
   return data?.[0] ?? null;
