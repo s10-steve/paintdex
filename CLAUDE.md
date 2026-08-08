@@ -741,26 +741,31 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   toggle in the *same grid cell* as the card's anchor (`col-start-1 row-start-1`,
   plus `self-start justify-self-end` for the corner). It needs no containing
   block and no percentage height, which is reason enough to keep it.
-- **Three "Safari bugs" have been reported against this one overlay, and none of
-  them has ever been reproduced in a WebKit engine.** The first two were
-  diagnosed from a Chromium render plus a screenshot, and the fixes they
-  motivated — `relative` off the `<li>`, then abandoning `position` entirely —
-  did not make the symptom go away. This file used to assert, as fact, that
-  WebKit ignores `position: relative` on a list item and drops `right` while
-  honouring `top`. **Treat both as unproven.** What is established:
+- **Three "Safari bugs" were reported against this one overlay. All three were a
+  stale dev stylesheet, and none was a WebKit bug.** This file used to assert, as
+  fact, that WebKit ignores `position: relative` on a list item and drops `right`
+  while honouring `top`. Both claims were wrong — invented to explain a
+  screenshot, then written down as established. The two fixes they motivated
+  (`relative` off the `<li>`, then abandoning `position` entirely) were churn
+  against a phantom, and neither made the symptom go away. What settled it:
   - A fresh `npm run build` emits all four placement utilities correctly
-    (`grid-column-start:1`, `grid-row-start:1`), and Chromium lays the shipped
-    markup out correctly with them.
-  - Every class involved in the third report — unprefixed `col-start-1`,
-    `row-start-1`, `self-start`, `justify-self-end` — was **new to the generated
-    stylesheet** in the commit that introduced it. Earlier uses were all
-    variant-prefixed (`lg:col-start-1`, `md:self-start`), which emit different
-    selectors, so they did not put the bare rules in the CSS. A rendering bug
-    cannot correlate with which class names are new to this repo; **a stale
-    stylesheet correlates with it exactly**, and the reports come from
-    `npm run dev`, where Tailwind v4 regenerates CSS over HMR.
-  - So before changing any markup, hard-reload (Cmd-Opt-R, or Develop → Empty
-    Caches) or restart `npm run dev`, and re-check.
+    (`grid-column-start:1`, `grid-row-start:1`), and both Chromium **and Safari**
+    lay the shipped markup out correctly with them.
+  - Every class in the third report — unprefixed `col-start-1`, `row-start-1`,
+    `self-start`, `justify-self-end` — was **new to the generated stylesheet** in
+    the commit that introduced it. Earlier uses were all variant-prefixed
+    (`lg:col-start-1`, `md:self-start`), which emit different selectors, so they
+    did not put the bare rules in the CSS. With those four rules missing, both
+    children auto-place: the anchor into implicit row 1, the toggle into row 2,
+    stretched to full width with its icons at the left — exactly the reported
+    symptom. A rendering bug cannot correlate with which class names are new to
+    this repo; **a stale stylesheet correlates with it exactly.**
+  - Reinstalling and restarting `npm run dev` fixed it, with no markup change.
+- **So a Safari-only styling report starts with the stylesheet, not the markup.**
+  Restart `npm run dev` and hard-reload (Cmd-Opt-R, or Develop → Empty Caches)
+  before believing a screenshot — Tailwind v4 regenerates CSS over HMR, and a
+  newly-used utility is the kind that goes missing. Three reports and two commits
+  went the other way round.
 - **Reproduce it in isolation before believing it.** The way to settle one of
   these in seconds is a standalone HTML file: the built stylesheet in a `<style>`
   tag (inline, so `cssRules` is readable and staleness is impossible), the card
