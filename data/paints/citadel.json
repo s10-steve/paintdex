@@ -17,11 +17,17 @@
     "type": "base",
     "hex": "#000000",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-abaddon-black-air",
+    "name": "Abaddon Black",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#000000",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-adeptus-battlegrey",
@@ -282,11 +288,17 @@
     "type": "base",
     "hex": "#FBB81C",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-averland-sunset-air",
+    "name": "Averland Sunset",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#FBB81C",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-baal-red-wash",
@@ -336,11 +348,17 @@
     "type": "layer",
     "hex": "#875408",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-balor-brown-air",
+    "name": "Balor Brown",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#875408",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-balthasar-gold",
@@ -351,11 +369,18 @@
     "hex": "#A77353",
     "code": null,
     "discontinued": false,
-    "metallic": true,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "metallic": true
+  },
+  {
+    "id": "citadel-balthasar-gold-air",
+    "name": "Balthasar Gold",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#A77353",
+    "code": null,
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-baneblade-brown",
@@ -365,11 +390,17 @@
     "type": "layer",
     "hex": "#8F7C68",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-baneblade-brown-air",
+    "name": "Baneblade Brown",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#8F7C68",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-barak-nar-burgundy",
@@ -644,11 +675,17 @@
     "type": "base",
     "hex": "#366699",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-caledor-sky-air",
+    "name": "Caledor Sky",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#366699",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-calgar-blue",
@@ -658,11 +695,17 @@
     "type": "layer",
     "hex": "#2A497F",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-calgar-blue-air",
+    "name": "Calgar Blue",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#2A497F",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-caliban-green",
@@ -672,11 +715,17 @@
     "type": "base",
     "hex": "#003D15",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-caliban-green-air",
+    "name": "Caliban Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#003D15",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-calth-blue-clear",
@@ -747,11 +796,17 @@
     "type": "base",
     "hex": "#264715",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-castellan-green-air",
+    "name": "Castellan Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#264715",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-castellax-bronze",
@@ -761,11 +816,17 @@
     "type": "layer",
     "hex": "#C68351",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-castellax-bronze-air",
+    "name": "Castellax Bronze",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#C68351",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-catachan-fleshtone",
@@ -916,11 +977,17 @@
     "type": "base",
     "hex": "#FFFFFF",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Base",
-      "Spray"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-corax-white-spray",
+    "name": "Corax White",
+    "brand": "Citadel",
+    "range": "Spray",
+    "type": "spray",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-corvus-black",
@@ -930,11 +997,17 @@
     "type": "base",
     "hex": "#171314",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-corvus-black-air",
+    "name": "Corvus Black",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#171314",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-creed-camo",
@@ -1044,12 +1117,27 @@
     "type": "layer",
     "hex": "#697068",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Dry",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-dawnstone-air",
+    "name": "Dawnstone",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#697068",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-dawnstone-dry",
+    "name": "Dawnstone",
+    "brand": "Citadel",
+    "range": "Dry",
+    "type": "dry",
+    "hex": "#697068",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-death-guard-green",
@@ -1079,11 +1167,17 @@
     "type": "base",
     "hex": "#3D4539",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-death-korps-drab-air",
+    "name": "Death Korps Drab",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#3D4539",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-deathclaw-brown",
@@ -1093,11 +1187,17 @@
     "type": "layer",
     "hex": "#AF634F",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-deathclaw-brown-air",
+    "name": "Deathclaw Brown",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#AF634F",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-deathshroud-clear",
@@ -1117,11 +1217,17 @@
     "type": "base",
     "hex": "#556229",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-deathworld-forest-air",
+    "name": "Deathworld Forest",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#556229",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-dechala-lilac",
@@ -1221,11 +1327,17 @@
     "type": "base",
     "hex": "#2B2A24",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-dryad-bark-air",
+    "name": "Dryad Bark",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#2B2A24",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-dwarf-bronze",
@@ -1286,11 +1398,17 @@
     "type": "layer",
     "hex": "#6B8C37",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-elysian-green-air",
+    "name": "Elysian Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#6B8C37",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-emperor-children",
@@ -1340,11 +1458,17 @@
     "type": "layer",
     "hex": "#C01411",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-evil-sunz-scarlet-air",
+    "name": "Evil Sunz Scarlet",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#C01411",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-fenrisian-grey",
@@ -1354,11 +1478,17 @@
     "type": "layer",
     "hex": "#6D94B3",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-fenrisian-grey-air",
+    "name": "Fenrisian Grey",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#6D94B3",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-fenrys-grey",
@@ -1398,11 +1528,17 @@
     "type": "layer",
     "hex": "#FFF300",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-flash-gitz-yellow-air",
+    "name": "Flash Gitz Yellow",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#FFF300",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-flayed-one-flesh",
@@ -1493,11 +1629,17 @@
     "type": "base",
     "hex": "#4B213C",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-gal-vorbak-red-air",
+    "name": "Gal Vorbak Red",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#4B213C",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-gauss-blaster-green",
@@ -1527,11 +1669,17 @@
     "type": "layer",
     "hex": "#7658A5",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-genestealer-purple-air",
+    "name": "Genestealer Purple",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#7658A5",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-ghostly-grey",
@@ -1631,11 +1779,17 @@
     "type": "base",
     "hex": "#B0BDC6",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-grey-knights-steel-air",
+    "name": "Grey Knights Steel",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#B0BDC6",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-grey-seer",
@@ -1645,11 +1799,17 @@
     "type": "base",
     "hex": "#A2A5A7",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Base",
-      "Spray"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-grey-seer-spray",
+    "name": "Grey Seer",
+    "brand": "Citadel",
+    "range": "Spray",
+    "type": "spray",
+    "hex": "#A2A5A7",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-gryph-charger-grey",
@@ -1770,11 +1930,17 @@
     "type": "layer",
     "hex": "#4C78AF",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Dry",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-hoeth-blue-dry",
+    "name": "Hoeth Blue",
+    "brand": "Citadel",
+    "range": "Dry",
+    "type": "dry",
+    "hex": "#4C78AF",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-hormagaunt-purple",
@@ -1845,11 +2011,18 @@
     "hex": "#B2A79F",
     "code": null,
     "discontinued": false,
-    "metallic": true,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "metallic": true
+  },
+  {
+    "id": "citadel-iron-hands-steel-air",
+    "name": "Iron Hands Steel",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#B2A79F",
+    "code": null,
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-iron-warriors",
@@ -1870,11 +2043,18 @@
     "hex": "#899092",
     "code": null,
     "discontinued": false,
-    "metallic": true,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "metallic": true
+  },
+  {
+    "id": "citadel-ironbreaker-air",
+    "name": "Ironbreaker",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#899092",
+    "code": null,
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-iyanden-darksun",
@@ -1934,11 +2114,17 @@
     "type": "layer",
     "hex": "#8869AE",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-kakophoni-purple-air",
+    "name": "Kakophoni Purple",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#8869AE",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-kantor-blue",
@@ -1948,11 +2134,17 @@
     "type": "base",
     "hex": "#02134E",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-kantor-blue-air",
+    "name": "Kantor Blue",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#02134E",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-karak-stone",
@@ -1962,11 +2154,17 @@
     "type": "layer",
     "hex": "#B7945C",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-karak-stone-air",
+    "name": "Karak Stone",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#B7945C",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-khemri-brown",
@@ -1986,11 +2184,17 @@
     "type": "base",
     "hex": "#650001",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-khorne-red-air",
+    "name": "Khorne Red",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#650001",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-kindleflame",
@@ -2010,11 +2214,17 @@
     "type": "layer",
     "hex": "#D1A570",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-kislev-flesh-air",
+    "name": "Kislev Flesh",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#D1A570",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-knarloc-green",
@@ -2106,11 +2316,18 @@
     "hex": "#969696",
     "code": null,
     "discontinued": false,
-    "metallic": true,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "metallic": true
+  },
+  {
+    "id": "citadel-leadbelcher-base-air",
+    "name": "Leadbelcher",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#969696",
+    "code": null,
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-leprous-brown",
@@ -2201,11 +2418,17 @@
     "type": "layer",
     "hex": "#2C9BCC",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-lothern-blue-air",
+    "name": "Lothern Blue",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#2C9BCC",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-lucius-lilac",
@@ -2235,11 +2458,17 @@
     "type": "base",
     "hex": "#002C2B",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-lupercal-green-air",
+    "name": "Lupercal Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#002C2B",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-macharius-solar-orange",
@@ -2269,11 +2498,17 @@
     "type": "base",
     "hex": "#0F3D7C",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-macragge-blue-base-air",
+    "name": "Macragge Blue",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#0F3D7C",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-magenta-ink",
@@ -2323,12 +2558,27 @@
     "type": "base",
     "hex": "#39484A",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base",
-      "Spray"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-mechanicus-standard-grey-air",
+    "name": "Mechanicus Standard Grey",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#39484A",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-mechanicus-standard-grey-spray",
+    "name": "Mechanicus Standard Grey",
+    "brand": "Citadel",
+    "range": "Spray",
+    "type": "spray",
+    "hex": "#39484A",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-mechrite-red",
@@ -2348,11 +2598,17 @@
     "type": "base",
     "hex": "#960C09",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-mephiston-red-air",
+    "name": "Mephiston Red",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#960C09",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-mephiston-red-spray",
@@ -2403,11 +2659,17 @@
     "type": "layer",
     "hex": "#3DAF44",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-moot-green-air",
+    "name": "Moot Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#3DAF44",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-mordant-earth",
@@ -2457,11 +2719,17 @@
     "type": "base",
     "hex": "#490F06",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-mournfang-brown-air",
+    "name": "Mournfang Brown",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#490F06",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-munitorum-varnish",
@@ -2542,11 +2810,17 @@
     "type": "base",
     "hex": "#002B5C",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-night-lords-blue-air",
+    "name": "Night Lords Blue",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#002B5C",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-nighthaunt-gloom",
@@ -2576,11 +2850,17 @@
     "type": "base",
     "hex": "#162A29",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-nocturne-green-air",
+    "name": "Nocturne Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#162A29",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-nuln-oil",
@@ -2620,11 +2900,17 @@
     "type": "layer",
     "hex": "#7E975E",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Dry",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-nurgling-green-dry",
+    "name": "Nurgling Green",
+    "brand": "Citadel",
+    "range": "Dry",
+    "type": "dry",
+    "hex": "#7E975E",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-ogryn-camo",
@@ -2634,11 +2920,17 @@
     "type": "layer",
     "hex": "#96A648",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-ogryn-camo-air",
+    "name": "Ogryn Camo",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#96A648",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-ogryn-flesh-wash",
@@ -2708,11 +3000,17 @@
     "type": "layer",
     "hex": "#FFE200",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-phalanx-yellow-air",
+    "name": "Phalanx Yellow",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#FFE200",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-phoenician-purple",
@@ -2722,11 +3020,17 @@
     "type": "base",
     "hex": "#440052",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-phoenician-purple-air",
+    "name": "Phoenician Purple",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#440052",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-pink-horror",
@@ -2899,11 +3203,18 @@
     "hex": "#C2C8CC",
     "code": null,
     "discontinued": false,
-    "metallic": true,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "metallic": true
+  },
+  {
+    "id": "citadel-runefang-steel-air",
+    "name": "Runefang Steel",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#C2C8CC",
+    "code": null,
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-runelord-brass",
@@ -2923,11 +3234,17 @@
     "type": "layer",
     "hex": "#507085",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-russ-grey-air",
+    "name": "Russ Grey",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#507085",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-ryza-rust",
@@ -3149,11 +3466,17 @@
     "type": "layer",
     "hex": "#8B8893",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Dry",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-slaanesh-grey-dry",
+    "name": "Slaanesh Grey",
+    "brand": "Citadel",
+    "range": "Dry",
+    "type": "dry",
+    "hex": "#8B8893",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-smelly-primer",
@@ -3203,11 +3526,17 @@
     "type": "layer",
     "hex": "#00545E",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-sons-of-horus-green-air",
+    "name": "Sons of Horus Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#00545E",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-sotek-green",
@@ -3277,11 +3606,17 @@
     "type": "base",
     "hex": "#584E2D",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-steel-legion-drab-air",
+    "name": "Steel Legion Drab",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#584E2D",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-stegadon-scale-green",
@@ -3372,11 +3707,17 @@
     "type": "layer",
     "hex": "#597F1C",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-straken-green-air",
+    "name": "Straken Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#597F1C",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-sunburst-yellow",
@@ -3396,11 +3737,17 @@
     "type": "layer",
     "hex": "#17A166",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-sybarite-green-air",
+    "name": "Sybarite Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#17A166",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-sycorax-bronze",
@@ -3451,11 +3798,17 @@
     "type": "layer",
     "hex": "#A07409",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-tallarn-sand-air",
+    "name": "Tallarn Sand",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#A07409",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-tanned-flesh",
@@ -3475,11 +3828,17 @@
     "type": "layer",
     "hex": "#BC6B10",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-tau-light-ochre-air",
+    "name": "Tau Light Ochre",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#BC6B10",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-tausept-ochre",
@@ -3509,11 +3868,17 @@
     "type": "layer",
     "hex": "#239489",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-temple-guard-blue-air",
+    "name": "Temple Guard Blue",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#239489",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-tentacle-pink",
@@ -3533,11 +3898,17 @@
     "type": "dry",
     "hex": "#C8B79D",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Dry"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-terminatus-stone-air",
+    "name": "Terminatus Stone",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#C8B79D",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-terracotta",
@@ -3587,11 +3958,17 @@
     "type": "base",
     "hex": "#405B71",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-the-fang-air",
+    "name": "The Fang",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#405B71",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-thondia-brown",
@@ -3621,11 +3998,17 @@
     "type": "layer",
     "hex": "#396A70",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Dry",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-thunderhawk-blue-dry",
+    "name": "Thunderhawk Blue",
+    "brand": "Citadel",
+    "range": "Dry",
+    "type": "dry",
+    "hex": "#396A70",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-tin-bitz",
@@ -3646,11 +4029,17 @@
     "type": "layer",
     "hex": "#F16C23",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-troll-slayer-orange-air",
+    "name": "Troll Slayer Orange",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#F16C23",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-tuskgor-fur",
@@ -3660,11 +4049,17 @@
     "type": "layer",
     "hex": "#863231",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-tuskgor-fur-air",
+    "name": "Tuskgor Fur",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#863231",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-typhon-ash",
@@ -3704,11 +4099,17 @@
     "type": "layer",
     "hex": "#C4DDD5",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-ulthuan-grey-air",
+    "name": "Ulthuan Grey",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#C4DDD5",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-ultramarine-blue",
@@ -3758,11 +4159,17 @@
     "type": "layer",
     "hex": "#ABA173",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-ushabti-bone-air",
+    "name": "Ushabti Bone",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#ABA173",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-valdor-gold",
@@ -3852,11 +4259,17 @@
     "type": "layer",
     "hex": "#223C2E",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-vulkan-green-air",
+    "name": "Vulkan Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#223C2E",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-waaagh-flesh",
@@ -3876,11 +4289,17 @@
     "type": "layer",
     "hex": "#317E57",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-warboss-green-air",
+    "name": "Warboss Green",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#317E57",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-warlock-purple",
@@ -3971,11 +4390,17 @@
     "type": "layer",
     "hex": "#FFFFFF",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-white-scar-air",
+    "name": "White Scar",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-wild-rider-red",
@@ -3995,11 +4420,17 @@
     "type": "layer",
     "hex": "#620104",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Layer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-word-bearers-red-air",
+    "name": "Word Bearers Red",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#620104",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-wrack-white",
@@ -4019,11 +4450,17 @@
     "type": "base",
     "hex": "#DBD1B2",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Base",
-      "Spray"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-wraithbone-spray",
+    "name": "Wraithbone",
+    "brand": "Citadel",
+    "range": "Spray",
+    "type": "spray",
+    "hex": "#DBD1B2",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-wyldwood",
@@ -4053,11 +4490,17 @@
     "type": "base",
     "hex": "#6C4811",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-xv-88-air",
+    "name": "XV-88",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#6C4811",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-yriel-yellow",
@@ -4087,12 +4530,27 @@
     "type": "base",
     "hex": "#988E56",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Air",
-      "Base",
-      "Spray"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "citadel-zandri-dust-air",
+    "name": "Zandri Dust",
+    "brand": "Citadel",
+    "range": "Air",
+    "type": "air",
+    "hex": "#988E56",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "citadel-zandri-dust-spray",
+    "name": "Zandri Dust",
+    "brand": "Citadel",
+    "range": "Spray",
+    "type": "spray",
+    "hex": "#988E56",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "citadel-soulblight-grey",

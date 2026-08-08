@@ -1,7 +1,10 @@
 #!/usr/bin/env tsx
 /**
  * Validate every paint data file in `data/paints/` against the zod schema,
- * and enforce cross-file invariants (globally unique ids, unique brand+name+hex).
+ * and enforce cross-file invariants (globally unique ids, unique
+ * brand+name+hex+range — the range is part of the key because the same
+ * colour legitimately appears once per product line, e.g. a Base and an Air
+ * version of the same paint).
  *
  * Run: npm run validate:data
  * Exits non-zero on any problem, so it can gate CI and PRs.
@@ -51,7 +54,7 @@ function main() {
       } else {
         ids.set(p.id, file);
       }
-      const key = `${p.brand}|${p.name.toLowerCase()}|${p.hex}`;
+      const key = `${p.brand}|${p.name.toLowerCase()}|${p.hex}|${p.range}`;
       if (identity.has(key)) {
         errors.push(
           `${file}: duplicate paint ${p.brand} "${p.name}" ${p.hex} (also in ${identity.get(key)})`,
