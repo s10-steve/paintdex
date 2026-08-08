@@ -7,6 +7,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-08-08
+
+Paintdex can now remember which paints you actually own — and which ones you
+still need to buy — so a colour match tells you whether you can start painting
+tonight or need a trip to the shop first.
+
+This release needed a database change, applied before it went live:
+`0005-v0.14.0-paint-collection.sql`. It adds the table the whole feature reads
+and writes, and the code has no fallback for its absence.
+
+### Added
+
+- **My paints.** Keep track of the paints you own, and the ones you still want
+  to buy. Every paint now has ✓ and ☆ buttons — on the browse grid, on its own
+  page, and beside each alternative when you're comparing colours — so you can
+  add one without losing your place. A paint sits in one list or the other, so
+  moving something from the wishlist to the shelf is a single click.
+- **The My paints page** (`/my-paints`) shows both lists, and lets you move
+  paints between them or take them out. You can search it and filter it by
+  brand, type and colour family exactly like the main browse page, except that
+  the filters only offer the brands you actually own — no dead ends. Discontinued
+  paints stay visible here: this is a record of what you have, not a shopping
+  catalogue.
+- **Export your collection**, and import it back. It's plain JSON, so it's a
+  backup you hold yourself rather than one you have to trust us with. Importing
+  merges into what's already there by default; replacing it wholesale is offered
+  as the other branch of the same prompt.
+
+  The trade-off worth naming: unlike your schemes, this needs an account. A
+  collection is hundreds of small decisions, and leaving that in one browser's
+  storage is a worse promise than asking you to sign in.
+- **Add paints straight from the search box.** The ✓ and ☆ buttons now appear on
+  each suggestion as you type, so stocking your collection is one click per
+  paint instead of opening each one. These particular buttons are mouse-only —
+  the dropdown is a listbox, and putting real controls inside it would break it
+  for anyone using a screen reader — so from the keyboard, pick the paint and
+  use the buttons on its page as before.
+- **The buttons in the visualiser too.** Every layer of a scheme now shows
+  whether you own that paint, and lets you add it to your wishlist without
+  leaving the designer — which is the moment you actually discover you need it.
+  A layer that's a blend gets a button for each paint in it, including the
+  medium, since those are separate pots you have to own. Colours you typed in
+  by hand show nothing, as there's no catalogue paint behind them.
+- **The ✓ and ☆ buttons have tooltips**, so you don't have to guess which is
+  which.
+- **A panel on the homepage** explaining the whole thing, since none of it is
+  discoverable if you don't already know the buttons are there.
+
+### Fixed
+
+- A scheme's **Export** could occasionally produce a truncated or failed
+  download in Firefox and Safari, which read the file asynchronously while the
+  page had already discarded it. The share-image export already worked around
+  this; both now share one implementation.
+
 ## [0.13.0] - 2026-08-08
 
 Finishes the two social-sharing items left on the roadmap after the share-image

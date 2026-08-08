@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { MatchBadge } from "./match-badge";
+import { CollectionToggle } from "./collection/collection-toggle";
+import { useCollection } from "./collection/collection-provider";
 
 /** The minimal shape the list renders from (shared by precomputed + recomputed). */
 export interface RenderItem {
@@ -33,13 +37,40 @@ export function SimilarList({
    */
   linkQuery: string;
 }) {
+  // Only for the name's padding, below. The toggle hides itself independently.
+  const { enabled } = useCollection();
+
   return (
     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2">
       {items.map((item) => (
-        <li key={item.id}>
+        // The toggle overlays the card rather than sitting beside it. As a flex
+        // sibling it took its ~64px, plus the gap, out of the card's own width
+        // — enough to wrap "Blood For The Blood God" onto two lines and truncate
+        // its brand to "Cit…". Overlaying puts it inside the card's bounds, so
+        // only the name pays, and only by its own padding. It's a sibling of the
+        // anchor rather than inside it for `PaintCard`'s reason: the whole card
+        // is one link, and a button can't nest in it.
+        //
+        // **It overlays by grid stacking, not by `position`.** Two goes at
+        // absolute positioning both failed in Safari and not in Chromium:
+        // `relative` on the `<li>` wasn't honoured as a containing block at all,
+        // and moving it to an inner `flex` div left `top` applying but `right`
+        // not, planting every toggle in the card's top-left corner.
+        //
+        // Rather than keep guessing which property WebKit drops in which
+        // wrapper, this uses none of them. The `<li>` is a one-cell grid and
+        // both children are placed in that cell, so they simply overlap;
+        // `justify-self-end` and `self-start` put the toggle top-right. No
+        // `position`, no containing block, no percentage height, no flex-basis
+        // resolution — nothing left with a browser-dependent answer.
+        //
+        // Grid item stretching also sizes the card for free: the anchor fills
+        // the cell in both axes by default, so the height floor on the `<li>`
+        // is the only measurement, in step with `SimilarListSkeleton`.
+        <li key={item.id} className="grid min-h-[76px]">
           <Link
             href={`/paints/${item.id}${linkQuery}`}
-            className="flex h-full items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="col-start-1 row-start-1 flex items-stretch gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span
               className="h-12 w-12 shrink-0 rounded-md border border-border"
@@ -47,15 +78,33 @@ export function SimilarList({
               aria-hidden="true"
             />
             {/* The name gets the whole width beside the swatch, with the badge
-                dropped to the second row alongside `brand · range`. Sharing one
+                dropped to the bottom row alongside `brand · range`. Sharing one
                 row with the badge left names like "Xb-518 Zashchitniy Zeleno
                 (russian Postwar Green)" about 12 characters a line, wrapping to
                 six lines against a vertically-centred pill. */}
-            <span className="min-w-0 flex-1">
-              <span className="block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2">
+            <span className="flex min-w-0 flex-1 flex-col">
+              {/* Only the name clears the toggle horizontally: the buttons sit
+                  roughly 8–40px down inside a `p-3` card, over the clamp's two
+                  lines. The `brand · range` row keeps its full width, which is
+                  the line that was truncating to "Cit…". */}
+              <span
+                className={`block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 ${
+                  enabled ? "pr-16" : ""
+                }`}
+              >
                 {item.name}
               </span>
-              <span className="mt-1 flex items-start justify-between gap-2">
+              {/* `mt-auto` pins this to the bottom rather than letting it sit
+                  straight under the name. A one-line name ("Pale Tan") otherwise
+                  pulled the row up to ~36px, where the badge caught the bottom
+                  of the buttons; pinned, it starts below them at every name
+                  length.
+
+                  The `min-h-[76px]` on the `<li>` is what makes that true
+                  rather than merely usual — it's what puts this row's top at
+                  ~44px against buttons ending at 40. At the old 72px resting
+                  height the two met exactly, with no clearance at all. */}
+              <span className="mt-auto flex items-end justify-between gap-2 pt-1">
                 <span className="min-w-0 text-xs text-muted-foreground [overflow-wrap:anywhere] line-clamp-2">
                   {item.brand} · {item.range}
                 </span>
@@ -63,20 +112,31 @@ export function SimilarList({
               </span>
             </span>
           </Link>
+          {/* Same cell as the anchor, so it sits on top of it. Only this box
+              takes the clicks; the rest of the cell is still the link. */}
+          <div className="col-start-1 row-start-1 self-start justify-self-end p-2">
+            <CollectionToggle paintId={item.id} paintName={item.name} />
+          </div>
         </li>
       ))}
     </ul>
   );
 }
 
-/** Placeholder rows, sized to the list's resting height so nothing jumps. */
+/**
+ * Placeholder rows, sized to the list's resting height so nothing jumps.
+ *
+ * Keep this in step with the card's `min-h-[76px]` above — that height is load
+ * bearing there (it's what keeps the match badge clear of the collection
+ * buttons), so it's the one that moves first and this one that follows.
+ */
 export function SimilarListSkeleton({ rows = 8 }: { rows?: number }) {
   return (
     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2" aria-hidden="true">
       {Array.from({ length: rows }).map((_, i) => (
         <li
           key={i}
-          className="h-[72px] animate-pulse rounded-lg border border-border bg-muted"
+          className="h-[76px] animate-pulse rounded-lg border border-border bg-muted"
         />
       ))}
     </ul>

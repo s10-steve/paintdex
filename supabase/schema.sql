@@ -157,6 +157,71 @@ revoke all on function public.get_public_scheme(text) from public;
 grant execute on function public.get_public_scheme(text) to anon, authenticated;
 
 -- ---------------------------------------------------------------------------
+-- paint_collection: the paints a user owns, and the ones they want to buy.
+--
+-- One row per paint per user, with a `status` column rather than two booleans:
+-- a paint is in exactly one list, so buying something off the wishlist is a
+-- single UPDATE and there is no owned-and-wishlisted state for the UI to
+-- explain. The unique index below is what makes that true, and is also the
+-- conflict target the client's upsert names — adding a paint and moving it
+-- between lists are the same call.
+--
+-- `paint_id` is a catalogue slug with no foreign key, per the note at the top
+-- of this file. So an id can outlive its paint (a rename, a removed brand);
+-- the client shows such a row as "no longer in the catalogue" rather than
+-- dropping it silently.
+-- ---------------------------------------------------------------------------
+create table if not exists public.paint_collection (
+  id         uuid primary key default gen_random_uuid(),
+  user_id    uuid not null references auth.users (id) on delete cascade,
+  paint_id   text not null,
+  status     text not null default 'owned',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+-- The lists are always read for one user, usually split by status.
+create index if not exists paint_collection_user_idx
+  on public.paint_collection (user_id, status);
+
+-- Both the "one list per paint" rule and the upsert's conflict target.
+create unique index if not exists paint_collection_user_paint_key
+  on public.paint_collection (user_id, paint_id);
+
+alter table public.paint_collection
+  drop constraint if exists paint_collection_status;
+alter table public.paint_collection
+  add constraint paint_collection_status
+  check (status in ('owned', 'wishlist'));
+
+-- Catalogue ids run to about 80 characters at their longest; 200 is slack, not
+-- a target. Without it `paint_id` is unbounded text and the row cap is the only
+-- thing between an account and an arbitrary amount of storage.
+alter table public.paint_collection
+  drop constraint if exists paint_collection_paint_id_length;
+alter table public.paint_collection
+  add constraint paint_collection_paint_id_length
+  check (char_length(paint_id) between 1 and 200);
+
+alter table public.paint_collection enable row level security;
+
+-- Four owner-only policies, and deliberately nothing else. There is no public
+-- or shared view of a collection, so unlike `schemes` there is no anonymous
+-- read to carve out.
+drop policy if exists "paint_collection select own"  on public.paint_collection;
+drop policy if exists "paint_collection insert self" on public.paint_collection;
+drop policy if exists "paint_collection update self" on public.paint_collection;
+drop policy if exists "paint_collection delete self" on public.paint_collection;
+create policy "paint_collection select own"  on public.paint_collection for select using (auth.uid() = user_id);
+create policy "paint_collection insert self" on public.paint_collection for insert with check (auth.uid() = user_id);
+create policy "paint_collection update self" on public.paint_collection for update using (auth.uid() = user_id);
+create policy "paint_collection delete self" on public.paint_collection for delete using (auth.uid() = user_id);
+
+-- Its `updated_at` trigger is attached further down, with the schemes one:
+-- `create trigger` resolves the function immediately, and
+-- `public.touch_updated_at()` isn't defined until then.
+
+-- ---------------------------------------------------------------------------
 -- Storage: model photos for the share-image studio
 -- ---------------------------------------------------------------------------
 -- Private bucket. A public one serves its objects with no auth at all, so a
@@ -268,7 +333,7 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
--- Keep schemes.updated_at fresh on every update.
+-- Keep schemes.updated_at and paint_collection.updated_at fresh on every update.
 create or replace function public.touch_updated_at()
   returns trigger
   language plpgsql
@@ -283,6 +348,11 @@ $$;
 drop trigger if exists schemes_touch on public.schemes;
 create trigger schemes_touch
   before update on public.schemes
+  for each row execute function public.touch_updated_at();
+
+drop trigger if exists paint_collection_touch on public.paint_collection;
+create trigger paint_collection_touch
+  before update on public.paint_collection
   for each row execute function public.touch_updated_at();
 
 -- Deleting a scheme deletes its photo. The client can't be the one to do this:
@@ -357,6 +427,35 @@ create trigger schemes_quota
   before insert on public.schemes
   for each row execute function public.enforce_scheme_quota();
 
+-- Cap the paints in a collection. Same shape as the scheme quota above, but a
+-- much higher ceiling: the catalogue is ~4,900 paints, so someone who genuinely
+-- owns everything has to fit. This is an abuse backstop, not a product limit.
+--
+-- `before insert` only — an update moves a paint between the owned and wishlist
+-- lists and cannot change the row count, so charging it the count query would
+-- be pure cost.
+create or replace function public.enforce_paint_collection_quota()
+  returns trigger
+  language plpgsql
+  security definer
+  set search_path = public
+as $$
+declare
+  max_paints constant int := 5000;
+begin
+  if (select count(*) from public.paint_collection where user_id = new.user_id) >= max_paints then
+    raise exception 'Collection limit reached (max % paints per account).', max_paints
+      using errcode = 'check_violation';
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists paint_collection_quota on public.paint_collection;
+create trigger paint_collection_quota
+  before insert on public.paint_collection
+  for each row execute function public.enforce_paint_collection_quota();
+
 -- ---------------------------------------------------------------------------
 -- Migration bookkeeping
 -- ---------------------------------------------------------------------------
@@ -372,5 +471,6 @@ insert into public.schema_migrations (filename) values
   ('0001-v0.12.0-unlisted-share-links.sql'),
   ('0002-v0.13.0-migration-tracking.sql'),
   ('0003-v0.13.0-scheme-photos.sql'),
-  ('0004-v0.13.0-fix-published-photo-read.sql')
+  ('0004-v0.13.0-fix-published-photo-read.sql'),
+  ('0005-v0.14.0-paint-collection.sql')
 on conflict (filename) do nothing;

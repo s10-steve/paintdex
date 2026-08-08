@@ -71,12 +71,13 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 
 - `src/app/` — routes: `/` (home), `/paints` (browse), `/paints/[id]` (paint
   detail, SSG with `dynamicParams = false`), `/visualiser`, `/my-schemes`
-  (static shell → client scheme manager) and `/my-paints` (placeholder for the
-  owned-paints feature), `/scheme/[slug]` (**server-rendered** public
-  shared-scheme viewer + `opengraph-image.tsx`), plus `robots.ts` and
-  `sitemap.ts`. Root `layout.tsx` holds metadata (incl. OpenGraph/Twitter),
-  wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the header and
-  Vercel Analytics/Speed Insights.
+  (static shell → client scheme manager) and `/my-paints` (static shell → client
+  collection manager — see "My paints" below), `/scheme/[slug]`
+  (**server-rendered** public shared-scheme viewer + `opengraph-image.tsx`), plus
+  `robots.ts` and `sitemap.ts`. Root `layout.tsx` holds metadata (incl.
+  OpenGraph/Twitter), wraps the app in `ThemeProvider` + `AuthProvider` +
+  `CollectionProvider`, and mounts the header and Vercel Analytics/Speed
+  Insights.
 - `src/components/` — client components (`paints-browser`, `similar-colours`
   (the shell: filters + the List/Plot toggle), `similar-list` (the ΔE-ranked
   cards), `similar-plot` (the hue/lightness plot — see "The alternatives plot"
@@ -94,8 +95,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `home-scheme-carousel` (the homepage's auto-rotating example schemes — renders
   the real `Bar`, not a mock), etc.), plus `auth/`
   (`auth-provider` with the `useAuth` hook + Google Identity Services init;
-  `sign-in-button`) and `profile/` (`schemes-manager` for `/my-schemes`,
-  `paints-placeholder` for `/my-paints`, and the shared `signed-in-gate`), and
+  `sign-in-button`), `profile/` (`schemes-manager` for `/my-schemes`,
+  `paints-manager` for `/my-paints`, and the shared `signed-in-gate`),
+  `collection/` (`collection-provider`, the app-wide owned/wishlist state, and
+  `collection-toggle`, the two add controls — see "My paints" below), and
   `scheme/` (the visualiser's presentational pieces: `element-card`, `layer-row`,
   `add-paint`, `icon-btn`, `role-tag`, plus the share-image studio —
   `poster-studio` (the modal) and `poster-canvas` (the interactive preview)).
@@ -144,7 +147,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   were three implementations of it) — and `facetLabel`, which cases a facet value
   for display so the visible text and the accessible name can't diverge;
   `active-filters.ts`, which turns either page's param state into the
-  removable chip list, and `lab-index.ts`, a module-scope memo attaching Lab to
+  removable chip list, `catalogue-match.ts`, which recovers a catalogue id from
+  a paint that only carries its name and maker (the visualiser's problem — see
+  "My paints" below), and `lab-index.ts`, a module-scope memo attaching Lab to
   the browse index), `scheme/` (bar maths, JSON import/export, types, plus `mix.ts`
   — mixed entries and `displayHex`, the one thing a renderer may read for a
   colour, see "Mixes and notes" below — and `local-store.ts`,
@@ -203,6 +208,14 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `scheme-editor.test.tsx` (the first coverage of paint editing at all — mixes,
   ratios, the medium tick and notes, plus the deletions that keep a de-mixed
   entry canonically identical to a plain paint),
+  `collection-io.test.ts`, `paint-collection-provider.test.tsx` (the optimistic
+  write's rollback, and that a token refresh doesn't refetch),
+  `paints-manager.test.tsx` (moving between lists, and that a stale id and a
+  discontinued paint both still show), `catalogue-match.test.ts` (the
+  name-to-id lookup, and the three ways it must answer `null`) and
+  `layer-row-collection.test.tsx` (the visualiser's toggle, split out because
+  it needs the provider mocked where `scheme-editor.test.tsx` needs no auth at
+  all) — see "My paints" below,
   `catalogue-sources.test.ts` (the `load.ts` drift guard)
   and `migrations.test.ts` (the migration-bookkeeping drift guard, plus the
   "no RLS-protected table inline in a storage policy" guard — see "Deploying"
@@ -685,6 +698,163 @@ for `warning`.
 - `test/scheme-visualiser.test.tsx` and `test/schemes-manager.test.tsx` query these
   messages by role (`status` and `alert` respectively), so changing a tone changes
   what those suites find.
+
+## My paints (owned + wishlist)
+
+The paints you own and the ones you want to buy. Added from the browse grid, a
+paint's own page, and the alternatives list; managed on `/my-paints`.
+
+- **Accounts-only, deliberately.** There is no `localStorage` fallback and no
+  sign-in migration, unlike the visualiser. That layering is where every
+  multi-device scheme bug came from (see "Which saved scheme is this?"), and the
+  thing it protects — a list of catalogue ids — is worth much less than a scheme
+  document. Signed out, the controls render nothing at all rather than
+  prompting: they appear hundreds at a time in the browse grid.
+- **One row per paint with a `status` column, not two booleans.** A paint is in
+  exactly one list, so "I bought it" is a single upsert and there's no
+  owned-and-wishlisted state to explain. `paint_collection_user_paint_key` is
+  both that rule and the upsert's conflict target, which is what lets
+  `setPaintStatus` be add, move *and* the whole of what a toggle needs.
+- **One provider, not per-component fetching** (`collection/collection-provider`,
+  mounted inside `AuthProvider`). Four views can show a toggle for the same
+  paint, and the browse grid renders hundreds of them — per-component fetching
+  is impossible and per-page fetching lets two mounted views disagree after a
+  toggle. This is the opposite call to `alert-banner`, and for the opposite
+  reason: that's presentation whose state the caller already owns, this *is*
+  shared state with nowhere else to live.
+  - It follows the sync-layer rules: the load effect keys on `user?.id` and never
+    `user` (a token refresh hands back a fresh object hourly), `!user` means
+    *unknown* until `authLoading` is false, and every fetch has the cancelled
+    guard.
+  - **Writes are optimistic with rollback**, and the rollback is the point — a
+    toggle that flipped, failed silently and reverted on the next load is the
+    one failure this feature can't afford. Failures go through `AlertBanner`
+    from the provider, so they're announced once wherever the user is scrolled
+    to, whichever of the four views triggered it.
+- **`PaintCard` takes an `action` slot rather than importing the toggle.** The
+  card is one big `<Link>` with no `"use client"`, rendered in server trees
+  (`paint-suggestions`, `back-to-browse`); importing a client component would
+  make those client trees, and a `<button>` inside an `<a>` is invalid HTML with
+  browser-dependent click behaviour. The caller injects it and it renders as a
+  sibling, overlaid on the swatch — dead space, so nothing can collide.
+- **Overlays stack with CSS grid.** Both `paint-card` and `similar-list` put the
+  toggle in the *same grid cell* as the card's anchor (`col-start-1 row-start-1`,
+  plus `self-start justify-self-end` for the corner). It needs no containing
+  block and no percentage height, which is reason enough to keep it.
+- **Three "Safari bugs" were reported against this one overlay. All three were a
+  stale dev stylesheet, and none was a WebKit bug.** This file used to assert, as
+  fact, that WebKit ignores `position: relative` on a list item and drops `right`
+  while honouring `top`. Both claims were wrong — invented to explain a
+  screenshot, then written down as established. The two fixes they motivated
+  (`relative` off the `<li>`, then abandoning `position` entirely) were churn
+  against a phantom, and neither made the symptom go away. What settled it:
+  - A fresh `npm run build` emits all four placement utilities correctly
+    (`grid-column-start:1`, `grid-row-start:1`), and both Chromium **and Safari**
+    lay the shipped markup out correctly with them.
+  - Every class in the third report — unprefixed `col-start-1`, `row-start-1`,
+    `self-start`, `justify-self-end` — was **new to the generated stylesheet** in
+    the commit that introduced it. Earlier uses were all variant-prefixed
+    (`lg:col-start-1`, `md:self-start`), which emit different selectors, so they
+    did not put the bare rules in the CSS. With those four rules missing, both
+    children auto-place: the anchor into implicit row 1, the toggle into row 2,
+    stretched to full width with its icons at the left — exactly the reported
+    symptom. A rendering bug cannot correlate with which class names are new to
+    this repo; **a stale stylesheet correlates with it exactly.**
+  - Reinstalling and restarting `npm run dev` fixed it, with no markup change.
+- **So a Safari-only styling report starts with the stylesheet, not the markup.**
+  Restart `npm run dev` and hard-reload (Cmd-Opt-R, or Develop → Empty Caches)
+  before believing a screenshot — Tailwind v4 regenerates CSS over HMR, and a
+  newly-used utility is the kind that goes missing. Three reports and two commits
+  went the other way round.
+- **Reproduce it in isolation before believing it.** The way to settle one of
+  these in seconds is a standalone HTML file: the built stylesheet in a `<style>`
+  tag (inline, so `cssRules` is readable and staleness is impossible), the card
+  markup copied verbatim, and a script that measures the toggle's box against the
+  anchor's and prints the computed `grid-row-start`/`justify-self` alongside
+  whether the rules are in the sheet at all. No React, no auth, no dev server —
+  the sign-in gate only decides whether the toggle renders, so the layout
+  question needs none of it. Add a control block with the same declarations
+  inlined as `style` attributes: if the control is right and the class version is
+  wrong, the problem is stylesheet delivery, not the engine.
+- One thing worth knowing if a real WebKit difference ever does turn up here:
+  Tailwind v4 compiles `justify-self-end`/`self-start` to `justify-self:flex-end`
+  and `align-self:flex-start`. Those are legal on a grid item (Box Alignment says
+  `flex-*` behaves as `start`/`end` outside flex), but they are the only values
+  in this stack whose grid behaviour is an alias rather than the plain keyword —
+  so they are the first thing to probe, via `[justify-self:end]
+  [align-self:start]`.
+- **`similar-list` overlays too, but pads the name rather than the card.** It
+  first shipped with the toggle as a flex *sibling* of the anchor, which took its
+  ~64px plus the gap out of the card's own width — enough to wrap "Blood For The
+  Blood God" onto two lines and truncate its brand to "Cit…". Overlaid, only the
+  name pays: the toggle spans roughly y=8–40px inside a `p-3` card, so it covers
+  both lines of the `line-clamp-2` name and clears the `brand · range` row below
+  it. Hence `pr-16` on the name alone, and hence `similar-list` reading
+  `useCollection().enabled` — the padding has to be conditional or every
+  signed-out visitor pays for a control they can't see.
+- **The plot's marks get nothing; its detail panel gets the toggle.** Marks are
+  24px and WCAG 2.5.8 spacing already caps how many fit. The panel is driven by
+  hover, focus and touch alike, so it's reachable by every route the marks are.
+- **In the search suggestions the toggle is pointer-only, and that is not an
+  oversight.** Those rows are `role="option"` inside a combobox listbox: ARIA
+  forbids focusable descendants *and* makes an option's children presentational,
+  so an AT ignores the buttons' roles whatever we mark them. The variant
+  (`interactive="pointer"`) therefore takes `tabIndex={-1}` and `aria-hidden`
+  rather than claiming a semantic it can't honour, and acts on `onMouseDown`
+  with `stopPropagation` — the row's own mousedown picks the paint and closes
+  the list, so a click handler would fire too late, on an element that has gone,
+  and an un-stopped one would add the paint *and* navigate away. Nothing is
+  lost: the same paint is one keyboard-operable toggle away on the browse grid,
+  its own page, the alternatives list and the visualiser.
+- **Every button's `title` is the same string as its `aria-label`**, from one
+  `actionLabel()` call. The `facetLabel` rule again — built separately they
+  drift, and a control that announces something other than what it shows is
+  worse than either alone.
+- **The visualiser resolves a catalogue id by name, because a `SchemePaint`
+  hasn't got one.** Its `id` is an ephemeral React key: `toExportShape` strips
+  it, `importSchemeObject` mints a fresh one, `add-paint.tsx` discards
+  `BrowsePaint.id` on the way in, and even `presets.ts` — which stores real
+  catalogue ids — throws them away in `resolvePreset`. So
+  `paints/catalogue-match.ts` matches on `brand|range|name`, falling back to
+  `brand|name`, with the index memoized at module scope on the array's identity
+  (the `lab-index.ts` rule: a `useMemo` would rebuild a 5,000-entry map per row
+  per mount). Hex is deliberately not part of the key — catalogue hexes get
+  corrected, and keying on colour would break every older scheme the day one
+  landed. Don't "fix" this by persisting an id on `SchemePaint`: it would need
+  conditional spreading to keep serialisation byte-identical, it would be absent
+  from every scheme saved before it, and this lookup would still be the
+  fallback. `null` is a normal answer — custom colour, unloaded catalogue,
+  renamed paint — and the caller renders no toggle.
+- **A plain layer row's toggle sits right, before the ↑↓✕ cluster; a mix puts
+  one on each ingredient instead.** The mix case is the interesting one: beside
+  the title one toggle shared a row with the paint name and truncated it —
+  "Nuln Oil + Lahmian …" — and it was never clear *which* paint it meant. The
+  ingredient lines answer both at once, and `components()` lists the primary as
+  slot 0, so they cover it. Hence `mixed ? null : …` on the right-hand one, or
+  the primary would be offered twice. Mediums get a toggle too: you still have
+  to buy Lahmian Medium.
+- **Both share the third grid column** rather than the row growing a fourth. An
+  empty `auto` track collapses to zero width but still pays its `gap` on both
+  sides, so a fourth column would put 10px of dead space in every mixed row.
+- **The visualiser uses `size="sm"` throughout** — 24px, which is the WCAG
+  2.5.8 minimum target and the same number the plot's marks use. It's a floor,
+  not a preference; don't shrink it further to win space in a dense row.
+- **Not inside the ↑↓✕ cluster**, wherever it lands: that cluster is
+  `opacity-40` until hover, which is right for actions and wrong for state — a
+  faded ✓ would hide whether the paint is already in your collection.
+- **`/my-paints` filters in local state, not the URL.** The URL-as-truth rule
+  exists for shareability, and this page is `noindex` and per-user — a link to
+  it means nothing to anyone else. It also hard-wires `includeDiscontinued: true`
+  and hides that facet: the catalogue-wide default is right for browsing and
+  wrong for a record of what you have, and it would hide paints you own with no
+  visible control to explain it.
+- **An id with no paint behind it gets a row, not silence.** `paint_id` is a
+  catalogue slug with no foreign key, so a rename or a dropped brand leaves one
+  stranded. It renders as the raw id with "No longer in the catalogue" and a
+  Remove button — dropping it silently makes the section count disagree with
+  what's on screen and leaves no way to clear it. `parseCollectionJSON` doesn't
+  validate ids against the catalogue for the same reason, and because that
+  module must not import the paint data (the `presets.ts` rule).
 
 ## Share images (the poster)
 

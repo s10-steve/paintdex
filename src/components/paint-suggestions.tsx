@@ -1,6 +1,7 @@
 "use client";
 
 import type { BrowsePaint } from "@/lib/paints/types";
+import { CollectionToggle } from "./collection/collection-toggle";
 
 /**
  * The autocomplete listbox shared by the browse search and the homepage search.
@@ -17,6 +18,16 @@ import type { BrowsePaint } from "@/lib/paints/types";
  * - `onMouseDown`, not `onClick`, so selection beats the input's blur.
  * - The empty state is `role="presentation"`: a listbox child with no role is
  *   invalid, and it isn't an option.
+ *
+ * The collection toggle inside each row is the one exception, and it is shaped
+ * to keep the first invariant true rather than to bend it: `tabIndex={-1}` so it
+ * is genuinely not focusable, and `aria-hidden` because ARIA makes an option's
+ * children presentational anyway — their roles are ignored by assistive tech
+ * whatever we mark them, so announcing them would be a claim we can't honour.
+ * It is a pointer-only shortcut, and deliberately so: the same paint can be
+ * added from the browse grid, its own page, the alternatives list or the
+ * visualiser, all fully keyboard-operable. Don't "fix" it by making it a real
+ * button here — that breaks the combobox for everyone using a screen reader.
  */
 export function PaintSuggestions({
   id,
@@ -76,6 +87,7 @@ export function PaintSuggestions({
             <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
               {p.hex}
             </span>
+            <CollectionToggle paintId={p.id} paintName={p.name} interactive="pointer" />
           </li>
         ))
       )}

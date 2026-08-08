@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/auth/auth-provider";
+import { CollectionProvider } from "@/components/collection/collection-provider";
 import { SiteHeader } from "@/components/site-header";
 
 const geistSans = Geist({
@@ -62,15 +63,20 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
-            <SiteHeader />
-            <div className="flex-1">{children}</div>
-            <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
-              <p className="mx-auto max-w-2xl px-4">
-                Paintdex is not affiliated with any paint manufacturer or game
-                publisher. Brand, product and faction names are trademarks of their
-                respective owners. Example schemes are unofficial fan recipes.
-              </p>
-            </footer>
+            {/* Inside AuthProvider: the collection is per-user and keys its
+                load on `user?.id`. Inert until someone signs in, so this costs
+                a signed-out visitor one context and no request. */}
+            <CollectionProvider>
+              <SiteHeader />
+              <div className="flex-1">{children}</div>
+              <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
+                <p className="mx-auto max-w-2xl px-4">
+                  Paintdex is not affiliated with any paint manufacturer or game
+                  publisher. Brand, product and faction names are trademarks of their
+                  respective owners. Example schemes are unofficial fan recipes.
+                </p>
+              </footer>
+            </CollectionProvider>
           </AuthProvider>
         </ThemeProvider>
         <Analytics />

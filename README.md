@@ -52,8 +52,12 @@ schemes, sync them across devices, and share them by link.
   page (`/my-schemes`) manages your schemes — rename, duplicate, delete and
   share. Edit on your phone and your laptop picks it up when you switch back to
   it; rename or delete on one device and the others follow rather than ending up
-  with a second copy. A placeholder **My paints** page (`/my-paints`) marks where
-  owned-paint inventories will go.
+  with a second copy.
+- **My paints.** Keep track of the paints you own and the ones you still want to
+  buy. Add either from the browse grid, a paint's own page, or the alternatives
+  on any paint page; the **My paints** page (`/my-paints`) shows both lists, lets
+  you move paints between them, and can export the whole collection as JSON.
+  Needs an account — a collection is worth too much to leave in one browser.
 - **Shareable scheme links.** Publish any saved scheme to an unguessable
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
   the full paint recipe, with a rich colour preview when pasted on social sites.
@@ -206,9 +210,9 @@ Still open:
 
 ### My paints feature
 
-- [ ] Save the paints you own
+- [x] Save the paints you own
+- [x] Wishlist for paints you don't own yet but want to buy
 - [ ] Paint schemes can suggest only paints from your collection
-- [ ] Wishlist for paints you don't own yet but want to buy
 
 ## License
 

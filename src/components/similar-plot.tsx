@@ -16,6 +16,7 @@ import {
 } from "@/lib/paints/scatter";
 import { useElementWidth } from "@/hooks/use-element-width";
 import { MatchBadge } from "./match-badge";
+import { CollectionToggle } from "./collection/collection-toggle";
 
 interface SimilarPlotProps {
   /**
@@ -517,6 +518,14 @@ export function SimilarPlot({
                   {describePoint(detail, axis)}
                 </span>
               </span>
+              {/* The collection toggle lives here and not on the marks. A mark
+                  is 24px and WCAG 2.5.8 spacing is already what caps how many
+                  fit; hanging two buttons off each of up to 120 of them would
+                  break that outright. The panel is driven by hover, focus and
+                  touch alike, so this is reachable by every route the marks
+                  are — including the keyboard, since arrowing through the
+                  ranking updates it. */}
+              <CollectionToggle paintId={detail.id} paintName={detail.name} />
             </div>
           ) : (
             <p className="text-sm text-muted-foreground">

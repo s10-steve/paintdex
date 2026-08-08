@@ -138,8 +138,7 @@ export default function Home() {
               <p className="mt-2 max-w-[70ch] text-muted-foreground">
                 The paint scheme visualiser lets you group paints by element —
                 armour, robes, lenses, etc — and preview every colour together as
-                vertical bars: base at the bottom, highlights at the top, washes and
-                weathering layered over. Add paints from the database or your own
+                vertical bars. Add paints from the database or your own
                 custom values.
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -172,9 +171,9 @@ export default function Home() {
               </h2>
               <p className="mt-2 text-muted-foreground">
                 Drop in a photo of your model and the visualiser lays your scheme over
-                it as an image built for social media — square, feed or story shaped,
-                with one callout per element, each showing its colour ramp and the
-                paints that made it, joined by a leader line to the spot on the model.
+                it as an image built for social media — square, feed or story shaped.
+                With one callout per element, each showing its colour ramp and the
+                paints that made it.
               </p>
               <p className="mt-2 text-muted-foreground">
                 Sign in with a Google account to save schemes and share them as
@@ -207,6 +206,51 @@ export default function Home() {
                 above is the same scheme.
               </figcaption>
             </figure>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 pb-12">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card">
+          <div className="space-y-6 p-6 sm:p-8">
+            <div className="text-left">
+              <h2 className="text-2xl font-bold tracking-tight">
+                Keep track of the paints you own
+              </h2>
+              <p className="mt-2 max-w-[70ch] text-muted-foreground">
+                Every paint has a ✓ and a ☆ on the browse grid, on its own page,
+                beside each alternative when you&apos;re comparing colours, and on
+                every layer of a scheme in the visualiser. One marks a paint as
+                yours, the other puts it on your wishlist.
+              </p>
+              <p className="mt-2 max-w-[70ch] text-muted-foreground">
+                <b className="font-medium text-foreground">My paints</b> shows both
+                lists, filtered by brand, type or colour family the same way the
+                main database is, and lets you move paints between them as you buy
+                them. You can export and import your collection as a JSON file whenever you like.
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/my-paints"
+                  className="inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+                >
+                  Open my paints →
+                </Link>
+                <Link
+                  href="/paints"
+                  className="inline-block rounded-lg border border-border px-5 py-2.5 text-sm font-medium hover:bg-accent"
+                >
+                  Start from the database
+                </Link>
+              </div>
+              {/* Stated plainly rather than discovered at the sign-in gate. This
+                  is the one feature with no signed-out mode at all — a list of
+                  paints is worth more than one browser's storage. */}
+              <p className="mt-3 text-xs text-muted-foreground">
+                Needs a Google account, so your collection follows you between your
+                phone and your desk.
+              </p>
+            </div>
           </div>
         </div>
       </section>

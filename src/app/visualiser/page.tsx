@@ -4,7 +4,7 @@ import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
 
 const TITLE = "Scheme visualiser";
 const DESCRIPTION =
-  "Plan a miniature paint scheme: group paints by element and see every element's colours as blended vertical bars, side by side.";
+  "Plan a miniature paint scheme: group paints by element and see every element's colours as vertical bars, side by side.";
 
 export const metadata: Metadata = {
   title: TITLE,
