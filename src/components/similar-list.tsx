@@ -55,7 +55,7 @@ export function SimilarList({
         <li key={item.id} className="relative">
           <Link
             href={`/paints/${item.id}${linkQuery}`}
-            className="flex h-full items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-full min-h-[76px] items-stretch gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span
               className="h-12 w-12 shrink-0 rounded-md border border-border"
@@ -63,15 +63,15 @@ export function SimilarList({
               aria-hidden="true"
             />
             {/* The name gets the whole width beside the swatch, with the badge
-                dropped to the second row alongside `brand · range`. Sharing one
+                dropped to the bottom row alongside `brand · range`. Sharing one
                 row with the badge left names like "Xb-518 Zashchitniy Zeleno
                 (russian Postwar Green)" about 12 characters a line, wrapping to
                 six lines against a vertically-centred pill. */}
-            <span className="min-w-0 flex-1">
-              {/* Only the name clears the toggle. It sits roughly 8–40px down
-                  inside a `p-3` card, so it covers both lines of the clamp but
-                  stops above the `brand · range` row — which is the line that
-                  was truncating, and which now gets the full width back. */}
+            <span className="flex min-w-0 flex-1 flex-col">
+              {/* Only the name clears the toggle horizontally: the buttons sit
+                  roughly 8–40px down inside a `p-3` card, over the clamp's two
+                  lines. The `brand · range` row keeps its full width, which is
+                  the line that was truncating to "Cit…". */}
               <span
                 className={`block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 ${
                   enabled ? "pr-16" : ""
@@ -79,7 +79,19 @@ export function SimilarList({
               >
                 {item.name}
               </span>
-              <span className="mt-1 flex items-start justify-between gap-2">
+              {/* `mt-auto` pins this to the bottom rather than letting it sit
+                  straight under the name. A one-line name ("Pale Tan") otherwise
+                  pulled the row up to ~36px, where the badge caught the bottom
+                  of the buttons; pinned, it starts below them at every name
+                  length.
+
+                  The `min-h-[76px]` above is what makes that true rather than
+                  merely usual — it's what puts this row's top at ~44px against
+                  buttons ending at 40. At the old 72px resting height the two
+                  met exactly, with no clearance at all. **Keep it in step with
+                  `SimilarListSkeleton`'s height**, whose whole job is to match
+                  this so the list doesn't jump when it loads. */}
+              <span className="mt-auto flex items-end justify-between gap-2 pt-1">
                 <span className="min-w-0 text-xs text-muted-foreground [overflow-wrap:anywhere] line-clamp-2">
                   {item.brand} · {item.range}
                 </span>
@@ -96,14 +108,20 @@ export function SimilarList({
   );
 }
 
-/** Placeholder rows, sized to the list's resting height so nothing jumps. */
+/**
+ * Placeholder rows, sized to the list's resting height so nothing jumps.
+ *
+ * Keep this in step with the card's `min-h-[76px]` above — that height is load
+ * bearing there (it's what keeps the match badge clear of the collection
+ * buttons), so it's the one that moves first and this one that follows.
+ */
 export function SimilarListSkeleton({ rows = 8 }: { rows?: number }) {
   return (
     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2" aria-hidden="true">
       {Array.from({ length: rows }).map((_, i) => (
         <li
           key={i}
-          className="h-[72px] animate-pulse rounded-lg border border-border bg-muted"
+          className="h-[76px] animate-pulse rounded-lg border border-border bg-muted"
         />
       ))}
     </ul>
