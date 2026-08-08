@@ -213,6 +213,42 @@ describe("notes", () => {
     renderCard([{ ...AGRAX, note: "glaze into the lips" }], handlerSpies());
     expect(screen.getByText("glaze into the lips")).toBeTruthy();
   });
+
+  const noteBox = () =>
+    screen.queryByRole("textbox", { name: "Note for Agrax Earthshade", exact: true });
+
+  it("collapses the editor when focus leaves it", () => {
+    renderCard([{ ...AGRAX, note: "glaze into the lips" }], handlerSpies());
+    fireEvent.click(screen.getByLabelText("Edit a note for Agrax Earthshade"));
+    expect(noteBox()).toBeTruthy();
+
+    // Focus moving anywhere else — a click on the page, Tab to the next row.
+    fireEvent.blur(noteBox() as HTMLElement, { relatedTarget: document.body });
+    expect(noteBox()).toBeNull();
+    // The note itself is untouched; it just goes back to being read-only text.
+    expect(screen.getByText("glaze into the lips")).toBeTruthy();
+  });
+
+  it("still closes when the Note button itself is clicked", () => {
+    // Blur runs before the button's click, so a naive onBlur would close the
+    // editor and let the toggle immediately reopen it.
+    renderCard([{ ...AGRAX, note: "glaze into the lips" }], handlerSpies());
+    const btn = screen.getByLabelText("Edit a note for Agrax Earthshade");
+    fireEvent.click(btn);
+    expect(noteBox()).toBeTruthy();
+
+    fireEvent.blur(noteBox() as HTMLElement, { relatedTarget: btn });
+    fireEvent.click(btn);
+    expect(noteBox()).toBeNull();
+  });
+
+  it("leaves nothing behind when an empty note is abandoned", () => {
+    renderCard([AGRAX], handlerSpies());
+    fireEvent.click(screen.getByLabelText("Add a note for Agrax Earthshade"));
+    fireEvent.blur(noteBox() as HTMLElement, { relatedTarget: document.body });
+    expect(noteBox()).toBeNull();
+    expect(screen.getByLabelText("Add a note for Agrax Earthshade")).toBeTruthy();
+  });
 });
 
 /** Drives the real updaters over a real document. */

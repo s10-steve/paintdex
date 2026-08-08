@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { BrowsePaint } from "@/lib/paints/types";
 import { components, displayHex, hasMix, mixName, ratioLabel } from "@/lib/scheme/mix";
 import {
@@ -63,6 +63,7 @@ export function LayerRow({
 }) {
   const [mixOpen, setMixOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
+  const noteBtnRef = useRef<HTMLButtonElement>(null);
 
   const role = roleOf(paint);
   const meta = paintMeta(paint);
@@ -179,6 +180,7 @@ export function LayerRow({
             </button>
           )}
           <button
+            ref={noteBtnRef}
             onClick={() => setNoteOpen((v) => !v)}
             aria-expanded={showNote}
             aria-label={`${paint.note ? "Edit" : "Add"} a note for ${paint.name}`}
@@ -216,6 +218,12 @@ export function LayerRow({
               rows={2}
               value={paint.note ?? ""}
               onChange={(e) => onSetNote(e.target.value)}
+              // Collapse on click-away. Skipped when focus is moving to the
+              // Note button itself: blur runs before its click, so closing here
+              // would let the toggle reopen what the user meant to shut.
+              onBlur={(e) => {
+                if (e.relatedTarget !== noteBtnRef.current) setNoteOpen(false);
+              }}
               // Mirrors the importer's cap, so the browser stops the user at the
               // same number rather than letting the text vanish on reload.
               maxLength={MAX_NOTE}
