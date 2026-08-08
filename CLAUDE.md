@@ -737,6 +737,13 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   make those client trees, and a `<button>` inside an `<a>` is invalid HTML with
   browser-dependent click behaviour. The caller injects it and it renders as a
   sibling, overlaid on the swatch — dead space, so nothing can collide.
+- **An overlay's `relative` ancestor must be a plain `<div>`, never the `<li>`.**
+  `similar-list` put it on the list item and Safari didn't treat that as the
+  containing block: every toggle fell back to its static position and each card
+  painted over the one above, leaving one visible per column. Chromium renders
+  the `<li>` version correctly, so a render check there proves nothing — this is
+  the one piece of layout in the app that genuinely needs a second engine.
+  `PaintCard` had the right shape from the start; keep the two the same.
 - **`similar-list` overlays too, but pads the name rather than the card.** It
   first shipped with the toggle as a flex *sibling* of the anchor, which took its
   ~64px plus the gap out of the card's own width — enough to wrap "Blood For The

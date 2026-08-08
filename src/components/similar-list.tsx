@@ -47,45 +47,54 @@ export function SimilarList({
         // sibling it took its ~64px, plus the gap, out of the card's own width
         // — enough to wrap "Blood For The Blood God" onto two lines and truncate
         // its brand to "Cit…". Overlaying puts it inside the card's bounds, so
-        // only the name pays, and only by its own padding.
+        // only the name pays, and only by its own padding. It's a sibling of the
+        // anchor rather than inside it for `PaintCard`'s reason: the whole card
+        // is one link, and a button can't nest in it.
         //
-        // Same constraint as `PaintCard` — the whole row is one link and a
-        // button can't nest inside it — so it's a sibling of the anchor,
-        // positioned over it.
-        // The height floor lives here, on the grid item, rather than on the
-        // anchor. On the anchor it combined with `h-full` into a circular
-        // dependency — a percentage height resolved against a track sized by
-        // the very content it contains. Chromium resolves that the way you'd
-        // hope, but there's no reason to depend on it when the grid item's own
-        // height is unambiguous. Keep it in step with `SimilarListSkeleton`.
-        <li key={item.id} className="relative min-h-[76px]">
-          <Link
-            href={`/paints/${item.id}${linkQuery}`}
-            className="flex h-full items-stretch gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <span
-              className="h-12 w-12 shrink-0 rounded-md border border-border"
-              style={{ backgroundColor: item.hex }}
-              aria-hidden="true"
-            />
-            {/* The name gets the whole width beside the swatch, with the badge
+        // **The positioning context is the inner `<div>`, never the `<li>`.**
+        // `position: relative` on the list item is what broke this in Safari:
+        // WebKit didn't treat it as the containing block, so every toggle fell
+        // back to its static position — bottom-left, after the anchor — and each
+        // card painted over the one above it, leaving exactly one visible per
+        // column. Chromium renders the `<li>` version correctly, which is why
+        // checking it there proved nothing.
+        //
+        // `PaintCard` has always wrapped this same overlay in a plain `relative`
+        // div and has never had the problem. Keep the two the same shape.
+        //
+        // Heights stretch through flex rather than `h-full` for the neighbouring
+        // reason: no percentage resolved against a track sized by its own
+        // content. The floor sits on the `<li>`, in step with
+        // `SimilarListSkeleton`.
+        <li key={item.id} className="flex min-h-[76px]">
+          <div className="relative flex flex-1">
+            <Link
+              href={`/paints/${item.id}${linkQuery}`}
+              className="flex flex-1 items-stretch gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <span
+                className="h-12 w-12 shrink-0 rounded-md border border-border"
+                style={{ backgroundColor: item.hex }}
+                aria-hidden="true"
+              />
+              {/* The name gets the whole width beside the swatch, with the badge
                 dropped to the bottom row alongside `brand · range`. Sharing one
                 row with the badge left names like "Xb-518 Zashchitniy Zeleno
                 (russian Postwar Green)" about 12 characters a line, wrapping to
                 six lines against a vertically-centred pill. */}
-            <span className="flex min-w-0 flex-1 flex-col">
-              {/* Only the name clears the toggle horizontally: the buttons sit
+              <span className="flex min-w-0 flex-1 flex-col">
+                {/* Only the name clears the toggle horizontally: the buttons sit
                   roughly 8–40px down inside a `p-3` card, over the clamp's two
                   lines. The `brand · range` row keeps its full width, which is
                   the line that was truncating to "Cit…". */}
-              <span
-                className={`block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 ${
-                  enabled ? "pr-16" : ""
-                }`}
-              >
-                {item.name}
-              </span>
-              {/* `mt-auto` pins this to the bottom rather than letting it sit
+                <span
+                  className={`block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 ${
+                    enabled ? "pr-16" : ""
+                  }`}
+                >
+                  {item.name}
+                </span>
+                {/* `mt-auto` pins this to the bottom rather than letting it sit
                   straight under the name. A one-line name ("Pale Tan") otherwise
                   pulled the row up to ~36px, where the badge caught the bottom
                   of the buttons; pinned, it starts below them at every name
@@ -95,16 +104,19 @@ export function SimilarList({
                   rather than merely usual — it's what puts this row's top at
                   ~44px against buttons ending at 40. At the old 72px resting
                   height the two met exactly, with no clearance at all. */}
-              <span className="mt-auto flex items-end justify-between gap-2 pt-1">
-                <span className="min-w-0 text-xs text-muted-foreground [overflow-wrap:anywhere] line-clamp-2">
-                  {item.brand} · {item.range}
+                <span className="mt-auto flex items-end justify-between gap-2 pt-1">
+                  <span className="min-w-0 text-xs text-muted-foreground [overflow-wrap:anywhere] line-clamp-2">
+                    {item.brand} · {item.range}
+                  </span>
+                  <MatchBadge distance={item.distance} />
                 </span>
-                <MatchBadge distance={item.distance} />
               </span>
-            </span>
-          </Link>
-          <div className="absolute right-2 top-2">
-            <CollectionToggle paintId={item.id} paintName={item.name} />
+            </Link>
+            {/* `z-10` so paint order between adjacent positioned siblings can
+                never hide it, which is the shape the Safari failure took. */}
+            <div className="absolute right-2 top-2 z-10">
+              <CollectionToggle paintId={item.id} paintName={item.name} />
+            </div>
           </div>
         </li>
       ))}
