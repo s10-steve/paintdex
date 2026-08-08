@@ -147,7 +147,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   were three implementations of it) — and `facetLabel`, which cases a facet value
   for display so the visible text and the accessible name can't diverge;
   `active-filters.ts`, which turns either page's param state into the
-  removable chip list, and `lab-index.ts`, a module-scope memo attaching Lab to
+  removable chip list, `catalogue-match.ts`, which recovers a catalogue id from
+  a paint that only carries its name and maker (the visualiser's problem — see
+  "My paints" below), and `lab-index.ts`, a module-scope memo attaching Lab to
   the browse index), `scheme/` (bar maths, JSON import/export, types, plus `mix.ts`
   — mixed entries and `displayHex`, the one thing a renderer may read for a
   colour, see "Mixes and notes" below — and `local-store.ts`,
@@ -207,9 +209,13 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   ratios, the medium tick and notes, plus the deletions that keep a de-mixed
   entry canonically identical to a plain paint),
   `collection-io.test.ts`, `paint-collection-provider.test.tsx` (the optimistic
-  write's rollback, and that a token refresh doesn't refetch) and
+  write's rollback, and that a token refresh doesn't refetch),
   `paints-manager.test.tsx` (moving between lists, and that a stale id and a
-  discontinued paint both still show) — see "My paints" below,
+  discontinued paint both still show), `catalogue-match.test.ts` (the
+  name-to-id lookup, and the three ways it must answer `null`) and
+  `layer-row-collection.test.tsx` (the visualiser's toggle, split out because
+  it needs the provider mocked where `scheme-editor.test.tsx` needs no auth at
+  all) — see "My paints" below,
   `catalogue-sources.test.ts` (the `load.ts` drift guard)
   and `migrations.test.ts` (the migration-bookkeeping drift guard, plus the
   "no RLS-protected table inline in a storage policy" guard — see "Deploying"
@@ -731,15 +737,53 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   make those client trees, and a `<button>` inside an `<a>` is invalid HTML with
   browser-dependent click behaviour. The caller injects it and it renders as a
   sibling, overlaid on the swatch — dead space, so nothing can collide.
-- **`similar-list` puts the toggle in the flow, not overlaid, and that's not an
-  inconsistency.** Its rows are text edge to edge, so an absolutely-positioned
-  control would sit on the paint name — the very width that docblock spends a
-  paragraph defending. As a flex sibling it costs nothing when signed out, which
-  is nearly every visitor: the toggle renders `null` and a `gap` with one child
-  takes no space.
+- **`similar-list` overlays too, but pads the name rather than the card.** It
+  first shipped with the toggle as a flex *sibling* of the anchor, which took its
+  ~64px plus the gap out of the card's own width — enough to wrap "Blood For The
+  Blood God" onto two lines and truncate its brand to "Cit…". Overlaid, only the
+  name pays: the toggle spans roughly y=8–40px inside a `p-3` card, so it covers
+  both lines of the `line-clamp-2` name and clears the `brand · range` row below
+  it. Hence `pr-16` on the name alone, and hence `similar-list` reading
+  `useCollection().enabled` — the padding has to be conditional or every
+  signed-out visitor pays for a control they can't see.
 - **The plot's marks get nothing; its detail panel gets the toggle.** Marks are
   24px and WCAG 2.5.8 spacing already caps how many fit. The panel is driven by
   hover, focus and touch alike, so it's reachable by every route the marks are.
+- **In the search suggestions the toggle is pointer-only, and that is not an
+  oversight.** Those rows are `role="option"` inside a combobox listbox: ARIA
+  forbids focusable descendants *and* makes an option's children presentational,
+  so an AT ignores the buttons' roles whatever we mark them. The variant
+  (`interactive="pointer"`) therefore takes `tabIndex={-1}` and `aria-hidden`
+  rather than claiming a semantic it can't honour, and acts on `onMouseDown`
+  with `stopPropagation` — the row's own mousedown picks the paint and closes
+  the list, so a click handler would fire too late, on an element that has gone,
+  and an un-stopped one would add the paint *and* navigate away. Nothing is
+  lost: the same paint is one keyboard-operable toggle away on the browse grid,
+  its own page, the alternatives list and the visualiser.
+- **Every button's `title` is the same string as its `aria-label`**, from one
+  `actionLabel()` call. The `facetLabel` rule again — built separately they
+  drift, and a control that announces something other than what it shows is
+  worse than either alone.
+- **The visualiser resolves a catalogue id by name, because a `SchemePaint`
+  hasn't got one.** Its `id` is an ephemeral React key: `toExportShape` strips
+  it, `importSchemeObject` mints a fresh one, `add-paint.tsx` discards
+  `BrowsePaint.id` on the way in, and even `presets.ts` — which stores real
+  catalogue ids — throws them away in `resolvePreset`. So
+  `paints/catalogue-match.ts` matches on `brand|range|name`, falling back to
+  `brand|name`, with the index memoized at module scope on the array's identity
+  (the `lab-index.ts` rule: a `useMemo` would rebuild a 5,000-entry map per row
+  per mount). Hex is deliberately not part of the key — catalogue hexes get
+  corrected, and keying on colour would break every older scheme the day one
+  landed. Don't "fix" this by persisting an id on `SchemePaint`: it would need
+  conditional spreading to keep serialisation byte-identical, it would be absent
+  from every scheme saved before it, and this lookup would still be the
+  fallback. `null` is a normal answer — custom colour, unloaded catalogue,
+  renamed paint — and the caller renders no toggle.
+- **The layer row's toggle is its own grid column**, not part of the ↑↓✕
+  cluster: that cluster is `opacity-40` until hover, which is right for actions
+  and wrong for state — a faded ✓ would hide whether the paint is already in
+  your collection. Mix ingredients get no toggle; the row is about its primary
+  paint.
 - **`/my-paints` filters in local state, not the URL.** The URL-as-truth rule
   exists for shareability, and this page is `noindex` and per-user — a link to
   it means nothing to anyone else. It also hard-wires `includeDiscontinued: true`

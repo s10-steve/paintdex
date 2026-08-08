@@ -33,6 +33,19 @@ writes, and there is no fallback.
   The trade-off worth naming: unlike your schemes, this needs an account. A
   collection is hundreds of small decisions, and leaving that in one browser's
   storage is a worse promise than asking you to sign in.
+- **Add paints straight from the search box.** The ✓ and ☆ buttons now appear on
+  each suggestion as you type, so stocking your collection is one click per
+  paint instead of opening each one. These particular buttons are mouse-only —
+  the dropdown is a listbox, and putting real controls inside it would break it
+  for anyone using a screen reader — so from the keyboard, pick the paint and
+  use the buttons on its page as before.
+- **The buttons in the visualiser too.** Every layer of a scheme now shows
+  whether you own that paint, and lets you add it to your wishlist without
+  leaving the designer — which is the moment you actually discover you need it.
+  Colours you typed in by hand show nothing, since there's no catalogue paint
+  behind them.
+- **The ✓ and ☆ buttons have tooltips**, so you don't have to guess which is
+  which.
 
 ### Fixed
 

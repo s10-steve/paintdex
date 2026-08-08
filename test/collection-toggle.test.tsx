@@ -12,7 +12,7 @@
  * something other than what it shows is worse than either alone.
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, screen, cleanup, act } from "@testing-library/react";
+import { render, screen, cleanup, act, fireEvent } from "@testing-library/react";
 import type { PaintStatus } from "@/lib/supabase/types";
 
 let enabled = true;
@@ -98,6 +98,18 @@ describe("CollectionToggle", () => {
     expect(setStatus).not.toHaveBeenCalled();
   });
 
+  it("gives each button a tooltip saying exactly what it announces", () => {
+    // One string for both. Built separately they drift, and a control that
+    // announces something other than what it shows is worse than either alone.
+    render(<CollectionToggle paintId="p1" paintName="Abaddon Black" />);
+    for (const button of screen.getAllByRole("button")) {
+      expect(button.getAttribute("title")).toBe(button.getAttribute("aria-label"));
+    }
+    expect(
+      screen.getByLabelText("Add Abaddon Black to your wishlist").getAttribute("title"),
+    ).toBe("Add Abaddon Black to your wishlist");
+  });
+
   it("marks only the list the paint is actually in", () => {
     status = "wishlist";
     render(<CollectionToggle paintId="p1" paintName="Abaddon Black" />);
@@ -111,6 +123,65 @@ describe("CollectionToggle", () => {
         .getByLabelText("Add Abaddon Black to paints you own")
         .getAttribute("aria-pressed"),
     ).toBe("false");
+  });
+});
+
+describe("the pointer-only variant", () => {
+  // For the search suggestions, whose rows are `role="option"`. ARIA forbids
+  // focusable descendants there and makes an option's children presentational,
+  // so this variant takes itself out of the tab order and out of the
+  // accessibility tree rather than claiming a semantic it can't have.
+  it("is not focusable and not exposed to assistive tech", () => {
+    const { container } = render(
+      <CollectionToggle paintId="p1" paintName="Abaddon Black" interactive="pointer" />,
+    );
+
+    const buttons = container.querySelectorAll("button");
+    expect(buttons).toHaveLength(2);
+    for (const button of buttons) {
+      expect(button.getAttribute("tabindex")).toBe("-1");
+    }
+    expect(container.querySelector("span[aria-hidden='true']")).not.toBeNull();
+    // Out of the accessibility tree: a role query, which does consult it, finds
+    // nothing even though the buttons are plainly in the DOM above.
+    expect(screen.queryAllByRole("button")).toHaveLength(0);
+  });
+
+  it("still carries a tooltip, which is the pointer user's only hint", () => {
+    const { container } = render(<CollectionToggle paintId="p1" interactive="pointer" />);
+    expect(container.querySelector("button")?.getAttribute("title")).toBe(
+      "Add to paints you own",
+    );
+  });
+
+  it("acts on mousedown without reaching the row underneath", () => {
+    // The suggestion row has its own `onMouseDown` that picks the paint and
+    // closes the dropdown. Without stopPropagation, clicking ✓ would add the
+    // paint *and* navigate away from the search.
+    const rowMouseDown = vi.fn();
+    const { container } = render(
+      <div onMouseDown={rowMouseDown}>
+        <CollectionToggle paintId="p1" interactive="pointer" />
+      </div>,
+    );
+
+    const own = container.querySelector("button")!;
+    fireEvent.mouseDown(own);
+
+    expect(setStatus).toHaveBeenCalledWith("p1", "owned");
+    expect(rowMouseDown).not.toHaveBeenCalled();
+  });
+
+  it("does nothing on a plain click, so the row's mousedown owns the gesture", () => {
+    const { container } = render(<CollectionToggle paintId="p1" interactive="pointer" />);
+    fireEvent.click(container.querySelector("button")!);
+    expect(setStatus).not.toHaveBeenCalled();
+  });
+
+  it("renders nothing when the collection is switched off", () => {
+    enabled = false;
+    const { container } = render(<CollectionToggle paintId="p1" interactive="pointer" />);
+    expect(container.innerHTML).toBe("");
   });
 });
 

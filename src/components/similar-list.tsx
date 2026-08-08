@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { MatchBadge } from "./match-badge";
 import { CollectionToggle } from "./collection/collection-toggle";
+import { useCollection } from "./collection/collection-provider";
 
 /** The minimal shape the list renders from (shared by precomputed + recomputed). */
 export interface RenderItem {
@@ -34,22 +37,25 @@ export function SimilarList({
    */
   linkQuery: string;
 }) {
+  // Only for the name's padding, below. The toggle hides itself independently.
+  const { enabled } = useCollection();
+
   return (
     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2">
       {items.map((item) => (
-        // The toggle is a flex sibling of the anchor, not an overlay on it.
-        // Same constraint as `PaintCard` — the whole row is one link and a
-        // button can't nest inside it — but the opposite answer, because there
-        // is no dead space here to overlay: the card is text edge to edge, and
-        // an absolutely-positioned control would sit on top of the paint name.
+        // The toggle overlays the card rather than sitting beside it. As a flex
+        // sibling it took its ~64px, plus the gap, out of the card's own width
+        // — enough to wrap "Blood For The Blood God" onto two lines and truncate
+        // its brand to "Cit…". Overlaying puts it inside the card's bounds, so
+        // only the name pays, and only by its own padding.
         //
-        // It costs the name no width when signed out, which is almost every
-        // visitor: `CollectionToggle` renders `null` then, and a `gap` with
-        // nothing on the other side of it takes no space.
-        <li key={item.id} className="flex items-center gap-2">
+        // Same constraint as `PaintCard` — the whole row is one link and a
+        // button can't nest inside it — so it's a sibling of the anchor,
+        // positioned over it.
+        <li key={item.id} className="relative">
           <Link
             href={`/paints/${item.id}${linkQuery}`}
-            className="flex h-full min-w-0 flex-1 items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-full items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span
               className="h-12 w-12 shrink-0 rounded-md border border-border"
@@ -62,7 +68,15 @@ export function SimilarList({
                 (russian Postwar Green)" about 12 characters a line, wrapping to
                 six lines against a vertically-centred pill. */}
             <span className="min-w-0 flex-1">
-              <span className="block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2">
+              {/* Only the name clears the toggle. It sits roughly 8–40px down
+                  inside a `p-3` card, so it covers both lines of the clamp but
+                  stops above the `brand · range` row — which is the line that
+                  was truncating, and which now gets the full width back. */}
+              <span
+                className={`block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 ${
+                  enabled ? "pr-16" : ""
+                }`}
+              >
                 {item.name}
               </span>
               <span className="mt-1 flex items-start justify-between gap-2">
@@ -73,7 +87,9 @@ export function SimilarList({
               </span>
             </span>
           </Link>
-          <CollectionToggle paintId={item.id} paintName={item.name} />
+          <div className="absolute right-2 top-2">
+            <CollectionToggle paintId={item.id} paintName={item.name} />
+          </div>
         </li>
       ))}
     </ul>

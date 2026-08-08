@@ -2,6 +2,7 @@
 
 import { useRef, useState, type FocusEvent } from "react";
 import type { BrowsePaint } from "@/lib/paints/types";
+import { cataloguePaintId } from "@/lib/paints/catalogue-match";
 import { components, displayHex, hasMix, mixName, ratioLabel } from "@/lib/scheme/mix";
 import {
   MAX_MIX_COMPONENTS,
@@ -18,6 +19,7 @@ import type { HoverHandlers } from "../scheme-bars";
 import { AddPaint } from "./add-paint";
 import { IconBtn } from "./icon-btn";
 import { RoleTag } from "./role-tag";
+import { CollectionToggle } from "../collection/collection-toggle";
 
 /**
  * Whether a focusout means the user has genuinely left a panel, so it should
@@ -95,10 +97,18 @@ export function LayerRow({
   const showCustom = paint.custom && paint.brand && paint.brand !== "custom";
   const mixFull = (paint.mix?.length ?? 0) >= MAX_MIX_COMPONENTS;
   const showNote = noteOpen || Boolean(paint.note);
+  // The primary paint only. A mix's ingredients are catalogue paints too, but
+  // they render as a nested list under this row and a control on each line would
+  // crowd it; the main paint is what the row is about.
+  //
+  // `null` for a custom colour, for a catalogue that hasn't loaded, and for a
+  // paint the catalogue no longer has under that name — all of which simply
+  // render no toggle.
+  const catalogueId = cataloguePaintId(paint, dbPaints);
 
   return (
     <li
-      className={`group grid grid-cols-[auto_1fr_auto] items-start gap-2.5 rounded-lg px-2 py-1.5 transition-colors ${hot ? "bg-muted" : "hover:bg-muted"}`}
+      className={`group grid grid-cols-[auto_1fr_auto_auto] items-start gap-2.5 rounded-lg px-2 py-1.5 transition-colors ${hot ? "bg-muted" : "hover:bg-muted"}`}
       onPointerEnter={() => hover.mark(paint.id)}
       onPointerLeave={hover.unmark}
     >
@@ -265,6 +275,15 @@ export function LayerRow({
           ) : (
             <p className="mt-0.5 text-[11.5px] italic text-muted-foreground">{paint.note}</p>
           ))}
+      </div>
+      {/* Its own column, deliberately outside the cluster below: that one fades
+          to 40% until the row is hovered, which is right for actions but wrong
+          for state — a faded ✓ would hide whether the paint is already in your
+          collection. */}
+      <div className="mt-0.5 flex-none">
+        {catalogueId ? (
+          <CollectionToggle paintId={catalogueId} paintName={paint.name} />
+        ) : null}
       </div>
       <div className="flex flex-none gap-0.5 opacity-40 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
         <IconBtn label="Move up (towards base)" disabled={index === 0} onClick={() => onMove(-1)}>

@@ -49,39 +49,77 @@ function useToggleHandlers(paintId: string) {
 }
 
 /**
- * The compact pair, for a browse card or an alternatives row.
+ * How the compact toggle participates in the page.
  *
- * `stopPropagation` isn't enough on its own here — these sit *beside* the card's
- * anchor rather than inside it, so a click never reaches the link in the first
- * place. What the handler does prevent is the button's own default.
+ * `focusable` is the normal control: a real tab stop with an accessible name.
+ *
+ * `pointer` exists for one caller — the search suggestions — where the row is a
+ * `role="option"` inside a combobox listbox. ARIA forbids focusable descendants
+ * there, *and* makes an option's children presentational, so an assistive
+ * technology ignores these buttons' roles whatever we do. Rather than pretend
+ * otherwise, that variant takes itself out of the tab order and marks itself
+ * `aria-hidden`: a deliberate pointer-only shortcut, in the same spirit as the
+ * bar tooltip in `scheme-bars`. Nothing is lost — the same paint can be added
+ * from the browse grid, its own page, the alternatives list or the visualiser,
+ * all fully keyboard-operable.
+ */
+export type ToggleInteraction = "focusable" | "pointer";
+
+/**
+ * The compact pair, for a browse card, an alternatives row or a suggestion.
+ *
+ * `stopPropagation` isn't decoration. On a card these sit *beside* the anchor,
+ * so a click never reaches the link — but in the suggestions dropdown the row
+ * itself has an `onMouseDown` that picks the paint and closes the list, and
+ * without stopping propagation clicking ✓ would add the paint *and* navigate
+ * away from the search.
  */
 export function CollectionToggle({
   paintId,
   paintName,
+  interactive = "focusable",
 }: {
   paintId: string;
   /** Included in the accessible name, so a screen reader hears which paint. */
   paintName?: string;
+  interactive?: ToggleInteraction;
 }) {
   const { enabled } = useCollection();
   const { status, press } = useToggleHandlers(paintId);
 
   if (!enabled) return null;
 
+  const pointerOnly = interactive === "pointer";
+
   return (
-    <span className="flex gap-1 rounded-md bg-card/90 p-0.5 shadow-sm ring-1 ring-border backdrop-blur-sm">
+    <span
+      className="flex gap-1 rounded-md bg-card/90 p-0.5 shadow-sm ring-1 ring-border backdrop-blur-sm"
+      aria-hidden={pointerOnly || undefined}
+    >
       {(Object.keys(LISTS) as PaintStatus[]).map((list) => {
         const active = status === list;
+        // One string for the tooltip and the accessible name. Building them
+        // separately is how they drift, and a control that announces something
+        // other than what it shows is worse than either alone — the same reason
+        // `facetLabel` exists.
+        const label = actionLabel(list, active, paintName);
+        const act = (e: { preventDefault: () => void; stopPropagation: () => void }) => {
+          e.preventDefault();
+          e.stopPropagation();
+          press(list);
+        };
         return (
           <button
             key={list}
             type="button"
             aria-pressed={active}
-            aria-label={actionLabel(list, active, paintName)}
-            onClick={(e) => {
-              e.preventDefault();
-              press(list);
-            }}
+            aria-label={label}
+            title={label}
+            tabIndex={pointerOnly ? -1 : undefined}
+            // In the dropdown the surrounding row acts on mousedown, and the
+            // input's blur closes the list 120ms later — a click handler would
+            // fire too late, on an element that has already gone.
+            {...(pointerOnly ? { onMouseDown: act } : { onClick: act })}
             className={`flex h-7 w-7 items-center justify-center rounded text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               active
                 ? "bg-primary text-primary-foreground"
@@ -112,12 +150,14 @@ export function CollectionButtons({ paintId }: { paintId: string }) {
       <div className="flex gap-2">
         {(Object.keys(LISTS) as PaintStatus[]).map((list) => {
           const active = status === list;
+          const label = actionLabel(list, active);
           return (
             <button
               key={list}
               type="button"
               aria-pressed={active}
-              aria-label={actionLabel(list, active)}
+              aria-label={label}
+              title={label}
               onClick={() => press(list)}
               className={`rounded-md border px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                 active
