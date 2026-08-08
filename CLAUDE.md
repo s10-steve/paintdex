@@ -825,8 +825,15 @@ it `[Unreleased]`.
   needing schema changes has them applied and verified against production
   *before* the merge that deploys the code. Leaving the changelog unversioned
   holds nothing back; it just leaves production running code no version names.
-- Tag every release (`git tag vX.Y.Z`). There were no tags at all until v0.13.0,
-  which is part of why nothing anchored a version to a commit.
+- Tag every release (`git tag -a vX.Y.Z`, then `git push origin vX.Y.Z`).
+  Tagging here has always been sporadic — `v0.3.0`, `v0.5.0`, `v0.7.0` and
+  `v0.9.0` exist and nothing since, so the last four releases have no commit
+  behind their version. That gap is a large part of why the changelog was able
+  to drift without anyone noticing.
+  - **`git tag` in a fresh clone of this repo prints nothing**, because the
+    clone is made without tags. That is not evidence the repo is untagged; ask
+    the remote with `git ls-remote --tags origin` before concluding anything
+    about release history.
 
 ## Deploying
 
