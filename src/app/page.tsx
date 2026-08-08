@@ -211,6 +211,54 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-4xl px-4 pb-12">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card">
+          <div className="space-y-6 p-6 sm:p-8">
+            <div className="text-left">
+              <h2 className="text-2xl font-bold tracking-tight">
+                Keep track of the paints you own
+              </h2>
+              <p className="mt-2 max-w-[70ch] text-muted-foreground">
+                Every paint has a ✓ and a ☆ — on the browse grid, on its own page,
+                beside each alternative when you&apos;re comparing colours, and on
+                every layer of a scheme in the visualiser. One marks a paint as
+                yours, the other puts it on your wishlist, so you can tell at a
+                glance whether a match you&apos;ve just found is already in the box
+                or still needs buying.
+              </p>
+              <p className="mt-2 max-w-[70ch] text-muted-foreground">
+                <b className="font-medium text-foreground">My paints</b> shows both
+                lists, filtered by brand, type or colour family the same way the
+                main database is, and lets you move paints between them as you buy
+                them. You can export the lot as a file whenever you like — it&apos;s
+                your collection, not ours to hold onto.
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/my-paints"
+                  className="inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+                >
+                  Open my paints →
+                </Link>
+                <Link
+                  href="/paints"
+                  className="inline-block rounded-lg border border-border px-5 py-2.5 text-sm font-medium hover:bg-accent"
+                >
+                  Start from the database
+                </Link>
+              </div>
+              {/* Stated plainly rather than discovered at the sign-in gate. This
+                  is the one feature with no signed-out mode at all — a list of
+                  paints is worth more than one browser's storage. */}
+              <p className="mt-3 text-xs text-muted-foreground">
+                Needs a Google account, so your collection follows you between your
+                phone and your desk.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto grid max-w-4xl gap-4 px-4 pb-20 sm:grid-cols-2">
         <Feature
           title="Searchable & filterable"

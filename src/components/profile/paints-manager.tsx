@@ -404,28 +404,35 @@ function PaintSection({
       ) : (
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {bucket.paints.map((paint) => (
+            // Two rows, not one. Side by side, "Move to wishlist" and "Remove"
+            // took about 250px of a ~370px card and truncated most names to a
+            // few characters — "Abaddon Bl…", "Agrax Earth…". Dropping them to
+            // their own line gives the name the full width and costs one line
+            // of card height, which is the cheaper of the two.
             <li
               key={paint.id}
-              className="flex items-center gap-3 rounded-xl border border-border bg-card p-3 shadow-sm"
+              className="flex flex-col gap-2 rounded-xl border border-border bg-card p-3 shadow-sm"
             >
-              <span
-                className="h-10 w-10 shrink-0 rounded-md border border-border"
-                style={{ backgroundColor: paint.hex }}
-                aria-hidden="true"
-              />
-              <span className="min-w-0 flex-1">
-                <Link
-                  href={`/paints/${paint.id}`}
-                  className="block truncate text-sm font-medium hover:text-primary"
-                >
-                  {paint.name}
-                </Link>
-                <span className="block truncate text-xs text-muted-foreground">
-                  {paint.brand} · {paint.range}
-                  {paint.discontinued ? " · discontinued" : ""}
+              <span className="flex items-center gap-3">
+                <span
+                  className="h-12 w-12 shrink-0 rounded-md border border-border"
+                  style={{ backgroundColor: paint.hex }}
+                  aria-hidden="true"
+                />
+                <span className="min-w-0 flex-1">
+                  <Link
+                    href={`/paints/${paint.id}`}
+                    className="block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 hover:text-primary"
+                  >
+                    {paint.name}
+                  </Link>
+                  <span className="block truncate text-xs text-muted-foreground">
+                    {paint.brand} · {paint.range}
+                    {paint.discontinued ? " · discontinued" : ""}
+                  </span>
                 </span>
               </span>
-              <span className="flex shrink-0 gap-1.5">
+              <span className="flex justify-end gap-1.5">
                 <button
                   type="button"
                   onClick={() => onMove(paint.id)}
@@ -451,25 +458,36 @@ function PaintSection({
               the count would otherwise not add up, and the only way to clear
               one is a Remove button, which needs a row to sit on. */}
           {bucket.stale.map((paintId) => (
+            // Same two-row shape as a real paint's card, so the two sit level
+            // in the grid rather than one being visibly shorter.
             <li
               key={paintId}
-              className="flex items-center gap-3 rounded-xl border border-dashed border-border bg-card p-3"
+              className="flex flex-col gap-2 rounded-xl border border-dashed border-border bg-card p-3"
             >
-              <span className="h-10 w-10 shrink-0 rounded-md border border-dashed border-border" aria-hidden="true" />
-              <span className="min-w-0 flex-1">
-                <span className="block truncate font-mono text-xs">{paintId}</span>
-                <span className="block text-xs text-muted-foreground">
-                  No longer in the catalogue
+              <span className="flex items-center gap-3">
+                <span
+                  className="h-12 w-12 shrink-0 rounded-md border border-dashed border-border"
+                  aria-hidden="true"
+                />
+                <span className="min-w-0 flex-1">
+                  <span className="block font-mono text-xs [overflow-wrap:anywhere] line-clamp-2">
+                    {paintId}
+                  </span>
+                  <span className="block text-xs text-muted-foreground">
+                    No longer in the catalogue
+                  </span>
                 </span>
               </span>
-              <button
-                type="button"
-                onClick={() => onRemove(paintId)}
-                aria-label={`Remove ${paintId} from your collection`}
-                className={`${BUTTON} shrink-0 text-red-600 dark:text-red-400`}
-              >
-                Remove
-              </button>
+              <span className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => onRemove(paintId)}
+                  aria-label={`Remove ${paintId} from your collection`}
+                  className={`${BUTTON} text-red-600 dark:text-red-400`}
+                >
+                  Remove
+                </button>
+              </span>
             </li>
           ))}
         </ul>

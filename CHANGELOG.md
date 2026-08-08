@@ -47,6 +47,8 @@ writes, and there is no fallback.
   by hand show nothing, as there's no catalogue paint behind them.
 - **The ✓ and ☆ buttons have tooltips**, so you don't have to guess which is
   which.
+- **A panel on the homepage** explaining the whole thing, since none of it is
+  discoverable if you don't already know the buttons are there.
 
 ### Fixed
 
