@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 Finishes the two social-sharing items left on the roadmap after the share-image
-studio shipped.
+studio shipped, and gives the visualiser a pass of its own: a layer can now be a
+mix of paints with a ratio, and can carry a note about how you applied it.
 
 **This needs database changes applied before the update goes live** — run
 `0002-v0.13.0-migration-tracking.sql`, `0003-v0.13.0-scheme-photos.sql` and
@@ -19,6 +20,26 @@ fallback for either.
 
 ### Added
 
+- **A layer can be a mix of paints.** "1:1 Agrax Earthshade + Lahmian Medium" is
+  one wash on the model, and it's now one entry in the scheme rather than two
+  stacked layers pretending to be separate coats. Add up to five extra paints to
+  a layer with **+ Mix**, set the parts (1:1, 2:1, 2:1:1), and the swatch and the
+  bar show the blend.
+- **Tick "thins" for a medium or a thinner.** Lahmian Medium is a near-white in
+  the paint database, so blending it as if it were a pigment turns a 1:1 Agrax
+  wash into pale beige — when the real thing is the same brown, just thinner.
+  Ticking **thins** keeps that ingredient in the ratio you read but out of the
+  colour, so the mix looks like what's in the pot. It's a manual tick because
+  there's no reliable way to spot a medium from the database: the same product
+  category holds Crackle Medium and Blood for the Blood God, and "Medium" in a
+  paint's name is usually a real colour, as in Medium Sea Grey.
+- **Notes on a layer.** A short instruction — "airbrush over the upper 75%",
+  "glaze into fleshy areas like lips and palms" — kept with the layer it belongs
+  to. Notes travel with a shared scheme and show in the recipe on its page, so
+  the part that's actually hard to reproduce is no longer the part that gets lost.
+  They're deliberately left off the share image: a note needs its own line, and
+  the labels are already packed tightly enough that adding one would push whole
+  elements off the picture.
 - **Your model photo is saved with the scheme.** Signed in, the photo you add in
   the share-image studio now goes with your account rather than staying in one
   browser: open the same scheme on another device and the photo is already there.
@@ -36,6 +57,18 @@ fallback for either.
 
 ### Changed
 
+- **The weight slider is gone from every layer.** It set how much of the bar a
+  layer took, which is what choosing base, layer or highlight already says — so
+  it cost a line in every row to restate the role. The role now sizes the band on
+  its own. One consequence worth knowing: the example schemes were tuned with it,
+  so their ramps are slightly different now — a final highlight reads a little
+  thicker, a wash band a little thinner.
+- **Quieter element cards.** The paint count in each card's header and the
+  "▲ base / highlight ▼" hint under it have both gone. The ordering is spelled
+  out once above the list, and every bar already carries its own count, so on a
+  seven-element scheme those two facts were being restated fourteen times.
+- **The note box and the mix picker close when you click away**, instead of
+  staying open until you press the button a second time.
 - The **Create shareable image** button says **Edit shareable image** once the
   scheme has one. "Create" promised a blank studio and then opened onto your own
   model.
@@ -60,6 +93,15 @@ Not user-facing, but the reason the above is safe to ship.
   writes its own filename into, so "is production up to date?" is a query rather
   than a memory. That question had no answer at all when v0.12.0's migration
   silently rolled back.
+- **Paint editing has tests for the first time.** Mixes, ratios, the medium tick
+  and notes, and — the cases that matter most — the deletions: a layer that stops
+  being a mix has to end up byte-for-byte identical to a plain paint, or every
+  saved scheme looks edited on its next load and re-saves itself.
+- A test that waited on the autosave was a coin flip — the save is debounced by
+  exactly one second and the test's patience was also exactly one second, so it
+  only passed on an idle machine. It now controls the clock directly.
+- `nanoid` bumped for a high-severity advisory published while this was in
+  review. Build-time only; nothing shipped to the browser changed.
 
 ## [0.12.0] - 2026-08-02
 
