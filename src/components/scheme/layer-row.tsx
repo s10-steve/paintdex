@@ -42,6 +42,28 @@ function focusLeft(e: FocusEvent, ...stay: Array<Node | null>): boolean {
 }
 
 /**
+ * The collection toggle for one paint in a scheme, or nothing.
+ *
+ * Wraps the catalogue lookup so the two call sites below don't each have to
+ * handle its `null`: a custom colour, a catalogue that hasn't loaded, and a
+ * paint renamed out of the catalogue all mean "no button", never a button
+ * wired to nothing.
+ */
+function PaintToggle({
+  paint,
+  dbPaints,
+}: {
+  paint: SchemePaint | MixComponent;
+  dbPaints: BrowsePaint[] | null;
+}) {
+  const id = cataloguePaintId(paint, dbPaints);
+  if (!id) return null;
+  // `sm` throughout the visualiser: rows are dense, and a mixed entry carries
+  // one of these per ingredient. 24px is the WCAG 2.5.8 floor, not a preference.
+  return <CollectionToggle paintId={id} paintName={paint.name} size="sm" />;
+}
+
+/**
  * One paint within an element: swatch, name/meta, role, row actions — and, when
  * the entry is a mix, the ingredient list with its parts ratio.
  *
@@ -97,18 +119,9 @@ export function LayerRow({
   const showCustom = paint.custom && paint.brand && paint.brand !== "custom";
   const mixFull = (paint.mix?.length ?? 0) >= MAX_MIX_COMPONENTS;
   const showNote = noteOpen || Boolean(paint.note);
-  // The primary paint only. A mix's ingredients are catalogue paints too, but
-  // they render as a nested list under this row and a control on each line would
-  // crowd it; the main paint is what the row is about.
-  //
-  // `null` for a custom colour, for a catalogue that hasn't loaded, and for a
-  // paint the catalogue no longer has under that name — all of which simply
-  // render no toggle.
-  const catalogueId = cataloguePaintId(paint, dbPaints);
-
   return (
     <li
-      className={`group grid grid-cols-[auto_1fr_auto_auto] items-start gap-2.5 rounded-lg px-2 py-1.5 transition-colors ${hot ? "bg-muted" : "hover:bg-muted"}`}
+      className={`group grid grid-cols-[auto_1fr_auto] items-start gap-2.5 rounded-lg px-2 py-1.5 transition-colors ${hot ? "bg-muted" : "hover:bg-muted"}`}
       onPointerEnter={() => hover.mark(paint.id)}
       onPointerLeave={hover.unmark}
     >
@@ -168,6 +181,11 @@ export function LayerRow({
                   />
                   thins
                 </label>
+                {/* Each ingredient is a real paint you can own, and this is
+                    where a mix's toggles live — up beside the title they pushed
+                    "Nuln Oil + Lahmian …" into truncating. A medium gets one
+                    too: you still have to buy Lahmian Medium. */}
+                <PaintToggle paint={c} dbPaints={dbPaints} />
                 {slot > 0 ? (
                   <IconBtn
                     label={`Remove ${c.name} from the mix`}
@@ -187,6 +205,12 @@ export function LayerRow({
         )}
 
         <div className="mt-1.5 flex flex-wrap items-center gap-2">
+          {/* Below the title, not beside it. Up in the header it competed with
+              the name for the same row and pushed "Nuln Oil + Lahmian …" into
+              truncating; here it sits in a row that was already half empty.
+              A mixed entry has none — each of its ingredients carries its own,
+              in the list above, since `components()` includes the primary. */}
+          {mixed ? null : <PaintToggle paint={paint} dbPaints={dbPaints} />}
           <select
             value={paint.role}
             onChange={(e) => onSetRole(e.target.value as SchemeRole)}
@@ -275,15 +299,6 @@ export function LayerRow({
           ) : (
             <p className="mt-0.5 text-[11.5px] italic text-muted-foreground">{paint.note}</p>
           ))}
-      </div>
-      {/* Its own column, deliberately outside the cluster below: that one fades
-          to 40% until the row is hovered, which is right for actions but wrong
-          for state — a faded ✓ would hide whether the paint is already in your
-          collection. */}
-      <div className="mt-0.5 flex-none">
-        {catalogueId ? (
-          <CollectionToggle paintId={catalogueId} paintName={paint.name} />
-        ) : null}
       </div>
       <div className="flex flex-none gap-0.5 opacity-40 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
         <IconBtn label="Move up (towards base)" disabled={index === 0} onClick={() => onMove(-1)}>

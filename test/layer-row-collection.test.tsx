@@ -57,6 +57,17 @@ const CATALOGUE: BrowsePaint[] = [
     family: "brown",
     l: 25,
   } as BrowsePaint,
+  {
+    id: "citadel-lahmian-medium",
+    name: "Lahmian Medium",
+    brand: "Citadel",
+    range: "Technical",
+    type: "technical",
+    hex: "#F9F9F9",
+    discontinued: false,
+    family: "neutral",
+    l: 97,
+  } as BrowsePaint,
 ];
 
 const handlers: ElementHandlers = {
@@ -134,25 +145,48 @@ describe("paints with no catalogue id behind them", () => {
 });
 
 describe("mixes", () => {
-  it("gives the row one toggle, for the primary paint only", () => {
-    // The ingredients are catalogue paints too, but a control on each line of an
-    // already-nested list would crowd the row.
-    renderCard([
+  const MIXED: SchemePaint = {
+    ...AGRAX,
+    parts: 1,
+    mix: [
       {
-        ...AGRAX,
+        name: "Lahmian Medium",
+        brand: "Citadel",
+        range: "Technical",
+        hex: "#F9F9F9",
         parts: 1,
-        mix: [
-          {
-            name: "Lahmian Medium",
-            brand: "Citadel",
-            range: "Technical",
-            hex: "#F9F9F9",
-            parts: 1,
-          },
-        ],
+        medium: true,
       },
+    ],
+  };
+
+  it("puts a toggle on each ingredient instead of one on the row", () => {
+    // A single toggle in the header would have to mean the primary paint
+    // specifically, which isn't what "Agrax Earthshade + Lahmian Medium" reads
+    // as — and up there it competed with the title, truncating it.
+    renderCard([MIXED]);
+    expect(toggleFor("Agrax Earthshade")).not.toBeNull();
+    expect(toggleFor("Lahmian Medium")).not.toBeNull();
+  });
+
+  it("gives a medium one too — you still have to buy it", () => {
+    renderCard([MIXED]);
+    expect(toggleFor("Lahmian Medium")).not.toBeNull();
+  });
+
+  it("counts exactly one toggle pair per ingredient", () => {
+    // Guards against the row keeping its own toggle as well, which would offer
+    // the primary paint twice.
+    renderCard([MIXED]);
+    // Two ingredients, two buttons each.
+    expect(screen.getAllByRole("button", { name: /to paints you own$/ })).toHaveLength(2);
+  });
+
+  it("skips an ingredient the catalogue doesn't have", () => {
+    renderCard([
+      { ...MIXED, mix: [{ ...MIXED.mix![0], name: "Some Discontinued Medium" }] },
     ]);
     expect(toggleFor("Agrax Earthshade")).not.toBeNull();
-    expect(toggleFor("Lahmian Medium")).toBeNull();
+    expect(toggleFor("Some Discontinued Medium")).toBeNull();
   });
 });

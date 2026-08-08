@@ -66,6 +66,21 @@ function useToggleHandlers(paintId: string) {
 export type ToggleInteraction = "focusable" | "pointer";
 
 /**
+ * Button size. `sm` is 24px, which is the floor rather than a taste call: WCAG
+ * 2.5.8 sets 24×24 as the minimum target, and it's the same number the
+ * alternatives plot's marks are sized to. Don't go below it.
+ *
+ * The visualiser uses `sm` throughout — its layer rows are dense, and a mixed
+ * entry carries one toggle per ingredient.
+ */
+export type ToggleSize = "sm" | "md";
+
+const SIZES: Record<ToggleSize, string> = {
+  sm: "h-6 w-6 text-[11px]",
+  md: "h-7 w-7 text-xs",
+};
+
+/**
  * The compact pair, for a browse card, an alternatives row or a suggestion.
  *
  * `stopPropagation` isn't decoration. On a card these sit *beside* the anchor,
@@ -78,11 +93,13 @@ export function CollectionToggle({
   paintId,
   paintName,
   interactive = "focusable",
+  size = "md",
 }: {
   paintId: string;
   /** Included in the accessible name, so a screen reader hears which paint. */
   paintName?: string;
   interactive?: ToggleInteraction;
+  size?: ToggleSize;
 }) {
   const { enabled } = useCollection();
   const { status, press } = useToggleHandlers(paintId);
@@ -120,7 +137,7 @@ export function CollectionToggle({
             // input's blur closes the list 120ms later — a click handler would
             // fire too late, on an element that has already gone.
             {...(pointerOnly ? { onMouseDown: act } : { onClick: act })}
-            className={`flex h-7 w-7 items-center justify-center rounded text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+            className={`flex ${SIZES[size]} items-center justify-center rounded font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               active
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"

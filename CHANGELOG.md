@@ -42,8 +42,9 @@ writes, and there is no fallback.
 - **The buttons in the visualiser too.** Every layer of a scheme now shows
   whether you own that paint, and lets you add it to your wishlist without
   leaving the designer — which is the moment you actually discover you need it.
-  Colours you typed in by hand show nothing, since there's no catalogue paint
-  behind them.
+  A layer that's a blend gets a button for each paint in it, including the
+  medium, since those are separate pots you have to own. Colours you typed in
+  by hand show nothing, as there's no catalogue paint behind them.
 - **The ✓ and ☆ buttons have tooltips**, so you don't have to guess which is
   which.
 

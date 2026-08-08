@@ -779,11 +779,22 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   from every scheme saved before it, and this lookup would still be the
   fallback. `null` is a normal answer — custom colour, unloaded catalogue,
   renamed paint — and the caller renders no toggle.
-- **The layer row's toggle is its own grid column**, not part of the ↑↓✕
-  cluster: that cluster is `opacity-40` until hover, which is right for actions
-  and wrong for state — a faded ✓ would hide whether the paint is already in
-  your collection. Mix ingredients get no toggle; the row is about its primary
-  paint.
+- **The layer row's toggle sits below the title, and a mix puts one on each
+  ingredient.** Both follow from the same thing: beside the title it shared a
+  row with the paint name and truncated it — "Nuln Oil + Lahmian …". A plain
+  paint's toggle now goes in the action row (role select, `+ Mix`, `Note`),
+  which was already half empty; a mixed entry's go on its ingredient lines,
+  which is also the honest answer to *which* paint one toggle up in the header
+  would have meant. `components()` lists the primary as slot 0, so those lines
+  cover it — hence `mixed ? null : …` on the action-row one, or the primary
+  would be offered twice. Mediums get a toggle too: you still have to buy
+  Lahmian Medium.
+- **The visualiser uses `size="sm"` throughout** — 24px, which is the WCAG
+  2.5.8 minimum target and the same number the plot's marks use. It's a floor,
+  not a preference; don't shrink it further to win space in a dense row.
+- **Not inside the ↑↓✕ cluster**, wherever it lands: that cluster is
+  `opacity-40` until hover, which is right for actions and wrong for state — a
+  faded ✓ would hide whether the paint is already in your collection.
 - **`/my-paints` filters in local state, not the URL.** The URL-as-truth rule
   exists for shareability, and this page is `noindex` and per-user — a link to
   it means nothing to anyone else. It also hard-wires `includeDiscontinued: true`
