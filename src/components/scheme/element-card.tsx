@@ -83,12 +83,6 @@ export function ElementCard({
           spellCheck={false}
           className="min-w-0 flex-1 rounded-md bg-transparent px-1.5 py-1 text-[15px] font-semibold tracking-tight outline-none hover:bg-card focus:bg-card focus:ring-1 focus:ring-inset focus:ring-input"
         />
-        <span
-          className="flex-none text-xs tabular-nums text-muted-foreground"
-          title={`${element.paints.length} ${element.paints.length === 1 ? "paint" : "paints"}`}
-        >
-          {element.paints.length}
-        </span>
         <div className="flex flex-none items-center gap-0.5">
           <IconBtn
             label="Move element earlier (larger area)"
@@ -110,13 +104,10 @@ export function ElementCard({
         </div>
       </div>
 
-      {element.paints.length > 0 && (
-        <div className="flex justify-between px-3 pt-1 text-[10.5px] tracking-wide text-muted-foreground">
-          <span>▲ base</span>
-          <span>highlight ▼</span>
-        </div>
-      )}
-
+      {/* No per-card "▲ base / highlight ▼" or paint count: the ordering is
+          stated once beside the "Elements & paints" heading, and the count is
+          already on every bar's caption. Repeating either on each card is noise
+          that scales with the number of elements. */}
       <ul className="flex flex-col gap-0.5 p-2">
         {element.paints.map((paint, i) => (
           <LayerRow
