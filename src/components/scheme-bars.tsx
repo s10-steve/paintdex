@@ -18,6 +18,7 @@ import {
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { displayHex, mixTitle, ratioLabel } from "@/lib/scheme/mix";
 import { roleOf, weightOf, type SchemeElement, type SchemePaint } from "@/lib/scheme/types";
 import {
   barModel,
@@ -38,9 +39,18 @@ export type HoverHandlers = {
   unmark: () => void;
 };
 
-/** Accessible label for a bar band, e.g. "Base: Deck Tan (#ABA390)". */
+/**
+ * Accessible label for a bar band, e.g. "Base: Deck Tan (#ABA390)", or
+ * "Wash: 1:1 Agrax Earthshade + Lahmian Medium (#3C3C28). Note: thin it right
+ * down" for a mixed, noted entry.
+ *
+ * This is the only route by which a layer note reaches a screen reader on the
+ * bar — the tooltip beside it is pointer-only. A plain, unnoted paint keeps
+ * exactly the string it had before mixes existed.
+ */
 export function paintLabel(p: SchemePaint): string {
-  return `${roleOf(p).label}: ${p.name} (${p.hex.toUpperCase()})`;
+  const base = `${roleOf(p).label}: ${mixTitle(p)} (${displayHex(p).toUpperCase()})`;
+  return p.note ? `${base}. Note: ${p.note}` : base;
 }
 
 /**
@@ -105,22 +115,44 @@ export function useBarHover() {
   const tooltip = (
     <div
       ref={tipRef}
-      className="pointer-events-none fixed left-0 top-0 z-50 -translate-x-1/2 -translate-y-2 whitespace-nowrap rounded-md bg-foreground px-2 py-1.5 text-xs text-background opacity-0 shadow-xl transition-opacity"
+      // `whitespace-nowrap` sits on the first line rather than the root: a mix
+      // name plus a ratio is far longer than a paint name, and the box has no
+      // collision detection, so an unbounded one runs off the viewport edge.
+      className="pointer-events-none fixed left-0 top-0 z-50 max-w-[min(16rem,90vw)] -translate-x-1/2 -translate-y-2 rounded-md bg-foreground px-2 py-1.5 text-xs text-background opacity-0 shadow-xl transition-opacity"
     >
       {tipPaint && (
         <>
-          <span
-            className="mr-1.5 inline-block h-2.5 w-2.5 rounded-sm align-baseline ring-1 ring-white/30"
-            style={{ background: tipPaint.hex }}
-          />
-          <span
-            className="mr-1.5 text-[10px] font-bold uppercase tracking-wide"
-            style={{ color: roleOf(tipPaint).cssVar }}
-          >
-            {roleOf(tipPaint).label}
-          </span>
-          {tipPaint.name}
-          <span className="ml-1.5 font-mono opacity-70">{tipPaint.hex.toUpperCase()}</span>
+          <div className="truncate whitespace-nowrap">
+            <span
+              className="mr-1.5 inline-block h-2.5 w-2.5 rounded-sm align-baseline ring-1 ring-white/30"
+              style={{ background: displayHex(tipPaint) }}
+            />
+            <span
+              className="mr-1.5 text-[10px] font-bold uppercase tracking-wide"
+              style={{ color: roleOf(tipPaint).cssVar }}
+            >
+              {roleOf(tipPaint).label}
+            </span>
+            {ratioLabel(tipPaint) && (
+              <span className="mr-1 font-mono tabular-nums opacity-70">
+                {ratioLabel(tipPaint)}
+              </span>
+            )}
+            {tipPaint.name}
+            <span className="ml-1.5 font-mono opacity-70">
+              {displayHex(tipPaint).toUpperCase()}
+            </span>
+          </div>
+          {tipPaint.mix?.length ? (
+            <div className="mt-0.5 text-[10.5px] opacity-70">
+              with {tipPaint.mix.map((c) => c.name).join(" + ")}
+            </div>
+          ) : null}
+          {tipPaint.note && (
+            <div className="mt-0.5 line-clamp-2 text-[10.5px] italic opacity-70">
+              {tipPaint.note}
+            </div>
+          )}
         </>
       )}
     </div>
@@ -200,7 +232,7 @@ export function Bar({
             placement = {
               bottom: `${(bottom * 100).toFixed(2)}%`,
               height: `${(thick * 100).toFixed(2)}%`,
-              background: `linear-gradient(to top, transparent, ${ov.paint.hex} 50%, transparent)`,
+              background: `linear-gradient(to top, transparent, ${displayHex(ov.paint)} 50%, transparent)`,
             };
           } else {
             // A crisp band matching the ramp's hard steps. `max`/`min` keep it
@@ -210,7 +242,7 @@ export function Bar({
             placement = {
               bottom: `max(0px, min(calc(100% - ${BANDED_OVERLAY_PX}px), calc(${(center * 100).toFixed(2)}% - ${half}px)))`,
               height: `${BANDED_OVERLAY_PX}px`,
-              background: ov.paint.hex,
+              background: displayHex(ov.paint),
             };
           }
           return (

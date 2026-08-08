@@ -518,6 +518,11 @@ describe("SchemeVisualiser multi-device reconciliation", () => {
   });
 
   it("discards refetched rows that a save has already overtaken", async () => {
+    // Fake timers, like every sibling that waits on the autosave. The debounce
+    // is exactly 1000ms and `waitFor`'s default budget is also 1000ms, so
+    // waiting for the save in real time is a dead heat — it passes only while
+    // the machine is idle enough for the final poll to land after the timer.
+    vi.useFakeTimers({ shouldAdvanceTime: true });
     const doc = scheme("Before");
     seedBound(doc, "row-1");
     await renderSignedIn([row("row-1", "Before", doc, "2026-01-04T00:00:00.000Z")]);
@@ -537,7 +542,10 @@ describe("SchemeVisualiser multi-device reconciliation", () => {
     await act(async () => {
       fireEvent.change(input, { target: { value: "Edited after the refetch started" } });
     });
-    await waitFor(() => expect(updateScheme).toHaveBeenCalled());
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(updateScheme).toHaveBeenCalled();
 
     await act(async () => {
       releaseRows([row("row-1", "Before", doc, "2026-01-04T00:00:00.000Z")]);

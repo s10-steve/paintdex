@@ -10,6 +10,7 @@ import { ImageResponse } from "next/og";
 import { getPublicSchemeBySlug } from "@/lib/supabase/server";
 import { importSchemeObject } from "@/lib/scheme/io";
 import { barModel } from "@/lib/scheme/bars";
+import { displayHex } from "@/lib/scheme/mix";
 
 export const alt = "A miniature paint scheme shared from Paintdex";
 export const size = { width: 1200, height: 630 };
@@ -127,7 +128,7 @@ export default async function OgImage({
                     {segs.map((s, j) => (
                       <div
                         key={j}
-                        style={{ display: "flex", flexGrow: s.frac, background: s.paint.hex }}
+                        style={{ display: "flex", flexGrow: s.frac, background: displayHex(s.paint) }}
                       />
                     ))}
                   </div>

@@ -3,6 +3,7 @@
 import type { BrowsePaint } from "@/lib/paints/types";
 import {
   roleOf,
+  type MixComponent,
   type SchemeElement,
   type SchemePaint,
   type SchemeRole,
@@ -10,6 +11,7 @@ import {
 import type { HoverHandlers } from "../scheme-bars";
 import { AddPaint } from "./add-paint";
 import { IconBtn } from "./icon-btn";
+import { displayHex } from "@/lib/scheme/mix";
 import { LayerRow } from "./layer-row";
 
 /**
@@ -27,7 +29,16 @@ export type ElementHandlers = {
   movePaint: (elementId: string, paintId: string, dir: -1 | 1) => void;
   removePaint: (elementId: string, paintId: string) => void;
   setRole: (elementId: string, paintId: string, role: SchemeRole) => void;
-  setWeight: (elementId: string, paintId: string, weight: number) => void;
+  /** Slot 0 is the primary paint; slot `i + 1` is its `mix[i]`. */
+  setParts: (elementId: string, paintId: string, slot: number, parts: number) => void;
+  setMedium: (elementId: string, paintId: string, slot: number, medium: boolean) => void;
+  addMixComponent: (
+    elementId: string,
+    paintId: string,
+    component: Omit<MixComponent, "parts">,
+  ) => void;
+  removeMixComponent: (elementId: string, paintId: string, index: number) => void;
+  setNote: (elementId: string, paintId: string, note: string) => void;
 };
 
 /** First paint in an element is a base; subsequent additions default to layer. */
@@ -56,7 +67,7 @@ export function ElementCard({
   handlers: ElementHandlers;
 }) {
   const id = element.id;
-  const swatches = element.paints.length ? element.paints.map((p) => p.hex) : ["var(--muted)"];
+  const swatches = element.paints.length ? element.paints.map(displayHex) : ["var(--muted)"];
   return (
     <div className="relative rounded-xl border border-border bg-card shadow-sm focus-within:z-10">
       <div className="flex items-center gap-2.5 rounded-t-xl border-b border-border bg-muted px-3 py-3">
@@ -72,12 +83,6 @@ export function ElementCard({
           spellCheck={false}
           className="min-w-0 flex-1 rounded-md bg-transparent px-1.5 py-1 text-[15px] font-semibold tracking-tight outline-none hover:bg-card focus:bg-card focus:ring-1 focus:ring-inset focus:ring-input"
         />
-        <span
-          className="flex-none text-xs tabular-nums text-muted-foreground"
-          title={`${element.paints.length} ${element.paints.length === 1 ? "paint" : "paints"}`}
-        >
-          {element.paints.length}
-        </span>
         <div className="flex flex-none items-center gap-0.5">
           <IconBtn
             label="Move element earlier (larger area)"
@@ -99,13 +104,10 @@ export function ElementCard({
         </div>
       </div>
 
-      {element.paints.length > 0 && (
-        <div className="flex justify-between px-3 pt-1 text-[10.5px] tracking-wide text-muted-foreground">
-          <span>▲ base</span>
-          <span>highlight ▼</span>
-        </div>
-      )}
-
+      {/* No per-card "▲ base / highlight ▼" or paint count: the ordering is
+          stated once beside the "Elements & paints" heading, and the count is
+          already on every bar's caption. Repeating either on each card is noise
+          that scales with the number of elements. */}
       <ul className="flex flex-col gap-0.5 p-2">
         {element.paints.map((paint, i) => (
           <LayerRow
@@ -115,10 +117,16 @@ export function ElementCard({
             count={element.paints.length}
             hot={hovered === paint.id}
             hover={hover}
+            dbPaints={dbPaints}
+            loadError={loadError}
             onMove={(dir) => handlers.movePaint(id, paint.id, dir)}
             onRemove={() => handlers.removePaint(id, paint.id)}
             onSetRole={(role) => handlers.setRole(id, paint.id, role)}
-            onSetWeight={(w) => handlers.setWeight(id, paint.id, w)}
+            onSetParts={(slot, parts) => handlers.setParts(id, paint.id, slot, parts)}
+            onSetMedium={(slot, medium) => handlers.setMedium(id, paint.id, slot, medium)}
+            onAddMix={(c) => handlers.addMixComponent(id, paint.id, c)}
+            onRemoveMix={(i) => handlers.removeMixComponent(id, paint.id, i)}
+            onSetNote={(note) => handlers.setNote(id, paint.id, note)}
           />
         ))}
       </ul>

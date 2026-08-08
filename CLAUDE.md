@@ -113,7 +113,7 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   (the alternatives panel's three derivations of "which paints count" — sidebar
   availability, the re-ranked ΔE list, and the plot's own candidate set — in one
   place with the reasons they differ), `use-scheme-editor` (the visualiser's
-  twelve immutable document updates), `use-share-actions` (publish / unpublish /
+  seventeen immutable document updates), `use-share-actions` (publish / unpublish /
   copy link, shared by the visualiser's share card and `/my-schemes`;
   `use-scheme-share` is a thin adapter over it for the sync-indicator error
   sink), `use-modal-dialog` (scroll lock, focus trap, Escape, focus restore —
@@ -132,7 +132,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   stay portable. Framing, anchors and options live in its own `localStorage` key;
   the photo goes to Supabase Storage when signed in on a saved scheme and to
   `localStorage` otherwise (see "Share images" below).
-- `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab, CIEDE2000, LCh,
+- `src/lib/` — pure logic, node-testable: `color/` (hex↔Lab **and back** —
+  `labToHex` plus `blendHexLab`, the parts-weighted mean the paint mixes need;
+  forward and inverse share a white point and a matrix, so they stay in one file
+  — CIEDE2000, LCh,
   contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
   the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
   shared by both paint pages, `facet-availability.ts`, which owns the
@@ -142,7 +145,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   for display so the visible text and the accessible name can't diverge;
   `active-filters.ts`, which turns either page's param state into the
   removable chip list, and `lab-index.ts`, a module-scope memo attaching Lab to
-  the browse index), `scheme/` (bar maths, JSON import/export, types, plus `local-store.ts`,
+  the browse index), `scheme/` (bar maths, JSON import/export, types, plus `mix.ts`
+  — mixed entries and `displayHex`, the one thing a renderer may read for a
+  colour, see "Mixes and notes" below — and `local-store.ts`,
   the sole owner of the visualiser's `localStorage` document and its **binding**
   — see "Which saved scheme is this?" below — and `sync.ts`, the pure
   reconciliation decisions `planReload`/`planSignInScheme`). Also `supabase/` (browser client +
@@ -194,7 +199,11 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   the Storage path, including that an upload isn't re-downloaded and a download
   isn't echoed back up), `scheme-view.test.tsx` (the share page renders no
   `<img>` when there's no photo), `site-metadata.test.ts` (robots + sitemap — `/scheme/` was disallowed
-  and nothing noticed), `catalogue-sources.test.ts` (the `load.ts` drift guard)
+  and nothing noticed), `mix.test.ts` (the Lab blend and the mix labels) and
+  `scheme-editor.test.tsx` (the first coverage of paint editing at all — mixes,
+  ratios, the medium tick and notes, plus the deletions that keep a de-mixed
+  entry canonically identical to a plain paint),
+  `catalogue-sources.test.ts` (the `load.ts` drift guard)
   and `migrations.test.ts` (the migration-bookkeeping drift guard, plus the
   "no RLS-protected table inline in a storage policy" guard — see "Deploying"
   and "Share images"), and `share-card.test.tsx`.
@@ -367,6 +376,71 @@ The autosave also waits for `ready`: a save that lands before the row list does
 would push a stale copy over a remote rename. Known and out of scope: two
 `/visualiser` tabs in the *same* browser still ping-pong writes to one row.
 
+## Mixes and notes
+
+A layer entry can hold more than one paint — "1:1 Agrax Earthshade + Lahmian
+Medium" is one wash, not two stacked ones — and can carry a short free-text
+instruction ("airbrush over the upper 75%").
+
+- **`paint.hex` means the primary paint's own colour. `displayHex()` from
+  `scheme/mix.ts` is the one thing a renderer may read.** Nineteen call sites go
+  through it — `rampGradient`, the poster's gradient stops and overlay fills,
+  the bar tooltip, both card swatch strips, the share-page recipe and the Satori
+  OG route. `paint.hex` survives only in serialisation, `presets.ts` and the
+  browse-index paths. `displayHex` short-circuits to `p.hex` when there is no
+  mix, so every pre-existing scheme renders bit-identically and no slower.
+- **`parts` and `medium` are never written without a non-empty `mix`**, and
+  removing the last component drops all three (`removeMixComponent`), as
+  clearing a note drops `note`. A lone paint's "share" is meaningless, but the
+  real reason is canonical form: a de-mixed entry has to serialise back to
+  exactly the bytes a plain paint does, or its document is permanently unequal
+  to its stored `syncedCanon` and every load looks like unflushed edits. Same
+  instinct as `photo_path` being a column rather than a `data` field.
+- **`parts` rejects zero where the old `weight` clamped it.** Shares are
+  normalised by their total, so an all-zero mix divides by zero and every Lab
+  channel comes out `NaN` — the `addColorStop`-throws / Satori-500 chain the
+  removed `weight()` docblock used to narrate. `test/scheme.test.ts` pins a
+  **frozen canonical-JSON literal** for a mix-free scheme, because one
+  unconditional key in `toExportShape` would dirty every saved document at once
+  and start a 1s-debounce autosave for every signed-in user.
+- **The "thins" flag is manual, and has to be.** A medium counts in the ratio
+  but is left out of the blend, which is the only reason 1:1 Agrax + Lahmian
+  stays brown — Lahmian Medium is `#F9F9F9`, so blending it as a pigment gives
+  pale beige. It cannot be detected: the catalogue's `technical` type also holds
+  Crackle Medium and Blood for the Blood God, and "Medium" in a name is usually
+  a real colour ("Medium Sea Grey"). An all-medium mix blends everything rather
+  than returning grey.
+- **The blend is additive, not subtractive** — blue and yellow average to grey,
+  not green. Lab is the honest cheap approximation and reuses the transforms
+  already in `color/`; Kubelka–Munk is the real answer and is far more work. A
+  known limitation, not a bug.
+- **The `displayHex` memo is module-scope and bounded** (512, clear on
+  overflow), for the `lab-index.ts` reason above plus the OG route running on a
+  warm lambda. Keyed on the colours and shares, not `paint.id`, so a re-imported
+  scheme with fresh ids still hits.
+- **Notes are deliberately absent from the poster and the OG image.** A note
+  wraps, so its height is not a constant, and `calloutHeight` is documented
+  "no text metrics" precisely so the packer and the renderer cannot disagree. A
+  third line takes a four-paint callout from 276px to ~332px; two of those want
+  692px of a band that is 1134 on 4:5 but only 864 on 1:1, and the degradation
+  ladder's answer is to **drop whole elements** with `no-space`. Trading an
+  element off the poster for an application note is the wrong trade. Mixes do
+  reach the poster, as `mixTitle` and `mixBrandLabel` through the existing
+  `ellipsize` — one line either way, so the height budget is untouched. If
+  notes are ever wanted there, the shape is the one `showBrands` already uses: a
+  flag on `PosterOptions` folded into `paintRowHeight`.
+- **`brandLabel`/`paintMeta` in `types.ts` stay primary-only.** Making them
+  mix-aware there needs `types.ts` to import `mix.ts`, which imports `types.ts`
+  — and that cycle drags `@/lib/color` into `bars.ts`, `io.ts` and `presets.ts`,
+  the last of which is under a standing "must not import" rule.
+- `schemes-manager`'s `deriveSwatches` is **deliberately not** mix-aware: it
+  reads raw `jsonb` for a six-swatch card strip, and the alternatives are
+  re-running `importSchemeObject` per row or duplicating the blend against an
+  untyped shape. The primary's hex is a fair stand-in at that size.
+- `MixComponent` has no id, so the list keys on the array index. Fine while it
+  is append/remove only; if reordering is ever offered, give them ids **and**
+  strip them in `toExportShape`, the way `SchemePaint.id` is stripped.
+
 ## Example schemes (the homepage carousel)
 
 `src/lib/scheme/presets.ts` holds a handful of curated schemes, shown by
@@ -413,7 +487,18 @@ would push a stale copy over a remote rename. Known and out of scope: two
   the scheme that painted the model in that photo — and its caption and CTA both
   say so. There is a separate, unrelated `death-guard` (40K) preset, so if you
   repoint that CTA, check you aren't captioning the photo with a recipe that
-  didn't paint it.
+  didn't paint it. **Known drift, worth fixing when someone next has the source
+  photo to hand:** it was exported while presets could still carry per-paint
+  weight overrides, so its ramps are slightly finer than what the studio
+  produces now that role alone sizes a band.
+- **Presets no longer carry bar-share overrides**, and neither does anything
+  else — there was a per-paint `weight` on `SchemePaint` with a slider behind
+  it, and it said what the role already said (base thick, highlight thin) at the
+  cost of a line in every editor row. `weightOf` is now just `roleOf(p).weight`.
+  Don't reintroduce it: the importer deliberately drops a legacy `weight`
+  instead of carrying the key through, so the round trip stays clean, and role
+  being the only input is what removed the whole non-finite-number hazard that
+  `io.ts` used to guard against.
 - `Bar`'s `min-w-[56px]` floor is sized so a one-word element name fits on one
   line ("Tentacles" needs 54px). Lower it and long names split mid-word, because
   `break-words` is the only thing stopping them overflowing into the next bar and

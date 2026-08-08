@@ -17,20 +17,19 @@ import {
   shareUrl,
   SHARE_TOKEN_LENGTH,
 } from "@/lib/scheme/share";
-import { MAX_SCHEME_TITLE, ROLES, roleOf, weightOf } from "@/lib/scheme/types";
+import {
+  MAX_MIX_COMPONENTS,
+  MAX_NOTE,
+  MAX_SCHEME_TITLE,
+  ROLES,
+  roleOf,
+  weightOf,
+} from "@/lib/scheme/types";
 import type { Scheme, SchemePaint, SchemeRole } from "@/lib/scheme/types";
 
 let seq = 0;
-function p(role: SchemeRole, weight?: number): SchemePaint {
-  return {
-    id: `p${seq++}`,
-    name: role,
-    brand: "custom",
-    range: "custom",
-    hex: "#808080",
-    role,
-    weight,
-  };
+function p(role: SchemeRole): SchemePaint {
+  return { id: `p${seq++}`, name: role, brand: "custom", range: "custom", hex: "#808080", role };
 }
 
 describe("roles", () => {
@@ -95,16 +94,18 @@ describe("barModel", () => {
   });
 
   it("weights segments proportionally and the fractions sum to 1", () => {
-    const { segs } = barModel([p("base", 3), p("highlight", 1)]);
-    expect(segs[0].frac).toBeCloseTo(0.75, 5);
-    expect(segs[1].frac).toBeCloseTo(0.25, 5);
+    // Role is the only thing that sizes a band: base 1.4 against highlight 0.55.
+    const { segs } = barModel([p("base"), p("highlight")]);
+    const total = ROLES.base.weight + ROLES.highlight.weight;
+    expect(segs[0].frac).toBeCloseTo(ROLES.base.weight / total, 5);
+    expect(segs[1].frac).toBeCloseTo(ROLES.highlight.weight / total, 5);
     expect(segs.reduce((n, s) => n + s.frac, 0)).toBeCloseTo(1, 5);
     // First segment sits at the bottom (start 0), last reaches the top (end 1).
     expect(segs[0].start).toBeCloseTo(0, 5);
     expect(segs[segs.length - 1].end).toBeCloseTo(1, 5);
   });
 
-  it("uses role default weights when a paint has no explicit weight", () => {
+  it("orders the ramp by role weight, largest at the base", () => {
     const { segs } = barModel([p("base"), p("layer"), p("highlight")]);
     // Defaults 1.4 / 1.0 / 0.55 → base is the largest, highlight the smallest.
     expect(segs[0].frac).toBeGreaterThan(segs[1].frac);
@@ -233,7 +234,7 @@ describe("scheme import/export", () => {
         name: "Armour",
         paints: [
           { id: "a1", name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
-          { id: "a2", name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+          { id: "a2", name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true },
         ],
       },
     ],
@@ -247,7 +248,7 @@ describe("scheme import/export", () => {
     expect(back.elements[0].name).toBe("Armour");
     expect(back.elements[0].paints.map((p) => ({ ...p, id: undefined }))).toEqual([
       { id: undefined, name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
-      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true },
     ]);
   });
 
@@ -312,7 +313,7 @@ describe("scheme import/export", () => {
     expect(back.title).toBe("Test Scheme");
     expect(back.elements[0].paints.map((p) => ({ ...p, id: undefined }))).toEqual([
       { id: undefined, name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
-      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true, weight: 0.5 },
+      { id: undefined, name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true },
     ]);
   });
 
@@ -324,31 +325,133 @@ describe("scheme import/export", () => {
   });
 
   /**
-   * A weight override reaches the ramp maths, where a non-finite value makes
-   * every stop `NaN%` — a blank bar in CSS, a throw from `addColorStop` on the
-   * poster canvas, and `flexGrow: NaN` in the OpenGraph image, which can 500 a
-   * public route. `1e400` is the nasty one: valid JSON, parses to `Infinity`.
+   * The per-paint `weight` override is gone — role alone sizes a band. An older
+   * file or row still carrying one must import cleanly and simply lose it, not
+   * carry a stray key into the document (which would leave every affected
+   * scheme permanently unequal to its stored `syncedCanon`).
    */
-  it("rejects a non-finite weight rather than passing it to the ramp", () => {
-    const withWeight = (w: string) =>
-      importScheme(
-        `{"elements":[{"name":"E","paints":[{"name":"P","hex":"#AABBCC","role":"base","weight":${w}}]}]}`,
-        newId,
-      ).elements[0].paints[0];
+  it("drops a legacy weight override rather than carrying it through", () => {
+    const paint = importScheme(
+      `{"elements":[{"name":"E","paints":[{"name":"P","hex":"#AABBCC","role":"base","weight":1e400}]}]}`,
+      newId,
+    ).elements[0].paints[0];
 
-    expect(withWeight("1e400").weight).toBeUndefined();
-    expect(withWeight("-1").weight).toBeUndefined();
-    // Clamped, not dropped — a large finite weight is merely unreasonable.
-    expect(withWeight("1e6").weight).toBe(100);
-    expect(withWeight("0.5").weight).toBe(0.5);
+    expect("weight" in paint).toBe(false);
+    expect(weightOf(paint)).toBe(ROLES.base.weight);
   });
 
-  it("falls back to the role's weight when the override is unusable", () => {
-    // `weightOf` is the single read point, so it holds the line for any scheme
-    // that reaches a renderer without going through the importer.
-    expect(weightOf(p("base", Infinity))).toBe(ROLES.base.weight);
-    expect(weightOf(p("base", NaN))).toBe(ROLES.base.weight);
-    expect(weightOf(p("base", 0.9))).toBe(0.9);
+  it("sizes every band from its role, with nothing left to sanitise", () => {
+    // `weightOf` is the single read point, and a role can only be one of seven
+    // known keys — an unknown one falls back to `layer` in `roleOf`.
+    expect(weightOf(p("base"))).toBe(ROLES.base.weight);
+    expect(weightOf(p("highlight"))).toBe(ROLES.highlight.weight);
+    expect(weightOf({ ...p("base"), role: "nonsense" as SchemeRole })).toBe(ROLES.layer.weight);
+  });
+
+  describe("mixes and notes", () => {
+    const withPaint = (fields: string) =>
+      importScheme(`{"elements":[{"name":"E","paints":[{"name":"P","hex":"#AABBCC","role":"base"${fields}}]}]}`, newId)
+        .elements[0].paints[0];
+    const mixOf = (components: string) => withPaint(`,"mix":[${components}]`);
+
+    it("keeps a usable share and clamps an unreasonable one", () => {
+      expect(mixOf('{"name":"M","hex":"#FFFFFF","parts":2}').mix?.[0].parts).toBe(2);
+      expect(mixOf('{"name":"M","hex":"#FFFFFF","parts":1e6}').mix?.[0].parts).toBe(100);
+    });
+
+    /**
+     * Shares are normalised by their total, so an all-zero mix divides by zero
+     * and every Lab channel comes out NaN — a malformed hex reaching
+     * `addColorStop` and the public OpenGraph route. Zero is therefore rejected
+     * outright rather than clamped, and defaults to a single share.
+     */
+    it("rejects an unusable share rather than passing it to the blend", () => {
+      for (const bad of ["0", "-1", "1e400", '"2"', "null"]) {
+        expect(mixOf(`{"name":"M","hex":"#FFFFFF","parts":${bad}}`).mix?.[0].parts).toBe(1);
+      }
+    });
+
+    it("sanitises each component like a paint", () => {
+      const c = mixOf('{"hex":"not a colour"}').mix?.[0];
+      expect(c).toEqual({ name: "Untitled", brand: "custom", range: "custom", hex: "#808080", parts: 1 });
+    });
+
+    it("caps the component list", () => {
+      const many = Array.from({ length: 9 }, () => '{"name":"M","hex":"#FFFFFF"}').join(",");
+      expect(mixOf(many).mix).toHaveLength(MAX_MIX_COMPONENTS);
+    });
+
+    it("ignores a mix that isn't a list", () => {
+      expect("mix" in withPaint(',"mix":"1:1"')).toBe(false);
+    });
+
+    it("carries the medium flag on both the primary and a component", () => {
+      const p = withPaint(',"medium":true,"mix":[{"name":"M","hex":"#F9F9F9","medium":true}]');
+      expect(p.medium).toBe(true);
+      expect(p.mix?.[0].medium).toBe(true);
+    });
+
+    /**
+     * `parts`/`medium` ride with `mix`. Without this rule a de-mixed entry
+     * keeps a stray key, so its document never again equals the `syncedCanon`
+     * it was saved with — every load looks like unflushed edits.
+     */
+    it("drops parts and medium when there is no mix", () => {
+      const p = withPaint(',"parts":3,"medium":true');
+      expect("parts" in p).toBe(false);
+      expect("medium" in p).toBe(false);
+      expect("parts" in toExportShape({ title: "", elements: [{ id: "e", name: "E", paints: [{ ...p, parts: 3, medium: true }] }] }).elements[0].paints[0]).toBe(false);
+    });
+
+    it("trims a note and caps it at the column's budget", () => {
+      expect(withPaint(',"note":"  airbrush the top 75%  "').note).toBe("airbrush the top 75%");
+      expect(withPaint(`,"note":"${"x".repeat(500)}"`).note).toHaveLength(MAX_NOTE);
+    });
+
+    it("drops an empty or non-string note", () => {
+      for (const bad of ['""', '"   "', "42", "null"]) {
+        expect("note" in withPaint(`,"note":${bad}`)).toBe(false);
+      }
+    });
+
+    it("round-trips a mix and a note through export → import", () => {
+      const before = mixOf('{"name":"Lahmian Medium","brand":"Citadel","range":"Technical","hex":"#F9F9F9","parts":1,"medium":true}');
+      const scheme: Scheme = { title: "T", elements: [{ id: "e", name: "E", paints: [{ ...before, parts: 2, note: "glaze into the lips" }] }] };
+      const after = importScheme(exportSchemeJSON(scheme), newId).elements[0].paints[0];
+      expect(after.parts).toBe(2);
+      expect(after.note).toBe("glaze into the lips");
+      expect(after.mix).toEqual(before.mix);
+    });
+  });
+
+  /**
+   * The one that matters most. `canonicalScheme` is compared byte-for-byte
+   * against the `syncedCanon` stored with a saved scheme, so a single
+   * unconditional key added to `toExportShape` would make every document in
+   * existence look dirty on its next load — and start a 1s-debounce autosave
+   * for every signed-in user at once. Frozen literal, deliberately.
+   */
+  it("emits byte-identical canonical JSON for a scheme with no mix or note", () => {
+    const legacy = {
+      format: 1,
+      app: "paintdex",
+      title: "Test Scheme",
+      elements: [
+        {
+          name: "Armour",
+          paints: [
+            { name: "Base Grey", brand: "Vallejo", range: "Model Color", hex: "#404040", role: "base" },
+            { name: "My Mix", brand: "custom", range: "custom", hex: "#AABBCC", role: "highlight", custom: true },
+          ],
+        },
+      ],
+    };
+    expect(canonicalScheme(legacy)).toBe(
+      '{"format":1,"app":"paintdex","title":"Test Scheme","elements":[{"name":"Armour","paints":[' +
+        '{"name":"Base Grey","brand":"Vallejo","range":"Model Color","hex":"#404040","role":"base"},' +
+        '{"name":"My Mix","brand":"custom","range":"custom","hex":"#AABBCC","role":"highlight","custom":true}' +
+        "]}]}",
+    );
   });
 
   it("trims a title to the database's limit", () => {
