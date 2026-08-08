@@ -29,6 +29,7 @@ import { useModalDialog } from "@/hooks/use-modal-dialog";
 import { ActiveFilters } from "./active-filters";
 import { PaintSearchBox } from "./paint-search-box";
 import { PaintCard } from "./paint-card";
+import { CollectionToggle } from "./collection/collection-toggle";
 import { PaintFacets } from "./paint-facets";
 
 const PAGE = 60;
@@ -467,7 +468,12 @@ export function PaintsBrowser({
             <>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                 {results.slice(0, visible).map((p) => (
-                  <PaintCard key={p.id} paint={p} query={outgoingQuery} />
+                  <PaintCard
+                    key={p.id}
+                    paint={p}
+                    query={outgoingQuery}
+                    action={<CollectionToggle paintId={p.id} paintName={p.name} />}
+                  />
                 ))}
               </div>
               {visible < results.length ? (

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { PaintsPlaceholder } from "@/components/profile/paints-placeholder";
+import { PaintsManager } from "@/components/profile/paints-manager";
 
 export const metadata: Metadata = {
   title: "My paints",
-  description: "Track the paints you own (coming soon).",
+  description: "The paints you own, and the ones you still want to buy.",
   alternates: { canonical: "/my-paints" },
   // Personal, per-user page — nothing to index.
   robots: { index: false, follow: false },
@@ -11,13 +11,15 @@ export const metadata: Metadata = {
 
 export default function MyPaintsPage() {
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
+    // Wider than the other profile page: this one has a filter sidebar beside
+    // the lists, where `/my-schemes` is a single column of cards.
+    <main className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-2xl font-bold tracking-tight">My paints</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        The paints you own — for suggesting colours from your collection.
+        The paints you own, and the ones you still want to buy.
       </p>
       <div className="mt-6">
-        <PaintsPlaceholder />
+        <PaintsManager />
       </div>
     </main>
   );

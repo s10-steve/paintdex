@@ -17,6 +17,7 @@ import { useSchemePreset } from "@/hooks/use-scheme-preset";
 import { useSchemeShare } from "@/hooks/use-scheme-share";
 import { useSchemeSync } from "@/hooks/use-scheme-sync";
 import { setSchemePhotoPath } from "@/lib/data/schemes";
+import { downloadJSON } from "@/lib/download";
 import { emptyScheme, MAX_SCHEME_TITLE, type Scheme } from "@/lib/scheme/types";
 import { schemeHasContent } from "@/lib/scheme/sync";
 import { exportSchemeJSON, importScheme, schemeSlug } from "@/lib/scheme/io";
@@ -216,15 +217,7 @@ export function SchemeVisualiser() {
   const hasPosterImage = Boolean(activeRow?.photo_path) || hasLocalImage;
 
   const doExport = () => {
-    const blob = new Blob([exportSchemeJSON(scheme)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${schemeSlug(scheme.title)}.paintdex.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+    downloadJSON(exportSchemeJSON(scheme), `${schemeSlug(scheme.title)}.paintdex.json`);
   };
 
   const doImportFile = (file: File) => {

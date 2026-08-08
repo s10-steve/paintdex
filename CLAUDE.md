@@ -71,12 +71,13 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
 
 - `src/app/` — routes: `/` (home), `/paints` (browse), `/paints/[id]` (paint
   detail, SSG with `dynamicParams = false`), `/visualiser`, `/my-schemes`
-  (static shell → client scheme manager) and `/my-paints` (placeholder for the
-  owned-paints feature), `/scheme/[slug]` (**server-rendered** public
-  shared-scheme viewer + `opengraph-image.tsx`), plus `robots.ts` and
-  `sitemap.ts`. Root `layout.tsx` holds metadata (incl. OpenGraph/Twitter),
-  wraps the app in `ThemeProvider` + `AuthProvider`, and mounts the header and
-  Vercel Analytics/Speed Insights.
+  (static shell → client scheme manager) and `/my-paints` (static shell → client
+  collection manager — see "My paints" below), `/scheme/[slug]`
+  (**server-rendered** public shared-scheme viewer + `opengraph-image.tsx`), plus
+  `robots.ts` and `sitemap.ts`. Root `layout.tsx` holds metadata (incl.
+  OpenGraph/Twitter), wraps the app in `ThemeProvider` + `AuthProvider` +
+  `CollectionProvider`, and mounts the header and Vercel Analytics/Speed
+  Insights.
 - `src/components/` — client components (`paints-browser`, `similar-colours`
   (the shell: filters + the List/Plot toggle), `similar-list` (the ΔE-ranked
   cards), `similar-plot` (the hue/lightness plot — see "The alternatives plot"
@@ -94,8 +95,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `home-scheme-carousel` (the homepage's auto-rotating example schemes — renders
   the real `Bar`, not a mock), etc.), plus `auth/`
   (`auth-provider` with the `useAuth` hook + Google Identity Services init;
-  `sign-in-button`) and `profile/` (`schemes-manager` for `/my-schemes`,
-  `paints-placeholder` for `/my-paints`, and the shared `signed-in-gate`), and
+  `sign-in-button`), `profile/` (`schemes-manager` for `/my-schemes`,
+  `paints-manager` for `/my-paints`, and the shared `signed-in-gate`),
+  `collection/` (`collection-provider`, the app-wide owned/wishlist state, and
+  `collection-toggle`, the two add controls — see "My paints" below), and
   `scheme/` (the visualiser's presentational pieces: `element-card`, `layer-row`,
   `add-paint`, `icon-btn`, `role-tag`, plus the share-image studio —
   `poster-studio` (the modal) and `poster-canvas` (the interactive preview)).
@@ -203,6 +206,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `scheme-editor.test.tsx` (the first coverage of paint editing at all — mixes,
   ratios, the medium tick and notes, plus the deletions that keep a de-mixed
   entry canonically identical to a plain paint),
+  `collection-io.test.ts`, `paint-collection-provider.test.tsx` (the optimistic
+  write's rollback, and that a token refresh doesn't refetch) and
+  `paints-manager.test.tsx` (moving between lists, and that a stale id and a
+  discontinued paint both still show) — see "My paints" below,
   `catalogue-sources.test.ts` (the `load.ts` drift guard)
   and `migrations.test.ts` (the migration-bookkeeping drift guard, plus the
   "no RLS-protected table inline in a storage policy" guard — see "Deploying"
@@ -685,6 +692,67 @@ for `warning`.
 - `test/scheme-visualiser.test.tsx` and `test/schemes-manager.test.tsx` query these
   messages by role (`status` and `alert` respectively), so changing a tone changes
   what those suites find.
+
+## My paints (owned + wishlist)
+
+The paints you own and the ones you want to buy. Added from the browse grid, a
+paint's own page, and the alternatives list; managed on `/my-paints`.
+
+- **Accounts-only, deliberately.** There is no `localStorage` fallback and no
+  sign-in migration, unlike the visualiser. That layering is where every
+  multi-device scheme bug came from (see "Which saved scheme is this?"), and the
+  thing it protects — a list of catalogue ids — is worth much less than a scheme
+  document. Signed out, the controls render nothing at all rather than
+  prompting: they appear hundreds at a time in the browse grid.
+- **One row per paint with a `status` column, not two booleans.** A paint is in
+  exactly one list, so "I bought it" is a single upsert and there's no
+  owned-and-wishlisted state to explain. `paint_collection_user_paint_key` is
+  both that rule and the upsert's conflict target, which is what lets
+  `setPaintStatus` be add, move *and* the whole of what a toggle needs.
+- **One provider, not per-component fetching** (`collection/collection-provider`,
+  mounted inside `AuthProvider`). Four views can show a toggle for the same
+  paint, and the browse grid renders hundreds of them — per-component fetching
+  is impossible and per-page fetching lets two mounted views disagree after a
+  toggle. This is the opposite call to `alert-banner`, and for the opposite
+  reason: that's presentation whose state the caller already owns, this *is*
+  shared state with nowhere else to live.
+  - It follows the sync-layer rules: the load effect keys on `user?.id` and never
+    `user` (a token refresh hands back a fresh object hourly), `!user` means
+    *unknown* until `authLoading` is false, and every fetch has the cancelled
+    guard.
+  - **Writes are optimistic with rollback**, and the rollback is the point — a
+    toggle that flipped, failed silently and reverted on the next load is the
+    one failure this feature can't afford. Failures go through `AlertBanner`
+    from the provider, so they're announced once wherever the user is scrolled
+    to, whichever of the four views triggered it.
+- **`PaintCard` takes an `action` slot rather than importing the toggle.** The
+  card is one big `<Link>` with no `"use client"`, rendered in server trees
+  (`paint-suggestions`, `back-to-browse`); importing a client component would
+  make those client trees, and a `<button>` inside an `<a>` is invalid HTML with
+  browser-dependent click behaviour. The caller injects it and it renders as a
+  sibling, overlaid on the swatch — dead space, so nothing can collide.
+- **`similar-list` puts the toggle in the flow, not overlaid, and that's not an
+  inconsistency.** Its rows are text edge to edge, so an absolutely-positioned
+  control would sit on the paint name — the very width that docblock spends a
+  paragraph defending. As a flex sibling it costs nothing when signed out, which
+  is nearly every visitor: the toggle renders `null` and a `gap` with one child
+  takes no space.
+- **The plot's marks get nothing; its detail panel gets the toggle.** Marks are
+  24px and WCAG 2.5.8 spacing already caps how many fit. The panel is driven by
+  hover, focus and touch alike, so it's reachable by every route the marks are.
+- **`/my-paints` filters in local state, not the URL.** The URL-as-truth rule
+  exists for shareability, and this page is `noindex` and per-user — a link to
+  it means nothing to anyone else. It also hard-wires `includeDiscontinued: true`
+  and hides that facet: the catalogue-wide default is right for browsing and
+  wrong for a record of what you have, and it would hide paints you own with no
+  visible control to explain it.
+- **An id with no paint behind it gets a row, not silence.** `paint_id` is a
+  catalogue slug with no foreign key, so a rename or a dropped brand leaves one
+  stranded. It renders as the raw id with "No longer in the catalogue" and a
+  Remove button — dropping it silently makes the section count disagree with
+  what's on screen and leaves no way to clear it. `parseCollectionJSON` doesn't
+  validate ids against the catalogue for the same reason, and because that
+  module must not import the paint data (the `presets.ts` rule).
 
 ## Share images (the poster)
 

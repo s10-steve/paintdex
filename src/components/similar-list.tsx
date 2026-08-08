@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MatchBadge } from "./match-badge";
+import { CollectionToggle } from "./collection/collection-toggle";
 
 /** The minimal shape the list renders from (shared by precomputed + recomputed). */
 export interface RenderItem {
@@ -36,10 +37,19 @@ export function SimilarList({
   return (
     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2">
       {items.map((item) => (
-        <li key={item.id}>
+        // The toggle is a flex sibling of the anchor, not an overlay on it.
+        // Same constraint as `PaintCard` — the whole row is one link and a
+        // button can't nest inside it — but the opposite answer, because there
+        // is no dead space here to overlay: the card is text edge to edge, and
+        // an absolutely-positioned control would sit on top of the paint name.
+        //
+        // It costs the name no width when signed out, which is almost every
+        // visitor: `CollectionToggle` renders `null` then, and a `gap` with
+        // nothing on the other side of it takes no space.
+        <li key={item.id} className="flex items-center gap-2">
           <Link
             href={`/paints/${item.id}${linkQuery}`}
-            className="flex h-full items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-full min-w-0 flex-1 items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span
               className="h-12 w-12 shrink-0 rounded-md border border-border"
@@ -63,6 +73,7 @@ export function SimilarList({
               </span>
             </span>
           </Link>
+          <CollectionToggle paintId={item.id} paintName={item.name} />
         </li>
       ))}
     </ul>

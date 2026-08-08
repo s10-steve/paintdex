@@ -38,6 +38,29 @@ export type SchemeRow = {
 };
 
 /**
+ * Which of the two lists a paint is in. A paint is in exactly one, enforced by
+ * `paint_collection_user_paint_key` — see the table's comment in
+ * `supabase/schema.sql` for why that beats a pair of booleans.
+ */
+export type PaintStatus = "owned" | "wishlist";
+
+/**
+ * One paint in one user's collection.
+ *
+ * `paint_id` is a catalogue slug (`Paint.id`), not a foreign key — paints live
+ * in `data/paints/*.json`, not the database. So an id here can outlive the
+ * paint it names, and readers have to cope rather than assume a lookup hits.
+ */
+export type PaintCollectionRow = {
+  id: string;
+  user_id: string;
+  paint_id: string;
+  status: PaintStatus;
+  created_at: string;
+  updated_at: string;
+};
+
+/**
  * What `public.get_public_scheme(p_slug)` returns — the only way an anonymous
  * reader can see someone else's scheme, now that the blanket `is_public = true`
  * SELECT policy is gone.
@@ -86,6 +109,19 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<SchemeRow>;
+        Relationships: [];
+      };
+      paint_collection: {
+        Row: PaintCollectionRow;
+        Insert: {
+          id?: string;
+          user_id: string;
+          paint_id: string;
+          status?: PaintStatus;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<PaintCollectionRow>;
         Relationships: [];
       };
     };

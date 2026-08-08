@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+**This needs a database change applied before the update goes live** — run
+`0005-v0.14.0-paint-collection.sql` in the Supabase SQL editor and run its
+`-- Verify` block, *then* deploy. It adds the table the whole feature reads and
+writes, and there is no fallback.
+
+### Added
+
+- **My paints.** Keep track of the paints you own, and the ones you still want
+  to buy. Every paint now has ✓ and ☆ buttons — on the browse grid, on its own
+  page, and beside each alternative when you're comparing colours — so you can
+  add one without losing your place. A paint sits in one list or the other, so
+  moving something from the wishlist to the shelf is a single click.
+- **The My paints page** (`/my-paints`) shows both lists, and lets you move
+  paints between them or take them out. You can search it and filter it by
+  brand, type and colour family exactly like the main browse page, except that
+  the filters only offer the brands you actually own — no dead ends. Discontinued
+  paints stay visible here: this is a record of what you have, not a shopping
+  catalogue.
+- **Export your collection**, and import it back. It's plain JSON, so it's a
+  backup you hold yourself rather than one you have to trust us with. Importing
+  merges into what's already there by default; replacing it wholesale is offered
+  as the other branch of the same prompt.
+
+  The trade-off worth naming: unlike your schemes, this needs an account. A
+  collection is hundreds of small decisions, and leaving that in one browser's
+  storage is a worse promise than asking you to sign in.
+
+### Fixed
+
+- A scheme's **Export** could occasionally produce a truncated or failed
+  download in Firefox and Safari, which read the file asynchronously while the
+  page had already discarded it. The share-image export already worked around
+  this; both now share one implementation.
+
 ## [0.13.0] - 2026-08-08
 
 Finishes the two social-sharing items left on the roadmap after the share-image

@@ -13,6 +13,7 @@ import { CopyHex } from "@/components/copy-hex";
 import { SimilarColours, type SimilarItem } from "@/components/similar-colours";
 import { JsonLd } from "@/components/json-ld";
 import { BackToBrowse } from "@/components/back-to-browse";
+import { CollectionButtons } from "@/components/collection/collection-toggle";
 
 // Keep in sync with `metadataBase` in src/app/layout.tsx.
 const BASE_URL = "https://paintdex.app";
@@ -166,6 +167,10 @@ export default async function PaintDetailPage({
               <CopyHex hex={paint.hex} />
             </dd>
           </dl>
+
+          {/* A client component in a server page: it renders nothing until
+              someone is signed in, so the prerendered HTML is unchanged. */}
+          <CollectionButtons paintId={paint.id} />
 
           {paint.discontinued ? (
             <p className="mt-4 inline-block rounded-md bg-muted px-2.5 py-1 text-sm text-muted-foreground">

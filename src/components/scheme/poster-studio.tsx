@@ -26,6 +26,7 @@ import {
 } from "@/lib/scheme/poster";
 import { drawPoster, resolveFontFamily, type PosterPhoto } from "@/lib/scheme/poster-draw";
 import { schemeSlug } from "@/lib/scheme/io";
+import { downloadBlob } from "@/lib/download";
 import type { Scheme } from "@/lib/scheme/types";
 
 /** Logical → exported pixels. 2 gives 2160px across, comfortably above Instagram's 1080. */
@@ -168,18 +169,7 @@ export function PosterStudio({
         setDownloadError("Couldn't render the image — it may be too large for this browser.");
         return;
       }
-      // Same download idiom as the scheme's JSON export in `scheme-visualiser`.
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${schemeSlug(scheme.title)}.paintdex.png`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      // Deferred: revoking synchronously after `click()` has historically
-      // aborted the download in Firefox and Safari, which read the blob
-      // asynchronously.
-      setTimeout(() => URL.revokeObjectURL(url), 0);
+      downloadBlob(blob, `${schemeSlug(scheme.title)}.paintdex.png`);
     } catch {
       // There was `try/finally` but no `catch`, and the call site is
       // `void download()` — so a rejection from `document.fonts.ready` or a

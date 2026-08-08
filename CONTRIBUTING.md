@@ -57,7 +57,8 @@ npm run build
   production is a separate project from the one you develop against.
 - `src/components/` — UI components
 - `src/app/` — routes: `/`, `/paints`, `/paints/[id]`, `/visualiser`,
-  `/my-schemes`, `/my-paints`, `/scheme/[slug]` (the one server-rendered route)
+  `/my-schemes`, `/my-paints` (owned paints + wishlist), `/scheme/[slug]` (the
+  one server-rendered route)
 - `scripts/` — data import + validation
 
 Keep pure, testable logic in `src/lib` and add a test in `test/` when you
