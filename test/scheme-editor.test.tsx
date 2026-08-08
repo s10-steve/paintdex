@@ -14,7 +14,7 @@
  * `syncedCanon` it was saved with and every load looks like unflushed edits.
  */
 import { describe, it, expect, afterEach, vi } from "vitest";
-import { render, screen, cleanup, fireEvent, act } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent, act, within } from "@testing-library/react";
 import { renderHook } from "@testing-library/react";
 import { useState } from "react";
 import { ElementCard, type ElementHandlers } from "@/components/scheme/element-card";
@@ -178,6 +178,55 @@ describe("building a mix", () => {
     expect(handlers.removeMixComponent).toHaveBeenCalledWith("e1", "p1", 0);
   });
 
+  const mixBox = () => screen.queryByLabelText("Search paints to mix in");
+
+  it("collapses the picker when focus leaves it", () => {
+    renderCard([AGRAX], handlerSpies());
+    fireEvent.click(screen.getByLabelText("Add a paint to the Agrax Earthshade mix"));
+    expect(mixBox()).toBeTruthy();
+
+    fireEvent.blur(mixBox() as HTMLElement, { relatedTarget: document.body });
+    expect(mixBox()).toBeNull();
+  });
+
+  it("stays open while focus moves between the picker's own parts", () => {
+    // The search box and the "+ Custom" toggle are siblings inside it — tabbing
+    // from one to the other must not count as leaving.
+    renderCard([AGRAX], handlerSpies());
+    fireEvent.click(screen.getByLabelText("Add a paint to the Agrax Earthshade mix"));
+    // Scoped to the picker: the element's own AddPaint has a "+ Custom" too.
+    const custom = within(mixBox()?.parentElement as HTMLElement).getByTitle(
+      "Add a colour that isn't in the database",
+    );
+
+    fireEvent.blur(mixBox() as HTMLElement, { relatedTarget: custom });
+    expect(mixBox()).toBeTruthy();
+  });
+
+  it("still closes when the + Mix button itself is clicked", () => {
+    const handlers = handlerSpies();
+    renderCard([AGRAX], handlers);
+    const btn = screen.getByLabelText("Add a paint to the Agrax Earthshade mix");
+    fireEvent.click(btn);
+    expect(mixBox()).toBeTruthy();
+
+    fireEvent.blur(mixBox() as HTMLElement, { relatedTarget: btn });
+    fireEvent.click(btn);
+    expect(mixBox()).toBeNull();
+  });
+
+  it("stays open when the window loses focus rather than the panel", () => {
+    // An OS colour picker or an alt-tab reports no relatedTarget, same as a
+    // click on the page background — but leaves activeElement inside the panel.
+    renderCard([AGRAX], handlerSpies());
+    fireEvent.click(screen.getByLabelText("Add a paint to the Agrax Earthshade mix"));
+    const search = mixBox() as HTMLElement;
+    search.focus();
+
+    fireEvent.blur(search, { relatedTarget: null });
+    expect(mixBox()).toBeTruthy();
+  });
+
   it("stops offering + Mix at the cap", () => {
     const full = mixed({
       mix: Array.from({ length: MAX_MIX_COMPONENTS }, (_, i) => ({
@@ -215,7 +264,7 @@ describe("notes", () => {
   });
 
   const noteBox = () =>
-    screen.queryByRole("textbox", { name: "Note for Agrax Earthshade", exact: true });
+    screen.queryByRole("textbox", { name: "Note for Agrax Earthshade" });
 
   it("collapses the editor when focus leaves it", () => {
     renderCard([{ ...AGRAX, note: "glaze into the lips" }], handlerSpies());

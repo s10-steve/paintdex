@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type FocusEvent } from "react";
 import type { BrowsePaint } from "@/lib/paints/types";
 import { components, displayHex, hasMix, mixName, ratioLabel } from "@/lib/scheme/mix";
 import {
@@ -18,6 +18,26 @@ import type { HoverHandlers } from "../scheme-bars";
 import { AddPaint } from "./add-paint";
 import { IconBtn } from "./icon-btn";
 import { RoleTag } from "./role-tag";
+
+/**
+ * Whether a focusout means the user has genuinely left a panel, so it should
+ * collapse. `stay` is the panel itself plus the button that opens it.
+ *
+ * Two cases have to be told apart, and `relatedTarget` is null in both: focus
+ * moved to something unfocusable (a click on the page background — collapse),
+ * or the window itself lost focus (an OS colour picker, an alt-tab — don't, or
+ * the panel disappears behind the user's back). `document.activeElement` is
+ * what separates them: it stays inside the panel in the second case.
+ *
+ * Including the opening button matters because blur runs *before* its click, so
+ * collapsing here would let the toggle immediately reopen what the user meant
+ * to shut, and the button would look dead.
+ */
+function focusLeft(e: FocusEvent, ...stay: Array<Node | null>): boolean {
+  const inside = (n: Node | null) => stay.some((s) => Boolean(s && n && (s === n || s.contains(n))));
+  const next = e.relatedTarget as Node | null;
+  return next ? !inside(next) : !inside(document.activeElement);
+}
 
 /**
  * One paint within an element: swatch, name/meta, role, row actions — and, when
@@ -64,6 +84,8 @@ export function LayerRow({
   const [mixOpen, setMixOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
   const noteBtnRef = useRef<HTMLButtonElement>(null);
+  const mixBtnRef = useRef<HTMLButtonElement>(null);
+  const mixBoxRef = useRef<HTMLDivElement>(null);
 
   const role = roleOf(paint);
   const meta = paintMeta(paint);
@@ -171,6 +193,7 @@ export function LayerRow({
             <span className="text-[11px] text-muted-foreground/70">Mix full</span>
           ) : (
             <button
+              ref={mixBtnRef}
               onClick={() => setMixOpen((v) => !v)}
               aria-expanded={mixOpen}
               aria-label={`Add a paint to the ${paint.name} mix`}
@@ -191,25 +214,36 @@ export function LayerRow({
         </div>
 
         {mixOpen && !mixFull && (
-          <AddPaint
-            dbPaints={dbPaints}
-            loadError={loadError}
-            defaultRole={paint.role}
-            compact
-            autoFocus
-            placeholder="Add a paint to the mix…"
-            onAdd={(p) => {
-              // A mix component has no role of its own — it's part of one entry.
-              onAddMix({
-                name: p.name,
-                brand: p.brand,
-                range: p.range,
-                hex: p.hex,
-                ...(p.custom ? { custom: true as const } : {}),
-              });
-              setMixOpen(false);
+          // Wrapping div rather than a prop on `AddPaint`: focusout bubbles, so
+          // this catches focus leaving *any* of the picker's parts — the search
+          // box, the "+ Custom" toggle, the custom-colour panel — while moving
+          // between them keeps it open.
+          <div
+            ref={mixBoxRef}
+            onBlur={(e) => {
+              if (focusLeft(e, mixBoxRef.current, mixBtnRef.current)) setMixOpen(false);
             }}
-          />
+          >
+            <AddPaint
+              dbPaints={dbPaints}
+              loadError={loadError}
+              defaultRole={paint.role}
+              compact
+              autoFocus
+              placeholder="Add a paint to the mix…"
+              onAdd={(p) => {
+                // A mix component has no role of its own — it's part of one entry.
+                onAddMix({
+                  name: p.name,
+                  brand: p.brand,
+                  range: p.range,
+                  hex: p.hex,
+                  ...(p.custom ? { custom: true as const } : {}),
+                });
+                setMixOpen(false);
+              }}
+            />
+          </div>
         )}
 
         {showNote &&
@@ -218,11 +252,8 @@ export function LayerRow({
               rows={2}
               value={paint.note ?? ""}
               onChange={(e) => onSetNote(e.target.value)}
-              // Collapse on click-away. Skipped when focus is moving to the
-              // Note button itself: blur runs before its click, so closing here
-              // would let the toggle reopen what the user meant to shut.
               onBlur={(e) => {
-                if (e.relatedTarget !== noteBtnRef.current) setNoteOpen(false);
+                if (focusLeft(e, e.currentTarget, noteBtnRef.current)) setNoteOpen(false);
               }}
               // Mirrors the importer's cap, so the browser stops the user at the
               // same number rather than letting the text vanish on reload.
