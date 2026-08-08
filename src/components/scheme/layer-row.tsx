@@ -205,12 +205,6 @@ export function LayerRow({
         )}
 
         <div className="mt-1.5 flex flex-wrap items-center gap-2">
-          {/* Below the title, not beside it. Up in the header it competed with
-              the name for the same row and pushed "Nuln Oil + Lahmian …" into
-              truncating; here it sits in a row that was already half empty.
-              A mixed entry has none — each of its ingredients carries its own,
-              in the list above, since `components()` includes the primary. */}
-          {mixed ? null : <PaintToggle paint={paint} dbPaints={dbPaints} />}
           <select
             value={paint.role}
             onChange={(e) => onSetRole(e.target.value as SchemeRole)}
@@ -300,20 +294,32 @@ export function LayerRow({
             <p className="mt-0.5 text-[11.5px] italic text-muted-foreground">{paint.note}</p>
           ))}
       </div>
-      <div className="flex flex-none gap-0.5 opacity-40 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
-        <IconBtn label="Move up (towards base)" disabled={index === 0} onClick={() => onMove(-1)}>
-          ↑
-        </IconBtn>
-        <IconBtn
-          label="Move down (towards highlight)"
-          disabled={index === count - 1}
-          onClick={() => onMove(1)}
-        >
-          ↓
-        </IconBtn>
-        <IconBtn label="Remove paint" danger onClick={onRemove}>
-          ✕
-        </IconBtn>
+      {/* The third column holds both, so a mixed row costs no empty grid track
+          — a fourth `auto` column would collapse to zero width but still pay
+          its gap on both sides. */}
+      <div className="flex flex-none items-start gap-1.5">
+        {/* A mixed entry has none here: each of its ingredients carries its
+            own, up in the list above, and `components()` includes the primary
+            — so one here would offer the primary a second time. */}
+        {mixed ? null : <PaintToggle paint={paint} dbPaints={dbPaints} />}
+        {/* Deliberately a sibling of the toggle, not inside this cluster: it
+            fades to 40% until hover, which is right for actions and wrong for
+            state — a faded ✓ would hide whether you already own the paint. */}
+        <div className="flex gap-0.5 opacity-40 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+          <IconBtn label="Move up (towards base)" disabled={index === 0} onClick={() => onMove(-1)}>
+            ↑
+          </IconBtn>
+          <IconBtn
+            label="Move down (towards highlight)"
+            disabled={index === count - 1}
+            onClick={() => onMove(1)}
+          >
+            ↓
+          </IconBtn>
+          <IconBtn label="Remove paint" danger onClick={onRemove}>
+            ✕
+          </IconBtn>
+        </div>
       </div>
     </li>
   );

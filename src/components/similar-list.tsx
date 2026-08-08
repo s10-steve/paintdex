@@ -52,10 +52,16 @@ export function SimilarList({
         // Same constraint as `PaintCard` — the whole row is one link and a
         // button can't nest inside it — so it's a sibling of the anchor,
         // positioned over it.
-        <li key={item.id} className="relative">
+        // The height floor lives here, on the grid item, rather than on the
+        // anchor. On the anchor it combined with `h-full` into a circular
+        // dependency — a percentage height resolved against a track sized by
+        // the very content it contains. Chromium resolves that the way you'd
+        // hope, but there's no reason to depend on it when the grid item's own
+        // height is unambiguous. Keep it in step with `SimilarListSkeleton`.
+        <li key={item.id} className="relative min-h-[76px]">
           <Link
             href={`/paints/${item.id}${linkQuery}`}
-            className="flex h-full min-h-[76px] items-stretch gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-full items-stretch gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span
               className="h-12 w-12 shrink-0 rounded-md border border-border"
@@ -85,12 +91,10 @@ export function SimilarList({
                   of the buttons; pinned, it starts below them at every name
                   length.
 
-                  The `min-h-[76px]` above is what makes that true rather than
-                  merely usual — it's what puts this row's top at ~44px against
-                  buttons ending at 40. At the old 72px resting height the two
-                  met exactly, with no clearance at all. **Keep it in step with
-                  `SimilarListSkeleton`'s height**, whose whole job is to match
-                  this so the list doesn't jump when it loads. */}
+                  The `min-h-[76px]` on the `<li>` is what makes that true
+                  rather than merely usual — it's what puts this row's top at
+                  ~44px against buttons ending at 40. At the old 72px resting
+                  height the two met exactly, with no clearance at all. */}
               <span className="mt-auto flex items-end justify-between gap-2 pt-1">
                 <span className="min-w-0 text-xs text-muted-foreground [overflow-wrap:anywhere] line-clamp-2">
                   {item.brand} · {item.range}

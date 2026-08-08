@@ -779,16 +779,17 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   from every scheme saved before it, and this lookup would still be the
   fallback. `null` is a normal answer — custom colour, unloaded catalogue,
   renamed paint — and the caller renders no toggle.
-- **The layer row's toggle sits below the title, and a mix puts one on each
-  ingredient.** Both follow from the same thing: beside the title it shared a
-  row with the paint name and truncated it — "Nuln Oil + Lahmian …". A plain
-  paint's toggle now goes in the action row (role select, `+ Mix`, `Note`),
-  which was already half empty; a mixed entry's go on its ingredient lines,
-  which is also the honest answer to *which* paint one toggle up in the header
-  would have meant. `components()` lists the primary as slot 0, so those lines
-  cover it — hence `mixed ? null : …` on the action-row one, or the primary
-  would be offered twice. Mediums get a toggle too: you still have to buy
-  Lahmian Medium.
+- **A plain layer row's toggle sits right, before the ↑↓✕ cluster; a mix puts
+  one on each ingredient instead.** The mix case is the interesting one: beside
+  the title one toggle shared a row with the paint name and truncated it —
+  "Nuln Oil + Lahmian …" — and it was never clear *which* paint it meant. The
+  ingredient lines answer both at once, and `components()` lists the primary as
+  slot 0, so they cover it. Hence `mixed ? null : …` on the right-hand one, or
+  the primary would be offered twice. Mediums get a toggle too: you still have
+  to buy Lahmian Medium.
+- **Both share the third grid column** rather than the row growing a fourth. An
+  empty `auto` track collapses to zero width but still pays its `gap` on both
+  sides, so a fourth column would put 10px of dead space in every mixed row.
 - **The visualiser uses `size="sm"` throughout** — 24px, which is the WCAG
   2.5.8 minimum target and the same number the plot's marks use. It's a floor,
   not a preference; don't shrink it further to win space in a dense row.
