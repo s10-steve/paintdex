@@ -31,10 +31,16 @@ export function PaintCard({
   action?: ReactNode;
 }) {
   return (
-    <div className="relative flex">
+    // The action overlays by grid stacking rather than `position: absolute`,
+    // for the reason written up at length in `similar-list`: Safari did not put
+    // an absolutely positioned overlay where either of two `relative` wrappers
+    // said it should, and Chromium did, so the bug is invisible here. One cell,
+    // both children in it, `justify-self-end` for the corner — no containing
+    // block to get wrong. Keep the two components the same shape.
+    <div className="grid">
       <Link
         href={`/paints/${paint.id}${query}`}
-        className="group flex flex-1 flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="group col-start-1 row-start-1 flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <div
           className="h-24 w-full"
@@ -67,7 +73,11 @@ export function PaintCard({
           </span>
         </div>
       </Link>
-      {action ? <div className="absolute right-1.5 top-1.5">{action}</div> : null}
+      {action ? (
+        <div className="col-start-1 row-start-1 self-start justify-self-end p-1.5">
+          {action}
+        </div>
+      ) : null}
     </div>
   );
 }

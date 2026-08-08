@@ -737,13 +737,17 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   make those client trees, and a `<button>` inside an `<a>` is invalid HTML with
   browser-dependent click behaviour. The caller injects it and it renders as a
   sibling, overlaid on the swatch — dead space, so nothing can collide.
-- **An overlay's `relative` ancestor must be a plain `<div>`, never the `<li>`.**
-  `similar-list` put it on the list item and Safari didn't treat that as the
-  containing block: every toggle fell back to its static position and each card
-  painted over the one above, leaving one visible per column. Chromium renders
-  the `<li>` version correctly, so a render check there proves nothing — this is
-  the one piece of layout in the app that genuinely needs a second engine.
-  `PaintCard` had the right shape from the start; keep the two the same.
+- **Overlays stack with CSS grid, never `position: absolute`.** Both
+  `paint-card` and `similar-list` put the toggle in the *same grid cell* as the
+  card's anchor (`col-start-1 row-start-1`, plus `self-start justify-self-end`
+  for the corner). This is not a style preference — two attempts at absolute
+  positioning each failed in Safari and worked in Chromium: `relative` on the
+  `<li>` wasn't honoured as a containing block at all, and moving it to an inner
+  `relative flex` div left `top` applying but `right` not, planting every toggle
+  in the card's top-left. Grid stacking needs no containing block, so there is
+  nothing left to get wrong. **A Chromium render proves nothing here** — this is
+  the one part of the app that genuinely needs a second engine, and the repo has
+  no automated way to check it.
 - **`similar-list` overlays too, but pads the name rather than the card.** It
   first shipped with the toggle as a flex *sibling* of the anchor, which took its
   ~64px plus the gap out of the card's own width — enough to wrap "Blood For The
