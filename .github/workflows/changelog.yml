@@ -1,0 +1,57 @@
+name: Changelog
+
+# Fails a pull request that changes the app without documenting it.
+#
+# The changelog kept being left behind, because the only moment anyone has the
+# context to write an entry is while the change is still in review — once a PR
+# is merged the pressure to go back and write one is gone, and the entry never
+# gets written. A checklist item in the PR template does not fix this; people
+# tick it. A failing check is the only thing that lands at the right moment.
+#
+# Deliberately narrow: `src/` only. Paint-data corrections, dependency bumps and
+# doc changes do not need an entry, and nagging about them would train people to
+# reach for the escape hatch by reflex.
+
+on:
+  pull_request:
+    # `labeled`/`unlabeled` are here so adding the escape-hatch label re-runs
+    # this and turns the check green, rather than needing an empty push.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.pull_request.labels.*.name, 'no changelog')"
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The default shallow clone has no merge base to diff against.
+          fetch-depth: 0
+
+      - name: Require a changelog entry for user-facing changes
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "$BASE"
+          changed=$(git diff --name-only "origin/$BASE...HEAD")
+
+          echo "Files changed in this PR:"
+          echo "$changed" | sed 's/^/  /'
+          echo
+
+          if ! echo "$changed" | grep -qE '^src/'; then
+            echo "Nothing under src/ — no entry needed."
+            exit 0
+          fi
+
+          if echo "$changed" | grep -qx 'CHANGELOG.md'; then
+            echo "CHANGELOG.md updated."
+            exit 0
+          fi
+
+          echo "::error file=CHANGELOG.md::This PR changes src/ but does not touch CHANGELOG.md. Add your entries under '## [Unreleased]' — see the Releasing section in CONTRIBUTING.md. If the change genuinely isn't user-facing (a refactor, a test-only change), add the 'no changelog' label to this PR."
+          exit 1

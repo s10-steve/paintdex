@@ -797,6 +797,37 @@ Things to know before changing it:
   to one aspect while everything else moves — `poster-canvas` had seven such
   reads, which is every coordinate the pointer and keyboard paths use.
 
+## The changelog and releasing
+
+Two separate jobs. Conflating them is what let `CHANGELOG.md` drift behind
+production — v0.13.0's work shipped across three PRs while the file still called
+it `[Unreleased]`.
+
+- **A PR that touches `src/` writes its own entries under `## [Unreleased]`, in
+  that PR**, with no version and no date. `.github/workflows/changelog.yml`
+  fails the PR otherwise; the escape hatch for a genuine non-user-facing change
+  is the `no changelog` label. The check is deliberately narrow — `src/` only —
+  so data corrections and dependency bumps don't train people to reach for that
+  label by reflex.
+- **Entries are written for painters, not reviewers.** What changed, why it's
+  better, what it costs. Naming the trade-off is the house style ("the photo is
+  all that travels for now"), and it's the reason this file must not be
+  generated from commit messages — Conventional Commits tooling would produce a
+  terser, developer-flavoured changelog and lose exactly what makes this one
+  worth reading. Automating the *version and tag* bookkeeping is fine; automating
+  the prose is not.
+- **Cutting a version is a separate, deliberate act**: rename `[Unreleased]` to
+  `## [X.Y.Z] - YYYY-MM-DD`, add a fresh empty `[Unreleased]`, bump
+  `package.json`, then tag the merge commit. Releasing is not how you ship —
+  **every push to `main` deploys**, so a merge already shipped it. A version says
+  "this is worth announcing".
+- **The migration ordering is a merge gate, not a changelog gate.** A release
+  needing schema changes has them applied and verified against production
+  *before* the merge that deploys the code. Leaving the changelog unversioned
+  holds nothing back; it just leaves production running code no version names.
+- Tag every release (`git tag vX.Y.Z`). There were no tags at all until v0.13.0,
+  which is part of why nothing anchored a version to a commit.
+
 ## Deploying
 
 Vercel builds `main` for production and gives every PR a preview URL — it's a
