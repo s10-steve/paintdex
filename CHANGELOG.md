@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-**This needs a database change applied before the update goes live** — run
-`0005-v0.14.0-paint-collection.sql` in the Supabase SQL editor and run its
-`-- Verify` block, *then* deploy. It adds the table the whole feature reads and
-writes, and there is no fallback.
+## [0.14.0] - 2026-08-08
+
+Paintdex can now remember which paints you actually own — and which ones you
+still need to buy — so a colour match tells you whether you can start painting
+tonight or need a trip to the shop first.
+
+This release needed a database change, applied before it went live:
+`0005-v0.14.0-paint-collection.sql`. It adds the table the whole feature reads
+and writes, and the code has no fallback for its absence.
 
 ### Added
 
