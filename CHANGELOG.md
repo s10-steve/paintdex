@@ -7,14 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-08-08
+
 Finishes the two social-sharing items left on the roadmap after the share-image
 studio shipped, and gives the visualiser a pass of its own: a layer can now be a
 mix of paints with a ratio, and can carry a note about how you applied it.
 
-**This needs database changes applied before the update goes live** — run
+This release needed database changes, applied before it went live:
 `0002-v0.13.0-migration-tracking.sql`, `0003-v0.13.0-scheme-photos.sql` and
-`0004-v0.13.0-fix-published-photo-read.sql` in the Supabase SQL editor, in that
-order, running each one's `-- Verify` block, *then* deploy. They add the photo
+`0004-v0.13.0-fix-published-photo-read.sql`, in that order. They add the photo
 bucket and change what the share page's lookup returns, and the code has no
 fallback for either.
 
