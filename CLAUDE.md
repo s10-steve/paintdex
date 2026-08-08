@@ -737,17 +737,47 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   make those client trees, and a `<button>` inside an `<a>` is invalid HTML with
   browser-dependent click behaviour. The caller injects it and it renders as a
   sibling, overlaid on the swatch — dead space, so nothing can collide.
-- **Overlays stack with CSS grid, never `position: absolute`.** Both
-  `paint-card` and `similar-list` put the toggle in the *same grid cell* as the
-  card's anchor (`col-start-1 row-start-1`, plus `self-start justify-self-end`
-  for the corner). This is not a style preference — two attempts at absolute
-  positioning each failed in Safari and worked in Chromium: `relative` on the
-  `<li>` wasn't honoured as a containing block at all, and moving it to an inner
-  `relative flex` div left `top` applying but `right` not, planting every toggle
-  in the card's top-left. Grid stacking needs no containing block, so there is
-  nothing left to get wrong. **A Chromium render proves nothing here** — this is
-  the one part of the app that genuinely needs a second engine, and the repo has
-  no automated way to check it.
+- **Overlays stack with CSS grid.** Both `paint-card` and `similar-list` put the
+  toggle in the *same grid cell* as the card's anchor (`col-start-1 row-start-1`,
+  plus `self-start justify-self-end` for the corner). It needs no containing
+  block and no percentage height, which is reason enough to keep it.
+- **Three "Safari bugs" have been reported against this one overlay, and none of
+  them has ever been reproduced in a WebKit engine.** The first two were
+  diagnosed from a Chromium render plus a screenshot, and the fixes they
+  motivated — `relative` off the `<li>`, then abandoning `position` entirely —
+  did not make the symptom go away. This file used to assert, as fact, that
+  WebKit ignores `position: relative` on a list item and drops `right` while
+  honouring `top`. **Treat both as unproven.** What is established:
+  - A fresh `npm run build` emits all four placement utilities correctly
+    (`grid-column-start:1`, `grid-row-start:1`), and Chromium lays the shipped
+    markup out correctly with them.
+  - Every class involved in the third report — unprefixed `col-start-1`,
+    `row-start-1`, `self-start`, `justify-self-end` — was **new to the generated
+    stylesheet** in the commit that introduced it. Earlier uses were all
+    variant-prefixed (`lg:col-start-1`, `md:self-start`), which emit different
+    selectors, so they did not put the bare rules in the CSS. A rendering bug
+    cannot correlate with which class names are new to this repo; **a stale
+    stylesheet correlates with it exactly**, and the reports come from
+    `npm run dev`, where Tailwind v4 regenerates CSS over HMR.
+  - So before changing any markup, hard-reload (Cmd-Opt-R, or Develop → Empty
+    Caches) or restart `npm run dev`, and re-check.
+- **Reproduce it in isolation before believing it.** The way to settle one of
+  these in seconds is a standalone HTML file: the built stylesheet in a `<style>`
+  tag (inline, so `cssRules` is readable and staleness is impossible), the card
+  markup copied verbatim, and a script that measures the toggle's box against the
+  anchor's and prints the computed `grid-row-start`/`justify-self` alongside
+  whether the rules are in the sheet at all. No React, no auth, no dev server —
+  the sign-in gate only decides whether the toggle renders, so the layout
+  question needs none of it. Add a control block with the same declarations
+  inlined as `style` attributes: if the control is right and the class version is
+  wrong, the problem is stylesheet delivery, not the engine.
+- One thing worth knowing if a real WebKit difference ever does turn up here:
+  Tailwind v4 compiles `justify-self-end`/`self-start` to `justify-self:flex-end`
+  and `align-self:flex-start`. Those are legal on a grid item (Box Alignment says
+  `flex-*` behaves as `start`/`end` outside flex), but they are the only values
+  in this stack whose grid behaviour is an alias rather than the plain keyword —
+  so they are the first thing to probe, via `[justify-self:end]
+  [align-self:start]`.
 - **`similar-list` overlays too, but pads the name rather than the card.** It
   first shipped with the toggle as a flex *sibling* of the anchor, which took its
   ~64px plus the gap out of the card's own width — enough to wrap "Blood For The
