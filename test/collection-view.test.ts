@@ -31,7 +31,7 @@ const paint = (
 
 const names = (paints: readonly BrowsePaint[]) => paints.map((p) => p.name);
 const flat = (paints: BrowsePaint[], sort: Parameters<typeof groupCollection>[2]) =>
-  names(groupCollection(paints, "none", sort)[0].paints);
+  names(groupCollection(paints, [], sort)[0].paints);
 
 describe("sorting", () => {
   const red = paint("red", "Red", "#cc0000", { family: "red", l: 44 });
@@ -92,7 +92,7 @@ describe("sorting", () => {
 
   it("leaves the caller's array alone", () => {
     const input = [yellow, blue, red];
-    groupCollection(input, "none", "hue");
+    groupCollection(input, [], "hue");
     expect(names(input)).toEqual(["Yellow", "Blue", "Red"]);
   });
 });
@@ -103,27 +103,30 @@ describe("grouping", () => {
     brand: "Vallejo",
     range: "Model Color",
     family: "blue",
+    type: "layer",
   });
   const citadelBlue = paint("c-blue", "Macragge Blue", "#0d407f", {
     range: "Layer",
     family: "blue",
+    type: "layer",
   });
 
-  it("returns one unlabelled group when grouping is off", () => {
-    const groups = groupCollection([citadelRed, vallejoBlue], "none", "name");
+  it("returns one unlabelled group when nothing is ticked", () => {
+    const groups = groupCollection([citadelRed, vallejoBlue], [], "name");
     expect(groups).toHaveLength(1);
     expect(groups[0].key).toBe("");
     expect(groups[0].label).toBe("");
+    expect(groups[0].groups).toEqual([]);
   });
 
   it("groups by brand, alphabetically", () => {
-    const groups = groupCollection([vallejoBlue, citadelRed], "brand", "name");
+    const groups = groupCollection([vallejoBlue, citadelRed], ["brand"], "name");
     expect(groups.map((g) => g.label)).toEqual(["Citadel", "Vallejo"]);
     expect(names(groups[0].paints)).toEqual(["Mephiston Red"]);
   });
 
   it("groups by range, alphabetically", () => {
-    const groups = groupCollection([citadelBlue, citadelRed, vallejoBlue], "range", "name");
+    const groups = groupCollection([citadelBlue, citadelRed, vallejoBlue], ["range"], "name");
     expect(groups.map((g) => g.label)).toEqual(["Base", "Layer", "Model Color"]);
   });
 
@@ -131,17 +134,60 @@ describe("grouping", () => {
     // Alphabetical would put Blue before Red and Yellow last; and the label has
     // to come from `facetLabel`, so a heading and its facet checkbox can't
     // disagree about casing.
-    const groups = groupCollection([vallejoBlue, citadelRed], "family", "name");
+    const groups = groupCollection([vallejoBlue, citadelRed], ["family"], "name");
     expect(groups.map((g) => g.label)).toEqual(["Red", "Blue"]);
     expect(groups.map((g) => g.key)).toEqual(["red", "blue"]);
   });
 
+  it("orders types by the catalogue's own vocabulary, not A–Z", () => {
+    // `PAINT_TYPES` runs base → layer → shade …, which is the order the pots
+    // are used in; alphabetically Layer would come before Base.
+    const groups = groupCollection([citadelBlue, citadelRed], ["type"], "name");
+    expect(groups.map((g) => g.label)).toEqual(["Base", "Layer"]);
+  });
+
   it("sorts within each group, not just across the whole list", () => {
-    const groups = groupCollection([citadelBlue, citadelRed], "brand", "hue");
+    const groups = groupCollection([citadelBlue, citadelRed], ["brand"], "hue");
     expect(names(groups[0].paints)).toEqual(["Mephiston Red", "Macragge Blue"]);
   });
 
   it("has no groups at all for an empty list", () => {
-    expect(groupCollection([], "brand", "name")).toEqual([]);
+    expect(groupCollection([], ["brand"], "name")).toEqual([]);
+  });
+});
+
+describe("grouping on two axes", () => {
+  const citadelBase = paint("c-red", "Mephiston Red", "#960c0c", { range: "Base" });
+  const citadelLayer = paint("c-blue", "Macragge Blue", "#0d407f", { range: "Layer" });
+  const vallejo = paint("v-blue", "Andrea Blue", "#1f6cb0", {
+    brand: "Vallejo",
+    range: "Model Color",
+  });
+  const all = [citadelLayer, vallejo, citadelBase];
+
+  it("nests in the order the axes are given — first ticked is the outer heading", () => {
+    const groups = groupCollection(all, ["brand", "range"], "name");
+    expect(groups.map((g) => g.label)).toEqual(["Citadel", "Vallejo"]);
+    expect(groups[0].groups.map((g) => g.label)).toEqual(["Base", "Layer"]);
+    expect(names(groups[0].groups[0].paints)).toEqual(["Mephiston Red"]);
+  });
+
+  it("flips when the axes are given the other way round", () => {
+    const groups = groupCollection(all, ["range", "brand"], "name");
+    expect(groups.map((g) => g.label)).toEqual(["Base", "Layer", "Model Color"]);
+    expect(groups[0].groups.map((g) => g.label)).toEqual(["Citadel"]);
+  });
+
+  it("gives a parent every paint beneath it, so its count needs no summing", () => {
+    const groups = groupCollection(all, ["brand", "range"], "name");
+    expect(names(groups[0].paints)).toEqual(["Macragge Blue", "Mephiston Red"]);
+    expect(groups[0].paints).toHaveLength(
+      groups[0].groups.reduce((n, g) => n + g.paints.length, 0),
+    );
+  });
+
+  it("leaves the leaves in the chosen sort", () => {
+    const groups = groupCollection(all, ["brand", "range"], "hue");
+    expect(names(groups[0].paints)).toEqual(["Mephiston Red", "Macragge Blue"]);
   });
 });

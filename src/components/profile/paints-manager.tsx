@@ -31,11 +31,12 @@ import { PaintFacets } from "@/components/paint-facets";
 import { facetOptions } from "@/lib/paints/facet-availability";
 import { filterPaints } from "@/lib/paints/filter";
 import {
-  COLLECTION_GROUPS,
   COLLECTION_SORTS,
+  GROUP_AXES,
+  MAX_GROUP_AXES,
   groupCollection,
-  type CollectionGroup,
   type CollectionSort,
+  type GroupAxis,
   type PaintGroup,
 } from "@/lib/paints/collection-view";
 import { PAINT_TYPES, type BrowsePaint, type PaintType } from "@/lib/paints/types";
@@ -81,11 +82,11 @@ const BUTTON =
 const ICON_BUTTON =
   "flex h-6 w-6 shrink-0 items-center justify-center rounded border border-border text-[11px] font-medium transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
-const GROUP_LABELS: Record<CollectionGroup, string> = {
-  none: "No grouping",
-  brand: "Group by brand",
-  family: "Group by colour family",
-  range: "Group by range",
+const AXIS_LABELS: Record<GroupAxis, string> = {
+  brand: "Brand",
+  range: "Range",
+  type: "Type",
+  family: "Colour family",
 };
 
 const SORT_LABELS: Record<CollectionSort, string> = {
@@ -97,6 +98,24 @@ const SORT_LABELS: Record<CollectionSort, string> = {
 
 const SELECT =
   "rounded-md border border-border bg-card px-2 py-1.5 text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+/**
+ * Two columns, never three. Three fitted, but a name long enough to wrap makes
+ * its card taller than its neighbours, and at three columns that happens in
+ * most rows — the grid looked ragged rather than dense.
+ */
+const CARD_GRID = "mt-3 grid gap-2 sm:grid-cols-2";
+
+/**
+ * The name/meta column, with the second line of the name reserved whether or not
+ * it's used (`min-h-10` = two `text-sm` lines).
+ *
+ * That's what actually makes the cards a uniform height: grid rows stretch to
+ * their tallest card, so one wrapped name sets the height for its whole row and
+ * the rows differ from each other. Reserving the line costs ~16px on a
+ * short-named card and leaves every card identical.
+ */
+const CARD_TEXT = "min-h-10 min-w-0 flex-1";
 
 function CollectionManager() {
   const { user } = useAuth();
@@ -112,14 +131,17 @@ function CollectionManager() {
   // Display options, not filters: they say how to present the page rather than
   // which paints you want, so "Clear all" leaves them alone — the same split
   // browse makes between its facets and its `sort`.
-  const [group, setGroup] = useState<CollectionGroup>("none");
+  //
+  // An ordered array rather than a Set, because the order is the nesting: the
+  // axis ticked first is the outer heading, which is the only way to get both
+  // "Citadel → Base" and "Base → Citadel" out of two checkboxes.
+  const [groupAxes, setGroupAxes] = useState<GroupAxis[]>([]);
   const [sort, setSort] = useState<CollectionSort>("name");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
   // `useId` rather than a literal: `PaintFacets` renders its own controls on the
   // same page, and hardcoded ids are what let two copies of a control collide.
-  const groupId = useId();
   const sortId = useId();
 
   /**
@@ -158,7 +180,7 @@ function CollectionManager() {
         includeDiscontinued: true,
         metallic: metallic || undefined,
       });
-      return { groups: groupCollection(kept, group, sort), count: kept.length, stale };
+      return { groups: groupCollection(kept, groupAxes, sort), count: kept.length, stale };
     };
 
     return {
@@ -166,7 +188,12 @@ function CollectionManager() {
       wishlist: apply(raw.wishlist),
       total: entries.size,
     };
-  }, [paints, entries, search, brands, ranges, types, families, metallic, group, sort]);
+  }, [paints, entries, search, brands, ranges, types, families, metallic, groupAxes, sort]);
+
+  /** Tick appends (so tick order is nesting order); untick removes. */
+  const toggleAxis = useCallback((axis: GroupAxis) => {
+    setGroupAxes((prev) => (prev.includes(axis) ? prev.filter((a) => a !== axis) : [...prev, axis]));
+  }, []);
 
   /**
    * Facet options come from the collection, not the whole catalogue — offering
@@ -358,23 +385,43 @@ function CollectionManager() {
             {total.toLocaleString()} paint{total === 1 ? "" : "s"} in your collection
           </p>
           <div className="flex flex-wrap items-center gap-2">
-            {/* One pair of controls for both lists. Per-section copies would
+            {/* One set of controls for both lists. Per-section copies would
                 double the decisions to make and mean two ids per control. */}
-            <label htmlFor={groupId} className="sr-only">
-              Group paints by
-            </label>
-            <select
-              id={groupId}
-              value={group}
-              onChange={(e) => setGroup(e.target.value as CollectionGroup)}
-              className={SELECT}
-            >
-              {COLLECTION_GROUPS.map((key) => (
-                <option key={key} value={key}>
-                  {GROUP_LABELS[key]}
-                </option>
-              ))}
-            </select>
+            <fieldset className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              {/* The legend is what a screen reader announces for the group, so
+                  it carries the cap in words; the visible hint says the same
+                  thing and is hidden from the accessibility tree to avoid
+                  announcing it twice. */}
+              <legend className="sr-only">Group paints by (up to {MAX_GROUP_AXES})</legend>
+              <span aria-hidden className="text-xs text-muted-foreground">
+                Group by <span className="text-[10px]">(up to {MAX_GROUP_AXES})</span>
+              </span>
+              {GROUP_AXES.map((axis) => {
+                const checked = groupAxes.includes(axis);
+                return (
+                  <label
+                    key={axis}
+                    className={`flex items-center gap-1.5 text-xs ${
+                      // Disabled rather than silently dropping the oldest pick:
+                      // nothing rearranges behind the user's back, and the hint
+                      // above says why before they reach the cap.
+                      !checked && groupAxes.length >= MAX_GROUP_AXES
+                        ? "cursor-not-allowed opacity-50"
+                        : "cursor-pointer"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      className="accent-[var(--primary)]"
+                      checked={checked}
+                      disabled={!checked && groupAxes.length >= MAX_GROUP_AXES}
+                      onChange={() => toggleAxis(axis)}
+                    />
+                    {AXIS_LABELS[axis]}
+                  </label>
+                );
+              })}
+            </fieldset>
             <label htmlFor={sortId} className="sr-only">
               Sort paints by
             </label>
@@ -485,72 +532,16 @@ function PaintSection({
         </p>
       ) : (
         <>
-          {/* One group with an empty key is the ungrouped case, so there is one
-              shape to render rather than a branch: no key, no heading. */}
           {bucket.groups.map((group) => (
-            <div key={group.key || "all"}>
-              {group.key ? (
-                <h3 className="mt-4 text-sm font-semibold text-muted-foreground">
-                  {group.label}{" "}
-                  <span className="font-normal">({group.paints.length})</span>
-                </h3>
-              ) : null}
-              <ul className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-                {group.paints.map((paint) => (
-                  // One row. The two actions used to be full-text buttons on a
-                  // second line, because side by side with the name they took
-                  // about 250px of a ~370px card and truncated most of them —
-                  // "Abaddon Bl…", "Agrax Earth…". As 24px icons they cost ~56px
-                  // instead, which the name can spare, and the card gets a whole
-                  // line of height back.
-                  <li
-                    key={paint.id}
-                    className="flex items-center gap-3 rounded-xl border border-border bg-card p-2.5 shadow-sm"
-                  >
-                    <span
-                      className="h-10 w-10 shrink-0 rounded-md border border-border"
-                      style={{ backgroundColor: paint.hex }}
-                      aria-hidden="true"
-                    />
-                    <span className="min-w-0 flex-1">
-                      <Link
-                        href={`/paints/${paint.id}`}
-                        className="block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 hover:text-primary"
-                      >
-                        {paint.name}
-                      </Link>
-                      <span className="block truncate text-xs text-muted-foreground">
-                        {paint.brand} · {paint.range}
-                        {paint.discontinued ? " · discontinued" : ""}
-                      </span>
-                    </span>
-                    <span className="flex shrink-0 gap-1">
-                      {/* `title` and `aria-label` are the same string: an icon
-                          button that announces something other than what its
-                          tooltip says is worse than either alone. */}
-                      <button
-                        type="button"
-                        onClick={() => onMove(paint.id)}
-                        aria-label={`${moveLabel}: ${paint.name}`}
-                        title={`${moveLabel}: ${paint.name}`}
-                        className={`${ICON_BUTTON} text-muted-foreground hover:text-foreground`}
-                      >
-                        <span aria-hidden>{moveIcon}</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => onRemove(paint.id)}
-                        aria-label={`Remove ${paint.name} from your collection`}
-                        title={`Remove ${paint.name} from your collection`}
-                        className={`${ICON_BUTTON} text-red-600 dark:text-red-400`}
-                      >
-                        <span aria-hidden>✕</span>
-                      </button>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <GroupBlock
+              key={group.key || "all"}
+              group={group}
+              depth={0}
+              moveLabel={moveLabel}
+              moveIcon={moveIcon}
+              onMove={onMove}
+              onRemove={onRemove}
+            />
           ))}
 
           {/* Ids with no paint behind them any more — a rename, or a brand
@@ -559,7 +550,7 @@ function PaintSection({
               one is a Remove button, which needs a row to sit on. Kept out of
               the groups: there's no brand or family to file them under. */}
           {bucket.stale.length > 0 ? (
-            <ul className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+            <ul className={CARD_GRID}>
               {bucket.stale.map((paintId) => (
                 // Same single-row shape as a real paint's card, so the two sit
                 // level in the grid rather than one being visibly shorter.
@@ -571,7 +562,7 @@ function PaintSection({
                     className="h-10 w-10 shrink-0 rounded-md border border-dashed border-border"
                     aria-hidden="true"
                   />
-                  <span className="min-w-0 flex-1">
+                  <span className={CARD_TEXT}>
                     <span className="block font-mono text-xs [overflow-wrap:anywhere] line-clamp-2">
                       {paintId}
                     </span>
@@ -595,5 +586,114 @@ function PaintSection({
         </>
       )}
     </section>
+  );
+}
+
+/**
+ * One heading and what's under it — its subgroups, or its paints.
+ *
+ * Recursive because grouping takes up to two axes, and the two levels differ
+ * only in heading level and weight. A group with an empty key is the ungrouped
+ * whole, which is why there is one shape here rather than a branch: no key, no
+ * heading.
+ */
+function GroupBlock({
+  group,
+  depth,
+  moveLabel,
+  moveIcon,
+  onMove,
+  onRemove,
+}: {
+  group: PaintGroup;
+  depth: number;
+  moveLabel: string;
+  moveIcon: string;
+  onMove: (paintId: string) => void;
+  onRemove: (paintId: string) => void;
+}) {
+  // Heading level tracks depth, so the page's outline stays h2 → h3 → h4 rather
+  // than repeating one level for two different things.
+  const Heading = depth === 0 ? "h3" : "h4";
+
+  return (
+    <div className={depth > 0 ? "border-l border-border pl-3" : undefined}>
+      {group.key ? (
+        <Heading
+          className={`${depth === 0 ? "mt-4 text-sm" : "mt-3 text-xs"} font-semibold text-muted-foreground`}
+        >
+          {group.label} <span className="font-normal">({group.paints.length})</span>
+        </Heading>
+      ) : null}
+
+      {group.groups.length > 0 ? (
+        group.groups.map((child) => (
+          <GroupBlock
+            key={child.key}
+            group={child}
+            depth={depth + 1}
+            moveLabel={moveLabel}
+            moveIcon={moveIcon}
+            onMove={onMove}
+            onRemove={onRemove}
+          />
+        ))
+      ) : (
+        <ul className={CARD_GRID}>
+          {group.paints.map((paint) => (
+            // One row. The two actions used to be full-text buttons on a second
+            // line, because side by side with the name they took about 250px of
+            // a ~370px card and truncated most of them — "Abaddon Bl…", "Agrax
+            // Earth…". As 24px icons they cost ~56px instead, which the name can
+            // spare, and the card gets a whole line of height back.
+            <li
+              key={paint.id}
+              className="flex items-center gap-3 rounded-xl border border-border bg-card p-2.5 shadow-sm"
+            >
+              <span
+                className="h-10 w-10 shrink-0 rounded-md border border-border"
+                style={{ backgroundColor: paint.hex }}
+                aria-hidden="true"
+              />
+              <span className={CARD_TEXT}>
+                <Link
+                  href={`/paints/${paint.id}`}
+                  className="block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 hover:text-primary"
+                >
+                  {paint.name}
+                </Link>
+                <span className="block truncate text-xs text-muted-foreground">
+                  {paint.brand} · {paint.range}
+                  {paint.discontinued ? " · discontinued" : ""}
+                </span>
+              </span>
+              <span className="flex shrink-0 gap-1">
+                {/* `title` and `aria-label` are the same string: an icon button
+                    that announces something other than what its tooltip says is
+                    worse than either alone. */}
+                <button
+                  type="button"
+                  onClick={() => onMove(paint.id)}
+                  aria-label={`${moveLabel}: ${paint.name}`}
+                  title={`${moveLabel}: ${paint.name}`}
+                  className={`${ICON_BUTTON} text-muted-foreground hover:text-foreground`}
+                >
+                  <span aria-hidden>{moveIcon}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onRemove(paint.id)}
+                  aria-label={`Remove ${paint.name} from your collection`}
+                  title={`Remove ${paint.name} from your collection`}
+                  className={`${ICON_BUTTON} text-red-600 dark:text-red-400`}
+                >
+                  <span aria-hidden>✕</span>
+                </button>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

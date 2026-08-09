@@ -274,7 +274,7 @@ describe("display options", () => {
 
   it("adds a heading per brand when grouping by brand", () => {
     render(<PaintsManager />);
-    fireEvent.change(screen.getByLabelText("Group paints by"), { target: { value: "brand" } });
+    fireEvent.click(screen.getByLabelText("Brand"));
 
     const headings = within(ownedSection())
       .getAllByRole("heading")
@@ -283,6 +283,31 @@ describe("display options", () => {
     expect(headings[1]).toContain("(2)");
     expect(headings[2]).toContain("Vallejo");
     expect(headings[2]).toContain("(1)");
+  });
+
+  it("nests two axes, outermost first ticked", () => {
+    render(<PaintsManager />);
+    fireEvent.click(screen.getByLabelText("Brand"));
+    fireEvent.click(screen.getByLabelText("Range"));
+
+    const owned = ownedSection();
+    expect(within(owned).getByRole("heading", { level: 3, name: /Citadel/ })).toBeTruthy();
+    // Every fixture paint is in the "Base" range, so the inner headings are the
+    // ranges within each brand.
+    expect(within(owned).getAllByRole("heading", { level: 4 }).length).toBe(2);
+  });
+
+  it("stops at two axes rather than becoming a tree", () => {
+    render(<PaintsManager />);
+    fireEvent.click(screen.getByLabelText("Brand"));
+    fireEvent.click(screen.getByLabelText("Range"));
+
+    expect((screen.getByLabelText("Type") as HTMLInputElement).disabled).toBe(true);
+    // Ticked boxes stay live, so you can always untick to swap one out.
+    expect((screen.getByLabelText("Brand") as HTMLInputElement).disabled).toBe(false);
+
+    fireEvent.click(screen.getByLabelText("Brand"));
+    expect((screen.getByLabelText("Type") as HTMLInputElement).disabled).toBe(false);
   });
 
   it("reorders the list when sorting by hue", () => {
@@ -297,13 +322,13 @@ describe("display options", () => {
     // They say how to present the page, not which paints you want — the same
     // split browse makes between its facets and its sort.
     render(<PaintsManager />);
-    fireEvent.change(screen.getByLabelText("Group paints by"), { target: { value: "brand" } });
+    fireEvent.click(screen.getByLabelText("Brand"));
     fireEvent.change(screen.getByPlaceholderText("Search your paints"), {
       target: { value: "abaddon" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Clear all" }));
 
-    expect((screen.getByLabelText("Group paints by") as HTMLSelectElement).value).toBe("brand");
+    expect((screen.getByLabelText("Brand") as HTMLInputElement).checked).toBe(true);
     expect(within(ownedSection()).getAllByRole("heading").length).toBeGreaterThan(1);
   });
 });

@@ -15,19 +15,36 @@
  */
 import { COLOUR_FAMILIES, NEUTRAL_CHROMA, hexToLab, labToLch, type Lch } from "@/lib/color";
 import { facetLabel } from "./facet-availability";
-import type { BrowsePaint } from "./types";
+import { PAINT_TYPES, type BrowsePaint } from "./types";
 
 export const COLLECTION_SORTS = ["name", "hue", "chroma", "lightness"] as const;
 export type CollectionSort = (typeof COLLECTION_SORTS)[number];
 
-export const COLLECTION_GROUPS = ["none", "brand", "family", "range"] as const;
-export type CollectionGroup = (typeof COLLECTION_GROUPS)[number];
+/** What a collection can be grouped by. No grouping is the empty selection. */
+export const GROUP_AXES = ["brand", "range", "type", "family"] as const;
+export type GroupAxis = (typeof GROUP_AXES)[number];
 
-/** One heading's worth of paints. `key` is `""` for the ungrouped whole. */
+/**
+ * How many axes may be combined at once.
+ *
+ * Two is a product decision, not a limit of the fold below — three levels of
+ * heading over a few hundred paints is a tree, not a list. Enforced by the
+ * control (the remaining boxes disable), so this module stays a plain fold.
+ */
+export const MAX_GROUP_AXES = 2;
+
+/**
+ * One heading's worth of paints. `key` is `""` for the ungrouped whole.
+ *
+ * `paints` is everything under this heading at *any* depth, so a count is
+ * `group.paints.length` at either level and no renderer has to sum its
+ * children. `groups` empty means a leaf: render the list.
+ */
 export interface PaintGroup {
   key: string;
   label: string;
   paints: BrowsePaint[];
+  groups: PaintGroup[];
 }
 
 /**
@@ -104,51 +121,80 @@ function sortPaints(paints: readonly BrowsePaint[], sort: CollectionSort): Brows
   return [...chromatic, ...neutral];
 }
 
-/** Which field a grouping reads, and how its headings are ordered. */
-const GROUP_KEY: Record<Exclude<CollectionGroup, "none">, (p: BrowsePaint) => string> = {
+/** Which field each axis reads. */
+const GROUP_KEY: Record<GroupAxis, (p: BrowsePaint) => string> = {
   brand: (p) => p.brand,
-  family: (p) => p.family,
   range: (p) => p.range,
+  type: (p) => p.type,
+  family: (p) => p.family,
 };
+
+/**
+ * How an axis's headings are ordered, and how its keys are labelled.
+ *
+ * `type` and `family` are closed vocabularies whose declared order means
+ * something — base → layer → shade, red → … → neutral — so they follow it
+ * rather than the alphabet, which would put Blue before Red and Wash before
+ * Base. Brands and ranges have no such order and sort by label.
+ *
+ * Labels come from `facetLabel`, the one place a facet value is cased for
+ * display, so a heading and the checkbox that filters by it can't disagree.
+ */
+const VOCABULARY: Partial<Record<GroupAxis, { order: readonly string[]; kind: "types" | "families" }>> = {
+  type: { order: PAINT_TYPES, kind: "types" },
+  family: { order: COLOUR_FAMILIES, kind: "families" },
+};
+
+/** One level of the fold: split by `axis`, then recurse into whatever's left. */
+function foldAxis(
+  paints: readonly BrowsePaint[],
+  axis: GroupAxis,
+  rest: readonly GroupAxis[],
+): PaintGroup[] {
+  const keyOf = GROUP_KEY[axis];
+  // Insertion-ordered, but the keys are sorted below — the map only has to
+  // preserve the *paints'* order within each bucket, which it does.
+  const buckets = new Map<string, BrowsePaint[]>();
+  for (const p of paints) {
+    const key = keyOf(p);
+    const bucket = buckets.get(key);
+    if (bucket) bucket.push(p);
+    else buckets.set(key, [p]);
+  }
+
+  const vocab = VOCABULARY[axis];
+  const order = vocab
+    ? (a: string, b: string) => vocab.order.indexOf(a) - vocab.order.indexOf(b) || a.localeCompare(b)
+    : (a: string, b: string) => a.localeCompare(b);
+
+  return [...buckets.keys()].sort(order).map((key) => {
+    const mine = buckets.get(key)!;
+    return {
+      key,
+      label: vocab ? facetLabel(vocab.kind, key) : key,
+      paints: mine,
+      groups: rest.length ? foldAxis(mine, rest[0], rest.slice(1)) : [],
+    };
+  });
+}
 
 /**
  * Filtered paints → the sections `/my-paints` renders.
  *
- * `none` returns a single group with an empty key, so the caller has one shape
- * to render rather than a branch: an empty key means "no heading".
+ * `axes` is **ordered**: `axes[0]` is the outer heading, so ticking Brand then
+ * Range gives Citadel → Base, and the other way round gives Base → Citadel.
+ * An empty `axes` returns a single group with an empty key, so the caller has
+ * one shape to render rather than a branch: no key means no heading.
  *
- * Colour families are ordered by `COLOUR_FAMILIES` — red…neutral — not
- * alphabetically, so the headings read as a spectrum instead of putting Blue
- * before Red and Yellow last. Brands and ranges have no such natural order and
- * sort by label. Labels come from `facetLabel`, the one place a facet value is
- * cased for display, so a heading and its checkbox can't disagree.
+ * Sorting is applied once, up front, and the fold preserves order within each
+ * bucket — so a leaf reads in the sort the user picked, whatever the nesting.
  */
 export function groupCollection(
   paints: readonly BrowsePaint[],
-  group: CollectionGroup,
+  axes: readonly GroupAxis[],
   sort: CollectionSort,
 ): PaintGroup[] {
   const sorted = sortPaints(paints, sort);
-  if (group === "none") return [{ key: "", label: "", paints: sorted }];
-
-  const keyOf = GROUP_KEY[group];
-  const groups = new Map<string, BrowsePaint[]>();
-  for (const p of sorted) {
-    const key = keyOf(p);
-    const bucket = groups.get(key);
-    if (bucket) bucket.push(p);
-    else groups.set(key, [p]);
-  }
-
-  const families: readonly string[] = COLOUR_FAMILIES;
-  const order =
-    group === "family"
-      ? (a: string, b: string) => families.indexOf(a) - families.indexOf(b) || a.localeCompare(b)
-      : (a: string, b: string) => a.localeCompare(b);
-
-  return [...groups.keys()].sort(order).map((key) => ({
-    key,
-    label: group === "family" ? facetLabel("families", key) : key,
-    paints: groups.get(key)!,
-  }));
+  if (axes.length === 0) return [{ key: "", label: "", paints: sorted, groups: [] }];
+  return foldAxis(sorted, axes[0], axes.slice(1));
 }
