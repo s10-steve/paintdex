@@ -135,8 +135,12 @@ function CollectionManager() {
   // An ordered array rather than a Set, because the order is the nesting: the
   // axis ticked first is the outer heading, which is the only way to get both
   // "Citadel → Base" and "Base → Citadel" out of two checkboxes.
-  const [groupAxes, setGroupAxes] = useState<GroupAxis[]>([]);
-  const [sort, setSort] = useState<CollectionSort>("name");
+  //
+  // Brand + hue rather than the old ungrouped A–Z: alphabetical is a list of
+  // words, where brand groups sorted round the spectrum are a picture of what
+  // you own — which is the whole point of the page.
+  const [groupAxes, setGroupAxes] = useState<GroupAxis[]>(["brand"]);
+  const [sort, setSort] = useState<CollectionSort>("hue");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);

@@ -187,7 +187,9 @@ describe("paints the catalogue no longer has", () => {
       ["some-brand-gone-2011", "owned"],
     ]);
     render(<PaintsManager />);
-    expect(within(ownedSection()).getByRole("heading").textContent).toContain("(2)");
+    // The section heading — the count that has to add up. The page also groups
+    // by brand out of the box, so there are brand headings below this one.
+    expect(within(ownedSection()).getByRole("heading", { level: 2 }).textContent).toContain("(2)");
   });
 });
 
@@ -264,17 +266,12 @@ describe("display options", () => {
       .getAllByRole("link")
       .map((a) => a.textContent);
 
-  it("opens flat and A–Z, so the page looks the same until you change it", () => {
+  it("opens grouped by brand and sorted by hue", () => {
+    // The defaults are the recommendation, not a neutral starting point: brand
+    // groups running round the spectrum are what makes the page read like a
+    // paint rack.
     render(<PaintsManager />);
-    // One heading per section: the group headings are the only other headings
-    // this page can grow, and grouping is off by default.
-    expect(within(ownedSection()).getAllByRole("heading")).toHaveLength(1);
-    expect(listedNames()).toEqual(["Abaddon Black", "Mephiston Red", "Vallejo White"]);
-  });
-
-  it("adds a heading per brand when grouping by brand", () => {
-    render(<PaintsManager />);
-    fireEvent.click(screen.getByLabelText("Brand"));
+    expect((screen.getByLabelText("Brand") as HTMLInputElement).checked).toBe(true);
 
     const headings = within(ownedSection())
       .getAllByRole("heading")
@@ -283,11 +280,23 @@ describe("display options", () => {
     expect(headings[1]).toContain("(2)");
     expect(headings[2]).toContain("Vallejo");
     expect(headings[2]).toContain("(1)");
+
+    // Within Citadel: the red first, then the near-neutral black — hue order,
+    // where A–Z would have put Abaddon Black first.
+    expect(listedNames()).toEqual(["Mephiston Red", "Abaddon Black", "Vallejo White"]);
+  });
+
+  it("drops the brand headings when the box is unticked", () => {
+    render(<PaintsManager />);
+    fireEvent.click(screen.getByLabelText("Brand"));
+
+    expect(within(ownedSection()).getAllByRole("heading")).toHaveLength(1);
+    expect(within(ownedSection()).queryByRole("heading", { name: /Citadel/ })).toBeNull();
   });
 
   it("nests two axes, outermost first ticked", () => {
+    // Brand is ticked by default, so Range is the second axis and nests inside.
     render(<PaintsManager />);
-    fireEvent.click(screen.getByLabelText("Brand"));
     fireEvent.click(screen.getByLabelText("Range"));
 
     const owned = ownedSection();
@@ -299,7 +308,6 @@ describe("display options", () => {
 
   it("stops at two axes rather than becoming a tree", () => {
     render(<PaintsManager />);
-    fireEvent.click(screen.getByLabelText("Brand"));
     fireEvent.click(screen.getByLabelText("Range"));
 
     expect((screen.getByLabelText("Type") as HTMLInputElement).disabled).toBe(true);
@@ -310,26 +318,26 @@ describe("display options", () => {
     expect((screen.getByLabelText("Type") as HTMLInputElement).disabled).toBe(false);
   });
 
-  it("reorders the list when sorting by hue", () => {
-    // The two greys are near-neutral, so a hue sort puts the one coloured paint
-    // first and collects them after it, dark to light.
+  it("reorders the list when the sort is changed", () => {
     render(<PaintsManager />);
-    fireEvent.change(screen.getByLabelText("Sort paints by"), { target: { value: "hue" } });
-    expect(listedNames()).toEqual(["Mephiston Red", "Abaddon Black", "Vallejo White"]);
+    fireEvent.change(screen.getByLabelText("Sort paints by"), { target: { value: "name" } });
+    // Back to A–Z within each brand group: Abaddon Black ahead of Mephiston Red,
+    // the reverse of the hue order the page opens on.
+    expect(listedNames()).toEqual(["Abaddon Black", "Mephiston Red", "Vallejo White"]);
   });
 
   it("keeps the display options when the filters are cleared", () => {
     // They say how to present the page, not which paints you want — the same
     // split browse makes between its facets and its sort.
     render(<PaintsManager />);
-    fireEvent.click(screen.getByLabelText("Brand"));
+    fireEvent.click(screen.getByLabelText("Range"));
     fireEvent.change(screen.getByPlaceholderText("Search your paints"), {
       target: { value: "abaddon" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Clear all" }));
 
-    expect((screen.getByLabelText("Brand") as HTMLInputElement).checked).toBe(true);
-    expect(within(ownedSection()).getAllByRole("heading").length).toBeGreaterThan(1);
+    expect((screen.getByLabelText("Range") as HTMLInputElement).checked).toBe(true);
+    expect(within(ownedSection()).getAllByRole("heading", { level: 4 }).length).toBeGreaterThan(0);
   });
 });
 

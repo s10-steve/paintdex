@@ -9,19 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **My paints can now be grouped and sorted.** Above the lists: tick boxes to
-  group by brand, range, type or colour family — up to two at once, so you can
-  see your Citadel paints split by range — and a dropdown to sort by name, hue,
-  saturation or lightness. Whichever box you tick first becomes the outer
-  heading, so brand-then-range and range-then-brand give you different views of
-  the same paints. Two is the cap because three would be a tree rather than a
-  list. Hue is the sort worth knowing about: it runs your paints round the
-  spectrum the way you'd lay them out on the desk, and gathers the greys and
-  blacks together at the end rather than scattering them through the colours,
-  because below a certain saturation a paint doesn't really have a hue to sort
-  on. All of it is presentation, so "Clear all" leaves it alone; none of it is
-  remembered between visits, which is the trade-off for keeping the page's
-  state out of the URL.
+- **My paints is now grouped and sorted.** It opens grouped by brand and
+  ordered by hue — each maker's paints running round the spectrum, the way
+  you'd lay them out on the desk — which reads as a picture of what you own
+  rather than the list of words A–Z gave you. Hue is also the sort worth
+  knowing about for its edge case: it gathers the greys and blacks together at
+  the end rather than scattering them through the colours, because below a
+  certain saturation a paint doesn't really have a hue to sort on. Both
+  controls sit above the lists: tick boxes to group by brand, range, type or
+  colour family — up to two at once, so you can see your Citadel paints split
+  by range — and a dropdown for name, hue, saturation or lightness. Whichever
+  box you tick first becomes the outer heading, so brand-then-range and
+  range-then-brand give you different views of the same paints. Two is the cap
+  because three would be a tree rather than a list. All of it is presentation,
+  so "Clear all" leaves it alone; none of it is remembered between visits,
+  which is the trade-off for keeping the page's state out of the URL.
 
 ### Changed
 
