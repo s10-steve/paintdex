@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Paints sold under more than one Citadel product line now get their own
+  entry per line**, instead of one merged record. Ogryn Camo (Layer + Air),
+  Nurgling Green (Layer + Dry) and 69 others like them are genuinely two (or
+  three) different pots — different formulation, different price — the same
+  way Retributor Armour's base and spray versions already were. Merging them
+  meant My Paints couldn't record which one you actually own, and browsing by
+  a paint's secondary range (e.g. filtering to "Air") never surfaced it at
+  all. The trade-off: the new entries share their original's best-effort hex
+  until someone sources the real swatch for each line.
+
 ## [0.14.0] - 2026-08-08
 
 Paintdex can now remember which paints you actually own — and which ones you
