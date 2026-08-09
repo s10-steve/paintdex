@@ -18,14 +18,15 @@ import { useCollection } from "./collection-provider";
 import type { PaintStatus } from "@/lib/supabase/types";
 
 /**
- * The one place each list is named.
+ * The one place each list is named — exported for `/my-paints`, whose own
+ * move/remove buttons use the same glyphs and the same wording.
  *
  * Visible text and accessible name are built from the same strings, which is
  * the `facetLabel` lesson: a CSS `capitalize` or a separate `aria-label` string
  * lets the two drift, and a control that announces something other than what it
  * shows is worse than either alone.
  */
-const LISTS: Record<PaintStatus, { short: string; long: string; icon: string }> = {
+export const LISTS: Record<PaintStatus, { short: string; long: string; icon: string }> = {
   owned: { short: "Own", long: "paints you own", icon: "✓" },
   wishlist: { short: "Want", long: "your wishlist", icon: "☆" },
 };

@@ -52,9 +52,24 @@ const paint = (
     ...extra,
   }) as BrowsePaint;
 
+// Hexes are coherent with the families and L* values here, because the display
+// options derive hue and chroma from them.
 const CATALOGUE: BrowsePaint[] = [
-  paint("citadel-abaddon-black", "Abaddon Black", "Citadel"),
-  paint("vallejo-white", "Vallejo White", "Vallejo", { family: "neutral", l: 95 }),
+  paint("citadel-abaddon-black", "Abaddon Black", "Citadel", {
+    hex: "#231f20",
+    family: "neutral",
+    l: 8,
+  }),
+  paint("vallejo-white", "Vallejo White", "Vallejo", {
+    hex: "#f2f2f0",
+    family: "neutral",
+    l: 95,
+  }),
+  paint("citadel-mephiston", "Mephiston Red", "Citadel", {
+    hex: "#960c0c",
+    family: "red",
+    l: 30,
+  }),
   paint("citadel-boltgun", "Boltgun Metal", "Citadel", { discontinued: true }),
 ];
 
@@ -172,7 +187,9 @@ describe("paints the catalogue no longer has", () => {
       ["some-brand-gone-2011", "owned"],
     ]);
     render(<PaintsManager />);
-    expect(within(ownedSection()).getByRole("heading").textContent).toContain("(2)");
+    // The section heading — the count that has to add up. The page also groups
+    // by brand out of the box, so there are brand headings below this one.
+    expect(within(ownedSection()).getByRole("heading", { level: 2 }).textContent).toContain("(2)");
   });
 });
 
@@ -232,6 +249,95 @@ describe("filtering", () => {
     fireEvent.click(screen.getByRole("button", { name: "Clear all" }));
 
     expect(within(ownedSection()).getByText("Vallejo White")).toBeTruthy();
+  });
+});
+
+describe("display options", () => {
+  beforeEach(() => {
+    entries = new Map([
+      ["citadel-abaddon-black", "owned"],
+      ["vallejo-white", "owned"],
+      ["citadel-mephiston", "owned"],
+    ]);
+  });
+
+  const listedNames = () =>
+    within(ownedSection())
+      .getAllByRole("link")
+      .map((a) => a.textContent);
+
+  it("opens grouped by brand and sorted by hue", () => {
+    // The defaults are the recommendation, not a neutral starting point: brand
+    // groups running round the spectrum are what makes the page read like a
+    // paint rack.
+    render(<PaintsManager />);
+    expect((screen.getByLabelText("Brand") as HTMLInputElement).checked).toBe(true);
+
+    const headings = within(ownedSection())
+      .getAllByRole("heading")
+      .map((h) => h.textContent);
+    expect(headings[1]).toContain("Citadel");
+    expect(headings[1]).toContain("(2)");
+    expect(headings[2]).toContain("Vallejo");
+    expect(headings[2]).toContain("(1)");
+
+    // Within Citadel: the red first, then the near-neutral black — hue order,
+    // where A–Z would have put Abaddon Black first.
+    expect(listedNames()).toEqual(["Mephiston Red", "Abaddon Black", "Vallejo White"]);
+  });
+
+  it("drops the brand headings when the box is unticked", () => {
+    render(<PaintsManager />);
+    fireEvent.click(screen.getByLabelText("Brand"));
+
+    expect(within(ownedSection()).getAllByRole("heading")).toHaveLength(1);
+    expect(within(ownedSection()).queryByRole("heading", { name: /Citadel/ })).toBeNull();
+  });
+
+  it("nests two axes, outermost first ticked", () => {
+    // Brand is ticked by default, so Range is the second axis and nests inside.
+    render(<PaintsManager />);
+    fireEvent.click(screen.getByLabelText("Range"));
+
+    const owned = ownedSection();
+    expect(within(owned).getByRole("heading", { level: 3, name: /Citadel/ })).toBeTruthy();
+    // Every fixture paint is in the "Base" range, so the inner headings are the
+    // ranges within each brand.
+    expect(within(owned).getAllByRole("heading", { level: 4 }).length).toBe(2);
+  });
+
+  it("stops at two axes rather than becoming a tree", () => {
+    render(<PaintsManager />);
+    fireEvent.click(screen.getByLabelText("Range"));
+
+    expect((screen.getByLabelText("Type") as HTMLInputElement).disabled).toBe(true);
+    // Ticked boxes stay live, so you can always untick to swap one out.
+    expect((screen.getByLabelText("Brand") as HTMLInputElement).disabled).toBe(false);
+
+    fireEvent.click(screen.getByLabelText("Brand"));
+    expect((screen.getByLabelText("Type") as HTMLInputElement).disabled).toBe(false);
+  });
+
+  it("reorders the list when the sort is changed", () => {
+    render(<PaintsManager />);
+    fireEvent.change(screen.getByLabelText("Sort paints by"), { target: { value: "name" } });
+    // Back to A–Z within each brand group: Abaddon Black ahead of Mephiston Red,
+    // the reverse of the hue order the page opens on.
+    expect(listedNames()).toEqual(["Abaddon Black", "Mephiston Red", "Vallejo White"]);
+  });
+
+  it("keeps the display options when the filters are cleared", () => {
+    // They say how to present the page, not which paints you want — the same
+    // split browse makes between its facets and its sort.
+    render(<PaintsManager />);
+    fireEvent.click(screen.getByLabelText("Range"));
+    fireEvent.change(screen.getByPlaceholderText("Search your paints"), {
+      target: { value: "abaddon" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Clear all" }));
+
+    expect((screen.getByLabelText("Range") as HTMLInputElement).checked).toBe(true);
+    expect(within(ownedSection()).getAllByRole("heading", { level: 4 }).length).toBeGreaterThan(0);
   });
 });
 
