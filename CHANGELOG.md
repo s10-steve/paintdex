@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **My paints can now be grouped and sorted.** Two dropdowns above the lists:
+  group by brand, colour family or range, and sort by name, hue, saturation or
+  lightness. Hue is the one worth knowing about — it runs your paints round the
+  spectrum the way you'd lay them out on the desk, and gathers the greys and
+  blacks together at the end rather than scattering them through the colours,
+  because below a certain saturation a paint doesn't really have a hue to sort
+  on. Both settings are presentation, so "Clear all" leaves them alone; they
+  also aren't remembered between visits, which is the trade-off for keeping the
+  page's state out of the URL.
+
+### Changed
+
+- **The paint cards on My paints are about a third shorter.** "Move to
+  wishlist" and "Remove" were full-width buttons on their own line; they're now
+  a ☆/✓ and an ✕ beside the paint, using the same icons as the add buttons
+  everywhere else on the site. Long names still get two lines before they
+  truncate — more room than before, in fact, since the card no longer spends a
+  whole row on buttons — and hovering either icon says what it does. On a wide
+  screen you now get three columns of paints instead of two.
+
 ### Fixed
 
 - **Paints sold under more than one Citadel product line now get their own

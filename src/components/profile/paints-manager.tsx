@@ -19,16 +19,25 @@
  * because those views are shareable; this one is `noindex`, per-user, and a link
  * to it means nothing to anyone else, so there is nothing for the URL to buy.
  */
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useId, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { SignedInGate } from "@/components/profile/signed-in-gate";
 import { AlertBanner } from "@/components/alert-banner";
 import { useAuth } from "@/components/auth/auth-provider";
 import { useCollection } from "@/components/collection/collection-provider";
+import { LISTS } from "@/components/collection/collection-toggle";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { PaintFacets } from "@/components/paint-facets";
 import { facetOptions } from "@/lib/paints/facet-availability";
 import { filterPaints } from "@/lib/paints/filter";
+import {
+  COLLECTION_GROUPS,
+  COLLECTION_SORTS,
+  groupCollection,
+  type CollectionGroup,
+  type CollectionSort,
+  type PaintGroup,
+} from "@/lib/paints/collection-view";
 import { PAINT_TYPES, type BrowsePaint, type PaintType } from "@/lib/paints/types";
 import type { MetallicFilter } from "@/lib/paints/filter-params";
 import type { PaintStatus } from "@/lib/supabase/types";
@@ -52,16 +61,42 @@ function Panel({ children }: { children: React.ReactNode }) {
   return <div className="rounded-xl border border-border bg-card p-4 shadow-sm">{children}</div>;
 }
 
-/** One list's paints, plus the ids in it that no longer name a real paint. */
+/**
+ * One list, ready to render: its paints already sorted and split into headings
+ * (a single unlabelled group when grouping is off), plus the ids in it that no
+ * longer name a real paint.
+ */
 interface Bucket {
-  paints: BrowsePaint[];
+  groups: PaintGroup[];
+  count: number;
   stale: string[];
 }
 
-const EMPTY_BUCKET: Bucket = { paints: [], stale: [] };
+const EMPTY_BUCKET: Bucket = { groups: [], count: 0, stale: [] };
 
 const BUTTON =
   "rounded-md border border-border px-2.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50";
+
+/** An action on a card: 24px, the WCAG 2.5.8 floor the rest of the app sizes to. */
+const ICON_BUTTON =
+  "flex h-6 w-6 shrink-0 items-center justify-center rounded border border-border text-[11px] font-medium transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+const GROUP_LABELS: Record<CollectionGroup, string> = {
+  none: "No grouping",
+  brand: "Group by brand",
+  family: "Group by colour family",
+  range: "Group by range",
+};
+
+const SORT_LABELS: Record<CollectionSort, string> = {
+  name: "Sort: name (A–Z)",
+  hue: "Sort: hue",
+  chroma: "Sort: saturation",
+  lightness: "Sort: lightness",
+};
+
+const SELECT =
+  "rounded-md border border-border bg-card px-2 py-1.5 text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 function CollectionManager() {
   const { user } = useAuth();
@@ -74,9 +109,18 @@ function CollectionManager() {
   const [types, setTypes] = useState<Set<PaintType>>(new Set());
   const [families, setFamilies] = useState<Set<string>>(new Set());
   const [metallic, setMetallic] = useState<MetallicFilter>("");
+  // Display options, not filters: they say how to present the page rather than
+  // which paints you want, so "Clear all" leaves them alone — the same split
+  // browse makes between its facets and its `sort`.
+  const [group, setGroup] = useState<CollectionGroup>("none");
+  const [sort, setSort] = useState<CollectionSort>("name");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
+  // `useId` rather than a literal: `PaintFacets` renders its own controls on the
+  // same page, and hardcoded ids are what let two copies of a control collide.
+  const groupId = useId();
+  const sortId = useId();
 
   /**
    * The collection joined against the catalogue, split by list.
@@ -91,20 +135,21 @@ function CollectionManager() {
     if (!paints) return { owned: EMPTY_BUCKET, wishlist: EMPTY_BUCKET, total: 0 };
 
     const byId = new Map(paints.map((p) => [p.id, p]));
-    const buckets: Record<PaintStatus, Bucket> = {
+    const raw: Record<PaintStatus, { paints: BrowsePaint[]; stale: string[] }> = {
       owned: { paints: [], stale: [] },
       wishlist: { paints: [], stale: [] },
     };
 
     for (const [paintId, status] of entries) {
       const paint = byId.get(paintId);
-      if (paint) buckets[status].paints.push(paint);
-      else buckets[status].stale.push(paintId);
+      if (paint) raw[status].paints.push(paint);
+      else raw[status].stale.push(paintId);
     }
 
-    const apply = (bucket: Bucket): Bucket => ({
-      ...bucket,
-      paints: filterPaints(bucket.paints, {
+    // Filter first, then arrange: `filterPaints` decides which paints you want,
+    // `groupCollection` decides how they're laid out.
+    const apply = ({ paints: mine, stale }: { paints: BrowsePaint[]; stale: string[] }): Bucket => {
+      const kept = filterPaints(mine, {
         search,
         brands: [...brands],
         ranges: [...ranges],
@@ -112,15 +157,16 @@ function CollectionManager() {
         families: [...families],
         includeDiscontinued: true,
         metallic: metallic || undefined,
-      }),
-    });
+      });
+      return { groups: groupCollection(kept, group, sort), count: kept.length, stale };
+    };
 
     return {
-      owned: apply(buckets.owned),
-      wishlist: apply(buckets.wishlist),
+      owned: apply(raw.owned),
+      wishlist: apply(raw.wishlist),
       total: entries.size,
     };
-  }, [paints, entries, search, brands, ranges, types, families, metallic]);
+  }, [paints, entries, search, brands, ranges, types, families, metallic, group, sort]);
 
   /**
    * Facet options come from the collection, not the whole catalogue — offering
@@ -311,7 +357,39 @@ function CollectionManager() {
           <p className="text-sm text-muted-foreground">
             {total.toLocaleString()} paint{total === 1 ? "" : "s"} in your collection
           </p>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {/* One pair of controls for both lists. Per-section copies would
+                double the decisions to make and mean two ids per control. */}
+            <label htmlFor={groupId} className="sr-only">
+              Group paints by
+            </label>
+            <select
+              id={groupId}
+              value={group}
+              onChange={(e) => setGroup(e.target.value as CollectionGroup)}
+              className={SELECT}
+            >
+              {COLLECTION_GROUPS.map((key) => (
+                <option key={key} value={key}>
+                  {GROUP_LABELS[key]}
+                </option>
+              ))}
+            </select>
+            <label htmlFor={sortId} className="sr-only">
+              Sort paints by
+            </label>
+            <select
+              id={sortId}
+              value={sort}
+              onChange={(e) => setSort(e.target.value as CollectionSort)}
+              className={SELECT}
+            >
+              {COLLECTION_SORTS.map((key) => (
+                <option key={key} value={key}>
+                  {SORT_LABELS[key]}
+                </option>
+              ))}
+            </select>
             <button type="button" onClick={doExport} className={BUTTON}>
               Export
             </button>
@@ -388,8 +466,12 @@ function PaintSection({
   onMove: (paintId: string) => void;
   onRemove: (paintId: string) => void;
 }) {
-  const count = bucket.paints.length + bucket.stale.length;
+  const count = bucket.count + bucket.stale.length;
   const moveLabel = list === "owned" ? "Move to wishlist" : "Move to owned";
+  // The icon of the list the button moves the paint *to*, from the one place
+  // each list is named — so this page and the ✓/☆ toggles everywhere else can't
+  // end up using different glyphs for the same two lists.
+  const moveIcon = list === "owned" ? LISTS.wishlist.icon : LISTS.owned.icon;
 
   return (
     <section aria-label={title} className="mt-6">
@@ -402,95 +484,115 @@ function PaintSection({
           {filtered ? "Nothing here matches these filters." : "Nothing here yet."}
         </p>
       ) : (
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-          {bucket.paints.map((paint) => (
-            // Two rows, not one. Side by side, "Move to wishlist" and "Remove"
-            // took about 250px of a ~370px card and truncated most names to a
-            // few characters — "Abaddon Bl…", "Agrax Earth…". Dropping them to
-            // their own line gives the name the full width and costs one line
-            // of card height, which is the cheaper of the two.
-            <li
-              key={paint.id}
-              className="flex flex-col gap-2 rounded-xl border border-border bg-card p-3 shadow-sm"
-            >
-              <span className="flex items-center gap-3">
-                <span
-                  className="h-12 w-12 shrink-0 rounded-md border border-border"
-                  style={{ backgroundColor: paint.hex }}
-                  aria-hidden="true"
-                />
-                <span className="min-w-0 flex-1">
-                  <Link
-                    href={`/paints/${paint.id}`}
-                    className="block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 hover:text-primary"
+        <>
+          {/* One group with an empty key is the ungrouped case, so there is one
+              shape to render rather than a branch: no key, no heading. */}
+          {bucket.groups.map((group) => (
+            <div key={group.key || "all"}>
+              {group.key ? (
+                <h3 className="mt-4 text-sm font-semibold text-muted-foreground">
+                  {group.label}{" "}
+                  <span className="font-normal">({group.paints.length})</span>
+                </h3>
+              ) : null}
+              <ul className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+                {group.paints.map((paint) => (
+                  // One row. The two actions used to be full-text buttons on a
+                  // second line, because side by side with the name they took
+                  // about 250px of a ~370px card and truncated most of them —
+                  // "Abaddon Bl…", "Agrax Earth…". As 24px icons they cost ~56px
+                  // instead, which the name can spare, and the card gets a whole
+                  // line of height back.
+                  <li
+                    key={paint.id}
+                    className="flex items-center gap-3 rounded-xl border border-border bg-card p-2.5 shadow-sm"
                   >
-                    {paint.name}
-                  </Link>
-                  <span className="block truncate text-xs text-muted-foreground">
-                    {paint.brand} · {paint.range}
-                    {paint.discontinued ? " · discontinued" : ""}
-                  </span>
-                </span>
-              </span>
-              <span className="flex justify-end gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => onMove(paint.id)}
-                  aria-label={`${moveLabel}: ${paint.name}`}
-                  className={BUTTON}
-                >
-                  {moveLabel}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onRemove(paint.id)}
-                  aria-label={`Remove ${paint.name} from your collection`}
-                  className={`${BUTTON} text-red-600 dark:text-red-400`}
-                >
-                  Remove
-                </button>
-              </span>
-            </li>
+                    <span
+                      className="h-10 w-10 shrink-0 rounded-md border border-border"
+                      style={{ backgroundColor: paint.hex }}
+                      aria-hidden="true"
+                    />
+                    <span className="min-w-0 flex-1">
+                      <Link
+                        href={`/paints/${paint.id}`}
+                        className="block text-sm font-medium [overflow-wrap:anywhere] line-clamp-2 hover:text-primary"
+                      >
+                        {paint.name}
+                      </Link>
+                      <span className="block truncate text-xs text-muted-foreground">
+                        {paint.brand} · {paint.range}
+                        {paint.discontinued ? " · discontinued" : ""}
+                      </span>
+                    </span>
+                    <span className="flex shrink-0 gap-1">
+                      {/* `title` and `aria-label` are the same string: an icon
+                          button that announces something other than what its
+                          tooltip says is worse than either alone. */}
+                      <button
+                        type="button"
+                        onClick={() => onMove(paint.id)}
+                        aria-label={`${moveLabel}: ${paint.name}`}
+                        title={`${moveLabel}: ${paint.name}`}
+                        className={`${ICON_BUTTON} text-muted-foreground hover:text-foreground`}
+                      >
+                        <span aria-hidden>{moveIcon}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onRemove(paint.id)}
+                        aria-label={`Remove ${paint.name} from your collection`}
+                        title={`Remove ${paint.name} from your collection`}
+                        className={`${ICON_BUTTON} text-red-600 dark:text-red-400`}
+                      >
+                        <span aria-hidden>✕</span>
+                      </button>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
 
           {/* Ids with no paint behind them any more — a rename, or a brand
               dropped from the catalogue. Shown rather than silently skipped:
               the count would otherwise not add up, and the only way to clear
-              one is a Remove button, which needs a row to sit on. */}
-          {bucket.stale.map((paintId) => (
-            // Same two-row shape as a real paint's card, so the two sit level
-            // in the grid rather than one being visibly shorter.
-            <li
-              key={paintId}
-              className="flex flex-col gap-2 rounded-xl border border-dashed border-border bg-card p-3"
-            >
-              <span className="flex items-center gap-3">
-                <span
-                  className="h-12 w-12 shrink-0 rounded-md border border-dashed border-border"
-                  aria-hidden="true"
-                />
-                <span className="min-w-0 flex-1">
-                  <span className="block font-mono text-xs [overflow-wrap:anywhere] line-clamp-2">
-                    {paintId}
-                  </span>
-                  <span className="block text-xs text-muted-foreground">
-                    No longer in the catalogue
-                  </span>
-                </span>
-              </span>
-              <span className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => onRemove(paintId)}
-                  aria-label={`Remove ${paintId} from your collection`}
-                  className={`${BUTTON} text-red-600 dark:text-red-400`}
+              one is a Remove button, which needs a row to sit on. Kept out of
+              the groups: there's no brand or family to file them under. */}
+          {bucket.stale.length > 0 ? (
+            <ul className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+              {bucket.stale.map((paintId) => (
+                // Same single-row shape as a real paint's card, so the two sit
+                // level in the grid rather than one being visibly shorter.
+                <li
+                  key={paintId}
+                  className="flex items-center gap-3 rounded-xl border border-dashed border-border bg-card p-2.5"
                 >
-                  Remove
-                </button>
-              </span>
-            </li>
-          ))}
-        </ul>
+                  <span
+                    className="h-10 w-10 shrink-0 rounded-md border border-dashed border-border"
+                    aria-hidden="true"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-mono text-xs [overflow-wrap:anywhere] line-clamp-2">
+                      {paintId}
+                    </span>
+                    <span className="block text-xs text-muted-foreground">
+                      No longer in the catalogue
+                    </span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => onRemove(paintId)}
+                    aria-label={`Remove ${paintId} from your collection`}
+                    title={`Remove ${paintId} from your collection`}
+                    className={`${ICON_BUTTON} text-red-600 dark:text-red-400`}
+                  >
+                    <span aria-hidden>✕</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </>
       )}
     </section>
   );

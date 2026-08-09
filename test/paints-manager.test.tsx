@@ -52,9 +52,24 @@ const paint = (
     ...extra,
   }) as BrowsePaint;
 
+// Hexes are coherent with the families and L* values here, because the display
+// options derive hue and chroma from them.
 const CATALOGUE: BrowsePaint[] = [
-  paint("citadel-abaddon-black", "Abaddon Black", "Citadel"),
-  paint("vallejo-white", "Vallejo White", "Vallejo", { family: "neutral", l: 95 }),
+  paint("citadel-abaddon-black", "Abaddon Black", "Citadel", {
+    hex: "#231f20",
+    family: "neutral",
+    l: 8,
+  }),
+  paint("vallejo-white", "Vallejo White", "Vallejo", {
+    hex: "#f2f2f0",
+    family: "neutral",
+    l: 95,
+  }),
+  paint("citadel-mephiston", "Mephiston Red", "Citadel", {
+    hex: "#960c0c",
+    family: "red",
+    l: 30,
+  }),
   paint("citadel-boltgun", "Boltgun Metal", "Citadel", { discontinued: true }),
 ];
 
@@ -232,6 +247,64 @@ describe("filtering", () => {
     fireEvent.click(screen.getByRole("button", { name: "Clear all" }));
 
     expect(within(ownedSection()).getByText("Vallejo White")).toBeTruthy();
+  });
+});
+
+describe("display options", () => {
+  beforeEach(() => {
+    entries = new Map([
+      ["citadel-abaddon-black", "owned"],
+      ["vallejo-white", "owned"],
+      ["citadel-mephiston", "owned"],
+    ]);
+  });
+
+  const listedNames = () =>
+    within(ownedSection())
+      .getAllByRole("link")
+      .map((a) => a.textContent);
+
+  it("opens flat and A–Z, so the page looks the same until you change it", () => {
+    render(<PaintsManager />);
+    // One heading per section: the group headings are the only other headings
+    // this page can grow, and grouping is off by default.
+    expect(within(ownedSection()).getAllByRole("heading")).toHaveLength(1);
+    expect(listedNames()).toEqual(["Abaddon Black", "Mephiston Red", "Vallejo White"]);
+  });
+
+  it("adds a heading per brand when grouping by brand", () => {
+    render(<PaintsManager />);
+    fireEvent.change(screen.getByLabelText("Group paints by"), { target: { value: "brand" } });
+
+    const headings = within(ownedSection())
+      .getAllByRole("heading")
+      .map((h) => h.textContent);
+    expect(headings[1]).toContain("Citadel");
+    expect(headings[1]).toContain("(2)");
+    expect(headings[2]).toContain("Vallejo");
+    expect(headings[2]).toContain("(1)");
+  });
+
+  it("reorders the list when sorting by hue", () => {
+    // The two greys are near-neutral, so a hue sort puts the one coloured paint
+    // first and collects them after it, dark to light.
+    render(<PaintsManager />);
+    fireEvent.change(screen.getByLabelText("Sort paints by"), { target: { value: "hue" } });
+    expect(listedNames()).toEqual(["Mephiston Red", "Abaddon Black", "Vallejo White"]);
+  });
+
+  it("keeps the display options when the filters are cleared", () => {
+    // They say how to present the page, not which paints you want — the same
+    // split browse makes between its facets and its sort.
+    render(<PaintsManager />);
+    fireEvent.change(screen.getByLabelText("Group paints by"), { target: { value: "brand" } });
+    fireEvent.change(screen.getByPlaceholderText("Search your paints"), {
+      target: { value: "abaddon" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Clear all" }));
+
+    expect((screen.getByLabelText("Group paints by") as HTMLSelectElement).value).toBe("brand");
+    expect(within(ownedSection()).getAllByRole("heading").length).toBeGreaterThan(1);
   });
 });
 
