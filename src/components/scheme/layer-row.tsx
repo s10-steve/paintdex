@@ -140,10 +140,7 @@ export function LayerRow({
           <RoleTag role={role} />
         </div>
         <div className="truncate text-[11.5px] text-muted-foreground">
-          {meta}{" "}
-          <span className="font-mono tabular-nums text-muted-foreground/80">
-            {hex.toUpperCase()}
-          </span>
+          {meta}
           {mixed && <span className="text-muted-foreground/70"> · blend</span>}
           {showCustom && <span className="text-muted-foreground/70"> · custom</span>}
         </div>

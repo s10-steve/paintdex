@@ -64,8 +64,16 @@ describe("publishScheme", () => {
   it("blames the session when there isn't one", async () => {
     result = { data: [], error: null };
     hasLiveSession.mockResolvedValue(false);
-    const err = await publishScheme("row-1", "shared-a1b2c3d4e5", regenerate).catch(
-      (e) => e as Error,
+    // `.catch()` alone leaves the resolve type in the union, so `err` is
+    // `string | Error` and `err.message` doesn't typecheck. `next build` on
+    // 16.2 doesn't reach this file and never said so; on 16.3 it does, which is
+    // what failed Dependabot's Next bump. `.then()` with both arms fixes the
+    // type and says what the test means anyway: this call must reject.
+    const err = await publishScheme("row-1", "shared-a1b2c3d4e5", regenerate).then(
+      () => {
+        throw new Error("publishScheme resolved; it should have rejected");
+      },
+      (e: unknown) => e as Error,
     );
     expect(err.message).toMatch(/session may have expired/i);
     expect(err.message).not.toMatch(/deleted/i);
