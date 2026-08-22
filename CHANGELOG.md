@@ -27,6 +27,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **The designer's paint list no longer prints a hex code beside every paint.**
+  The swatch next to the name is already the colour, so the six characters after
+  the brand and range were a second, less readable copy of it — and with mixes,
+  notes and collection buttons all sharing that row, they were the least useful
+  thing competing for the space. What you lose is copying a hex straight out of
+  the editor; the bar visualisation still shows it in the hover tooltip, and the
+  paint's own page still lists it.
+
 - **The paint cards on My paints are about a third shorter.** "Move to
   wishlist" and "Remove" were full-width buttons on their own line; they're now
   a ☆/✓ and an ✕ beside the paint, using the same icons as the add buttons
