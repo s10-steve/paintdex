@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-09-19
+
 ### Added
 
 - **My paints is now grouped and sorted.** It opens grouped by brand and
@@ -55,6 +57,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a paint's secondary range (e.g. filtering to "Air") never surfaced it at
   all. The trade-off: the new entries share their original's best-effort hex
   until someone sources the real swatch for each line.
+
+### Security
+
+- **Updated Next.js and the rest of the dependency stack**, clearing six
+  advisories including two rated critical in the framework the site is built
+  on. Nothing about the site changes for you; it's the kind of housekeeping
+  worth recording rather than describing. Dependency bumps don't normally earn
+  a changelog entry here — this one does because the fixes were security ones
+  and they had been sitting unreleased while every proposed update failed CI
+  for the same reason.
 
 ## [0.14.0] - 2026-08-08
 
