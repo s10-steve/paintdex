@@ -213,11 +213,24 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   directory, so a new brand would reach the browse grid but not
   `generateStaticParams`, and with `dynamicParams = false` every one of its cards
   would be a hard 404. `test/catalogue-sources.test.ts` is the drift guard.
+  **Citadel is brand `Warhammer` (in `warhammer.json`) but its ids are still
+  `citadel-*`, on purpose** — URLs, `paint_collection.paint_id` rows and preset
+  ids all point at them; only new paints (Tone Pro) get `warhammer-*`. The old
+  name lives on in what the catalogue doesn't own, so `lib/paints/brand-aliases.ts`
+  maps it back for the four readers that meet it: `catalogue-match` (saved
+  schemes still store `brand: "Citadel"`), `sanitiseSharedFacets` (old
+  `?brand=Citadel` links), `filterPaints`' search haystack, and the paint page's
+  meta description ("formerly Citadel"). **Don't migrate scheme documents to the
+  new name**: changing `brand` in `importSchemeObject` would make every such
+  document unequal to its `syncedCanon` and start an autosave for every
+  signed-in user who has one.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
   `validate-data.ts`, `import-source.mjs`. The importer's `mapType` is ordered
   most-specific-first, so an "Enamel Wash" stays a `wash`; its `oil` rule is
   `/\boil/` rather than a substring, or Scale 75's "Soil Works" range imports as
-  14 oils.
+  14 oils — and `tone` is `/\btone\b/` for the same reason ("stone"). A
+  source's `idPrefix` overrides the brand slug in ids, which is what stops a
+  re-import minting `warhammer-*` ids for the Citadel paints.
 - `test/` — Vitest suites for the `src/lib` logic (including `scatter.test.ts`,
   which is where the alternatives plot's behaviour is pinned, and
   `filter-params.test.ts`, which pins the URL codec, guards the comma

@@ -119,6 +119,18 @@ describe("cataloguePaintId", () => {
     });
   });
 
+  it("still finds a paint saved under its former brand name", () => {
+    // Schemes saved before Citadel became Warhammer still say "Citadel", and
+    // their documents are deliberately not rewritten (see `brand-aliases.ts`).
+    const renamed = [paint("citadel-abaddon-black", "Abaddon Black", "Warhammer", "Base")];
+    expect(cataloguePaintId(query("Abaddon Black", "Citadel", "Base"), renamed)).toBe(
+      "citadel-abaddon-black",
+    );
+    expect(cataloguePaintId(query("Abaddon Black", "Citadel", "Shade"), renamed)).toBe(
+      "citadel-abaddon-black",
+    );
+  });
+
   it("ignores hex entirely", () => {
     // Catalogue hexes are best-effort and do get corrected, so a scheme saved
     // with the old value must still resolve. Nothing in the query carries one.

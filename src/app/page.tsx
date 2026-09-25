@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllPaints, getBrands, getPaintById } from "@/lib/paints/load";
-import { COLOUR_FAMILIES } from "@/lib/color";
+import { COLOUR_FAMILIES, NEUTRAL_CHROMA, labToLch } from "@/lib/color";
 import { resolvePresets } from "@/lib/scheme/presets";
 import { JsonLd } from "@/components/json-ld";
 import { HomeSearch } from "@/components/home-search";
@@ -68,12 +68,36 @@ const websiteJsonLd = {
  */
 const POSTER_CREDIT = "@kasperhawser";
 
+/**
+ * The launch announcement for Warhammer Tone Pro. Time-boxed: delete this (and
+ * `<ToneProBanner>` below) once the range isn't news.
+ *
+ * Server-rendered on purpose, and the swatches are plain links to the paints'
+ * own static pages — the CTA's `?range=` link canonicalises to `/paints`, so
+ * the swatches are what give a crawler a path to the new pages. Derived from the
+ * catalogue rather than listed here, so it can't drift from the data.
+ */
+const TONE_PRO_RANGE = "Tone Pro";
+
+function toneProSwatches(paints: ReturnType<typeof getAllPaints>) {
+  // Tone 3 is the middle of each five-step ramp: the colour the pot is named for.
+  const mids = paints.filter((p) => p.range === TONE_PRO_RANGE && p.name.endsWith(" 3"));
+  const lch = new Map(mids.map((p) => [p.id, labToLch(p.lab)]));
+  const chromatic = mids.filter((p) => lch.get(p.id)!.c >= NEUTRAL_CHROMA);
+  const neutral = mids.filter((p) => lch.get(p.id)!.c < NEUTRAL_CHROMA);
+  // Round the spectrum, greys at the end — the same order `/my-paints` uses.
+  chromatic.sort((a, b) => lch.get(a.id)!.h - lch.get(b.id)!.h);
+  neutral.sort((a, b) => a.lab[0] - b.lab[0]);
+  return [...chromatic, ...neutral];
+}
+
 export default function Home() {
   const paints = getAllPaints();
   const brands = getBrands();
   // Resolved at build time, so the examples always carry current catalogue
   // hexes and the 4,900-paint catalogue never reaches the client bundle.
   const presets = resolvePresets(getPaintById);
+  const tonePro = toneProSwatches(paints);
 
   // One representative vivid swatch per colour family for the hero strip.
   const spectrum = COLOUR_FAMILIES.map((family) => {
@@ -89,6 +113,7 @@ export default function Home() {
   return (
     <main>
       <JsonLd data={websiteJsonLd} />
+      {tonePro.length > 0 && <ToneProBanner swatches={tonePro} />}
       <section className="mx-auto max-w-4xl px-4 py-10 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Find the right miniature paint
@@ -287,6 +312,48 @@ export default function Home() {
         />
       </section>
     </main>
+  );
+}
+
+function ToneProBanner({ swatches }: { swatches: ReturnType<typeof toneProSwatches> }) {
+  return (
+    <section className="mx-auto max-w-4xl px-4 pt-6" aria-labelledby="tone-pro-heading">
+      <div className="rounded-lg border border-border bg-card p-4 text-left sm:flex sm:items-center sm:gap-6">
+        <div className="sm:flex-1">
+          <h2 id="tone-pro-heading" className="text-sm font-semibold">
+            <span className="mr-2 rounded bg-primary px-1.5 py-0.5 text-xs font-medium text-primary-foreground">
+              New
+            </span>
+            Warhammer Tone Pro is in the database
+          </h2>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            All {swatches.length} colours in all five tones. Find the Tone Pro match
+            for paints you already own, or see what&apos;s close to each one.
+          </p>
+        </div>
+        <Link
+          href={`/paints?range=${encodeURIComponent(TONE_PRO_RANGE)}`}
+          className="mt-3 inline-block shrink-0 rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-accent sm:mt-0"
+        >
+          Browse Tone Pro →
+        </Link>
+      </div>
+      {/* Ten across on a phone, so every swatch stays a 24px target (WCAG 2.5.8);
+          one row from `lg`, where thirty still clear it. */}
+      <div className="mt-2 grid grid-cols-10 overflow-hidden rounded-lg border border-border lg:grid-cols-30">
+        {swatches.map((p) => (
+          <Link
+            key={p.id}
+            href={`/paints/${p.id}`}
+            prefetch={false}
+            title={p.name}
+            aria-label={`${p.name}, Warhammer Tone Pro`}
+            className="h-6 transition-transform hover:scale-y-125"
+            style={{ backgroundColor: p.hex }}
+          />
+        ))}
+      </div>
+    </section>
   );
 }
 

@@ -5,6 +5,7 @@ import type { BrowsePaint, PaintType, PaintWithLab } from "./types";
 export { SORT_KEYS, DEFAULT_SORT, type SortKey } from "./filter-params";
 import type { SortKey } from "./filter-params";
 import { matchesFacets, type FacetSelection } from "./facet-availability";
+import { formerBrand } from "./brand-aliases";
 
 export interface PaintFilters {
   search?: string;
@@ -93,7 +94,9 @@ export function filterPaints(
   const result = paints.filter((p) => {
     if (!matchesFacets(p, selection)) return false;
     if (tokens.length) {
-      const hay = `${p.name} ${p.brand} ${p.range} ${p.code ?? ""}`.toLowerCase();
+      // The former brand is searchable too — people still type "citadel".
+      const hay =
+        `${p.name} ${p.brand} ${formerBrand(p) ?? ""} ${p.range} ${p.code ?? ""}`.toLowerCase();
       // indexOf per token, not a regex per paint — this runs over the whole
       // catalogue on every keystroke.
       for (const t of tokens) if (hay.indexOf(t) === -1) return false;

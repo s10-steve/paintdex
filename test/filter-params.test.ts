@@ -251,14 +251,14 @@ describe("isDefaultSimilarParams", () => {
 });
 
 describe("sanitiseSimilarParams", () => {
-  const known = { brands: ["Citadel", "Vallejo"], ranges: ["Base", "Layer"] };
+  const known = { brands: ["Warhammer", "Vallejo"], ranges: ["Base", "Layer"] };
 
   it("keeps values that still exist", () => {
     const s = sanitiseSimilarParams(
-      state({ brands: new Set(["Citadel"]), ranges: new Set(["Base"]) }),
+      state({ brands: new Set(["Warhammer"]), ranges: new Set(["Base"]) }),
       known,
     );
-    expect([...s.brands]).toEqual(["Citadel"]);
+    expect([...s.brands]).toEqual(["Warhammer"]);
     expect([...s.ranges]).toEqual(["Base"]);
   });
 
@@ -266,10 +266,16 @@ describe("sanitiseSimilarParams", () => {
     // Otherwise it's an invisible active filter: no checkbox to untick, zero
     // results, and no explanation.
     const s = sanitiseSimilarParams(
-      state({ brands: new Set(["Citadel", "Gone Paints Ltd"]) }),
+      state({ brands: new Set(["Warhammer", "Gone Paints Ltd"]) }),
       known,
     );
-    expect([...s.brands]).toEqual(["Citadel"]);
+    expect([...s.brands]).toEqual(["Warhammer"]);
+  });
+
+  it("maps a former brand name to the current one rather than dropping it", () => {
+    // An old `?brand=Citadel` link should still filter, not silently show all.
+    const s = sanitiseSimilarParams(state({ brands: new Set(["Citadel", "Vallejo"]) }), known);
+    expect([...s.brands].sort()).toEqual(["Vallejo", "Warhammer"]);
   });
 
   it("drops an unknown range and can empty the filter entirely", () => {

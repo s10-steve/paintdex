@@ -1,3 +1,4 @@
+import { canonicalBrand } from "./brand-aliases";
 import type { BrowsePaint } from "./types";
 
 /**
@@ -27,6 +28,13 @@ export interface CatalogueQuery {
 }
 
 const norm = (s: string) => s.trim().toLowerCase();
+/**
+ * Brands go through `canonicalBrand` first: a scheme saved before Citadel became
+ * Warhammer still says "Citadel", and its document is deliberately left alone —
+ * rewriting it would make it unequal to its `syncedCanon` and set off an
+ * autosave for every signed-in user who owns one.
+ */
+const brandKey = (brand: string) => norm(canonicalBrand(brand));
 
 /**
  * `brand|range|name` and `brand|name`. Two keys, because a paint sold in more
@@ -39,9 +47,9 @@ const norm = (s: string) => s.trim().toLowerCase();
  * hexes match the catalogue — so keying on colour would silently break every
  * older scheme the day a correction landed.
  */
-const wideKey = (brand: string, name: string) => `${norm(brand)}|${norm(name)}`;
+const wideKey = (brand: string, name: string) => `${brandKey(brand)}|${norm(name)}`;
 const narrowKey = (brand: string, range: string, name: string) =>
-  `${norm(brand)}|${norm(range)}|${norm(name)}`;
+  `${brandKey(brand)}|${norm(range)}|${norm(name)}`;
 
 interface Index {
   narrow: Map<string, string>;

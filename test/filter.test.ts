@@ -61,6 +61,17 @@ describe("filterPaints", () => {
     expect(filterPaints(paints, { search: "mephiston vallejo" })).toEqual([]);
   });
 
+  it("finds a relabelled paint by its former brand, and nothing newer", () => {
+    const renamed = [
+      make({ id: "citadel-mephiston-red", name: "Mephiston Red", brand: "Warhammer", range: "Base", type: "base", hex: "#9A1115", discontinued: false }),
+      make({ id: "warhammer-bloodtoof-red-3", name: "Bloodtoof Red 3", brand: "Warhammer", range: "Tone Pro", type: "tone", hex: "#AD082B", discontinued: false }),
+    ];
+    expect(filterPaints(renamed, { search: "citadel red" }).map((p) => p.id)).toEqual([
+      "citadel-mephiston-red",
+    ]);
+    expect(filterPaints(renamed, { search: "warhammer red" })).toHaveLength(2);
+  });
+
   it("treats a blank or whitespace-only query as no query", () => {
     expect(filterPaints(paints, { search: "" }).length).toBe(4);
     expect(filterPaints(paints, { search: "   " }).length).toBe(4);

@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Warhammer Tone Pro is in the database** — all 30 colours in all five
+  tones, 150 paints, each on its own page with its closest matches from every
+  other brand, so you can see which of them you already have something close
+  to. They sit under a new **Tone** type, and tone 1 is always the darkest.
+  The homepage carries a short announcement with a strip of the range. The
+  colours were read off Games Workshop's launch swatches rather than measured
+  from painted samples, so treat them like every other hex here: a close
+  guide, open to correction.
+
+### Changed
+
+- **Citadel is now Warhammer.** Games Workshop has dropped the Citadel name
+  from its paints, so the brand filter, paint pages and search results say
+  Warhammer. Nothing you had stops working: every paint keeps its address, so
+  old links and bookmarks still land, a link filtered to Citadel now filters
+  to Warhammer, searching "citadel" still finds them, and your owned and
+  wishlist paints are untouched. Schemes you saved before the change still
+  say Citadel beside those paints — we left them as you made them rather than
+  rewriting every saved scheme — but the ✓ and ☆ buttons on them still work.
+
 ## [0.15.0] - 2026-09-19
 
 ### Added

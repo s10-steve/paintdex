@@ -22,9 +22,21 @@ const OUT_DIR = join(ROOT, "data", "paints");
 const RAW_BASE =
   "https://raw.githubusercontent.com/Arcturus5404/miniature-paints/master/paints";
 
-/** Upstream files grouped by the Paintdex output file they contribute to. */
+/**
+ * Upstream files grouped by the Paintdex output file they contribute to.
+ *
+ * `idPrefix` overrides the brand slug in generated ids. Games Workshop dropped
+ * the Citadel name, so those paints are brand "Warhammer" now — but their ids
+ * stay `citadel-*`, because every indexed URL, saved collection row and preset
+ * points at them. Without the override a re-import would mint `warhammer-*`.
+ */
 const SOURCES = [
-  { file: "Citadel_Colour.md", brand: "Citadel", out: "citadel.json" },
+  {
+    file: "Citadel_Colour.md",
+    brand: "Warhammer",
+    idPrefix: "citadel",
+    out: "warhammer.json",
+  },
   { file: "Vallejo.md", brand: "Vallejo", out: "vallejo.json" },
   { file: "AK.md", brand: "AK Interactive", out: "ak-interactive.json" },
   { file: "AKRC.md", brand: "AK Interactive", out: "ak-interactive.json" },
@@ -51,6 +63,9 @@ function mapType(set, name) {
   const s = set.toLowerCase();
   const n = name.toLowerCase();
   if (s.includes("contrast") || s.includes("speedpaint")) return "contrast";
+  // Warhammer Tone Pro. `\btone\b`, for the "Soil Works" reason below: a bare
+  // substring would catch any range with "stone" in it.
+  if (/\btone\b/.test(s)) return "tone";
   if (s.includes("technical")) return "technical";
   if (s.includes("shade") || n.includes(" shade")) return "shade";
   if (s.includes("wash") || n.includes(" wash")) return "wash";
@@ -76,6 +91,7 @@ const TYPE_RANK = {
   base: 0,
   layer: 1,
   contrast: 2,
+  tone: 2,
   metallic: 2,
   shade: 3,
   ink: 3,
@@ -132,7 +148,7 @@ async function main() {
   // out file -> Map keyed by `${nameKey}|${hex}` for dedup across ranges/files.
   const byOut = new Map();
 
-  for (const { file, brand, out } of SOURCES) {
+  for (const { file, brand, idPrefix, out } of SOURCES) {
     const md = await loadSource(file, srcDir);
     const rows = parseTable(md);
     const bucket = byOut.get(out) ?? new Map();
@@ -160,6 +176,7 @@ async function main() {
         bucket.set(key, {
           name,
           brand,
+          idPrefix: idPrefix ?? slugify(brand),
           hex,
           code,
           ranges: [range],
@@ -185,8 +202,7 @@ async function main() {
       const type = mapType(primaryRange, p.name);
 
       // Stable id, disambiguated on collision (same name, different hex).
-      const brandSlug = slugify(p.brand);
-      const base = `${brandSlug}-${slugify(p.name)}`;
+      const base = `${p.idPrefix}-${slugify(p.name)}`;
       let id = base;
       if (usedIds.has(id)) id = `${base}-${slugify(primaryRange)}`;
       let n = 2;

@@ -3,7 +3,9 @@
 This folder is the open, community-maintained source of truth for Paintdex. Each
 file is a JSON array of paint records for one brand:
 
-- `citadel.json` — Citadel Colour (Games Workshop)
+- `warhammer.json` — Warhammer, formerly Citadel Colour (Games Workshop),
+  including Tone Pro. The paints sold as Citadel keep their `citadel-*` ids —
+  see "Ids outlive brand names" below
 - `vallejo.json` — Vallejo
 - `ak-interactive.json` — AK Interactive (incl. Real Colors)
 - `army-painter.json` — The Army Painter (Warpaints, Speedpaint, …)
@@ -21,7 +23,7 @@ file is a JSON array of paint records for one brand:
 {
   "id": "citadel-abaddon-black", // unique slug: <brand-slug>-<name-slug>
   "name": "Abaddon Black", // display name
-  "brand": "Citadel", // brand name
+  "brand": "Warhammer", // brand name
   "range": "Base", // primary product line
   "ranges": ["Air", "Base"], // OPTIONAL: all lines it appears in (if >1)
   "type": "base", // normalized type across brands (see below)
@@ -32,17 +34,18 @@ file is a JSON array of paint records for one brand:
 }
 ```
 
-**`type`** is one of: `base`, `layer`, `shade`, `contrast`, `technical`,
-`metallic`, `air`, `primer`, `spray`, `ink`, `wash`, `glaze`, `dry`, `enamel`,
-`other`. It's a best-effort normalization of the product type across brands;
+**`type`** is one of: `base`, `layer`, `shade`, `contrast`, `tone`,
+`technical`, `metallic`, `air`, `primer`, `spray`, `ink`, `wash`, `glaze`, `dry`,
+`enamel`, `oil`, `other`. (`tone` is Warhammer Tone Pro: each colour in five
+tones, named `"<Colour> 1"` darkest to `"<Colour> 5"` lightest.) It's a best-effort normalization of the product type across brands;
 `range` keeps the brand's own product-line label.
 
 **`metallic`** marks a metallic finish. It's deliberately separate from `type`
 because brands classify metallics inconsistently: some ship a dedicated
 `metallic` line (Vallejo Metal Color, Scale 75 Metal, …) while others file their
-metallics under a colour/finish line — Citadel's golds and silvers, for example,
+metallics under a colour/finish line — Warhammer's (formerly Citadel's) golds and silvers, for example,
 are Layer or Base paints. The flag was seeded from `type: "metallic"` plus a
-vetted set of Citadel metallics, so coverage for other brands is still partial.
+vetted set of Citadel-era metallics, so coverage for other brands is still partial.
 If a metallic paint isn't flagged (e.g. a gold that shows up as "similar" to
 flat yellows), add `"metallic": true` and open a PR — it's community-correctable
 just like hex values. Omit the field entirely for non-metallic paints.
@@ -54,6 +57,15 @@ just like hex values. Omit the field entirely for non-metallic paints.
 - `hex` must be uppercase `#RRGGBB`.
 - No two paints may share the same `brand` + `name` + `hex`.
 - `type` must be one of the values above.
+
+### Ids outlive brand names
+
+An id is an address — paint pages, saved collections and the example schemes
+all point at one — so it is never changed to follow a rebrand. When Games
+Workshop dropped the Citadel name, those paints became `"brand": "Warhammer"`
+and kept their `citadel-*` ids; paints launched since (Tone Pro) get
+`warhammer-*` ones. The `<brand-slug>-<name-slug>` rule is for minting new ids,
+not for checking old ones.
 
 ## How to fix or add a paint
 
