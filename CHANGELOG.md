@@ -24,6 +24,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   because three would be a tree rather than a list. All of it is presentation,
   so "Clear all" leaves it alone; none of it is remembered between visits,
   which is the trade-off for keeping the page's state out of the URL.
+- **Army Painter's John Blanche Masterclass paints.** All 40 across the four
+  volumes, under their own "John Blanche Masterclass" range: acrylics, washes,
+  two metallics, two Speedpaints and the Grim Rust effect, with Army Painter's
+  product codes. Colours are sampled from Army Painter's own swatches. The flat
+  acrylics come through exactly. The washes, metallics, Speedpaints and Grim
+  Rust are shown as textures there, so theirs are an average of the swatch and
+  worth correcting if you have the bottle. The Masterclass Banshee Brown is a
+  dark brown and nothing like the old Warpaints one of the same name, so both
+  are listed.
 
 ### Changed
 
