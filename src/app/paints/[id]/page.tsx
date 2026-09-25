@@ -7,6 +7,7 @@ import {
   getSimilarColours,
 } from "@/lib/paints/load";
 import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
+import { formerBrand } from "@/lib/paints/brand-aliases";
 import { contrastText } from "@/lib/color";
 import { PAINT_TYPES, type Paint, type PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
@@ -37,7 +38,13 @@ export async function generateMetadata({
   const paint = getPaintById(id);
   if (!paint) return { title: "Paint not found" };
   const title = `${paint.name} — ${paint.brand}`;
-  const description = `${paint.name} by ${paint.brand} (${paint.range}) — hex ${paint.hex}. Compare ${paint.name} to visually similar alternatives from other brands.`;
+  // "formerly Citadel" keeps the name people still search for on the pages
+  // that were indexed under it.
+  const former = formerBrand(paint);
+  const maker = former
+    ? `${paint.brand} (formerly ${former}), ${paint.range}`
+    : `${paint.brand} (${paint.range})`;
+  const description = `${paint.name} by ${maker} — hex ${paint.hex}. Compare ${paint.name} to visually similar alternatives from other brands.`;
   return {
     title,
     description,

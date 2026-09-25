@@ -10,7 +10,7 @@ schemes, sync them across devices, and share them by link.
 ## Features
 
 - **Searchable, filterable database** of 4,900+ paints across 11 brands —
-  **Citadel**, **Vallejo**, **AK Interactive**, **The Army Painter**, **Duncan
+  **Warhammer** (formerly Citadel, now including Tone Pro), **Vallejo**, **AK Interactive**, **The Army Painter**, **Duncan
   Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**, **Scale 75**
   and **Tamiya**. Filter by brand, product range, finish type, colour family and
   metallic finish.

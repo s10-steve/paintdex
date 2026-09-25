@@ -12,6 +12,7 @@ export const PAINT_TYPES = [
   "layer",
   "shade",
   "contrast",
+  "tone",
   "technical",
   "metallic",
   "air",

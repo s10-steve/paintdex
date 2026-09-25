@@ -54,11 +54,11 @@ const paint = (
   }) as BrowsePaint;
 
 const CATALOGUE: BrowsePaint[] = [
-  paint("citadel-a", "Citadel", "layer", "red"),
-  paint("citadel-b", "Citadel", "base", "blue"),
+  paint("citadel-a", "Warhammer", "layer", "red"),
+  paint("citadel-b", "Warhammer", "base", "blue"),
   paint("vallejo-a", "Vallejo", "layer", "red"),
   paint("vallejo-metal", "Vallejo", "metallic", "neutral", { metallic: true }),
-  paint("old-paint", "Citadel", "layer", "red", { discontinued: true }),
+  paint("old-paint", "Warhammer", "layer", "red", { discontinued: true }),
 ];
 
 vi.mock("@/hooks/use-browse-index", () => ({
@@ -68,8 +68,8 @@ vi.mock("@/hooks/use-browse-index", () => ({
 import { PaintsBrowser } from "@/components/paints-browser";
 
 const FACETS = {
-  brands: ["Citadel", "Vallejo"],
-  ranges: ["Citadel Range", "Vallejo Range"],
+  brands: ["Warhammer", "Vallejo"],
+  ranges: ["Warhammer Range", "Vallejo Range"],
   types: ["base", "layer", "metallic"],
   families: ["red", "blue", "neutral"],
 };
@@ -152,7 +152,7 @@ describe("deriving the grid from the URL", () => {
   });
 
   it("filters by brand", () => {
-    renderAt("brand=Citadel");
+    renderAt("brand=Warhammer");
     expect(shownIds().sort()).toEqual(["citadel-a", "citadel-b"]);
   });
 
@@ -180,7 +180,7 @@ describe("deriving the grid from the URL", () => {
   });
 
   it("combines facets with AND", () => {
-    renderAt("brand=Citadel&type=layer");
+    renderAt("brand=Warhammer&type=layer");
     expect(shownIds()).toEqual(["citadel-a"]);
   });
 
@@ -204,21 +204,21 @@ describe("deriving the grid from the URL", () => {
 describe("writing the URL from the controls", () => {
   it("adds a facet on tick", () => {
     renderAt("");
-    fireEvent.click(screen.getByLabelText("Citadel"));
-    expect(new URLSearchParams(writtenQuery()).get("brand")).toBe("Citadel");
+    fireEvent.click(screen.getByLabelText("Warhammer"));
+    expect(new URLSearchParams(writtenQuery()).get("brand")).toBe("Warhammer");
   });
 
   it("merges into an existing facet, sorted", () => {
     renderAt("brand=Vallejo");
-    fireEvent.click(screen.getByLabelText("Citadel"));
+    fireEvent.click(screen.getByLabelText("Warhammer"));
     expect(new URLSearchParams(writtenQuery()).get("brand")).toBe(
-      "Citadel,Vallejo",
+      "Vallejo,Warhammer",
     );
   });
 
   it("removes a facet on untick, deleting the param entirely", () => {
-    renderAt("brand=Citadel");
-    fireEvent.click(screen.getByLabelText("Citadel"));
+    renderAt("brand=Warhammer");
+    fireEvent.click(screen.getByLabelText("Warhammer"));
     expect(new URLSearchParams(writtenQuery()).get("brand")).toBeNull();
   });
 
@@ -230,7 +230,7 @@ describe("writing the URL from the controls", () => {
 
   it("preserves a paint page's params when a facet changes", () => {
     renderAt("view=plot&match=2");
-    fireEvent.click(screen.getByLabelText("Citadel"));
+    fireEvent.click(screen.getByLabelText("Warhammer"));
     const out = new URLSearchParams(writtenQuery());
     expect(out.get("view")).toBe("plot");
     expect(out.get("match")).toBe("2");
@@ -239,7 +239,7 @@ describe("writing the URL from the controls", () => {
   it("keeps sort through Clear all, and drops the filters", () => {
     // The bug this pins: clearAll used to wipe the whole query string, including a
     // sort it never counted as a filter.
-    renderAt("brand=Citadel&q=red&family=blue&sort=lightness&view=plot");
+    renderAt("brand=Warhammer&q=red&family=blue&sort=lightness&view=plot");
     fireEvent.click(screen.getAllByRole("button", { name: "Clear all" })[0]);
     const out = new URLSearchParams(writtenQuery());
     expect(out.get("sort")).toBe("lightness");
@@ -261,7 +261,7 @@ describe("resync: the grid follows the params the write produced", () => {
     renderAt("");
     expect(shownIds().length).toBe(4);
 
-    fireEvent.click(screen.getByLabelText("Citadel"));
+    fireEvent.click(screen.getByLabelText("Warhammer"));
     const produced = writtenQuery();
 
     // Stand in for Next handing back the new useSearchParams value. The point is
@@ -292,13 +292,13 @@ describe("the active-filter chips", () => {
   });
 
   it("summarises every applied filter, and not sort", () => {
-    renderAt("brand=Citadel&type=layer&family=red&metal=1&disc=1&q=ork&sort=lightness");
+    renderAt("brand=Warhammer&type=layer&family=red&metal=1&disc=1&q=ork&sort=lightness");
     // Both sidebar copies are in the DOM at once (desktop `hidden md:block`) plus
     // the mobile row above the grid, so each chip appears more than once — the
     // set is what matters, not the count.
     expect(new Set(chipLabels())).toEqual(
       new Set([
-        "Citadel",
+        "Warhammer",
         "Red",
         "Layer",
         "Metallic only",
@@ -309,19 +309,19 @@ describe("the active-filter chips", () => {
   });
 
   it("removing a facet chip writes the same URL as unticking the box", () => {
-    renderAt("brand=Citadel,Vallejo");
-    fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: Citadel" })[0]);
+    renderAt("brand=Warhammer,Vallejo");
+    fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: Warhammer" })[0]);
     expect(new URLSearchParams(writtenQuery()).get("brand")).toBe("Vallejo");
   });
 
   it("removing the finish chip clears only the finish", () => {
-    renderAt("brand=Citadel&metal=1");
+    renderAt("brand=Warhammer&metal=1");
     fireEvent.click(
       screen.getAllByRole("button", { name: "Remove filter: Metallic only" })[0],
     );
     const out = new URLSearchParams(writtenQuery());
     expect(out.get("metal")).toBeNull();
-    expect(out.get("brand")).toBe("Citadel");
+    expect(out.get("brand")).toBe("Warhammer");
   });
 
   it("removing the search chip empties the box as well as the param", () => {
@@ -338,12 +338,12 @@ describe("the active-filter chips", () => {
   });
 
   it("drops the chip once the grid re-renders at the URL the removal wrote", () => {
-    renderAt("brand=Citadel&type=layer");
+    renderAt("brand=Warhammer&type=layer");
     fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: Layer" })[0]);
     const produced = writtenQuery();
     cleanup();
     renderAt(produced);
-    expect(new Set(chipLabels())).toEqual(new Set(["Citadel"]));
+    expect(new Set(chipLabels())).toEqual(new Set(["Warhammer"]));
   });
 });
 
@@ -358,19 +358,19 @@ describe("the mobile chip row and the filters drawer don't double up", () => {
     screen.queryAllByRole("button", { name: `Remove filter: ${name}` });
 
   it("shows one chip per filter with the drawer shut", () => {
-    renderAt("brand=Citadel");
+    renderAt("brand=Warhammer");
     // The sidebar copy (`hidden md:block`, so display:none but still queryable
     // by role in jsdom) plus the mobile row.
-    expect(removeButtons("Citadel").length).toBe(2);
+    expect(removeButtons("Warhammer").length).toBe(2);
   });
 
   it("does not add a third copy when the drawer opens", () => {
-    renderAt("brand=Citadel");
-    const before = removeButtons("Citadel").length;
+    renderAt("brand=Warhammer");
+    const before = removeButtons("Warhammer").length;
     fireEvent.click(screen.getByRole("button", { name: /^Filters/ }));
     // The drawer mounts its own sidebar copy; the mobile row steps aside so the
     // total doesn't grow.
-    expect(removeButtons("Citadel").length).toBe(before);
+    expect(removeButtons("Warhammer").length).toBe(before);
   });
 });
 

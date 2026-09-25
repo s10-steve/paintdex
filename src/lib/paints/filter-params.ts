@@ -31,6 +31,7 @@
  * links).
  */
 import { COLOUR_FAMILIES, type ColourFamily } from "@/lib/color";
+import { canonicalBrand } from "./brand-aliases";
 import { PAINT_TYPES, type PaintType } from "./types";
 
 /** Every param the two paint pages own. */
@@ -457,9 +458,13 @@ export function sanitiseSharedFacets<T extends SharedFacets>(
   state: T,
   known: { brands: readonly string[]; ranges: readonly string[] },
 ): T {
+  // A former brand name (`?brand=Citadel` from before the rename) is mapped to
+  // the current one rather than dropped, so an old link still filters — and the
+  // same heal write then puts the new name in the address bar.
+  const brands = new Set([...state.brands].map(canonicalBrand));
   return {
     ...state,
-    brands: keepKnown(state.brands, known.brands),
+    brands: keepKnown(brands, known.brands),
     ranges: keepKnown(state.ranges, known.ranges),
   };
 }

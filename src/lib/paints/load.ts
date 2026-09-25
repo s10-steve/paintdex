@@ -1,4 +1,4 @@
-import citadel from "@/../data/paints/citadel.json";
+import warhammer from "@/../data/paints/warhammer.json";
 import vallejo from "@/../data/paints/vallejo.json";
 import akInteractive from "@/../data/paints/ak-interactive.json";
 import armyPainter from "@/../data/paints/army-painter.json";
@@ -17,7 +17,7 @@ import { hexToLab, hueFamily } from "@/lib/color";
 import type { Paint, PaintWithLab } from "./types";
 
 const RAW: Paint[] = [
-  ...(citadel as Paint[]),
+  ...(warhammer as Paint[]),
   ...(vallejo as Paint[]),
   ...(akInteractive as Paint[]),
   ...(armyPainter as Paint[]),
