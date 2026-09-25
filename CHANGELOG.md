@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.15.0] - 2026-09-19
-
 ### Added
 
 - **Warhammer Tone Pro is in the database** — all 30 colours in all five
@@ -19,6 +17,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   colours were read off Games Workshop's launch swatches rather than measured
   from painted samples, so treat them like every other hex here: a close
   guide, open to correction.
+
+### Changed
+
+- **Citadel is now Warhammer.** Games Workshop has dropped the Citadel name
+  from its paints, so the brand filter, paint pages and search results say
+  Warhammer. Nothing you had stops working: every paint keeps its address, so
+  old links and bookmarks still land, a link filtered to Citadel now filters
+  to Warhammer, searching "citadel" still finds them, and your owned and
+  wishlist paints are untouched. Schemes you saved before the change still
+  say Citadel beside those paints — we left them as you made them rather than
+  rewriting every saved scheme — but the ✓ and ☆ buttons on them still work.
+
+## [0.15.0] - 2026-09-19
+
+### Added
 
 - **My paints is now grouped and sorted.** It opens grouped by brand and
   ordered by hue — each maker's paints running round the spectrum, the way
@@ -37,15 +50,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   which is the trade-off for keeping the page's state out of the URL.
 
 ### Changed
-
-- **Citadel is now Warhammer.** Games Workshop has dropped the Citadel name
-  from its paints, so the brand filter, paint pages and search results say
-  Warhammer. Nothing you had stops working: every paint keeps its address, so
-  old links and bookmarks still land, a link filtered to Citadel now filters
-  to Warhammer, searching "citadel" still finds them, and your owned and
-  wishlist paints are untouched. Schemes you saved before the change still
-  say Citadel beside those paints — we left them as you made them rather than
-  rewriting every saved scheme — but the ✓ and ☆ buttons on them still work.
 
 - **The designer's paint list no longer prints a hex code beside every paint.**
   The swatch next to the name is already the colour, so the six characters after
