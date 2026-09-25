@@ -55,6 +55,41 @@ npm run validate:data  # validate data/paints/*.json against the Zod schema
 CI (`.github/workflows/ci.yml`, Node 24) runs lint → validate:data → test →
 build → `npm audit --audit-level=high` on every PR. Run these before pushing.
 
+### Dependencies
+
+Five things here have each cost a red CI run or a week of stalled PRs.
+
+- **Never regenerate the lock file with `npm install --package-lock-only`.** It
+  resolves against the current machine's platform and drops the bundled wasm
+  optional dependencies of `sharp` and `@tailwindcss/oxide`, producing a tree
+  `npm ci` **rejects** — `Missing: @emnapi/runtime … from lock file`, eight
+  seconds in, before lint, tests or the audit run. Either regenerate properly
+  (`rm package-lock.json node_modules && npm install`) or edit the file by hand
+  for something as small as a version bump. There is nothing safe in between.
+- **`npm audit` is not the whole picture.** It missed two *critical* Next.js
+  advisories that GitHub had open, so check both:
+  `gh api repos/s10-steve/paintdex/dependabot/alerts --paginate -q '.[]|select(.state=="open")'`.
+- **Dependabot PRs can only go green together.** The audit gate fails the build,
+  so while `main` carries N advisories every PR that fixes one of them still
+  fails on the other N−1 — eight PRs sat red for weeks for exactly this reason.
+  Land them as one branch, resolved cleanly, rather than merging them in turn.
+- **`jsdom` is pinned exactly (`30.0.1`, no caret), deliberately.** 30.1.0 breaks
+  `URL.createObjectURL`: a `File` from the jsdom environment's own global, handed
+  to jsdom's own `createObjectURL`, throws `Cannot read properties of undefined
+  (reading '_buffer')`, failing six `use-poster` tests. The caret is what let a
+  clean resolve pick it up, and `npm ci` honouring the lock is not enough —
+  anyone regenerating lands back on the failures with nothing to explain them.
+  Dependabot will keep offering 30.1.x; that PR is where to re-test it.
+- **`eslint.config.mjs` names the React version instead of letting the plugin
+  detect it.** ESLint 10 removed the rule-context API that `eslint-plugin-react`'s
+  version sniffer calls, so `detect` — what `eslint-config-next` leaves in place —
+  dies in `resolveBasedir` before a single file is linted. Naming the version
+  skips the sniffer; it's read from `package.json` so a React bump can't leave it
+  stale. Drop the block once the bundled plugin supports ESLint 10, and when you
+  do, check the rules still fire (lint a file with an unkeyed `.map()` and an
+  unused variable) — a config change that silences the crash could as easily be
+  silencing the plugin.
+
 ## Build-time index generation (important)
 
 `npm run build:index` runs automatically via the `predev`/`prebuild` hooks. It
@@ -236,6 +271,16 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   The environment is `node` by default;
   component tests opt into jsdom with a per-file `@vitest-environment jsdom`
   docblock, so the pure suites stay fast.
+  - **`test/setup.ts` borrows a real `localStorage` from a throwaway iframe**,
+    because Node ships an experimental `globalThis.localStorage` from 25 onwards
+    that shadows jsdom's and that Vitest's environment then refuses to overwrite.
+    Six suites — the visualiser's document, the poster, the deep links — depend
+    on it. Read its docblock before touching it; the short version is that the
+    guard must test for a **working** `Storage`, not a missing one. Node 26
+    evaluates the property to `undefined`, but Node 25 hands back a truthy object
+    with no methods, so a `!globalThis.localStorage` guard skips the donor and 93
+    tests die on `localStorage.clear is not a function`. CI (Node 24) has no such
+    global and never sees any of this, which is exactly how it went unnoticed.
 - `src/types/gis.d.ts` — minimal typings for the Google Identity Services lib.
 - `.env.example` — the three `NEXT_PUBLIC_*` vars accounts need (Supabase URL +
   anon key, Google client id).
@@ -1008,11 +1053,14 @@ it `[Unreleased]`.
   needing schema changes has them applied and verified against production
   *before* the merge that deploys the code. Leaving the changelog unversioned
   holds nothing back; it just leaves production running code no version names.
-- Tag every release (`git tag -a vX.Y.Z`, then `git push origin vX.Y.Z`).
-  Tagging here has always been sporadic — `v0.3.0`, `v0.5.0`, `v0.7.0` and
-  `v0.9.0` exist and nothing since, so the last four releases have no commit
-  behind their version. That gap is a large part of why the changelog was able
-  to drift without anyone noticing.
+- Tag every release (`git tag -a vX.Y.Z`, then `git push origin vX.Y.Z`), and
+  tag the **merge commit**, not the branch you cut the version on.
+  Tagging here has been sporadic rather than absent. On the remote:
+  `v0.3.0`, `v0.5.0`, `v0.7.0`, `v0.9.0`, `v0.13.0`, `v0.14.0`, `v0.15.0`.
+  Missing: 0.1.0, 0.2.0, 0.4.0, 0.6.0, 0.8.0, 0.10.0, 0.10.1, 0.11.0, 0.12.0 —
+  nine of the sixteen releases in `CHANGELOG.md` have no commit behind their
+  version, which is a large part of why the file was able to drift without
+  anyone noticing. Tagging resumed at v0.13.0; don't let it lapse again.
   - **`git tag` in a fresh clone of this repo prints nothing**, because the
     clone is made without tags. That is not evidence the repo is untagged; ask
     the remote with `git ls-remote --tags origin` before concluding anything

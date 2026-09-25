@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-09-19
+
 ### Added
 
 - **Warhammer Tone Pro is in the database** — all 30 colours in all five
@@ -64,6 +66,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **A sign-in that fails now tells you so.** Google could recognise you and
+  hand over your account, and then the last step — logging you in to Paintdex
+  itself — could fail with nothing on screen: the button still said "Sign in
+  as …", clicking it did nothing, and your paints and schemes stayed out of
+  reach. That's what happened while our account database was briefly offline.
+  Now a red notice appears at the bottom of the page, saying whether the
+  sign-in service couldn't be reached (try again in a few minutes) or turned
+  the attempt down (try again now). Your saved schemes and paints were never
+  at risk.
+
 - **Paints sold under more than one Citadel product line now get their own
   entry per line**, instead of one merged record. Ogryn Camo (Layer + Air),
   Nurgling Green (Layer + Dry) and 69 others like them are genuinely two (or
@@ -73,6 +85,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a paint's secondary range (e.g. filtering to "Air") never surfaced it at
   all. The trade-off: the new entries share their original's best-effort hex
   until someone sources the real swatch for each line.
+
+### Security
+
+- **Updated Next.js and the rest of the dependency stack**, clearing six
+  advisories including two rated critical in the framework the site is built
+  on. Nothing about the site changes for you; it's the kind of housekeeping
+  worth recording rather than describing. Dependency bumps don't normally earn
+  a changelog entry here — this one does because the fixes were security ones
+  and they had been sitting unreleased while every proposed update failed CI
+  for the same reason.
 
 ## [0.14.0] - 2026-08-08
 
