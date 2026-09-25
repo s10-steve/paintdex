@@ -414,6 +414,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-ashroot",
+    "name": "Ashroot",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#564540",
+    "code": "WP4106",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-augur-blue",
     "name": "Augur Blue",
     "brand": "Army Painter",
@@ -482,6 +492,16 @@
     "type": "other",
     "hex": "#BFA59B",
     "code": "WP1404",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-banshee-brown-john-blanche-masterclass",
+    "name": "Banshee Brown",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#342B28",
+    "code": "WP4005",
     "discontinued": false
   },
   {
@@ -605,6 +625,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-blanched-berry",
+    "name": "Blanched Berry",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#38242C",
+    "code": "WP4014",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-bleached-bone",
     "name": "Bleached Bone",
     "brand": "Army Painter",
@@ -622,6 +652,16 @@
     "type": "other",
     "hex": "#F5F4F0",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blighted-green",
+    "name": "Blighted Green",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#1E2C2D",
+    "code": "WP4004",
     "discontinued": false
   },
   {
@@ -662,6 +702,26 @@
     "type": "contrast",
     "hex": "#A8141F",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-blood-thorn",
+    "name": "Blood Thorn",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#9E1E3D",
+    "code": "WP4117",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bloodmoon-red",
+    "name": "Bloodmoon Red",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "contrast",
+    "hex": "#BE3D36",
+    "code": "WP4006",
     "discontinued": false
   },
   {
@@ -762,6 +822,16 @@
     "type": "other",
     "hex": "#F1F2E2",
     "code": "WP1405",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-bramble-grove",
+    "name": "Bramble Grove",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#617779",
+    "code": "WP4108",
     "discontinued": false
   },
   {
@@ -1705,6 +1775,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-dewpath",
+    "name": "Dewpath",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#4D8385",
+    "code": "WP4109",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-diabolic-plum",
     "name": "Diabolic Plum",
     "brand": "Army Painter",
@@ -2056,6 +2136,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-emberveil",
+    "name": "Emberveil",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#C7331B",
+    "code": "WP4113",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-emerald-forest",
     "name": "Emerald Forest",
     "brand": "Army Painter",
@@ -2064,6 +2154,17 @@
     "hex": "#5BBB4D",
     "code": null,
     "discontinued": false
+  },
+  {
+    "id": "army-painter-emperor-gold",
+    "name": "Emperor Gold",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "metallic",
+    "hex": "#634B2C",
+    "code": "WP4009",
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-encarmine-red",
@@ -2308,6 +2409,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-fiery-vermilion",
+    "name": "Fiery Vermilion",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#B11B12",
+    "code": "WP4010",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-figgy-pink",
     "name": "Figgy Pink",
     "brand": "Army Painter",
@@ -2498,6 +2609,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-frostveil",
+    "name": "Frostveil",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#1B5698",
+    "code": "WP4103",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-fur-brown",
     "name": "Fur Brown",
     "brand": "Army Painter",
@@ -2656,6 +2777,16 @@
     "type": "other",
     "hex": "#B9BEC4",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-gladeshard",
+    "name": "Gladeshard",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#92B931",
+    "code": "WP4120",
     "discontinued": false
   },
   {
@@ -3030,6 +3161,26 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-grim-rust",
+    "name": "Grim Rust",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "technical",
+    "hex": "#492E13",
+    "code": "WP4018",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grimdark-shadow",
+    "name": "Grimdark Shadow",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "wash",
+    "hex": "#45413B",
+    "code": "WP4008",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-grimoire-purple",
     "name": "Grimoire Purple",
     "brand": "Army Painter",
@@ -3047,6 +3198,16 @@
     "type": "other",
     "hex": "#B3C29D",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-grove-hollow-shade",
+    "name": "Grove Hollow Shade",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "wash",
+    "hex": "#434A36",
+    "code": "WP4121",
     "discontinued": false
   },
   {
@@ -3158,6 +3319,27 @@
     "hex": "#60AB97",
     "code": null,
     "discontinued": false
+  },
+  {
+    "id": "army-painter-hearthborn",
+    "name": "Hearthborn",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#EABB8B",
+    "code": "WP4114",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-heavy-metal",
+    "name": "Heavy Metal",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "metallic",
+    "hex": "#454646",
+    "code": "WP4019",
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-hemp-rope",
@@ -3350,6 +3532,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-iceborn",
+    "name": "Iceborn",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#F3DFF3",
+    "code": "WP4104",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-imp-yellow",
     "name": "Imp Yellow",
     "brand": "Army Painter",
@@ -3417,6 +3609,26 @@
     "type": "air",
     "hex": "#354B57",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ironclad-grey",
+    "name": "Ironclad Grey",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#323438",
+    "code": "WP4002",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ivory-white",
+    "name": "Ivory White",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#F6E2BD",
+    "code": "WP4001",
     "discontinued": false
   },
   {
@@ -3931,6 +4143,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-midnight-olive",
+    "name": "Midnight Olive",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#31352C",
+    "code": "WP4012",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-military-shade",
     "name": "Military Shade",
     "brand": "Army Painter",
@@ -4091,6 +4313,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-moonbeam-yellow",
+    "name": "Moonbeam Yellow",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#F0B81D",
+    "code": "WP4003",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-moonlake-coral",
     "name": "Moonlake Coral",
     "brand": "Army Painter",
@@ -4098,6 +4330,16 @@
     "type": "contrast",
     "hex": "#A5396D",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-moonpetal",
+    "name": "Moonpetal",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#AB5E76",
+    "code": "WP4105",
     "discontinued": false
   },
   {
@@ -4299,6 +4541,16 @@
     "type": "other",
     "hex": "#304358",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-nightroot-shade",
+    "name": "Nightroot Shade",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "wash",
+    "hex": "#483C4F",
+    "code": "WP4112",
     "discontinued": false
   },
   {
@@ -4769,6 +5021,16 @@
     "type": "other",
     "hex": "#F7A103",
     "code": "WP1446",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-pine-hollow-shade",
+    "name": "Pine Hollow Shade",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "wash",
+    "hex": "#3E5A59",
+    "code": "WP4111",
     "discontinued": false
   },
   {
@@ -5282,6 +5544,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-rootpath",
+    "name": "Rootpath",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#605032",
+    "code": "WP4119",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-rosy-skin",
     "name": "Rosy Skin",
     "brand": "Army Painter",
@@ -5410,6 +5682,16 @@
     "type": "other",
     "hex": "#BB7962",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-ruddy-terra",
+    "name": "Ruddy Terra",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#81443A",
+    "code": "WP4015",
     "discontinued": false
   },
   {
@@ -5593,6 +5875,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-shadow-thorn",
+    "name": "Shadow Thorn",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#1D425E",
+    "code": "WP4107",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-shadow-wash",
     "name": "Shadow Wash",
     "brand": "Army Painter",
@@ -5720,6 +6012,16 @@
     "type": "primer",
     "hex": "#D0C59A",
     "code": "CP3012",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-skyshard",
+    "name": "Skyshard",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#DFEEEC",
+    "code": "WP4110",
     "discontinued": false
   },
   {
@@ -5953,6 +6255,36 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-sunburst-ochre",
+    "name": "Sunburst Ochre",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#714529",
+    "code": "WP4011",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-sunpetal",
+    "name": "Sunpetal",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#F8DE33",
+    "code": "WP4115",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-tainted-garden",
+    "name": "Tainted Garden",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#3F3F2B",
+    "code": "WP4013",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-tainted-gold",
     "name": "Tainted Gold",
     "brand": "Army Painter",
@@ -6041,6 +6373,26 @@
     "type": "other",
     "hex": "#303149",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-the-darkness",
+    "name": "The Darkness",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#21252C",
+    "code": "WP4000",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-thicket-grove",
+    "name": "Thicket Grove",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#6F6E41",
+    "code": "WP4118",
     "discontinued": false
   },
   {
@@ -6314,6 +6666,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-turnbull-turquoise",
+    "name": "Turnbull Turquoise",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "contrast",
+    "hex": "#3D4E54",
+    "code": "WP4016",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-turquoise-siren",
     "name": "Turquoise Siren",
     "brand": "Army Painter",
@@ -6381,6 +6743,16 @@
     "type": "other",
     "hex": "#3B57A5",
     "code": "WP1115",
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-umberroot",
+    "name": "Umberroot",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "other",
+    "hex": "#55332B",
+    "code": "WP4116",
     "discontinued": false
   },
   {
@@ -6524,6 +6896,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-vineroot-shade",
+    "name": "Vineroot Shade",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "wash",
+    "hex": "#43201E",
+    "code": "WP4122",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-violent-vermillion",
     "name": "Violent Vermillion",
     "brand": "Army Painter",
@@ -6584,6 +6966,16 @@
     "discontinued": false
   },
   {
+    "id": "army-painter-voodoo-shade",
+    "name": "Voodoo Shade",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "wash",
+    "hex": "#55432C",
+    "code": "WP4017",
+    "discontinued": false
+  },
+  {
     "id": "army-painter-warlock-magenta",
     "name": "Warlock Magenta",
     "brand": "Army Painter",
@@ -6611,6 +7003,16 @@
     "type": "air",
     "hex": "#8C345C",
     "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-warm-skin-shade",
+    "name": "Warm Skin Shade",
+    "brand": "Army Painter",
+    "range": "John Blanche Masterclass",
+    "type": "wash",
+    "hex": "#78583E",
+    "code": "WP4007",
     "discontinued": false
   },
   {
