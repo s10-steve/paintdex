@@ -14,6 +14,13 @@
  * When Supabase itself isn't configured the provider is inert: `configured` is
  * false and the UI hides all account features, so the site works exactly as it
  * did before accounts existed.
+ *
+ * A failed sign-in is shown in an `AlertBanner`, rendered from here. Google's
+ * half of the flow can succeed while ours fails — the button still greets you
+ * by name, and only the token exchange with Supabase breaks — so without it the
+ * click does nothing at all. That is exactly what a paused Supabase project
+ * looked like: its hostname stopped resolving, every exchange failed with a
+ * network error, and the only trace was a line in the console.
  */
 import {
   createContext,
@@ -24,7 +31,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { Session, User } from "@supabase/supabase-js";
+import { isAuthRetryableFetchError, type Session, type User } from "@supabase/supabase-js";
+import { AlertBanner } from "@/components/alert-banner";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
@@ -56,10 +64,23 @@ async function makeNonce(): Promise<{ raw: string; hashed: string }> {
   return { raw, hashed };
 }
 
+/**
+ * What to tell the user when the token exchange fails. Supabase's own message
+ * is for the console — "Failed to fetch" means nothing to a painter — so this
+ * only distinguishes "we couldn't reach it" (worth retrying later) from "it
+ * said no" (worth retrying now).
+ */
+function signInErrorMessage(error: unknown): string {
+  return isAuthRetryableFetchError(error) || error instanceof TypeError
+    ? "Couldn't reach the sign-in service. Please try again in a few minutes."
+    : "Sign-in didn't work. Please try again.";
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(isSupabaseConfigured);
   const [gisReady, setGisReady] = useState(false);
+  const [signInError, setSignInError] = useState<string | null>(null);
   const nonceRef = useRef<string | null>(null);
   const initedRef = useRef(false);
 
@@ -100,12 +121,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         client_id: GOOGLE_CLIENT_ID!,
         nonce: hashed,
         callback: async ({ credential }) => {
-          const { error } = await supabase!.auth.signInWithIdToken({
-            provider: "google",
-            token: credential,
-            nonce: nonceRef.current ?? undefined,
-          });
-          if (error) console.error("Google sign-in failed:", error.message);
+          setSignInError(null);
+          // supabase-js normally returns its errors, but a fetch that rejects
+          // outside its wrapper would otherwise vanish as an unhandled rejection
+          // — the silent failure this banner exists to end.
+          try {
+            const { error } = await supabase!.auth.signInWithIdToken({
+              provider: "google",
+              token: credential,
+              nonce: nonceRef.current ?? undefined,
+            });
+            if (error) {
+              console.error("Google sign-in failed:", error.message);
+              setSignInError(signInErrorMessage(error));
+            }
+          } catch (error) {
+            console.error("Google sign-in failed:", error);
+            setSignInError(signInErrorMessage(error));
+          }
         },
       });
       setGisReady(true);
@@ -148,7 +181,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [session, loading, gisReady],
   );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+      {signInError ? (
+        <AlertBanner message={signInError} onDismiss={() => setSignInError(null)} />
+      ) : null}
+    </AuthContext.Provider>
+  );
 }
 
 /** Access the auth context. Returns an inert value when no provider is present. */
