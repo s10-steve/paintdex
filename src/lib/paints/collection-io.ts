@@ -29,10 +29,12 @@ export interface CollectionExportShape {
 /**
  * Cap on how many entries an import will accept.
  *
- * The catalogue is about 4,900 paints and the database caps an account at
- * 5,000, so anything past this could not be stored anyway; stopping here means
- * a hostile or corrupt file is rejected before it becomes ten thousand upsert
- * rows.
+ * Matches the database's per-account cap (`max_paints` in the
+ * `paint_collection` trigger), so anything past this could not be stored
+ * anyway; stopping here means a hostile or corrupt file is rejected before it
+ * becomes ten thousand upsert rows. The catalogue has since outgrown it (5,275
+ * paints), so "own everything" no longer fits — raising both is a migration,
+ * and on the README's roadmap.
  */
 export const MAX_IMPORT_ENTRIES = 5000;
 

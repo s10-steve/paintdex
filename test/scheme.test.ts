@@ -16,6 +16,7 @@ import {
   makeShareSlug,
   shareUrl,
   SHARE_TOKEN_LENGTH,
+  schemeFromPublicRow,
 } from "@/lib/scheme/share";
 import {
   MAX_MIX_COMPONENTS,
@@ -617,6 +618,25 @@ describe("planReload (reconciling a bound document)", () => {
 });
 
 describe("share links", () => {
+  it("renders a published row under its column title, not the one inside data", () => {
+    // A rename on /my-schemes writes only the `title` column, so `data.title`
+    // lags behind until the next autosave — the share page's heading and
+    // preview image showed the old name beside a correct <title>.
+    const scheme = schemeFromPublicRow({
+      title: "Renamed",
+      data: { version: 1, title: "Original", elements: [] },
+    });
+    expect(scheme?.title).toBe("Renamed");
+  });
+
+  it("falls back to the stored title when the column is blank, and to null on junk", () => {
+    expect(
+      schemeFromPublicRow({ title: "", data: { version: 1, title: "Stored", elements: [] } })
+        ?.title,
+    ).toBe("Stored");
+    expect(schemeFromPublicRow({ title: "x", data: { elements: "nope" } })).toBeNull();
+  });
+
   it("derives a fixed-length lowercase base-36 token from bytes (deterministic)", () => {
     const bytes = new Uint8Array([0, 1, 255, 128, 42, 7, 200, 99]);
     const a = makeShareToken(bytes);

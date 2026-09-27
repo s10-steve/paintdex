@@ -318,6 +318,27 @@ describe("usePoster remote storage", () => {
     expect(seen.current?.photo?.dataUrl).toMatch(/^data:/);
   });
 
+  it("isn't left busy when the row loses its photo mid-download", async () => {
+    // A cancelled run skips its `finally`, and the run that replaces it returns
+    // early with no path to fetch — so nothing cleared the flag.
+    mockDownload.mockImplementationOnce(() => new Promise(() => {}));
+    const seen: { current: ReturnType<typeof usePoster> | null } = { current: null };
+    function Probe({ photoPath }: { photoPath: string | null }) {
+      seen.current = usePoster(elements, "row-1", {
+        schemeId: "row-1",
+        userId: "u1",
+        photoPath,
+        onPhotoPath: () => {},
+      });
+      return null;
+    }
+    const view = render(<Probe photoPath="u1/row-1.jpg" />);
+    await waitFor(() => expect(seen.current?.photoBusy).toBe(true));
+
+    view.rerender(<Probe photoPath={null} />);
+    await waitFor(() => expect(seen.current?.photoBusy).toBe(false));
+  });
+
   it("opens empty rather than broken when the object has gone", async () => {
     mockDownload.mockResolvedValueOnce(null);
     const { seen, paths } = remoteHarness("row-1", "u1/row-1.jpg");

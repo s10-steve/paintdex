@@ -154,15 +154,27 @@ function SchemeCard({
     onError,
   });
   const inputRef = useRef<HTMLInputElement>(null);
+  // Whether this edit has already been settled — by Enter, Escape or blur.
+  // Unmounting the input can fire its blur, so without this Escape went on to
+  // *save* the draft it meant to discard, and Enter saved twice.
+  const settledRef = useRef(false);
 
   const startRename = () => {
+    settledRef.current = false;
     setDraft(row.title || "");
     setEditing(true);
     // Focus after the input renders.
     setTimeout(() => inputRef.current?.select(), 0);
   };
 
+  const cancelRename = () => {
+    settledRef.current = true;
+    setEditing(false);
+  };
+
   const commitRename = async () => {
+    if (settledRef.current) return;
+    settledRef.current = true;
     setEditing(false);
     const title = draft.trim() || "Untitled scheme";
     if (title === row.title) return;
@@ -248,7 +260,7 @@ function SchemeCard({
               onBlur={() => void commitRename()}
               onKeyDown={(e) => {
                 if (e.key === "Enter") void commitRename();
-                if (e.key === "Escape") setEditing(false);
+                if (e.key === "Escape") cancelRename();
               }}
               aria-label="Scheme name"
               maxLength={MAX_SCHEME_TITLE}

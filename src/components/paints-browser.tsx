@@ -409,9 +409,10 @@ export function PaintsBrowser({
               sidebar, next to the controls they undo.
 
               Suppressed while the drawer is open, which renders its own copy of
-              the sidebar — the drawer is a plain overlay with no `aria-modal`, so
-              both copies stay in the accessibility tree and Tab order, giving two
-              identical "Remove filter: X" buttons for every chip. */}
+              the sidebar. The drawer is a modal now (`useModalDialog` traps Tab
+              and sets `aria-modal`), but `aria-modal` isn't honoured by every
+              screen reader, so a second mounted copy would still put two
+              identical "Remove filter: X" buttons per chip in some trees. */}
           {mobileFiltersOpen ? null : (
             <ActiveFilters
               chips={chips}

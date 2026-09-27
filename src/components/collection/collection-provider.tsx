@@ -37,12 +37,21 @@ import {
 import type { PaintStatus } from "@/lib/supabase/types";
 
 export type CollectionMap = ReadonlyMap<string, PaintStatus>;
+export type CollectionPhase = "off" | "loading" | "ready" | "failed";
 
 export interface CollectionValue {
   /** Whether the collection features should appear at all. */
   enabled: boolean;
   /** Whether the map reflects the server yet. */
   ready: boolean;
+  /**
+   * Where the load has got to, for the consumers that must tell "still
+   * loading" apart from "couldn't load". `ready` alone can't: a failed load
+   * leaves it false forever, which read as "Loading…" with nothing to retry.
+   * `off` covers unconfigured and settled signed-out; `loading` includes
+   * resolving auth, so a signed-in visitor never sees an "off" frame first.
+   */
+  phase: CollectionPhase;
   /** Which list a paint is in, or null. */
   statusOf: (paintId: string) => PaintStatus | null;
   entries: CollectionMap;
@@ -65,6 +74,7 @@ const EMPTY: CollectionMap = new Map();
 const INERT: CollectionValue = {
   enabled: false,
   ready: false,
+  phase: "off",
   statusOf: () => null,
   entries: EMPTY,
   setStatus: async () => {},
@@ -86,12 +96,25 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
 
   const [entries, setEntries] = useState<CollectionMap>(EMPTY);
   const [ready, setReady] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // `enabled` requires auth to have *settled*. `!user` is "unknown" while
   // `authLoading`, exactly as in `use-scheme-sync`, and treating it as
   // signed-out would flash the toggles out of existence on every cold load.
   const enabled = configured && !authLoading && userId !== null;
+
+  const phase: CollectionPhase = !configured
+    ? "off"
+    : authLoading
+      ? "loading"
+      : userId === null
+        ? "off"
+        : loadFailed
+          ? "failed"
+          : ready
+            ? "ready"
+            : "loading";
 
   /**
    * The load. Keyed on `userId`, never on `user` — a token refresh hands back a
@@ -107,6 +130,7 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
       // browser can't see the first one's paints between renders.
       setEntries(EMPTY);
       setReady(false);
+      setLoadFailed(false);
       return;
     }
 
@@ -115,6 +139,7 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
     // — still writes its rows into state, including someone else's.
     let cancelled = false;
     setReady(false);
+    setLoadFailed(false);
     void (async () => {
       try {
         const rows = await listCollection(userId);
@@ -123,7 +148,8 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
         setReady(true);
       } catch {
         if (cancelled) return;
-        setError("Couldn't load your paints. Please refresh the page.");
+        setLoadFailed(true);
+        setError("Couldn't load your paints. Please try again.");
       }
     })();
     /* eslint-enable react-hooks/set-state-in-effect */
@@ -197,8 +223,9 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
       const rows = await listCollection(userId);
       setEntries(new Map(rows.map((r) => [r.paint_id, r.status])));
       setReady(true);
+      setLoadFailed(false);
     } catch {
-      setError("Couldn't reload your paints. Please refresh the page.");
+      setError("Couldn't reload your paints. Please try again.");
     }
   }, [userId]);
 
@@ -211,6 +238,7 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
     () => ({
       enabled,
       ready,
+      phase,
       statusOf,
       entries,
       setStatus,
@@ -219,7 +247,7 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
       error,
       dismissError: () => setError(null),
     }),
-    [enabled, ready, statusOf, entries, setStatus, remove, reload, error],
+    [enabled, ready, phase, statusOf, entries, setStatus, remove, reload, error],
   );
 
   return (

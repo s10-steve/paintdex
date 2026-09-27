@@ -114,7 +114,8 @@ const IMPORT_CHUNK = 500;
  * Deliberately the same conflict target as `setPaintStatus`, so importing a
  * file over an existing collection *merges* — an entry already present moves to
  * whichever list the file says, and everything absent from the file is left
- * alone. Replacing instead is `clearCollection` followed by this.
+ * alone. Replacing instead is this followed by `removePaints` for whatever the
+ * file doesn't mention.
  */
 export async function importCollection(
   userId: string,
@@ -141,15 +142,31 @@ export async function importCollection(
 }
 
 /**
- * Empty the collection. Only used by a replace-mode import, which is why it
- * isn't offered as a button of its own — "delete everything" wants to be the
- * consequence of a choice the user has already been asked to confirm, not a
- * control sitting next to Remove.
+ * How many ids go in one delete. Smaller than `IMPORT_CHUNK` because a delete's
+ * filter travels in the URL (`paint_id=in.(…)`), not the body, and 500 slugs
+ * is a query string long enough for a proxy to refuse.
  */
-export async function clearCollection(userId: string): Promise<void> {
-  const { error } = await client()
-    .from("paint_collection")
-    .delete()
-    .eq("user_id", userId);
-  if (error) throw error;
+const REMOVE_CHUNK = 100;
+
+/**
+ * Take many paints out of the collection at once. Only used by a replace-mode
+ * import, after the file's entries have been written: removing what the file
+ * doesn't mention, rather than emptying the collection and then importing,
+ * means a failure part way through leaves the user with *more* than they
+ * asked for, never an empty or half-written collection.
+ *
+ * That ordering is also why there is no "delete everything" helper: the
+ * clear-then-import version it served could wipe a collection on a dropped
+ * connection, and "delete everything" wants to be the consequence of a choice
+ * the user has already confirmed, not a control of its own.
+ */
+export async function removePaints(userId: string, paintIds: readonly string[]): Promise<void> {
+  for (let i = 0; i < paintIds.length; i += REMOVE_CHUNK) {
+    const { error } = await client()
+      .from("paint_collection")
+      .delete()
+      .eq("user_id", userId)
+      .in("paint_id", paintIds.slice(i, i + REMOVE_CHUNK));
+    if (error) throw error;
+  }
 }

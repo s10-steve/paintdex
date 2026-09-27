@@ -422,6 +422,11 @@ export function usePoster(
 
     return () => {
       cancelled = true;
+      // The `finally` above is skipped once cancelled, and the next run may
+      // return before setting anything (signed out, or the row lost its
+      // photo mid-download) — so without this the studio stayed "busy" for
+      // good. A run that does start a transfer sets it straight back.
+      setPhotoBusy(false);
     };
   }, [remoteUserId, remotePath]);
 
@@ -618,6 +623,8 @@ export function usePoster(
 
     return () => {
       cancelled = true;
+      // As in the fetch effect: a cancelled run skips its `finally`.
+      setPhotoBusy(false);
     };
   }, [photo, mounted, remoteUserId, remoteSchemeId, remotePath]);
 

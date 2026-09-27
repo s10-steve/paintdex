@@ -90,11 +90,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!supabase) return;
 
     let active = true;
-    supabase.auth.getSession().then(({ data }) => {
-      if (!active) return;
-      setSession(data.session);
-      setLoading(false);
-    });
+    supabase.auth.getSession().then(
+      ({ data }) => {
+        if (!active) return;
+        setSession(data.session);
+        setLoading(false);
+      },
+      () => {
+        // Settle signed-out rather than stay "loading" for good: every `ready`
+        // gate downstream (scheme sync, the collection, `?preset=`) waits on
+        // `loading`, so an unhandled rejection here froze all of them.
+        if (!active) return;
+        setLoading(false);
+      },
+    );
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, next) => {
       setSession(next);

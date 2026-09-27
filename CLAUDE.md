@@ -155,7 +155,10 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   copy link, shared by the visualiser's share card and `/my-schemes`;
   `use-scheme-share` is a thin adapter over it for the sync-indicator error
   sink), `use-modal-dialog` (scroll lock, focus trap, Escape, focus restore —
-  used by `PosterStudio` and browse's filter drawer),
+  used by `PosterStudio` and browse's filter drawer), `use-disclosure` (the
+  header's two drop-downs — they are disclosures, not ARIA menus: they claimed
+  `role="menu"` without the menu keyboard model, so what they keep now is
+  outside-click, Escape-returns-focus and close-on-focus-out),
   and `use-element-width` (a `ResizeObserver` wrapper; the alternatives plot lays
   out in real pixels, so it needs a measured width), and the visualiser's three
   state layers — `use-local-scheme`
@@ -265,6 +268,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   it needs the provider mocked where `scheme-editor.test.tsx` needs no auth at
   all) — see "My paints" below,
   `catalogue-sources.test.ts` (the `load.ts` drift guard)
+  `header-disclosure.test.tsx`, `add-paint.test.tsx` (the visualiser's search
+  is a combobox with the `paint-suggestions` invariants) and
+  `poster-studio.test.tsx` (the shape radios' roving tab stop),
   and `migrations.test.ts` (the migration-bookkeeping drift guard, plus the
   "no RLS-protected table inline in a storage policy" guard — see "Deploying"
   and "Share images"), and `share-card.test.tsx`.
@@ -718,10 +724,12 @@ scrolling sidebar, or behind a closed drawer on a phone.
   spliced in at `brands.size`, which was correct only while brands happened to be
   emitted first.
 - **The mobile copy is suppressed while that page's drawer is open.** Both
-  drawers render a second copy of the sidebar and neither is a real modal (no
-  `aria-modal`, no focus trap), so leaving the mobile row mounted put two
-  identical "Remove filter: X" buttons per chip in the tree and the Tab order.
-  Browse and the panel both need this guard; browse shipped without it once.
+  drawers render a second copy of the sidebar. The panel's drawer is a plain
+  overlay (no `aria-modal`, no focus trap), so leaving the mobile row mounted
+  put two identical "Remove filter: X" buttons per chip in the tree and the Tab
+  order. Browse's drawer has since become a real modal (`useModalDialog`), but
+  keep its guard too: `aria-modal` isn't honoured by every screen reader.
+  Browse shipped without the guard once.
 
 ## Notices
 
@@ -732,8 +740,9 @@ for `warning`.
 - **It's presentational, deliberately not a toast provider.** Every caller already
   owns the state (`use-scheme-sync` has `notice`, `schemes-manager` has `error`),
   so a context would add runtime plumbing to a static site and buy nothing. The
-  accepted trade-off: two banners from two owners would stack, and nothing renders
-  two today.
+  accepted trade-off: two banners from two owners would stack. One page can:
+  `/my-paints`, where the collection provider's banner (a failed toggle or
+  load) and the page's own (a failed import) are separate owners.
 - **Anything the user must act on goes through `notice`, not `syncState`.** The
   sync indicator is a small `aria-live` span that the next keystroke overwrites
   with "Saving…" a second later. The scheme cap used to live there, so a capped
@@ -784,6 +793,14 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
     `user` (a token refresh hands back a fresh object hourly), `!user` means
     *unknown* until `authLoading` is false, and every fetch has the cancelled
     guard.
+  - **`phase` (`off`/`loading`/`ready`/`failed`) is what to gate on**, not
+    `ready`: a failed load leaves `ready` false for good, and `/my-paints` sat
+    on "Loading your paints…" with nothing to retry. `loading` covers resolving
+    auth too, so a signed-in visitor never sees an `off` frame first.
+  - **A replace-mode import writes first and deletes second** (`importCollection`,
+    then `removePaints` for what the file doesn't list). The reverse — empty,
+    then import — lost the whole collection to a dropped connection between the
+    two, which is why there is no "clear everything" helper any more.
   - **Writes are optimistic with rollback**, and the rollback is the point — a
     toggle that flipped, failed silently and reverted on the next load is the
     one failure this feature can't afford. Failures go through `AlertBanner`
@@ -1037,6 +1054,11 @@ it `[Unreleased]`.
   is the `no changelog` label. The check is deliberately narrow — `src/` only —
   so data corrections and dependency bumps don't train people to reach for that
   label by reflex.
+- **The README's Roadmap moves in the same PR as the work.** A PR that ships a
+  roadmap item ticks it (and adds its line to Features); a PR that decides
+  something is worth doing later adds it as an open item. Left to memory, the
+  roadmap drifted the way the changelog did — a shipped item still open, and
+  the Features list quoting a paint count two brands out of date.
 - **Entries are written for painters, not reviewers.** What changed, why it's
   better, what it costs. Naming the trade-off is the house style ("the photo is
   all that travels for now"), and it's the reason this file must not be
