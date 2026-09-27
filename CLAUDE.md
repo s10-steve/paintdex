@@ -1138,6 +1138,13 @@ it `[Unreleased]`.
   `package.json`, then tag the merge commit. Releasing is not how you ship —
   **every push to `main` deploys**, so a merge already shipped it. A version says
   "this is worth announcing".
+- **Stacked PRs: retarget, then push.** `main` requires the `build` check on
+  a PR's exact head. When the PR underneath is squash-merged, retarget the
+  next one to `main` *first* and only then force-push its rebase. Pushed the
+  other way round — while its old base is being merged away — GitHub Actions
+  never starts, the only check that appears is Vercel's, and the merge is
+  refused ("Required status check `build` is expected") until another push.
+  It happened twice landing #93–#95; an empty commit is not the fix.
 - **The migration ordering is a merge gate, not a changelog gate.** A release
   needing schema changes has them applied and verified against production
   *before* the merge that deploys the code. Leaving the changelog unversioned
