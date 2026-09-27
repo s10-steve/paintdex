@@ -22,9 +22,15 @@
  *   the old "Citadel" brand. An ingredient it can't resolve — a custom colour,
  *   or a paint that has been renamed — is `unmatched` rather than dropped, so
  *   the counts add up to what's on screen.
- * - **"Closest you own" is by colour alone** (CIEDE2000), so a wash can come back
- *   as the nearest match for a base paint. That is the honest cheap answer, and
- *   the card says "closest colour", not "substitute".
+ * - **"Closest you own" is like-for-like, then by colour.** A candidate has to be
+ *   the same kind of paint (`paintGroup`: an opaque paint for an opaque one, a
+ *   wash for a wash) with the same metallic finish, and within `MAX_SUGGESTION`
+ *   ΔE — past that "Similar" is a different colour, and "nothing close" is the
+ *   more useful answer. By colour alone it offered Nuln Oil for Macragge Blue,
+ *   Heavy Metal for Fenrisian Grey and Lahmian Medium for Stormhost Silver.
+ *   `paintGroup` is a stopgap over the catalogue's `type`, which mixes product
+ *   lines (Citadel's Base/Layer/Dry) with what a paint does and files 60% of
+ *   the catalogue as `other`; see the README roadmap item on paint categories.
  */
 import { ciede2000, hexToLab, type Lab } from "@/lib/color";
 import { cataloguePaintId } from "@/lib/paints/catalogue-match";
@@ -32,7 +38,81 @@ import { withLab, type BrowsePaintWithLab } from "@/lib/paints/lab-index";
 import type { BrowsePaint } from "@/lib/paints/types";
 import type { PaintStatus } from "@/lib/supabase/types";
 import { components } from "./mix";
-import type { Scheme } from "./types";
+import type { Scheme, SchemeRole } from "./types";
+
+/**
+ * Beyond this ΔE a "closest colour" isn't close: `matchLabel` calls it
+ * "Loose", and the card says there's nothing close instead.
+ */
+export const MAX_SUGGESTION = 20;
+
+/**
+ * What a paint does, coarsely enough to be comparable across brands, from the
+ * catalogue's `type`. Only paints in the same group can stand in for each other.
+ *
+ * - `opaque` includes `other`, which is nearly every non-Citadel paint — mostly
+ *   ordinary opaque acrylics, but not all, which is why this is a stopgap.
+ *   Airbrush paints count: they're opaque paints, thinned.
+ * - Rattle cans, oils and enamels each only match their own kind: a spray can
+ *   isn't a substitute for a pot, and oils and enamels behave differently from
+ *   acrylics.
+ * - `technical` (textures, effects, mediums) never matches anything: there is
+ *   no colour substitute for Lahmian Medium or a crackle texture.
+ */
+export type PaintGroup =
+  | "opaque"
+  | "wash"
+  | "one-coat"
+  | "primer"
+  | "spray"
+  | "oil"
+  | "enamel"
+  | "technical";
+
+const GROUP_OF_TYPE: Record<string, PaintGroup> = {
+  base: "opaque",
+  layer: "opaque",
+  dry: "opaque",
+  air: "opaque",
+  tone: "opaque",
+  metallic: "opaque",
+  other: "opaque",
+  shade: "wash",
+  wash: "wash",
+  glaze: "wash",
+  ink: "wash",
+  contrast: "one-coat",
+  primer: "primer",
+  spray: "spray",
+  oil: "oil",
+  enamel: "enamel",
+  technical: "technical",
+};
+
+export const paintGroup = (p: { type: string }): PaintGroup =>
+  GROUP_OF_TYPE[p.type] ?? "opaque";
+
+export const isMetallic = (p: { type: string; metallic?: boolean }): boolean =>
+  Boolean(p.metallic) || p.type === "metallic";
+
+/**
+ * For a colour with no catalogue entry, the scheme's role is the only hint at
+ * what kind of paint it is. Weathering can be anything, so it isn't narrowed.
+ */
+const GROUP_OF_ROLE: Partial<Record<SchemeRole, PaintGroup>> = {
+  base: "opaque",
+  layer: "opaque",
+  highlight: "opaque",
+  drybrush: "opaque",
+  wash: "wash",
+  glaze: "wash",
+};
+
+/** What a suggestion has to match. `metallic: null` means "either". */
+interface Want {
+  group: PaintGroup | null;
+  metallic: boolean | null;
+}
 
 type Entries = ReadonlyMap<string, PaintStatus>;
 
@@ -55,6 +135,8 @@ export interface NeededItem extends ShoppingItem {
 
 export interface UnmatchedItem {
   name: string;
+  /** The role of the scheme entry it first appeared in — the only hint at its kind. */
+  role: SchemeRole;
   brand: string;
   hex: string;
   /** `custom`: a colour entered by hand. `not-found`: named, but not in the catalogue. */
@@ -102,8 +184,15 @@ function ownedPool(entries: Entries, catalogue: readonly BrowsePaint[]): OwnedPo
   return pool;
 }
 
-function closestTo(hex: string, pool: OwnedPool, excludeId?: string): ClosestOwned | null {
-  const key = `${hex.toUpperCase()}|${excludeId ?? ""}`;
+function closestTo(
+  hex: string,
+  want: Want,
+  pool: OwnedPool,
+  excludeId?: string,
+): ClosestOwned | null {
+  // Technical paints have no colour substitute; don't pretend otherwise.
+  if (want.group === "technical") return null;
+  const key = `${hex.toUpperCase()}|${want.group ?? "*"}|${want.metallic ?? "*"}|${excludeId ?? ""}`;
   if (pool.byHex.has(key)) return pool.byHex.get(key) ?? null;
 
   let lab: Lab;
@@ -117,7 +206,12 @@ function closestTo(hex: string, pool: OwnedPool, excludeId?: string): ClosestOwn
   let best: ClosestOwned | null = null;
   for (const p of pool.paints) {
     if (p.id === excludeId) continue;
+    const group = paintGroup(p);
+    if (group === "technical") continue;
+    if (want.group && group !== want.group) continue;
+    if (want.metallic !== null && isMetallic(p) !== want.metallic) continue;
     const distance = ciede2000(lab, p.lab);
+    if (distance >= MAX_SUGGESTION) continue;
     if (!best || distance < best.distance) best = { paint: p, distance };
   }
   pool.byHex.set(key, best);
@@ -156,6 +250,7 @@ export function shoppingList(
         const key = `${custom ? "custom" : c.brand.toLowerCase()}|${c.name.toLowerCase()}|${c.hex.toUpperCase()}`;
         const item = unmatched.get(key) ?? {
           name: c.name || "Custom colour",
+          role: entry.role,
           brand: custom ? "" : c.brand,
           hex: c.hex,
           reason: custom ? ("custom" as const) : ("not-found" as const),
@@ -177,13 +272,20 @@ export function shoppingList(
     }
     const withClosest: NeededItem = {
       ...item,
-      closestOwned: closestTo(item.paint.hex, pool, item.paintId),
+      closestOwned: closestTo(
+        item.paint.hex,
+        { group: paintGroup(item.paint), metallic: isMetallic(item.paint) },
+        pool,
+        item.paintId,
+      ),
     };
     if (status === "wishlist") out.wishlist.push(withClosest);
     else out.needed.push(withClosest);
   }
   for (const item of unmatched.values()) {
-    out.unmatched.push({ ...item, closestOwned: closestTo(item.hex, pool) });
+    // Nothing says whether a hand-entered colour is metallic, so either will do.
+    const want: Want = { group: GROUP_OF_ROLE[item.role] ?? null, metallic: null };
+    out.unmatched.push({ ...item, closestOwned: closestTo(item.hex, want, pool) });
   }
   return out;
 }

@@ -242,16 +242,28 @@ function UnmatchedRow({ item }: { item: UnmatchedItem }) {
 }
 
 /**
- * The closest owned paint, by colour. Said as "closest colour you own" rather
- * than "substitute", because ΔE knows nothing about whether a wash can stand in
- * for a base.
+ * The closest owned paint of the same kind and finish (see `shopping-list.ts`).
+ * Said as "closest colour you own" rather than "substitute": it's the nearest
+ * like-for-like colour, not a promise that it paints the same.
  */
 function Closest({ closest, forId }: { closest: ClosestOwned | null; forId?: string }) {
+  // Ties back to "Your paints" on the paint page: the whole ranked list of what
+  // you own, which is still worth a look when nothing like-for-like is close.
+  const compare = forId ? (
+    <Link
+      href={`/paints/${forId}?mine=owned`}
+      prefetch={false}
+      className="text-primary hover:underline"
+    >
+      Compare with all yours →
+    </Link>
+  ) : null;
   if (!closest) {
     return (
-      <p className="mt-1 pl-8 text-[11.5px] text-muted-foreground">
-        Nothing you own to compare it with yet.
-      </p>
+      <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 pl-8 text-[11.5px] text-muted-foreground">
+        <span>Nothing close of the same kind in your paints.</span>
+        {compare}
+      </div>
     );
   }
   return (
@@ -270,17 +282,7 @@ function Closest({ closest, forId }: { closest: ClosestOwned | null; forId?: str
         {closest.paint.name}
       </Link>
       <MatchBadge distance={closest.distance} />
-      {forId ? (
-        // Ties back to "Your paints" on the paint page: the whole ranked list of
-        // what you own, not just the one nearest.
-        <Link
-          href={`/paints/${forId}?mine=owned`}
-          prefetch={false}
-          className="text-primary hover:underline"
-        >
-          Compare with all yours →
-        </Link>
-      ) : null}
+      {compare}
     </div>
   );
 }

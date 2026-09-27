@@ -1,16 +1,23 @@
 import { describe, it, expect } from "vitest";
-import { shoppingList } from "@/lib/scheme/shopping-list";
+import { MAX_SUGGESTION, paintGroup, shoppingList } from "@/lib/scheme/shopping-list";
 import type { BrowsePaint } from "@/lib/paints/types";
 import type { Scheme, SchemePaint } from "@/lib/scheme/types";
 import type { PaintStatus } from "@/lib/supabase/types";
 
-const bp = (id: string, name: string, brand: string, hex: string, range = "Base"): BrowsePaint =>
-  ({ id, name, brand, range, type: "base", hex, discontinued: false, family: "red", l: 40 }) as BrowsePaint;
+const bp = (
+  id: string,
+  name: string,
+  brand: string,
+  hex: string,
+  range = "Base",
+  extra: Partial<BrowsePaint> = {},
+): BrowsePaint =>
+  ({ id, name, brand, range, type: "base", hex, discontinued: false, family: "red", l: 40, ...extra }) as BrowsePaint;
 
 const CATALOGUE: BrowsePaint[] = [
   bp("citadel-mephiston-red", "Mephiston Red", "Warhammer", "#960C09"),
-  bp("citadel-agrax", "Agrax Earthshade", "Warhammer", "#5A4A2E", "Shade"),
-  bp("citadel-lahmian", "Lahmian Medium", "Warhammer", "#F9F9F9", "Technical"),
+  bp("citadel-agrax", "Agrax Earthshade", "Warhammer", "#5A4A2E", "Shade", { type: "shade" }),
+  bp("citadel-lahmian", "Lahmian Medium", "Warhammer", "#F9F9F9", "Technical", { type: "technical" }),
   bp("vallejo-bloody-red", "Bloody Red", "Vallejo", "#9A0E0E", "Game Color"),
   bp("vallejo-white", "Dead White", "Vallejo", "#FFFFFF", "Game Color"),
 ];
@@ -142,7 +149,8 @@ describe("shoppingList", () => {
       CATALOGUE,
       new Map([["vallejo-white", "owned" as PaintStatus]]),
     );
-    expect(list.needed[0].closestOwned?.paint.id).toBe("vallejo-white");
+    // White is no stand-in for red: past MAX_SUGGESTION there's nothing close.
+    expect(list.needed[0].closestOwned).toBeNull();
     expect(list.unmatched[0].closestOwned).toBeNull();
     expect(shoppingList(scheme(["X", [sp("Mephiston Red", "Warhammer", "Base", "#960C09")]]), CATALOGUE, new Map()).needed[0].closestOwned).toBeNull();
   });
@@ -154,5 +162,73 @@ describe("shoppingList", () => {
       needed: [],
       unmatched: [],
     });
+  });
+});
+
+describe("like-for-like suggestions", () => {
+  // The three bad suggestions from the first preview, in miniature.
+  const LIKE: BrowsePaint[] = [
+    bp("macragge", "Macragge Blue", "Warhammer", "#0D407F"),
+    bp("nuln", "Nuln Oil", "Warhammer", "#14100E", "Shade", { type: "shade" }),
+    bp("kantor", "Kantor Blue", "Warhammer", "#02134E"),
+    bp("fenrisian", "Fenrisian Grey", "Warhammer", "#6D94B3", "Layer", { type: "layer" }),
+    bp("heavy-metal", "Heavy Metal", "Scale 75", "#7090A8", "Metal", { type: "metallic", metallic: true }),
+    bp("stormhost", "Stormhost Silver", "Warhammer", "#BBBBBB", "Layer", { type: "layer", metallic: true }),
+    bp("lahmian", "Lahmian Medium", "Warhammer", "#BDBDBD", "Technical", { type: "technical" }),
+    bp("silver-other", "Silver", "Vallejo", "#B0B0B0", "Model Color", { type: "other", metallic: true }),
+    bp("agrax", "Agrax Earthshade", "Warhammer", "#5A4A2E", "Shade", { type: "shade" }),
+    bp("seraphim", "Seraphim Sepia", "Warhammer", "#6A5530", "Shade", { type: "shade" }),
+  ];
+  const own = (...ids: string[]) => new Map(ids.map((id) => [id, "owned" as PaintStatus]));
+  const needFor = (name: string, owned: Map<string, PaintStatus>) => {
+    const p = LIKE.find((x) => x.name === name)!;
+    return shoppingList(
+      scheme(["X", [sp(p.name, p.brand, p.range, p.hex)]]),
+      LIKE,
+      owned,
+    ).needed[0];
+  };
+
+  it("never offers a wash for an opaque paint", () => {
+    expect(needFor("Macragge Blue", own("nuln", "kantor")).closestOwned?.paint.id).toBe("kantor");
+    expect(needFor("Macragge Blue", own("nuln")).closestOwned).toBeNull();
+  });
+
+  it("offers a wash for a wash", () => {
+    expect(needFor("Agrax Earthshade", own("seraphim", "kantor")).closestOwned?.paint.id).toBe(
+      "seraphim",
+    );
+  });
+
+  it("matches metallic finish both ways", () => {
+    expect(needFor("Fenrisian Grey", own("heavy-metal")).closestOwned).toBeNull();
+    expect(needFor("Stormhost Silver", own("silver-other")).closestOwned?.paint.id).toBe(
+      "silver-other",
+    );
+  });
+
+  it("never suggests a technical paint, nor anything for one", () => {
+    expect(needFor("Stormhost Silver", own("lahmian")).closestOwned).toBeNull();
+    expect(needFor("Lahmian Medium", own("stormhost", "silver-other")).closestOwned).toBeNull();
+  });
+
+  it("uses the scheme role to narrow a hand-entered colour", () => {
+    const list = shoppingList(
+      scheme(["X", [sp("My shade", "custom", "custom", "#5A4A2E", { custom: true, role: "wash" })]]),
+      LIKE,
+      own("seraphim", "kantor"),
+    );
+    expect(list.unmatched[0].closestOwned?.paint.id).toBe("seraphim");
+  });
+
+  it("groups the catalogue's types coarsely", () => {
+    expect(["base", "layer", "dry", "air", "tone", "other"].map((type) => paintGroup({ type }))).toEqual(
+      Array(6).fill("opaque"),
+    );
+    expect(["shade", "wash", "glaze", "ink"].map((type) => paintGroup({ type }))).toEqual(
+      Array(4).fill("wash"),
+    );
+    expect(paintGroup({ type: "contrast" })).toBe("one-coat");
+    expect(MAX_SUGGESTION).toBe(20);
   });
 });

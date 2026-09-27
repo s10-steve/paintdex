@@ -977,7 +977,13 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   confidently, as "not in the catalogue". "Closest colour you own" is ΔE over
   *owned* paints only (a wishlisted pot isn't one you can reach for), memoized
   on the collection map's identity so typing the title doesn't redo it, and
-  worded as a colour match rather than a substitute on purpose.
+  worded as a colour match rather than a substitute on purpose. It is also
+  **like-for-like**: same `paintGroup`, same metallic finish, technical paints
+  never on either side, and nothing past `MAX_SUGGESTION` (ΔE 20) — by colour
+  alone it offered Nuln Oil for Macragge Blue. `paintGroup` is a stopgap over
+  `type`, which mixes product lines with what a paint does (see the README
+  roadmap item on categorising paints); replace it when that's settled rather
+  than growing its table.
 - **`/my-paints` filters in local state, not the URL.** The URL-as-truth rule
   exists for shareability, and this page is `noindex` and per-user — a link to
   it means nothing to anyone else. It also hard-wires `includeDiscontinued: true`
