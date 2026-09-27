@@ -42,7 +42,7 @@ import {
 import { PAINT_TYPES, type BrowsePaint, type PaintType } from "@/lib/paints/types";
 import type { MetallicFilter } from "@/lib/paints/filter-params";
 import type { PaintStatus } from "@/lib/supabase/types";
-import { clearCollection, importCollection } from "@/lib/data/paint-collection";
+import { importCollection, removePaints } from "@/lib/data/paint-collection";
 import {
   COLLECTION_FILENAME,
   exportCollectionJSON,
@@ -119,7 +119,7 @@ const CARD_TEXT = "min-h-10 min-w-0 flex-1";
 
 function CollectionManager() {
   const { user } = useAuth();
-  const { entries, ready, setStatus, remove, reload } = useCollection();
+  const { entries, ready, phase, setStatus, remove, reload } = useCollection();
   const { paints, loading: indexLoading, loadError } = useBrowseIndex();
 
   const [search, setSearch] = useState("");
@@ -206,11 +206,12 @@ function CollectionManager() {
    * set is already small enough to show whole.
    */
   const options = useMemo(() => {
-    const mine = paints
-      ? [...entries.keys()]
-          .map((id) => paints.find((p) => p.id === id))
-          .filter((p): p is BrowsePaint => Boolean(p))
-      : [];
+    // One map rather than a `find` per entry: that was catalogue × collection
+    // work on every facet toggle, and both can run to thousands.
+    const byId = new Map((paints ?? []).map((p) => [p.id, p]));
+    const mine = [...entries.keys()]
+      .map((id) => byId.get(id))
+      .filter((p): p is BrowsePaint => Boolean(p));
     const uniq = (vs: string[]) => [...new Set(vs)].sort((a, b) => a.localeCompare(b));
     const present = new Set(mine.map((p) => p.type));
     return {
@@ -265,6 +266,7 @@ function CollectionManager() {
       if (!user) return;
       setBusy(true);
       setError(null);
+      let wrote = false;
       try {
         const parsed = parseCollectionJSON(await file.text());
         if (parsed.length === 0) {
@@ -281,22 +283,56 @@ function CollectionManager() {
               "OK: replace your collection with this file.\n" +
               "Cancel: merge it into what you already have.",
           );
-        if (replace) await clearCollection(user.id);
+        // Write first, then remove what the file doesn't mention. The other
+        // order — empty the collection, then import — lost everything on a
+        // dropped connection between the two; this way round a failure leaves
+        // extra paints, never missing ones.
+        wrote = true;
         await importCollection(user.id, parsed);
-        await reload();
+        if (replace) {
+          const keep = new Set(parsed.map((e) => e.paintId));
+          await removePaints(
+            user.id,
+            [...entries.keys()].filter((id) => !keep.has(id)),
+          );
+        }
       } catch (e) {
         // `parseCollectionJSON` throws messages written for the user ("That
         // file isn't valid JSON"), so they're shown as-is; anything else is a
         // network or database failure and gets the generic line.
         setError(e instanceof Error ? e.message : "Couldn't import that file.");
       } finally {
+        // In `finally`, not after the writes: a failure part way through has
+        // still changed the server, and the page must show what's really
+        // there rather than the collection from before the import.
+        if (wrote) await reload();
         setBusy(false);
       }
     },
-    [entries.size, reload, user],
+    [entries, reload, user],
   );
 
   if (!user) return null; // Guard keeps TypeScript happy; the gate handles it.
+
+  // Before the `!ready` branch, which a failed load would otherwise sit in for
+  // good: `ready` never turns true after a failure, so this page used to say
+  // "Loading your paints…" indefinitely with nothing to retry.
+  if (phase === "failed") {
+    return (
+      <Panel>
+        <p className="text-sm text-muted-foreground">
+          Couldn&apos;t load your paints. Check your connection and try again.
+        </p>
+        <button
+          type="button"
+          onClick={() => void reload()}
+          className="mt-3 rounded-md border border-border px-3 py-1.5 text-sm font-medium hover:bg-muted"
+        >
+          Try again
+        </button>
+      </Panel>
+    );
+  }
 
   if (!ready || indexLoading) {
     return (

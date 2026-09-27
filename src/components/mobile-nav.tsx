@@ -3,14 +3,16 @@
 /**
  * Mobile-only nav: a hamburger button that opens the site links in a dropdown,
  * so the header fits a phone width. Hidden at `sm` and up, where the links sit
- * inline in the header instead. Mirrors the account menu's open/outside-click
- * behaviour in `auth/sign-in-button`.
+ * inline in the header instead. A disclosure rather than an ARIA menu — see
+ * `use-disclosure` — sharing its open/close behaviour with the account menu in
+ * `auth/sign-in-button`.
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "./auth/auth-provider";
 import { PROFILE_LINKS } from "./profile-nav";
+import { useDisclosure } from "@/hooks/use-disclosure";
 
 const LINKS = [
   { href: "/paints", label: "Paints" },
@@ -18,33 +20,18 @@ const LINKS = [
 ];
 
 export function MobileNav({ className }: { className?: string }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const { open, close, rootRef, buttonProps, panelProps } = useDisclosure();
   const pathname = usePathname();
   const { user } = useAuth();
 
   // Close when the route changes (a link was followed).
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setOpen(false), [pathname]);
-
-  // Close on an outside click.
-  useEffect(() => {
-    if (!open) return;
-    const onClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
-  }, [open]);
+  useEffect(() => close(), [pathname, close]);
 
   return (
-    <div className={`relative ${className ?? ""}`} ref={ref}>
+    <div className={`relative ${className ?? ""}`} ref={rootRef}>
       <button
-        type="button"
+        {...buttonProps}
         aria-label="Menu"
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
         className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <svg
@@ -61,15 +48,15 @@ export function MobileNav({ className }: { className?: string }) {
         </svg>
       </button>
       {open && (
-        <div
-          role="menu"
+        <nav
+          {...panelProps}
+          aria-label="Site"
           className="absolute right-0 z-40 mt-2 w-44 rounded-md border border-border bg-card p-1 shadow-lg"
         >
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              role="menuitem"
               className="block rounded-sm px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted"
             >
               {l.label}
@@ -86,7 +73,6 @@ export function MobileNav({ className }: { className?: string }) {
                 <Link
                   key={l.href}
                   href={l.href}
-                  role="menuitem"
                   className="block rounded-sm px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted"
                 >
                   {l.label}
@@ -94,7 +80,7 @@ export function MobileNav({ className }: { className?: string }) {
               ))}
             </>
           )}
-        </div>
+        </nav>
       )}
     </div>
   );

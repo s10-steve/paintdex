@@ -14,8 +14,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getPublicSchemeBySlug, getServerSupabase } from "@/lib/supabase/server";
 import { signSchemePhoto } from "@/lib/data/scheme-photos";
-import { importSchemeObject } from "@/lib/scheme/io";
-import type { Scheme } from "@/lib/scheme/types";
+import { schemeFromPublicRow } from "@/lib/scheme/share";
 import { SchemeView } from "@/components/scheme-view";
 
 // Re-render at most once a minute per slug: cheap caching of previews without
@@ -24,23 +23,6 @@ export const revalidate = 60;
 
 /** Deduped fetch shared by generateMetadata and the page within one render. */
 const loadScheme = cache(getPublicSchemeBySlug);
-
-/**
- * Parse a stored scheme into the runtime shape, assigning throwaway ids.
- * Returns null on a malformed `data` shape (importSchemeObject throws when
- * `elements` isn't an array). Nothing validates that shape on the way in — the
- * column is `jsonb` and the only constraint on it is a size cap — so a
- * published row can carry junk; we degrade to the not-available fallback
- * rather than throwing into the error boundary.
- */
-function parse(data: unknown): Scheme | null {
-  try {
-    let n = 0;
-    return importSchemeObject(data, () => `s${n++}`);
-  } catch {
-    return null;
-  }
-}
 
 export async function generateMetadata({
   params,
@@ -83,7 +65,7 @@ export default async function SharedSchemePage({
 }) {
   const { slug } = await params;
   const row = await loadScheme(slug);
-  const scheme = row ? parse(row.data) : null;
+  const scheme = row ? schemeFromPublicRow(row) : null;
 
   // Missing/unpublished row, or a public row whose stored data is malformed.
   if (!scheme) {

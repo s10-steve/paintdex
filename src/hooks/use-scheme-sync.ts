@@ -157,6 +157,12 @@ export function useSchemeSync({
   const [ready, setReady] = useState(false);
 
   const deepLinkedRef = useRef(false);
+  // The picker's rows as of the last render, for the autosave's deletion
+  // branch: it runs in a timer, long after the effect captured its closure.
+  const savedSchemesRef = useRef(savedSchemes);
+  useEffect(() => {
+    savedSchemesRef.current = savedSchemes;
+  }, [savedSchemes]);
   const schemeRef = useRef(scheme);
   useEffect(() => {
     schemeRef.current = scheme;
@@ -428,7 +434,13 @@ export function useSchemeSync({
           // at on the strength of a stale in-flight write is its own bug.
           if (gone) {
             if (!cancelled && activeIdRef.current === id) {
-              const rows = await listSchemes(userId).catch(() => [] as SchemeRow[]);
+              // If the re-list fails too, fall back to what the picker already
+              // holds minus the deleted row. Falling back to `[]` opened a
+              // blank scheme and emptied the picker, as if every other saved
+              // scheme had gone with it.
+              const rows = await listSchemes(userId).catch(() =>
+                savedSchemesRef.current.filter((r) => r.id !== id),
+              );
               openAfterDeletion(id, rows, userId);
               setSavedSchemes(rows);
             } else {

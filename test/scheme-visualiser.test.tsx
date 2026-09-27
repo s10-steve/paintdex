@@ -442,6 +442,34 @@ describe("SchemeVisualiser multi-device reconciliation", () => {
     expect(storedBinding()).toBeNull();
   });
 
+  it("opens a surviving scheme when the re-list after a deletion also fails", async () => {
+    // The re-list used to fall back to `[]`, which opened a blank scheme and
+    // emptied the picker as if every other saved scheme had gone too.
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const doc = scheme("Being edited");
+    seedBound(doc, "row-1");
+    await renderSignedIn([
+      row("row-1", "Being edited", doc, "2026-01-04T00:00:00.000Z"),
+      row("row-2", "Survivor", scheme("Survivor"), "2026-01-03T00:00:00.000Z"),
+    ]);
+    await waitFor(() => expect(editorTitle()).toBe("Being edited"));
+
+    updateScheme.mockResolvedValue({ matched: false });
+    schemeExists.mockResolvedValue(false);
+    listSchemes.mockRejectedValue(new Error("network"));
+
+    const input = screen.getByLabelText("Scheme name") as HTMLInputElement;
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "Being edited!" } });
+    });
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+
+    await waitFor(() => expect(editorTitle()).toBe("Survivor"));
+    expect(createScheme).not.toHaveBeenCalled();
+  });
+
   it("does not claim a deletion when the session has lapsed", async () => {
     // The ambiguity that makes `schemeExists` alone insufficient: an anon-key
     // request has `auth.uid() = null`, so RLS matches none of our rows and a

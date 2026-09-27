@@ -25,7 +25,7 @@ import { uid } from "@/lib/scheme/uid";
 /**
  * The scheme visualiser (`/visualiser`) — the editor for a paint scheme.
  *
- * This file is now the wiring: it composes four hooks, turns their state into
+ * This file is now the wiring: it composes the hooks below, turns their state into
  * the editor's mutations, and renders. Here's where everything lives.
  *
  * **State, by concern — each its own hook**
@@ -121,7 +121,7 @@ export function SchemeVisualiser() {
     adoptScheme,
   });
 
-  // The twelve immutable updates to the document, lifted into their own hook —
+  // The immutable updates to the document, lifted into their own hook —
   // they touch nothing but the scheme.
   const { setTitle, addElement, elementHandlers } = useSchemeEditor(setScheme);
 
@@ -185,14 +185,23 @@ export function SchemeVisualiser() {
             photoPath: activeRow.photo_path,
             onPhotoPath: (path: string | null) => {
               patchRow(activeRow.id, { photo_path: path });
-              // The write can miss — the row may have been deleted on another
-              // device — but that is not worth a message here: the sync layer
-              // already owns that conversation, and the photo itself is fine.
-              void setSchemePhotoPath(activeRow.id, path).catch(() => {});
+              // A miss (`matched: false`) needs no message — the row was deleted
+              // on another device, and the sync layer already owns that
+              // conversation. A *throw* does: the photo is in the bucket but the
+              // row doesn't point at it, so it won't be on the share page or
+              // another device, and nothing else would say so. It surfaces when
+              // the studio closes, since banners are suppressed over the modal.
+              void setSchemePhotoPath(activeRow.id, path).catch(() => {
+                showNotice(
+                  path
+                    ? "Couldn't link that photo to your saved scheme. It won't show on other devices or the share page until you add it again."
+                    : "Couldn't finish removing that photo from your saved scheme. Try removing it again.",
+                );
+              });
             },
           }
         : null,
-    [user, activeRow, patchRow],
+    [user, activeRow, patchRow, showNotice],
   );
 
   /**
@@ -415,7 +424,11 @@ export function SchemeVisualiser() {
                   className="peer sr-only"
                 />
                 <span className="relative h-[22px] w-[38px] flex-none rounded-full border border-input bg-muted transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:border-primary peer-checked:bg-primary peer-checked:after:translate-x-4 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring" />
-                <span className="font-medium text-foreground">{blend ? "Blended" : "Banded"}</span>
+                {/* A fixed label: the checkbox's name used to flip between
+                    "Blended" and "Banded" with its own state, so a screen reader
+                    announced "Banded, not checked" — a name that described the
+                    other state from the one it was asking about. */}
+                <span className="font-medium text-foreground">Blend colours</span>
               </label>
             </div>
 

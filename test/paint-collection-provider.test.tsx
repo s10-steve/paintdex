@@ -44,7 +44,7 @@ vi.mock("@/lib/data/paint-collection", () => ({
   setPaintStatus: (...a: unknown[]) => setPaintStatus(...a),
   removePaint: (...a: unknown[]) => removePaint(...a),
   importCollection: vi.fn(),
-  clearCollection: vi.fn(),
+  removePaints: vi.fn(),
 }));
 
 const { CollectionProvider, useCollection } = await import(
@@ -62,11 +62,13 @@ const row = (paintId: string, status: PaintStatus): PaintCollectionRow => ({
 
 /** Surfaces the parts of the context the assertions need, plus two buttons. */
 function Probe({ paintId = "p1" }: { paintId?: string }) {
-  const { enabled, ready, statusOf, setStatus, remove } = useCollection();
+  const { enabled, ready, phase, statusOf, setStatus, remove, reload } = useCollection();
   return (
     <div>
       <span data-testid="enabled">{String(enabled)}</span>
       <span data-testid="ready">{String(ready)}</span>
+      <span data-testid="phase">{phase}</span>
+      <button onClick={() => void reload()}>reload</button>
       <span data-testid="status">{statusOf(paintId) ?? "none"}</span>
       <button onClick={() => void setStatus(paintId, "owned")}>own</button>
       <button onClick={() => void remove(paintId)}>forget</button>
@@ -181,6 +183,38 @@ describe("loading", () => {
     await flush();
 
     expect(screen.getByRole("alert").textContent).toMatch(/Couldn't load your paints/);
+  });
+
+  it("says the load failed, distinctly from still loading, until a retry succeeds", async () => {
+    // `ready` stays false after a failure, so without `phase` a consumer can't
+    // tell "wait" from "retry" — /my-paints showed "Loading…" for good.
+    listCollection.mockRejectedValueOnce(new Error("network"));
+    renderProvider();
+    await flush();
+    expect(screen.getByTestId("phase").textContent).toBe("failed");
+
+    listCollection.mockResolvedValue([row("p1", "owned")]);
+    await act(async () => screen.getByText("reload").click());
+    expect(screen.getByTestId("phase").textContent).toBe("ready");
+    expect(statusText()).toBe("owned");
+  });
+
+  it("reports each phase: loading while auth resolves, off when signed out", async () => {
+    authLoading = true;
+    currentUser = null;
+    const { rerender } = renderProvider();
+    await flush();
+    // Loading, not off: a signed-in visitor must never see an "off" frame first.
+    expect(screen.getByTestId("phase").textContent).toBe("loading");
+
+    authLoading = false;
+    rerender(
+      <CollectionProvider>
+        <Probe />
+      </CollectionProvider>,
+    );
+    await flush();
+    expect(screen.getByTestId("phase").textContent).toBe("off");
   });
 });
 

@@ -21,19 +21,20 @@ import { AuthRetryableFetchError } from "@supabase/supabase-js";
 vi.stubEnv("NEXT_PUBLIC_GOOGLE_CLIENT_ID", "test-client-id");
 
 const signInWithIdToken = vi.fn();
+let getSession: () => Promise<unknown> = async () => ({ data: { session: null } });
 
 vi.mock("@/lib/supabase/client", () => ({
   isSupabaseConfigured: true,
   getSupabase: () => ({
     auth: {
-      getSession: async () => ({ data: { session: null } }),
+      getSession: () => getSession(),
       onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
       signInWithIdToken: (...a: unknown[]) => signInWithIdToken(...a),
     },
   }),
 }));
 
-const { AuthProvider } = await import("@/components/auth/auth-provider");
+const { AuthProvider, useAuth } = await import("@/components/auth/auth-provider");
 
 let gisCallback: ((r: { credential: string }) => Promise<void>) | null = null;
 
@@ -56,6 +57,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   signInWithIdToken.mockReset();
+  getSession = async () => ({ data: { session: null } });
   vi.restoreAllMocks();
 });
 
@@ -107,5 +109,25 @@ describe("AuthProvider sign-in errors", () => {
     signInWithIdToken.mockResolvedValueOnce({ data: {}, error: null });
     await act(() => gisCallback!({ credential: "id-token" }));
     expect(screen.queryByRole("alert")).toBeNull();
+  });
+});
+
+describe("AuthProvider session restore", () => {
+  it("settles signed-out when restoring the session fails", async () => {
+    // Every `ready` gate downstream waits on `loading`; a rejection that left
+    // it true froze scheme sync, the collection and `?preset=` together.
+    getSession = async () => {
+      throw new Error("storage unavailable");
+    };
+    function Probe() {
+      const { loading, user } = useAuth();
+      return <p>{loading ? "loading" : user ? "signed in" : "signed out"}</p>;
+    }
+    render(
+      <AuthProvider>
+        <Probe />
+      </AuthProvider>,
+    );
+    await vi.waitFor(() => expect(screen.getByText("signed out")).toBeTruthy());
   });
 });

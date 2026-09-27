@@ -159,6 +159,36 @@ describe("deleting a scheme", () => {
 });
 
 describe("renaming a scheme", () => {
+  it("discards the draft on Escape, even when the input's blur fires after", async () => {
+    // Unmounting a focused input can fire its blur, and blur commits — so
+    // Escape used to save the draft it was meant to throw away.
+    await renderManager([row("row-1", "Kept")]);
+    await act(async () => {
+      fireEvent.click(screen.getAllByRole("button", { name: "Rename" })[0]);
+    });
+    const input = screen.getByLabelText("Scheme name") as HTMLInputElement;
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "Discarded" } });
+      fireEvent.keyDown(input, { key: "Escape" });
+      fireEvent.blur(input);
+    });
+    expect(renameScheme).not.toHaveBeenCalled();
+  });
+
+  it("saves once on Enter, not again on the blur that follows", async () => {
+    await renderManager([row("row-1", "Old")]);
+    await act(async () => {
+      fireEvent.click(screen.getAllByRole("button", { name: "Rename" })[0]);
+    });
+    const input = screen.getByLabelText("Scheme name") as HTMLInputElement;
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "New" } });
+      fireEvent.keyDown(input, { key: "Enter" });
+      fireEvent.blur(input);
+    });
+    expect(renameScheme).toHaveBeenCalledTimes(1);
+  });
+
   it("leaves the local document alone when the rename matched no row", async () => {
     // Deliberately unlike delete: "no rows matched" is also what a lapsed
     // session looks like, and blanking a live document on a maybe is the

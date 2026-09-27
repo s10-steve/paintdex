@@ -38,6 +38,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   say Citadel beside those paints — we left them as you made them rather than
   rewriting every saved scheme — but the ✓ and ☆ buttons on them still work.
 
+### Fixed
+
+- **My paints no longer sits on "Loading your paints…" forever when your
+  collection can't be fetched.** A dropped connection at the wrong moment left
+  the page waiting on a load that had already failed, with nothing to press.
+  It now says it couldn't load your paints and offers **Try again**.
+- **Importing a file with "replace" can no longer empty your collection.** It
+  used to clear everything first and then write the file, so a connection that
+  dropped in between left you with nothing — or with half the file. Now it
+  writes the file first and only then removes the paints the file doesn't
+  list, so the worst a failure can do is leave a few extra paints behind. The
+  page also re-reads your collection after any import, so what you see is what
+  was actually saved even if something went wrong part way.
+- **A shared scheme's page and link preview show its current name.** Renaming
+  a scheme on My schemes updated the browser tab's title but left the old name
+  on the page itself and in the preview image, until the next edit in the
+  designer caught it up.
+- **A scheme deleted on another device no longer blanks the designer** when
+  the connection also drops. The designer notices, tells you, and opens your
+  most recent other scheme — but if it couldn't re-fetch the list at that
+  moment it used to open an empty scheme and hide all your others from the
+  picker until a reload.
+- **The share-image studio can't get stuck showing its photo as "busy"** after
+  you switch schemes or sign out while a photo is still loading or uploading.
+- **Sign-in no longer hangs on a blank header** if your browser can't restore
+  your previous session (blocked storage, for instance). It settles as signed
+  out, and signing in works as normal.
+- **A photo that uploads but can't be linked to your saved scheme now says
+  so.** It stayed in the studio, so nothing looked wrong, but it wouldn't show
+  on the share page or your other devices. You'll see a notice when you close
+  the studio.
+- **Pressing Escape while renaming a scheme cancels the rename.** It used to
+  save the half-typed name anyway, and Enter could save it twice.
+- **Keyboard and screen-reader fixes:**
+  - The header's menu and account buttons now close with Escape and return you
+    to the button, and they're announced as the lists of links they are — they
+    used to call themselves menus without behaving like one. The account
+    button is now named after your account rather than read out as a single
+    letter.
+  - The designer's paint search now works as a proper search-with-suggestions:
+    a screen reader announces each paint as you arrow through, and Tab no
+    longer lands on results that vanish before you can press them.
+  - In the share-image studio, the three image shapes are one stop in the Tab
+    order, with the arrow keys moving between them.
+  - The designer's blend switch is labelled **Blend colours**. It used to read
+    "Banded" or "Blended" depending on its own state, so it announced itself
+    by the opposite of what ticking it would do.
+
 ## [0.15.0] - 2026-09-19
 
 ### Added

@@ -20,14 +20,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { useAuth } from "./auth-provider";
+import { useDisclosure } from "@/hooks/use-disclosure";
 
 export function SignInButton() {
   const { configured, googleEnabled, gisReady, user, loading, signOut } = useAuth();
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [compact, setCompact] = useState(false);
-  const [open, setOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const { open, close, rootRef, buttonProps, panelProps } = useDisclosure();
   const gsiRef = useRef<HTMLDivElement>(null);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -43,18 +43,6 @@ export function SignInButton() {
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
   }, []);
-
-  // Close the account menu on an outside click.
-  useEffect(() => {
-    if (!open) return;
-    const onClick = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
-  }, [open]);
 
   // (Re-)render the Google button whenever it, its container, or the resolved
   // theme changes. Google's button is an iframe we can't style with CSS, so the
@@ -96,12 +84,11 @@ export function SignInButton() {
 
       {/* Account menu, shown when signed in. */}
       {user && (
-        <div className="relative" ref={menuRef}>
+        <div className="relative" ref={rootRef}>
           <button
-            type="button"
-            aria-haspopup="menu"
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
+            {...buttonProps}
+            // The visible text is just an initial, which is no name at all.
+            aria-label={`Account: ${label}`}
             className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             title={label}
           >
@@ -109,7 +96,7 @@ export function SignInButton() {
           </button>
           {open && (
             <div
-              role="menu"
+              {...panelProps}
               className="absolute right-0 z-40 mt-2 w-56 rounded-md border border-border bg-card p-1 shadow-lg"
             >
               <p className="truncate px-3 py-2 text-xs text-muted-foreground" title={label}>
@@ -117,9 +104,8 @@ export function SignInButton() {
               </p>
               <button
                 type="button"
-                role="menuitem"
                 onClick={() => {
-                  setOpen(false);
+                  close();
                   void signOut();
                 }}
                 className="block w-full rounded-sm px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"

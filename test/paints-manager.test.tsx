@@ -78,6 +78,7 @@ vi.mock("@/hooks/use-browse-index", () => ({
 }));
 
 let entries = new Map<string, PaintStatus>();
+let phase: "off" | "loading" | "ready" | "failed" = "ready";
 const setStatus = vi.fn();
 const remove = vi.fn();
 const reload = vi.fn();
@@ -85,7 +86,8 @@ const reload = vi.fn();
 vi.mock("@/components/collection/collection-provider", () => ({
   useCollection: () => ({
     enabled: true,
-    ready: true,
+    ready: phase === "ready",
+    phase,
     statusOf: (id: string) => entries.get(id) ?? null,
     entries,
     setStatus: (...a: unknown[]) => setStatus(...a),
@@ -96,12 +98,14 @@ vi.mock("@/components/collection/collection-provider", () => ({
   }),
 }));
 
+const importCollection = vi.fn();
+const removePaints = vi.fn();
 vi.mock("@/lib/data/paint-collection", () => ({
   listCollection: vi.fn(),
   setPaintStatus: vi.fn(),
   removePaint: vi.fn(),
-  importCollection: vi.fn(),
-  clearCollection: vi.fn(),
+  importCollection: (...a: unknown[]) => importCollection(...a),
+  removePaints: (...a: unknown[]) => removePaints(...a),
 }));
 
 const { PaintsManager } = await import("@/components/profile/paints-manager");
@@ -112,12 +116,18 @@ const wishlistSection = () => screen.getByRole("region", { name: "Wishlist" });
 beforeEach(() => {
   currentUser = { id: "user-1" };
   entries = new Map();
+  phase = "ready";
+  importCollection.mockReset().mockResolvedValue(0);
+  removePaints.mockReset().mockResolvedValue(undefined);
   setStatus.mockReset();
   remove.mockReset();
   reload.mockReset();
 });
 
-afterEach(() => cleanup());
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
 
 describe("empty state", () => {
   it("points at the browse grid when nothing is saved", () => {
@@ -346,5 +356,80 @@ describe("export", () => {
     entries = new Map([["citadel-abaddon-black", "owned"]]);
     render(<PaintsManager />);
     expect(screen.getByRole("button", { name: "Export" })).toBeTruthy();
+  });
+});
+
+describe("a failed load", () => {
+  it("says so and offers a retry, rather than 'Loading…' for good", () => {
+    // `ready` never turns true after a failure, so gating on it alone left the
+    // page on its loading line indefinitely with nothing to press.
+    phase = "failed";
+    render(<PaintsManager />);
+    expect(screen.queryByText("Loading your paints…")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Try again" }));
+    expect(reload).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("import", () => {
+  const file = (paints: { id: string; status: PaintStatus }[]) => {
+    const f = new File([JSON.stringify({ paints })], "my-paints.paintdex.json", {
+      type: "application/json",
+    });
+    // jsdom's File has no `text()` in every version this suite runs on.
+    Object.defineProperty(f, "text", { value: async () => JSON.stringify({ paints }) });
+    return f;
+  };
+
+  const pick = async (f: File) => {
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [f] } });
+    });
+  };
+
+  beforeEach(() => {
+    entries = new Map([
+      ["citadel-abaddon-black", "owned"],
+      ["vallejo-white", "wishlist"],
+    ]);
+  });
+
+  it("replaces by writing the file first, then removing only what it doesn't list", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    render(<PaintsManager />);
+    await pick(file([{ id: "citadel-abaddon-black", status: "wishlist" }]));
+
+    expect(importCollection).toHaveBeenCalledWith("user-1", [
+      { paintId: "citadel-abaddon-black", status: "wishlist" },
+    ]);
+    expect(removePaints).toHaveBeenCalledWith("user-1", ["vallejo-white"]);
+    expect(importCollection.mock.invocationCallOrder[0]).toBeLessThan(
+      removePaints.mock.invocationCallOrder[0],
+    );
+    expect(reload).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps the existing collection when the write fails, and still re-reads it", async () => {
+    // The old order emptied the collection first, so a dropped connection
+    // between the two steps left the user with nothing.
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    importCollection.mockRejectedValue(new Error("network"));
+    render(<PaintsManager />);
+    await pick(file([{ id: "citadel-mephiston", status: "owned" }]));
+
+    expect(removePaints).not.toHaveBeenCalled();
+    // A partial write may still have landed, so the page shows the server's
+    // copy rather than the one from before the import.
+    expect(reload).toHaveBeenCalledTimes(1);
+  });
+
+  it("merges without removing anything when the prompt is cancelled", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(false);
+    render(<PaintsManager />);
+    await pick(file([{ id: "citadel-mephiston", status: "owned" }]));
+
+    expect(importCollection).toHaveBeenCalledTimes(1);
+    expect(removePaints).not.toHaveBeenCalled();
   });
 });

@@ -1,7 +1,8 @@
 /**
- * Import / export a scheme as JSON — the MVP's "save your work" mechanism
- * (there are no accounts, so a downloadable file doubles as backup and a way
- * to share a scheme with someone else).
+ * Import / export a scheme as JSON. It was the MVP's only "save your work"
+ * mechanism; with accounts it remains the backup, the way to move a scheme
+ * between browsers signed out, and the canonical form (`toExportShape`) that
+ * saved rows and `syncedCanon` are compared in.
  *
  * Export strips runtime ids and undefined fields for a clean, human-readable
  * file. Import is deliberately lenient: it sanitises each field with a sensible

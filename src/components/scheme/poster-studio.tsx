@@ -342,6 +342,33 @@ export function PosterStudio({
                     // The visible text is two short lines, and a screen reader
                     // would run them together as "4:5 Feed". Say what it's for.
                     aria-label={`${name} — ${format.label.toLowerCase()} post`}
+                    // Roving tab stop: only the selected shape is in the Tab
+                    // order, and the arrows move the selection (and focus) along
+                    // the group, which is the radio pattern the roles promise.
+                    tabIndex={selected ? 0 : -1}
+                    onKeyDown={(e) => {
+                      const step =
+                        e.key === "ArrowRight" || e.key === "ArrowDown"
+                          ? 1
+                          : e.key === "ArrowLeft" || e.key === "ArrowUp"
+                            ? -1
+                            : 0;
+                      const i = FORMAT_ORDER.indexOf(name);
+                      const target =
+                        e.key === "Home"
+                          ? 0
+                          : e.key === "End"
+                            ? FORMAT_ORDER.length - 1
+                            : step
+                              ? (i + step + FORMAT_ORDER.length) % FORMAT_ORDER.length
+                              : null;
+                      if (target === null) return;
+                      e.preventDefault();
+                      setOptions((o) => ({ ...o, format: FORMAT_ORDER[target] }));
+                      const radios =
+                        e.currentTarget.parentElement?.querySelectorAll<HTMLElement>('[role="radio"]');
+                      radios?.[target]?.focus();
+                    }}
                     onClick={() => setOptions((o) => ({ ...o, format: name }))}
                     className={`flex-1 px-2 py-1.5 text-center text-[11px] leading-tight transition-colors ${
                       selected

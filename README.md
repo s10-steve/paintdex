@@ -9,10 +9,11 @@ schemes, sync them across devices, and share them by link.
 
 ## Features
 
-- **Searchable, filterable database** of 4,900+ paints across 11 brands —
-  **Warhammer** (formerly Citadel, now including Tone Pro), **Vallejo**, **AK Interactive**, **The Army Painter**, **Duncan
-  Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**, **P3**, **Scale 75**
-  and **Tamiya**. Filter by brand, product range, finish type, colour family and
+- **Searchable, filterable database** of 5,200+ paints across 11 brands —
+  **Warhammer** (formerly Citadel, now including Tone Pro), **Vallejo**, **AK
+  Interactive**, **The Army Painter** (including the John Blanche Masterclass
+  range), **Duncan Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**,
+  **P3**, **Scale 75** and **Tamiya**. Filter by brand, product range, finish type, colour family and
   metallic finish.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
@@ -38,9 +39,11 @@ schemes, sync them across devices, and share them by link.
   `/visualiser`: Group your paints by element (armour, robes, lenses, etc) and
   preview every element's colours as aligned, optionally-blended vertical bars.
   Paints carry a role (base, layer, highlight, drybrush, wash, glaze,
-  weathering) and a weight; each element's bar is sized by its order —
-  largest-area element first. Search the database to add a paint or enter a
-  custom name + hex. Schemes autosave in your browser and export/import as JSON
+  weathering), and the role sizes its band; each element's bar is sized by its
+  order — largest-area element first. A layer can be a **mix** ("1:1 Agrax
+  Earthshade + Lahmian Medium"), previewed as the blended colour, and can carry
+  a short **note** ("airbrush over the upper 75%"). Search the database to add a
+  paint or enter a custom name + hex. Schemes autosave in your browser and export/import as JSON
   — or sync to your account when signed in.
 - **Example schemes.** The homepage carousels through a few real, recognisable
   schemes — rendered by the same component the visualiser uses, not a mock-up —
@@ -56,7 +59,9 @@ schemes, sync them across devices, and share them by link.
 - **My paints.** Keep track of the paints you own and the ones you still want to
   buy. Add either from the browse grid, a paint's own page, or the alternatives
   on any paint page; the **My paints** page (`/my-paints`) shows both lists, lets
-  you move paints between them, and can export the whole collection as JSON.
+  you move paints between them, groups them by brand, range, type or colour
+  family and sorts them round the colour wheel, and can export and re-import
+  the whole collection as JSON.
   Needs an account — a collection is worth too much to leave in one browser.
 - **Shareable scheme links.** Publish any saved scheme to an unguessable
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
@@ -177,7 +182,21 @@ Still open:
 
 ### Paint database and UI features
 
-- [ ] Add more paint brands and ranges
+- [ ] Add more paint brands and ranges. The biggest gaps: **Monument Pro
+      Acryl**, **Reaper** (Master Series), **Kimera**, **Turbo Dork**, **AMMO
+      ATOM**, and Liquitex's Acrylic Ink / Soft Body (only Heavy Body is in).
+      Worth checking whether Warhammer's Contrast and Layer ranges are complete.
+- [ ] Fill the data gaps in what's already here: 60% of paints are typed
+      `other`, so the Type filter says little about most brands; `discontinued`
+      is only ever set on Warhammer paints; product codes are missing for all of
+      Warhammer, Scale 75, Green Stuff World, P3 and Duncan Rhodes; and metallic
+      flags are sparse (Tamiya and P3 have none).
+- [ ] **Match any colour.** Type a hex (or pick one) and see the closest paints
+      from every brand — the visualiser's custom colours would get the same
+      suggestions.
+- [ ] Brand and range pages (e.g. `/brands/vallejo/model-color`) — a static
+      page per range, which is also what people search for ("Vallejo Model
+      Color chart").
 - [ ] **If the catalogue grows a lot, revisit how the browse index is delivered.**
       `public/browse-index.json` is a single file covering the whole catalogue
       (~1MB uncompressed at 4,961 paints, well compressed on the wire) and it's
@@ -206,13 +225,21 @@ Still open:
       **alternatives plot** on each paint page (see Features above). Still open:
       the same treatment for the whole catalogue on `/paints`, which needs a
       different axis model (absolute rather than relative to one paint) and has to
-      cope with ~4,900 points instead of ~120.
+      cope with ~5,200 points instead of ~120.
 
 ### My paints feature
 
 - [x] Save the paints you own
 - [x] Wishlist for paints you don't own yet but want to buy
 - [ ] Paint schemes can suggest only paints from your collection
+- [ ] Import a collection from a pasted list or a CSV (name + brand), rather
+      than only from Paintdex's own JSON export — typing in a few hundred pots
+      one at a time is the barrier to starting.
+- [ ] Remember My paints' grouping and sort between visits.
+- [ ] Raise the 5,000-paint collection cap: the catalogue is now bigger than
+      that, so "I own everything" doesn't fit. *Needs a database migration.*
+- [ ] Quantity, "running low" and notes per paint. *Needs a database
+      migration.*
 
 ## License
 

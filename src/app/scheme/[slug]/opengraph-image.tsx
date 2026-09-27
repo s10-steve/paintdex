@@ -8,7 +8,7 @@
  */
 import { ImageResponse } from "next/og";
 import { getPublicSchemeBySlug } from "@/lib/supabase/server";
-import { importSchemeObject } from "@/lib/scheme/io";
+import { schemeFromPublicRow } from "@/lib/scheme/share";
 import { barModel } from "@/lib/scheme/bars";
 import { displayHex } from "@/lib/scheme/mix";
 
@@ -33,17 +33,9 @@ export default async function OgImage({
   const { slug } = await params;
   const row = await getPublicSchemeBySlug(slug);
 
-  // Tolerate a malformed stored `data` shape (importSchemeObject throws when
-  // `elements` isn't an array): fall back to the generic card rather than 500.
-  let scheme = null;
-  if (row) {
-    try {
-      let n = 0;
-      scheme = importSchemeObject(row.data, () => `o${n++}`);
-    } catch {
-      scheme = null;
-    }
-  }
+  // A malformed stored `data` shape comes back null: fall back to the generic
+  // card rather than 500.
+  const scheme = row ? schemeFromPublicRow(row, "o") : null;
   const title = scheme?.title || "A Paintdex colour scheme";
   // Cap the number of bars so a huge scheme still fits the frame.
   const elements = (scheme?.elements ?? []).filter((e) => e.paints.length > 0).slice(0, 8);

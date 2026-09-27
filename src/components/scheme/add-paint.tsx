@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { filterPaints } from "@/lib/paints/filter";
 import type { BrowsePaint } from "@/lib/paints/types";
 import type { SchemePaint, SchemeRole } from "@/lib/scheme/types";
@@ -13,6 +13,15 @@ import type { SchemePaint, SchemeRole } from "@/lib/scheme/types";
  * `LayerRow` reuses this nested inside a paint row to add a mix component, via
  * `compact`; that caller keeps the four colour fields and discards the `role`,
  * which a mix component has no use for.
+ *
+ * The search is an ARIA combobox with the same invariants as the browse and
+ * homepage searches (see `paint-suggestions.tsx`): `id` and `role="option"` on
+ * the same element, no focusable descendants in the list, and the input's
+ * arrows and Enter as the keyboard path. It was a list of plain buttons with no
+ * roles, so a screen reader heard nothing while arrowing, and Tab walked onto
+ * results that the input's blur then closed out from under the keypress. It
+ * doesn't reuse `PaintSuggestions` itself: that carries a collection toggle
+ * per row and the page-width positioning, neither of which fits a card.
  */
 export function AddPaint({
   dbPaints,
@@ -38,6 +47,8 @@ export function AddPaint({
   const [showCustom, setShowCustom] = useState(false);
   const [customName, setCustomName] = useState("");
   const [customHex, setCustomHex] = useState("#6d4aa8");
+  const listId = useId();
+  const optionId = (i: number) => `${listId}-opt-${i}`;
 
   const loading = dbPaints === null;
   const results = useMemo(() => {
@@ -45,6 +56,8 @@ export function AddPaint({
     if (q.length < 2 || !dbPaints) return [];
     return filterPaints(dbPaints, { search: q }).slice(0, 60);
   }, [query, dbPaints]);
+
+  const listOpen = open && query.trim().length >= 2;
 
   const pick = (p: BrowsePaint) => {
     onAdd({ name: p.name, brand: p.brand, range: p.range, hex: p.hex, role });
@@ -80,20 +93,29 @@ export function AddPaint({
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 120)}
           onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setOpen(false);
+              setActive(-1);
+              return;
+            }
             if (!results.length) return;
             if (e.key === "ArrowDown") {
               e.preventDefault();
+              setOpen(true);
               setActive((a) => Math.min(a + 1, results.length - 1));
             } else if (e.key === "ArrowUp") {
               e.preventDefault();
               setActive((a) => Math.max(a - 1, 0));
-            } else if (e.key === "Enter" && active >= 0) {
+            } else if (e.key === "Enter" && listOpen && active >= 0) {
               e.preventDefault();
               pick(results[active]);
-            } else if (e.key === "Escape") {
-              setOpen(false);
             }
           }}
+          role="combobox"
+          aria-expanded={listOpen}
+          aria-controls={listId}
+          aria-autocomplete="list"
+          aria-activedescendant={listOpen && active >= 0 ? optionId(active) : undefined}
           placeholder={
             loading
               ? "Loading paint database…"
@@ -114,27 +136,33 @@ export function AddPaint({
         </button>
       </div>
 
-      {open && query.trim().length >= 2 && (
-        <div
+      {listOpen && (
+        <ul
+          id={listId}
+          role="listbox"
+          aria-label={compact ? "Paints to mix in" : "Paints to add"}
           className={`absolute ${compact ? "inset-x-0 top-full" : "inset-x-2.5 top-[calc(100%-6px)]"} z-20 max-h-72 overflow-y-auto rounded-lg border border-border bg-card p-1 shadow-xl`}
         >
           {results.length === 0 ? (
-            <div className="p-3 text-center text-[12.5px] text-muted-foreground">
+            <li role="presentation" className="p-3 text-center text-[12.5px] text-muted-foreground">
               {loadError
                 ? "Paint database unavailable. Use + Custom to add it by hand."
                 : "No match. Use + Custom to add it by hand."}
-            </div>
+            </li>
           ) : (
             results.map((p, i) => (
-              <button
+              <li
                 key={p.id}
+                id={optionId(i)}
+                role="option"
+                aria-selected={i === active}
                 // onMouseDown (not onClick) so it fires before the input's blur closes the list.
                 onMouseDown={(e) => {
                   e.preventDefault();
                   pick(p);
                 }}
                 onMouseEnter={() => setActive(i)}
-                className={`flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${i === active ? "bg-accent" : "hover:bg-accent"}`}
+                className={`flex w-full cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-left ${i === active ? "bg-accent" : "hover:bg-accent"}`}
               >
                 <span
                   className="h-[22px] w-[22px] flex-none rounded-md ring-1 ring-inset ring-black/15"
@@ -149,10 +177,10 @@ export function AddPaint({
                 <span className="ml-auto flex-none font-mono text-[11px] text-muted-foreground">
                   {p.hex}
                 </span>
-              </button>
+              </li>
             ))
           )}
-        </div>
+        </ul>
       )}
 
       {showCustom && (

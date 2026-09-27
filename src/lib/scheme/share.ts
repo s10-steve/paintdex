@@ -9,7 +9,8 @@
  * Everything here is pure (no React/DOM, no crypto) so it stays node-testable —
  * callers supply the randomness (browser `crypto.getRandomValues`).
  */
-import { schemeSlug } from "./io";
+import { importSchemeObject, schemeSlug } from "./io";
+import type { Scheme } from "./types";
 
 /** Length of the random suffix, in base-36 characters. */
 export const SHARE_TOKEN_LENGTH = 10;
@@ -43,4 +44,28 @@ export function makeShareSlug(title: string, token: string): string {
 /** Absolute URL for a shared scheme, e.g. "https://paintdex.app/scheme/foo-123". */
 export function shareUrl(origin: string, slug: string): string {
   return `${origin.replace(/\/+$/, "")}/scheme/${slug}`;
+}
+
+/**
+ * A published row as the share page and its OpenGraph image render it, or null
+ * when the stored `data` is malformed (`importSchemeObject` throws when
+ * `elements` isn't an array — nothing validates that `jsonb` on the way in).
+ *
+ * The **title comes from the column**, not from `data`. Renaming on
+ * `/my-schemes` writes only `title` (`renameScheme`), so `data.title` is
+ * whatever it was at the last autosave — the share page's heading and preview
+ * image kept the old name while its `<title>` showed the new one. The editor
+ * already reads it this way (`loadRow` in `use-scheme-sync`).
+ */
+export function schemeFromPublicRow(
+  row: { title: string; data: unknown },
+  prefix = "s",
+): Scheme | null {
+  try {
+    let n = 0;
+    const scheme = importSchemeObject(row.data, () => `${prefix}${n++}`);
+    return { ...scheme, title: row.title || scheme.title };
+  } catch {
+    return null;
+  }
 }
