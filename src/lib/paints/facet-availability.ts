@@ -25,6 +25,8 @@ export interface FacetOption {
 
 /** The minimum a record needs for the availability pass. */
 export interface Facetable {
+  /** Needed only for the collection filter; a record without one never matches it. */
+  id?: string;
   brand: string;
   range: string;
   type: string;
@@ -40,8 +42,17 @@ export interface FacetAvailability {
   families: Set<string>;
 }
 
-/** The selection the pass narrows by. `families` is browse-only; empty elsewhere. */
-export type FacetSelection = SharedFacets & { families: Set<string> };
+/**
+ * The selection the pass narrows by. `families` is browse-only; empty elsewhere.
+ *
+ * `inCollection` is the signed-in user's paint ids when `mine` is in effect,
+ * resolved by the caller (`collectionIds`). A set rather than the collection
+ * itself, so this module stays pure and never learns what a provider is.
+ */
+export type FacetSelection = SharedFacets & {
+  families: Set<string>;
+  inCollection?: ReadonlySet<string> | null;
+};
 
 export const matchesMetallic = (p: { metallic?: boolean }, m: MetallicFilter) =>
   m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
@@ -68,8 +79,11 @@ export function matchesFacets(
   sel: FacetSelection,
   skip?: FacetAxis,
 ): boolean {
+  const inCollection = sel.inCollection ?? null;
   return (
-    (sel.includeDiscontinued || !p.discontinued) &&
+    (!inCollection || (p.id !== undefined && inCollection.has(p.id))) &&
+    // Your own paints are shown discontinued or not — see `effectiveFacets`.
+    (sel.includeDiscontinued || !p.discontinued || inCollection !== null) &&
     matchesMetallic(p, sel.metallic) &&
     (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
     (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&

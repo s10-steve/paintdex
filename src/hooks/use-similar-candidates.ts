@@ -52,14 +52,28 @@ export function useSimilarCandidates({
   filters,
   cutoff,
   anyFilter,
+  inCollection = null,
+  collectionPending = false,
 }: {
   target: Paint;
   targetLab: Lab;
+  /** The *effective* state — see `effectiveFacets`. */
   filters: SimilarParamState;
   /** ΔE ceiling from the "minimum match" control. */
   cutoff: number;
   /** Whether any facet filter is active, which is what forces a re-rank. */
   anyFilter: boolean;
+  /**
+   * The user's paint ids when "only paints I own" is in effect, else null. Your
+   * own discontinued paints pass the universe's discontinued gate, the rule
+   * `effectiveFacets` documents.
+   */
+  inCollection?: ReadonlySet<string> | null;
+  /**
+   * The filter is in effect but the collection hasn't arrived: both views wait
+   * rather than render every paint (or none) and then snap to yours.
+   */
+  collectionPending?: boolean;
 }): SimilarCandidates {
   const { brands: selBrands, types: selTypes, ranges: selRanges } = filters;
   const { metallic, view, includeDiscontinued } = filters;
@@ -83,9 +97,13 @@ export function useSimilarCandidates({
   const universe = useMemo(
     () =>
       dataset
-        ? dataset.filter((p) => p.id !== target.id && (includeDiscontinued || !p.discontinued))
+        ? dataset.filter(
+            (p) =>
+              p.id !== target.id &&
+              (includeDiscontinued || !p.discontinued || (inCollection?.has(p.id) ?? false)),
+          )
         : null,
-    [dataset, target.id, includeDiscontinued],
+    [dataset, target.id, includeDiscontinued, inCollection],
   );
 
   // Which option values still yield results given the *other* selected facets.
@@ -93,8 +111,10 @@ export function useSimilarCandidates({
   // browse so the two sidebars can't prune differently.
   const availability = useMemo(
     () =>
-      universe ? computeAvailability(universe, { ...filters, families: NO_FAMILIES }) : null,
-    [universe, filters],
+      universe
+        ? computeAvailability(universe, { ...filters, families: NO_FAMILIES, inCollection })
+        : null,
+    [universe, filters, inCollection],
   );
 
   /**
@@ -115,9 +135,11 @@ export function useSimilarCandidates({
       families: NO_FAMILIES,
       metallic,
       includeDiscontinued: true,
+      mine: "",
+      inCollection,
     };
     return (pool: PaintWithLab[]) => pool.filter((p) => matchesFacets(p, selection));
-  }, [selBrands, selTypes, selRanges, metallic]);
+  }, [selBrands, selTypes, selRanges, metallic, inCollection]);
 
   const targetWithLab = useMemo<PaintWithLab>(
     // family isn't needed by findSimilar; a placeholder keeps the type honest.
@@ -126,11 +148,14 @@ export function useSimilarCandidates({
   );
 
   // Recompute the ranked list from the filtered subset when a filter is active.
+  // `excludeDiscontinued` is off under the collection filter for the same reason
+  // as the universe gate: `universe` has already decided, and yours stay in.
+  const excludeDiscontinued = !includeDiscontinued && !inCollection;
   const computed = useMemo<RenderItem[] | null>(() => {
-    if (!anyFilter || !universe) return null;
+    if (!anyFilter || !universe || collectionPending) return null;
     return findSimilar(candidatesFor(universe), targetWithLab, {
       limit: LIST_LIMIT,
-      excludeDiscontinued: !includeDiscontinued,
+      excludeDiscontinued,
     }).map(({ paint, distance }) => ({
       id: paint.id,
       hex: paint.hex,
@@ -139,7 +164,7 @@ export function useSimilarCandidates({
       range: paint.range,
       distance,
     }));
-  }, [anyFilter, universe, candidatesFor, targetWithLab, includeDiscontinued]);
+  }, [anyFilter, universe, collectionPending, candidatesFor, targetWithLab, excludeDiscontinued]);
 
   /**
    * The plot's own candidate set, deliberately separate from the list's.
@@ -152,7 +177,7 @@ export function useSimilarCandidates({
    * client recompute can reorder ties and visibly reshuffle the default view.
    */
   const plotCandidates = useMemo<ScatterCandidate[] | null>(() => {
-    if (view !== "plot" || !universe) return null;
+    if (view !== "plot" || !universe || collectionPending) return null;
     // No `limit` here: capping before `layoutScatter` made `omittedCount` count
     // only what this call dropped, so the caption reported "60 of 120" when Agrax
     // Earthshade really has ~350 inside the cutoff. `findSimilar` sorts the whole
@@ -160,7 +185,7 @@ export function useSimilarCandidates({
     // sort, and `layoutScatter` applies both caps and reports them honestly.
     return findSimilar(candidatesFor(universe), targetWithLab, {
       limit: Infinity,
-      excludeDiscontinued: !includeDiscontinued,
+      excludeDiscontinued,
     })
       .filter(({ distance }) => distance < cutoff)
       .map(({ paint, distance }) => ({
@@ -172,11 +197,12 @@ export function useSimilarCandidates({
         lab: paint.lab,
         distance,
       }));
-  }, [view, universe, candidatesFor, targetWithLab, cutoff, includeDiscontinued]);
+  }, [view, universe, collectionPending, candidatesFor, targetWithLab, cutoff, excludeDiscontinued]);
 
   // The list only waits on the dataset when a filter forces a re-rank; the plot
-  // always needs it.
-  const awaitingData = !loadError && !universe && (view === "plot" || anyFilter);
+  // always needs it. Both wait on a pending collection filter.
+  const awaitingData =
+    !loadError && ((!universe && (view === "plot" || anyFilter)) || collectionPending);
 
   return { loadError, availability, computed, plotCandidates, awaitingData };
 }

@@ -179,6 +179,37 @@ describe("PaintFacets", () => {
     expect(names.size).toBe(2);
   });
 
+  it("gives two copies' collection radios distinct group names too", () => {
+    const collection = { value: "" as const, onChange: noop };
+    const { container } = render(
+      <>
+        <PaintFacets
+          options={options}
+          selected={selected}
+          onToggle={noop}
+          onMetallic={noop}
+          onDiscontinued={noop}
+          collection={collection}
+        />
+        <PaintFacets
+          options={options}
+          selected={selected}
+          onToggle={noop}
+          onMetallic={noop}
+          onDiscontinued={noop}
+          collection={collection}
+        />
+      </>,
+    );
+    const names = new Set(
+      [...container.querySelectorAll<HTMLInputElement>('input[type="radio"]')].map(
+        (el) => el.name,
+      ),
+    );
+    // Finish + collection, per copy.
+    expect(names.size).toBe(4);
+  });
+
   it("reports the finish the user picked, in the shared vocabulary", () => {
     const onMetallic = vi.fn();
     render(

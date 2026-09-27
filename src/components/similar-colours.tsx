@@ -12,6 +12,8 @@ import {
   MATCH_OPTIONS,
   SIMILAR_CLEARABLE,
   clearParams,
+  collectionFilterLabel,
+  effectiveFacets,
   emptySimilarParams,
   hasFacetFilter,
   isDefaultSimilarParams,
@@ -25,6 +27,8 @@ import {
   type SimilarView,
 } from "@/lib/paints/filter-params";
 import { facetOptions } from "@/lib/paints/facet-availability";
+import { collectionIds } from "@/lib/paints/collection-filter";
+import { useCollection } from "@/components/collection/collection-provider";
 import {
   describeSimilarFilters,
   type ActiveFilterChip,
@@ -102,8 +106,24 @@ export function SimilarColours({
    */
   const [liveParams, setLiveParams] = useState<URLSearchParams | null>(null);
 
-  const { brands: selBrands, types: selTypes, ranges: selRanges } = filters;
-  const { metallic, minMatch, view, includeDiscontinued } = filters;
+  /**
+   * What's actually applied, as opposed to what the URL says: `?mine=` only
+   * takes part once there's a collection to take part — see `effectiveFacets`.
+   * Everything that *reads* the filters (chips, counts, the pipeline) uses this;
+   * everything that *writes* them uses `filters`, so nothing is lost from the URL.
+   */
+  const collection = useCollection();
+  const collectionOn = collection.phase !== "off";
+  const applied = useMemo(() => effectiveFacets(filters, collectionOn), [filters, collectionOn]);
+  const inCollection =
+    applied.mine && collection.phase === "ready"
+      ? collectionIds(collection.entries, applied.mine)
+      : null;
+  const collectionPending = !!applied.mine && collection.phase === "loading";
+  const collectionFailed = !!applied.mine && collection.phase === "failed";
+
+  const { brands: selBrands, types: selTypes, ranges: selRanges } = applied;
+  const { minMatch, view } = applied;
 
   const targetLab = useMemo(() => hexToLab(target.hex), [target.hex]);
   const targetChroma = useMemo(() => labToLch(targetLab).c, [targetLab]);
@@ -182,22 +202,22 @@ export function SimilarColours({
   const linkQuery = similarLinkQuery(filters, liveParams ?? undefined);
 
   // Facet filters drive the re-rank; the match cutoff is a cheap post-filter on
-  // distance, so it's tracked separately and never triggers a fetch/re-rank.
-  const facetCount =
-    selBrands.size +
-    selTypes.size +
-    selRanges.size +
-    (metallic ? 1 : 0) +
-    (includeDiscontinued ? 1 : 0);
-  const anyFilter = hasFacetFilter(filters);
-  const matchActive = minMatch !== DEFAULT_MATCH;
-  const activeCount = facetCount + (matchActive ? 1 : 0);
+  // distance, so it never triggers a fetch/re-rank.
+  const anyFilter = hasFacetFilter(applied);
   const cutoff = matchCutoff(minMatch);
 
   // The three derivations of "which paints count" — sidebar availability, the
   // re-ranked ΔE list, and the plot's own candidate set — live in their own hook.
   const { loadError, availability, computed, plotCandidates, awaitingData } =
-    useSimilarCandidates({ target, targetLab, filters, cutoff, anyFilter });
+    useSimilarCandidates({
+      target,
+      targetLab,
+      filters: applied,
+      cutoff,
+      anyFilter,
+      inCollection,
+      collectionPending,
+    });
 
   const items: RenderItem[] = useMemo(
     () =>
@@ -221,9 +241,15 @@ export function SimilarColours({
    * writer that already exists, so the summary is a second view of the filter
    * state and never a second way to write it.
    */
-  const chips = describeSimilarFilters(filters);
+  const chips = describeSimilarFilters(applied);
+  // The badge and the Clear-all gate are the chip list's length rather than
+  // separate tallies, so the three can't disagree about what's applied.
+  const activeCount = chips.length;
   const removeChip = (c: ActiveFilterChip) => {
     switch (c.kind) {
+      case "mine":
+        commit((prev) => ({ ...prev, mine: "" }));
+        break;
       case "brands":
       case "ranges":
       case "types":
@@ -284,7 +310,7 @@ export function SimilarColours({
     <div className="text-sm">
       <div className="flex items-center justify-between pb-2">
         <span className="font-semibold">Filters</span>
-        {anyFilter || matchActive ? (
+        {activeCount > 0 ? (
           <button
             type="button"
             onClick={clearAll}
@@ -325,7 +351,7 @@ export function SimilarColours({
           types: facetOptions(types, availability?.types ?? null, selTypes, "types"),
           families: [],
         }}
-        selected={{ ...filters, families: NO_FAMILIES }}
+        selected={{ ...applied, families: NO_FAMILIES }}
         onToggle={(key, value) => {
           // The panel has no family group, so that key can never arrive.
           if (key !== "families") toggle(key)(value);
@@ -334,7 +360,17 @@ export function SimilarColours({
         onDiscontinued={(value) =>
           commit((prev) => ({ ...prev, includeDiscontinued: value }))
         }
-        show={{ family: false }}
+        // Hidden while "only paints I own" is on: your discontinued paints are
+        // shown regardless, so the box would do nothing.
+        show={{ family: false, discontinued: !applied.mine }}
+        collection={
+          collection.enabled
+            ? {
+                value: applied.mine,
+                onChange: (value) => commit((prev) => ({ ...prev, mine: value })),
+              }
+            : undefined
+        }
       />
     </div>
   );
@@ -409,7 +445,22 @@ export function SimilarColours({
               className="mb-3 md:hidden"
             />
           )}
-          {loadError && (anyFilter || view === "plot") ? (
+          {collectionFailed ? (
+            <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
+              <p>
+                Couldn’t load your paints to filter by them. Remove the “
+                {collectionFilterLabel(applied.mine)}” filter to see every
+                alternative, or try again.
+              </p>
+              <button
+                type="button"
+                onClick={() => void collection.reload()}
+                className="mt-3 rounded-md border border-border px-3 py-1.5 font-medium text-foreground hover:bg-muted"
+              >
+                Try again
+              </button>
+            </div>
+          ) : loadError && (anyFilter || view === "plot") ? (
             <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
               Couldn’t load the paint database to{" "}
               {view === "plot" ? "build the plot" : "filter"}. Try refreshing the
@@ -431,7 +482,9 @@ export function SimilarColours({
             />
           ) : items.length === 0 ? (
             <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-              No alternatives match these filters. Try widening them.
+              {applied.mine
+                ? "None of your paints match these filters. Try a looser minimum match."
+                : "No alternatives match these filters. Try widening them."}
             </div>
           ) : (
             <SimilarList items={items} linkQuery={linkQuery} />

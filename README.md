@@ -63,6 +63,9 @@ schemes, sync them across devices, and share them by link.
   family and sorts them round the colour wheel, and can export and re-import
   the whole collection as JSON.
   Needs an account — a collection is worth too much to leave in one browser.
+  Signed in, both the browse grid and every paint's alternatives can be
+  narrowed to **only the paints you own** (or own plus wishlist), so "what do I
+  already have that's close to this?" is one click.
 - **Shareable scheme links.** Publish any saved scheme to an unguessable
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
   the full paint recipe, with a rich colour preview when pasted on social sites.
@@ -186,11 +189,27 @@ Still open:
       Acryl**, **Reaper** (Master Series), **Kimera**, **Turbo Dork**, **AMMO
       ATOM**, and Liquitex's Acrylic Ink / Soft Body (only Heavy Body is in).
       Worth checking whether Warhammer's Contrast and Layer ranges are complete.
-- [ ] Fill the data gaps in what's already here: 60% of paints are typed
-      `other`, so the Type filter says little about most brands; `discontinued`
-      is only ever set on Warhammer paints; product codes are missing for all of
-      Warhammer, Scale 75, Green Stuff World, P3 and Duncan Rhodes; and metallic
-      flags are sparse (Tamiya and P3 have none).
+- [ ] **Rethink how paints are categorised — a dedicated piece of work.** The
+      catalogue's `type` mixes three different things: what a paint *does*
+      (opaque, wash, glaze, ink, one-coat, primer, technical, medium), how it's
+      *delivered* (`air`, `spray`) and Citadel's *product lines* (`base`,
+      `layer`, `dry`, `tone` — which are already each paint's `range`). It came
+      from an importer that used Citadel's vocabulary, so every other brand's
+      ordinary paints landed in `other`: 60% of the catalogue. The Type filter
+      says little for most brands, and anything that needs "a paint like this
+      one" — the designer's closest-owned suggestions, a future "swap for one I
+      own" — can only approximate it (`paintGroup` in
+      `src/lib/scheme/shopping-list.ts` is that stopgap). To decide, rather
+      than assume: whether to redefine `type` as the cross-brand "what it does"
+      category (and move delivery and product line out of it) or add a field
+      next to it — the preference so far is *not* a third field; how existing
+      `?type=` links and the Type filter survive the change; and how to
+      classify ~3,200 `other` paints reliably (per-brand rules from range and
+      name, plus a hand-checked list — "Medium" in a name is usually a colour,
+      not a medium). While in there: `discontinued` is only ever set on
+      Warhammer paints, product codes are missing for all of Warhammer, Scale
+      75, Green Stuff World, P3 and Duncan Rhodes, and metallic flags are
+      sparse (Tamiya and P3 have none).
 - [ ] **Match any colour.** Type a hex (or pick one) and see the closest paints
       from every brand — the visualiser's custom colours would get the same
       suggestions.
@@ -231,6 +250,10 @@ Still open:
 
 - [x] Save the paints you own
 - [x] Wishlist for paints you don't own yet but want to buy
+- [x] Show only the paints you own — on the browse grid and on every paint's
+      alternatives (list and plot), so "what do I already have that's close to
+      this?" is one click. Paint schemes suggesting from your collection is the
+      next step (see below).
 - [ ] Paint schemes can suggest only paints from your collection
 - [ ] Import a collection from a pasted list or a CSV (name + brand), rather
       than only from Paintdex's own JSON export — typing in a few hundred pots

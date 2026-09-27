@@ -20,6 +20,7 @@
  */
 import {
   DEFAULT_MATCH,
+  collectionFilterLabel,
   matchOptionLabel,
   type BrowseParamState,
   type MatchValue,
@@ -33,6 +34,7 @@ import { facetLabel, type FacetKind } from "./facet-availability";
  * to undo it, so these names match the `onToggle` keys `PaintFacets` uses.
  */
 export type ChipKind =
+  | "mine"
   | "brands"
   | "ranges"
   | "types"
@@ -77,8 +79,12 @@ const valueChip = (kind: FacetKind, value: string): ActiveFilterChip =>
 
 /**
  * Every chip, in the sidebar's group order, so scanning the chips and scanning
- * the controls give the same picture: brand → family → type → finish → range →
- * discontinued, then the page-specific control.
+ * the controls give the same picture: your paints → brand → family → type →
+ * finish → range → discontinued, then the page-specific control.
+ *
+ * Callers pass the **effective** state (`effectiveFacets`), so a `?mine=` that
+ * isn't applied (signed out) gets no chip, and `disc` gets none while `mine` has
+ * taken it out of effect.
  *
  * One ordered pass with `families` gated, rather than two lists spliced by
  * position — the splice was only correct while brands happened to be emitted
@@ -90,6 +96,7 @@ function describeFilters(
   extras: { families?: Set<string>; search?: string; minMatch?: MatchValue },
 ): ActiveFilterChip[] {
   const out: ActiveFilterChip[] = [];
+  if (s.mine) out.push(chip("mine", "", collectionFilterLabel(s.mine)));
   for (const b of s.brands) out.push(valueChip("brands", b));
   for (const f of extras.families ?? []) out.push(valueChip("families", f));
   for (const t of s.types) out.push(valueChip("types", t));

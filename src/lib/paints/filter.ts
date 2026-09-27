@@ -17,6 +17,11 @@ export interface PaintFilters {
   includeDiscontinued?: boolean;
   /** Restrict by metallic finish: `only` metallics, or `exclude` them. */
   metallic?: "only" | "exclude";
+  /**
+   * Only these paint ids — the user's collection, from `collectionIds`. Members
+   * are kept whether or not they're discontinued; see `effectiveFacets`.
+   */
+  inCollection?: ReadonlySet<string> | null;
 }
 
 /**
@@ -31,6 +36,9 @@ function toFacetSelection(filters: PaintFilters): FacetSelection {
     families: new Set(filters.families ?? []),
     includeDiscontinued: Boolean(filters.includeDiscontinued),
     metallic: filters.metallic ?? "",
+    // `mine` is the URL's word for it; the predicate reads the resolved set.
+    mine: "",
+    inCollection: filters.inCollection ?? null,
   };
 }
 
