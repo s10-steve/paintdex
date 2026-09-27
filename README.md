@@ -189,11 +189,27 @@ Still open:
       Acryl**, **Reaper** (Master Series), **Kimera**, **Turbo Dork**, **AMMO
       ATOM**, and Liquitex's Acrylic Ink / Soft Body (only Heavy Body is in).
       Worth checking whether Warhammer's Contrast and Layer ranges are complete.
-- [ ] Fill the data gaps in what's already here: 60% of paints are typed
-      `other`, so the Type filter says little about most brands; `discontinued`
-      is only ever set on Warhammer paints; product codes are missing for all of
-      Warhammer, Scale 75, Green Stuff World, P3 and Duncan Rhodes; and metallic
-      flags are sparse (Tamiya and P3 have none).
+- [ ] **Rethink how paints are categorised — a dedicated piece of work.** The
+      catalogue's `type` mixes three different things: what a paint *does*
+      (opaque, wash, glaze, ink, one-coat, primer, technical, medium), how it's
+      *delivered* (`air`, `spray`) and Citadel's *product lines* (`base`,
+      `layer`, `dry`, `tone` — which are already each paint's `range`). It came
+      from an importer that used Citadel's vocabulary, so every other brand's
+      ordinary paints landed in `other`: 60% of the catalogue. The Type filter
+      says little for most brands, and anything that needs "a paint like this
+      one" — the designer's closest-owned suggestions, a future "swap for one I
+      own" — can only approximate it (`paintGroup` in
+      `src/lib/scheme/shopping-list.ts` is that stopgap). To decide, rather
+      than assume: whether to redefine `type` as the cross-brand "what it does"
+      category (and move delivery and product line out of it) or add a field
+      next to it — the preference so far is *not* a third field; how existing
+      `?type=` links and the Type filter survive the change; and how to
+      classify ~3,200 `other` paints reliably (per-brand rules from range and
+      name, plus a hand-checked list — "Medium" in a name is usually a colour,
+      not a medium). While in there: `discontinued` is only ever set on
+      Warhammer paints, product codes are missing for all of Warhammer, Scale
+      75, Green Stuff World, P3 and Duncan Rhodes, and metallic flags are
+      sparse (Tamiya and P3 have none).
 - [ ] **Match any colour.** Type a hex (or pick one) and see the closest paints
       from every brand — the visualiser's custom colours would get the same
       suggestions.
