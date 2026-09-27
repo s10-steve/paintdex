@@ -34,7 +34,7 @@ import {
   type ActiveFilterChip,
 } from "@/lib/paints/active-filters";
 import { useSimilarCandidates, NO_FAMILIES } from "@/hooks/use-similar-candidates";
-import type { Paint, PaintType } from "@/lib/paints/types";
+import { PAINT_BINDERS, PAINT_FORMATS, type Paint, type PaintType } from "@/lib/paints/types";
 import { ActiveFilters } from "./active-filters";
 import { PaintFacets } from "./paint-facets";
 import { SimilarList, SimilarListSkeleton, type RenderItem } from "./similar-list";
@@ -227,7 +227,7 @@ export function SimilarColours({
     [anyFilter, computed, all, cutoff],
   );
   const toggle =
-    (key: "brands" | "types" | "ranges") =>
+    (key: "brands" | "types" | "formats" | "binders" | "ranges") =>
     (value: string) =>
       commit((prev) => {
         const next = new Set(prev[key]);
@@ -253,6 +253,8 @@ export function SimilarColours({
       case "brands":
       case "ranges":
       case "types":
+      case "formats":
+      case "binders":
         toggle(c.kind)(c.value);
         break;
       case "metallic":
@@ -349,6 +351,8 @@ export function SimilarColours({
           brands: facetOptions(brands, availability?.brands ?? null, selBrands, "brands"),
           ranges: facetOptions(ranges, availability?.ranges ?? null, selRanges, "ranges"),
           types: facetOptions(types, availability?.types ?? null, selTypes, "types"),
+          formats: facetOptions(PAINT_FORMATS, availability?.formats ?? null, applied.formats, "formats"),
+          binders: facetOptions(PAINT_BINDERS, availability?.binders ?? null, applied.binders, "binders"),
           families: [],
         }}
         selected={{ ...applied, families: NO_FAMILIES }}

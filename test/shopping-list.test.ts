@@ -12,12 +12,25 @@ const bp = (
   range = "Base",
   extra: Partial<BrowsePaint> = {},
 ): BrowsePaint =>
-  ({ id, name, brand, range, type: "base", hex, discontinued: false, family: "red", l: 40, ...extra }) as BrowsePaint;
+  ({
+    id,
+    name,
+    brand,
+    range,
+    type: "opaque",
+    format: "brush",
+    binder: "acrylic",
+    hex,
+    discontinued: false,
+    family: "red",
+    l: 40,
+    ...extra,
+  }) as BrowsePaint;
 
 const CATALOGUE: BrowsePaint[] = [
   bp("citadel-mephiston-red", "Mephiston Red", "Warhammer", "#960C09"),
-  bp("citadel-agrax", "Agrax Earthshade", "Warhammer", "#5A4A2E", "Shade", { type: "shade" }),
-  bp("citadel-lahmian", "Lahmian Medium", "Warhammer", "#F9F9F9", "Technical", { type: "technical" }),
+  bp("citadel-agrax", "Agrax Earthshade", "Warhammer", "#5A4A2E", "Shade", { type: "wash" }),
+  bp("citadel-lahmian", "Lahmian Medium", "Warhammer", "#F9F9F9", "Technical", { type: "medium" }),
   bp("vallejo-bloody-red", "Bloody Red", "Vallejo", "#9A0E0E", "Game Color"),
   bp("vallejo-white", "Dead White", "Vallejo", "#FFFFFF", "Game Color"),
 ];
@@ -169,15 +182,15 @@ describe("like-for-like suggestions", () => {
   // The three bad suggestions from the first preview, in miniature.
   const LIKE: BrowsePaint[] = [
     bp("macragge", "Macragge Blue", "Warhammer", "#0D407F"),
-    bp("nuln", "Nuln Oil", "Warhammer", "#14100E", "Shade", { type: "shade" }),
+    bp("nuln", "Nuln Oil", "Warhammer", "#14100E", "Shade", { type: "wash" }),
     bp("kantor", "Kantor Blue", "Warhammer", "#02134E"),
-    bp("fenrisian", "Fenrisian Grey", "Warhammer", "#6D94B3", "Layer", { type: "layer" }),
-    bp("heavy-metal", "Heavy Metal", "Scale 75", "#7090A8", "Metal", { type: "metallic", metallic: true }),
-    bp("stormhost", "Stormhost Silver", "Warhammer", "#BBBBBB", "Layer", { type: "layer", metallic: true }),
-    bp("lahmian", "Lahmian Medium", "Warhammer", "#BDBDBD", "Technical", { type: "technical" }),
-    bp("silver-other", "Silver", "Vallejo", "#B0B0B0", "Model Color", { type: "other", metallic: true }),
-    bp("agrax", "Agrax Earthshade", "Warhammer", "#5A4A2E", "Shade", { type: "shade" }),
-    bp("seraphim", "Seraphim Sepia", "Warhammer", "#6A5530", "Shade", { type: "shade" }),
+    bp("fenrisian", "Fenrisian Grey", "Warhammer", "#6D94B3", "Layer", { type: "opaque" }),
+    bp("heavy-metal", "Heavy Metal", "Scale 75", "#7090A8", "Metal", { type: "opaque", metallic: true }),
+    bp("stormhost", "Stormhost Silver", "Warhammer", "#BBBBBB", "Layer", { type: "opaque", metallic: true }),
+    bp("lahmian", "Lahmian Medium", "Warhammer", "#BDBDBD", "Technical", { type: "medium" }),
+    bp("silver-other", "Silver", "Vallejo", "#B0B0B0", "Model Color", { type: "opaque", metallic: true }),
+    bp("agrax", "Agrax Earthshade", "Warhammer", "#5A4A2E", "Shade", { type: "wash" }),
+    bp("seraphim", "Seraphim Sepia", "Warhammer", "#6A5530", "Shade", { type: "wash" }),
   ];
   const own = (...ids: string[]) => new Map(ids.map((id) => [id, "owned" as PaintStatus]));
   const needFor = (name: string, owned: Map<string, PaintStatus>) => {
@@ -222,13 +235,45 @@ describe("like-for-like suggestions", () => {
   });
 
   it("groups the catalogue's types coarsely", () => {
-    expect(["base", "layer", "dry", "air", "tone", "other"].map((type) => paintGroup({ type }))).toEqual(
-      Array(6).fill("opaque"),
-    );
-    expect(["shade", "wash", "glaze", "ink"].map((type) => paintGroup({ type }))).toEqual(
-      Array(4).fill("wash"),
+    expect(paintGroup({ type: "opaque" })).toBe("opaque");
+    // An ink thinned is a wash, and a glaze is a wash over a wider area.
+    expect((["wash", "glaze", "ink"] as const).map((type) => paintGroup({ type }))).toEqual(
+      Array(3).fill("wash"),
     );
     expect(paintGroup({ type: "contrast" })).toBe("one-coat");
+    // No colour substitute for any of these.
+    expect((["varnish", "medium", "technical"] as const).map((type) => paintGroup({ type }))).toEqual(
+      Array(3).fill("technical"),
+    );
     expect(MAX_SUGGESTION).toBe(20);
+  });
+
+  it("only suggests a paint with the same binder", () => {
+    // Tamiya's enamel panel-line wash is a wash, but not a stand-in for an
+    // acrylic shade — and the reverse.
+    const withEnamel: BrowsePaint[] = [
+      ...LIKE,
+      bp("panel-line", "Panel Line Accent Color: Brown", "Tamiya", "#5B4A2F", "Weathering & Accents", {
+        type: "wash",
+        binder: "enamel",
+      }),
+    ];
+    const need = (name: string, owned: Map<string, PaintStatus>) => {
+      const p = withEnamel.find((x) => x.name === name)!;
+      return shoppingList(scheme(["X", [sp(p.name, p.brand, p.range, p.hex)]]), withEnamel, owned).needed[0];
+    };
+    expect(need("Agrax Earthshade", own("panel-line")).closestOwned).toBeNull();
+    expect(need("Agrax Earthshade", own("panel-line", "seraphim")).closestOwned?.paint.id).toBe("seraphim");
+    expect(need("Panel Line Accent Color: Brown", own("seraphim")).closestOwned).toBeNull();
+  });
+
+  it("ignores format: an airbrush version stands in for the pot", () => {
+    const withAir: BrowsePaint[] = [
+      ...LIKE,
+      bp("kantor-air", "Kantor Blue", "Warhammer", "#02134E", "Air", { format: "airbrush" }),
+    ];
+    const p = withAir.find((x) => x.id === "macragge")!;
+    const list = shoppingList(scheme(["X", [sp(p.name, p.brand, p.range, p.hex)]]), withAir, own("kantor-air"));
+    expect(list.needed[0].closestOwned?.paint.id).toBe("kantor-air");
   });
 });

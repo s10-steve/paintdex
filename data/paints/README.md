@@ -24,9 +24,9 @@ file is a JSON array of paint records for one brand:
   "id": "citadel-abaddon-black", // unique slug: <brand-slug>-<name-slug>
   "name": "Abaddon Black", // display name
   "brand": "Warhammer", // brand name
-  "range": "Base", // primary product line
-  "ranges": ["Air", "Base"], // OPTIONAL: all lines it appears in (if >1)
-  "type": "base", // normalized type across brands (see below)
+  "range": "Base", // the product-line heading its page shows
+  "ranges": ["Real Colors - Air", "Real Colors - WWII"], // OPTIONAL: every heading, if >1
+  "type": "opaque", // what the paint does (see below)
   "hex": "#231F20", // uppercase #RRGGBB
   "code": null, // OPTIONAL manufacturer code, or null
   "discontinued": false,
@@ -34,29 +34,57 @@ file is a JSON array of paint records for one brand:
 }
 ```
 
-**`type`** is one of: `base`, `layer`, `shade`, `contrast`, `tone`,
-`technical`, `metallic`, `air`, `primer`, `spray`, `ink`, `wash`, `glaze`, `dry`,
-`enamel`, `oil`, `other`. (`tone` is Warhammer Tone Pro: each colour in five
-tones, named `"<Colour> 1"` darkest to `"<Colour> 5"` lightest.) It's a best-effort normalization of the product type across brands;
-`range` keeps the brand's own product-line label.
+**`type`** says what the paint *does*, comparably across brands:
 
-**`metallic`** marks a metallic finish. It's deliberately separate from `type`
-because brands classify metallics inconsistently: some ship a dedicated
-`metallic` line (Vallejo Metal Color, Scale 75 Metal, …) while others file their
-metallics under a colour/finish line — Warhammer's (formerly Citadel's) golds and silvers, for example,
-are Layer or Base paints. The flag was seeded from `type: "metallic"` plus a
-vetted set of Citadel-era metallics, so coverage for other brands is still partial.
-If a metallic paint isn't flagged (e.g. a gold that shows up as "similar" to
-flat yellows), add `"metallic": true` and open a PR — it's community-correctable
-just like hex values. Omit the field entirely for non-metallic paints.
+| type | for |
+|---|---|
+| `opaque` | an ordinary covering paint — base, layer, dry, most airbrush and spray colours |
+| `contrast` | a one-coat paint that shades as it colours (Contrast, Speedpaint, Xpress Color) |
+| `wash` | a wash or shade, including enamel panel-line washes |
+| `glaze` | a transparent colour, including "Clear …" paints |
+| `ink` | an ink |
+| `primer` | a primer, pot or can |
+| `varnish` | a varnish (Ardcoat, Munitorum Varnish, gloss/matt/satin) |
+| `medium` | a thinner, retarder or mixing medium (Lahmian Medium) |
+| `technical` | a texture or effect (Astrogranite, crackle, mud, blood) |
+
+A brand's own product line ("Base", "Layer", "Tone Pro") is `range`, not
+`type`. A name is a poor guide: "Medium Blue" and "Basic Skin Tone" are
+`opaque`.
+
+**`metallic`** marks a metallic finish, and is the only place a metallic is
+marked: some brands ship a dedicated metallic line, others file golds and
+silvers among their ordinary colours, and Scale 75's Metal N Alchemy mixes
+both. If a metallic paint isn't flagged (a gold that shows up as "similar" to
+flat yellows), add `"metallic": true` and open a PR. Omit the field for
+non-metallic paints.
+
+### Ranges (`data/ranges.json`)
+
+What's true of a whole range lives there, not on each paint: how it's
+delivered (`format`: `brush`, `airbrush` — sold to spray straight from the
+bottle — or `spray`), what binds it (`binder`: `acrylic`, `enamel`, `oil`,
+`lacquer`), its product `line`, a URL `slug`, the `defaultType` for new paints,
+and `discontinued` when the whole line is off the market. The rare paint that
+breaks its range's rule is listed under `exceptions`.
+
+**`ranges[]` may only list headings on one product line.** AK prints the same
+Real Colors bottle under "Air" and "WWII", and that's what the field is for. A
+paint sold in two lines — Game Color and Game Air, a Tamiya pot and its spray
+can — is two different paints, with two records: someone can own one without
+the other.
 
 ### Rules (enforced by `npm run validate:data`)
 
 - `id` must be a lowercase slug (`a-z`, `0-9`, `-`) and unique across **all**
   files.
 - `hex` must be uppercase `#RRGGBB`.
-- No two paints may share the same `brand` + `name` + `hex`.
+- No two paints may share the same `brand` + `name` + `hex` + `range`.
 - `type` must be one of the values above.
+- Every paint's range has an entry in `data/ranges.json`, and every entry has
+  a paint.
+- A paint's `ranges[]` all sit on one product line.
+- A paint in a discontinued range is marked `discontinued`.
 
 ### Ids outlive brand names
 
@@ -69,7 +97,8 @@ not for checking old ones.
 
 ## How to fix or add a paint
 
-1. Edit the relevant JSON file (or add a new object to the array).
+1. Edit the relevant JSON file (or add a new object to the array). A paint in
+   a range that isn't in `data/ranges.json` yet needs an entry there too.
 2. Run `npm run validate:data` to check your change.
 3. Open a pull request. CI runs the same validation.
 

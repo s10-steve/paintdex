@@ -35,7 +35,7 @@ vi.mock("@/components/collection/collection-provider", () => ({
 const { ShoppingListCard } = await import("@/components/scheme/shopping-list-card");
 
 const bp = (id: string, name: string, hex: string): BrowsePaint =>
-  ({ id, name, brand: "Vallejo", range: "Game Color", type: "base", hex, discontinued: false, family: "red", l: 40 }) as BrowsePaint;
+  ({ id, name, brand: "Vallejo", range: "Game Color", type: "opaque", format: "brush", binder: "acrylic", hex, discontinued: false, family: "red", l: 40 }) as BrowsePaint;
 
 const CATALOGUE = [bp("red", "Bloody Red", "#9A0E0E"), bp("white", "Dead White", "#FFFFFF"), bp("blue", "Magic Blue", "#0B5CA8")];
 

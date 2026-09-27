@@ -13,8 +13,8 @@ const p = (
   range: string,
   type: string,
   family: string,
-  extra: { metallic?: boolean; discontinued?: boolean } = {},
-): Facetable => ({ brand, range, type, family, ...extra });
+  extra: { metallic?: boolean; discontinued?: boolean; format?: string; binder?: string } = {},
+): Facetable => ({ brand, range, type, family, format: "brush", binder: "acrylic", ...extra });
 
 const sel = (over: Partial<FacetSelection> = {}): FacetSelection => ({
   ...emptySharedFacets(),
@@ -23,19 +23,21 @@ const sel = (over: Partial<FacetSelection> = {}): FacetSelection => ({
 });
 
 const POOL: Facetable[] = [
-  p("Citadel", "Base", "base", "red"),
-  p("Citadel", "Layer", "layer", "red"),
-  p("Citadel", "Retro", "layer", "blue", { discontinued: true }),
-  p("Vallejo", "Game Color", "layer", "blue"),
-  p("Vallejo", "Metal Color", "metallic", "neutral", { metallic: true }),
+  p("Citadel", "Base", "opaque", "red"),
+  p("Citadel", "Layer", "wash", "red"),
+  p("Citadel", "Retro", "wash", "blue", { discontinued: true }),
+  p("Vallejo", "Game Color", "wash", "blue"),
+  p("Vallejo", "Metal Color", "ink", "neutral", { metallic: true }),
 ];
 
 describe("computeAvailability", () => {
   it("offers everything when nothing is selected", () => {
     const a = computeAvailability(POOL, sel());
     expect([...a.brands].sort()).toEqual(["Citadel", "Vallejo"]);
-    expect([...a.types].sort()).toEqual(["base", "layer", "metallic"]);
+    expect([...a.types].sort()).toEqual(["ink", "opaque", "wash"]);
     expect([...a.families].sort()).toEqual(["blue", "neutral", "red"]);
+    expect([...a.formats]).toEqual(["brush"]);
+    expect([...a.binders]).toEqual(["acrylic"]);
   });
 
   it("does not prune a facet's own list from its own selection", () => {
@@ -47,7 +49,7 @@ describe("computeAvailability", () => {
   it("prunes other facets by the current selection", () => {
     const a = computeAvailability(POOL, sel({ brands: new Set(["Vallejo"]) }));
     expect([...a.ranges].sort()).toEqual(["Game Color", "Metal Color"]);
-    expect([...a.types].sort()).toEqual(["layer", "metallic"]);
+    expect([...a.types].sort()).toEqual(["ink", "wash"]);
     expect([...a.families].sort()).toEqual(["blue", "neutral"]);
   });
 
@@ -141,6 +143,8 @@ describe("matchesFacets", () => {
     brands: new Set(),
     ranges: new Set(),
     types: new Set(),
+    formats: new Set(),
+    binders: new Set(),
     families: new Set(),
     metallic: "",
     includeDiscontinued: false,
@@ -150,7 +154,9 @@ describe("matchesFacets", () => {
   const p = {
     brand: "Citadel",
     range: "Base",
-    type: "base",
+    type: "opaque",
+    format: "brush",
+    binder: "acrylic",
     family: "red",
     discontinued: false,
     metallic: false,
@@ -165,7 +171,7 @@ describe("matchesFacets", () => {
     expect(matchesFacets(p, sel({ brands: new Set(["Vallejo"]) }))).toBe(false);
     // Brand matches, type doesn't.
     expect(
-      matchesFacets(p, sel({ brands: new Set(["Citadel"]), types: new Set(["layer"]) })),
+      matchesFacets(p, sel({ brands: new Set(["Citadel"]), types: new Set(["wash"]) })),
     ).toBe(false);
   });
 
@@ -183,6 +189,17 @@ describe("matchesFacets", () => {
     expect(matchesFacets(p, sel({ metallic: "only" }))).toBe(false);
   });
 
+  it("filters on format and binder like any other facet", () => {
+    const air = { ...p, format: "airbrush" };
+    const enamel = { ...p, binder: "enamel" };
+    expect(matchesFacets(air, sel({ formats: new Set(["airbrush"]) }))).toBe(true);
+    expect(matchesFacets(p, sel({ formats: new Set(["airbrush"]) }))).toBe(false);
+    expect(matchesFacets(enamel, sel({ binders: new Set(["enamel", "oil"]) }))).toBe(true);
+    expect(matchesFacets(p, sel({ binders: new Set(["enamel"]) }))).toBe(false);
+    expect(matchesFacets(air, sel({ formats: new Set(["airbrush"]) }), "format")).toBe(true);
+    expect(matchesFacets(p, sel({ formats: new Set(["airbrush"]) }), "format")).toBe(true);
+  });
+
   it("leaves out the skipped facet, so it can't hide its own siblings", () => {
     const other = sel({ brands: new Set(["Vallejo"]) });
     expect(matchesFacets(p, other)).toBe(false);
@@ -195,7 +212,9 @@ describe("the collection filter (inCollection)", () => {
     id,
     brand,
     range: "Base",
-    type: "base",
+    type: "opaque",
+    format: "brush",
+    binder: "acrylic",
     family: "red",
     ...extra,
   });
@@ -224,7 +243,7 @@ describe("the collection filter (inCollection)", () => {
   });
 
   it("never matches a record without an id", () => {
-    expect(matchesFacets(p("Citadel", "Base", "base", "red"), sel({ inCollection: MINE }))).toBe(false);
+    expect(matchesFacets(p("Citadel", "Base", "opaque", "red"), sel({ inCollection: MINE }))).toBe(false);
   });
 
   it("prunes the sidebar to the brands you own", () => {

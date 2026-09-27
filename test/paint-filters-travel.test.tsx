@@ -116,7 +116,9 @@ describe("PaintFacets", () => {
   const options = {
     brands: [{ value: "Citadel", label: "Citadel" }],
     ranges: [{ value: "Base", label: "Base" }],
-    types: [{ value: "layer", label: "layer" }],
+    types: [{ value: "wash", label: "Wash / shade" }],
+    formats: [{ value: "airbrush", label: "Airbrush" }],
+    binders: [{ value: "enamel", label: "Enamel" }],
     families: [{ value: "red", label: "red" }],
   };
   const selected = { ...emptySharedFacets(), families: new Set<string>() };
@@ -136,7 +138,7 @@ describe("PaintFacets", () => {
 
   it("shows every group by default", () => {
     renderFacets();
-    for (const t of ["Brand", "Colour family", "Type", "Finish", "Range"]) {
+    for (const t of ["Brand", "Colour family", "Type", "Format", "Binder", "Finish", "Range"]) {
       expect(screen.getByText(t)).toBeTruthy();
     }
     expect(screen.getByLabelText("Include discontinued")).toBeTruthy();

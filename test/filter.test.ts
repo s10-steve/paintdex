@@ -1,20 +1,20 @@
 import { describe, it, expect } from "vitest";
 import { hexToLab, hueFamily } from "@/lib/color";
 import { filterPaints, findSimilar } from "@/lib/paints/filter";
-import type { BrowsePaint, Paint, PaintWithLab } from "@/lib/paints/types";
+import type { BrowsePaint, PaintRecord, PaintWithLab } from "@/lib/paints/types";
 
 // Carries both the full Lab triple (for findSimilar) and the lightness `l`
 // (for filterPaints), so the same records satisfy PaintWithLab and BrowsePaint.
-function make(p: Paint): PaintWithLab & BrowsePaint {
+function make(p: PaintRecord): PaintWithLab & BrowsePaint {
   const lab = hexToLab(p.hex);
-  return { ...p, lab, l: lab[0], family: hueFamily(p.hex) };
+  return { ...p, format: "brush", binder: "acrylic", lab, l: lab[0], family: hueFamily(p.hex) };
 }
 
 const paints: (PaintWithLab & BrowsePaint)[] = [
-  make({ id: "citadel-abaddon-black", name: "Abaddon Black", brand: "Citadel", range: "Base", type: "base", hex: "#000000", discontinued: false }),
-  make({ id: "citadel-mephiston-red", name: "Mephiston Red", brand: "Citadel", range: "Base", type: "base", hex: "#9A1115", discontinued: false }),
-  make({ id: "vallejo-black", name: "Black", brand: "Vallejo", range: "Model Color", type: "other", hex: "#0A0A0A", discontinued: false }),
-  make({ id: "vallejo-old-red", name: "Old Red", brand: "Vallejo", range: "Game Color", type: "other", hex: "#A01418", discontinued: true }),
+  make({ id: "citadel-abaddon-black", name: "Abaddon Black", brand: "Citadel", range: "Base", type: "opaque", hex: "#000000", discontinued: false }),
+  make({ id: "citadel-mephiston-red", name: "Mephiston Red", brand: "Citadel", range: "Base", type: "opaque", hex: "#9A1115", discontinued: false }),
+  make({ id: "vallejo-black", name: "Black", brand: "Vallejo", range: "Model Color", type: "opaque", hex: "#0A0A0A", discontinued: false }),
+  make({ id: "vallejo-old-red", name: "Old Red", brand: "Vallejo", range: "Game Color", type: "opaque", hex: "#A01418", discontinued: true }),
   make({ id: "tamiya-panel-line-dark-brown", name: "Panel Line Accent Color: Dark Brown", brand: "Tamiya", range: "Panel Line Accent", type: "wash", hex: "#4A342A", discontinued: false, code: "87140" }),
 ];
 
@@ -63,8 +63,8 @@ describe("filterPaints", () => {
 
   it("finds a relabelled paint by its former brand, and nothing newer", () => {
     const renamed = [
-      make({ id: "citadel-mephiston-red", name: "Mephiston Red", brand: "Warhammer", range: "Base", type: "base", hex: "#9A1115", discontinued: false }),
-      make({ id: "warhammer-bloodtoof-red-3", name: "Bloodtoof Red 3", brand: "Warhammer", range: "Tone Pro", type: "tone", hex: "#AD082B", discontinued: false }),
+      make({ id: "citadel-mephiston-red", name: "Mephiston Red", brand: "Warhammer", range: "Base", type: "opaque", hex: "#9A1115", discontinued: false }),
+      make({ id: "warhammer-bloodtoof-red-3", name: "Bloodtoof Red 3", brand: "Warhammer", range: "Tone Pro", type: "opaque", hex: "#AD082B", discontinued: false }),
     ];
     expect(filterPaints(renamed, { search: "citadel red" }).map((p) => p.id)).toEqual([
       "citadel-mephiston-red",

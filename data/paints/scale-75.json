@@ -4,7 +4,7 @@
     "name": "Abyssal Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#292A2F",
     "code": null,
     "discontinued": false
@@ -14,7 +14,7 @@
     "name": "Acid Green",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#C4D964",
     "code": null,
     "discontinued": false
@@ -24,7 +24,7 @@
     "name": "Acid Pink",
     "brand": "Scale 75",
     "range": "FX Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F81DFE",
     "code": null,
     "discontinued": false
@@ -34,7 +34,7 @@
     "name": "Adriatic Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#128A9B",
     "code": null,
     "discontinued": false
@@ -44,7 +44,7 @@
     "name": "African Shadow",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#56424B",
     "code": null,
     "discontinued": false
@@ -54,7 +54,7 @@
     "name": "Airnrhod Blue",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#39398F",
     "code": null,
     "discontinued": false
@@ -64,7 +64,7 @@
     "name": "Aldebaran Red",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BE331E",
     "code": null,
     "discontinued": false
@@ -74,7 +74,7 @@
     "name": "Alizarin Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#26944B",
     "code": null,
     "discontinued": false
@@ -84,7 +84,7 @@
     "name": "Amarth Blue",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0582C5",
     "code": null,
     "discontinued": false
@@ -94,18 +94,17 @@
     "name": "Amber Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#B89E85",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-american-olive",
     "name": "American Olive",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#736737",
     "code": null,
     "discontinued": false
@@ -115,18 +114,17 @@
     "name": "Amethyst Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#9F8EB0",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-ancestral-blue",
     "name": "Ancestral Blue",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#61ABC4",
     "code": null,
     "discontinued": false
@@ -136,7 +134,7 @@
     "name": "Antares Red",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C11E21",
     "code": null,
     "discontinued": false
@@ -146,7 +144,7 @@
     "name": "Anthartic Grey",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#42424C",
     "code": null,
     "discontinued": false
@@ -156,7 +154,7 @@
     "name": "Arabic Shadow",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7C6833",
     "code": null,
     "discontinued": false
@@ -166,7 +164,7 @@
     "name": "Arbuckles Brown",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3C2922",
     "code": null,
     "discontinued": false
@@ -176,7 +174,7 @@
     "name": "Arcane Purple",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#350D4C",
     "code": null,
     "discontinued": false
@@ -186,7 +184,7 @@
     "name": "Ardenes Green",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#566345",
     "code": null,
     "discontinued": false
@@ -196,7 +194,7 @@
     "name": "Arphen Jade",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#035D53",
     "code": null,
     "discontinued": false
@@ -206,7 +204,7 @@
     "name": "Art Black",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#101010",
     "code": null,
     "discontinued": false
@@ -216,7 +214,7 @@
     "name": "Art White",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FEFEFE",
     "code": null,
     "discontinued": false
@@ -226,7 +224,7 @@
     "name": "Artic Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#888FA1",
     "code": null,
     "discontinued": false
@@ -236,7 +234,7 @@
     "name": "Artic Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9FB3BC",
     "code": null,
     "discontinued": false
@@ -246,7 +244,7 @@
     "name": "Baal Crimson",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E11A39",
     "code": null,
     "discontinued": false
@@ -256,7 +254,7 @@
     "name": "Basic Flesh",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D0B393",
     "code": null,
     "discontinued": false
@@ -266,7 +264,7 @@
     "name": "Basilisk Green",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#3D5152",
     "code": null,
     "discontinued": false
@@ -276,7 +274,7 @@
     "name": "Beherit Red",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E2390E",
     "code": null,
     "discontinued": false
@@ -286,7 +284,7 @@
     "name": "Belladonna Green",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#4CA579",
     "code": null,
     "discontinued": false
@@ -296,7 +294,7 @@
     "name": "Bering Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6C8997",
     "code": null,
     "discontinued": false
@@ -306,7 +304,7 @@
     "name": "Birch",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EFD2B0",
     "code": null,
     "discontinued": false
@@ -316,7 +314,7 @@
     "name": "Black",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2C2C2C",
     "code": null,
     "discontinued": false
@@ -326,7 +324,7 @@
     "name": "Black Forest Green",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#004834",
     "code": null,
     "discontinued": false
@@ -346,7 +344,7 @@
     "name": "Black Leather",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#422A2A",
     "code": null,
     "discontinued": false
@@ -356,7 +354,7 @@
     "name": "Black Metal",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#484848",
     "code": null,
     "discontinued": false,
@@ -367,7 +365,7 @@
     "name": "Blackert Brown",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B8825C",
     "code": null,
     "discontinued": false
@@ -377,7 +375,7 @@
     "name": "Blood Red",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#912727",
     "code": null,
     "discontinued": false
@@ -387,7 +385,7 @@
     "name": "Bloodfest Crimson",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6A033B",
     "code": null,
     "discontinued": false
@@ -397,7 +395,7 @@
     "name": "Boreal Green",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00563E",
     "code": null,
     "discontinued": false
@@ -407,7 +405,7 @@
     "name": "Bosh Chesnut",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#69452F",
     "code": null,
     "discontinued": false
@@ -417,7 +415,7 @@
     "name": "Braineater Azure",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#676AAF",
     "code": null,
     "discontinued": false
@@ -427,7 +425,7 @@
     "name": "Braun",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E5C89E",
     "code": null,
     "discontinued": false
@@ -437,7 +435,7 @@
     "name": "Brilli White",
     "brand": "Scale 75",
     "range": "FX Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FEFEFE",
     "code": null,
     "discontinued": false
@@ -447,7 +445,7 @@
     "name": "Brown Gray",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7B7170",
     "code": null,
     "discontinued": false
@@ -457,7 +455,7 @@
     "name": "Brown Leather",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4D2C1D",
     "code": null,
     "discontinued": false
@@ -467,7 +465,7 @@
     "name": "Buff",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B29D82",
     "code": null,
     "discontinued": false
@@ -477,7 +475,7 @@
     "name": "Burgundy Wine Red",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5A2212",
     "code": null,
     "discontinued": false
@@ -487,7 +485,7 @@
     "name": "Burnt Sienna",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7C2D06",
     "code": null,
     "discontinued": false
@@ -497,7 +495,7 @@
     "name": "Burnt Sienna Umber",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4C2A20",
     "code": null,
     "discontinued": false
@@ -507,7 +505,7 @@
     "name": "Burnt Skin",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#654023",
     "code": null,
     "discontinued": false
@@ -517,7 +515,7 @@
     "name": "Burnt Umber",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#51402C",
     "code": null,
     "discontinued": false
@@ -527,7 +525,7 @@
     "name": "Cantabric Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#164765",
     "code": null,
     "discontinued": false
@@ -537,7 +535,7 @@
     "name": "Caribbean Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#75B6B0",
     "code": null,
     "discontinued": false
@@ -547,7 +545,7 @@
     "name": "Caspian Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A4F58",
     "code": null,
     "discontinued": false
@@ -567,7 +565,7 @@
     "name": "Chink Orange",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B2621B",
     "code": null,
     "discontinued": false
@@ -577,18 +575,17 @@
     "name": "Citrine Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#EFE1C7",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-city-dust",
     "name": "City Dust",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#C6C1BD",
     "code": null,
     "discontinued": false
@@ -598,7 +595,7 @@
     "name": "Cobalt Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#005E91",
     "code": null,
     "discontinued": false
@@ -608,7 +605,7 @@
     "name": "Cobalt Metal",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#7FA2B5",
     "code": null,
     "discontinued": false,
@@ -619,7 +616,7 @@
     "name": "Cobalt Violet Grey",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#73768B",
     "code": null,
     "discontinued": false
@@ -629,17 +626,18 @@
     "name": "Cokum Copper",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A37021",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-coral-red",
     "name": "Coral Red",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F73724",
     "code": null,
     "discontinued": false
@@ -649,7 +647,7 @@
     "name": "Cork Brown",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9F8D78",
     "code": null,
     "discontinued": false
@@ -659,7 +657,7 @@
     "name": "Corrupted Stamina",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#699D0C",
     "code": null,
     "discontinued": false
@@ -669,7 +667,7 @@
     "name": "Cremeweiss",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FCFCE0",
     "code": null,
     "discontinued": false
@@ -679,7 +677,7 @@
     "name": "Crimsom",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C22335",
     "code": null,
     "discontinued": false
@@ -699,7 +697,7 @@
     "name": "Dark Brown Ochre",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1E1317",
     "code": null,
     "discontinued": false
@@ -709,7 +707,7 @@
     "name": "Dark Earth",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#643722",
     "code": null,
     "discontinued": false
@@ -719,7 +717,7 @@
     "name": "Dark Kraken",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#194A5B",
     "code": null,
     "discontinued": false
@@ -729,7 +727,7 @@
     "name": "Dark Mud",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#210200",
     "code": null,
     "discontinued": false
@@ -739,7 +737,7 @@
     "name": "Dark Prussian Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#252430",
     "code": null,
     "discontinued": false
@@ -749,7 +747,7 @@
     "name": "Dark Rust",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#6B3729",
     "code": null,
     "discontinued": false
@@ -759,7 +757,7 @@
     "name": "Dark Sand",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#D4BB92",
     "code": null,
     "discontinued": false
@@ -769,7 +767,7 @@
     "name": "Dark Stains",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "wash",
     "hex": "#000000",
     "code": null,
     "discontinued": false
@@ -779,7 +777,7 @@
     "name": "Dark Ultramarine",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#32297A",
     "code": null,
     "discontinued": false
@@ -789,7 +787,7 @@
     "name": "Dark Violet",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#481A3F",
     "code": null,
     "discontinued": false
@@ -799,7 +797,7 @@
     "name": "Dead Flesh",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#7F6662",
     "code": null,
     "discontinued": false
@@ -809,7 +807,7 @@
     "name": "Decay Black",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1C1C1C",
     "code": null,
     "discontinued": false
@@ -819,7 +817,7 @@
     "name": "Decayed Metal",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#5D4038",
     "code": null,
     "discontinued": false,
@@ -830,7 +828,7 @@
     "name": "Deep Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#383B4A",
     "code": null,
     "discontinued": false
@@ -840,7 +838,7 @@
     "name": "Deep Ocean",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#000B2B",
     "code": null,
     "discontinued": false
@@ -850,7 +848,7 @@
     "name": "Deep Red",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#701B20",
     "code": null,
     "discontinued": false
@@ -860,7 +858,7 @@
     "name": "Demon Brown",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#66271E",
     "code": null,
     "discontinued": false
@@ -870,7 +868,7 @@
     "name": "Desert Yellow",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D9AF75",
     "code": null,
     "discontinued": false
@@ -880,7 +878,7 @@
     "name": "Despair Green",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#17383D",
     "code": null,
     "discontinued": false
@@ -890,7 +888,7 @@
     "name": "Dragon Blood",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#810622",
     "code": null,
     "discontinued": false
@@ -900,7 +898,7 @@
     "name": "Drain Life",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#E69464",
     "code": null,
     "discontinued": false
@@ -910,7 +908,7 @@
     "name": "Dubai Brown",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#583D22",
     "code": null,
     "discontinued": false
@@ -920,7 +918,7 @@
     "name": "Dunkelbraun Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#413028",
     "code": null,
     "discontinued": false
@@ -930,7 +928,7 @@
     "name": "Dunkelgelb 44",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DED1B1",
     "code": null,
     "discontinued": false
@@ -940,7 +938,7 @@
     "name": "Dunkelgelb Yellow",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CBB550",
     "code": null,
     "discontinued": false
@@ -950,7 +948,7 @@
     "name": "Dunkelgrau Gray",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#57585A",
     "code": null,
     "discontinued": false
@@ -960,7 +958,7 @@
     "name": "Dust In Summertime",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#727556",
     "code": null,
     "discontinued": false
@@ -970,7 +968,7 @@
     "name": "Dwarven Gold",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#D68D2F",
     "code": null,
     "discontinued": false,
@@ -981,7 +979,7 @@
     "name": "Earth Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4A3C2F",
     "code": null,
     "discontinued": false
@@ -991,7 +989,7 @@
     "name": "Eclipse Grey",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#363636",
     "code": null,
     "discontinued": false
@@ -1001,7 +999,7 @@
     "name": "Eldandil Violet",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2B1A3C",
     "code": null,
     "discontinued": false
@@ -1011,7 +1009,7 @@
     "name": "Electric Blue",
     "brand": "Scale 75",
     "range": "FX Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#021AFE",
     "code": null,
     "discontinued": false
@@ -1021,7 +1019,7 @@
     "name": "Elixir Green",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#005C4D",
     "code": null,
     "discontinued": false
@@ -1031,7 +1029,7 @@
     "name": "Elven Gold",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#CDAB47",
     "code": null,
     "discontinued": false,
@@ -1042,18 +1040,17 @@
     "name": "Emerald Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#78A098",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-emerald-green",
     "name": "Emerald Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#165341",
     "code": null,
     "discontinued": false
@@ -1063,7 +1060,7 @@
     "name": "Endurance Brown",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#773F1C",
     "code": null,
     "discontinued": false
@@ -1073,7 +1070,7 @@
     "name": "Estus Yellow",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#FEE459",
     "code": null,
     "discontinued": false
@@ -1083,7 +1080,7 @@
     "name": "Evil Root",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#F07E4A",
     "code": null,
     "discontinued": false
@@ -1093,7 +1090,7 @@
     "name": "Fairy Blood",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#414874",
     "code": null,
     "discontinued": false
@@ -1103,7 +1100,7 @@
     "name": "Fall Green",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C9D161",
     "code": null,
     "discontinued": false
@@ -1113,7 +1110,7 @@
     "name": "Field Gray",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#66736C",
     "code": null,
     "discontinued": false
@@ -1123,7 +1120,7 @@
     "name": "Field Grey 1",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#39553C",
     "code": null,
     "discontinued": false
@@ -1133,7 +1130,7 @@
     "name": "Field Grey 2",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3F4C45",
     "code": null,
     "discontinued": false
@@ -1143,7 +1140,7 @@
     "name": "Flat Black",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1C1C1C",
     "code": null,
     "discontinued": false
@@ -1153,7 +1150,7 @@
     "name": "Flight Blue",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#01688B",
     "code": null,
     "discontinued": false
@@ -1163,7 +1160,7 @@
     "name": "Frenzy Orange",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#EC6001",
     "code": null,
     "discontinued": false
@@ -1173,7 +1170,7 @@
     "name": "Fuchsia",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AA336B",
     "code": null,
     "discontinued": false
@@ -1183,7 +1180,7 @@
     "name": "Fuel And Grease",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "wash",
     "hex": "#EEEAE9",
     "code": null,
     "discontinued": false
@@ -1193,7 +1190,7 @@
     "name": "Full Healing",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#FEEF00",
     "code": null,
     "discontinued": false
@@ -1203,18 +1200,17 @@
     "name": "Garnet Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#88424D",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-gelbraun-brown",
     "name": "Gelbraun Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D5AC74",
     "code": null,
     "discontinued": false
@@ -1224,7 +1220,7 @@
     "name": "Gobi Brown",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6E5A3F",
     "code": null,
     "discontinued": false
@@ -1234,7 +1230,7 @@
     "name": "Goblin Flesh",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#77B840",
     "code": null,
     "discontinued": false
@@ -1244,7 +1240,7 @@
     "name": "Golden Flesh",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E2A76D",
     "code": null,
     "discontinued": false
@@ -1254,7 +1250,7 @@
     "name": "Golden Skin",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EDC89C",
     "code": null,
     "discontinued": false
@@ -1264,7 +1260,7 @@
     "name": "Golem Grey",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#2C3031",
     "code": null,
     "discontinued": false
@@ -1274,7 +1270,7 @@
     "name": "Graphene Gray",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4A515B",
     "code": null,
     "discontinued": false
@@ -1284,7 +1280,7 @@
     "name": "Graphite",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8B8C87",
     "code": null,
     "discontinued": false
@@ -1294,7 +1290,7 @@
     "name": "Grau",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E8D5C4",
     "code": null,
     "discontinued": false
@@ -1304,7 +1300,7 @@
     "name": "Graugrun Gray",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A08848",
     "code": null,
     "discontinued": false
@@ -1314,7 +1310,7 @@
     "name": "Grease",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "wash",
     "hex": "#3E2D25",
     "code": null,
     "discontinued": false
@@ -1324,7 +1320,7 @@
     "name": "Green Grey",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2C3033",
     "code": null,
     "discontinued": false
@@ -1334,7 +1330,7 @@
     "name": "Green Moss",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#1C7C23",
     "code": null,
     "discontinued": false
@@ -1344,7 +1340,7 @@
     "name": "Green Ochre",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#948123",
     "code": null,
     "discontinued": false
@@ -1354,7 +1350,7 @@
     "name": "Greenskin Flesh",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#006F34",
     "code": null,
     "discontinued": false
@@ -1364,7 +1360,7 @@
     "name": "Grey Spell",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#808FB0",
     "code": null,
     "discontinued": false
@@ -1374,7 +1370,7 @@
     "name": "Grizzly Brown",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#50181B",
     "code": null,
     "discontinued": false
@@ -1384,7 +1380,7 @@
     "name": "Harvester Flesh",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D0A791",
     "code": null,
     "discontinued": false
@@ -1394,7 +1390,7 @@
     "name": "Hastur Purple",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#740331",
     "code": null,
     "discontinued": false
@@ -1404,7 +1400,7 @@
     "name": "Health Red",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#C31610",
     "code": null,
     "discontinued": false
@@ -1414,7 +1410,7 @@
     "name": "Heavy Metal",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#9C9DA1",
     "code": null,
     "discontinued": false,
@@ -1425,7 +1421,7 @@
     "name": "Hellbound Flesh",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9CB1AC",
     "code": null,
     "discontinued": false
@@ -1435,7 +1431,7 @@
     "name": "Hiril Blue",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4AA9BF",
     "code": null,
     "discontinued": false
@@ -1445,7 +1441,7 @@
     "name": "Huldra Blue",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#234256",
     "code": null,
     "discontinued": false
@@ -1455,7 +1451,7 @@
     "name": "Human Flesh",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#DAAB97",
     "code": null,
     "discontinued": false
@@ -1465,7 +1461,7 @@
     "name": "Hykey Yellow",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EFD491",
     "code": null,
     "discontinued": false
@@ -1475,7 +1471,7 @@
     "name": "Indian Shadow",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#673D3F",
     "code": null,
     "discontinued": false
@@ -1565,7 +1561,7 @@
     "name": "Innsmouth Blue",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00596B",
     "code": null,
     "discontinued": false
@@ -1575,7 +1571,7 @@
     "name": "Intense Yellow",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F2CB02",
     "code": null,
     "discontinued": false
@@ -1585,7 +1581,7 @@
     "name": "Irati Green",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#008721",
     "code": null,
     "discontinued": false
@@ -1595,7 +1591,7 @@
     "name": "Iroko",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B28F4D",
     "code": null,
     "discontinued": false
@@ -1605,7 +1601,7 @@
     "name": "Ishtar Pink",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FC9363",
     "code": null,
     "discontinued": false
@@ -1615,7 +1611,7 @@
     "name": "Jade Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2FBEAF",
     "code": null,
     "discontinued": false
@@ -1625,7 +1621,7 @@
     "name": "Jorildyn Turquoise",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#067DA7",
     "code": null,
     "discontinued": false
@@ -1635,7 +1631,7 @@
     "name": "Kalahari Orange",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A3563C",
     "code": null,
     "discontinued": false
@@ -1645,18 +1641,17 @@
     "name": "Kunzite Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#CA9FBB",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-leaden-sky",
     "name": "Leaden Sky",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#404F70",
     "code": null,
     "discontinued": false
@@ -1666,7 +1661,7 @@
     "name": "Lemon Yellow",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EBEA52",
     "code": null,
     "discontinued": false
@@ -1676,7 +1671,7 @@
     "name": "Lendanis Grey",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8B8DA4",
     "code": null,
     "discontinued": false
@@ -1686,7 +1681,7 @@
     "name": "Leviathan Blue",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#005E70",
     "code": null,
     "discontinued": false
@@ -1696,7 +1691,7 @@
     "name": "Life Red",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#E63217",
     "code": null,
     "discontinued": false
@@ -1706,7 +1701,7 @@
     "name": "Light Moss Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#61701B",
     "code": null,
     "discontinued": false
@@ -1716,7 +1711,7 @@
     "name": "Light Rust",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#C1682C",
     "code": null,
     "discontinued": false
@@ -1726,7 +1721,7 @@
     "name": "Light Skin",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E2B890",
     "code": null,
     "discontinued": false
@@ -1736,7 +1731,7 @@
     "name": "Light Skin",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D3B5AD",
     "code": null,
     "discontinued": false
@@ -1746,7 +1741,7 @@
     "name": "Light Sky",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7890B4",
     "code": null,
     "discontinued": false
@@ -1756,7 +1751,7 @@
     "name": "Light Ultramarine",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#263E88",
     "code": null,
     "discontinued": false
@@ -1766,7 +1761,7 @@
     "name": "Lilith Yellow",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FDEA83",
     "code": null,
     "discontinued": false
@@ -1776,7 +1771,7 @@
     "name": "Lime Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#ACE44A",
     "code": null,
     "discontinued": false
@@ -1786,7 +1781,7 @@
     "name": "Love Affair",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#E92B37",
     "code": null,
     "discontinued": false
@@ -1796,7 +1791,7 @@
     "name": "Magenta",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C60A85",
     "code": null,
     "discontinued": false
@@ -1806,7 +1801,7 @@
     "name": "Magic Blue",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#147797",
     "code": null,
     "discontinued": false
@@ -1816,7 +1811,7 @@
     "name": "Mana Regeneration",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#0184D2",
     "code": null,
     "discontinued": false
@@ -1826,7 +1821,7 @@
     "name": "Marduk Yellow",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFEF00",
     "code": null,
     "discontinued": false
@@ -1836,7 +1831,7 @@
     "name": "Mars Orange",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AF6631",
     "code": null,
     "discontinued": false
@@ -1846,7 +1841,7 @@
     "name": "Mayhem Red",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9F0D20",
     "code": null,
     "discontinued": false
@@ -1856,7 +1851,7 @@
     "name": "Mediterranean Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4D73B2",
     "code": null,
     "discontinued": false
@@ -1866,7 +1861,7 @@
     "name": "Medium Wet",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -1876,7 +1871,7 @@
     "name": "Merm Green",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#455236",
     "code": null,
     "discontinued": false
@@ -1886,7 +1881,7 @@
     "name": "Mid Ground / Earth",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#C8AD7E",
     "code": null,
     "discontinued": false
@@ -1896,7 +1891,7 @@
     "name": "Misfits Green",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#004B31",
     "code": null,
     "discontinued": false
@@ -1906,7 +1901,7 @@
     "name": "Miskatonic Grey",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BBB7B4",
     "code": null,
     "discontinued": false
@@ -1916,7 +1911,7 @@
     "name": "Mojave White",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D2CEB5",
     "code": null,
     "discontinued": false
@@ -1926,7 +1921,7 @@
     "name": "Moonray Flesh",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0D7A1",
     "code": null,
     "discontinued": false
@@ -1936,18 +1931,17 @@
     "name": "Moonstone Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#BC937F",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-moss-green",
     "name": "Moss Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#43492F",
     "code": null,
     "discontinued": false
@@ -1957,7 +1951,7 @@
     "name": "Nacar",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9B9F90",
     "code": null,
     "discontinued": false
@@ -1967,7 +1961,7 @@
     "name": "Naples Yellow",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DAAC22",
     "code": null,
     "discontinued": false
@@ -1977,7 +1971,7 @@
     "name": "Navy Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#253B6D",
     "code": null,
     "discontinued": false
@@ -1987,7 +1981,7 @@
     "name": "Necro Gold",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#574E31",
     "code": null,
     "discontinued": false,
@@ -1998,7 +1992,7 @@
     "name": "Necro Grey",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#303038",
     "code": null,
     "discontinued": false
@@ -2008,7 +2002,7 @@
     "name": "Neon Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0E81D6",
     "code": null,
     "discontinued": false
@@ -2018,7 +2012,7 @@
     "name": "Neon Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#62F687",
     "code": null,
     "discontinued": false
@@ -2028,7 +2022,7 @@
     "name": "Neon Orange",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FF9E0E",
     "code": null,
     "discontinued": false
@@ -2038,7 +2032,7 @@
     "name": "Neon Pink",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FE3F47",
     "code": null,
     "discontinued": false
@@ -2048,7 +2042,7 @@
     "name": "Neon Red",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EF321D",
     "code": null,
     "discontinued": false
@@ -2058,7 +2052,7 @@
     "name": "Neon Yellow",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EDFE5A",
     "code": null,
     "discontinued": false
@@ -2068,7 +2062,7 @@
     "name": "Ocean Blue",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0C2140",
     "code": null,
     "discontinued": false
@@ -2078,7 +2072,7 @@
     "name": "Ocean Gray",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#556477",
     "code": null,
     "discontinued": false
@@ -2088,7 +2082,7 @@
     "name": "Odorless Thinner",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "medium",
     "hex": "#DFDFDF",
     "code": null,
     "discontinued": false
@@ -2098,7 +2092,7 @@
     "name": "Off White",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DFD3B9",
     "code": null,
     "discontinued": false
@@ -2108,7 +2102,7 @@
     "name": "Ogre Brown",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#C07704",
     "code": null,
     "discontinued": false
@@ -2118,7 +2112,7 @@
     "name": "Old Copper",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#97604C",
     "code": null,
     "discontinued": false,
@@ -2129,7 +2123,7 @@
     "name": "Olive Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#434631",
     "code": null,
     "discontinued": false
@@ -2139,7 +2133,7 @@
     "name": "Olive Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#585135",
     "code": null,
     "discontinued": false
@@ -2149,7 +2143,7 @@
     "name": "Olivegrun 44",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#93A45D",
     "code": null,
     "discontinued": false
@@ -2159,7 +2153,7 @@
     "name": "Olivegrun Green",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5A6432",
     "code": null,
     "discontinued": false
@@ -2169,7 +2163,7 @@
     "name": "Orange",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E9670F",
     "code": null,
     "discontinued": false
@@ -2179,7 +2173,7 @@
     "name": "Orange",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D45B14",
     "code": null,
     "discontinued": false
@@ -2189,7 +2183,7 @@
     "name": "Orange Leather",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A06337",
     "code": null,
     "discontinued": false
@@ -2199,7 +2193,7 @@
     "name": "Orange Neon",
     "brand": "Scale 75",
     "range": "FX Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F96401",
     "code": null,
     "discontinued": false
@@ -2209,7 +2203,7 @@
     "name": "Orcish Dermis",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DB7D73",
     "code": null,
     "discontinued": false
@@ -2219,7 +2213,7 @@
     "name": "Oxford Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#434EA8",
     "code": null,
     "discontinued": false
@@ -2229,7 +2223,7 @@
     "name": "Pale Dust",
     "brand": "Scale 75",
     "range": "Soil Works",
-    "type": "other",
+    "type": "technical",
     "hex": "#EAD1BB",
     "code": null,
     "discontinued": false
@@ -2239,7 +2233,7 @@
     "name": "Pale Earth",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5F4125",
     "code": null,
     "discontinued": false
@@ -2249,7 +2243,7 @@
     "name": "Pale Skin",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F1D9CF",
     "code": null,
     "discontinued": false
@@ -2259,7 +2253,7 @@
     "name": "Pale Skin",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F3D6CF",
     "code": null,
     "discontinued": false
@@ -2269,7 +2263,7 @@
     "name": "Panzer Grey",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#30383B",
     "code": null,
     "discontinued": false
@@ -2279,7 +2273,7 @@
     "name": "Panzer Yellow",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D6C78C",
     "code": null,
     "discontinued": false
@@ -2289,7 +2283,7 @@
     "name": "Paralyze Blue",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#3579C0",
     "code": null,
     "discontinued": false
@@ -2299,7 +2293,7 @@
     "name": "Pastel Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#44646F",
     "code": null,
     "discontinued": false
@@ -2309,7 +2303,7 @@
     "name": "Pastel Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#929D97",
     "code": null,
     "discontinued": false
@@ -2319,7 +2313,7 @@
     "name": "Pastel Pink",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D97ABA",
     "code": null,
     "discontinued": false
@@ -2329,7 +2323,7 @@
     "name": "Pastel Violet",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#804A95",
     "code": null,
     "discontinued": false
@@ -2339,7 +2333,7 @@
     "name": "Peanut Butter",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BB8103",
     "code": null,
     "discontinued": false
@@ -2349,7 +2343,7 @@
     "name": "Pearl Grey",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#867980",
     "code": null,
     "discontinued": false
@@ -2359,18 +2353,17 @@
     "name": "Peridot Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#8A8D78",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-permanent-orange",
     "name": "Permanent Orange",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FF6B0D",
     "code": null,
     "discontinued": false
@@ -2380,7 +2373,7 @@
     "name": "Petroleum Gray",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#554D4B",
     "code": null,
     "discontinued": false
@@ -2390,7 +2383,7 @@
     "name": "Phoenix Egg",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#E5D0A3",
     "code": null,
     "discontinued": false
@@ -2400,7 +2393,7 @@
     "name": "Phoenix Feather",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#D18A5C",
     "code": null,
     "discontinued": false
@@ -2410,7 +2403,7 @@
     "name": "Pink Flesh",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D1928D",
     "code": null,
     "discontinued": false
@@ -2420,7 +2413,7 @@
     "name": "Pink Flesh",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BD7066",
     "code": null,
     "discontinued": false
@@ -2440,7 +2433,7 @@
     "name": "Primary Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1A76B5",
     "code": null,
     "discontinued": false
@@ -2450,7 +2443,7 @@
     "name": "Primary Red",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D53036",
     "code": null,
     "discontinued": false
@@ -2460,7 +2453,7 @@
     "name": "Primary Yellow",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F4E915",
     "code": null,
     "discontinued": false
@@ -2500,7 +2493,7 @@
     "name": "Prusian Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#06293D",
     "code": null,
     "discontinued": false
@@ -2510,7 +2503,7 @@
     "name": "Psychedelic Purple",
     "brand": "Scale 75",
     "range": "FX Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BB1CFF",
     "code": null,
     "discontinued": false
@@ -2520,7 +2513,7 @@
     "name": "Pure Copper",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#CC744C",
     "code": null,
     "discontinued": false,
@@ -2531,7 +2524,7 @@
     "name": "Purity White",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -2541,7 +2534,7 @@
     "name": "Purple",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#912360",
     "code": null,
     "discontinued": false
@@ -2551,7 +2544,7 @@
     "name": "Rage Brown",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#7C2B16",
     "code": null,
     "discontinued": false
@@ -2561,7 +2554,7 @@
     "name": "Ragweed Orange",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#DF6A27",
     "code": null,
     "discontinued": false
@@ -2571,7 +2564,7 @@
     "name": "Rainy Gray",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8B8683",
     "code": null,
     "discontinued": false
@@ -2581,7 +2574,7 @@
     "name": "Raw Sienna",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#654226",
     "code": null,
     "discontinued": false
@@ -2591,7 +2584,7 @@
     "name": "Raw Umber",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#765F33",
     "code": null,
     "discontinued": false
@@ -2601,7 +2594,7 @@
     "name": "Red Ecstasy",
     "brand": "Scale 75",
     "range": "FX Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F81803",
     "code": null,
     "discontinued": false
@@ -2611,7 +2604,7 @@
     "name": "Red Label",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DF0617",
     "code": null,
     "discontinued": false
@@ -2621,7 +2614,7 @@
     "name": "Red Leather",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5F3634",
     "code": null,
     "discontinued": false
@@ -2631,7 +2624,7 @@
     "name": "Red Ochre",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#80362D",
     "code": null,
     "discontinued": false
@@ -2641,7 +2634,7 @@
     "name": "Remove Mana",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#0D2736",
     "code": null,
     "discontinued": false
@@ -2651,7 +2644,7 @@
     "name": "Replenish Blue",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#01479C",
     "code": null,
     "discontinued": false
@@ -2661,7 +2654,7 @@
     "name": "Resurrection Flesh",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BB8B65",
     "code": null,
     "discontinued": false
@@ -2671,7 +2664,7 @@
     "name": "Riff Green",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1A2D29",
     "code": null,
     "discontinued": false
@@ -2681,7 +2674,7 @@
     "name": "Rlyeh Grey",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#464B4E",
     "code": null,
     "discontinued": false
@@ -2691,7 +2684,7 @@
     "name": "Rotbraun 44",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#905024",
     "code": null,
     "discontinued": false
@@ -2701,7 +2694,7 @@
     "name": "Rotbraun Primer Red",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#925447",
     "code": null,
     "discontinued": false
@@ -2711,7 +2704,7 @@
     "name": "Rotbraun Red",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#52341A",
     "code": null,
     "discontinued": false
@@ -2721,7 +2714,7 @@
     "name": "Rotten Pus",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#FBB400",
     "code": null,
     "discontinued": false
@@ -2731,18 +2724,17 @@
     "name": "Ruby Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#D37887",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-russian-green",
     "name": "Russian Green",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#584F26",
     "code": null,
     "discontinued": false
@@ -2752,7 +2744,7 @@
     "name": "Russian Light Green",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#635111",
     "code": null,
     "discontinued": false
@@ -2762,7 +2754,7 @@
     "name": "Russian Uniform",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#695928",
     "code": null,
     "discontinued": false
@@ -2772,7 +2764,7 @@
     "name": "Sahara Sand",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EFD066",
     "code": null,
     "discontinued": false
@@ -2782,7 +2774,7 @@
     "name": "Sahara Yellow",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AA852D",
     "code": null,
     "discontinued": false
@@ -2792,7 +2784,7 @@
     "name": "Salmon Fury",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#EB5650",
     "code": null,
     "discontinued": false
@@ -2802,7 +2794,7 @@
     "name": "Sand Yellow",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EAC581",
     "code": null,
     "discontinued": false
@@ -2812,7 +2804,7 @@
     "name": "Sandalwood",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B89086",
     "code": null,
     "discontinued": false
@@ -2822,7 +2814,7 @@
     "name": "Sap Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#033417",
     "code": null,
     "discontinued": false
@@ -2832,7 +2824,7 @@
     "name": "Savage Beige",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#F3D783",
     "code": null,
     "discontinued": false
@@ -2842,7 +2834,7 @@
     "name": "Shadow Black",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#1D1F1C",
     "code": null,
     "discontinued": false
@@ -2852,7 +2844,7 @@
     "name": "Shadow Blue",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A3245",
     "code": null,
     "discontinued": false
@@ -2862,7 +2854,7 @@
     "name": "Sharpnel Red",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6E290A",
     "code": null,
     "discontinued": false
@@ -2872,7 +2864,7 @@
     "name": "Sherwood Green",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D853A",
     "code": null,
     "discontinued": false
@@ -2882,7 +2874,7 @@
     "name": "Sky Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2496C8",
     "code": null,
     "discontinued": false
@@ -2892,7 +2884,7 @@
     "name": "Sky Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C0E4ED",
     "code": null,
     "discontinued": false
@@ -2902,7 +2894,7 @@
     "name": "Slate Gray",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#372B15",
     "code": null,
     "discontinued": false
@@ -2912,7 +2904,7 @@
     "name": "Slimer Green",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5A9032",
     "code": null,
     "discontinued": false
@@ -2922,7 +2914,7 @@
     "name": "Smoke Gray",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#886859",
     "code": null,
     "discontinued": false
@@ -2932,7 +2924,7 @@
     "name": "Sol Yellow",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#ECCB00",
     "code": null,
     "discontinued": false
@@ -2942,7 +2934,7 @@
     "name": "Spectral Wolf",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#AB9FA1",
     "code": null,
     "discontinued": false
@@ -2952,7 +2944,7 @@
     "name": "Speed Metal",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#D4D4D6",
     "code": null,
     "discontinued": false,
@@ -2963,7 +2955,7 @@
     "name": "Speed Yellow",
     "brand": "Scale 75",
     "range": "FX Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFFE00",
     "code": null,
     "discontinued": false
@@ -2973,7 +2965,7 @@
     "name": "Spring Green",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D9F35",
     "code": null,
     "discontinued": false
@@ -2983,7 +2975,7 @@
     "name": "Spring Green",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7FB953",
     "code": null,
     "discontinued": false
@@ -2993,7 +2985,7 @@
     "name": "Ss Camo Dark Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#220B05",
     "code": null,
     "discontinued": false
@@ -3003,7 +2995,7 @@
     "name": "Ss Camo Dark Green",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A331E",
     "code": null,
     "discontinued": false
@@ -3013,7 +3005,7 @@
     "name": "SS Camo Golden Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0A001",
     "code": null,
     "discontinued": false
@@ -3023,7 +3015,7 @@
     "name": "Ss Camo Gray Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6F4F36",
     "code": null,
     "discontinued": false
@@ -3033,7 +3025,7 @@
     "name": "Ss Camo Grey",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8F8063",
     "code": null,
     "discontinued": false
@@ -3043,7 +3035,7 @@
     "name": "Ss Camo Highlights",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FAB861",
     "code": null,
     "discontinued": false
@@ -3053,7 +3045,7 @@
     "name": "Ss Camo Italian Green",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3F5232",
     "code": null,
     "discontinued": false
@@ -3063,7 +3055,7 @@
     "name": "Ss Camo Light Green",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7E8126",
     "code": null,
     "discontinued": false
@@ -3073,7 +3065,7 @@
     "name": "Ss Camo Medium Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#825D31",
     "code": null,
     "discontinued": false
@@ -3083,7 +3075,7 @@
     "name": "Ss Camo Medium Green",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4D5025",
     "code": null,
     "discontinued": false
@@ -3093,7 +3085,7 @@
     "name": "Ss Camo Ocher Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CFAE5F",
     "code": null,
     "discontinued": false
@@ -3103,7 +3095,7 @@
     "name": "Ss Camo Red Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#593A1B",
     "code": null,
     "discontinued": false
@@ -3113,7 +3105,7 @@
     "name": "Ss Camo Top Lights",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FBC77E",
     "code": null,
     "discontinued": false
@@ -3123,7 +3115,7 @@
     "name": "Ss Camo Top Shadows",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#343428",
     "code": null,
     "discontinued": false
@@ -3133,7 +3125,7 @@
     "name": "Ss Camo Yellow Sand",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C0A56E",
     "code": null,
     "discontinued": false
@@ -3143,7 +3135,7 @@
     "name": "Sulfur Yellow",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#FED500",
     "code": null,
     "discontinued": false
@@ -3153,7 +3145,7 @@
     "name": "Sunset Purple",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#622E54",
     "code": null,
     "discontinued": false
@@ -3163,7 +3155,7 @@
     "name": "Surfer Orc Flesh",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00A58B",
     "code": null,
     "discontinued": false
@@ -3173,7 +3165,7 @@
     "name": "Techno Green",
     "brand": "Scale 75",
     "range": "FX Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#44FA05",
     "code": null,
     "discontinued": false
@@ -3183,7 +3175,7 @@
     "name": "Tenere Yellow",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E5C76F",
     "code": null,
     "discontinued": false
@@ -3193,7 +3185,7 @@
     "name": "Tesla Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#414D97",
     "code": null,
     "discontinued": false
@@ -3203,7 +3195,7 @@
     "name": "Thar Brown",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B09F81",
     "code": null,
     "discontinued": false
@@ -3213,7 +3205,7 @@
     "name": "Thrash Metal",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#544943",
     "code": null,
     "discontinued": false,
@@ -3224,7 +3216,7 @@
     "name": "Tiamat Orange",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E97329",
     "code": null,
     "discontinued": false
@@ -3234,7 +3226,7 @@
     "name": "Tindalos Red",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5B2922",
     "code": null,
     "discontinued": false
@@ -3244,27 +3236,29 @@
     "name": "Titanium Gray",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#41342B",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-titanium-grey",
     "name": "Titanium Grey",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#404445",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "scale-75-toad-green",
     "name": "Toad Green",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#475139",
     "code": null,
     "discontinued": false
@@ -3274,18 +3268,17 @@
     "name": "Tourmaline Alchemy",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#E7A8B3",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "scale-75-toxic-waste-green",
     "name": "Toxic Waste Green",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C7D538",
     "code": null,
     "discontinued": false
@@ -3295,7 +3288,7 @@
     "name": "Turquoise",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#03435F",
     "code": null,
     "discontinued": false
@@ -3305,7 +3298,7 @@
     "name": "Turquoise Blue",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#15998E",
     "code": null,
     "discontinued": false
@@ -3325,7 +3318,7 @@
     "name": "Undead Dragon",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#B6C8BC",
     "code": null,
     "discontinued": false
@@ -3335,7 +3328,7 @@
     "name": "Undead Flesh",
     "brand": "Scale 75",
     "range": "Fantasy & Games Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A8B170",
     "code": null,
     "discontinued": false
@@ -3345,7 +3338,7 @@
     "name": "Us Dark Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AE8A72",
     "code": null,
     "discontinued": false
@@ -3355,7 +3348,7 @@
     "name": "Us Green",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#474632",
     "code": null,
     "discontinued": false
@@ -3365,7 +3358,7 @@
     "name": "Us Medium Brown",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D4AD84",
     "code": null,
     "discontinued": false
@@ -3375,7 +3368,7 @@
     "name": "Vanilla White",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EDE8D4",
     "code": null,
     "discontinued": false
@@ -3385,7 +3378,7 @@
     "name": "Vanilla Yellow",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D8CC68",
     "code": null,
     "discontinued": false
@@ -3395,7 +3388,7 @@
     "name": "Victorian Brass",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#B6843B",
     "code": null,
     "discontinued": false,
@@ -3406,7 +3399,7 @@
     "name": "Viking Gold",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#8D591F",
     "code": null,
     "discontinued": false,
@@ -3417,7 +3410,7 @@
     "name": "Violet",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A1C51",
     "code": null,
     "discontinued": false
@@ -3427,7 +3420,7 @@
     "name": "Violet Blue",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#604673",
     "code": null,
     "discontinued": false
@@ -3437,7 +3430,7 @@
     "name": "Violet Grey",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#72727C",
     "code": null,
     "discontinued": false
@@ -3447,7 +3440,7 @@
     "name": "Walnut",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D6450",
     "code": null,
     "discontinued": false
@@ -3457,7 +3450,7 @@
     "name": "Werewolf Brown",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#553C35",
     "code": null,
     "discontinued": false
@@ -3467,14 +3460,20 @@
     "name": "White",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
-    "discontinued": false,
-    "ranges": [
-      "Scale Color Range",
-      "Warfront  Range"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "scale-75-white-scale-color-range",
+    "name": "White",
+    "brand": "Scale 75",
+    "range": "Scale Color Range",
+    "type": "opaque",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "scale-75-white-ink",
@@ -3491,7 +3490,7 @@
     "name": "White Metal",
     "brand": "Scale 75",
     "range": "Metal N Alchemy Range",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#F1F1F1",
     "code": null,
     "discontinued": false,
@@ -3502,7 +3501,7 @@
     "name": "White Sands",
     "brand": "Scale 75",
     "range": "Scale Color Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F6E1C6",
     "code": null,
     "discontinued": false
@@ -3512,7 +3511,7 @@
     "name": "Wild Beast",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#CA854E",
     "code": null,
     "discontinued": false
@@ -3522,7 +3521,7 @@
     "name": "Winter Grey",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6E6E70",
     "code": null,
     "discontinued": false
@@ -3532,7 +3531,7 @@
     "name": "Winter Shadow",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3A3C39",
     "code": null,
     "discontinued": false
@@ -3542,7 +3541,7 @@
     "name": "Wood",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#60483E",
     "code": null,
     "discontinued": false
@@ -3552,7 +3551,7 @@
     "name": "Yellow Code",
     "brand": "Scale 75",
     "range": "Warfront  Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFCB06",
     "code": null,
     "discontinued": false
@@ -3562,7 +3561,7 @@
     "name": "Yellow Ocre",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A0702E",
     "code": null,
     "discontinued": false
@@ -3572,7 +3571,7 @@
     "name": "Yellow Oxide",
     "brand": "Scale 75",
     "range": "Artist Range",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4B3527",
     "code": null,
     "discontinued": false
@@ -3582,7 +3581,7 @@
     "name": "Zombie Skin",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#A6A869",
     "code": null,
     "discontinued": false
@@ -3592,7 +3591,7 @@
     "name": "Zucchini Green",
     "brand": "Scale 75",
     "range": "Instant Colors Range",
-    "type": "other",
+    "type": "contrast",
     "hex": "#405B32",
     "code": null,
     "discontinued": false

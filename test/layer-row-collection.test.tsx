@@ -51,7 +51,7 @@ const CATALOGUE: BrowsePaint[] = [
     name: "Agrax Earthshade",
     brand: "Citadel",
     range: "Shade",
-    type: "shade",
+    type: "wash",
     hex: "#3C3C28",
     discontinued: false,
     family: "brown",

@@ -3,7 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { filterPaints } from "@/lib/paints/filter";
-import type { BrowsePaint, PaintType } from "@/lib/paints/types";
+import {
+  PAINT_BINDERS,
+  PAINT_FORMATS,
+  type BrowsePaint,
+  type PaintBinder,
+  type PaintFormat,
+  type PaintType,
+} from "@/lib/paints/types";
 import {
   BROWSE_CLEARABLE,
   FILTER_PARAMS,
@@ -19,6 +26,7 @@ import {
   type SortKey,
 } from "@/lib/paints/filter-params";
 import {
+  type FacetKind,
   computeAvailability,
   facetOptions,
 } from "@/lib/paints/facet-availability";
@@ -171,7 +179,7 @@ export function PaintsBrowser({
 
   /** Toggle one value in a multi-select facet. */
   const toggleFacet =
-    (key: "brands" | "ranges" | "types" | "families") => (value: string) =>
+    (key: FacetKind) => (value: string) =>
       commit((prev) => {
         const next = new Set(prev[key]);
         if (next.has(value)) next.delete(value);
@@ -257,6 +265,8 @@ export function PaintsBrowser({
           brands: [...applied.brands],
           ranges: [...applied.ranges],
           types: [...applied.types] as PaintType[],
+          formats: [...applied.formats] as PaintFormat[],
+          binders: [...applied.binders] as PaintBinder[],
           families: [...applied.families],
           includeDiscontinued,
           // PaintFilters wants the finish absent rather than empty.
@@ -290,6 +300,8 @@ export function PaintsBrowser({
   const brandOptions = facetOptions(brands, available?.brands ?? null, applied.brands, "brands");
   const familyOptions = facetOptions(families, available?.families ?? null, applied.families, "families");
   const typeOptions = facetOptions(types, available?.types ?? null, applied.types, "types");
+  const formatOptions = facetOptions(PAINT_FORMATS, available?.formats ?? null, applied.formats, "formats");
+  const binderOptions = facetOptions(PAINT_BINDERS, available?.binders ?? null, applied.binders, "binders");
   const rangeOptions = facetOptions(ranges, available?.ranges ?? null, applied.ranges, "ranges");
 
   /**
@@ -306,6 +318,8 @@ export function PaintsBrowser({
       case "brands":
       case "ranges":
       case "types":
+      case "formats":
+      case "binders":
       case "families":
         toggleFacet(c.kind)(c.value);
         break;
@@ -366,6 +380,8 @@ export function PaintsBrowser({
           brands: brandOptions,
           ranges: rangeOptions,
           types: typeOptions,
+          formats: formatOptions,
+          binders: binderOptions,
           families: familyOptions,
         }}
         selected={applied}

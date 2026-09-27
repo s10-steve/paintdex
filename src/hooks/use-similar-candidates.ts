@@ -75,7 +75,7 @@ export function useSimilarCandidates({
    */
   collectionPending?: boolean;
 }): SimilarCandidates {
-  const { brands: selBrands, types: selTypes, ranges: selRanges } = filters;
+  const { brands: selBrands, types: selTypes, ranges: selRanges, formats: selFormats, binders: selBinders } = filters;
   const { metallic, view, includeDiscontinued } = filters;
 
   const { paints, loadError } = useBrowseIndex();
@@ -132,6 +132,8 @@ export function useSimilarCandidates({
       brands: selBrands,
       types: selTypes,
       ranges: selRanges,
+      formats: selFormats,
+      binders: selBinders,
       families: NO_FAMILIES,
       metallic,
       includeDiscontinued: true,
@@ -139,7 +141,7 @@ export function useSimilarCandidates({
       inCollection,
     };
     return (pool: PaintWithLab[]) => pool.filter((p) => matchesFacets(p, selection));
-  }, [selBrands, selTypes, selRanges, metallic, inCollection]);
+  }, [selBrands, selTypes, selRanges, selFormats, selBinders, metallic, inCollection]);
 
   const targetWithLab = useMemo<PaintWithLab>(
     // family isn't needed by findSimilar; a placeholder keeps the type honest.

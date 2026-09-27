@@ -46,6 +46,8 @@ const paint = (
     brand,
     range: `${brand} Range`,
     type,
+    format: "brush",
+    binder: "acrylic",
     hex: "#808080",
     discontinued: false,
     family,
@@ -54,11 +56,11 @@ const paint = (
   }) as BrowsePaint;
 
 const CATALOGUE: BrowsePaint[] = [
-  paint("citadel-a", "Warhammer", "layer", "red"),
-  paint("citadel-b", "Warhammer", "base", "blue"),
-  paint("vallejo-a", "Vallejo", "layer", "red"),
-  paint("vallejo-metal", "Vallejo", "metallic", "neutral", { metallic: true }),
-  paint("old-paint", "Warhammer", "layer", "red", { discontinued: true }),
+  paint("citadel-a", "Warhammer", "wash", "red"),
+  paint("citadel-b", "Warhammer", "opaque", "blue"),
+  paint("vallejo-a", "Vallejo", "wash", "red"),
+  paint("vallejo-metal", "Vallejo", "ink", "neutral", { metallic: true, format: "airbrush" }),
+  paint("old-paint", "Warhammer", "wash", "red", { discontinued: true }),
 ];
 
 vi.mock("@/hooks/use-browse-index", () => ({
@@ -70,7 +72,7 @@ import { PaintsBrowser } from "@/components/paints-browser";
 const FACETS = {
   brands: ["Warhammer", "Vallejo"],
   ranges: ["Warhammer Range", "Vallejo Range"],
-  types: ["base", "layer", "metallic"],
+  types: ["opaque", "wash", "ink"],
   families: ["red", "blue", "neutral"],
 };
 
@@ -157,8 +159,21 @@ describe("deriving the grid from the URL", () => {
   });
 
   it("filters by type", () => {
-    renderAt("type=layer");
+    renderAt("type=wash");
     expect(shownIds().sort()).toEqual(["citadel-a", "vallejo-a"]);
+  });
+
+  it("filters by format", () => {
+    renderAt("format=airbrush");
+    expect(shownIds()).toEqual(["vallejo-metal"]);
+  });
+
+  // An old link from before `type` meant "what it does": `metallic` was a
+  // type then. It still filters, and the heal writes the new vocabulary.
+  it("reads a legacy ?type= value and heals the URL to the new one", () => {
+    renderAt("type=metallic");
+    expect(shownIds()).toEqual(["vallejo-metal"]);
+    expect(writtenQuery()).toBe("metal=1");
   });
 
   it("filters by colour family", () => {
@@ -180,7 +195,7 @@ describe("deriving the grid from the URL", () => {
   });
 
   it("combines facets with AND", () => {
-    renderAt("brand=Warhammer&type=layer");
+    renderAt("brand=Warhammer&type=wash");
     expect(shownIds()).toEqual(["citadel-a"]);
   });
 
@@ -292,7 +307,7 @@ describe("the active-filter chips", () => {
   });
 
   it("summarises every applied filter, and not sort", () => {
-    renderAt("brand=Warhammer&type=layer&family=red&metal=1&disc=1&q=ork&sort=lightness");
+    renderAt("brand=Warhammer&type=wash&family=red&metal=1&disc=1&q=ork&sort=lightness");
     // Both sidebar copies are in the DOM at once (desktop `hidden md:block`) plus
     // the mobile row above the grid, so each chip appears more than once — the
     // set is what matters, not the count.
@@ -300,7 +315,7 @@ describe("the active-filter chips", () => {
       new Set([
         "Warhammer",
         "Red",
-        "Layer",
+        "Wash / shade",
         "Metallic only",
         "Including discontinued",
         "Search: ork",
@@ -338,8 +353,8 @@ describe("the active-filter chips", () => {
   });
 
   it("drops the chip once the grid re-renders at the URL the removal wrote", () => {
-    renderAt("brand=Warhammer&type=layer");
-    fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: Layer" })[0]);
+    renderAt("brand=Warhammer&type=wash");
+    fireEvent.click(screen.getAllByRole("button", { name: "Remove filter: Wash / shade" })[0]);
     const produced = writtenQuery();
     cleanup();
     renderAt(produced);

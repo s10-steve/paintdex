@@ -24,18 +24,16 @@
  *   the counts add up to what's on screen.
  * - **"Closest you own" is like-for-like, then by colour.** A candidate has to be
  *   the same kind of paint (`paintGroup`: an opaque paint for an opaque one, a
- *   wash for a wash) with the same metallic finish, and within `MAX_SUGGESTION`
+ *   wash for a wash), in the same binder, with the same metallic finish, and
+ *   within `MAX_SUGGESTION`
  *   ΔE — past that "Similar" is a different colour, and "nothing close" is the
  *   more useful answer. By colour alone it offered Nuln Oil for Macragge Blue,
  *   Heavy Metal for Fenrisian Grey and Lahmian Medium for Stormhost Silver.
- *   `paintGroup` is a stopgap over the catalogue's `type`, which mixes product
- *   lines (Citadel's Base/Layer/Dry) with what a paint does and files 60% of
- *   the catalogue as `other`; see the README roadmap item on paint categories.
  */
 import { ciede2000, hexToLab, type Lab } from "@/lib/color";
 import { cataloguePaintId } from "@/lib/paints/catalogue-match";
 import { withLab, type BrowsePaintWithLab } from "@/lib/paints/lab-index";
-import type { BrowsePaint } from "@/lib/paints/types";
+import type { BrowsePaint, PaintBinder, PaintType } from "@/lib/paints/types";
 import type { PaintStatus } from "@/lib/supabase/types";
 import { components } from "./mix";
 import type { Scheme, SchemeRole } from "./types";
@@ -47,53 +45,37 @@ import type { Scheme, SchemeRole } from "./types";
 export const MAX_SUGGESTION = 20;
 
 /**
- * What a paint does, coarsely enough to be comparable across brands, from the
- * catalogue's `type`. Only paints in the same group can stand in for each other.
+ * What a paint does, coarsely enough that paints in one group can stand in
+ * for each other — a direct read of the catalogue's `type`, which now means
+ * exactly that.
  *
- * - `opaque` includes `other`, which is nearly every non-Citadel paint — mostly
- *   ordinary opaque acrylics, but not all, which is why this is a stopgap.
- *   Airbrush paints count: they're opaque paints, thinned.
- * - Rattle cans, oils and enamels each only match their own kind: a spray can
- *   isn't a substitute for a pot, and oils and enamels behave differently from
+ * - `wash` takes glazes and inks too: painters thin an ink into a wash, and a
+ *   glaze is a wash used over a wider area. Coarser than `type` on purpose.
+ * - `technical` covers textures, effects, mediums and varnishes, and never
+ *   matches anything: there is no colour substitute for Lahmian Medium, a
+ *   crackle texture or a gloss varnish.
+ * - Delivery is **not** part of the match. If you own the airbrush Macragge
+ *   Blue, you have that colour; the shopping list still counts owning *this*
+ *   record exactly, which is why pot and air versions are separate paints.
+ * - Chemistry is, through `binder` in `Want`: an enamel panel-line wash
+ *   behaves nothing like an acrylic shade, and oil paints aren't a stand-in for
  *   acrylics.
- * - `technical` (textures, effects, mediums) never matches anything: there is
- *   no colour substitute for Lahmian Medium or a crackle texture.
  */
-export type PaintGroup =
-  | "opaque"
-  | "wash"
-  | "one-coat"
-  | "primer"
-  | "spray"
-  | "oil"
-  | "enamel"
-  | "technical";
+export type PaintGroup = "opaque" | "wash" | "one-coat" | "primer" | "technical";
 
-const GROUP_OF_TYPE: Record<string, PaintGroup> = {
-  base: "opaque",
-  layer: "opaque",
-  dry: "opaque",
-  air: "opaque",
-  tone: "opaque",
-  metallic: "opaque",
-  other: "opaque",
-  shade: "wash",
+const GROUP_OF_TYPE: Record<PaintType, PaintGroup> = {
+  opaque: "opaque",
+  contrast: "one-coat",
   wash: "wash",
   glaze: "wash",
   ink: "wash",
-  contrast: "one-coat",
   primer: "primer",
-  spray: "spray",
-  oil: "oil",
-  enamel: "enamel",
+  varnish: "technical",
+  medium: "technical",
   technical: "technical",
 };
 
-export const paintGroup = (p: { type: string }): PaintGroup =>
-  GROUP_OF_TYPE[p.type] ?? "opaque";
-
-export const isMetallic = (p: { type: string; metallic?: boolean }): boolean =>
-  Boolean(p.metallic) || p.type === "metallic";
+export const paintGroup = (p: { type: PaintType }): PaintGroup => GROUP_OF_TYPE[p.type];
 
 /**
  * For a colour with no catalogue entry, the scheme's role is the only hint at
@@ -108,9 +90,10 @@ const GROUP_OF_ROLE: Partial<Record<SchemeRole, PaintGroup>> = {
   glaze: "wash",
 };
 
-/** What a suggestion has to match. `metallic: null` means "either". */
+/** What a suggestion has to match. `null` means "either". */
 interface Want {
   group: PaintGroup | null;
+  binder: PaintBinder | null;
   metallic: boolean | null;
 }
 
@@ -192,7 +175,7 @@ function closestTo(
 ): ClosestOwned | null {
   // Technical paints have no colour substitute; don't pretend otherwise.
   if (want.group === "technical") return null;
-  const key = `${hex.toUpperCase()}|${want.group ?? "*"}|${want.metallic ?? "*"}|${excludeId ?? ""}`;
+  const key = `${hex.toUpperCase()}|${want.group ?? "*"}|${want.binder ?? "*"}|${want.metallic ?? "*"}|${excludeId ?? ""}`;
   if (pool.byHex.has(key)) return pool.byHex.get(key) ?? null;
 
   let lab: Lab;
@@ -209,7 +192,8 @@ function closestTo(
     const group = paintGroup(p);
     if (group === "technical") continue;
     if (want.group && group !== want.group) continue;
-    if (want.metallic !== null && isMetallic(p) !== want.metallic) continue;
+    if (want.binder && p.binder !== want.binder) continue;
+    if (want.metallic !== null && Boolean(p.metallic) !== want.metallic) continue;
     const distance = ciede2000(lab, p.lab);
     if (distance >= MAX_SUGGESTION) continue;
     if (!best || distance < best.distance) best = { paint: p, distance };
@@ -274,7 +258,7 @@ export function shoppingList(
       ...item,
       closestOwned: closestTo(
         item.paint.hex,
-        { group: paintGroup(item.paint), metallic: isMetallic(item.paint) },
+        { group: paintGroup(item.paint), binder: item.paint.binder, metallic: Boolean(item.paint.metallic) },
         pool,
         item.paintId,
       ),
@@ -283,8 +267,9 @@ export function shoppingList(
     else out.needed.push(withClosest);
   }
   for (const item of unmatched.values()) {
-    // Nothing says whether a hand-entered colour is metallic, so either will do.
-    const want: Want = { group: GROUP_OF_ROLE[item.role] ?? null, metallic: null };
+    // Nothing says what a hand-entered colour is made of or whether it's
+    // metallic, so either will do.
+    const want: Want = { group: GROUP_OF_ROLE[item.role] ?? null, binder: null, metallic: null };
     out.unmatched.push({ ...item, closestOwned: closestTo(item.hex, want, pool) });
   }
   return out;

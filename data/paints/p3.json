@@ -4,7 +4,7 @@
     "name": "Jack Bone",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D6D3AA",
     "code": null,
     "discontinued": false
@@ -14,7 +14,7 @@
     "name": "Amethyst Rose",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#481306",
     "code": null,
     "discontinued": false
@@ -24,7 +24,7 @@
     "name": "Arcane Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7ACFD9",
     "code": null,
     "discontinued": false
@@ -34,7 +34,7 @@
     "name": "Arcantrik Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#547E5B",
     "code": null,
     "discontinued": false
@@ -54,7 +54,7 @@
     "name": "Asheth Grey",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A2524",
     "code": null,
     "discontinued": false
@@ -64,7 +64,7 @@
     "name": "Bad Bruise",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#33283A",
     "code": null,
     "discontinued": false
@@ -74,7 +74,7 @@
     "name": "Bane Grey",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#564F3D",
     "code": null,
     "discontinued": false
@@ -84,7 +84,7 @@
     "name": "Basilisk Brown",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#76412B",
     "code": null,
     "discontinued": false
@@ -94,7 +94,7 @@
     "name": "Bastion Grey",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#777965",
     "code": null,
     "discontinued": false
@@ -104,7 +104,7 @@
     "name": "Battle Dress Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5E4E14",
     "code": null,
     "discontinued": false
@@ -114,7 +114,7 @@
     "name": "Battledress Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#757131",
     "code": null,
     "discontinued": false
@@ -124,7 +124,7 @@
     "name": "Battlefield Brown",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#32261D",
     "code": null,
     "discontinued": false
@@ -134,7 +134,7 @@
     "name": "Beast Hide",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AF9369",
     "code": null,
     "discontinued": false
@@ -144,7 +144,7 @@
     "name": "Beaten Purple",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#552A72",
     "code": null,
     "discontinued": false
@@ -154,7 +154,7 @@
     "name": "Bile Thrall",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6A4E16",
     "code": null,
     "discontinued": false
@@ -174,7 +174,7 @@
     "name": "Bleached Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#877A68",
     "code": null,
     "discontinued": false
@@ -184,17 +184,18 @@
     "name": "Blighted Gold",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8B9742",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-blindwater-green",
     "name": "Blindwater Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A271A",
     "code": null,
     "discontinued": false
@@ -204,7 +205,7 @@
     "name": "Bloodstone",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9E4923",
     "code": null,
     "discontinued": false
@@ -214,7 +215,7 @@
     "name": "Bloodtracker Brown",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A56A28",
     "code": null,
     "discontinued": false
@@ -234,7 +235,7 @@
     "name": "Bog Moss",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#80703C",
     "code": null,
     "discontinued": false
@@ -244,7 +245,7 @@
     "name": "Bogrin Brown",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#92653C",
     "code": null,
     "discontinued": false
@@ -254,7 +255,7 @@
     "name": "Boiler Black",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D5A55",
     "code": null,
     "discontinued": false
@@ -264,7 +265,7 @@
     "name": "Bootstrap Leather",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#946839",
     "code": null,
     "discontinued": false
@@ -274,17 +275,18 @@
     "name": "Brass Balls",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FAF8D2",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-broken-brick",
     "name": "Broken Brick",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A53331",
     "code": null,
     "discontinued": false
@@ -294,10 +296,11 @@
     "name": "Bronze Badge",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#954A02",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-brown-ink",
@@ -314,7 +317,7 @@
     "name": "Carnal Pink",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F9E0EA",
     "code": null,
     "discontinued": false
@@ -334,7 +337,7 @@
     "name": "Coal Black",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#005A61",
     "code": null,
     "discontinued": false
@@ -344,27 +347,29 @@
     "name": "Cold Steel",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BFCACE",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-copper-pipe",
     "name": "Copper Pipe",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#745738",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-cryx-bane-base",
     "name": "Cryx Bane Base",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#313A25",
     "code": null,
     "discontinued": false
@@ -374,7 +379,7 @@
     "name": "Cryx Bane Highlight",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#908E7C",
     "code": null,
     "discontinued": false
@@ -384,7 +389,7 @@
     "name": "Cryx Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2C281B",
     "code": null,
     "discontinued": false
@@ -394,7 +399,7 @@
     "name": "Cygnar Blue Base",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#124B9A",
     "code": null,
     "discontinued": false
@@ -404,7 +409,7 @@
     "name": "Cygnar Blue Highlight",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2C75BB",
     "code": null,
     "discontinued": false
@@ -414,7 +419,7 @@
     "name": "Cygnus Yellow",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F7E52D",
     "code": null,
     "discontinued": false
@@ -424,17 +429,18 @@
     "name": "Deathless Metal",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#503528",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-devout-white",
     "name": "Devout White",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B3A998",
     "code": null,
     "discontinued": false
@@ -444,7 +450,7 @@
     "name": "Drake Grey",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8D8581",
     "code": null,
     "discontinued": false
@@ -454,7 +460,7 @@
     "name": "Eldritch",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#35795E",
     "code": null,
     "discontinued": false
@@ -464,7 +470,7 @@
     "name": "Eldritch Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#21573B",
     "code": null,
     "discontinued": false
@@ -474,7 +480,7 @@
     "name": "Ember Orange",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EE2C24",
     "code": null,
     "discontinued": false
@@ -484,7 +490,7 @@
     "name": "Exile Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#203467",
     "code": null,
     "discontinued": false
@@ -504,7 +510,7 @@
     "name": "Frostbite",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E6EFF5",
     "code": null,
     "discontinued": false
@@ -514,17 +520,18 @@
     "name": "Galvanized Steel",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B5BCB2",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-gnarls-green",
     "name": "Gnarls Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0D6232",
     "code": null,
     "discontinued": false
@@ -534,7 +541,7 @@
     "name": "Gravedigger Denim",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4A5456",
     "code": null,
     "discontinued": false
@@ -544,7 +551,7 @@
     "name": "Greatcoat Grey",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4E5861",
     "code": null,
     "discontinued": false
@@ -564,7 +571,7 @@
     "name": "Greylord",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#48453D",
     "code": null,
     "discontinued": false
@@ -574,7 +581,7 @@
     "name": "Gun Corps Brown",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#927D47",
     "code": null,
     "discontinued": false
@@ -584,7 +591,7 @@
     "name": "Hammerfall Khaki",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C7BF97",
     "code": null,
     "discontinued": false
@@ -594,7 +601,7 @@
     "name": "Heartfire",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F4AF46",
     "code": null,
     "discontinued": false
@@ -604,7 +611,7 @@
     "name": "Hoksune Red",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4B2015",
     "code": null,
     "discontinued": false
@@ -614,7 +621,7 @@
     "name": "Icy Yellow",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C7B378",
     "code": null,
     "discontinued": false
@@ -624,7 +631,7 @@
     "name": "Idrian Flesh",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9B5E37",
     "code": null,
     "discontinued": false
@@ -634,7 +641,7 @@
     "name": "Immortal Black",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#30281F",
     "code": null,
     "discontinued": false
@@ -644,7 +651,7 @@
     "name": "Inferno Orange",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E16E41",
     "code": null,
     "discontinued": false
@@ -654,7 +661,7 @@
     "name": "Iosan Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#23A652",
     "code": null,
     "discontinued": false
@@ -664,7 +671,7 @@
     "name": "Ironhull Grey",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8E959A",
     "code": null,
     "discontinued": false
@@ -674,7 +681,7 @@
     "name": "Kapitan Red",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D07B3A",
     "code": null,
     "discontinued": false
@@ -684,7 +691,7 @@
     "name": "Khador Red Base",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EE2C24",
     "code": null,
     "discontinued": false
@@ -694,7 +701,7 @@
     "name": "Khador Red Highlight",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F09042",
     "code": null,
     "discontinued": false
@@ -704,7 +711,7 @@
     "name": "Khardic Flesh",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C87A5A",
     "code": null,
     "discontinued": false
@@ -724,7 +731,7 @@
     "name": "Lyossan Flesh",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AC8454",
     "code": null,
     "discontinued": false
@@ -734,7 +741,7 @@
     "name": "Mage Hunter Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#596453",
     "code": null,
     "discontinued": false
@@ -744,7 +751,7 @@
     "name": "Meaty Ochre",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B28240",
     "code": null,
     "discontinued": false
@@ -754,7 +761,7 @@
     "name": "Menoth White Base",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EFECBA",
     "code": null,
     "discontinued": false
@@ -764,7 +771,7 @@
     "name": "Menoth White Highlight",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F2F1DC",
     "code": null,
     "discontinued": false
@@ -774,7 +781,7 @@
     "name": "Meredius Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00AFB8",
     "code": null,
     "discontinued": false
@@ -784,7 +791,7 @@
     "name": "Meridius Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1F9095",
     "code": null,
     "discontinued": false
@@ -794,7 +801,7 @@
     "name": "Midlund Flesh",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EEA883",
     "code": null,
     "discontinued": false
@@ -804,7 +811,7 @@
     "name": "Moldy Ochre",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DCB43D",
     "code": null,
     "discontinued": false
@@ -814,17 +821,18 @@
     "name": "Molten Bronze",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CB8C57",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-morrow-white",
     "name": "Morrow White",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFFCFD",
     "code": null,
     "discontinued": false
@@ -834,7 +842,7 @@
     "name": "Mouldy Ochre",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B0830E",
     "code": null,
     "discontinued": false
@@ -844,7 +852,7 @@
     "name": "Mud Rut",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#674D2D",
     "code": null,
     "discontinued": false
@@ -864,7 +872,7 @@
     "name": "Murderous Magenta",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A91F5E",
     "code": null,
     "discontinued": false
@@ -874,7 +882,7 @@
     "name": "Necrotite Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7FC246",
     "code": null,
     "discontinued": false
@@ -884,7 +892,7 @@
     "name": "Ordic Olive",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6E7E36",
     "code": null,
     "discontinued": false
@@ -894,20 +902,22 @@
     "name": "Orgoth Bronze",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6D6346",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-pig-iron",
     "name": "Pig Iron",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#797979",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-piggy-purple-ink",
@@ -924,7 +934,7 @@
     "name": "Pyg Grey",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5F6156",
     "code": null,
     "discontinued": false
@@ -934,17 +944,18 @@
     "name": "Quick Silver",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D7D9E0",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-radiant-platinum",
     "name": "Radiant Platinum",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C0C0AE",
     "code": null,
     "discontinued": false
@@ -964,7 +975,7 @@
     "name": "Rhok Hide",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#35211C",
     "code": null,
     "discontinued": false
@@ -974,17 +985,18 @@
     "name": "Rhulic Gold",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F7D259",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-riven-green",
     "name": "Riven Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#99AB90",
     "code": null,
     "discontinued": false
@@ -994,7 +1006,7 @@
     "name": "Royal Violet",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#553D55",
     "code": null,
     "discontinued": false
@@ -1004,7 +1016,7 @@
     "name": "Rucksack Tan",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B2953D",
     "code": null,
     "discontinued": false
@@ -1014,7 +1026,7 @@
     "name": "Ruddy Blush",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AB3737",
     "code": null,
     "discontinued": false
@@ -1024,7 +1036,7 @@
     "name": "Runeshot",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2E728B",
     "code": null,
     "discontinued": false
@@ -1034,7 +1046,7 @@
     "name": "Ryn Flesh",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F8E2D1",
     "code": null,
     "discontinued": false
@@ -1044,7 +1056,7 @@
     "name": "Sanguine Base",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6B160F",
     "code": null,
     "discontinued": false
@@ -1054,7 +1066,7 @@
     "name": "Sanguine Highlight",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C64958",
     "code": null,
     "discontinued": false
@@ -1064,7 +1076,7 @@
     "name": "Sanguine Shadow",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#541A0E",
     "code": null,
     "discontinued": false
@@ -1074,7 +1086,7 @@
     "name": "Sickly Skin",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E8E6BD",
     "code": null,
     "discontinued": false
@@ -1084,7 +1096,7 @@
     "name": "Sinari Skin",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4B2B1F",
     "code": null,
     "discontinued": false
@@ -1094,7 +1106,7 @@
     "name": "Skorne Flesh",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9D6327",
     "code": null,
     "discontinued": false
@@ -1104,7 +1116,7 @@
     "name": "Skorne Red",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B12024",
     "code": null,
     "discontinued": false
@@ -1114,17 +1126,18 @@
     "name": "Solid Gold",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F8F39F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "p3-stormguard-blue",
     "name": "Stormguard Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#285C8A",
     "code": null,
     "discontinued": false
@@ -1134,7 +1147,7 @@
     "name": "Sul Red",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4A2518",
     "code": null,
     "discontinued": false
@@ -1144,7 +1157,7 @@
     "name": "Sulfuric Yellow",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0D133",
     "code": null,
     "discontinued": false
@@ -1154,7 +1167,7 @@
     "name": "Thamar Black",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#000000",
     "code": null,
     "discontinued": false
@@ -1164,7 +1177,7 @@
     "name": "Tharn Flesh",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7A5131",
     "code": null,
     "discontinued": false
@@ -1174,7 +1187,7 @@
     "name": "Thornwood Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#65644B",
     "code": null,
     "discontinued": false
@@ -1184,7 +1197,7 @@
     "name": "Thrall Flesh",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CFD7AC",
     "code": null,
     "discontinued": false
@@ -1194,7 +1207,7 @@
     "name": "Traitor Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#808F65",
     "code": null,
     "discontinued": false
@@ -1204,7 +1217,7 @@
     "name": "Troll Tongue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B65E77",
     "code": null,
     "discontinued": false
@@ -1214,7 +1227,7 @@
     "name": "Trollblod Highlight",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BBB4A2",
     "code": null,
     "discontinued": false
@@ -1224,7 +1237,7 @@
     "name": "Trollblood Base",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#178799",
     "code": null,
     "discontinued": false
@@ -1234,7 +1247,7 @@
     "name": "Trollblood Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1F6A77",
     "code": null,
     "discontinued": false
@@ -1254,7 +1267,7 @@
     "name": "Umbral Umber",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#240600",
     "code": null,
     "discontinued": false
@@ -1264,7 +1277,7 @@
     "name": "Underbelly Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C0D4D9",
     "code": null,
     "discontinued": false
@@ -1274,7 +1287,7 @@
     "name": "Voltaic Blue",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7AA0AB",
     "code": null,
     "discontinued": false
@@ -1284,7 +1297,7 @@
     "name": "Wurm Green",
     "brand": "P3",
     "range": "Privateer Press Formula P3",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8FBE40",
     "code": null,
     "discontinued": false

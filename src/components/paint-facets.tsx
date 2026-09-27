@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import type { FacetOption } from "@/lib/paints/facet-availability";
+import type { FacetKind, FacetOption } from "@/lib/paints/facet-availability";
 import {
   COLLECTION_FILTER_OPTIONS,
   type CollectionFilter,
@@ -15,13 +15,12 @@ export interface PaintFacetsProps {
     brands: FacetOption[];
     ranges: FacetOption[];
     types: FacetOption[];
+    formats: FacetOption[];
+    binders: FacetOption[];
     families: FacetOption[];
   };
   selected: SharedFacets & { families: Set<string> };
-  onToggle: (
-    key: "brands" | "ranges" | "types" | "families",
-    value: string,
-  ) => void;
+  onToggle: (key: FacetKind, value: string) => void;
   onMetallic: (value: MetallicFilter) => void;
   onDiscontinued: (value: boolean) => void;
   /**
@@ -116,6 +115,22 @@ export function PaintFacets({
         options={options.types}
         selected={selected.types}
         onToggle={(v) => onToggle("types", v)}
+      />
+      <FacetGroup
+        title="Format"
+        options={options.formats}
+        selected={selected.formats}
+        onToggle={(v) => onToggle("formats", v)}
+      />
+      {/* Collapsed: few painters filter on chemistry, but the few who do (an
+          enamel wash over acrylic) really need it. The count badge still shows
+          when something is ticked. */}
+      <FacetGroup
+        title="Binder"
+        options={options.binders}
+        selected={selected.binders}
+        onToggle={(v) => onToggle("binders", v)}
+        defaultOpen={false}
       />
       <div className="border-b border-border py-3">
         <span className="text-sm font-semibold">Finish</span>

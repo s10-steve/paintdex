@@ -44,7 +44,7 @@ describe("the real catalogue", () => {
   it("carries all of Tone Pro: thirty colours, five tones each", () => {
     const tones = getAllPaints().filter((p) => p.range === "Tone Pro");
     expect(tones).toHaveLength(150);
-    expect(tones.every((p) => p.type === "tone" && p.brand === "Warhammer")).toBe(true);
+    expect(tones.every((p) => p.type === "opaque" && p.brand === "Warhammer")).toBe(true);
     for (const n of [1, 2, 3, 4, 5]) {
       expect(tones.filter((p) => p.name.endsWith(` ${n}`))).toHaveLength(30);
     }

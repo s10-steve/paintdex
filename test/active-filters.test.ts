@@ -42,17 +42,22 @@ describe("describeBrowseFilters", () => {
       browse({
         brands: new Set(["Vallejo"]),
         families: new Set(["red"]),
-        types: new Set(["oil"]),
+        types: new Set(["wash"]),
+        formats: new Set(["airbrush"]),
+        binders: new Set(["oil"]),
         metallic: "only",
         ranges: new Set(["Model Color"]),
         includeDiscontinued: true,
         search: "ork flesh",
       }),
     );
-    // Brand → family → type → finish → range → discontinued → search.
+    // Brand → family → type → format → binder → finish → range →
+    // discontinued → search.
     expect(labels(chips)).toEqual([
       "Vallejo",
       "Red",
+      "Wash / shade",
+      "Airbrush",
       "Oil",
       "Metallic only",
       "Model Color",
@@ -63,12 +68,14 @@ describe("describeBrowseFilters", () => {
 
   it("keys a chip by facet and value so a page can hand it back to its toggle", () => {
     const chips = describeBrowseFilters(
-      browse({ brands: new Set(["Citadel"]), types: new Set(["base"]) }),
+      browse({ brands: new Set(["Citadel"]), types: new Set(["technical"]) }),
     );
     // The key keeps the raw catalogue value; only the label is display-cased, so
     // a page can hand `value` straight back to its toggle.
-    expect(keys(chips)).toEqual(["brands:Citadel", "types:base"]);
-    expect(labels(chips)).toEqual(["Citadel", "Base"]);
+    expect(keys(chips)).toEqual(["brands:Citadel", "types:technical"]);
+    // The written-out word, not the internal value — the chip must read the
+    // same as its checkbox.
+    expect(labels(chips)).toEqual(["Citadel", "Texture & effect"]);
     expect(chips[0]).toMatchObject({ kind: "brands", value: "Citadel" });
   });
 
@@ -129,7 +136,9 @@ describe("describeSimilarFilters", () => {
   it("agrees with browse on the facets they share", () => {
     const shared = {
       brands: new Set(["Citadel"]),
-      types: new Set(["shade"]),
+      types: new Set(["wash"]),
+      formats: new Set(["spray"]),
+      binders: new Set(["lacquer"]),
       ranges: new Set(["Base"]),
       metallic: "only" as const,
       includeDiscontinued: true,

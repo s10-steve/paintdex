@@ -30,9 +30,10 @@ import {
   sanitiseSimilarParams,
   similarLinkQuery,
   writeSimilarParams,
+  LEGACY_TYPES,
   type SimilarParamState,
 } from "@/lib/paints/filter-params";
-import { PAINT_TYPES } from "@/lib/paints/types";
+import { PAINT_BINDERS, PAINT_FORMATS, PAINT_TYPES } from "@/lib/paints/types";
 
 const read = (qs: string) => readSimilarParams(new URLSearchParams(qs));
 const write = (state: SimilarParamState, qs = "") =>
@@ -64,10 +65,10 @@ describe("readSimilarParams", () => {
   });
 
   it("reads the facets the browse page already uses", () => {
-    const s = read("brand=Citadel,Vallejo&range=Base&type=layer,wash&metal=1");
+    const s = read("brand=Citadel,Vallejo&range=Base&type=opaque,wash&metal=1");
     expect([...s.brands]).toEqual(["Citadel", "Vallejo"]);
     expect([...s.ranges]).toEqual(["Base"]);
-    expect([...s.types]).toEqual(["layer", "wash"]);
+    expect([...s.types]).toEqual(["opaque", "wash"]);
     expect(s.metallic).toBe("only");
   });
 
@@ -85,9 +86,15 @@ describe("readSimilarParams", () => {
 
   it("drops paint types that aren't in the vocabulary", () => {
     // A hand-edited or stale URL must not produce a filter nothing can satisfy.
-    const s = read("type=layer,nonsense,wash");
-    expect([...s.types]).toEqual(["layer", "wash"]);
+    const s = read("type=opaque,nonsense,wash");
+    expect([...s.types]).toEqual(["opaque", "wash"]);
     expect([...read("type=nonsense").types]).toEqual([]);
+  });
+
+  it("reads the format and binder facets, dropping unknown values", () => {
+    const s = read("format=airbrush,nonsense&binder=enamel,oil,water");
+    expect([...s.formats]).toEqual(["airbrush"]);
+    expect([...s.binders]).toEqual(["enamel", "oil"]);
   });
 
   it("falls back to the default for an unknown match value", () => {
@@ -122,7 +129,7 @@ describe("writeSimilarParams", () => {
   });
 
   it("deletes a facet param rather than writing an empty one", () => {
-    const cleared = write(state(), "brand=Citadel&type=layer&metal=1&match=5");
+    const cleared = write(state(), "brand=Citadel&type=opaque&metal=1&match=5");
     expect(cleared).toBe("");
   });
 
@@ -160,7 +167,7 @@ describe("round-trip", () => {
       "everything at once",
       state({
         brands: new Set(["AK Interactive", "Army Painter"]),
-        types: new Set(["layer", "wash"]),
+        types: new Set(["opaque", "wash"]),
         ranges: new Set(["D&D Nolzur's Marvelous Pigments", "Warpaints"]),
         metallic: "exclude",
         minMatch: "20",
@@ -219,7 +226,7 @@ describe("hasFacetFilter", () => {
 
   it("is true for any facet", () => {
     expect(hasFacetFilter(state({ brands: new Set(["Citadel"]) }))).toBe(true);
-    expect(hasFacetFilter(state({ types: new Set(["layer"]) }))).toBe(true);
+    expect(hasFacetFilter(state({ types: new Set(["opaque"]) }))).toBe(true);
     expect(hasFacetFilter(state({ ranges: new Set(["Base"]) }))).toBe(true);
     expect(hasFacetFilter(state({ metallic: "only" }))).toBe(true);
   });
@@ -240,7 +247,7 @@ describe("isDefaultSimilarParams", () => {
 
   it("is false for anything the URL could be carrying", () => {
     expect(isDefaultSimilarParams(state({ brands: new Set(["Citadel"]) }))).toBe(false);
-    expect(isDefaultSimilarParams(state({ types: new Set(["layer"]) }))).toBe(false);
+    expect(isDefaultSimilarParams(state({ types: new Set(["opaque"]) }))).toBe(false);
     expect(isDefaultSimilarParams(state({ ranges: new Set(["Base"]) }))).toBe(false);
     expect(isDefaultSimilarParams(state({ metallic: "only" }))).toBe(false);
     expect(isDefaultSimilarParams(state({ minMatch: "2" }))).toBe(false);
@@ -288,13 +295,13 @@ describe("sanitiseSimilarParams", () => {
 
   it("leaves the other fields alone", () => {
     const s = sanitiseSimilarParams(
-      state({ metallic: "only", minMatch: "2", view: "plot", types: new Set(["layer"]) }),
+      state({ metallic: "only", minMatch: "2", view: "plot", types: new Set(["opaque"]) }),
       known,
     );
     expect(s.metallic).toBe("only");
     expect(s.minMatch).toBe("2");
     expect(s.view).toBe("plot");
-    expect([...s.types]).toEqual(["layer"]);
+    expect([...s.types]).toEqual(["opaque"]);
   });
 });
 
@@ -329,6 +336,34 @@ describe("comma-joining is safe for the real catalogue", () => {
     const { getAllPaints } = await import("@/lib/paints/load");
     const present = new Set(getAllPaints().map((p) => p.type));
     expect(PAINT_TYPES.filter((t) => !present.has(t))).toEqual([]);
+  });
+
+  // The same failure mode for the two facets that take closed vocabularies
+  // from `data/ranges.json`: pages render them from the constants directly.
+  it("has at least one paint for every format and binder", async () => {
+    const { getAllPaints } = await import("@/lib/paints/load");
+    const paints = getAllPaints();
+    const formats = new Set(paints.map((p) => p.format));
+    const binders = new Set(paints.map((p) => p.binder));
+    expect(PAINT_FORMATS.filter((f) => !formats.has(f))).toEqual([]);
+    expect(PAINT_BINDERS.filter((b) => !binders.has(b))).toEqual([]);
+  });
+
+  /**
+   * `LEGACY_TYPES` promises an old `?type=layer` link still shows what it
+   * showed. That's only true while those range names exist and the old type
+   * was exactly that range — pin the counts it was written against.
+   */
+  it("maps the old Citadel product-line types to ranges that still exist", async () => {
+    const { getAllPaints } = await import("@/lib/paints/load");
+    const byRange = new Map<string, number>();
+    for (const p of getAllPaints()) byRange.set(p.range, (byRange.get(p.range) ?? 0) + 1);
+    for (const [old, to] of Object.entries(LEGACY_TYPES)) {
+      for (const r of to.ranges ?? []) expect(byRange.get(r), `${old} → ${r}`).toBeGreaterThan(0);
+    }
+    expect(byRange.get("Layer")).toBe(93);
+    const opaque = (r: string) => getAllPaints().filter((p) => p.range === r && p.type === "opaque").length;
+    expect(opaque("Base") + opaque("Foundation")).toBe(143);
   });
 
   it("round-trips every real brand and range name through the URL", () => {
@@ -381,7 +416,7 @@ describe("the new codecs", () => {
 describe("readSharedFacets", () => {
   it("is exactly the intersection of the two page readers", () => {
     // The guard against the two state shapes drifting apart.
-    const qs = "brand=Citadel,Vallejo&range=Base&type=layer&metal=0&disc=1";
+    const qs = "brand=Citadel,Vallejo&range=Base&type=opaque&metal=0&disc=1";
     const shared = readSharedFacets(new URLSearchParams(qs));
     const fromBrowse = readBrowse(qs);
     const fromPanel = read(qs);
@@ -459,7 +494,7 @@ describe("writeBrowseParams", () => {
     const original = browseState({
       brands: new Set(["Citadel"]),
       ranges: new Set(["D&D Nolzur's Marvelous Pigments"]),
-      types: new Set(["layer"]),
+      types: new Set(["opaque"]),
       families: new Set(["red"]),
       metallic: "exclude",
       includeDiscontinued: true,
@@ -523,12 +558,14 @@ describe("travelParams", () => {
     expect(travelQuery(new URLSearchParams("brand=Vallejo"))).toBe("?brand=Vallejo");
   });
 
-  it("has TRAVEL_PARAMS covering exactly the eleven owned params", () => {
+  it("has TRAVEL_PARAMS covering exactly the thirteen owned params", () => {
     expect([...TRAVEL_PARAMS].sort()).toEqual(
       [
         "brand",
         "range",
         "type",
+        "format",
+        "binder",
         "metal",
         "disc",
         "mine",
@@ -561,7 +598,7 @@ describe("similarLinkQuery with the current URL", () => {
 });
 
 describe("clearParams — clear the controls in front of you", () => {
-  const busy = "q=x&brand=B&range=R&type=layer&metal=1&disc=1&family=red&sort=brand&view=plot&match=2&utm_source=n";
+  const busy = "q=x&brand=B&range=R&type=opaque&metal=1&disc=1&family=red&sort=brand&view=plot&match=2&utm_source=n";
 
   it("browse keeps sort, the panel's params, and foreign params", () => {
     const out = clearParams(new URLSearchParams(busy), BROWSE_CLEARABLE);
@@ -664,3 +701,67 @@ describe("effectiveFacets", () => {
     expect(effectiveFacets(s, true)).toBe(s);
   });
 });
+
+/**
+ * The old `type` vocabulary mixed what a paint does with Citadel's product
+ * lines, delivery, binder and the metallic finish. Links carrying it are out
+ * there (bookmarks, shared filters), so each old value is read into wherever
+ * it went — and the next write heals the URL to the new form.
+ */
+describe("legacy ?type= links", () => {
+  const legacy = (qs: string) => readBrowseParams(new URLSearchParams(qs));
+  const healed = (qs: string) =>
+    writeBrowseParams(new URLSearchParams(qs), legacy(qs)).toString();
+
+  it("sends Citadel's product lines to their ranges", () => {
+    expect([...legacy("type=layer").ranges]).toEqual(["Layer"]);
+    expect([...legacy("type=base").ranges].sort()).toEqual(["Base", "Foundation"]);
+    expect([...legacy("type=dry").ranges]).toEqual(["Dry"]);
+    expect([...legacy("type=tone").ranges]).toEqual(["Tone Pro"]);
+    expect(legacy("type=layer").types.size).toBe(0);
+    // Foundation also holds inks and a wash the old `base` never included.
+    expect([...legacy("type=base").types]).toEqual(["opaque"]);
+  });
+
+  it("folds shade into wash", () => {
+    expect([...legacy("type=shade").types]).toEqual(["wash"]);
+    expect([...legacy("type=shade,wash").types]).toEqual(["wash"]);
+  });
+
+  it("moves delivery and binder to their own facets", () => {
+    expect([...legacy("type=air").formats]).toEqual(["airbrush"]);
+    expect([...legacy("type=spray").formats]).toEqual(["spray"]);
+    expect([...legacy("type=enamel,oil").binders]).toEqual(["enamel", "oil"]);
+  });
+
+  it("turns the metallic type into the finish filter, unless metal= says otherwise", () => {
+    expect(legacy("type=metallic").metallic).toBe("only");
+    expect(legacy("type=metallic&metal=0").metallic).toBe("exclude");
+  });
+
+  it("drops other, which only ever meant unclassified", () => {
+    const s = legacy("type=other");
+    expect(s.types.size + s.ranges.size + s.formats.size + s.binders.size).toBe(0);
+  });
+
+  it("keeps new-vocabulary values alongside legacy ones", () => {
+    const s = legacy("type=layer,wash,contrast");
+    expect([...s.types].sort()).toEqual(["contrast", "wash"]);
+    expect([...s.ranges]).toEqual(["Layer"]);
+  });
+
+  it("heals to the new vocabulary on the next write, leaving other params alone", () => {
+    expect(healed("type=shade&brand=Warhammer&sort=brand")).toBe("type=wash&brand=Warhammer&sort=brand");
+    expect(healed("type=layer")).toBe("range=Layer");
+    expect(healed("type=air,metallic")).toBe("format=airbrush&metal=1");
+  });
+
+  it("covers every value of the old vocabulary", () => {
+    expect(Object.keys(LEGACY_TYPES).sort()).toEqual(
+      ["air", "base", "dry", "enamel", "layer", "metallic", "oil", "other", "shade", "spray", "tone"].sort(),
+    );
+    // And never shadows a current type, which would rewrite a live value.
+    for (const t of PAINT_TYPES) expect(LEGACY_TYPES[t]).toBeUndefined();
+  });
+});
+

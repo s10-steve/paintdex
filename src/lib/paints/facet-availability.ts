@@ -16,6 +16,7 @@
  *   worse than the asymmetry.
  */
 import type { MetallicFilter, SharedFacets } from "./filter-params";
+import { VALUE_LABELS } from "./types";
 
 /** One checkbox in a facet group. */
 export interface FacetOption {
@@ -30,6 +31,8 @@ export interface Facetable {
   brand: string;
   range: string;
   type: string;
+  format: string;
+  binder: string;
   family: string;
   metallic?: boolean;
   discontinued?: boolean;
@@ -39,6 +42,8 @@ export interface FacetAvailability {
   brands: Set<string>;
   ranges: Set<string>;
   types: Set<string>;
+  formats: Set<string>;
+  binders: Set<string>;
   families: Set<string>;
 }
 
@@ -58,7 +63,7 @@ export const matchesMetallic = (p: { metallic?: boolean }, m: MetallicFilter) =>
   m === "" ? true : m === "only" ? !!p.metallic : !p.metallic;
 
 /** Which facet a caller wants left out of the test. */
-export type FacetAxis = "brand" | "range" | "type" | "family";
+export type FacetAxis = "brand" | "range" | "type" | "format" | "binder" | "family";
 
 /**
  * Does this record survive the facet selection?
@@ -88,6 +93,8 @@ export function matchesFacets(
     (skip === "brand" || !sel.brands.size || sel.brands.has(p.brand)) &&
     (skip === "range" || !sel.ranges.size || sel.ranges.has(p.range)) &&
     (skip === "type" || !sel.types.size || sel.types.has(p.type)) &&
+    (skip === "format" || !sel.formats.size || sel.formats.has(p.format)) &&
+    (skip === "binder" || !sel.binders.size || sel.binders.has(p.binder)) &&
     (skip === "family" || !sel.families.size || sel.families.has(p.family))
   );
 }
@@ -106,14 +113,18 @@ export function computeAvailability(
   const brands = new Set<string>();
   const ranges = new Set<string>();
   const types = new Set<string>();
+  const formats = new Set<string>();
+  const binders = new Set<string>();
   const families = new Set<string>();
   for (const p of pool) {
     if (match(p, "brand")) brands.add(p.brand);
     if (match(p, "range")) ranges.add(p.range);
     if (match(p, "type")) types.add(p.type);
+    if (match(p, "format")) formats.add(p.format);
+    if (match(p, "binder")) binders.add(p.binder);
     if (match(p, "family")) families.add(p.family);
   }
-  return { brands, ranges, types, families };
+  return { brands, ranges, types, formats, binders, families };
 }
 
 /**
@@ -138,14 +149,16 @@ export function facetOptions(
     .map((v) => ({ value: v, label: facetLabel(kind, v) }));
 }
 
-/** The four multi-select facets, named as they are in the URL state. */
-export type FacetKind = "brands" | "ranges" | "types" | "families";
+/** The multi-select facets, named as they are in the URL state. */
+export type FacetKind = "brands" | "ranges" | "types" | "formats" | "binders" | "families";
 
 /**
  * Display form of a facet value.
  *
- * `type` and `family` are a lowercase internal vocabulary ("oil", "red");
- * brands and ranges carry their own casing and must be left alone.
+ * `type`, `format` and `binder` have written-out words (`VALUE_LABELS`:
+ * "technical" reads "Texture & effect"); `family` is a lowercase internal
+ * vocabulary ("red"), cased; brands and ranges carry their own casing and
+ * must be left alone.
  *
  * Done here rather than with a CSS `capitalize` on the control, because the
  * accessible name comes from the label's text content and CSS can't reach it —
@@ -154,6 +167,8 @@ export type FacetKind = "brands" | "ranges" | "types" | "families";
  * the two can't drift.
  */
 export const facetLabel = (kind: FacetKind, value: string): string =>
-  kind === "types" || kind === "families"
-    ? value.charAt(0).toUpperCase() + value.slice(1)
-    : value;
+  kind === "types" || kind === "formats" || kind === "binders"
+    ? (VALUE_LABELS[value] ?? value)
+    : kind === "families"
+      ? value.charAt(0).toUpperCase() + value.slice(1)
+      : value;

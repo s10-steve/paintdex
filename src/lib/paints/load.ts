@@ -14,20 +14,21 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { hexToLab, hueFamily } from "@/lib/color";
-import type { Paint, PaintWithLab } from "./types";
+import { withRangeInfo } from "./ranges";
+import type { PaintRecord, PaintWithLab } from "./types";
 
-const RAW: Paint[] = [
-  ...(warhammer as Paint[]),
-  ...(vallejo as Paint[]),
-  ...(akInteractive as Paint[]),
-  ...(armyPainter as Paint[]),
-  ...(duncanRhodes as Paint[]),
-  ...(greenStuffWorld as Paint[]),
-  ...(liquitex as Paint[]),
-  ...(mig as Paint[]),
-  ...(p3 as Paint[]),
-  ...(scale75 as Paint[]),
-  ...(tamiya as Paint[]),
+const RAW: PaintRecord[] = [
+  ...(warhammer as PaintRecord[]),
+  ...(vallejo as PaintRecord[]),
+  ...(akInteractive as PaintRecord[]),
+  ...(armyPainter as PaintRecord[]),
+  ...(duncanRhodes as PaintRecord[]),
+  ...(greenStuffWorld as PaintRecord[]),
+  ...(liquitex as PaintRecord[]),
+  ...(mig as PaintRecord[]),
+  ...(p3 as PaintRecord[]),
+  ...(scale75 as PaintRecord[]),
+  ...(tamiya as PaintRecord[]),
 ];
 
 let cache: PaintWithLab[] | null = null;
@@ -44,7 +45,7 @@ let cache: PaintWithLab[] | null = null;
 export function getAllPaints(): PaintWithLab[] {
   if (cache) return cache;
   cache = RAW.map((p) => ({
-    ...p,
+    ...withRangeInfo(p),
     lab: hexToLab(p.hex),
     family: hueFamily(p.hex),
   })).sort(
