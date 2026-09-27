@@ -65,7 +65,10 @@ schemes, sync them across devices, and share them by link.
   Needs an account — a collection is worth too much to leave in one browser.
   Signed in, both the browse grid and every paint's alternatives can be
   narrowed to **only the paints you own** (or own plus wishlist), so "what do I
-  already have that's close to this?" is one click.
+  already have that's close to this?" is one click. In the designer, **Your
+  paints for this scheme** checks a scheme against your collection: what you
+  own, what you'd need to buy (add them all to your wishlist in one go), and
+  the closest colour you already own for each paint you haven't got.
 - **Shareable scheme links.** Publish any saved scheme to an unguessable
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
   the full paint recipe, with a rich colour preview when pasted on social sites.
@@ -254,7 +257,12 @@ Still open:
       alternatives (list and plot), so "what do I already have that's close to
       this?" is one click. Paint schemes suggesting from your collection is the
       next step (see below).
-- [ ] Paint schemes can suggest only paints from your collection
+- [x] Paint schemes can suggest paints from your collection — the designer's
+      **Your paints for this scheme** lists what you own, what's on your
+      wishlist and what you'd need to buy, adds the lot to your wishlist in one
+      go, and shows the closest colour you already own for each missing paint.
+- [ ] Swap a scheme paint for the closest one you own in one click, rather
+      than only being shown it.
 - [ ] Import a collection from a pasted list or a CSV (name + brand), rather
       than only from Paintdex's own JSON export — typing in a few hundred pots
       one at a time is the barrier to starting.

@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **"Your paints for this scheme" in the designer.** Signed in, a new panel
+  under the share buttons checks the scheme against your collection. It says
+  how many of its paints you own, how many are on your wishlist and how many
+  you'd need to buy, and opening it lists them. **Add all to wishlist** puts
+  every paint you're missing on your wishlist in one go, ready for the shop.
+  For each one you haven't got it shows the closest colour you already own
+  *of the same kind* — an opaque paint for an opaque one, a wash for a wash,
+  metallic for metallic — with a link to compare it against all of yours, and
+  says so when nothing you own is close. Every paint in a mix counts, mediums
+  included, so Lahmian Medium turns up when you're out of it. "Same kind" leans
+  on how paints are categorised in our data, which is rough outside the
+  Warhammer range, so an odd suggestion may still slip through. Custom
+  colours, and paints we can no longer find in the catalogue, are listed
+  separately, with their own closest match.
 - **Show only the paints you own.** Signed in, the filters on the paints page
   and on every paint's alternatives gain a **Your paints** choice: all paints,
   paints I own, or owned plus wishlist. On a paint's page that turns the

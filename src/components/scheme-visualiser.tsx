@@ -7,6 +7,7 @@ import { ElementCard } from "./scheme/element-card";
 import { PosterStudio } from "./scheme/poster-studio";
 import { SchemePicker } from "./scheme/scheme-picker";
 import { ShareCard } from "./scheme/share-card";
+import { ShoppingListCard } from "./scheme/shopping-list-card";
 import { useAuth } from "./auth/auth-provider";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { useLocalScheme } from "@/hooks/use-local-scheme";
@@ -306,6 +307,8 @@ export function SchemeVisualiser() {
             onTogglePublished={() => void togglePublished()}
             onCopyLink={() => void copyShareLink()}
           />
+
+          <ShoppingListCard scheme={scheme} dbPaints={dbPaints} loadError={loadError} />
 
           {mounted && configured && googleEnabled && !user && (
             <div className="mb-3.5 flex items-start gap-2 rounded-md border border-border bg-card px-3 py-2 text-xs text-muted-foreground">
