@@ -205,6 +205,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   packing, photo framing, anchor projection, and `POSTER_FORMATS`);
   `scheme/poster-draw.ts` is its Canvas 2D renderer — see "Share images" below. `scheme/presets.ts` holds the
   curated example schemes — see "Example schemes" below.
+  `scheme/shopping-list.ts` is the pure half of the visualiser's "Your paints
+  for this scheme" card (`components/scheme/shopping-list-card.tsx`) — see "My
+  paints" below.
 - `supabase/` — the database. `schema.sql` is the bootstrap for a **fresh**
   project (tables, RLS, the `scheme-photos` bucket); `migrations/` holds the
   deltas to apply to an existing one, in order, by hand — never re-paste
@@ -269,6 +272,7 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   it needs the provider mocked where `scheme-editor.test.tsx` needs no auth at
   all) — see "My paints" below,
   `catalogue-sources.test.ts` (the `load.ts` drift guard)
+  `shopping-list.test.ts` and `shopping-list-card.test.tsx`,
   `paints-browser-collection.test.tsx` and `similar-colours-collection.test.tsx`
   (the `mine` filter on each page: off/loading/ready/failed, and that a
   signed-out visit never heals it out of the URL), `collection-filter.test.ts`,
@@ -840,6 +844,12 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
     then `removePaints` for what the file doesn't list). The reverse — empty,
     then import — lost the whole collection to a dropped connection between the
     two, which is why there is no "clear everything" helper any more.
+  - **`setStatusMany` is the one bulk write** (the shopping list's "Add all to
+    wishlist"): it skips ids already at the status, makes one optimistic
+    update and one `importCollection` upsert, and on failure rolls back *only
+    its own ids* through a functional update, with one banner. Caveat:
+    `importCollection` chunks at 500, so past that a failure can leave earlier
+    chunks written; a scheme can't get near it, and the next load corrects it.
   - **Writes are optimistic with rollback**, and the rollback is the point — a
     toggle that flipped, failed silently and reverted on the next load is the
     one failure this feature can't afford. Failures go through `AlertBanner`
@@ -956,6 +966,18 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
 - **Not inside the ↑↓✕ cluster**, wherever it lands: that cluster is
   `opacity-40` until hover, which is right for actions and wrong for state — a
   faded ✓ would hide whether the paint is already in your collection.
+- **The shopping list walks `components()`, not the entry.** Every ingredient
+  of a mix is a pot you need, mediums included — the blend leaves Lahmian
+  Medium out of the colour, but you still have to buy it. Ids come from
+  `cataloguePaintId` (a scheme paint has none of its own), deduplicated in
+  first-appearance order with the elements each is used on; anything that
+  doesn't resolve is `unmatched` with a reason, never dropped, so the counts add
+  up. It waits for the catalogue as well as the collection — with the index
+  still loading every paint would resolve to nothing and be listed, wrongly and
+  confidently, as "not in the catalogue". "Closest colour you own" is ΔE over
+  *owned* paints only (a wishlisted pot isn't one you can reach for), memoized
+  on the collection map's identity so typing the title doesn't redo it, and
+  worded as a colour match rather than a substitute on purpose.
 - **`/my-paints` filters in local state, not the URL.** The URL-as-truth rule
   exists for shareability, and this page is `noindex` and per-user — a link to
   it means nothing to anyone else. It also hard-wires `includeDiscontinued: true`

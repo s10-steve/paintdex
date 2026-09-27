@@ -36,6 +36,7 @@ vi.mock("@/components/auth/auth-provider", () => ({
 const listCollection = vi.fn<(userId: string) => Promise<PaintCollectionRow[]>>();
 const setPaintStatus = vi.fn();
 const removePaint = vi.fn();
+const importCollection = vi.fn();
 
 // Every export the module has: one absent from the factory is `undefined`, and
 // a test that reaches it dies on the call rather than on its assertion.
@@ -43,7 +44,7 @@ vi.mock("@/lib/data/paint-collection", () => ({
   listCollection: (...a: unknown[]) => listCollection(...(a as [string])),
   setPaintStatus: (...a: unknown[]) => setPaintStatus(...a),
   removePaint: (...a: unknown[]) => removePaint(...a),
-  importCollection: vi.fn(),
+  importCollection: (...a: unknown[]) => importCollection(...a),
   removePaints: vi.fn(),
 }));
 
@@ -93,6 +94,7 @@ beforeEach(() => {
   listCollection.mockReset();
   setPaintStatus.mockReset();
   removePaint.mockReset();
+  importCollection.mockReset().mockResolvedValue(0);
   listCollection.mockResolvedValue([]);
   setPaintStatus.mockResolvedValue(row("p1", "owned"));
   removePaint.mockResolvedValue({ matched: true });
@@ -297,5 +299,50 @@ describe("without a provider", () => {
     render(<Probe />);
     expect(screen.getByTestId("enabled").textContent).toBe("false");
     expect(statusText()).toBe("none");
+  });
+});
+
+describe("setStatusMany", () => {
+  function Bulk() {
+    const { statusOf, setStatusMany } = useCollection();
+    return (
+      <div>
+        <span data-testid="bulk">{["p1", "p2", "p3"].map((id) => statusOf(id) ?? "none").join(",")}</span>
+        <button onClick={() => void setStatusMany(["p1", "p2", "p3", "p2"], "wishlist")}>wish all</button>
+      </div>
+    );
+  }
+  const renderBulk = () =>
+    render(
+      <CollectionProvider>
+        <Bulk />
+      </CollectionProvider>,
+    );
+  const bulk = () => screen.getByTestId("bulk").textContent;
+
+  it("applies at once, in one request, skipping paints already there", async () => {
+    listCollection.mockResolvedValue([row("p1", "wishlist")]);
+    renderBulk();
+    await flush();
+    await act(async () => screen.getByText("wish all").click());
+
+    expect(bulk()).toBe("wishlist,wishlist,wishlist");
+    expect(importCollection).toHaveBeenCalledTimes(1);
+    expect(importCollection).toHaveBeenCalledWith("user-1", [
+      { paintId: "p2", status: "wishlist" },
+      { paintId: "p3", status: "wishlist" },
+    ]);
+  });
+
+  it("rolls back only its own paints and reports once when the write fails", async () => {
+    listCollection.mockResolvedValue([row("p1", "owned")]);
+    importCollection.mockRejectedValue(new Error("network"));
+    renderBulk();
+    await flush();
+    await act(async () => screen.getByText("wish all").click());
+
+    // p1 was owned and moved; it goes back to owned, the rest back to absent.
+    expect(bulk()).toBe("owned,none,none");
+    expect(screen.getAllByRole("alert")).toHaveLength(1);
   });
 });
