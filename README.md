@@ -63,6 +63,9 @@ schemes, sync them across devices, and share them by link.
   family and sorts them round the colour wheel, and can export and re-import
   the whole collection as JSON.
   Needs an account — a collection is worth too much to leave in one browser.
+  Signed in, both the browse grid and every paint's alternatives can be
+  narrowed to **only the paints you own** (or own plus wishlist), so "what do I
+  already have that's close to this?" is one click.
 - **Shareable scheme links.** Publish any saved scheme to an unguessable
   `/scheme/<slug>` link that anyone can open — no login — to see the visual and
   the full paint recipe, with a rich colour preview when pasted on social sites.
@@ -231,6 +234,10 @@ Still open:
 
 - [x] Save the paints you own
 - [x] Wishlist for paints you don't own yet but want to buy
+- [x] Show only the paints you own — on the browse grid and on every paint's
+      alternatives (list and plot), so "what do I already have that's close to
+      this?" is one click. Paint schemes suggesting from your collection is the
+      next step (see below).
 - [ ] Paint schemes can suggest only paints from your collection
 - [ ] Import a collection from a pasted list or a CSV (name + brand), rather
       than only from Paintdex's own JSON export — typing in a few hundred pots

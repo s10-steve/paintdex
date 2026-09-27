@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Show only the paints you own.** Signed in, the filters on the paints page
+  and on every paint's alternatives gain a **Your paints** choice: all paints,
+  paints I own, or owned plus wishlist. On a paint's page that turns the
+  alternatives into "what do I already have that's close to this?", in both
+  the list and the plot, and it stays on as you click from paint to paint. It
+  lives in the link like the other filters, so a link with it on shows
+  whoever opens it *their own* paints — or everything, if they're signed out.
+  Your discontinued paints are always included, since you still have them.
+  The one cost: with it on, a paint's alternatives take a moment longer to
+  appear, because they can't use the list we build in advance.
+
 - **Warhammer Tone Pro is in the database** — all 30 colours in all five
   tones, 150 paints, each on its own page with its closest matches from every
   other brand, so you can see which of them you already have something close

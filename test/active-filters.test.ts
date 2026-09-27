@@ -139,3 +139,17 @@ describe("describeSimilarFilters", () => {
     );
   });
 });
+
+describe("the collection filter chip", () => {
+  it("comes first, matching the radio at the top of the sidebar", () => {
+    const chips = describeBrowseFilters(browse({ mine: "owned", brands: new Set(["Vallejo"]) }));
+    expect(keys(chips)).toEqual(["mine", "brands:Vallejo"]);
+    expect(labels(chips)[0]).toBe("Paints I own");
+  });
+
+  it("appears on the panel too, labelled the way the radio is", () => {
+    expect(labels(describeSimilarFilters(similar({ mine: "collection" })))).toEqual([
+      "Owned or on wishlist",
+    ]);
+  });
+});

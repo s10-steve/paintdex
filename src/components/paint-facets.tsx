@@ -2,7 +2,12 @@
 
 import { useId } from "react";
 import type { FacetOption } from "@/lib/paints/facet-availability";
-import type { MetallicFilter, SharedFacets } from "@/lib/paints/filter-params";
+import {
+  COLLECTION_FILTER_OPTIONS,
+  type CollectionFilter,
+  type MetallicFilter,
+  type SharedFacets,
+} from "@/lib/paints/filter-params";
 import { FacetGroup } from "./facet-group";
 
 export interface PaintFacetsProps {
@@ -27,6 +32,12 @@ export interface PaintFacetsProps {
    * no such control" indistinguishable from "the catalogue hasn't loaded yet".
    */
   show?: { family?: boolean; discontinued?: boolean };
+  /**
+   * The "Your paints" radio — passed only when the collection is enabled, so
+   * a signed-out visitor never sees it (nor sees it flash in and out while auth
+   * resolves). The value is the *effective* one, so it matches the chip.
+   */
+  collection?: { value: CollectionFilter; onChange: (value: CollectionFilter) => void };
 }
 
 /**
@@ -47,18 +58,45 @@ export function PaintFacets({
   onMetallic,
   onDiscontinued,
   show,
+  collection,
 }: PaintFacetsProps) {
   // Both sidebars are in the DOM at once — the desktop copy is `hidden md:block`,
   // not unmounted — so a hardcoded radio `name` made the two copies a single
   // group, and clicking in the drawer moved the hidden one instead. Same reason
   // the "Minimum match" select needs a generated id.
   const finishName = useId();
+  const collectionName = useId();
 
   const showFamily = show?.family !== false;
   const showDiscontinued = show?.discontinued !== false;
 
   return (
     <>
+      {collection ? (
+        // First, because it's the coarsest cut and the one a signed-in painter
+        // reaches for — "what do I already have that's close?" — before
+        // narrowing by brand inside it.
+        <div className="border-b border-border py-3">
+          <span className="text-sm font-semibold">Your paints</span>
+          <div className="mt-2 flex flex-col gap-1">
+            {COLLECTION_FILTER_OPTIONS.map((o) => (
+              <label
+                key={o.value}
+                className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-sm hover:bg-muted"
+              >
+                <input
+                  type="radio"
+                  name={collectionName}
+                  className="accent-[var(--primary)]"
+                  checked={collection.value === o.value}
+                  onChange={() => collection.onChange(o.value)}
+                />
+                {o.label}
+              </label>
+            ))}
+          </div>
+        </div>
+      ) : null}
       <FacetGroup
         title="Brand"
         options={options.brands}

@@ -7,6 +7,8 @@ import {
   SIMILAR_CLEARABLE,
   TRAVEL_PARAMS,
   clearParams,
+  effectiveFacets,
+  parseMine,
   emptyBrowseParams,
   emptySharedFacets,
   hasSharedFacet,
@@ -521,7 +523,7 @@ describe("travelParams", () => {
     expect(travelQuery(new URLSearchParams("brand=Vallejo"))).toBe("?brand=Vallejo");
   });
 
-  it("has TRAVEL_PARAMS covering exactly the ten owned params", () => {
+  it("has TRAVEL_PARAMS covering exactly the eleven owned params", () => {
     expect([...TRAVEL_PARAMS].sort()).toEqual(
       [
         "brand",
@@ -529,6 +531,7 @@ describe("travelParams", () => {
         "type",
         "metal",
         "disc",
+        "mine",
         "family",
         "q",
         "sort",
@@ -593,5 +596,71 @@ describe("sanitiseSharedFacets", () => {
     expect(panel.minMatch).toBe("2");
     expect(panel.view).toBe("plot");
     expect(panel.includeDiscontinued).toBe(true);
+  });
+});
+
+describe("mine — only paints I own", () => {
+  it("reads the closed vocabulary and drops anything else", () => {
+    expect(parseMine("owned")).toBe("owned");
+    expect(parseMine("collection")).toBe("collection");
+    expect(parseMine("wishlist")).toBe("");
+    expect(parseMine(null)).toBe("");
+    expect(read("mine=junk").mine).toBe("");
+  });
+
+  it("round-trips through both pages' writers, and is absent when off", () => {
+    expect(write(state({ mine: "owned" }))).toBe("mine=owned");
+    expect(write(state())).toBe("");
+    const browse = writeBrowseParams(new URLSearchParams(), {
+      ...emptyBrowseParams(),
+      mine: "collection",
+    });
+    expect(readBrowseParams(browse).mine).toBe("collection");
+  });
+
+  it("counts as a filter, which is what forces the panel's client re-rank", () => {
+    // The precomputed sixteen can't know whose paints are whose.
+    expect(hasSharedFacet({ ...emptySharedFacets(), mine: "owned" })).toBe(true);
+    expect(isDefaultSimilarParams(state({ mine: "owned" }))).toBe(false);
+  });
+
+  it("travels on outgoing links", () => {
+    expect(similarLinkQuery(state({ mine: "owned" }))).toBe("?mine=owned");
+  });
+
+  it("is cleared by either page's Clear all", () => {
+    const busy = new URLSearchParams("mine=owned&sort=brand&view=plot");
+    expect(clearParams(busy, BROWSE_CLEARABLE).get("mine")).toBeNull();
+    expect(clearParams(busy, SIMILAR_CLEARABLE).get("mine")).toBeNull();
+  });
+});
+
+describe("effectiveFacets", () => {
+  it("carries mine without applying it while the collection is off", () => {
+    // Not healed away: signing in mid-session should put it into effect.
+    const s = state({ mine: "owned", brands: new Set(["Vallejo"]) });
+    const off = effectiveFacets(s, false);
+    expect(off.mine).toBe("");
+    expect(off.brands).toEqual(new Set(["Vallejo"]));
+    expect(hasSharedFacet(off)).toBe(true);
+    expect(isDefaultSimilarParams(effectiveFacets(state({ mine: "owned" }), false))).toBe(true);
+  });
+
+  it("applies mine when the collection is on", () => {
+    expect(effectiveFacets(state({ mine: "owned" }), true).mine).toBe("owned");
+  });
+
+  it("takes disc out of effect while mine is on — your own paints show either way", () => {
+    const on = effectiveFacets(state({ mine: "owned", includeDiscontinued: true }), true);
+    expect(on.includeDiscontinued).toBe(false);
+    // And gives it back once mine is cleared.
+    expect(effectiveFacets(state({ includeDiscontinued: true }), true).includeDiscontinued).toBe(
+      true,
+    );
+  });
+
+  it("returns the same object when there's nothing to change", () => {
+    const s = state({ brands: new Set(["Vallejo"]) });
+    expect(effectiveFacets(s, true)).toBe(s);
   });
 });

@@ -187,8 +187,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `active-filters.ts`, which turns either page's param state into the
   removable chip list, `catalogue-match.ts`, which recovers a catalogue id from
   a paint that only carries its name and maker (the visualiser's problem — see
-  "My paints" below), and `lab-index.ts`, a module-scope memo attaching Lab to
-  the browse index), `scheme/` (bar maths, JSON import/export, types, plus `mix.ts`
+  "My paints" below), `collection-filter.ts` (the id set "only paints I own"
+  narrows to — see `mine` below), and `lab-index.ts`, a module-scope memo
+  attaching Lab to the browse index), `scheme/` (bar maths, JSON import/export, types, plus `mix.ts`
   — mixed entries and `displayHex`, the one thing a renderer may read for a
   colour, see "Mixes and notes" below — and `local-store.ts`,
   the sole owner of the visualiser's `localStorage` document and its **binding**
@@ -268,6 +269,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   it needs the provider mocked where `scheme-editor.test.tsx` needs no auth at
   all) — see "My paints" below,
   `catalogue-sources.test.ts` (the `load.ts` drift guard)
+  `paints-browser-collection.test.tsx` and `similar-colours-collection.test.tsx`
+  (the `mine` filter on each page: off/loading/ready/failed, and that a
+  signed-out visit never heals it out of the URL), `collection-filter.test.ts`,
   `header-disclosure.test.tsx`, `add-paint.test.tsx` (the visualiser's search
   is a combobox with the `paint-suggestions` invariants) and
   `poster-studio.test.tsx` (the shape radios' roving tab stop),
@@ -301,19 +305,54 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   hard-loaded with query params (e.g. arriving from the homepage search), which
   silently freezes the results. See `src/components/paints-browser.tsx`.
   - `src/lib/paints/filter-params.ts` owns the **whole** vocabulary for both pages
-    — `brand`, `range`, `type`, `metal`, `disc`, `family`, `q`, `sort`, `match`,
-    `view` — plus `TRAVEL_PARAMS`, the allow-list an internal link may copy.
+    — `brand`, `range`, `type`, `metal`, `disc`, `mine`, `family`, `q`, `sort`,
+    `match`, `view` — plus `TRAVEL_PARAMS`, the allow-list an internal link may
+    copy.
   - **Filters travel between the two pages, in both directions**, and the rule for
     what goes where generalises the one already stated for the plot's `axisChoice`
     below: **a param that says *which paints you want* is shared and travels; a
     param that says *how to present this page* stays local.**
-    - `brand`/`range`/`type`/`metal`/`disc` are `SharedFacets`: applied by both
+    - `brand`/`range`/`type`/`metal`/`disc`/`mine` are `SharedFacets`: applied by both
       pages, and rendered by one component (`paint-facets.tsx`) so the sidebars
       can't drift apart again — they previously disagreed on the heading, on the
       wording of the metallic option, and on which groups existed.
     - `sort` (browse) and `view` (paint page) are presentation and stay put.
     - `q` and `family` (browse-only) and `match` (panel-only) are filters with a
       control on one page: **carried in the URL, never applied by the other.**
+  - **`mine` ("only paints I own") is the one per-user param**, and the first
+    time a shared URL has carried a value whose meaning depends on who opens it:
+    a shared `?mine=owned` link shows the *opener's* paints, which is coherent
+    and is what the chip says. It is a URL param rather than local state
+    (the `/my-paints` precedent) because it has to survive the flow it exists
+    for — paint → paint → Back — and the panel remounts on every navigation.
+    - **Applied only through `effectiveFacets(state, phase !== "off")`.** With
+      the collection off it is carried but not applied: no filter, no chip, no
+      count, and the precomputed first render is kept. It is **not healed away**
+      — auth can change within a session, and signing in from the header should
+      put it into effect, not have lost it. So this carried-but-not-applied
+      case depends on the session, where `q`/`family` depend on the page.
+    - **Reads use the effective state; writes use the raw one.** Chips,
+      `Filters (N)`, Clear all, availability and the predicate all read
+      `applied`; `commit`, the heal effect and `similarLinkQuery` read
+      `filters`. Mixing them either strips `mine` from a signed-out URL or
+      applies a filter nobody can see.
+    - **Applied vs. shown are different gates.** Applied when `phase !== "off"`
+      (so `loading` counts, and a signed-in arrival never flashes every paint);
+      the radio is rendered only when `enabled`. While `loading` the page shows
+      its skeleton, never "No paints found"; on `failed` it says so with a
+      retry.
+    - **It takes `disc` out of effect**: your own discontinued paints are shown
+      regardless (a collection is a record of what you have), the checkbox is
+      hidden, and `disc` comes back when `mine` is cleared. That's also why
+      `matchesFacets` lifts the discontinued exclusion for members of
+      `inCollection`.
+    - `hasSharedFacet` counts it, which is what forces the panel's client
+      re-rank — the precomputed sixteen can't know whose paints are whose.
+    - `matchesFacets` never learns what a collection is: it takes
+      `inCollection`, a set from `paints/collection-filter.ts`, memoized on the
+      provider map's identity (the `lab-index.ts` rule).
+    - Both pages' `Filters (N)` badge and Clear-all gate are now
+      `chips.length`, so the three can't disagree by construction.
   - **`family` is carried but not applied on `/paints/[id]`, deliberately.** Matches
     all cluster around the reference colour, so applying it would be a no-op most of
     the time and would silently empty the list at a family boundary, with no

@@ -144,6 +144,7 @@ describe("matchesFacets", () => {
     families: new Set(),
     metallic: "",
     includeDiscontinued: false,
+    mine: "",
     ...over,
   });
   const p = {
@@ -186,5 +187,48 @@ describe("matchesFacets", () => {
     const other = sel({ brands: new Set(["Vallejo"]) });
     expect(matchesFacets(p, other)).toBe(false);
     expect(matchesFacets(p, other, "brand")).toBe(true);
+  });
+});
+
+describe("the collection filter (inCollection)", () => {
+  const owned = (id: string, brand: string, extra: { discontinued?: boolean } = {}): Facetable => ({
+    id,
+    brand,
+    range: "Base",
+    type: "base",
+    family: "red",
+    ...extra,
+  });
+  const MINE = new Set(["a", "old"]);
+  const pool = [
+    owned("a", "Citadel"),
+    owned("b", "Vallejo"),
+    owned("old", "Citadel", { discontinued: true }),
+  ];
+
+  it("keeps only the paints in the set", () => {
+    expect(pool.filter((x) => matchesFacets(x, sel({ inCollection: MINE }))).map((x) => x.id)).toEqual(
+      ["a", "old"],
+    );
+  });
+
+  it("keeps your discontinued paints without `includeDiscontinued`", () => {
+    // A collection is a record of what you have, so the catalogue-wide default
+    // that hides discontinued paints doesn't apply to it.
+    const gone = owned("old", "Citadel", { discontinued: true });
+    expect(matchesFacets(gone, sel({ inCollection: MINE }))).toBe(true);
+    // Not yours: still hidden.
+    expect(matchesFacets(owned("x", "Citadel", { discontinued: true }), sel({ inCollection: MINE }))).toBe(
+      false,
+    );
+  });
+
+  it("never matches a record without an id", () => {
+    expect(matchesFacets(p("Citadel", "Base", "base", "red"), sel({ inCollection: MINE }))).toBe(false);
+  });
+
+  it("prunes the sidebar to the brands you own", () => {
+    const a = computeAvailability(pool, sel({ inCollection: new Set(["a"]) }));
+    expect([...a.brands]).toEqual(["Citadel"]);
   });
 });

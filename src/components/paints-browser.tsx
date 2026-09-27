@@ -10,6 +10,8 @@ import {
   travelQuery,
   SORT_KEYS,
   clearParams,
+  collectionFilterLabel,
+  effectiveFacets,
   readBrowseParams,
   sanitiseSharedFacets,
   writeBrowseParams,
@@ -24,7 +26,9 @@ import {
   describeBrowseFilters,
   type ActiveFilterChip,
 } from "@/lib/paints/active-filters";
+import { collectionIds } from "@/lib/paints/collection-filter";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
+import { useCollection } from "./collection/collection-provider";
 import { useModalDialog } from "@/hooks/use-modal-dialog";
 import { ActiveFilters } from "./active-filters";
 import { PaintSearchBox } from "./paint-search-box";
@@ -83,7 +87,24 @@ export function PaintsBrowser({
     return sanitiseSharedFacets(fromUrl, { brands, ranges });
   }, [searchParams, brands, ranges]);
 
-  const { metallic, includeDiscontinued, sort } = filters;
+  /**
+   * What's applied, as opposed to what the URL says: `?mine=` takes part only
+   * once there's a collection to take part — see `effectiveFacets`. Reads (the
+   * grid, availability, chips, the count) use this; writes (`commit`, the heal
+   * effect) keep using `filters`, so a signed-out visit never strips `mine`
+   * from the URL and signing in puts it straight into effect.
+   */
+  const collection = useCollection();
+  const collectionOn = collection.phase !== "off";
+  const applied = useMemo(() => effectiveFacets(filters, collectionOn), [filters, collectionOn]);
+  const inCollection =
+    applied.mine && collection.phase === "ready"
+      ? collectionIds(collection.entries, applied.mine)
+      : null;
+  const collectionPending = !!applied.mine && collection.phase === "loading";
+  const collectionFailed = !!applied.mine && collection.phase === "failed";
+
+  const { metallic, includeDiscontinued, sort } = applied;
   const q = filters.search;
 
   // Local search text so typing stays snappy; committed to the URL (debounced).
@@ -233,17 +254,18 @@ export function PaintsBrowser({
         paints ?? [],
         {
           search: q,
-          brands: [...filters.brands],
-          ranges: [...filters.ranges],
-          types: [...filters.types] as PaintType[],
-          families: [...filters.families],
+          brands: [...applied.brands],
+          ranges: [...applied.ranges],
+          types: [...applied.types] as PaintType[],
+          families: [...applied.families],
           includeDiscontinued,
           // PaintFilters wants the finish absent rather than empty.
           metallic: metallic || undefined,
+          inCollection,
         },
         sort,
       ),
-    [paints, q, filters, includeDiscontinued, metallic, sort],
+    [paints, q, applied, includeDiscontinued, metallic, sort, inCollection],
   );
 
   // Incremental rendering; reset to the first page whenever the query changes.
@@ -261,23 +283,26 @@ export function PaintsBrowser({
   // lands, which prunes nothing — the sidebar renders in full from the props
   // immediately and only narrows once it can.
   const available = useMemo(
-    () => (paints ? computeAvailability(paints, filters) : null),
-    [paints, filters],
+    () => (paints ? computeAvailability(paints, { ...applied, inCollection }) : null),
+    [paints, applied, inCollection],
   );
 
-  const brandOptions = facetOptions(brands, available?.brands ?? null, filters.brands, "brands");
-  const familyOptions = facetOptions(families, available?.families ?? null, filters.families, "families");
-  const typeOptions = facetOptions(types, available?.types ?? null, filters.types, "types");
-  const rangeOptions = facetOptions(ranges, available?.ranges ?? null, filters.ranges, "ranges");
+  const brandOptions = facetOptions(brands, available?.brands ?? null, applied.brands, "brands");
+  const familyOptions = facetOptions(families, available?.families ?? null, applied.families, "families");
+  const typeOptions = facetOptions(types, available?.types ?? null, applied.types, "types");
+  const rangeOptions = facetOptions(ranges, available?.ranges ?? null, applied.ranges, "ranges");
 
   /**
    * Undo one chip. Every branch goes through a writer that already exists, so
    * the summary is a second *view* of the filter state, never a second way to
    * write it.
    */
-  const chips = describeBrowseFilters(filters);
+  const chips = describeBrowseFilters(applied);
   const removeChip = (c: ActiveFilterChip) => {
     switch (c.kind) {
+      case "mine":
+        commit((prev) => ({ ...prev, mine: "" }));
+        break;
       case "brands":
       case "ranges":
       case "types":
@@ -306,14 +331,9 @@ export function PaintsBrowser({
     }
   };
 
-  const activeFilterCount =
-    filters.brands.size +
-    filters.ranges.size +
-    filters.types.size +
-    filters.families.size +
-    (includeDiscontinued ? 1 : 0) +
-    (metallic ? 1 : 0) +
-    (q ? 1 : 0);
+  // The chip list's length rather than a separate tally, so the badge, the
+  // chips and the Clear-all gate can't disagree about what's applied.
+  const activeFilterCount = chips.length;
 
   /**
    * The query every card link carries, so browse's filters follow the click. Built
@@ -348,11 +368,22 @@ export function PaintsBrowser({
           types: typeOptions,
           families: familyOptions,
         }}
-        selected={filters}
+        selected={applied}
         onToggle={(key, value) => toggleFacet(key)(value)}
         onMetallic={(value) => commit((prev) => ({ ...prev, metallic: value }))}
         onDiscontinued={(value) =>
           commit((prev) => ({ ...prev, includeDiscontinued: value }))
+        }
+        // Hidden while "only paints I own" is on: your discontinued paints are
+        // shown regardless, so the box would do nothing.
+        show={{ discontinued: !applied.mine }}
+        collection={
+          collection.enabled
+            ? {
+                value: applied.mine,
+                onChange: (value) => commit((prev) => ({ ...prev, mine: value })),
+              }
+            : undefined
         }
       />
     </div>
@@ -421,14 +452,14 @@ export function PaintsBrowser({
             />
           )}
           <p className="mb-3 text-sm text-muted-foreground" aria-live="polite">
-            {loading
+            {loading || collectionPending
               ? "Loading paints…"
               : `${results.length.toLocaleString()} paint${
                   results.length === 1 ? "" : "s"
                 }`}
           </p>
 
-          {loading ? (
+          {loading || collectionPending ? (
             <div
               className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"
               aria-hidden="true"
@@ -449,9 +480,26 @@ export function PaintsBrowser({
                 Check your connection and try refreshing the page.
               </p>
             </div>
+          ) : collectionFailed ? (
+            <div className="rounded-lg border border-dashed border-border p-10 text-center text-muted-foreground">
+              <p className="font-medium text-foreground">Couldn’t load your paints</p>
+              <p className="mt-1 text-sm">
+                Remove the “{collectionFilterLabel(applied.mine)}” filter to browse
+                everything, or try again.
+              </p>
+              <button
+                type="button"
+                onClick={() => void collection.reload()}
+                className="mt-4 rounded-md border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
+              >
+                Try again
+              </button>
+            </div>
           ) : results.length === 0 ? (
             <div className="rounded-lg border border-dashed border-border p-10 text-center text-muted-foreground">
-              <p className="font-medium text-foreground">No paints found</p>
+              <p className="font-medium text-foreground">
+                {applied.mine ? "None of your paints match" : "No paints found"}
+              </p>
               <p className="mt-1 text-sm">
                 Try clearing some filters or a different search term.
               </p>

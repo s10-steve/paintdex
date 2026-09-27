@@ -410,6 +410,8 @@ function CollectionManager() {
               // Never applied here — see the `includeDiscontinued` note above —
               // and the control is hidden, so this value is inert.
               includeDiscontinued: true,
+              // The page *is* the collection, and never passes the control.
+              mine: "",
             }}
             onToggle={toggleFacet}
             onMetallic={setMetallic}

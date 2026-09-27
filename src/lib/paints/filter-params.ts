@@ -11,12 +11,18 @@
  * The rule that decides where a param lives:
  *
  * - A param that says **which paints you want** is shared, applied by both pages,
- *   and travels: `brand`, `range`, `type`, `metal`, `disc` (see `SharedFacets`).
+ *   and travels: `brand`, `range`, `type`, `metal`, `disc`, `mine` (see
+ *   `SharedFacets`).
  * - A param that says **how to present this page** stays local: `sort` on browse,
  *   `view` on a paint page.
  * - A filter with a control on only one page is **carried but never applied by the
  *   other**: `q` and `family` (browse-only), `match` (panel-only). They ride the
  *   URL untouched so a round trip restores them.
+ *
+ * `mine` is the one per-user param: "only paints I own" means the *opener's*
+ * paints, whoever that is, and means nothing signed out. It is carried but not
+ * applied while the collection is off — see `effectiveFacets` — rather than
+ * healed away, so signing in mid-session doesn't lose it.
  *
  * Pure: no DOM, no React, no `window`. Callers read params from wherever suits
  * them — browse from `useSearchParams()`, the panel from `window.location` — and
@@ -41,6 +47,7 @@ export const FILTER_PARAMS = {
   type: "type",
   metal: "metal",
   disc: "disc",
+  mine: "mine",
   family: "family",
   q: "q",
   sort: "sort",
@@ -81,6 +88,25 @@ export const DEFAULT_SORT: SortKey = "name";
  */
 export const MATCH_VALUES = ["1", "2", "5", "10", "20", "all"] as const;
 export type MatchValue = (typeof MATCH_VALUES)[number];
+
+/**
+ * Narrow to the signed-in user's own paints. Nested, so a radio reads naturally:
+ * everything ⊃ owned or wishlisted ⊃ owned. There is no "wishlist only" — that
+ * list is `/my-paints`' job — but the vocabulary is closed and validated, so one
+ * can be added later without breaking old links.
+ */
+export const COLLECTION_FILTERS = ["owned", "collection"] as const;
+export type CollectionFilter = "" | (typeof COLLECTION_FILTERS)[number];
+
+/** The radio's options, and the chip's words — one string for both. */
+export const COLLECTION_FILTER_OPTIONS: readonly { value: CollectionFilter; label: string }[] = [
+  { value: "", label: "All paints" },
+  { value: "owned", label: "Paints I own" },
+  { value: "collection", label: "Owned or on wishlist" },
+];
+
+export const collectionFilterLabel = (v: CollectionFilter): string =>
+  COLLECTION_FILTER_OPTIONS.find((o) => o.value === v)?.label ?? v;
 
 /** Looser matches aren't much use, so the panel opens at "Close or better". */
 export const DEFAULT_MATCH: MatchValue = "10";
@@ -125,6 +151,8 @@ export interface SharedFacets {
   types: Set<string>;
   metallic: MetallicFilter;
   includeDiscontinued: boolean;
+  /** Only the signed-in user's paints. Applied through `effectiveFacets`. */
+  mine: CollectionFilter;
 }
 
 /** Browse: the shared facets plus its own search, colour family and ordering. */
@@ -147,6 +175,7 @@ export function emptySharedFacets(): SharedFacets {
     types: new Set(),
     metallic: "",
     includeDiscontinued: false,
+    mine: "",
   };
 }
 
@@ -201,6 +230,12 @@ export function parseDisc(v: string | null): boolean {
   return v === "1";
 }
 
+export function parseMine(v: string | null): CollectionFilter {
+  return (COLLECTION_FILTERS as readonly string[]).includes(v ?? "")
+    ? (v as CollectionFilter)
+    : "";
+}
+
 export function parseSort(v: string | null): SortKey {
   return (SORT_KEYS as readonly string[]).includes(v ?? "")
     ? (v as SortKey)
@@ -222,6 +257,7 @@ export function readSharedFacets(params: ParamReader): SharedFacets {
     types: new Set<string>(parseTypes(params.get(FILTER_PARAMS.type))),
     metallic: parseMetallic(params.get(FILTER_PARAMS.metal)),
     includeDiscontinued: parseDisc(params.get(FILTER_PARAMS.disc)),
+    mine: parseMine(params.get(FILTER_PARAMS.mine)),
   };
 }
 
@@ -279,6 +315,9 @@ export function writeSharedFacets(
   else next.delete(FILTER_PARAMS.metal);
 
   setFlag(next, FILTER_PARAMS.disc, facets.includeDiscontinued);
+
+  if (facets.mine) next.set(FILTER_PARAMS.mine, facets.mine);
+  else next.delete(FILTER_PARAMS.mine);
   return next;
 }
 
@@ -376,6 +415,11 @@ export function similarLinkQuery(
  * only an explicit `true` counts, because on a paint page this flag decides
  * whether the precomputed match list can be used at all, and treating the default
  * as a filter would cost every page its instant first render.
+ *
+ * `mine` counts, for the same reason: the precomputed sixteen can't know which
+ * paints are yours, so it forces the client re-rank. Callers pass the
+ * *effective* state (see `effectiveFacets`), so a signed-out visitor arriving
+ * with `?mine=owned` still gets the instant render.
  */
 export function hasSharedFacet(facets: SharedFacets): boolean {
   return (
@@ -383,8 +427,31 @@ export function hasSharedFacet(facets: SharedFacets): boolean {
     facets.ranges.size > 0 ||
     facets.types.size > 0 ||
     facets.metallic !== "" ||
-    facets.includeDiscontinued
+    facets.includeDiscontinued ||
+    facets.mine !== ""
   );
+}
+
+/**
+ * The facets a page actually **applies**, given whether the collection can take
+ * part — as opposed to what the URL says, which the writers keep using.
+ *
+ * - With the collection off (signed out, unconfigured), `mine` is carried but
+ *   not applied: no filter, no chip, no count. Not healed away either, because
+ *   auth can change within a session — signing in from the header should put the
+ *   filter into effect, not have lost it.
+ * - With `mine` in effect, `includeDiscontinued` is not applied: your own paints
+ *   are shown discontinued or not, the `/my-paints` reasoning (a collection is a
+ *   record of what you have), and the checkbox is hidden while that's true. It
+ *   comes back into effect when `mine` is cleared.
+ *
+ * Chips, the `Filters (N)` badge, "Clear all" and the predicate all read this,
+ * so they can't disagree about what's applied.
+ */
+export function effectiveFacets<T extends SharedFacets>(state: T, collectionOn: boolean): T {
+  if (!state.mine) return state;
+  if (!collectionOn) return { ...state, mine: "" };
+  return { ...state, includeDiscontinued: false };
 }
 
 /** Back-compat alias; the panel reads better calling this one. */
@@ -423,6 +490,7 @@ export const BROWSE_CLEARABLE: readonly string[] = [
   FILTER_PARAMS.type,
   FILTER_PARAMS.metal,
   FILTER_PARAMS.disc,
+  FILTER_PARAMS.mine,
   FILTER_PARAMS.family,
   FILTER_PARAMS.q,
 ];
@@ -433,6 +501,7 @@ export const SIMILAR_CLEARABLE: readonly string[] = [
   FILTER_PARAMS.type,
   FILTER_PARAMS.metal,
   FILTER_PARAMS.disc,
+  FILTER_PARAMS.mine,
   FILTER_PARAMS.match,
 ];
 
