@@ -66,14 +66,26 @@ change colour maths or filtering.
 
 ## 3. The changelog, and releasing
 
-These are two separate jobs, and keeping them separate is what stops
-[`CHANGELOG.md`](CHANGELOG.md) drifting behind what's actually live.
+**Every push to `main` deploys to production, so a PR that changes what
+painters see is a release, and it carries its own version and date.** Putting
+them off until "later" is what let [`CHANGELOG.md`](CHANGELOG.md) drift behind
+what's actually live.
 
-### In your PR: write the entry
+### In your PR: write the entry and version it
 
-**Any PR that changes `src/` adds its entries under `## [Unreleased]`, in that
-PR.** CI enforces it. Don't add a version number or a date — that happens at
-release.
+**Any PR that changes `src/` adds its entries under a new
+`## [X.Y.Z] - YYYY-MM-DD` heading, just below the empty `## [Unreleased]`, and
+bumps the version, in that PR.** CI enforces the entry.
+
+- **Version:** a minor bump for anything new, a patch for fixes only (the site
+  is pre-1.0, per [SemVer](https://semver.org/spec/v2.0.0.html)). Change
+  `version` in `package.json` and the two root `"version"` fields at the top of
+  `package-lock.json` by hand — don't regenerate the lock file.
+- **Date:** the day it merges. If your PR waits, update the date before it
+  merges.
+- **Two PRs in flight** will both claim the next number; whichever merges
+  second gets a conflict at the top of the changelog, which is the cue to
+  renumber and re-date.
 
 Write for someone who paints miniatures, not for someone reading the diff: what
 changed, why it's better, and what it costs. The existing entries are the house
@@ -86,22 +98,13 @@ If a change genuinely isn't user-facing — a pure refactor, a test-only change 
 put the **`no changelog`** label on the PR and the check goes green. Paint-data
 corrections, dependency bumps and doc-only changes aren't checked at all.
 
-### Releasing: put a version on it
+### After merging: tag it
 
-**Every push to `main` deploys to production**, so a merge ships. Cutting a
-version is a separate, deliberate act — it's how you say "this is a thing worth
-announcing", not how you ship.
-
-To cut one:
-
-1. Rename `## [Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD`.
-2. Add a fresh, empty `## [Unreleased]` above it.
-3. Bump `version` in `package.json` to match.
-4. Merge, then tag the merge commit: `git tag vX.Y.Z && git push origin vX.Y.Z`.
-
-The tag is what makes "which commit is production running?" answerable. Versions
-follow [SemVer](https://semver.org/spec/v2.0.0.html); while the site is pre-1.0,
-a release with new features is a minor bump and a fix-only one is a patch.
+Tag the merge commit straight away:
+`git tag -a vX.Y.Z -m vX.Y.Z <merge-sha> && git push origin vX.Y.Z`. It's the
+one step that can't live in the PR, because the commit doesn't exist until it
+merges. The tag is what makes "which commit is production running?"
+answerable.
 
 **If the release needs database changes, apply them first.** Migrations in
 `supabase/migrations/` are run by hand against production *before* the deploy

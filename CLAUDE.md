@@ -1170,16 +1170,36 @@ Things to know before changing it:
 
 ## The changelog and releasing
 
-Two separate jobs. Conflating them is what let `CHANGELOG.md` drift behind
-production — v0.13.0's work shipped across three PRs while the file still called
-it `[Unreleased]`.
+**Every push to `main` deploys, so every user-facing PR is a release, and it
+names itself.** The PR writes its entries under its own `## [X.Y.Z] -
+YYYY-MM-DD` heading (the day it merges), bumps `package.json`, and its merge
+commit is tagged. `## [Unreleased]` stays as an empty heading at the top.
 
-- **A PR that touches `src/` writes its own entries under `## [Unreleased]`, in
-  that PR**, with no version and no date. `.github/workflows/changelog.yml`
-  fails the PR otherwise; the escape hatch for a genuine non-user-facing change
-  is the `no changelog` label. The check is deliberately narrow — `src/` only —
-  so data corrections and dependency bumps don't train people to reach for that
-  label by reflex.
+This replaced "write under `[Unreleased]`, cut a version later", which let the
+file drift behind production twice: v0.13.0's work shipped across three PRs
+still called `[Unreleased]`, and v0.16.0 was cut after eight PRs had been live
+for up to nine days — one of whose entries had meanwhile been filed under the
+*previous*, already-tagged version, where the tag says it never was. A
+deferred step is a step that waits for someone to remember it.
+
+- **A PR that touches `src/` writes its own entries, in that PR.**
+  `.github/workflows/changelog.yml` fails the PR otherwise; the escape hatch for
+  a genuine non-user-facing change is the `no changelog` label (which also means
+  no version bump). The check is deliberately narrow — `src/` only — so data
+  corrections and dependency bumps don't train people to reach for that label
+  by reflex. A data-only PR that painters would notice (a new range) may still
+  release; it just isn't forced to.
+- **The version and the date go in the PR, not after it.** Minor for anything
+  new, patch for fixes only (pre-1.0 SemVer). Bump `version` in `package.json`
+  and the two root `"version"` fields of `package-lock.json` **by hand** — never
+  `npm install --package-lock-only` (see Dependencies). The date is the day it
+  merges: if a PR sits, fix the date before merging rather than after.
+- **Two PRs in flight both claim the next number** and both edit the top of
+  `CHANGELOG.md`, so the second to merge gets a conflict. That's wanted: it is
+  the moment to renumber, re-date and rebase. Stacked PRs each take their own
+  version.
+- **Tag the merge commit straight after merging** (below). Tagging is the one
+  step that can't happen inside the PR, since the commit doesn't exist yet.
 - **The README's Roadmap moves in the same PR as the work.** A PR that ships a
   roadmap item ticks it (and adds its line to Features); a PR that decides
   something is worth doing later adds it as an open item. Left to memory, the
@@ -1192,11 +1212,9 @@ it `[Unreleased]`.
   terser, developer-flavoured changelog and lose exactly what makes this one
   worth reading. Automating the *version and tag* bookkeeping is fine; automating
   the prose is not.
-- **Cutting a version is a separate, deliberate act**: rename `[Unreleased]` to
-  `## [X.Y.Z] - YYYY-MM-DD`, add a fresh empty `[Unreleased]`, bump
-  `package.json`, then tag the merge commit. Releasing is not how you ship —
-  **every push to `main` deploys**, so a merge already shipped it. A version says
-  "this is worth announcing".
+- **A version records what shipped; it is not how you ship.** A merge already
+  shipped it. Announcing is a separate choice, and nothing stops a release from
+  going unannounced.
 - **Stacked PRs: retarget, then push.** `main` requires the `build` check on
   a PR's exact head. When the PR underneath is squash-merged, retarget the
   next one to `main` *first* and only then force-push its rebase. Pushed the
