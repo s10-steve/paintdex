@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.16.0] - 2026-09-28
+
 ### Added
 
 - **"Your paints for this scheme" in the designer.** Signed in, a new panel
@@ -85,6 +87,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   rewriting every saved scheme — but the ✓ and ☆ buttons on them still work.
 
 ### Fixed
+
+- **A sign-in that fails now tells you so.** Google could recognise you and
+  hand over your account, and then the last step — logging you in to Paintdex
+  itself — could fail with nothing on screen: the button still said "Sign in
+  as …", clicking it did nothing, and your paints and schemes stayed out of
+  reach. That's what happened while our account database was briefly offline.
+  Now a red notice appears at the bottom of the page, saying whether the
+  sign-in service couldn't be reached (try again in a few minutes) or turned
+  the attempt down (try again now). Your saved schemes and paints were never
+  at risk.
 
 - **A pot and its airbrush version are now two paints.** Our data had merged
   some paints sold in more than one form into a single entry — Vallejo's Game
@@ -189,16 +201,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   even height instead of stepping up and down as the names get longer.
 
 ### Fixed
-
-- **A sign-in that fails now tells you so.** Google could recognise you and
-  hand over your account, and then the last step — logging you in to Paintdex
-  itself — could fail with nothing on screen: the button still said "Sign in
-  as …", clicking it did nothing, and your paints and schemes stayed out of
-  reach. That's what happened while our account database was briefly offline.
-  Now a red notice appears at the bottom of the page, saying whether the
-  sign-in service couldn't be reached (try again in a few minutes) or turned
-  the attempt down (try again now). Your saved schemes and paints were never
-  at risk.
 
 - **Paints sold under more than one Citadel product line now get their own
   entry per line**, instead of one merged record. Ogryn Camo (Layer + Air),
