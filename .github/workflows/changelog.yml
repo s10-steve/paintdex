@@ -1,6 +1,7 @@
 name: Changelog
 
-# Fails a pull request that changes the app without documenting it.
+# Fails a pull request that changes the app without documenting — and
+# versioning — it.
 #
 # The changelog kept being left behind, because the only moment anyone has the
 # context to write an entry is while the change is still in review — once a PR
@@ -8,9 +9,16 @@ name: Changelog
 # gets written. A checklist item in the PR template does not fix this; people
 # tick it. A failing check is the only thing that lands at the right moment.
 #
+# The same goes for the version. Every push to `main` deploys, so a PR that
+# changes `src/` is a release: it bumps the version and dates its own heading
+# in the PR (`scripts/check-release.mjs` holds the rules). Leaving that to a
+# later "cut" let eight PRs run unversioned in production, and one entry land
+# under a version already tagged without it.
+#
 # Deliberately narrow: `src/` only. Paint-data corrections, dependency bumps and
 # doc changes do not need an entry, and nagging about them would train people to
-# reach for the escape hatch by reflex.
+# reach for the escape hatch by reflex. The `no changelog` label skips both
+# halves — no entry, so no release either.
 
 on:
   pull_request:
@@ -32,6 +40,7 @@ jobs:
           fetch-depth: 0
 
       - name: Require a changelog entry for user-facing changes
+        id: entry
         env:
           BASE: ${{ github.base_ref }}
         run: |
@@ -45,13 +54,28 @@ jobs:
 
           if ! echo "$changed" | grep -qE '^src/'; then
             echo "Nothing under src/ — no entry needed."
+            echo "release=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           if echo "$changed" | grep -qx 'CHANGELOG.md'; then
             echo "CHANGELOG.md updated."
+            echo "release=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           echo "::error file=CHANGELOG.md::This PR changes src/ but does not touch CHANGELOG.md. Add your entries under a new '## [X.Y.Z] - YYYY-MM-DD' heading below '## [Unreleased]' and bump the version — see section 3 of CONTRIBUTING.md. If the change genuinely isn't user-facing (a refactor, a test-only change), add the 'no changelog' label to this PR."
           exit 1
+
+      - uses: actions/setup-node@v7
+        if: steps.entry.outputs.release == 'true'
+        with:
+          node-version: 24
+
+      # No `npm ci`: the script uses only Node built-ins, so this stays a
+      # six-second check.
+      - name: Require the PR to version and date its release
+        if: steps.entry.outputs.release == 'true'
+        env:
+          BASE: ${{ github.base_ref }}
+        run: node scripts/check-release.mjs
