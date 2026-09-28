@@ -21,7 +21,9 @@ const paint = (
     name,
     brand: "Citadel",
     range: "Base",
-    type: "base",
+    type: "opaque",
+    format: "brush",
+    binder: "acrylic",
     hex,
     discontinued: false,
     family: "red",
@@ -103,12 +105,12 @@ describe("grouping", () => {
     brand: "Vallejo",
     range: "Model Color",
     family: "blue",
-    type: "layer",
+    type: "wash",
   });
   const citadelBlue = paint("c-blue", "Macragge Blue", "#0d407f", {
-    range: "Layer",
+    range: "Shade",
     family: "blue",
-    type: "layer",
+    type: "wash",
   });
 
   it("returns one unlabelled group when nothing is ticked", () => {
@@ -127,7 +129,7 @@ describe("grouping", () => {
 
   it("groups by range, alphabetically", () => {
     const groups = groupCollection([citadelBlue, citadelRed, vallejoBlue], ["range"], "name");
-    expect(groups.map((g) => g.label)).toEqual(["Base", "Layer", "Model Color"]);
+    expect(groups.map((g) => g.label)).toEqual(["Base", "Model Color", "Shade"]);
   });
 
   it("orders colour families as a spectrum, not A–Z, and cases the label once", () => {
@@ -140,10 +142,11 @@ describe("grouping", () => {
   });
 
   it("orders types by the catalogue's own vocabulary, not A–Z", () => {
-    // `PAINT_TYPES` runs base → layer → shade …, which is the order the pots
-    // are used in; alphabetically Layer would come before Base.
+    // `PAINT_TYPES` runs opaque → contrast → wash …, the everyday paints
+    // first; alphabetically the wash's label would still sort after, so the
+    // input is given wash-first to prove the vocabulary is what orders it.
     const groups = groupCollection([citadelBlue, citadelRed], ["type"], "name");
-    expect(groups.map((g) => g.label)).toEqual(["Base", "Layer"]);
+    expect(groups.map((g) => g.label)).toEqual(["Opaque", "Wash / shade"]);
   });
 
   it("sorts within each group, not just across the whole list", () => {

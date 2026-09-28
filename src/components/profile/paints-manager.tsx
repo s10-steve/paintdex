@@ -28,7 +28,7 @@ import { useCollection } from "@/components/collection/collection-provider";
 import { LISTS } from "@/components/collection/collection-toggle";
 import { useBrowseIndex } from "@/hooks/use-browse-index";
 import { PaintFacets } from "@/components/paint-facets";
-import { facetOptions } from "@/lib/paints/facet-availability";
+import { facetOptions, type FacetKind } from "@/lib/paints/facet-availability";
 import { filterPaints } from "@/lib/paints/filter";
 import {
   COLLECTION_SORTS,
@@ -39,7 +39,15 @@ import {
   type GroupAxis,
   type PaintGroup,
 } from "@/lib/paints/collection-view";
-import { PAINT_TYPES, type BrowsePaint, type PaintType } from "@/lib/paints/types";
+import {
+  PAINT_BINDERS,
+  PAINT_FORMATS,
+  PAINT_TYPES,
+  type BrowsePaint,
+  type PaintBinder,
+  type PaintFormat,
+  type PaintType,
+} from "@/lib/paints/types";
 import type { MetallicFilter } from "@/lib/paints/filter-params";
 import type { PaintStatus } from "@/lib/supabase/types";
 import { importCollection, removePaints } from "@/lib/data/paint-collection";
@@ -126,6 +134,8 @@ function CollectionManager() {
   const [brands, setBrands] = useState<Set<string>>(new Set());
   const [ranges, setRanges] = useState<Set<string>>(new Set());
   const [types, setTypes] = useState<Set<PaintType>>(new Set());
+  const [formats, setFormats] = useState<Set<PaintFormat>>(new Set());
+  const [binders, setBinders] = useState<Set<PaintBinder>>(new Set());
   const [families, setFamilies] = useState<Set<string>>(new Set());
   const [metallic, setMetallic] = useState<MetallicFilter>("");
   // Display options, not filters: they say how to present the page rather than
@@ -180,6 +190,8 @@ function CollectionManager() {
         brands: [...brands],
         ranges: [...ranges],
         types: [...types],
+        formats: [...formats],
+        binders: [...binders],
         families: [...families],
         includeDiscontinued: true,
         metallic: metallic || undefined,
@@ -192,7 +204,7 @@ function CollectionManager() {
       wishlist: apply(raw.wishlist),
       total: entries.size,
     };
-  }, [paints, entries, search, brands, ranges, types, families, metallic, groupAxes, sort]);
+  }, [paints, entries, search, brands, ranges, types, formats, binders, families, metallic, groupAxes, sort]);
 
   /** Tick appends (so tick order is nesting order); untick removes. */
   const toggleAxis = useCallback((axis: GroupAxis) => {
@@ -214,6 +226,8 @@ function CollectionManager() {
       .filter((p): p is BrowsePaint => Boolean(p));
     const uniq = (vs: string[]) => [...new Set(vs)].sort((a, b) => a.localeCompare(b));
     const present = new Set(mine.map((p) => p.type));
+    const presentFormats = new Set(mine.map((p) => p.format));
+    const presentBinders = new Set(mine.map((p) => p.binder));
     return {
       brands: facetOptions(uniq(mine.map((p) => p.brand)), null, brands, "brands"),
       ranges: facetOptions(uniq(mine.map((p) => p.range)), null, ranges, "ranges"),
@@ -223,15 +237,24 @@ function CollectionManager() {
         types,
         "types",
       ),
+      formats: facetOptions(PAINT_FORMATS.filter((f) => presentFormats.has(f)), null, formats, "formats"),
+      binders: facetOptions(PAINT_BINDERS.filter((b) => presentBinders.has(b)), null, binders, "binders"),
       families: facetOptions(uniq(mine.map((p) => p.family)), null, families, "families"),
     };
-  }, [paints, entries, brands, ranges, types, families]);
+  }, [paints, entries, brands, ranges, types, formats, binders, families]);
 
   const toggleFacet = useCallback(
-    (key: "brands" | "ranges" | "types" | "families", value: string) => {
-      const setter = { brands: setBrands, ranges: setRanges, types: setTypes, families: setFamilies }[key];
-      // One generic updater over four sets of different element types; the cast
-      // is contained to this line rather than spread across four handlers.
+    (key: FacetKind, value: string) => {
+      const setter = {
+        brands: setBrands,
+        ranges: setRanges,
+        types: setTypes,
+        formats: setFormats,
+        binders: setBinders,
+        families: setFamilies,
+      }[key];
+      // One generic updater over six sets of different element types; the cast
+      // is contained to this line rather than spread across six handlers.
       (setter as (fn: (prev: Set<string>) => Set<string>) => void)((prev) => {
         const next = new Set(prev);
         if (next.has(value)) next.delete(value);
@@ -247,12 +270,21 @@ function CollectionManager() {
     setBrands(new Set());
     setRanges(new Set());
     setTypes(new Set());
+    setFormats(new Set());
+    setBinders(new Set());
     setFamilies(new Set());
     setMetallic("");
   }, []);
 
   const filterCount =
-    brands.size + ranges.size + types.size + families.size + (metallic ? 1 : 0) + (search ? 1 : 0);
+    brands.size +
+    ranges.size +
+    types.size +
+    formats.size +
+    binders.size +
+    families.size +
+    (metallic ? 1 : 0) +
+    (search ? 1 : 0);
 
   const doExport = useCallback(() => {
     downloadJSON(
@@ -405,6 +437,8 @@ function CollectionManager() {
               brands,
               ranges,
               types,
+              formats,
+              binders,
               families,
               metallic,
               // Never applied here — see the `includeDiscontinued` note above —

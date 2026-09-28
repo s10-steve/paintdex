@@ -4,7 +4,7 @@
     "name": "3b Au Basic Protector Alkidno-uretanovaya",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3D331A",
     "code": "AMIG0022",
     "discontinued": false
@@ -14,7 +14,7 @@
     "name": "4bo Russian Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4F5129",
     "code": "AMIG0019",
     "discontinued": false
@@ -24,7 +24,7 @@
     "name": "6k Russian Brown",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3B3128",
     "code": "AMIG0020",
     "discontinued": false
@@ -34,7 +34,7 @@
     "name": "7k Russian Tan",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#70603E",
     "code": "AMIG0021",
     "discontinued": false
@@ -54,7 +54,7 @@
     "name": "Apc Interior Light Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8DA186",
     "code": "AMIG0082",
     "discontinued": false
@@ -64,7 +64,7 @@
     "name": "Basic Skin Tone",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E3B4A4",
     "code": "AMIG0116",
     "discontinued": false
@@ -84,7 +84,7 @@
     "name": "Blood Red",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AC2B25",
     "code": "AMIG0121",
     "discontinued": false
@@ -94,7 +94,7 @@
     "name": "Blue (RAL 5019)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1B4F88",
     "code": "AMIG0086",
     "discontinued": false
@@ -104,7 +104,7 @@
     "name": "Blue Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#283C23",
     "code": "AMIG0069",
     "discontinued": false
@@ -124,17 +124,18 @@
     "name": "Bluish Titanium",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#619185",
     "code": "AMIG0193",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-bone",
     "name": "Bone",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EDEEDC",
     "code": "AMIG0122",
     "discontinued": false
@@ -144,17 +145,18 @@
     "name": "Brass",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B7881C",
     "code": "AMIG0197",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-bright-green-amt-4",
     "name": "Bright Green Amt-4",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5E7D3A",
     "code": "AMIG0080",
     "discontinued": false
@@ -164,7 +166,7 @@
     "name": "Brown Soil",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6E4939",
     "code": "AMIG0076",
     "discontinued": false
@@ -184,7 +186,7 @@
     "name": "Burnt Brown Red",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#352005",
     "code": "AMIG0134",
     "discontinued": false
@@ -194,7 +196,7 @@
     "name": "Burnt Sand",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7E5A3A",
     "code": "AMIG0118",
     "discontinued": false
@@ -204,7 +206,7 @@
     "name": "Chipping",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#260E0E",
     "code": "AMIG0044",
     "discontinued": false
@@ -214,7 +216,7 @@
     "name": "Cinnamon",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#937D6F",
     "code": "AMIG0135",
     "discontinued": false
@@ -224,7 +226,7 @@
     "name": "Clay Brown",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#683F23",
     "code": "AMIG0079",
     "discontinued": false
@@ -234,7 +236,7 @@
     "name": "Cold Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D3D3D3",
     "code": "AMIG0119",
     "discontinued": false
@@ -244,17 +246,18 @@
     "name": "Copper",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C94A5D",
     "code": "AMIG0199",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-crystal-black-blue",
     "name": "Crystal Black Blue",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#022334",
     "code": "AMIG0099",
     "discontinued": false
@@ -264,7 +267,7 @@
     "name": "Crystal Glass",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A7A7A7",
     "code": "AMIG0094",
     "discontinued": false
@@ -274,7 +277,7 @@
     "name": "Crystal Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2D4410",
     "code": "AMIG0092",
     "discontinued": false
@@ -284,7 +287,7 @@
     "name": "Crystal Light Blue",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0784BE",
     "code": "AMIG0098",
     "discontinued": false
@@ -294,7 +297,7 @@
     "name": "Crystal Orange",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FE8F00",
     "code": "AMIG0097",
     "discontinued": false
@@ -304,7 +307,7 @@
     "name": "Crystal Periscope Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#40770F",
     "code": "AMIG0096",
     "discontinued": false
@@ -314,7 +317,7 @@
     "name": "Crystal Red",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#591610",
     "code": "AMIG0093",
     "discontinued": false
@@ -324,7 +327,7 @@
     "name": "Crystal Smoke",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#131E18",
     "code": "AMIG0095",
     "discontinued": false
@@ -334,7 +337,7 @@
     "name": "Cyan",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2495FB",
     "code": "AMIG0128",
     "discontinued": false
@@ -354,7 +357,7 @@
     "name": "Dark Green (bs 241)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#455330",
     "code": "AMIG0915",
     "discontinued": false
@@ -364,7 +367,7 @@
     "name": "Dark Rust",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#893B24",
     "code": "AMIG0041",
     "discontinued": false
@@ -374,7 +377,7 @@
     "name": "Dark Tracks",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#130707",
     "code": "AMIG0035",
     "discontinued": false
@@ -394,7 +397,7 @@
     "name": "Deep Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0B562D",
     "code": "AMIG0052",
     "discontinued": false
@@ -404,7 +407,7 @@
     "name": "Desert Yellow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B8996D",
     "code": "AMIG0138",
     "discontinued": false
@@ -414,7 +417,7 @@
     "name": "Duck Egg Green (bs 216)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AFB985",
     "code": "AMIG0244",
     "discontinued": false
@@ -424,7 +427,7 @@
     "name": "Dull Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3D595A",
     "code": "AMIG0077",
     "discontinued": false
@@ -434,7 +437,7 @@
     "name": "Dunkelgelb Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8E814A",
     "code": "AMIG0902",
     "discontinued": false
@@ -444,7 +447,7 @@
     "name": "Dunkelgelb Dark Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7B6B37",
     "code": "AMIG0901",
     "discontinued": false
@@ -454,7 +457,7 @@
     "name": "Dunkelgelb High Light",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D0CE93",
     "code": "AMIG0904",
     "discontinued": false
@@ -464,7 +467,7 @@
     "name": "Dunkelgelb Light Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B7AB79",
     "code": "AMIG0903",
     "discontinued": false
@@ -474,7 +477,7 @@
     "name": "Dunkelgelb Shadow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#381B20",
     "code": "AMIG0900",
     "discontinued": false
@@ -484,7 +487,7 @@
     "name": "Dunkelgelb Shine",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E2E1C5",
     "code": "AMIG0905",
     "discontinued": false
@@ -494,7 +497,7 @@
     "name": "Dunkelgrau Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#333542",
     "code": "AMIG0908",
     "discontinued": false
@@ -504,7 +507,7 @@
     "name": "Dunkelgrau Dark Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#474956",
     "code": "AMIG0907",
     "discontinued": false
@@ -514,7 +517,7 @@
     "name": "Dunkelgrau Light Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#696D76",
     "code": "AMIG0909",
     "discontinued": false
@@ -524,7 +527,7 @@
     "name": "Dunkelgrau Shadow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#323335",
     "code": "AMIG0906",
     "discontinued": false
@@ -534,7 +537,7 @@
     "name": "Dust",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#968C71",
     "code": "AMIG0072",
     "discontinued": false
@@ -544,7 +547,7 @@
     "name": "Earth",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#745739",
     "code": "AMIG0073",
     "discontinued": false
@@ -554,7 +557,7 @@
     "name": "Earth Brown",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#814428",
     "code": "AMIG0064",
     "discontinued": false
@@ -564,7 +567,7 @@
     "name": "Faded Sinai Grey",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#736C5A",
     "code": "AMIG0066",
     "discontinued": false
@@ -574,7 +577,7 @@
     "name": "Faded Yellow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D8CD73",
     "code": "AMIG0130",
     "discontinued": false
@@ -584,7 +587,7 @@
     "name": "Forest Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#384527",
     "code": "AMIG0065",
     "discontinued": false
@@ -594,7 +597,7 @@
     "name": "French Blue",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#445366",
     "code": "AMIG0062",
     "discontinued": false
@@ -604,7 +607,7 @@
     "name": "Fs 15102 Dark Gray Blue",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2489BD",
     "code": "AMIG0229",
     "discontinued": false
@@ -614,7 +617,7 @@
     "name": "Fs 23070 Dark Olive Drab",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6C6845",
     "code": "AMIG0237",
     "discontinued": false
@@ -624,7 +627,7 @@
     "name": "Fs 24277 Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6B8778",
     "code": "AMIG0213",
     "discontinued": false
@@ -634,7 +637,7 @@
     "name": "Fs 25042 Sea Blue (ana 606)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#21262C",
     "code": "AMIG0227",
     "discontinued": false
@@ -644,7 +647,7 @@
     "name": "Fs 26231 (bs 638)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#71737F",
     "code": "AMIG0205",
     "discontinued": false
@@ -654,7 +657,7 @@
     "name": "Fs 26373 Silver Grey",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#92A2A2",
     "code": "AMIG0212",
     "discontinued": false
@@ -664,7 +667,7 @@
     "name": "Fs 30219 Tan",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#81603D",
     "code": "AMIG0202",
     "discontinued": false
@@ -674,7 +677,7 @@
     "name": "Fs 33446 US Modern Vehicles",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C7A780",
     "code": "AMIG0025",
     "discontinued": false
@@ -684,7 +687,7 @@
     "name": "Fs 33481 Zinc Chromate Yellow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B19846",
     "code": "AMIG0221",
     "discontinued": false
@@ -694,7 +697,7 @@
     "name": "Fs 33531 Middlestone",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D6C7B4",
     "code": "AMIG0200",
     "discontinued": false
@@ -704,7 +707,7 @@
     "name": "Fs 34086 (ana 613)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3F402E",
     "code": "AMIG0240",
     "discontinued": false
@@ -714,7 +717,7 @@
     "name": "Fs 34092 Medium Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3A523A",
     "code": "AMIG0238",
     "discontinued": false
@@ -724,7 +727,7 @@
     "name": "Fs 34151 Zinc Chromate Green (interior Green)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#666E45",
     "code": "AMIG0220",
     "discontinued": false
@@ -734,7 +737,7 @@
     "name": "Fs 34226 (bs283) Interior Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#729182",
     "code": "AMIG0219",
     "discontinued": false
@@ -744,7 +747,7 @@
     "name": "Fs 34424 Light Gray Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B1CAAA",
     "code": "AMIG0201",
     "discontinued": false
@@ -754,7 +757,7 @@
     "name": "Fs 35164 Intermediate Blue (ana 608)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#707980",
     "code": "AMIG0228",
     "discontinued": false
@@ -764,7 +767,7 @@
     "name": "Fs 36118 Medium Gunship Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3F4551",
     "code": "AMIG0204",
     "discontinued": false
@@ -774,7 +777,7 @@
     "name": "Fs 36122 NeutRAL Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#67686C",
     "code": "AMIG0239",
     "discontinued": false
@@ -784,7 +787,7 @@
     "name": "Fs 36270 Medium Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#99999B",
     "code": "AMIG0211",
     "discontinued": false
@@ -794,7 +797,7 @@
     "name": "Fs 36293",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7F8487",
     "code": "AMIG0236",
     "discontinued": false
@@ -804,7 +807,7 @@
     "name": "Fs 36314 (bs 626)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#83978C",
     "code": "AMIG0207",
     "discontinued": false
@@ -814,7 +817,7 @@
     "name": "Fs 36320 Dark Compass Ghost Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#70878D",
     "code": "AMIG0208",
     "discontinued": false
@@ -824,7 +827,7 @@
     "name": "Fs 36375 Light Compass Ghost Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8390A3",
     "code": "AMIG0203",
     "discontinued": false
@@ -834,7 +837,7 @@
     "name": "Fs 36440 Light Gull Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#959A94",
     "code": "AMIG0241",
     "discontinued": false
@@ -844,7 +847,7 @@
     "name": "Fs 36495 Light Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A6B7AD",
     "code": "AMIG0209",
     "discontinued": false
@@ -854,7 +857,7 @@
     "name": "Fs 36622 Gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D1D2C2",
     "code": "AMIG0226",
     "discontinued": false
@@ -864,7 +867,7 @@
     "name": "Fs 37886",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0F0D8",
     "code": "AMIG0242",
     "discontinued": false
@@ -874,7 +877,7 @@
     "name": "Fs35237 Blue Gray Amt-11",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6D7D8A",
     "code": "AMIG0210",
     "discontinued": false
@@ -884,7 +887,7 @@
     "name": "Fs35260 Sky Line Blue A II",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#71C6E3",
     "code": "AMIG0224",
     "discontinued": false
@@ -894,7 +897,7 @@
     "name": "Fs36152 Dark Grey AMT-12",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D6268",
     "code": "AMIG0235",
     "discontinued": false
@@ -904,17 +907,18 @@
     "name": "Gold",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B8B021",
     "code": "AMIG0198",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-gold-yellow-rlm-04-gelb",
     "name": "Gold Yellow (RLM 04 Gelb)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D7C012",
     "code": "AMIG0125",
     "discontinued": false
@@ -924,7 +928,7 @@
     "name": "Green Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4E6338",
     "code": "AMIG0916",
     "discontinued": false
@@ -934,7 +938,7 @@
     "name": "Green Khaki",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#545035",
     "code": "AMIG0056",
     "discontinued": false
@@ -944,7 +948,7 @@
     "name": "Green Moss",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6A6837",
     "code": "AMIG0074",
     "discontinued": false
@@ -954,7 +958,7 @@
     "name": "Green Slate (RLM 02)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A381E",
     "code": "AMIG0217",
     "discontinued": false
@@ -964,7 +968,7 @@
     "name": "Grey",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#81858E",
     "code": "AMIG0059",
     "discontinued": false
@@ -974,7 +978,7 @@
     "name": "Grey Brown Amt-1",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#827B71",
     "code": "AMIG0252",
     "discontinued": false
@@ -984,7 +988,7 @@
     "name": "Grey High Light",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D8087",
     "code": "AMIG0910",
     "discontinued": false
@@ -994,7 +998,7 @@
     "name": "Grey Shine",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A2A5AC",
     "code": "AMIG0911",
     "discontinued": false
@@ -1004,17 +1008,18 @@
     "name": "Gun Metal",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#525044",
     "code": "AMIG0045",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-idf-green",
     "name": "Idf Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#56542E",
     "code": "AMIG0068",
     "discontinued": false
@@ -1024,7 +1029,7 @@
     "name": "Interior Turquoise Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1C8368",
     "code": "AMIG0223",
     "discontinued": false
@@ -1044,17 +1049,18 @@
     "name": "Jet Exhaust Burnt Iron",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3E2417",
     "code": "AMIG0187",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-khaki",
     "name": "Khaki",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#735533",
     "code": "AMIG0071",
     "discontinued": false
@@ -1064,7 +1070,7 @@
     "name": "Khaki Brown",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B39267",
     "code": "AMIG0088",
     "discontinued": false
@@ -1074,7 +1080,7 @@
     "name": "Khaki Green Nº3 (british 1939-42)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#685F38",
     "code": "AMIG0113",
     "discontinued": false
@@ -1084,7 +1090,7 @@
     "name": "Light Blue",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B4CEDB",
     "code": "AMIG0249",
     "discontinued": false
@@ -1094,7 +1100,7 @@
     "name": "Light Brown-gray",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D6D1CE",
     "code": "AMIG0120",
     "discontinued": false
@@ -1104,7 +1110,7 @@
     "name": "Light Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#93AF75",
     "code": "AMIG0917",
     "discontinued": false
@@ -1114,7 +1120,7 @@
     "name": "Light Green Khaki",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7C7B4D",
     "code": "AMIG0058",
     "discontinued": false
@@ -1124,7 +1130,7 @@
     "name": "Light Green Khv-553m",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A5BB8A",
     "code": "AMIG0051",
     "discontinued": false
@@ -1134,7 +1140,7 @@
     "name": "Light Rust",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E5910B",
     "code": "AMIG0039",
     "discontinued": false
@@ -1154,7 +1160,7 @@
     "name": "Light Sand Grey",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B8A680",
     "code": "AMIG0067",
     "discontinued": false
@@ -1164,7 +1170,7 @@
     "name": "Light Skin Tone",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EECAA8",
     "code": "AMIG0115",
     "discontinued": false
@@ -1174,7 +1180,7 @@
     "name": "Light Wood",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BBAA7F",
     "code": "AMIG0038",
     "discontinued": false
@@ -1184,7 +1190,7 @@
     "name": "Lime Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#109F45",
     "code": "AMIG0124",
     "discontinued": false
@@ -1194,7 +1200,7 @@
     "name": "Marine Blue",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#18568F",
     "code": "AMIG0123",
     "discontinued": false
@@ -1204,17 +1210,18 @@
     "name": "Matt Aluminum",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AABCB0",
     "code": "AMIG0194",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-matt-black",
     "name": "Matt Black",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#131313",
     "code": "AMIG0046",
     "discontinued": false
@@ -1224,7 +1231,7 @@
     "name": "Matt Varnish",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "varnish",
     "hex": "#FEFEFE",
     "code": "AMIG0089",
     "discontinued": false
@@ -1234,7 +1241,7 @@
     "name": "Matt White",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FCFEFB",
     "code": "AMIG0050",
     "discontinued": false
@@ -1244,7 +1251,7 @@
     "name": "Medium Blue",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#294888",
     "code": "AMIG0103",
     "discontinued": false
@@ -1254,7 +1261,7 @@
     "name": "Medium Brown Dark Earth (bs 450)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#523628",
     "code": "AMIG0070",
     "discontinued": false
@@ -1264,7 +1271,7 @@
     "name": "Medium Rust",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B85430",
     "code": "AMIG0040",
     "discontinued": false
@@ -1274,7 +1281,7 @@
     "name": "Medium Sea Grey (bs 637)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#858F91",
     "code": "AMIG0246",
     "discontinued": false
@@ -1284,7 +1291,7 @@
     "name": "Metallic Orange",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CD6702",
     "code": "AMIG0189",
     "discontinued": false
@@ -1294,7 +1301,7 @@
     "name": "Metallic Red",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C13828",
     "code": "AMIG0188",
     "discontinued": false
@@ -1304,7 +1311,7 @@
     "name": "Nato Brown",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#412C27",
     "code": "AMIG0085",
     "discontinued": false
@@ -1314,7 +1321,7 @@
     "name": "Nato Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#424733",
     "code": "AMIG0084",
     "discontinued": false
@@ -1334,7 +1341,7 @@
     "name": "New  Wood",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C1AB72",
     "code": "AMIG0037",
     "discontinued": false
@@ -1344,7 +1351,7 @@
     "name": "New Iraqui Army Sand",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C8AF76",
     "code": "AMIG0029",
     "discontinued": false
@@ -1354,7 +1361,7 @@
     "name": "Night Blue Grey",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#525662",
     "code": "AMIG0250",
     "discontinued": false
@@ -1364,7 +1371,7 @@
     "name": "Ocean Grey (bs 629)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#626B72",
     "code": "AMIG0245",
     "discontinued": false
@@ -1374,7 +1381,7 @@
     "name": "Ochre Brown",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9E8356",
     "code": "AMIG0102",
     "discontinued": false
@@ -1384,7 +1391,7 @@
     "name": "Ochre Earth",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C28E5C",
     "code": "AMIG0078",
     "discontinued": false
@@ -1394,7 +1401,7 @@
     "name": "Oil Ochre",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CEAD50",
     "code": "AMIG0055",
     "discontinued": false
@@ -1404,17 +1411,18 @@
     "name": "Old Brass",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#816116",
     "code": "AMIG0190",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-old-rust",
     "name": "Old Rust",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#452621",
     "code": "AMIG0042",
     "discontinued": false
@@ -1424,7 +1432,7 @@
     "name": "Old Wood",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BFAB8A",
     "code": "AMIG0036",
     "discontinued": false
@@ -1434,7 +1442,7 @@
     "name": "Olive Drab  Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#524F2E",
     "code": "AMIG0926",
     "discontinued": false
@@ -1444,7 +1452,7 @@
     "name": "Olive Drab  High Lights",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#797653",
     "code": "AMIG0928",
     "discontinued": false
@@ -1454,7 +1462,7 @@
     "name": "Olive Drab  Light Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#686542",
     "code": "AMIG0927",
     "discontinued": false
@@ -1464,7 +1472,7 @@
     "name": "Olive Drab Shadow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#323017",
     "code": "AMIG0924",
     "discontinued": false
@@ -1474,7 +1482,7 @@
     "name": "Olive Drab Shine",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#898761",
     "code": "AMIG0929",
     "discontinued": false
@@ -1544,7 +1552,7 @@
     "name": "Orange",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E7731E",
     "code": "AMIG0129",
     "discontinued": false
@@ -1554,7 +1562,7 @@
     "name": "Pale Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3A6327",
     "code": "AMIG0060",
     "discontinued": false
@@ -1564,17 +1572,18 @@
     "name": "Polished Metal",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5B6C5C",
     "code": "AMIG0192",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-protective-green",
     "name": "Protective Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5E733B",
     "code": "AMIG0023",
     "discontinued": false
@@ -1584,7 +1593,7 @@
     "name": "Protective Mc 1200",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#18341B",
     "code": "AMIG0053",
     "discontinued": false
@@ -1594,7 +1603,7 @@
     "name": "Purple",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9154A4",
     "code": "AMIG0127",
     "discontinued": false
@@ -1604,7 +1613,7 @@
     "name": "RAL 6003 Olivgrün Opt.1",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#353D26",
     "code": "AMIG0001",
     "discontinued": false
@@ -1614,7 +1623,7 @@
     "name": "RAL 6003 Olivgrün Opt.2",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4E5536",
     "code": "AMIG0002",
     "discontinued": false
@@ -1624,7 +1633,7 @@
     "name": "RAL 6011 B Resedagrün",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#525D33",
     "code": "AMIG0004",
     "discontinued": false
@@ -1634,7 +1643,7 @@
     "name": "RAL 6011 Resedagrün",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#677D4C",
     "code": "AMIG0003",
     "discontinued": false
@@ -1644,7 +1653,7 @@
     "name": "RAL 6014 Gelboliv",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#454732",
     "code": "AMIG0087",
     "discontinued": false
@@ -1654,7 +1663,7 @@
     "name": "RAL 7008 Graugrün",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#62593C",
     "code": "AMIG0005",
     "discontinued": false
@@ -1664,7 +1673,7 @@
     "name": "RAL 7008 Graugrün Opt.2",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8A854D",
     "code": "AMIG0006",
     "discontinued": false
@@ -1674,7 +1683,7 @@
     "name": "RAL 7017 Dunkelbraun",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#524232",
     "code": "AMIG0007",
     "discontinued": false
@@ -1684,7 +1693,7 @@
     "name": "RAL 7021 Dunkelgrau",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#272B34",
     "code": "AMIG0008",
     "discontinued": false
@@ -1694,7 +1703,7 @@
     "name": "RAL 7027 Sandgrau",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C0AF93",
     "code": "AMIG0009",
     "discontinued": false
@@ -1704,7 +1713,7 @@
     "name": "RAL 7028 Dunkelgelb (mid War)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A4943F",
     "code": "AMIG0010",
     "discontinued": false
@@ -1714,7 +1723,7 @@
     "name": "RAL 7028 Dunkelgelb AUS ’44 Dg I",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C9BE86",
     "code": "AMIG0011",
     "discontinued": false
@@ -1724,7 +1733,7 @@
     "name": "RAL 7028 Dunkelgelb AUS ’44 Dg IIi",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D7CEA5",
     "code": "AMIG0012",
     "discontinued": false
@@ -1734,7 +1743,7 @@
     "name": "RAL 8000 Gelbbraun",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AE9576",
     "code": "AMIG0013",
     "discontinued": false
@@ -1744,7 +1753,7 @@
     "name": "RAL 8012 Rotbraun",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#85320A",
     "code": "AMIG0014",
     "discontinued": false
@@ -1754,7 +1763,7 @@
     "name": "RAL 8017 Schokobraun",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#50312C",
     "code": "AMIG0015",
     "discontinued": false
@@ -1764,7 +1773,7 @@
     "name": "RAL 8020 Gelbbraun",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E7CA7A",
     "code": "AMIG0016",
     "discontinued": false
@@ -1774,7 +1783,7 @@
     "name": "RAL 8031 F9 Sand Brown",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CDA38B",
     "code": "AMIG0026",
     "discontinued": false
@@ -1784,7 +1793,7 @@
     "name": "RAL 9001 Cremeweiss",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F2EFC2",
     "code": "AMIG0017",
     "discontinued": false
@@ -1794,7 +1803,7 @@
     "name": "RAL1039 F9 German Sand Beige",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C6B074",
     "code": "AMIG0027",
     "discontinued": false
@@ -1804,7 +1813,7 @@
     "name": "RAL7050 F7 German Grey Beige",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#807863",
     "code": "AMIG0028",
     "discontinued": false
@@ -1814,7 +1823,7 @@
     "name": "Real Idf Sand Grey 73",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#84794B",
     "code": "AMIG0132",
     "discontinued": false
@@ -1824,7 +1833,7 @@
     "name": "Real Idf Sinai Grey 82",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#534F2A",
     "code": "AMIG0131",
     "discontinued": false
@@ -1834,7 +1843,7 @@
     "name": "Red",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BD2615",
     "code": "AMIG0049",
     "discontinued": false
@@ -1844,7 +1853,7 @@
     "name": "Red Brown Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6B321E",
     "code": "AMIG0913",
     "discontinued": false
@@ -1854,7 +1863,7 @@
     "name": "Red Brown Light",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9E5340",
     "code": "AMIG0914",
     "discontinued": false
@@ -1864,7 +1873,7 @@
     "name": "Red Brown Shadow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#421D14",
     "code": "AMIG0912",
     "discontinued": false
@@ -1874,7 +1883,7 @@
     "name": "Red Leather",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#643B29",
     "code": "AMIG0133",
     "discontinued": false
@@ -1883,8 +1892,8 @@
     "id": "mig-red-primer-high-lights",
     "name": "Red Primer  High Lights",
     "brand": "Mig",
-    "range": "Primers",
-    "type": "primer",
+    "range": "Acrylics",
+    "type": "opaque",
     "hex": "#7F3D1A",
     "code": "AMIG0922",
     "discontinued": false
@@ -1893,8 +1902,8 @@
     "id": "mig-red-primer-shine",
     "name": "Red Primer  Shine",
     "brand": "Mig",
-    "range": "Primers",
-    "type": "primer",
+    "range": "Acrylics",
+    "type": "opaque",
     "hex": "#9E5922",
     "code": "AMIG0923",
     "discontinued": false
@@ -1903,8 +1912,8 @@
     "id": "mig-red-primer-base",
     "name": "Red Primer Base",
     "brand": "Mig",
-    "range": "Primers",
-    "type": "primer",
+    "range": "Acrylics",
+    "type": "opaque",
     "hex": "#491404",
     "code": "AMIG0920",
     "discontinued": false
@@ -1913,8 +1922,8 @@
     "id": "mig-red-primer-dark-base",
     "name": "Red Primer Dark Base",
     "brand": "Mig",
-    "range": "Primers",
-    "type": "primer",
+    "range": "Acrylics",
+    "type": "opaque",
     "hex": "#593B23",
     "code": "AMIG0919",
     "discontinued": false
@@ -1923,8 +1932,8 @@
     "id": "mig-red-primer-light-base",
     "name": "Red Primer Light Base",
     "brand": "Mig",
-    "range": "Primers",
-    "type": "primer",
+    "range": "Acrylics",
+    "type": "opaque",
     "hex": "#63250C",
     "code": "AMIG0921",
     "discontinued": false
@@ -1933,8 +1942,8 @@
     "id": "mig-red-primer-shadow",
     "name": "Red Primer Shadow",
     "brand": "Mig",
-    "range": "Primers",
-    "type": "primer",
+    "range": "Acrylics",
+    "type": "opaque",
     "hex": "#321819",
     "code": "AMIG0918",
     "discontinued": false
@@ -1944,7 +1953,7 @@
     "name": "Reddish Earth",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#705446",
     "code": "AMIG0139",
     "discontinued": false
@@ -1954,7 +1963,7 @@
     "name": "RLM 65 Hellblau",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C7DBE2",
     "code": "AMIG0231",
     "discontinued": false
@@ -1964,7 +1973,7 @@
     "name": "RLM 66 Schwartzgrau",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#282B34",
     "code": "AMIG0218",
     "discontinued": false
@@ -1974,7 +1983,7 @@
     "name": "RLM 70 Schwartzgrün",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#333C2B",
     "code": "AMIG0232",
     "discontinued": false
@@ -1984,7 +1993,7 @@
     "name": "RLM 71 Dunkelgrün",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#51563F",
     "code": "AMIG0233",
     "discontinued": false
@@ -1994,7 +2003,7 @@
     "name": "RLM 74 Graugrün",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#434E48",
     "code": "AMIG0253",
     "discontinued": false
@@ -2004,7 +2013,7 @@
     "name": "RLM 75 Grauviolett",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7C7E7B",
     "code": "AMIG0254",
     "discontinued": false
@@ -2014,7 +2023,7 @@
     "name": "RLM 76 Pale Grey",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9AC4B6",
     "code": "AMIG0063",
     "discontinued": false
@@ -2024,7 +2033,7 @@
     "name": "RLM 78 Hellblau",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#819B9C",
     "code": "AMIG0247",
     "discontinued": false
@@ -2034,7 +2043,7 @@
     "name": "RLM 79 Sandgelb",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C59942",
     "code": "AMIG0222",
     "discontinued": false
@@ -2044,7 +2053,7 @@
     "name": "RLM 80 Olivgrün",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3B4930",
     "code": "AMIG0248",
     "discontinued": false
@@ -2054,7 +2063,7 @@
     "name": "RLM 81",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#47512C",
     "code": "AMIG0206",
     "discontinued": false
@@ -2064,7 +2073,7 @@
     "name": "RLM 81 Braunviolett",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#553C37",
     "code": "AMIG0255",
     "discontinued": false
@@ -2074,7 +2083,7 @@
     "name": "RLM 81 Olive Drab Dark",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#413D20",
     "code": "AMIG0925",
     "discontinued": false
@@ -2084,7 +2093,7 @@
     "name": "RLM 82 Camo Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3E3E00",
     "code": "AMIG0230",
     "discontinued": false
@@ -2094,7 +2103,7 @@
     "name": "RLM 84 Graublau",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B9B97B",
     "code": "AMIG0256",
     "discontinued": false
@@ -2104,7 +2113,7 @@
     "name": "Rubber &amp; Tires",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3D383C",
     "code": "AMIG0033",
     "discontinued": false
@@ -2114,7 +2123,7 @@
     "name": "Russian Blue Amt-7",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2F737E",
     "code": "AMIG0251",
     "discontinued": false
@@ -2124,7 +2133,7 @@
     "name": "Russian Dark Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4A4F27",
     "code": "AMIG0931",
     "discontinued": false
@@ -2134,7 +2143,7 @@
     "name": "Russian Green Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D5C19",
     "code": "AMIG0932",
     "discontinued": false
@@ -2144,7 +2153,7 @@
     "name": "Russian High Light",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8C8557",
     "code": "AMIG0934",
     "discontinued": false
@@ -2154,7 +2163,7 @@
     "name": "Russian Light Base",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#797244",
     "code": "AMIG0933",
     "discontinued": false
@@ -2164,7 +2173,7 @@
     "name": "Russian Shadow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#30300E",
     "code": "AMIG0930",
     "discontinued": false
@@ -2174,7 +2183,7 @@
     "name": "Russian Shine",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9E976D",
     "code": "AMIG0935",
     "discontinued": false
@@ -2184,7 +2193,7 @@
     "name": "Rust Tracks",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#38261C",
     "code": "AMIG0034",
     "discontinued": false
@@ -2194,7 +2203,7 @@
     "name": "Sand Yellow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D8A64F",
     "code": "AMIG0030",
     "discontinued": false
@@ -2204,7 +2213,7 @@
     "name": "Satin Black",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1C1C1C",
     "code": "AMIG0032",
     "discontinued": false
@@ -2214,7 +2223,7 @@
     "name": "Satin White",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E8E8E8",
     "code": "AMIG0047",
     "discontinued": false
@@ -2224,7 +2233,7 @@
     "name": "Scc 15 (british 1944-45 Olive Drab)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#353B19",
     "code": "AMIG0112",
     "discontinued": false
@@ -2234,7 +2243,7 @@
     "name": "Scc 1a  (british Brown 1941-42)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#352118",
     "code": "AMIG0110",
     "discontinued": false
@@ -2244,7 +2253,7 @@
     "name": "Scc 2 (british 1941-44 Service Drab)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#544933",
     "code": "AMIG0111",
     "discontinued": false
@@ -2254,7 +2263,7 @@
     "name": "Shadow Rust",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#331716",
     "code": "AMIG0043",
     "discontinued": false
@@ -2264,7 +2273,7 @@
     "name": "Signal Green",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#28812D",
     "code": "AMIG0054",
     "discontinued": false
@@ -2274,17 +2283,18 @@
     "name": "Silver",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C6D1C1",
     "code": "AMIG0195",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-sky-type-s-bs-210",
     "name": "Sky Type S (bs 210)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B4B299",
     "code": "AMIG0243",
     "discontinued": false
@@ -2294,7 +2304,7 @@
     "name": "Spanish Green-khaki",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#504728",
     "code": "AMIG0031",
     "discontinued": false
@@ -2314,17 +2324,18 @@
     "name": "Steel",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B7C2B1",
     "code": "AMIG0191",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "mig-stone-grey",
     "name": "Stone Grey",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B2B2B2",
     "code": "AMIG0075",
     "discontinued": false
@@ -2354,7 +2365,7 @@
     "name": "US Olive Drab Vietnam Era (fs 24087)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#424A35",
     "code": "AMIG0081",
     "discontinued": false
@@ -2364,7 +2375,7 @@
     "name": "Violet",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#56439C",
     "code": "AMIG0126",
     "discontinued": false
@@ -2374,7 +2385,7 @@
     "name": "Waffen Ss",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#42685B",
     "code": "AMIG0018",
     "discontinued": false
@@ -2384,7 +2395,7 @@
     "name": "Warhead Metallic Blue",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#237EE9",
     "code": "AMIG0196",
     "discontinued": false
@@ -2394,7 +2405,7 @@
     "name": "Warm Sand-yellow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D7B657",
     "code": "AMIG0061",
     "discontinued": false
@@ -2404,7 +2415,7 @@
     "name": "Warm Skin Tone",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B5876F",
     "code": "AMIG0117",
     "discontinued": false
@@ -2414,7 +2425,7 @@
     "name": "Washable Black",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#000000",
     "code": "AMIG0104",
     "discontinued": false
@@ -2424,7 +2435,7 @@
     "name": "Washable Dust (RAL 8000)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9D8152",
     "code": "AMIG0105",
     "discontinued": false
@@ -2434,7 +2445,7 @@
     "name": "Washable Earth",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#714D35",
     "code": "AMIG0107",
     "discontinued": false
@@ -2444,7 +2455,7 @@
     "name": "Washable Mud",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#533229",
     "code": "AMIG0108",
     "discontinued": false
@@ -2454,7 +2465,7 @@
     "name": "Washable Rust",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A0402A",
     "code": "AMIG0109",
     "discontinued": false
@@ -2464,7 +2475,7 @@
     "name": "Washable Sand (RAL 8020)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C09853",
     "code": "AMIG0106",
     "discontinued": false
@@ -2474,7 +2485,7 @@
     "name": "Washable White Camo",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FAFBF6",
     "code": "AMIG0024",
     "discontinued": false
@@ -2484,7 +2495,7 @@
     "name": "Xb-518 Zashchitniy Zeleno (russian Postwar Green)",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4E4F30",
     "code": "AMIG0083",
     "discontinued": false
@@ -2494,7 +2505,7 @@
     "name": "Yellow",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EBC30B",
     "code": "AMIG0048",
     "discontinued": false
@@ -2504,7 +2515,7 @@
     "name": "Yellow Grey",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C9B68E",
     "code": "AMIG0057",
     "discontinued": false
@@ -2514,7 +2525,7 @@
     "name": "Zimmerit Ochre Color",
     "brand": "Mig",
     "range": "Acrylics",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9A8B76",
     "code": "AMIG0114",
     "discontinued": false
@@ -2524,7 +2535,7 @@
     "name": "Oilbrusher Black",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#0E0E0E",
     "code": "AMIG3500",
     "discontinued": false
@@ -2534,7 +2545,7 @@
     "name": "Oilbrusher White",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": "AMIG3501",
     "discontinued": false
@@ -2544,7 +2555,7 @@
     "name": "Oilbrusher Yellow",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#F6D347",
     "code": "AMIG3502",
     "discontinued": false
@@ -2554,7 +2565,7 @@
     "name": "Oilbrusher Red",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#AF251F",
     "code": "AMIG3503",
     "discontinued": false
@@ -2564,7 +2575,7 @@
     "name": "Oilbrusher Dark Blue",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#163C88",
     "code": "AMIG3504",
     "discontinued": false
@@ -2574,7 +2585,7 @@
     "name": "Oilbrusher Olive Green",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#60712F",
     "code": "AMIG3505",
     "discontinued": false
@@ -2584,7 +2595,7 @@
     "name": "Oilbrusher Field Green",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#46481C",
     "code": "AMIG3506",
     "discontinued": false
@@ -2594,7 +2605,7 @@
     "name": "Oilbrusher Dark Green",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#303A26",
     "code": "AMIG3507",
     "discontinued": false
@@ -2604,7 +2615,7 @@
     "name": "Oilbrusher Dark Mud",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#62471F",
     "code": "AMIG3508",
     "discontinued": false
@@ -2614,7 +2625,7 @@
     "name": "Oilbrusher Medium Grey",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#ABA9AA",
     "code": "AMIG3509",
     "discontinued": false
@@ -2624,7 +2635,7 @@
     "name": "Oilbrusher Rust",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#742C1B",
     "code": "AMIG3510",
     "discontinued": false
@@ -2634,7 +2645,7 @@
     "name": "Oilbrusher Red Primer",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#A9543C",
     "code": "AMIG3511",
     "discontinued": false
@@ -2644,7 +2655,7 @@
     "name": "Oilbrusher Dark Brown",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#391A19",
     "code": "AMIG3512",
     "discontinued": false
@@ -2654,7 +2665,7 @@
     "name": "Oilbrusher Starship Filth",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#3F3F34",
     "code": "AMIG3513",
     "discontinued": false
@@ -2664,7 +2675,7 @@
     "name": "Oilbrusher Earth",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#815523",
     "code": "AMIG3514",
     "discontinued": false
@@ -2674,7 +2685,7 @@
     "name": "Oilbrusher Ochre",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#BF8033",
     "code": "AMIG3515",
     "discontinued": false
@@ -2684,7 +2695,7 @@
     "name": "Oilbrusher Dust",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#BBA270",
     "code": "AMIG3516",
     "discontinued": false
@@ -2694,7 +2705,7 @@
     "name": "Oilbrusher Buff",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#CCBD87",
     "code": "AMIG3517",
     "discontinued": false
@@ -2704,7 +2715,7 @@
     "name": "Oilbrusher Sunny Flesh",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#EDDA9C",
     "code": "AMIG3518",
     "discontinued": false
@@ -2714,7 +2725,7 @@
     "name": "Oilbrusher Light Flesh",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#EEE3D2",
     "code": "AMIG3519",
     "discontinued": false
@@ -2724,7 +2735,7 @@
     "name": "Oilbrusher Basic Flesh",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#EBD9BC",
     "code": "AMIG3520",
     "discontinued": false
@@ -2734,7 +2745,7 @@
     "name": "Oilbrusher Yellow Bone",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#F7F1CA",
     "code": "AMIG3521",
     "discontinued": false
@@ -2744,7 +2755,7 @@
     "name": "Oilbrusher Medium Soil",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#917F58",
     "code": "AMIG3522",
     "discontinued": false
@@ -2754,7 +2765,7 @@
     "name": "Oilbrusher Dusty Earth",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#A99C84",
     "code": "AMIG3523",
     "discontinued": false
@@ -2764,7 +2775,7 @@
     "name": "Oilbrusher Earth Clay",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#5C3C23",
     "code": "AMIG3524",
     "discontinued": false
@@ -2774,7 +2785,7 @@
     "name": "Oilbrusher Red Tile",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#985234",
     "code": "AMIG3525",
     "discontinued": false
@@ -2784,7 +2795,7 @@
     "name": "Oilbrusher Space Purple",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#37243B",
     "code": "AMIG3526",
     "discontinued": false
@@ -2794,7 +2805,7 @@
     "name": "Oilbrusher Marine Blue",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#31456F",
     "code": "AMIG3527",
     "discontinued": false
@@ -2804,7 +2815,7 @@
     "name": "Oilbrusher Sky Blue",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#4A6D9A",
     "code": "AMIG3528",
     "discontinued": false
@@ -2814,7 +2825,7 @@
     "name": "Oilbrusher Mecha Light Green",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#69926D",
     "code": "AMIG3529",
     "discontinued": false
@@ -2824,7 +2835,7 @@
     "name": "Oilbrusher Weed Green",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#60834D",
     "code": "AMIG3530",
     "discontinued": false
@@ -2834,7 +2845,7 @@
     "name": "Oilbrusher Mecha Dark Green",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#143631",
     "code": "AMIG3531",
     "discontinued": false
@@ -2844,7 +2855,7 @@
     "name": "Oilbrusher Starship Bay Sludge",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#282117",
     "code": "AMIG3532",
     "discontinued": false
@@ -2854,7 +2865,7 @@
     "name": "Oilbrusher Raptor Shuttle Turquoise",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#142D37",
     "code": "AMIG3533",
     "discontinued": false
@@ -2864,7 +2875,7 @@
     "name": "Oilbrusher Summer Soil",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#9F8443",
     "code": "AMIG3534",
     "discontinued": false
@@ -2874,7 +2885,7 @@
     "name": "Oilbrusher Gun Metal",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#4E4E4E",
     "code": "AMIG3535",
     "discontinued": false,
@@ -2885,7 +2896,7 @@
     "name": "Oilbrusher Steel",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#666666",
     "code": "AMIG3536",
     "discontinued": false,
@@ -2896,7 +2907,7 @@
     "name": "Oilbrusher Aluminium",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#808080",
     "code": "AMIG3537",
     "discontinued": false,
@@ -2907,7 +2918,7 @@
     "name": "Oilbrusher Silver",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#B2B2B2",
     "code": "AMIG3538",
     "discontinued": false,
@@ -2918,7 +2929,7 @@
     "name": "Oilbrusher Gold",
     "brand": "Mig",
     "range": "Oilbrusher",
-    "type": "oil",
+    "type": "opaque",
     "hex": "#D8B960",
     "code": "AMIG3539",
     "discontinued": false,

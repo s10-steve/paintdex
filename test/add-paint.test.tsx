@@ -20,7 +20,7 @@ const paint = (id: string, name: string): BrowsePaint =>
     name,
     brand: "Warhammer",
     range: "Base",
-    type: "base",
+    type: "opaque",
     hex: "#123456",
     discontinued: false,
     family: "blue",

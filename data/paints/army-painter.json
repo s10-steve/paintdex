@@ -4,7 +4,7 @@
     "name": "Abomination Gore",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A32F26",
     "code": "WP1401",
     "discontinued": false
@@ -34,7 +34,7 @@
     "name": "Abyssal Black",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#21201D",
     "code": null,
     "discontinued": false
@@ -44,7 +44,7 @@
     "name": "Abyssal Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00506C",
     "code": null,
     "discontinued": false
@@ -54,7 +54,7 @@
     "name": "Aegis Aqua",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#32B3D5",
     "code": null,
     "discontinued": false
@@ -64,7 +64,7 @@
     "name": "Aegis Suit Satin Varnish",
     "brand": "Army Painter",
     "range": "Warpaints Primer",
-    "type": "primer",
+    "type": "varnish",
     "hex": "#F4F7F7",
     "code": "CP3027",
     "discontinued": false
@@ -74,7 +74,7 @@
     "name": "Afterglow",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E4EA8D",
     "code": null,
     "discontinued": false
@@ -84,7 +84,7 @@
     "name": "Agate Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D7877B",
     "code": null,
     "discontinued": false
@@ -114,7 +114,7 @@
     "name": "Alien Purple",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6154A3",
     "code": null,
     "discontinued": false
@@ -134,7 +134,7 @@
     "name": "Alien Purple",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#3D2560",
     "code": null,
     "discontinued": false
@@ -144,7 +144,7 @@
     "name": "Alien Purple",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#462D59",
     "code": "WP1128",
     "discontinued": false
@@ -154,7 +154,7 @@
     "name": "Alpha Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#667DC0",
     "code": null,
     "discontinued": false
@@ -164,7 +164,7 @@
     "name": "Amber Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C4A083",
     "code": null,
     "discontinued": false
@@ -174,7 +174,7 @@
     "name": "Amber Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AC835D",
     "code": null,
     "discontinued": false
@@ -184,7 +184,7 @@
     "name": "Amulet Aqua",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#68C5B6",
     "code": null,
     "discontinued": false
@@ -204,7 +204,7 @@
     "name": "Ancient Mummy",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FDEAA9",
     "code": null,
     "discontinued": false
@@ -214,7 +214,7 @@
     "name": "Ancient Stone",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D0C3A3",
     "code": null,
     "discontinued": false
@@ -224,7 +224,7 @@
     "name": "Angel Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#20321D",
     "code": null,
     "discontinued": false
@@ -234,7 +234,7 @@
     "name": "Angel Green",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0F3515",
     "code": "WP1112",
     "discontinued": false
@@ -254,7 +254,7 @@
     "name": "Angel Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#173E31",
     "code": null,
     "discontinued": false
@@ -264,7 +264,7 @@
     "name": "Angelic Red",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D42C39",
     "code": null,
     "discontinued": false
@@ -274,7 +274,7 @@
     "name": "Angelic Yellow",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F9DF1C",
     "code": null,
     "discontinued": false
@@ -284,21 +284,27 @@
     "name": "Anti-Shine Matt Varnish",
     "brand": "Army Painter",
     "range": "Warpaints Wash",
-    "type": "wash",
+    "type": "varnish",
+    "hex": "#F0F0F0",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-anti-shine-matt-varnish-warpaints-primer",
+    "name": "Anti-Shine Matt Varnish",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "varnish",
     "hex": "#F0F0F0",
     "code": "CP3003",
-    "discontinued": false,
-    "ranges": [
-      "Warpaints Primer",
-      "Warpaints Wash"
-    ]
+    "discontinued": false
   },
   {
     "id": "army-painter-aqua-alchemy",
     "name": "Aqua Alchemy",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#24BBA6",
     "code": null,
     "discontinued": false
@@ -308,7 +314,7 @@
     "name": "Aquamarine",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#56C4CD",
     "code": null,
     "discontinued": false
@@ -318,7 +324,7 @@
     "name": "Archangel Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C52822",
     "code": null,
     "discontinued": false
@@ -328,7 +334,7 @@
     "name": "Arctic Gem",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1995D4",
     "code": null,
     "discontinued": false
@@ -338,7 +344,7 @@
     "name": "Arid Earth",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FDEDC7",
     "code": "WP1402",
     "discontinued": false
@@ -348,7 +354,7 @@
     "name": "Army Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D7554",
     "code": null,
     "discontinued": false
@@ -358,7 +364,7 @@
     "name": "Army Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#536638",
     "code": null,
     "discontinued": false
@@ -378,7 +384,7 @@
     "name": "Army Green",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#747260",
     "code": "WP1110",
     "discontinued": false
@@ -388,7 +394,7 @@
     "name": "Ash Grey",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#95959F",
     "code": "WP1117",
     "discontinued": false
@@ -398,7 +404,7 @@
     "name": "Ash Grey",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#84878F",
     "code": null,
     "discontinued": false
@@ -418,7 +424,7 @@
     "name": "Ashroot",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#564540",
     "code": "WP4106",
     "discontinued": false
@@ -428,7 +434,7 @@
     "name": "Augur Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#ACBCE2",
     "code": null,
     "discontinued": false
@@ -438,7 +444,7 @@
     "name": "Autumn Sage",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#75AD98",
     "code": null,
     "discontinued": false
@@ -451,14 +457,15 @@
     "type": "contrast",
     "hex": "#62732F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-azure-magic",
     "name": "Azure Magic",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#005D78",
     "code": null,
     "discontinued": false,
@@ -469,7 +476,7 @@
     "name": "Azure Magic",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#153F51",
     "code": null,
     "discontinued": false
@@ -479,7 +486,7 @@
     "name": "Babe Blonde",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FBDC04",
     "code": "WP1403",
     "discontinued": false
@@ -489,7 +496,7 @@
     "name": "Banshee Brown",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BFA59B",
     "code": "WP1404",
     "discontinued": false
@@ -499,7 +506,7 @@
     "name": "Banshee Brown",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#342B28",
     "code": "WP4005",
     "discontinued": false
@@ -509,7 +516,7 @@
     "name": "Barbarian Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#D28D57",
     "code": null,
     "discontinued": false
@@ -519,7 +526,7 @@
     "name": "Barbarian Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F69B7F",
     "code": null,
     "discontinued": false
@@ -529,7 +536,7 @@
     "name": "Barbarian Flesh",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E38C7F",
     "code": "WP1126",
     "discontinued": false
@@ -549,7 +556,7 @@
     "name": "Baron Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7C95CC",
     "code": null,
     "discontinued": false
@@ -559,7 +566,7 @@
     "name": "Barren Dune",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DEBB72",
     "code": null,
     "discontinued": false
@@ -569,7 +576,7 @@
     "name": "Barren Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#845B25",
     "code": null,
     "discontinued": false
@@ -579,7 +586,7 @@
     "name": "Basilisk Brown",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CF8100",
     "code": "WP1405",
     "discontinued": false
@@ -589,7 +596,7 @@
     "name": "Basilisk Red",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6C2539",
     "code": null,
     "discontinued": false
@@ -609,7 +616,7 @@
     "name": "Beholder Purple",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A893B3",
     "code": null,
     "discontinued": false
@@ -629,7 +636,7 @@
     "name": "Blanched Berry",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#38242C",
     "code": "WP4014",
     "discontinued": false
@@ -639,7 +646,7 @@
     "name": "Bleached Bone",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#DFD9B7",
     "code": null,
     "discontinued": false
@@ -649,7 +656,7 @@
     "name": "Bleached Skull",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F5F4F0",
     "code": null,
     "discontinued": false
@@ -659,7 +666,7 @@
     "name": "Blighted Green",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1E2C2D",
     "code": "WP4004",
     "discontinued": false
@@ -679,7 +686,7 @@
     "name": "Blood Chalice",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DB4B50",
     "code": null,
     "discontinued": false
@@ -709,7 +716,7 @@
     "name": "Blood Thorn",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9E1E3D",
     "code": "WP4117",
     "discontinued": false
@@ -729,7 +736,7 @@
     "name": "Blue Flux",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#008BBD",
     "code": null,
     "discontinued": false
@@ -739,7 +746,7 @@
     "name": "Blue Tone",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#0D2540",
     "code": null,
     "discontinued": false
@@ -749,7 +756,7 @@
     "name": "Blue Tone",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "other",
+    "type": "wash",
     "hex": "#112A47",
     "code": "WP1139",
     "discontinued": false
@@ -769,7 +776,7 @@
     "name": "Bogey Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#A1BD67",
     "code": null,
     "discontinued": false
@@ -779,7 +786,7 @@
     "name": "Boney Spikes",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E6D4C1",
     "code": null,
     "discontinued": false
@@ -799,7 +806,7 @@
     "name": "Bootstrap Brown",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D4D4D",
     "code": null,
     "discontinued": false
@@ -809,7 +816,7 @@
     "name": "Brainmatter Beige",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DEDBD3",
     "code": null,
     "discontinued": false
@@ -819,7 +826,7 @@
     "name": "Brainmatter Beige",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F1F2E2",
     "code": "WP1405",
     "discontinued": false
@@ -829,7 +836,7 @@
     "name": "Bramble Grove",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#617779",
     "code": "WP4108",
     "discontinued": false
@@ -842,14 +849,15 @@
     "type": "contrast",
     "hex": "#6A3D37",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-brethil-flesh",
     "name": "Brethil Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C4915A",
     "code": null,
     "discontinued": false
@@ -859,7 +867,7 @@
     "name": "Brigade Grey",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D0D0D2",
     "code": null,
     "discontinued": false
@@ -869,7 +877,7 @@
     "name": "Brigadine Brown",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#443A40",
     "code": null,
     "discontinued": false
@@ -879,30 +887,33 @@
     "name": "Bright Gold",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B48024",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-bright-gold-warpaints-fanatic",
     "name": "Bright Gold",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#987B1A",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-bright-gold-warpaints",
     "name": "Bright Gold",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BB8702",
     "code": "WP1144",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-bright-red",
@@ -919,7 +930,7 @@
     "name": "Bright Sapphire",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#84CEF0",
     "code": null,
     "discontinued": false
@@ -932,14 +943,15 @@
     "type": "contrast",
     "hex": "#595854",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-broodmother-purple",
     "name": "Broodmother Purple",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#26233B",
     "code": null,
     "discontinued": false
@@ -978,7 +990,7 @@
     "id": "army-painter-brush-on-primer-warpaints-primer",
     "name": "Brush-On Primer",
     "brand": "Army Painter",
-    "range": "Warpaints Primer",
+    "range": "Warpaints",
     "type": "primer",
     "hex": "#A0A3A2",
     "code": "WP1472",
@@ -989,7 +1001,7 @@
     "name": "Buffed Hide",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B3756A",
     "code": null,
     "discontinued": false
@@ -999,7 +1011,7 @@
     "name": "Bugbear Brown",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7B561E",
     "code": null,
     "discontinued": false
@@ -1009,7 +1021,7 @@
     "name": "Bullwhack Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#8A6243",
     "code": null,
     "discontinued": false
@@ -1019,7 +1031,7 @@
     "name": "Burning Ore",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F2653E",
     "code": null,
     "discontinued": false
@@ -1049,7 +1061,7 @@
     "name": "Burnt Turf",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BE9859",
     "code": null,
     "discontinued": false
@@ -1059,7 +1071,7 @@
     "name": "Cadre Grey",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#8E9999",
     "code": null,
     "discontinued": false
@@ -1069,7 +1081,7 @@
     "name": "Cambion Crimson",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9C1A1D",
     "code": null,
     "discontinued": false
@@ -1099,7 +1111,7 @@
     "name": "Camouflage Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6E8358",
     "code": null,
     "discontinued": false
@@ -1109,7 +1121,7 @@
     "name": "Canopy Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#ABBE55",
     "code": null,
     "discontinued": false
@@ -1139,7 +1151,7 @@
     "name": "Carnelian Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D3E46",
     "code": null,
     "discontinued": false
@@ -1149,7 +1161,7 @@
     "name": "Castle Grey",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8D887F",
     "code": "WP1407",
     "discontinued": false
@@ -1159,7 +1171,7 @@
     "name": "Centaur Skin",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E3B1A5",
     "code": "WP1408",
     "discontinued": false
@@ -1169,7 +1181,7 @@
     "name": "Chaotic Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#582013",
     "code": null,
     "discontinued": false
@@ -1189,7 +1201,7 @@
     "name": "Chaotic Red",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6F1D06",
     "code": "WP1142",
     "discontinued": false
@@ -1209,7 +1221,7 @@
     "name": "Charred Bone",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#8C7757",
     "code": null,
     "discontinued": false
@@ -1219,7 +1231,7 @@
     "name": "Chimera Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#621723",
     "code": null,
     "discontinued": false
@@ -1249,17 +1261,18 @@
     "name": "Cobalt Metal",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2E4249",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-cold-flesh",
     "name": "Cold Flesh",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E7F0F9",
     "code": null,
     "discontinued": false
@@ -1269,7 +1282,7 @@
     "name": "Combat Fatigues",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#868E59",
     "code": "WP1409",
     "discontinued": false
@@ -1279,7 +1292,7 @@
     "name": "Command Khaki",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B49488",
     "code": null,
     "discontinued": false
@@ -1289,7 +1302,7 @@
     "name": "Commando Green",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#847F37",
     "code": "WP1410",
     "discontinued": false
@@ -1299,7 +1312,7 @@
     "name": "Company Grey",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BCBEC2",
     "code": null,
     "discontinued": false
@@ -1309,7 +1322,7 @@
     "name": "Consul Blue",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#526899",
     "code": null,
     "discontinued": false
@@ -1319,7 +1332,7 @@
     "name": "Corpse Pale",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EFD0AF",
     "code": "WP1411",
     "discontinued": false
@@ -1329,7 +1342,7 @@
     "name": "Cosmic Dust",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#EEE47D",
     "code": null,
     "discontinued": false
@@ -1339,7 +1352,7 @@
     "name": "Coven Purple",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#7B5A85",
     "code": null,
     "discontinued": false
@@ -1349,7 +1362,7 @@
     "name": "Crow Hue",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#424B47",
     "code": null,
     "discontinued": false
@@ -1379,7 +1392,7 @@
     "name": "Crusted Sore",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#843046",
     "code": "WP1412",
     "discontinued": false
@@ -1389,7 +1402,7 @@
     "name": "Crypt Wraith",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D5F4D",
     "code": "WP1413",
     "discontinued": false
@@ -1409,7 +1422,7 @@
     "name": "Crystal Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0273BC",
     "code": null,
     "discontinued": false
@@ -1419,7 +1432,7 @@
     "name": "Crystal Blue",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#106DAC",
     "code": null,
     "discontinued": false
@@ -1429,7 +1442,7 @@
     "name": "Crystal Blue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2579BB",
     "code": "WP1114",
     "discontinued": false
@@ -1439,7 +1452,7 @@
     "name": "Cultist Purple",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6962AB",
     "code": null,
     "discontinued": false
@@ -1449,7 +1462,7 @@
     "name": "Cultist Robe",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#787164",
     "code": "WP1414",
     "discontinued": false
@@ -1459,7 +1472,7 @@
     "name": "Cursed Blade",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7B482A",
     "code": null,
     "discontinued": false
@@ -1469,7 +1482,7 @@
     "name": "Cypress Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#544537",
     "code": null,
     "discontinued": false
@@ -1479,7 +1492,7 @@
     "name": "Daemonic Yellow",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F8BF3E",
     "code": "WP1107",
     "discontinued": false
@@ -1489,7 +1502,7 @@
     "name": "Daemonic Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FECE2A",
     "code": null,
     "discontinued": false
@@ -1509,7 +1522,7 @@
     "name": "Daemonic Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#F1D12F",
     "code": null,
     "discontinued": false
@@ -1529,7 +1542,7 @@
     "name": "Dark Emerald",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3B4A25",
     "code": null,
     "discontinued": false
@@ -1559,7 +1572,7 @@
     "name": "Dark Skin Shade",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic Wash",
-    "type": "shade",
+    "type": "wash",
     "hex": "#443638",
     "code": null,
     "discontinued": false
@@ -1579,7 +1592,7 @@
     "name": "Dark Sky",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#354653",
     "code": null,
     "discontinued": false
@@ -1589,7 +1602,7 @@
     "name": "Dark Sky",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#314F5E",
     "code": "WP1415",
     "discontinued": false
@@ -1599,7 +1612,7 @@
     "name": "Dark Stone",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#49383C",
     "code": "WP1425",
     "discontinued": false
@@ -1609,7 +1622,7 @@
     "name": "Dark Tone",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#0C060E",
     "code": null,
     "discontinued": false
@@ -1629,7 +1642,7 @@
     "name": "Dark Tone",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "other",
+    "type": "wash",
     "hex": "#050505",
     "code": "WP1136",
     "discontinued": false
@@ -1669,17 +1682,18 @@
     "name": "Death Metal",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2B2B2B",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-deep-azure",
     "name": "Deep Azure",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#006B79",
     "code": null,
     "discontinued": false
@@ -1689,7 +1703,7 @@
     "name": "Deep Blue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0E4E76",
     "code": "WP1116",
     "discontinued": false
@@ -1699,7 +1713,7 @@
     "name": "Deep Grey",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4B5164",
     "code": null,
     "discontinued": false
@@ -1709,7 +1723,7 @@
     "name": "Deep Ocean Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1B3044",
     "code": null,
     "discontinued": false
@@ -1719,7 +1733,7 @@
     "name": "Demigod Flames",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D17B41",
     "code": null,
     "discontinued": false
@@ -1729,7 +1743,7 @@
     "name": "Desert Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#856D45",
     "code": null,
     "discontinued": false
@@ -1739,7 +1753,7 @@
     "name": "Desert Yellow",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D7955A",
     "code": "WP1121",
     "discontinued": false
@@ -1759,7 +1773,7 @@
     "name": "Desert Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B99029",
     "code": null,
     "discontinued": false
@@ -1779,7 +1793,7 @@
     "name": "Dewpath",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4D8385",
     "code": "WP4109",
     "discontinued": false
@@ -1789,7 +1803,7 @@
     "name": "Diabolic Plum",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#562D74",
     "code": null,
     "discontinued": false
@@ -1799,7 +1813,7 @@
     "name": "Dirt Spatter",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#603920",
     "code": "WP1416",
     "discontinued": false
@@ -1819,7 +1833,7 @@
     "name": "Disgusting Slime",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CBB503",
     "code": "WP1477",
     "discontinued": false
@@ -1829,7 +1843,7 @@
     "name": "Diviner Light",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D59FC5",
     "code": null,
     "discontinued": false
@@ -1839,7 +1853,7 @@
     "name": "Doomfire Drab",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F9D9E6",
     "code": null,
     "discontinued": false
@@ -1849,7 +1863,7 @@
     "name": "Dorado Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A97761",
     "code": null,
     "discontinued": false
@@ -1859,7 +1873,7 @@
     "name": "Dorado Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EEC79E",
     "code": null,
     "discontinued": false
@@ -1869,7 +1883,7 @@
     "name": "Drab Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#7F815C",
     "code": null,
     "discontinued": false
@@ -1889,7 +1903,7 @@
     "name": "Dragon Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#7C191B",
     "code": null,
     "discontinued": false
@@ -1899,7 +1913,7 @@
     "name": "Dragon Red",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BF283B",
     "code": null,
     "discontinued": false
@@ -1909,7 +1923,7 @@
     "name": "Dragon Red",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B91130",
     "code": "WP1105",
     "discontinued": false
@@ -1919,7 +1933,7 @@
     "name": "Dragonfire Red",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CF2529",
     "code": null,
     "discontinued": false
@@ -1929,7 +1943,7 @@
     "name": "Drake Tooth",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D5D2BD",
     "code": "WP1417",
     "discontinued": false
@@ -1939,7 +1953,7 @@
     "name": "Drakolich Scales",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6D7FA3",
     "code": null,
     "discontinued": false
@@ -1959,7 +1973,7 @@
     "name": "Dry Rust",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E74F35",
     "code": "WP1479",
     "discontinued": false
@@ -1969,7 +1983,7 @@
     "name": "Dryad Brown",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#613630",
     "code": null,
     "discontinued": false
@@ -1979,17 +1993,18 @@
     "name": "Duergar Metal",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#582121",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-dungeon-grey",
     "name": "Dungeon Grey",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#676B70",
     "code": "WP1418",
     "discontinued": false
@@ -1999,7 +2014,7 @@
     "name": "Dungeon Stone",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#666D74",
     "code": null,
     "discontinued": false
@@ -2019,7 +2034,7 @@
     "name": "Dusty Skull",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8B7C68",
     "code": null,
     "discontinued": false
@@ -2029,17 +2044,18 @@
     "name": "Dwarven Bronze",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CD601F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-elder-flower",
     "name": "Elder Flower",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A8577B",
     "code": null,
     "discontinued": false
@@ -2049,7 +2065,7 @@
     "name": "Electric Blue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5288B8",
     "code": "WP1113",
     "discontinued": false
@@ -2059,7 +2075,7 @@
     "name": "Electric Lime",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BDD532",
     "code": null,
     "discontinued": false
@@ -2069,7 +2085,7 @@
     "name": "Elemental Bolt",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#158E76",
     "code": "WP1419",
     "discontinued": false
@@ -2079,7 +2095,7 @@
     "name": "Elemental Bolt",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#00816C",
     "code": null,
     "discontinued": false
@@ -2089,7 +2105,7 @@
     "name": "Elf Green",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4B5212",
     "code": "WP1420",
     "discontinued": false
@@ -2099,7 +2115,7 @@
     "name": "Elven Armor",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#1B3061",
     "code": null,
     "discontinued": false
@@ -2109,7 +2125,7 @@
     "name": "Elven Armour",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#003D81",
     "code": null,
     "discontinued": false,
@@ -2120,7 +2136,7 @@
     "name": "Elven Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#E6AD86",
     "code": null,
     "discontinued": false
@@ -2130,7 +2146,7 @@
     "name": "Elven Flesh",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F9BE94",
     "code": "WP1421",
     "discontinued": false
@@ -2140,7 +2156,7 @@
     "name": "Emberveil",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C7331B",
     "code": "WP4113",
     "discontinued": false
@@ -2150,7 +2166,7 @@
     "name": "Emerald Forest",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5BBB4D",
     "code": null,
     "discontinued": false
@@ -2160,7 +2176,7 @@
     "name": "Emperor Gold",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#634B2C",
     "code": "WP4009",
     "discontinued": false,
@@ -2171,7 +2187,7 @@
     "name": "Encarmine Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#721824",
     "code": null,
     "discontinued": false
@@ -2181,7 +2197,7 @@
     "name": "Enchanted Pink",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B66CAE",
     "code": null,
     "discontinued": false
@@ -2194,14 +2210,15 @@
     "type": "contrast",
     "hex": "#4F595B",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-eternal-blue",
     "name": "Eternal Blue",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5A7F93",
     "code": null,
     "discontinued": false
@@ -2211,7 +2228,7 @@
     "name": "Eternal Hunt",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#279A4C",
     "code": null,
     "discontinued": false
@@ -2221,7 +2238,7 @@
     "name": "Ethereal Specter",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C1AFBB",
     "code": null,
     "discontinued": false
@@ -2231,7 +2248,7 @@
     "name": "Evergreen Fog",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#396360",
     "code": null,
     "discontinued": false
@@ -2241,7 +2258,7 @@
     "name": "Evil Chrome",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#A46049",
     "code": null,
     "discontinued": false,
@@ -2252,27 +2269,29 @@
     "name": "Evil Chrome",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5B3B2F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-evil-chrome-warpaints-air",
     "name": "Evil Chrome",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#644133",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-exile-green",
     "name": "Exile Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#4C685B",
     "code": null,
     "discontinued": false
@@ -2282,7 +2301,7 @@
     "name": "Faerzress Purple",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#87146E",
     "code": null,
     "discontinued": false
@@ -2292,7 +2311,7 @@
     "name": "Fair Skin",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EACDAD",
     "code": null,
     "discontinued": false
@@ -2302,7 +2321,7 @@
     "name": "Fairy Dust",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#8C8C8C",
     "code": null,
     "discontinued": false
@@ -2312,7 +2331,7 @@
     "name": "Fairy Dust",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#A93C27",
     "code": null,
     "discontinued": false,
@@ -2323,7 +2342,7 @@
     "name": "Fairy Pink",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#81375F",
     "code": null,
     "discontinued": false
@@ -2343,7 +2362,7 @@
     "name": "Feral Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#5D8758",
     "code": null,
     "discontinued": false
@@ -2353,7 +2372,7 @@
     "name": "Ferocious Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#75C377",
     "code": null,
     "discontinued": false
@@ -2363,7 +2382,7 @@
     "name": "Fey Pink",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C384A6",
     "code": null,
     "discontinued": false
@@ -2373,7 +2392,7 @@
     "name": "Feywild Emerald",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#006E40",
     "code": null,
     "discontinued": false
@@ -2383,7 +2402,7 @@
     "name": "Feywild Glow",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#F2CC9E",
     "code": null,
     "discontinued": false
@@ -2393,7 +2412,7 @@
     "name": "Field Grey",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D807B",
     "code": "WP1481",
     "discontinued": false
@@ -2403,7 +2422,7 @@
     "name": "Fiendish Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EC9A44",
     "code": null,
     "discontinued": false
@@ -2413,7 +2432,7 @@
     "name": "Fiery Vermilion",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B11B12",
     "code": "WP4010",
     "discontinued": false
@@ -2423,7 +2442,7 @@
     "name": "Figgy Pink",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E3AFC9",
     "code": null,
     "discontinued": false
@@ -2433,7 +2452,7 @@
     "name": "Filthy Cape",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D785A",
     "code": "WP1424",
     "discontinued": false
@@ -2473,7 +2492,7 @@
     "name": "Fire Lizard",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F07000",
     "code": "WP1426",
     "discontinued": false
@@ -2483,7 +2502,7 @@
     "name": "Firenewt Orange",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F6AA0D",
     "code": null,
     "discontinued": false
@@ -2503,7 +2522,7 @@
     "name": "Flesh Wash",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#441517",
     "code": null,
     "discontinued": false
@@ -2523,7 +2542,7 @@
     "name": "Flickering Flame",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F58B3D",
     "code": null,
     "discontinued": false
@@ -2533,7 +2552,7 @@
     "name": "Flumph Pink",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E69D63",
     "code": null,
     "discontinued": false
@@ -2543,7 +2562,7 @@
     "name": "Fog Grey",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7A97B1",
     "code": "WP1427",
     "discontinued": false
@@ -2553,7 +2572,7 @@
     "name": "Forbidden Fruit",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CD88A9",
     "code": null,
     "discontinued": false
@@ -2563,7 +2582,7 @@
     "name": "Forest Faun",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A1C7AF",
     "code": null,
     "discontinued": false
@@ -2593,7 +2612,7 @@
     "name": "Frost Blue",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0080BF",
     "code": null,
     "discontinued": false
@@ -2603,7 +2622,7 @@
     "name": "Frost Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9ABEDE",
     "code": null,
     "discontinued": false
@@ -2613,7 +2632,7 @@
     "name": "Frostveil",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1B5698",
     "code": "WP4103",
     "discontinued": false
@@ -2623,7 +2642,7 @@
     "name": "Fur Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#84351D",
     "code": null,
     "discontinued": false
@@ -2633,7 +2652,7 @@
     "name": "Fur Brown",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#774544",
     "code": null,
     "discontinued": false
@@ -2653,7 +2672,7 @@
     "name": "Fur Brown",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A13A0F",
     "code": "WP1122",
     "discontinued": false
@@ -2663,7 +2682,7 @@
     "name": "Gargoyle Grey",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A8A292",
     "code": null,
     "discontinued": false
@@ -2673,7 +2692,7 @@
     "name": "Garment Pigment Toner",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#752330",
     "code": null,
     "discontinued": false
@@ -2683,7 +2702,7 @@
     "name": "Gauss Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#63A33C",
     "code": null,
     "discontinued": false
@@ -2693,7 +2712,7 @@
     "name": "Gelatinous Blue",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C7CFE3",
     "code": null,
     "discontinued": false
@@ -2703,7 +2722,7 @@
     "name": "Gemstone",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#AE1C28",
     "code": null,
     "discontinued": false,
@@ -2714,7 +2733,7 @@
     "name": "Gemstone",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#69191F",
     "code": null,
     "discontinued": false
@@ -2724,7 +2743,7 @@
     "name": "Gemstone Red",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#821D23",
     "code": null,
     "discontinued": false
@@ -2744,7 +2763,7 @@
     "name": "Ghostly Blue",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3A9DD5",
     "code": null,
     "discontinued": false
@@ -2754,7 +2773,7 @@
     "name": "Ghostly Vapours",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A5C5C0",
     "code": null,
     "discontinued": false
@@ -2774,7 +2793,7 @@
     "name": "Ghoul Grey",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B9BEC4",
     "code": null,
     "discontinued": false
@@ -2784,7 +2803,7 @@
     "name": "Gladeshard",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#92B931",
     "code": "WP4120",
     "discontinued": false
@@ -2794,7 +2813,7 @@
     "name": "Glistening Blood",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B3082D",
     "code": "WP1476",
     "discontinued": false
@@ -2814,7 +2833,7 @@
     "name": "Glitter Green",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#007B3A",
     "code": null,
     "discontinued": false,
@@ -2825,7 +2844,7 @@
     "name": "Glitter Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2E5A2F",
     "code": null,
     "discontinued": false
@@ -2835,7 +2854,7 @@
     "name": "Glittering Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2E794A",
     "code": null,
     "discontinued": false
@@ -2855,7 +2874,7 @@
     "name": "Gloss Varnish",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "varnish",
     "hex": "#F7F7F7",
     "code": "WP1473",
     "discontinued": false
@@ -2865,7 +2884,7 @@
     "name": "Glowing Inferno",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F79D42",
     "code": null,
     "discontinued": false
@@ -2875,7 +2894,7 @@
     "name": "Gnome Cheeks",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#978376",
     "code": null,
     "discontinued": false
@@ -2885,7 +2904,7 @@
     "name": "Goblin Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#528536",
     "code": null,
     "discontinued": false
@@ -2905,7 +2924,7 @@
     "name": "Goblin Green",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#338E46",
     "code": "WP1109",
     "discontinued": false
@@ -2915,7 +2934,7 @@
     "name": "Goblin Skin",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E0B26A",
     "code": "WP1720",
     "discontinued": false
@@ -2945,7 +2964,7 @@
     "name": "Gorgon Hide",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CFD7E7",
     "code": "WP1428",
     "discontinued": false
@@ -2955,7 +2974,7 @@
     "name": "Gothic Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2E3E79",
     "code": null,
     "discontinued": false
@@ -2985,7 +3004,7 @@
     "name": "Great Hall Grey",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BBB4A6",
     "code": null,
     "discontinued": false
@@ -2995,37 +3014,40 @@
     "name": "Greedy Gold",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CC7D00",
     "code": "WP1132",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-greedy-gold-warpaints-fanatic",
     "name": "Greedy Gold",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#745218",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-greedy-gold-warpaints-air",
     "name": "Greedy Gold",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#A35819",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-green-flame",
     "name": "Green Flame",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#81AC36",
     "code": null,
     "discontinued": false
@@ -3035,7 +3057,7 @@
     "name": "Green Tone",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#0F2B18",
     "code": null,
     "discontinued": false
@@ -3055,7 +3077,7 @@
     "name": "Green Tone",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "other",
+    "type": "wash",
     "hex": "#162F12",
     "code": "WP1137",
     "discontinued": false
@@ -3075,7 +3097,7 @@
     "name": "Greenskin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1F7843",
     "code": null,
     "discontinued": false
@@ -3085,7 +3107,7 @@
     "name": "Greenskin",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#04662B",
     "code": "WP1111",
     "discontinued": false
@@ -3095,7 +3117,7 @@
     "name": "Greenskin",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2C5C2F",
     "code": null,
     "discontinued": false
@@ -3105,7 +3127,7 @@
     "name": "Gremlin Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#4A5A2B",
     "code": null,
     "discontinued": false
@@ -3115,7 +3137,7 @@
     "name": "Grey Castle",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#929286",
     "code": null,
     "discontinued": false
@@ -3135,7 +3157,7 @@
     "name": "Griffon Blue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#20477A",
     "code": "WP1429",
     "discontinued": false
@@ -3185,7 +3207,7 @@
     "name": "Grimoire Purple",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#724860",
     "code": "WP1444",
     "discontinued": false
@@ -3195,7 +3217,7 @@
     "name": "Grotesque Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B3C29D",
     "code": null,
     "discontinued": false
@@ -3215,7 +3237,7 @@
     "name": "Grung Green",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9DC29E",
     "code": "WP1731",
     "discontinued": false
@@ -3225,7 +3247,7 @@
     "name": "Guardian Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#226248",
     "code": null,
     "discontinued": false
@@ -3235,20 +3257,22 @@
     "name": "Gun Metal",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#5F5D5C",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-gun-metal-warpaints-fanatic",
     "name": "Gun Metal",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4F5053",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-gun-metal-warpaints-primer",
@@ -3258,17 +3282,19 @@
     "type": "primer",
     "hex": "#858180",
     "code": "CP3025",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-gun-metal-warpaints",
     "name": "Gun Metal",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7E7C7B",
     "code": "WP1131",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-gunner-camo",
@@ -3285,7 +3311,7 @@
     "name": "Hardened Carapace",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#44453B",
     "code": "WP1430",
     "discontinued": false
@@ -3315,7 +3341,7 @@
     "name": "Hazardous Smog",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#60AB97",
     "code": null,
     "discontinued": false
@@ -3325,7 +3351,7 @@
     "name": "Hearthborn",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EABB8B",
     "code": "WP4114",
     "discontinued": false
@@ -3335,7 +3361,7 @@
     "name": "Heavy Metal",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#454646",
     "code": "WP4019",
     "discontinued": false,
@@ -3346,7 +3372,7 @@
     "name": "Hemp Rope",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#977C3A",
     "code": "WP1431",
     "discontinued": false
@@ -3356,7 +3382,7 @@
     "name": "Hexed Violet",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8D81BE",
     "code": null,
     "discontinued": false
@@ -3409,14 +3435,15 @@
     "type": "contrast",
     "hex": "#867240",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-hobgoblin-hue",
     "name": "Hobgoblin Hue",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#F3DBC0",
     "code": null,
     "discontinued": false
@@ -3449,14 +3476,15 @@
     "type": "contrast",
     "hex": "#907317",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-hot-pink",
     "name": "Hot Pink",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#CB4485",
     "code": null,
     "discontinued": false
@@ -3476,7 +3504,7 @@
     "name": "Husk Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#562F22",
     "code": null,
     "discontinued": false
@@ -3486,7 +3514,7 @@
     "name": "Hydra Turqoise",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1E939C",
     "code": "WP1141",
     "discontinued": false
@@ -3496,7 +3524,7 @@
     "name": "Hydra Turquoise",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#277581",
     "code": null,
     "discontinued": false
@@ -3506,7 +3534,7 @@
     "name": "Hydra Turquoise",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#149398",
     "code": null,
     "discontinued": false
@@ -3516,7 +3544,7 @@
     "name": "Ice Storm",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3BA0CB",
     "code": "WP1432",
     "discontinued": false
@@ -3526,7 +3554,7 @@
     "name": "Ice Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFEDAD",
     "code": null,
     "discontinued": false
@@ -3536,7 +3564,7 @@
     "name": "Iceborn",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F3DFF3",
     "code": "WP4104",
     "discontinued": false
@@ -3546,7 +3574,7 @@
     "name": "Imp Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#E3BE6A",
     "code": null,
     "discontinued": false
@@ -3556,7 +3584,7 @@
     "name": "Imperial Navy",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#063565",
     "code": null,
     "discontinued": false
@@ -3566,7 +3594,7 @@
     "name": "Impish Rouge",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D957A0",
     "code": null,
     "discontinued": false
@@ -3576,7 +3604,7 @@
     "name": "Incursion Orange",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#D7752A",
     "code": null,
     "discontinued": false
@@ -3586,7 +3614,7 @@
     "name": "Inner Light",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FDCB5F",
     "code": null,
     "discontinued": false
@@ -3596,7 +3624,7 @@
     "name": "Ionic Blue",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#3992C5",
     "code": null,
     "discontinued": false
@@ -3606,17 +3634,18 @@
     "name": "Iron Wolf",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#354B57",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-ironclad-grey",
     "name": "Ironclad Grey",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#323438",
     "code": "WP4002",
     "discontinued": false
@@ -3626,7 +3655,7 @@
     "name": "Ivory White",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F6E2BD",
     "code": "WP4001",
     "discontinued": false
@@ -3636,7 +3665,7 @@
     "name": "Jasper Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#834641",
     "code": null,
     "discontinued": false
@@ -3646,7 +3675,7 @@
     "name": "Jasper Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BA7372",
     "code": null,
     "discontinued": false
@@ -3656,7 +3685,7 @@
     "name": "Jungle Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#779F37",
     "code": null,
     "discontinued": false
@@ -3666,7 +3695,7 @@
     "name": "Jungle Green",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8EA901",
     "code": "WP1433",
     "discontinued": false
@@ -3676,17 +3705,18 @@
     "name": "Ki-Rin Gold",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AF8102",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-kobold-red",
     "name": "Kobold Red",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6D1F0C",
     "code": null,
     "discontinued": false
@@ -3696,7 +3726,7 @@
     "name": "Kobold Skin",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C79C79",
     "code": null,
     "discontinued": false
@@ -3706,7 +3736,7 @@
     "name": "Kobold Skin",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D89D8F",
     "code": "WP1434",
     "discontinued": false
@@ -3716,7 +3746,7 @@
     "name": "Kraken Blue",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#055E8F",
     "code": null,
     "discontinued": false
@@ -3726,7 +3756,7 @@
     "name": "Kraken Lavender",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D5CAE5",
     "code": null,
     "discontinued": false
@@ -3736,7 +3766,7 @@
     "name": "Kraken Skin",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#71BF87",
     "code": "WP1435",
     "discontinued": false
@@ -3746,7 +3776,7 @@
     "name": "Lava Orange",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F5792C",
     "code": null,
     "discontinued": false
@@ -3756,7 +3786,7 @@
     "name": "Lava Orange",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E24606",
     "code": "WP1106",
     "discontinued": false
@@ -3766,7 +3796,7 @@
     "name": "Lava Orange",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#BF3D20",
     "code": null,
     "discontinued": false
@@ -3776,7 +3806,7 @@
     "name": "Lawfull White",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FEFFFF",
     "code": null,
     "discontinued": false
@@ -3786,7 +3816,7 @@
     "name": "Leafy Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#76C045",
     "code": null,
     "discontinued": false
@@ -3796,7 +3826,7 @@
     "name": "Leather Brown",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7C5B54",
     "code": null,
     "discontinued": false
@@ -3806,7 +3836,7 @@
     "name": "Leather Brown",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7C4F10",
     "code": "WP1123",
     "discontinued": false
@@ -3826,7 +3856,7 @@
     "name": "Leather Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#67471E",
     "code": null,
     "discontinued": false
@@ -3836,7 +3866,7 @@
     "name": "Legendary Red",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EF4B3E",
     "code": null,
     "discontinued": false
@@ -3856,7 +3886,7 @@
     "name": "Leopard Stone Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E7B4B1",
     "code": null,
     "discontinued": false
@@ -3866,7 +3896,7 @@
     "name": "Leviathan Light",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B5D2BA",
     "code": null,
     "discontinued": false
@@ -3876,7 +3906,7 @@
     "name": "Lich Blue",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#094073",
     "code": null,
     "discontinued": false
@@ -3886,7 +3916,7 @@
     "name": "Lich Skin",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#83827B",
     "code": null,
     "discontinued": false
@@ -3896,7 +3926,7 @@
     "name": "Light Tone",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#AB3B2C",
     "code": null,
     "discontinued": false
@@ -3916,7 +3946,7 @@
     "name": "Light Tone",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "other",
+    "type": "wash",
     "hex": "#B03812",
     "code": "WP1470",
     "discontinued": false
@@ -3936,7 +3966,7 @@
     "name": "Magecast Magenta",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#704099",
     "code": null,
     "discontinued": false
@@ -3986,7 +4016,7 @@
     "name": "Magnolia Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2C2C24",
     "code": null,
     "discontinued": false
@@ -4006,7 +4036,7 @@
     "name": "Majestic Fortress",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#006856",
     "code": null,
     "discontinued": false
@@ -4036,7 +4066,7 @@
     "name": "Marine Mist",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#94D6D7",
     "code": null,
     "discontinued": false
@@ -4046,7 +4076,7 @@
     "name": "Mars Red",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D33830",
     "code": "WP1436",
     "discontinued": false
@@ -4056,22 +4086,37 @@
     "name": "Matt Black",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#000000",
     "code": "WP1101",
-    "discontinued": false,
-    "ranges": [
-      "Warpaints",
-      "Warpaints Fanatic",
-      "Warpaints Primer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-matt-black-warpaints-fanatic",
+    "name": "Matt Black",
+    "brand": "Army Painter",
+    "range": "Warpaints Fanatic",
+    "type": "opaque",
+    "hex": "#000000",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-matt-black-warpaints-primer",
+    "name": "Matt Black",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#000000",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "army-painter-matt-black-warpaints-air",
     "name": "Matt Black",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#181915",
     "code": null,
     "discontinued": false
@@ -4081,23 +4126,47 @@
     "name": "Matt White",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-matt-white-warpaints",
+    "name": "Matt White",
+    "brand": "Army Painter",
+    "range": "Warpaints",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": "WP1102",
-    "discontinued": false,
-    "ranges": [
-      "Warpaints",
-      "Warpaints Air",
-      "Warpaints Fanatic",
-      "Warpaints Primer"
-    ]
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-matt-white-warpaints-air",
+    "name": "Matt White",
+    "brand": "Army Painter",
+    "range": "Warpaints Air",
+    "type": "opaque",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
+  },
+  {
+    "id": "army-painter-matt-white-warpaints-primer",
+    "name": "Matt White",
+    "brand": "Army Painter",
+    "range": "Warpaints Primer",
+    "type": "primer",
+    "hex": "#FFFFFF",
+    "code": null,
+    "discontinued": false
   },
   {
     "id": "army-painter-medieval-forest",
     "name": "Medieval Forest",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#437C6D",
     "code": null,
     "discontinued": false
@@ -4107,7 +4176,7 @@
     "name": "Merfolk Turquoise",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#019096",
     "code": null,
     "discontinued": false
@@ -4117,7 +4186,7 @@
     "name": "Meteor Rock",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#D7AF2B",
     "code": null,
     "discontinued": false
@@ -4127,7 +4196,7 @@
     "name": "Mid Brown",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#925A11",
     "code": "WP1469",
     "discontinued": false
@@ -4137,7 +4206,7 @@
     "name": "Mid Brown",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#934E2B",
     "code": null,
     "discontinued": false
@@ -4147,7 +4216,7 @@
     "name": "Midnight Olive",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#31352C",
     "code": "WP4012",
     "discontinued": false
@@ -4157,7 +4226,7 @@
     "name": "Military Shade",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic Wash",
-    "type": "shade",
+    "type": "wash",
     "hex": "#23270E",
     "code": null,
     "discontinued": false
@@ -4167,7 +4236,7 @@
     "name": "Military Shader",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "shade",
+    "type": "wash",
     "hex": "#4C631C",
     "code": "WP1471",
     "discontinued": false
@@ -4177,7 +4246,7 @@
     "name": "Military Shader",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#43582B",
     "code": null,
     "discontinued": false
@@ -4187,7 +4256,7 @@
     "name": "Militia Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#273124",
     "code": null,
     "discontinued": false
@@ -4197,7 +4266,7 @@
     "name": "Minotaur Hide",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A34521",
     "code": null,
     "discontinued": false
@@ -4207,17 +4276,18 @@
     "name": "Mithral Silver",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#808182",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-mithril",
     "name": "Mithril",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9E9FA3",
     "code": null,
     "discontinued": false
@@ -4227,7 +4297,7 @@
     "name": "Mocca Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#402828",
     "code": null,
     "discontinued": false
@@ -4237,7 +4307,7 @@
     "name": "Mocca Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#81655A",
     "code": null,
     "discontinued": false
@@ -4247,7 +4317,7 @@
     "name": "Moldy Wine",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D3451",
     "code": null,
     "discontinued": false
@@ -4257,7 +4327,7 @@
     "name": "Molten Lava",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F05A3E",
     "code": null,
     "discontinued": false
@@ -4267,7 +4337,7 @@
     "name": "Molten Orange",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#7D3222",
     "code": null,
     "discontinued": false
@@ -4277,7 +4347,7 @@
     "name": "Monster Brown",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9D6A5F",
     "code": "WP1120",
     "discontinued": false
@@ -4297,7 +4367,7 @@
     "name": "Moon Dust",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#E4CB63",
     "code": null,
     "discontinued": false
@@ -4307,7 +4377,7 @@
     "name": "Moon Dust",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0D45F",
     "code": "WP1438",
     "discontinued": false
@@ -4317,7 +4387,7 @@
     "name": "Moonbeam Yellow",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0B81D",
     "code": "WP4003",
     "discontinued": false
@@ -4337,7 +4407,7 @@
     "name": "Moonpetal",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AB5E76",
     "code": "WP4105",
     "discontinued": false
@@ -4347,7 +4417,7 @@
     "name": "Moonstone Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C57B74",
     "code": null,
     "discontinued": false
@@ -4357,7 +4427,7 @@
     "name": "Mossy Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B1DCC0",
     "code": null,
     "discontinued": false
@@ -4367,7 +4437,7 @@
     "name": "Mouldy Clothes",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3A7529",
     "code": "WP1439",
     "discontinued": false
@@ -4387,7 +4457,7 @@
     "name": "Mulled Berry",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#623348",
     "code": null,
     "discontinued": false
@@ -4407,7 +4477,7 @@
     "name": "Mummy Robes",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EFDED6",
     "code": "WP1440",
     "discontinued": false
@@ -4427,7 +4497,7 @@
     "name": "Mutant Hue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AC8A8D",
     "code": "WP1441",
     "discontinued": false
@@ -4437,7 +4507,7 @@
     "name": "Mythical Orange",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E22E0D",
     "code": "WP1442",
     "discontinued": false
@@ -4447,7 +4517,7 @@
     "name": "Necromancer Cloak",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#413C47",
     "code": "WP1443",
     "discontinued": false
@@ -4457,7 +4527,7 @@
     "name": "Necrotic Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B1B886",
     "code": null,
     "discontinued": false
@@ -4467,7 +4537,7 @@
     "name": "Necrotic Flesh",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B6A789",
     "code": "WP1108",
     "discontinued": false
@@ -4487,7 +4557,7 @@
     "name": "Necrotic Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9AA984",
     "code": null,
     "discontinued": false
@@ -4497,7 +4567,7 @@
     "name": "Neon Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#FEDE40",
     "code": null,
     "discontinued": false
@@ -4507,7 +4577,7 @@
     "name": "Neptune Glow",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#75CED4",
     "code": null,
     "discontinued": false
@@ -4517,7 +4587,7 @@
     "name": "Night Scales",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#232023",
     "code": null,
     "discontinued": false
@@ -4527,7 +4597,7 @@
     "name": "Night Scales",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#312C2F",
     "code": null,
     "discontinued": false,
@@ -4538,7 +4608,7 @@
     "name": "Night Sky",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#304358",
     "code": null,
     "discontinued": false
@@ -4568,7 +4638,7 @@
     "name": "Nomad Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B3614B",
     "code": null,
     "discontinued": false
@@ -4588,7 +4658,7 @@
     "name": "Oak Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#3A2415",
     "code": null,
     "discontinued": false
@@ -4598,7 +4668,7 @@
     "name": "Oak Brown",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#39262A",
     "code": null,
     "discontinued": false
@@ -4608,7 +4678,7 @@
     "name": "Oak Brown",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#48240A",
     "code": "WP1124",
     "discontinued": false
@@ -4618,7 +4688,7 @@
     "name": "Obsidian Pigment Toner",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1F2224",
     "code": null,
     "discontinued": false
@@ -4628,7 +4698,7 @@
     "name": "Obsidian Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4A4046",
     "code": null,
     "discontinued": false
@@ -4648,7 +4718,7 @@
     "name": "Ocean Depths",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#054C5B",
     "code": null,
     "discontinued": false
@@ -4678,7 +4748,7 @@
     "name": "Olive Drab",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7A905F",
     "code": null,
     "discontinued": false
@@ -4688,7 +4758,7 @@
     "name": "Omega Blue",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#1F3863",
     "code": null,
     "discontinued": false
@@ -4698,7 +4768,7 @@
     "name": "Onyx Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#363231",
     "code": null,
     "discontinued": false
@@ -4708,7 +4778,7 @@
     "name": "Onyx Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#664A4D",
     "code": null,
     "discontinued": false
@@ -4718,7 +4788,7 @@
     "name": "Oozing Purple",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B29DB7",
     "code": "WP1445",
     "discontinued": false
@@ -4738,7 +4808,7 @@
     "name": "Opal Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D6C3C1",
     "code": null,
     "discontinued": false
@@ -4748,7 +4818,7 @@
     "name": "Opal Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFD2C8",
     "code": null,
     "discontinued": false
@@ -4758,7 +4828,7 @@
     "name": "Orange Magma",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C52822",
     "code": null,
     "discontinued": false
@@ -4778,7 +4848,7 @@
     "name": "Orc Blood",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#904B7A",
     "code": "WP1422",
     "discontinued": false
@@ -4808,7 +4878,7 @@
     "name": "Orc Skin",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9FA3A3",
     "code": null,
     "discontinued": false
@@ -4818,7 +4888,7 @@
     "name": "Otyugh Brown",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DEB57D",
     "code": null,
     "discontinued": false
@@ -4828,7 +4898,7 @@
     "name": "Owlbear Brown",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5F3D27",
     "code": null,
     "discontinued": false
@@ -4838,7 +4908,7 @@
     "name": "Pale Sand",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EFEAD3",
     "code": null,
     "discontinued": false
@@ -4868,7 +4938,7 @@
     "name": "Paratrooper Tan",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9A776C",
     "code": null,
     "discontinued": false
@@ -4928,7 +4998,7 @@
     "name": "Patagon Pine",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#63917F",
     "code": null,
     "discontinued": false
@@ -4948,7 +5018,7 @@
     "name": "Pearl Pigment Toner",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EBE4E1",
     "code": null,
     "discontinued": false
@@ -4958,7 +5028,7 @@
     "name": "Pearl Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFE3D8",
     "code": null,
     "discontinued": false
@@ -4978,7 +5048,7 @@
     "name": "Pestilent Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#70733B",
     "code": null,
     "discontinued": false
@@ -4988,7 +5058,7 @@
     "name": "Phalanx Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#048BAE",
     "code": null,
     "discontinued": false
@@ -4998,7 +5068,7 @@
     "name": "Phantasmal Blue",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#5CADB3",
     "code": null,
     "discontinued": false
@@ -5008,7 +5078,7 @@
     "name": "Pharaoh Guard",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0C7C61",
     "code": null,
     "discontinued": false
@@ -5018,7 +5088,7 @@
     "name": "Phoenix Flames",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F7A103",
     "code": "WP1446",
     "discontinued": false
@@ -5038,7 +5108,7 @@
     "name": "Pink Potion",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F4B9D4",
     "code": null,
     "discontinued": false
@@ -5048,7 +5118,7 @@
     "name": "Pixie Pink",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D67B83",
     "code": "WP1447",
     "discontinued": false
@@ -5058,7 +5128,7 @@
     "name": "Pixie Pink",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B94F8C",
     "code": null,
     "discontinued": false
@@ -5068,7 +5138,7 @@
     "name": "Pixie Pink",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D96FAE",
     "code": null,
     "discontinued": false
@@ -5078,7 +5148,7 @@
     "name": "Pixiedust Pink",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D27F84",
     "code": null,
     "discontinued": false
@@ -5118,10 +5188,11 @@
     "name": "Plate Mail Metal",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#6A6B68",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-plate-mail-metal-warpaints-primer",
@@ -5131,34 +5202,37 @@
     "type": "primer",
     "hex": "#858584",
     "code": "CP3008",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-plate-mail-metal-warpaints",
     "name": "Plate Mail Metal",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#949494",
     "code": "WP1130",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-plate-mail-metal-warpaints-fanatic",
     "name": "Plate Mail Metal",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#686A6E",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-poisonous-cloud",
     "name": "Poisonous Cloud",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CFDA2F",
     "code": "WP1448",
     "discontinued": false
@@ -5171,7 +5245,8 @@
     "type": "contrast",
     "hex": "#888782",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-poppy-red",
@@ -5188,7 +5263,7 @@
     "name": "Potion Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#618A72",
     "code": null,
     "discontinued": false
@@ -5208,7 +5283,7 @@
     "name": "Prairie Ochre",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#696242",
     "code": null,
     "discontinued": false
@@ -5228,7 +5303,7 @@
     "name": "Psychic Shock",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#5DA490",
     "code": null,
     "discontinued": false
@@ -5238,7 +5313,7 @@
     "name": "Pure Red",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CA1913",
     "code": "WP1104",
     "discontinued": false
@@ -5248,7 +5323,7 @@
     "name": "Pure Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#A8141F",
     "code": null,
     "discontinued": false
@@ -5268,7 +5343,7 @@
     "name": "Pure Red",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CD151C",
     "code": null,
     "discontinued": false
@@ -5318,7 +5393,7 @@
     "name": "Purple Tone",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "other",
+    "type": "wash",
     "hex": "#2A1C4D",
     "code": "WP1140",
     "discontinued": false
@@ -5328,7 +5403,7 @@
     "name": "Purple Tone",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#2A194A",
     "code": null,
     "discontinued": false
@@ -5338,7 +5413,7 @@
     "name": "Purple Worm",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#826D8D",
     "code": "WP1712",
     "discontinued": false
@@ -5348,7 +5423,7 @@
     "name": "Putrid Slime",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C4B107",
     "code": null,
     "discontinued": false
@@ -5358,7 +5433,7 @@
     "name": "Quartz Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0D0B4",
     "code": null,
     "discontinued": false
@@ -5368,7 +5443,7 @@
     "name": "Quickshade Wash Mixing Medium",
     "brand": "Army Painter",
     "range": "Warpaints Wash",
-    "type": "wash",
+    "type": "medium",
     "hex": "#EEEFEF",
     "code": "WP1474",
     "discontinued": false
@@ -5388,7 +5463,7 @@
     "name": "Raging Rose",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E96663",
     "code": null,
     "discontinued": false
@@ -5398,7 +5473,7 @@
     "name": "Raging Rouge",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F68F82",
     "code": null,
     "discontinued": false
@@ -5418,7 +5493,7 @@
     "name": "Rainforest",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8BC63E",
     "code": null,
     "discontinued": false
@@ -5428,7 +5503,7 @@
     "name": "Raven Black",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2B3030",
     "code": null,
     "discontinued": false
@@ -5438,7 +5513,7 @@
     "name": "Rawhide Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#4F3826",
     "code": null,
     "discontinued": false
@@ -5448,7 +5523,7 @@
     "name": "Rebel Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#741434",
     "code": null,
     "discontinued": false
@@ -5458,17 +5533,18 @@
     "name": "Red Copper",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4D2C30",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-red-tone",
     "name": "Red Tone",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "other",
+    "type": "wash",
     "hex": "#502114",
     "code": "WP1138",
     "discontinued": false
@@ -5488,7 +5564,7 @@
     "name": "Red Tone",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#421516",
     "code": null,
     "discontinued": false
@@ -5498,7 +5574,7 @@
     "name": "Regal Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#004F88",
     "code": null,
     "discontinued": false
@@ -5508,7 +5584,7 @@
     "name": "Regiment Grey",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#424B4A",
     "code": null,
     "discontinued": false
@@ -5518,7 +5594,7 @@
     "name": "Resplendent Red",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#96272F",
     "code": null,
     "discontinued": false
@@ -5528,7 +5604,7 @@
     "name": "Rigid Leather",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#521C02",
     "code": null,
     "discontinued": false
@@ -5548,7 +5624,7 @@
     "name": "Rootpath",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#605032",
     "code": "WP4119",
     "discontinued": false
@@ -5558,7 +5634,7 @@
     "name": "Rosy Skin",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F7BF96",
     "code": null,
     "discontinued": false
@@ -5568,37 +5644,40 @@
     "name": "Rough Iron",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#20130E",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-rough-iron-warpaints-fanatic",
     "name": "Rough Iron",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#352D25",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-rough-iron-warpaints",
     "name": "Rough Iron",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#22130F",
     "code": "WP1468",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-royal-blue",
     "name": "Royal Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0162AF",
     "code": null,
     "discontinued": false
@@ -5608,7 +5687,7 @@
     "name": "Royal Cloak",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1C9095",
     "code": "WP1449",
     "discontinued": false
@@ -5618,7 +5697,7 @@
     "name": "Royal Purple",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#701B55",
     "code": null,
     "discontinued": false,
@@ -5629,7 +5708,7 @@
     "name": "Royal Purple",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#43173B",
     "code": null,
     "discontinued": false
@@ -5649,7 +5728,7 @@
     "name": "Ruby Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E5ABAB",
     "code": null,
     "discontinued": false
@@ -5659,7 +5738,7 @@
     "name": "Ruby Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FBB99D",
     "code": null,
     "discontinued": false
@@ -5679,7 +5758,7 @@
     "name": "Ruddy Skin",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BB7962",
     "code": null,
     "discontinued": false
@@ -5689,7 +5768,7 @@
     "name": "Ruddy Terra",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#81443A",
     "code": "WP4015",
     "discontinued": false
@@ -5699,7 +5778,7 @@
     "name": "Ruddy Umber",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#985951",
     "code": null,
     "discontinued": false
@@ -5709,7 +5788,7 @@
     "name": "Ruinous Spell",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#375242",
     "code": null,
     "discontinued": false
@@ -5719,7 +5798,7 @@
     "name": "Runic Cobalt",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7496B4",
     "code": null,
     "discontinued": false
@@ -5749,7 +5828,7 @@
     "name": "Rust Monster",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E5581E",
     "code": null,
     "discontinued": false
@@ -5769,7 +5848,7 @@
     "name": "Sacred Scarlet",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F1634C",
     "code": null,
     "discontinued": false
@@ -5779,7 +5858,7 @@
     "name": "Safety Orange",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#DE8F58",
     "code": null,
     "discontinued": false
@@ -5809,7 +5888,7 @@
     "name": "Sapphire Gem",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#1C477E",
     "code": null,
     "discontinued": false
@@ -5829,7 +5908,7 @@
     "name": "Savage Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#164F2C",
     "code": null,
     "discontinued": false
@@ -5839,7 +5918,7 @@
     "name": "Scaly Hide",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#939F8C",
     "code": "WP1450",
     "discontinued": false
@@ -5849,7 +5928,7 @@
     "name": "Scar Tissue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CF8C73",
     "code": "WP1480",
     "discontinued": false
@@ -5859,7 +5938,7 @@
     "name": "Scarab Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#193C44",
     "code": null,
     "discontinued": false
@@ -5879,7 +5958,7 @@
     "name": "Shadow Thorn",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1D425E",
     "code": "WP4107",
     "discontinued": false
@@ -5909,7 +5988,7 @@
     "name": "Shark White",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#959F9C",
     "code": null,
     "discontinued": false
@@ -5919,7 +5998,7 @@
     "name": "Shieldwall Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#08A1CC",
     "code": null,
     "discontinued": false
@@ -5929,47 +6008,51 @@
     "name": "Shining Silver",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#86888C",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-shining-silver-warpaints-air",
     "name": "Shining Silver",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#A9A9A7",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-shining-silver-warpaints",
     "name": "Shining Silver",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B1B1AF",
     "code": "WP1129",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-silver-dragon",
     "name": "Silver Dragon",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B2B2B3",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-skeleton-bone",
     "name": "Skeleton Bone",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#666D74",
     "code": null,
     "discontinued": false
@@ -5979,7 +6062,7 @@
     "name": "Skeleton Bone",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#CBC294",
     "code": null,
     "discontinued": false
@@ -5989,7 +6072,7 @@
     "name": "Skeleton Bone",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C2B293",
     "code": null,
     "discontinued": false
@@ -5999,7 +6082,7 @@
     "name": "Skeleton Bone",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C2AE9D",
     "code": "WP1125",
     "discontinued": false
@@ -6019,7 +6102,7 @@
     "name": "Skyshard",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DFEEEC",
     "code": "WP4110",
     "discontinued": false
@@ -6049,7 +6132,7 @@
     "name": "Snake Scales",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8EAE11",
     "code": "WP1453",
     "discontinued": false
@@ -6069,7 +6152,7 @@
     "name": "Soft Tone",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#49251E",
     "code": null,
     "discontinued": false
@@ -6079,7 +6162,7 @@
     "name": "Soft Tone",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "other",
+    "type": "wash",
     "hex": "#532814",
     "code": "WP1134",
     "discontinued": false
@@ -6099,7 +6182,7 @@
     "name": "Space Dust",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFE388",
     "code": null,
     "discontinued": false
@@ -6109,7 +6192,7 @@
     "name": "Spaceship Exterior",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D6D6D6",
     "code": "WP1454",
     "discontinued": false
@@ -6119,7 +6202,7 @@
     "name": "Speedpaint Medium",
     "brand": "Army Painter",
     "range": "Speedpaint Set",
-    "type": "contrast",
+    "type": "medium",
     "hex": "#EFEFEF",
     "code": null,
     "discontinued": false
@@ -6129,7 +6212,7 @@
     "name": "Speedpaint Medium",
     "brand": "Army Painter",
     "range": "Speedpaint Set 2.0",
-    "type": "contrast",
+    "type": "medium",
     "hex": "#F3F0EB",
     "code": null,
     "discontinued": false
@@ -6139,7 +6222,7 @@
     "name": "Spellbound Fuchsia",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AD4DA0",
     "code": null,
     "discontinued": false
@@ -6149,7 +6232,7 @@
     "name": "Stirge Tan",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C47A7B",
     "code": null,
     "discontinued": false
@@ -6159,7 +6242,7 @@
     "name": "Stone Golem",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C3C5BE",
     "code": "WP1455",
     "discontinued": false
@@ -6169,7 +6252,7 @@
     "name": "Storm Wolf",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#9DAED2",
     "code": null,
     "discontinued": false
@@ -6179,7 +6262,7 @@
     "name": "Stratos Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#33658F",
     "code": null,
     "discontinued": false
@@ -6189,7 +6272,7 @@
     "name": "Strong Skin Shade",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic Wash",
-    "type": "shade",
+    "type": "wash",
     "hex": "#442824",
     "code": null,
     "discontinued": false
@@ -6219,7 +6302,7 @@
     "name": "Strong Tone",
     "brand": "Army Painter",
     "range": "Warpaints Tone",
-    "type": "other",
+    "type": "wash",
     "hex": "#3A2A11",
     "code": "WP1135",
     "discontinued": false
@@ -6229,7 +6312,7 @@
     "name": "Strong Tone",
     "brand": "Army Painter",
     "range": "Quickshade Washes Set",
-    "type": "shade",
+    "type": "wash",
     "hex": "#3B2826",
     "code": null,
     "discontinued": false
@@ -6239,7 +6322,7 @@
     "name": "Succubus Red",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AA262F",
     "code": null,
     "discontinued": false
@@ -6249,7 +6332,7 @@
     "name": "Sulfide Ochre",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C78600",
     "code": "WP1456",
     "discontinued": false
@@ -6259,7 +6342,7 @@
     "name": "Sunburst Ochre",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#714529",
     "code": "WP4011",
     "discontinued": false
@@ -6269,7 +6352,7 @@
     "name": "Sunpetal",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F8DE33",
     "code": "WP4115",
     "discontinued": false
@@ -6279,7 +6362,7 @@
     "name": "Tainted Garden",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3F3F2B",
     "code": "WP4013",
     "discontinued": false
@@ -6289,17 +6372,18 @@
     "name": "Tainted Gold",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#46422C",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-tainted-gold-metallic-colours-paint-set",
     "name": "Tainted Gold",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#686139",
     "code": null,
     "discontinued": false,
@@ -6310,17 +6394,18 @@
     "name": "Tainted Gold",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#575235",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-talisman-purple",
     "name": "Talisman Purple",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#CE859C",
     "code": null,
     "discontinued": false
@@ -6330,7 +6415,7 @@
     "name": "Talisman Teal",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1FAE91",
     "code": null,
     "discontinued": false
@@ -6343,14 +6428,15 @@
     "type": "contrast",
     "hex": "#6B3B27",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-tanned-flesh",
     "name": "Tanned Flesh",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BB6F51",
     "code": "WP1127",
     "discontinued": false
@@ -6360,7 +6446,7 @@
     "name": "Temple Gate Teal",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#046154",
     "code": null,
     "discontinued": false
@@ -6370,7 +6456,7 @@
     "name": "Terrestial Titan",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#303149",
     "code": null,
     "discontinued": false
@@ -6380,7 +6466,7 @@
     "name": "The Darkness",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#21252C",
     "code": "WP4000",
     "discontinued": false
@@ -6390,7 +6476,7 @@
     "name": "Thicket Grove",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6F6E41",
     "code": "WP4118",
     "discontinued": false
@@ -6400,7 +6486,7 @@
     "name": "Thunder Storm",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#1E2931",
     "code": null,
     "discontinued": false
@@ -6420,7 +6506,7 @@
     "name": "Thunderous Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#34577B",
     "code": null,
     "discontinued": false
@@ -6430,7 +6516,7 @@
     "name": "Tidal Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#026B93",
     "code": null,
     "discontinued": false
@@ -6450,7 +6536,7 @@
     "name": "Tiger's Eye Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7F4841",
     "code": null,
     "discontinued": false
@@ -6460,7 +6546,7 @@
     "name": "Tiger’s Eye Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#904D52",
     "code": null,
     "discontinued": false
@@ -6470,7 +6556,7 @@
     "name": "Tomb King Tan",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A29278",
     "code": null,
     "discontinued": false
@@ -6480,7 +6566,7 @@
     "name": "Topaz Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B25A53",
     "code": null,
     "discontinued": false
@@ -6490,7 +6576,7 @@
     "name": "Topaz Skin",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BF8477",
     "code": null,
     "discontinued": false
@@ -6500,7 +6586,7 @@
     "name": "Tourmaline Skin",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E3988B",
     "code": null,
     "discontinued": false
@@ -6510,7 +6596,7 @@
     "name": "Toxic Boils",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A66E7D",
     "code": "WP1457",
     "discontinued": false
@@ -6520,7 +6606,7 @@
     "name": "Toxic Mist",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#63B0B5",
     "code": null,
     "discontinued": false
@@ -6530,7 +6616,7 @@
     "name": "Toxic Mist",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#40BAC0",
     "code": "WP1437",
     "discontinued": false
@@ -6540,7 +6626,7 @@
     "name": "Traitor Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#34251F",
     "code": null,
     "discontinued": false
@@ -6550,7 +6636,7 @@
     "name": "Treant Green",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#409B4B",
     "code": null,
     "discontinued": false
@@ -6560,7 +6646,7 @@
     "name": "Tree Ancient",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#513430",
     "code": null,
     "discontinued": false
@@ -6570,7 +6656,7 @@
     "name": "Triumphant Navy",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1A2C53",
     "code": null,
     "discontinued": false
@@ -6580,7 +6666,7 @@
     "name": "Troglodyte Blue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2588B9",
     "code": "WP1458",
     "discontinued": false
@@ -6590,7 +6676,7 @@
     "name": "Troll Claws",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CB883E",
     "code": "WP1459",
     "discontinued": false
@@ -6600,7 +6686,7 @@
     "name": "Troll Skin",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#06381F",
     "code": null,
     "discontinued": false
@@ -6620,47 +6706,51 @@
     "name": "True Brass",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#635D58",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-true-copper",
     "name": "True Copper",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E07D2D",
     "code": "WP1467",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-true-copper-warpaints-fanatic",
     "name": "True Copper",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6B4731",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-true-copper-warpaints-air",
     "name": "True Copper",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#BD5225",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-tundra-taupe",
     "name": "Tundra Taupe",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4B4D3E",
     "code": null,
     "discontinued": false
@@ -6680,7 +6770,7 @@
     "name": "Turquoise Siren",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#29B3B9",
     "code": null,
     "discontinued": false
@@ -6690,7 +6780,7 @@
     "name": "Twilight Sky",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#1B455F",
     "code": null,
     "discontinued": false
@@ -6720,7 +6810,7 @@
     "name": "Ultramarine Blue",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2A4A74",
     "code": null,
     "discontinued": false
@@ -6730,7 +6820,7 @@
     "name": "Ultramarine Blue",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#284D8E",
     "code": null,
     "discontinued": false
@@ -6740,7 +6830,7 @@
     "name": "Ultramarine Blue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3B57A5",
     "code": "WP1115",
     "discontinued": false
@@ -6750,7 +6840,7 @@
     "name": "Umberroot",
     "brand": "Army Painter",
     "range": "John Blanche Masterclass",
-    "type": "other",
+    "type": "opaque",
     "hex": "#55332B",
     "code": "WP4116",
     "discontinued": false
@@ -6760,7 +6850,7 @@
     "name": "Underdark Grey",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7F7372",
     "code": null,
     "discontinued": false
@@ -6770,7 +6860,7 @@
     "name": "Underdark Indigo",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#205286",
     "code": null,
     "discontinued": false
@@ -6780,7 +6870,7 @@
     "name": "Undergrowth Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#507D35",
     "code": null,
     "discontinued": false
@@ -6790,7 +6880,7 @@
     "name": "Unforgiven Green",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#242923",
     "code": null,
     "discontinued": false
@@ -6810,7 +6900,7 @@
     "name": "Uniform Grey",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#555C61",
     "code": null,
     "discontinued": false
@@ -6820,7 +6910,7 @@
     "name": "Uniform Grey",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6B707C",
     "code": null,
     "discontinued": false
@@ -6830,7 +6920,7 @@
     "name": "Uniform Grey",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#70737F",
     "code": "WP1118",
     "discontinued": false
@@ -6840,7 +6930,7 @@
     "name": "Urban Buff",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DBB9AB",
     "code": null,
     "discontinued": false
@@ -6850,7 +6940,7 @@
     "name": "Vampire Garments",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A12F24",
     "code": null,
     "discontinued": false
@@ -6860,7 +6950,7 @@
     "name": "Vampire Red",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#98172A",
     "code": "WP1460",
     "discontinued": false
@@ -6870,7 +6960,7 @@
     "name": "Venom Wyrm",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6A653E",
     "code": "WP1461",
     "discontinued": false
@@ -6890,7 +6980,7 @@
     "name": "Viking Blue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1C5B98",
     "code": "WP1462",
     "discontinued": false
@@ -6910,7 +7000,7 @@
     "name": "Violent Vermillion",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F37964",
     "code": null,
     "discontinued": false
@@ -6920,7 +7010,7 @@
     "name": "Violet Coven",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A999C7",
     "code": null,
     "discontinued": false
@@ -6930,7 +7020,7 @@
     "name": "Violet Volt",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#764287",
     "code": null,
     "discontinued": false
@@ -6940,7 +7030,7 @@
     "name": "Viper Brown",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#9B5F4C",
     "code": null,
     "discontinued": false
@@ -6950,7 +7040,7 @@
     "name": "Vivid Volt",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CFDC51",
     "code": null,
     "discontinued": false
@@ -6960,7 +7050,7 @@
     "name": "Voidshield Blue",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5BBCD7",
     "code": "WP1452",
     "discontinued": false
@@ -6980,7 +7070,7 @@
     "name": "Warlock Magenta",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#834D9F",
     "code": null,
     "discontinued": false
@@ -6990,7 +7080,7 @@
     "name": "Warlock Purple",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C34D81",
     "code": "WP1451",
     "discontinued": false
@@ -7000,7 +7090,7 @@
     "name": "Warlock Purple",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#8C345C",
     "code": null,
     "discontinued": false
@@ -7020,7 +7110,7 @@
     "name": "Warpaints Mixing Medium",
     "brand": "Army Painter",
     "range": "Skin Tones Paint Set",
-    "type": "other",
+    "type": "medium",
     "hex": "#EFF1F0",
     "code": null,
     "discontinued": false
@@ -7030,7 +7120,7 @@
     "name": "Warpaints Mixing Medium",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "medium",
     "hex": "#EFEFEF",
     "code": "WP1475",
     "discontinued": false
@@ -7040,7 +7130,7 @@
     "name": "Warped Yellow",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FED548",
     "code": null,
     "discontinued": false
@@ -7060,7 +7150,7 @@
     "name": "Wash Medium",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic Wash",
-    "type": "wash",
+    "type": "medium",
     "hex": "#B1B3B4",
     "code": null,
     "discontinued": false
@@ -7070,7 +7160,7 @@
     "name": "Wasteland Clay",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A38755",
     "code": null,
     "discontinued": false
@@ -7080,7 +7170,7 @@
     "name": "Wasteland Soil",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#844857",
     "code": "WP1463",
     "discontinued": false
@@ -7090,37 +7180,40 @@
     "name": "Weapon Bronze",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#955610",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-weapon-bronze-warpaints",
     "name": "Weapon Bronze",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E47533",
     "code": "WP1133",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-weapon-bronze-warpaints-air",
     "name": "Weapon Bronze",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#AD5B33",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "army-painter-weird-elixir",
     "name": "Weird Elixir",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E092BF",
     "code": null,
     "discontinued": false
@@ -7130,7 +7223,7 @@
     "name": "Werewolf Fur",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#796352",
     "code": "WP1464",
     "discontinued": false
@@ -7140,7 +7233,7 @@
     "name": "Wet Mud",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9E3E35",
     "code": "WP1478",
     "discontinued": false
@@ -7150,7 +7243,7 @@
     "name": "Wicked Pink",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CE0886",
     "code": null,
     "discontinued": false
@@ -7160,7 +7253,7 @@
     "name": "Wild Green",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#46B758",
     "code": null,
     "discontinued": false
@@ -7170,7 +7263,7 @@
     "name": "Wildling Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#DE937B",
     "code": null,
     "discontinued": false
@@ -7180,7 +7273,7 @@
     "name": "Wilted Rose",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#ECC5D7",
     "code": null,
     "discontinued": false
@@ -7190,7 +7283,7 @@
     "name": "Witch Brew",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#919634",
     "code": "WP1465",
     "discontinued": false
@@ -7200,7 +7293,7 @@
     "name": "Witchbane Plum",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#601841",
     "code": null,
     "discontinued": false
@@ -7210,7 +7303,7 @@
     "name": "Wizards Orb",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2A6A5B",
     "code": null,
     "discontinued": false
@@ -7220,7 +7313,7 @@
     "name": "Wizards Orb",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0F7260",
     "code": "WP1466",
     "discontinued": false
@@ -7240,7 +7333,7 @@
     "name": "Wolf Grey",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#576F7E",
     "code": null,
     "discontinued": false
@@ -7250,7 +7343,7 @@
     "name": "Wolf Grey",
     "brand": "Army Painter",
     "range": "Warpaints",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5E7F9F",
     "code": "WP1119",
     "discontinued": false
@@ -7260,7 +7353,7 @@
     "name": "Wolf Grey",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4F78A3",
     "code": null,
     "discontinued": false
@@ -7270,7 +7363,7 @@
     "name": "Woodland Camo",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4B6149",
     "code": null,
     "discontinued": false
@@ -7280,7 +7373,7 @@
     "name": "Worn Stone",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C4BFB1",
     "code": null,
     "discontinued": false
@@ -7290,7 +7383,7 @@
     "name": "Wraith Black",
     "brand": "Army Painter",
     "range": "D&D Undead Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3C3F50",
     "code": null,
     "discontinued": false
@@ -7300,7 +7393,7 @@
     "name": "Wyrmling Red",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B43646",
     "code": null,
     "discontinued": false
@@ -7310,7 +7403,7 @@
     "name": "Wyvern Fury",
     "brand": "Army Painter",
     "range": "Warpaints Fanatic",
-    "type": "other",
+    "type": "opaque",
     "hex": "#993243",
     "code": null,
     "discontinued": false
@@ -7320,7 +7413,7 @@
     "name": "Xanathar Blue",
     "brand": "Army Painter",
     "range": "D&D Underdark Set",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2EB5B0",
     "code": null,
     "discontinued": false
@@ -7330,7 +7423,7 @@
     "name": "Yellow Dune",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C2994D",
     "code": null,
     "discontinued": false
@@ -7340,7 +7433,7 @@
     "name": "Yeti White",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B7BABF",
     "code": null,
     "discontinued": false
@@ -7370,7 +7463,7 @@
     "name": "Zephyr Pink",
     "brand": "Army Painter",
     "range": "Metallic Colours Paint Set",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#B4406F",
     "code": null,
     "discontinued": false,
@@ -7381,7 +7474,7 @@
     "name": "Zephyr Pink",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#6B304D",
     "code": null,
     "discontinued": false
@@ -7391,7 +7484,7 @@
     "name": "Zombie Flesh",
     "brand": "Army Painter",
     "range": "D&D Nolzur's Marvelous Pigments",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B0C194",
     "code": null,
     "discontinued": false
@@ -7401,7 +7494,7 @@
     "name": "Zombie Flesh",
     "brand": "Army Painter",
     "range": "Warpaints Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#AFB395",
     "code": null,
     "discontinued": false

@@ -1,5 +1,5 @@
 import { ciede2000 } from "@/lib/color";
-import type { BrowsePaint, PaintType, PaintWithLab } from "./types";
+import type { BrowsePaint, PaintBinder, PaintFormat, PaintType, PaintWithLab } from "./types";
 // Re-exported so existing importers don't churn; the canonical definition lives
 // with the other URL vocabularies, since `sort` is validated on read.
 export { SORT_KEYS, DEFAULT_SORT, type SortKey } from "./filter-params";
@@ -12,6 +12,8 @@ export interface PaintFilters {
   brands?: string[];
   ranges?: string[];
   types?: PaintType[];
+  formats?: PaintFormat[];
+  binders?: PaintBinder[];
   families?: string[];
   /** Discontinued paints are hidden unless this is true. */
   includeDiscontinued?: boolean;
@@ -33,6 +35,8 @@ function toFacetSelection(filters: PaintFilters): FacetSelection {
     brands: new Set(filters.brands ?? []),
     ranges: new Set(filters.ranges ?? []),
     types: new Set(filters.types ?? []),
+    formats: new Set(filters.formats ?? []),
+    binders: new Set(filters.binders ?? []),
     families: new Set(filters.families ?? []),
     includeDiscontinued: Boolean(filters.includeDiscontinued),
     metallic: filters.metallic ?? "",

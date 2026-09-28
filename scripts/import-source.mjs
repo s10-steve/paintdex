@@ -6,6 +6,17 @@
  * The generated JSON is the committed source of truth and is hand-editable;
  * this script only needs to run to (re)import or refresh from upstream.
  *
+ * **It rewrites each output file wholesale — diff before committing.** It
+ * knows nothing about paints added by hand (Warhammer Tone Pro, Army
+ * Painter's John Blanche range), and nothing about the categorisation
+ * migration's one-off fixes (`scripts/categorise/`: the old-formula Game Air
+ * split, paints moved to their right range, codes reassigned after splitting
+ * merged records). What it does carry forward, by id, is each existing
+ * paint's hand-checked `type`, `metallic` flag and primary range. New paints
+ * take their range's `defaultType` from `data/ranges.json`; a range with no
+ * entry there is reported, and `validate:data` will then fail until one is
+ * added — which is the point, since its format and binder are unknown.
+ *
  * Usage:
  *   node scripts/import-source.mjs            # fetch from GitHub (raw)
  *   node scripts/import-source.mjs --src DIR  # read local *.md from DIR
@@ -58,54 +69,26 @@ function slugify(s) {
     .replace(/^-+|-+$/g, "");
 }
 
-/** Map a brand's product-line label ("Set") + name to a normalized finish. */
-function mapType(set, name) {
-  const s = set.toLowerCase();
-  const n = name.toLowerCase();
-  if (s.includes("contrast") || s.includes("speedpaint")) return "contrast";
-  // Warhammer Tone Pro. `\btone\b`, for the "Soil Works" reason below: a bare
-  // substring would catch any range with "stone" in it.
-  if (/\btone\b/.test(s)) return "tone";
-  if (s.includes("technical")) return "technical";
-  if (s.includes("shade") || n.includes(" shade")) return "shade";
-  if (s.includes("wash") || n.includes(" wash")) return "wash";
-  if (s.includes("dry")) return "dry";
-  if (s.includes("glaze") || n.includes("glaze")) return "glaze";
-  if (s.includes("ink") || n.endsWith(" ink")) return "ink";
-  // Enamels and oils come after the finish rules above so an "Enamel Wash" is
-  // still a wash. `\boil` rather than `includes("oil")`: Scale 75's "Soil Works"
-  // range would otherwise import as 14 oils.
-  if (s.includes("enamel")) return "enamel";
-  if (/\boil/.test(s) || s.includes("oilbrusher")) return "oil";
-  if (s.includes("metal")) return "metallic";
-  if (s.includes("primer")) return "primer";
-  if (s.includes("spray")) return "spray";
-  if (s.includes("air")) return "air";
-  if (s.includes("layer")) return "layer";
-  if (s.includes("base") || s.includes("foundation")) return "base";
-  return "other";
-}
+const RANGES = JSON.parse(await readFile(join(ROOT, "data", "ranges.json"), "utf8")).ranges;
 
-/** Lower rank = more representative primary range for a paint. */
-const TYPE_RANK = {
-  base: 0,
-  layer: 1,
-  contrast: 2,
-  tone: 2,
-  metallic: 2,
-  shade: 3,
-  ink: 3,
-  wash: 3,
-  technical: 4,
-  glaze: 5,
-  other: 5,
-  enamel: 5,
-  oil: 5,
-  dry: 6,
-  primer: 7,
-  air: 8,
-  spray: 9,
-};
+/**
+ * The product line a range belongs to. Rows are deduplicated **within** a
+ * line: the same name and hex under two lines (Game Color and Game Air, a
+ * Tamiya pot and its spray can) are different bottles, and merging them made
+ * "I own the pot" indistinguishable from "I own the airbrush version". An
+ * unknown range is a line of its own.
+ */
+const lineOf = (brand, range) => RANGES[brand]?.[range]?.line ?? `range:${range}`;
+
+/** Existing records by id, so hand-checked fields survive a re-import. */
+async function loadExisting(out) {
+  try {
+    const paints = JSON.parse(await readFile(join(OUT_DIR, out), "utf8"));
+    return new Map(paints.map((p) => [p.id, p]));
+  } catch {
+    return new Map();
+  }
+}
 
 function normalizeHex(raw) {
   const m = raw.match(/#?([0-9a-fA-F]{6})/);
@@ -145,7 +128,8 @@ async function main() {
   const srcArgIdx = process.argv.indexOf("--src");
   const srcDir = srcArgIdx !== -1 ? process.argv[srcArgIdx + 1] : null;
 
-  // out file -> Map keyed by `${nameKey}|${hex}` for dedup across ranges/files.
+  // out file -> Map keyed by `${nameKey}|${hex}|${line}` for dedup across the
+  // headings of one product line (and across files).
   const byOut = new Map();
 
   for (const { file, brand, idPrefix, out } of SOURCES) {
@@ -166,7 +150,7 @@ async function main() {
       const codeRaw = (row.code ?? "").trim();
       const code = codeRaw && codeRaw.toLowerCase() !== "null" ? codeRaw : null;
 
-      const key = `${name.toLowerCase()}|${hex}`;
+      const key = `${name.toLowerCase()}|${hex}|${lineOf(brand, range)}`;
       const existing = bucket.get(key);
       if (existing) {
         if (!existing.ranges.includes(range)) existing.ranges.push(range);
@@ -189,17 +173,17 @@ async function main() {
   await mkdir(OUT_DIR, { recursive: true });
   let grandTotal = 0;
 
+  const unknownRanges = new Set();
   for (const [out, bucket] of byOut) {
     const usedIds = new Set();
     const paints = [];
+    const existing = await loadExisting(out);
 
     for (const p of bucket.values()) {
-      // Choose the most representative range as the primary.
-      const rangesSorted = [...p.ranges].sort(
-        (a, b) => TYPE_RANK[mapType(a, p.name)] - TYPE_RANK[mapType(b, p.name)],
-      );
-      const primaryRange = rangesSorted[0];
-      const type = mapType(primaryRange, p.name);
+      // The headings in one record are all one line, so the primary is only
+      // which heading its page shows; alphabetical unless the record exists.
+      const sortedRanges = [...p.ranges].sort();
+      let primaryRange = sortedRanges[0];
 
       // Stable id, disambiguated on collision (same name, different hex).
       const base = `${p.idPrefix}-${slugify(p.name)}`;
@@ -209,6 +193,13 @@ async function main() {
       while (usedIds.has(id)) id = `${base}-${n++}`;
       usedIds.add(id);
 
+      const before = existing.get(id);
+      if (before && p.ranges.includes(before.range)) primaryRange = before.range;
+      const info = RANGES[p.brand]?.[primaryRange];
+      if (!info) unknownRanges.add(`${p.brand} / ${primaryRange}`);
+      const type = before?.type ?? info?.defaultType ?? "opaque";
+      const metallic = before ? Boolean(before.metallic) : Boolean(info?.metallic);
+
       const record = {
         id,
         name: p.name,
@@ -217,11 +208,12 @@ async function main() {
         type,
         hex: p.hex,
         code: p.code,
-        discontinued: p.discontinued,
+        discontinued: p.discontinued || Boolean(info?.discontinued),
       };
       if (p.ranges.length > 1) {
-        record.ranges = [...p.ranges].sort();
+        record.ranges = sortedRanges;
       }
+      if (metallic) record.metallic = true;
       paints.push(record);
     }
 
@@ -235,6 +227,11 @@ async function main() {
   }
 
   console.log(`Done. ${grandTotal} paints across ${byOut.size} files.`);
+  if (unknownRanges.size) {
+    console.warn(
+      `\n${unknownRanges.size} range(s) have no entry in data/ranges.json — add them (format, binder, line, defaultType) before committing:\n  ${[...unknownRanges].join("\n  ")}`,
+    );
+  }
 }
 
 main().catch((err) => {

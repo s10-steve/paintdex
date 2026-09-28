@@ -9,11 +9,11 @@ schemes, sync them across devices, and share them by link.
 
 ## Features
 
-- **Searchable, filterable database** of 5,200+ paints across 11 brands —
+- **Searchable, filterable database** of 5,300+ paints across 11 brands —
   **Warhammer** (formerly Citadel, now including Tone Pro), **Vallejo**, **AK
   Interactive**, **The Army Painter** (including the John Blanche Masterclass
   range), **Duncan Rhodes**, **Green Stuff World**, **Liquitex**, **Mig**,
-  **P3**, **Scale 75** and **Tamiya**. Filter by brand, product range, finish type, colour family and
+  **P3**, **Scale 75** and **Tamiya**. Filter by brand, product range, what the paint does (opaque, wash, contrast, glaze…), brush/airbrush/spray, binder, colour family and
   metallic finish.
 - **Perceptual colour matching.** Every paint page lists the closest colours
   ranked by **CIEDE2000** (ΔE) — the industry-standard perceptual colour
@@ -192,27 +192,18 @@ Still open:
       Acryl**, **Reaper** (Master Series), **Kimera**, **Turbo Dork**, **AMMO
       ATOM**, and Liquitex's Acrylic Ink / Soft Body (only Heavy Body is in).
       Worth checking whether Warhammer's Contrast and Layer ranges are complete.
-- [ ] **Rethink how paints are categorised — a dedicated piece of work.** The
-      catalogue's `type` mixes three different things: what a paint *does*
-      (opaque, wash, glaze, ink, one-coat, primer, technical, medium), how it's
-      *delivered* (`air`, `spray`) and Citadel's *product lines* (`base`,
-      `layer`, `dry`, `tone` — which are already each paint's `range`). It came
-      from an importer that used Citadel's vocabulary, so every other brand's
-      ordinary paints landed in `other`: 60% of the catalogue. The Type filter
-      says little for most brands, and anything that needs "a paint like this
-      one" — the designer's closest-owned suggestions, a future "swap for one I
-      own" — can only approximate it (`paintGroup` in
-      `src/lib/scheme/shopping-list.ts` is that stopgap). To decide, rather
-      than assume: whether to redefine `type` as the cross-brand "what it does"
-      category (and move delivery and product line out of it) or add a field
-      next to it — the preference so far is *not* a third field; how existing
-      `?type=` links and the Type filter survive the change; and how to
-      classify ~3,200 `other` paints reliably (per-brand rules from range and
-      name, plus a hand-checked list — "Medium" in a name is usually a colour,
-      not a medium). While in there: `discontinued` is only ever set on
-      Warhammer paints, product codes are missing for all of Warhammer, Scale
-      75, Green Stuff World, P3 and Duncan Rhodes, and metallic flags are
-      sparse (Tamiya and P3 have none).
+- [x] **Rethink how paints are categorised.** Shipped: `type` now says what a
+      paint *does* across every brand (opaque, contrast, wash, glaze, ink,
+      primer, varnish, medium, texture & effect), with no `other` left. How
+      it's delivered (brush, airbrush, spray) and what binds it (acrylic,
+      enamel, oil, lacquer) became their own filters, read from each range in
+      `data/ranges.json`. Old `?type=` links still work. Along the way, 90
+      records that had merged different products — a pot and its airbrush
+      version, Vallejo's old and new Game Air — were split, so *My paints* can
+      tell them apart. See "Paint categories" in `CLAUDE.md`. Still open from
+      the same audit: product codes are missing for all of Warhammer, Scale 75,
+      Green Stuff World, P3 and Duncan Rhodes, and the metallic flags added by
+      name want a painter's eye.
 - [ ] **Match any colour.** Type a hex (or pick one) and see the closest paints
       from every brand — the visualiser's custom colours would get the same
       suggestions.
@@ -221,7 +212,7 @@ Still open:
       Color chart").
 - [ ] **If the catalogue grows a lot, revisit how the browse index is delivered.**
       `public/browse-index.json` is a single file covering the whole catalogue
-      (~1MB uncompressed at 4,961 paints, well compressed on the wire) and it's
+      (~1.3MB uncompressed at 5,379 paints, ~155KB gzipped) and it's
       fetched by four views: browse, the homepage search, the visualiser's paint
       picker and the alternatives panel. Both the download and the client-side
       CIEDE2000 re-rank scale linearly with the catalogue, so adding brands in
@@ -247,7 +238,7 @@ Still open:
       **alternatives plot** on each paint page (see Features above). Still open:
       the same treatment for the whole catalogue on `/paints`, which needs a
       different axis model (absolute rather than relative to one paint) and has to
-      cope with ~5,200 points instead of ~120.
+      cope with ~5,400 points instead of ~120.
 
 ### My paints feature
 

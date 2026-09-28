@@ -18,9 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   *of the same kind* — an opaque paint for an opaque one, a wash for a wash,
   metallic for metallic — with a link to compare it against all of yours, and
   says so when nothing you own is close. Every paint in a mix counts, mediums
-  included, so Lahmian Medium turns up when you're out of it. "Same kind" leans
-  on how paints are categorised in our data, which is rough outside the
-  Warhammer range, so an odd suggestion may still slip through. Custom
+  included, so Lahmian Medium turns up when you're out of it. "Same kind"
+  also means the same chemistry: an enamel panel-line wash won't be offered
+  for an acrylic shade. Custom
   colours, and paints we can no longer find in the catalogue, are listed
   separately, with their own closest match.
 - **Show only the paints you own.** Signed in, the filters on the paints page
@@ -54,6 +54,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Every paint now says what it does.** The Type filter used to speak
+  Citadel: Base, Layer, Shade, Dry — and filed 60% of the catalogue, nearly
+  every other brand's ordinary paints, as "other", so it told you almost
+  nothing about a Vallejo or an AK paint. Now every paint, from every brand, is
+  one of **Opaque, Contrast / one-coat, Wash / shade, Glaze, Ink, Primer,
+  Varnish, Medium** or **Texture & effect**, so "show me washes" finds Nuln Oil,
+  Strong Tone and Vallejo's Wash FX together. We sorted them range by range
+  against the makers' own descriptions and reviews, then checked the odd ones
+  out by hand — "Medium Blue" is a blue, not a medium. Citadel's Base, Layer and
+  Dry are still there under **Range**, where they always were too.
+- **Two new filters: Format and Binder.** Format is brush-on, airbrush or spray
+  can; Binder is acrylic, enamel, oil or lacquer, for when you're about to put
+  an enamel wash over acrylic and want to know what you're working with. Both
+  show on each paint's page too, and work on the alternatives and on My paints.
+  Links and bookmarks using the old types still work — a link to "shade"
+  paints now shows washes, one to "air" shows airbrush paints, and one to
+  "layer" shows exactly the Warhammer Layer range it always did.
+- **More metallics are marked as metallic** — about 360, up from 160,
+  including P3's and Tamiya's, which had none, and plenty of golds and silvers
+  in ordinary colour ranges. We added these by name and checked the obvious
+  traps ("Bronze Green" isn't metallic), so if one's wrong, tell us.
 - **Citadel is now Warhammer.** Games Workshop has dropped the Citadel name
   from its paints, so the brand filter, paint pages and search results say
   Warhammer. Nothing you had stops working: every paint keeps its address, so
@@ -64,6 +85,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   rewriting every saved scheme — but the ✓ and ☆ buttons on them still work.
 
 ### Fixed
+
+- **A pot and its airbrush version are now two paints.** Our data had merged
+  some paints sold in more than one form into a single entry — Vallejo's Game
+  Color and Game Air, a Tamiya pot and its spray can, Army Painter's Warpaints
+  and Fanatic Matt White — so adding one to My paints said you owned all of
+  them, and the product code shown could belong to a different bottle. They're
+  now separate: 104 new paint pages, each with its own code where we know it.
+  If you'd added one of these before, it's still in your collection as the
+  version its page showed at the time; add the other if you have it too.
+- **Vallejo's old Game Air is marked discontinued.** Vallejo reformulated Game
+  Air in 2024, and our data had the old bottles (72.7xx) and the new ones
+  (76.xxx) under one name. The old formula is now its own range, marked
+  discontinued, so it drops out of suggestions unless you ask for
+  discontinued paints — and stays in your collection if you own it.
+- **AK's aircraft colours are no longer listed as airbrush paints.** AK's "Air"
+  ranges are colours for painting aircraft; 276 of them had been filed as
+  airbrush-ready paints.
 
 - **My paints no longer sits on "Loading your paints…" forever when your
   collection can't be fetched.** A dropped connection at the wrong moment left

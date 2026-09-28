@@ -15,7 +15,8 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { hexToLab, hueFamily } from "../src/lib/color/index";
-import type { BrowsePaint, Paint } from "../src/lib/paints/types";
+import { withRangeInfo } from "../src/lib/paints/ranges";
+import type { BrowsePaint, PaintRecord } from "../src/lib/paints/types";
 
 const DATA_DIR = join(process.cwd(), "data", "paints");
 const OUT_DIR = join(process.cwd(), "public");
@@ -35,12 +36,12 @@ function main() {
   for (const file of files) {
     const records = JSON.parse(
       readFileSync(join(DATA_DIR, file), "utf8"),
-    ) as Paint[];
+    ) as PaintRecord[];
     for (const p of records) {
       // Ship only lightness (for the sort) + family (for the filter). The full
       // Lab triple isn't needed on the browse page and would bloat the payload.
       paints.push({
-        ...p,
+        ...withRangeInfo(p),
         l: round(hexToLab(p.hex)[0]),
         family: hueFamily(p.hex),
       });

@@ -23,7 +23,7 @@ const bp = (id: string, hex: string, extra: Partial<BrowsePaint> = {}): BrowsePa
     name: id,
     brand: "Vallejo",
     range: "Game Color",
-    type: "layer",
+    type: "opaque",
     hex,
     discontinued: false,
     family: "red",
@@ -68,7 +68,7 @@ vi.mock("@/components/collection/collection-provider", () => ({
 const { SimilarColours } = await import("@/components/similar-colours");
 const { useSimilarCandidates } = await import("@/hooks/use-similar-candidates");
 
-const target: Paint = { ...CATALOGUE[0], type: "layer" } as Paint;
+const target: Paint = { ...CATALOGUE[0], type: "opaque" } as Paint;
 // The precomputed list the static page ships: deliberately *not* what a
 // client re-rank would produce, so the assertions can tell the two apart.
 const PRECOMPUTED = [{ paint: CATALOGUE[1] as Paint, distance: 0.5 }];
@@ -81,7 +81,7 @@ const renderPanel = async () => {
       target={target}
       all={PRECOMPUTED}
       brands={["Vallejo"]}
-      types={["layer"]}
+      types={["opaque"]}
       ranges={["Game Color"]}
     />,
   );

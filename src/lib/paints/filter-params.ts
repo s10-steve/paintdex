@@ -11,8 +11,8 @@
  * The rule that decides where a param lives:
  *
  * - A param that says **which paints you want** is shared, applied by both pages,
- *   and travels: `brand`, `range`, `type`, `metal`, `disc`, `mine` (see
- *   `SharedFacets`).
+ *   and travels: `brand`, `range`, `type`, `format`, `binder`, `metal`, `disc`,
+ *   `mine` (see `SharedFacets`).
  * - A param that says **how to present this page** stays local: `sort` on browse,
  *   `view` on a paint page.
  * - A filter with a control on only one page is **carried but never applied by the
@@ -38,13 +38,22 @@
  */
 import { COLOUR_FAMILIES, type ColourFamily } from "@/lib/color";
 import { canonicalBrand } from "./brand-aliases";
-import { PAINT_TYPES, type PaintType } from "./types";
+import {
+  PAINT_BINDERS,
+  PAINT_FORMATS,
+  PAINT_TYPES,
+  type PaintBinder,
+  type PaintFormat,
+  type PaintType,
+} from "./types";
 
 /** Every param the two paint pages own. */
 export const FILTER_PARAMS = {
   brand: "brand",
   range: "range",
   type: "type",
+  format: "format",
+  binder: "binder",
   metal: "metal",
   disc: "disc",
   mine: "mine",
@@ -149,6 +158,8 @@ export interface SharedFacets {
   brands: Set<string>;
   ranges: Set<string>;
   types: Set<string>;
+  formats: Set<string>;
+  binders: Set<string>;
   metallic: MetallicFilter;
   includeDiscontinued: boolean;
   /** Only the signed-in user's paints. Applied through `effectiveFacets`. */
@@ -173,6 +184,8 @@ export function emptySharedFacets(): SharedFacets {
     brands: new Set(),
     ranges: new Set(),
     types: new Set(),
+    formats: new Set(),
+    binders: new Set(),
     metallic: "",
     includeDiscontinued: false,
     mine: "",
@@ -216,6 +229,51 @@ export function parseTypes(v: string | null): PaintType[] {
   );
 }
 
+export function parseFormats(v: string | null): PaintFormat[] {
+  return parseList(v).filter((f): f is PaintFormat =>
+    (PAINT_FORMATS as readonly string[]).includes(f),
+  );
+}
+
+export function parseBinders(v: string | null): PaintBinder[] {
+  return parseList(v).filter((b): b is PaintBinder =>
+    (PAINT_BINDERS as readonly string[]).includes(b),
+  );
+}
+
+/**
+ * Where each value of the **old** `type` vocabulary went, so a bookmarked or
+ * shared `?type=` link still filters — the `canonicalBrand` idea, applied to
+ * types. The old list mixed four things, so an old value can land in any of
+ * four places:
+ *
+ * - Citadel's product lines were never types; they're ranges, and mapping them
+ *   there keeps the link's result set identical (`layer` was exactly the 93
+ *   Warhammer Layer paints). `base` also needs `opaque`: the old Foundation
+ *   range holds inks and a wash that were never `base`.
+ * - Delivery and binder became their own facets.
+ * - `metallic` is the finish flag's job.
+ * - `other` meant "unclassified" and is simply dropped.
+ *
+ * Read-side only: the writers emit the new vocabulary, so the heal both pages
+ * already do puts the new form in the address bar.
+ */
+export const LEGACY_TYPES: Readonly<
+  Record<string, { type?: PaintType; ranges?: string[]; format?: PaintFormat; binder?: PaintBinder; metallic?: true }>
+> = {
+  base: { ranges: ["Base", "Foundation"], type: "opaque" },
+  layer: { ranges: ["Layer"] },
+  dry: { ranges: ["Dry"] },
+  tone: { ranges: ["Tone Pro"] },
+  shade: { type: "wash" },
+  metallic: { metallic: true },
+  air: { format: "airbrush" },
+  spray: { format: "spray" },
+  enamel: { binder: "enamel" },
+  oil: { binder: "oil" },
+  other: {},
+};
+
 export function parseFamilies(v: string | null): ColourFamily[] {
   return parseList(v).filter((f): f is ColourFamily =>
     (COLOUR_FAMILIES as readonly string[]).includes(f),
@@ -251,14 +309,28 @@ export function parseMatch(v: string | null): MatchValue {
 /* ------------------------------------------------------------------- reads */
 
 export function readSharedFacets(params: ParamReader): SharedFacets {
-  return {
+  const facets: SharedFacets = {
     brands: new Set(parseList(params.get(FILTER_PARAMS.brand))),
     ranges: new Set(parseList(params.get(FILTER_PARAMS.range))),
     types: new Set<string>(parseTypes(params.get(FILTER_PARAMS.type))),
+    formats: new Set<string>(parseFormats(params.get(FILTER_PARAMS.format))),
+    binders: new Set<string>(parseBinders(params.get(FILTER_PARAMS.binder))),
     metallic: parseMetallic(params.get(FILTER_PARAMS.metal)),
     includeDiscontinued: parseDisc(params.get(FILTER_PARAMS.disc)),
     mine: parseMine(params.get(FILTER_PARAMS.mine)),
   };
+  // Old `?type=` values, translated. An explicit `metal=` wins over a legacy
+  // `type=metallic`, being the more specific statement.
+  for (const old of parseList(params.get(FILTER_PARAMS.type))) {
+    const to = LEGACY_TYPES[old];
+    if (!to) continue;
+    if (to.type) facets.types.add(to.type);
+    for (const r of to.ranges ?? []) facets.ranges.add(r);
+    if (to.format) facets.formats.add(to.format);
+    if (to.binder) facets.binders.add(to.binder);
+    if (to.metallic && !params.get(FILTER_PARAMS.metal)) facets.metallic = "only";
+  }
+  return facets;
 }
 
 export function readSimilarParams(params: ParamReader): SimilarParamState {
@@ -309,6 +381,8 @@ export function writeSharedFacets(
   setList(next, FILTER_PARAMS.brand, facets.brands);
   setList(next, FILTER_PARAMS.range, facets.ranges);
   setList(next, FILTER_PARAMS.type, facets.types);
+  setList(next, FILTER_PARAMS.format, facets.formats);
+  setList(next, FILTER_PARAMS.binder, facets.binders);
 
   if (facets.metallic === "only") next.set(FILTER_PARAMS.metal, "1");
   else if (facets.metallic === "exclude") next.set(FILTER_PARAMS.metal, "0");
@@ -426,6 +500,8 @@ export function hasSharedFacet(facets: SharedFacets): boolean {
     facets.brands.size > 0 ||
     facets.ranges.size > 0 ||
     facets.types.size > 0 ||
+    facets.formats.size > 0 ||
+    facets.binders.size > 0 ||
     facets.metallic !== "" ||
     facets.includeDiscontinued ||
     facets.mine !== ""
@@ -488,6 +564,8 @@ export const BROWSE_CLEARABLE: readonly string[] = [
   FILTER_PARAMS.brand,
   FILTER_PARAMS.range,
   FILTER_PARAMS.type,
+  FILTER_PARAMS.format,
+  FILTER_PARAMS.binder,
   FILTER_PARAMS.metal,
   FILTER_PARAMS.disc,
   FILTER_PARAMS.mine,
@@ -499,6 +577,8 @@ export const SIMILAR_CLEARABLE: readonly string[] = [
   FILTER_PARAMS.brand,
   FILTER_PARAMS.range,
   FILTER_PARAMS.type,
+  FILTER_PARAMS.format,
+  FILTER_PARAMS.binder,
   FILTER_PARAMS.metal,
   FILTER_PARAMS.disc,
   FILTER_PARAMS.mine,

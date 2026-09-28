@@ -6,31 +6,60 @@
  */
 import type { ColourFamily } from "@/lib/color";
 
-/** Normalized paint finish/type. `range` keeps the brand's own product-line label. */
+/**
+ * What a paint **does**, comparably across brands — the only thing `type`
+ * means. How it's delivered (`format`) and what binds it (`binder`) are
+ * properties of its range, in `data/ranges.json`; a brand's own product line
+ * ("Base", "Layer", "Tone Pro") is `range`; metallic is its own flag. The old
+ * vocabulary mixed all four and filed 60% of the catalogue as `other` — see
+ * `LEGACY_TYPES` in `filter-params.ts` for where each old value went.
+ *
+ * Order is the facet's display order: the everyday paints first.
+ */
 export const PAINT_TYPES = [
-  "base",
-  "layer",
-  "shade",
+  "opaque",
   "contrast",
-  "tone",
-  "technical",
-  "metallic",
-  "air",
-  "primer",
-  "spray",
-  "ink",
   "wash",
   "glaze",
-  "dry",
-  "enamel",
-  "oil",
-  "other",
+  "ink",
+  "primer",
+  "varnish",
+  "medium",
+  "technical",
 ] as const;
 
 export type PaintType = (typeof PAINT_TYPES)[number];
 
+/** How a paint is delivered. `airbrush`: sold to spray straight from the bottle. */
+export const PAINT_FORMATS = ["brush", "airbrush", "spray"] as const;
+export type PaintFormat = (typeof PAINT_FORMATS)[number];
+
+/** What binds it. `lacquer` includes acrylic-lacquer and alcohol-based paints. */
+export const PAINT_BINDERS = ["acrylic", "enamel", "oil", "lacquer"] as const;
+export type PaintBinder = (typeof PAINT_BINDERS)[number];
+
+/** Display words for the three closed vocabularies, shared by facets and pages. */
+export const VALUE_LABELS: Readonly<Record<string, string>> = {
+  opaque: "Opaque",
+  contrast: "Contrast / one-coat",
+  wash: "Wash / shade",
+  glaze: "Glaze",
+  ink: "Ink",
+  primer: "Primer",
+  varnish: "Varnish",
+  medium: "Medium",
+  technical: "Texture & effect",
+  brush: "Brush-on",
+  airbrush: "Airbrush",
+  spray: "Spray can",
+  acrylic: "Acrylic",
+  enamel: "Enamel",
+  oil: "Oil",
+  lacquer: "Lacquer",
+};
+
 /** A paint as stored in `data/paints/*.json`. */
-export interface Paint {
+export interface PaintRecord {
   /** Stable slug id: `<brand-slug>-<name-slug>` (optionally range-disambiguated). */
   id: string;
   name: string;
@@ -52,6 +81,15 @@ export interface Paint {
    * flag. Absent is treated as false.
    */
   metallic?: boolean;
+}
+
+/**
+ * A paint as the app sees it: the stored record plus its range's `format` and
+ * `binder`, resolved by `withRangeInfo` (`ranges.ts`) when it's loaded.
+ */
+export interface Paint extends PaintRecord {
+  format: PaintFormat;
+  binder: PaintBinder;
 }
 
 /** A paint enriched with precomputed CIE-Lab for fast similarity math. */

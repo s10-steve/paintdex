@@ -4,7 +4,7 @@
     "name": "Abyss Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00134B",
     "code": null,
     "discontinued": false
@@ -84,7 +84,7 @@
     "name": "Anthrax Metal",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#7B7E83",
     "code": null,
     "discontinued": false,
@@ -95,7 +95,7 @@
     "name": "Antique Gold",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#957E38",
     "code": null,
     "discontinued": false,
@@ -106,7 +106,7 @@
     "name": "Aqua Turquoise",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#9BD1D1",
     "code": null,
     "discontinued": false,
@@ -117,7 +117,7 @@
     "name": "Arachnid Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#124244",
     "code": null,
     "discontinued": false
@@ -127,7 +127,7 @@
     "name": "Arctic Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#14ADCC",
     "code": null,
     "discontinued": false
@@ -137,7 +137,7 @@
     "name": "Arrakis Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E39C28",
     "code": null,
     "discontinued": false
@@ -167,7 +167,7 @@
     "name": "Banana Split",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0E229",
     "code": null,
     "discontinued": false
@@ -177,7 +177,7 @@
     "name": "Barrel Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#25221B",
     "code": null,
     "discontinued": false
@@ -187,7 +187,7 @@
     "name": "Bestial Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2D1E01",
     "code": null,
     "discontinued": false
@@ -207,7 +207,7 @@
     "name": "Black Stallion",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#000000",
     "code": null,
     "discontinued": false
@@ -217,7 +217,7 @@
     "name": "Blackroot Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#343436",
     "code": null,
     "discontinued": false
@@ -227,11 +227,10 @@
     "name": "Blue",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#5E88FF",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-blue-glacier-dip",
@@ -248,7 +247,7 @@
     "name": "Bluebird Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6F657D",
     "code": null,
     "discontinued": false
@@ -258,7 +257,7 @@
     "name": "Bluegrey Dusk",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A2C41",
     "code": null,
     "discontinued": false
@@ -278,7 +277,7 @@
     "name": "Blushing Flesh",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DA523A",
     "code": null,
     "discontinued": false
@@ -288,7 +287,7 @@
     "name": "Borealis Green",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#7AC9D6",
     "code": null,
     "discontinued": false,
@@ -299,7 +298,7 @@
     "name": "Brown Skin",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#802709",
     "code": null,
     "discontinued": false
@@ -319,7 +318,7 @@
     "name": "Burning Gold",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#F2DE2F",
     "code": null,
     "discontinued": false,
@@ -330,7 +329,7 @@
     "name": "Caesar Red",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#C8606B",
     "code": null,
     "discontinued": false,
@@ -341,7 +340,7 @@
     "name": "Camouflage Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#63601B",
     "code": null,
     "discontinued": false
@@ -351,7 +350,7 @@
     "name": "Canary Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D3DC65",
     "code": null,
     "discontinued": false
@@ -361,7 +360,7 @@
     "name": "Carnage Red",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C22B24",
     "code": null,
     "discontinued": false
@@ -371,7 +370,7 @@
     "name": "Celestial Azure",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#7CC8D6",
     "code": null,
     "discontinued": false,
@@ -382,7 +381,7 @@
     "name": "Chancellor Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#323045",
     "code": null,
     "discontinued": false
@@ -392,7 +391,7 @@
     "name": "Choco Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3F2001",
     "code": null,
     "discontinued": false
@@ -402,7 +401,7 @@
     "name": "Chrome Paint",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#FCFDFF",
     "code": null,
     "discontinued": false,
@@ -423,7 +422,7 @@
     "name": "Cobalt Blue",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#4476D7",
     "code": null,
     "discontinued": false,
@@ -444,7 +443,7 @@
     "name": "Coyote Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#806B3E",
     "code": null,
     "discontinued": false
@@ -464,7 +463,7 @@
     "name": "Cutthroat Red",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8E1316",
     "code": null,
     "discontinued": false
@@ -474,7 +473,7 @@
     "name": "Cyber Yellow",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F2D12C",
     "code": null,
     "discontinued": false
@@ -484,7 +483,7 @@
     "name": "Dark Beige",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#715C41",
     "code": null,
     "discontinued": false
@@ -494,7 +493,7 @@
     "name": "Dark Elder Bronze",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#3E2C14",
     "code": null,
     "discontinued": false,
@@ -505,7 +504,7 @@
     "name": "Dark Umber",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3B302E",
     "code": null,
     "discontinued": false
@@ -515,7 +514,7 @@
     "name": "Darth Blue",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#4476D9",
     "code": null,
     "discontinued": false,
@@ -526,7 +525,7 @@
     "name": "Deck Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D1C2A3",
     "code": null,
     "discontinued": false
@@ -546,7 +545,7 @@
     "name": "Desert Camo",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#947B3B",
     "code": null,
     "discontinued": false
@@ -566,7 +565,7 @@
     "name": "Dusty Rose",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0636B",
     "code": null,
     "discontinued": false
@@ -576,7 +575,7 @@
     "name": "Dwarven Flesh",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FF7D4B",
     "code": null,
     "discontinued": false
@@ -586,7 +585,7 @@
     "name": "El Dorado",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#BA931C",
     "code": null,
     "discontinued": false,
@@ -607,7 +606,7 @@
     "name": "Elven Flesh",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F2AA82",
     "code": null,
     "discontinued": false
@@ -617,7 +616,7 @@
     "name": "Ember Orange",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D94A22",
     "code": null,
     "discontinued": false
@@ -627,7 +626,7 @@
     "name": "Emerald Getaway",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#33AE92",
     "code": null,
     "discontinued": false,
@@ -638,7 +637,7 @@
     "name": "English Field Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6C4615",
     "code": null,
     "discontinued": false
@@ -648,7 +647,7 @@
     "name": "Evil Forest",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#531516",
     "code": null,
     "discontinued": false,
@@ -659,7 +658,7 @@
     "name": "Faded Orange",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F4793D",
     "code": null,
     "discontinued": false
@@ -669,7 +668,7 @@
     "name": "Fang White",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFFBDD",
     "code": null,
     "discontinued": false
@@ -679,7 +678,7 @@
     "name": "Field Green-grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1B4724",
     "code": null,
     "discontinued": false
@@ -689,7 +688,7 @@
     "name": "Flaming Orange",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EA701B",
     "code": null,
     "discontinued": false
@@ -699,7 +698,7 @@
     "name": "Flesh Rose",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D16855",
     "code": null,
     "discontinued": false
@@ -709,7 +708,7 @@
     "name": "Flubber Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#88B719",
     "code": null,
     "discontinued": false
@@ -719,7 +718,7 @@
     "name": "Forest Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#003910",
     "code": null,
     "discontinued": false
@@ -729,7 +728,7 @@
     "name": "Foxhide Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C16001",
     "code": null,
     "discontinued": false
@@ -739,7 +738,7 @@
     "name": "Gangrene",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3B4312",
     "code": null,
     "discontinued": false
@@ -759,7 +758,7 @@
     "name": "Gengis Khaki",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#665B3B",
     "code": null,
     "discontinued": false
@@ -769,7 +768,7 @@
     "name": "Gladius Bronze",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#E1A767",
     "code": null,
     "discontinued": false,
@@ -790,7 +789,7 @@
     "name": "Go Mango",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFA032",
     "code": null,
     "discontinued": false
@@ -800,7 +799,7 @@
     "name": "Golden Cream",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFCE53",
     "code": null,
     "discontinued": false
@@ -860,7 +859,7 @@
     "name": "Grey Teal",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#64857E",
     "code": null,
     "discontinued": false
@@ -870,7 +869,7 @@
     "name": "Gunmetal Grey",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#ACB1B7",
     "code": null,
     "discontinued": false,
@@ -881,7 +880,7 @@
     "name": "Hellfire Red",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CB160F",
     "code": null,
     "discontinued": false
@@ -901,7 +900,7 @@
     "name": "Hunter Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#017601",
     "code": null,
     "discontinued": false
@@ -921,7 +920,7 @@
     "name": "Imperium Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1A3085",
     "code": null,
     "discontinued": false
@@ -941,7 +940,7 @@
     "name": "Ivory Tusk",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F3DFBE",
     "code": null,
     "discontinued": false
@@ -961,7 +960,7 @@
     "name": "Komodo Khaki",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#885A29",
     "code": null,
     "discontinued": false
@@ -971,7 +970,7 @@
     "name": "Kraken Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#034C39",
     "code": null,
     "discontinued": false
@@ -981,7 +980,7 @@
     "name": "Lapislazuli",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#172C63",
     "code": null,
     "discontinued": false
@@ -991,7 +990,7 @@
     "name": "Leather Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AF6816",
     "code": null,
     "discontinued": false
@@ -1001,7 +1000,7 @@
     "name": "Liche Purple",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#441C5A",
     "code": null,
     "discontinued": false
@@ -1011,7 +1010,7 @@
     "name": "Lilac Purple",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B076B3",
     "code": null,
     "discontinued": false
@@ -1021,11 +1020,10 @@
     "name": "Lime",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#4EFF71",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-limelight-dip",
@@ -1042,7 +1040,7 @@
     "name": "Lollipop Magenta",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AB0061",
     "code": null,
     "discontinued": false
@@ -1052,7 +1050,7 @@
     "name": "Majin Pink",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D5618E",
     "code": null,
     "discontinued": false
@@ -1062,7 +1060,7 @@
     "name": "Malefic Purple",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#110B49",
     "code": null,
     "discontinued": false
@@ -1072,7 +1070,7 @@
     "name": "Marine Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#12407E",
     "code": null,
     "discontinued": false
@@ -1082,7 +1080,7 @@
     "name": "Martian Green",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#869B62",
     "code": null,
     "discontinued": false,
@@ -1093,7 +1091,7 @@
     "name": "Military Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#22260F",
     "code": null,
     "discontinued": false
@@ -1103,7 +1101,7 @@
     "name": "Mint Twister",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00BAA3",
     "code": null,
     "discontinued": false
@@ -1113,7 +1111,7 @@
     "name": "Mirage Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#36455A",
     "code": null,
     "discontinued": false
@@ -1133,7 +1131,7 @@
     "name": "Moon Mist Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DCCFC9",
     "code": null,
     "discontinued": false
@@ -1143,7 +1141,7 @@
     "name": "Moonstone Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8C8C8C",
     "code": null,
     "discontinued": false
@@ -1173,7 +1171,7 @@
     "name": "Mustard Yellow",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#936611",
     "code": null,
     "discontinued": false
@@ -1183,7 +1181,7 @@
     "name": "Mystic Gold",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#F2DE2F",
     "code": null,
     "discontinued": false,
@@ -1194,7 +1192,7 @@
     "name": "Mystic White",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#EFF0F4",
     "code": null,
     "discontinued": false,
@@ -1205,7 +1203,7 @@
     "name": "Nebula Copper",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#C94FA6",
     "code": null,
     "discontinued": false,
@@ -1216,7 +1214,7 @@
     "name": "Neptunus Blue",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#60BAF8",
     "code": null,
     "discontinued": false,
@@ -1237,7 +1235,7 @@
     "name": "Nuclear White",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -1257,7 +1255,7 @@
     "name": "Ochre Desert",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E08500",
     "code": null,
     "discontinued": false
@@ -1267,7 +1265,7 @@
     "name": "Olive-brown Ops",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#372D0A",
     "code": null,
     "discontinued": false
@@ -1277,7 +1275,7 @@
     "name": "Olivegrove Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1B290F",
     "code": null,
     "discontinued": false
@@ -1297,18 +1295,17 @@
     "name": "Orange",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#F96E33",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-orchid-purple",
     "name": "Orchid Purple",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#734472",
     "code": null,
     "discontinued": false,
@@ -1329,7 +1326,7 @@
     "name": "Overlord Olive",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#37321F",
     "code": null,
     "discontinued": false
@@ -1339,7 +1336,7 @@
     "name": "Pale Flesh",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E8B9A7",
     "code": null,
     "discontinued": false
@@ -1359,7 +1356,7 @@
     "name": "Parchment",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E1C095",
     "code": null,
     "discontinued": false
@@ -1369,7 +1366,7 @@
     "name": "Peach Flesh",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E47700",
     "code": null,
     "discontinued": false
@@ -1389,7 +1386,7 @@
     "name": "Persian Violet",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#412480",
     "code": null,
     "discontinued": false,
@@ -1400,7 +1397,7 @@
     "name": "Phantom Violet",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D367C",
     "code": null,
     "discontinued": false
@@ -1420,7 +1417,7 @@
     "name": "Pinky Blue",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#78CDD2",
     "code": null,
     "discontinued": false,
@@ -1431,7 +1428,7 @@
     "name": "Primer Black",
     "brand": "Green Stuff World",
     "range": "Gloss Surface",
-    "type": "other",
+    "type": "primer",
     "hex": "#202020",
     "code": null,
     "discontinued": false
@@ -1441,7 +1438,7 @@
     "name": "Primer Black",
     "brand": "Green Stuff World",
     "range": "Matt Surface",
-    "type": "other",
+    "type": "primer",
     "hex": "#1A1A1A",
     "code": null,
     "discontinued": false
@@ -1451,7 +1448,7 @@
     "name": "Primer Green",
     "brand": "Green Stuff World",
     "range": "Matt Surface",
-    "type": "other",
+    "type": "primer",
     "hex": "#485A04",
     "code": null,
     "discontinued": false
@@ -1461,7 +1458,7 @@
     "name": "Primer Grey",
     "brand": "Green Stuff World",
     "range": "Matt Surface",
-    "type": "other",
+    "type": "primer",
     "hex": "#CCCCCC",
     "code": null,
     "discontinued": false
@@ -1471,7 +1468,7 @@
     "name": "Primer Red",
     "brand": "Green Stuff World",
     "range": "Matt Surface",
-    "type": "other",
+    "type": "primer",
     "hex": "#882A1E",
     "code": null,
     "discontinued": false
@@ -1481,7 +1478,7 @@
     "name": "Primer White",
     "brand": "Green Stuff World",
     "range": "Matt Surface",
-    "type": "other",
+    "type": "primer",
     "hex": "#FDFDFD",
     "code": null,
     "discontinued": false
@@ -1491,7 +1488,7 @@
     "name": "Prussian Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00416B",
     "code": null,
     "discontinued": false
@@ -1501,7 +1498,7 @@
     "name": "Prussian Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#152E1B",
     "code": null,
     "discontinued": false
@@ -1511,7 +1508,7 @@
     "name": "Psychotic Illusions",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#69ACB5",
     "code": null,
     "discontinued": false,
@@ -1542,7 +1539,7 @@
     "name": "Quicksand Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D4A1B",
     "code": null,
     "discontinued": false
@@ -1552,7 +1549,7 @@
     "name": "Quicksilver",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#E0E3E8",
     "code": null,
     "discontinued": false,
@@ -1573,7 +1570,7 @@
     "name": "Ranger Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#38352E",
     "code": null,
     "discontinued": false
@@ -1583,11 +1580,10 @@
     "name": "Red",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#F03C25",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-red-cloak-dip",
@@ -1604,7 +1600,7 @@
     "name": "Red Goblin",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#A9BA73",
     "code": null,
     "discontinued": false,
@@ -1625,7 +1621,7 @@
     "name": "Red Truth",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#EC2005",
     "code": null,
     "discontinued": false
@@ -1635,7 +1631,7 @@
     "name": "Redwood Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3E0D00",
     "code": null,
     "discontinued": false
@@ -1645,7 +1641,7 @@
     "name": "Rocket Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#415E24",
     "code": null,
     "discontinued": false
@@ -1655,18 +1651,17 @@
     "name": "Rose",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#F470A1",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-rotten-green",
     "name": "Rotten Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#77932C",
     "code": null,
     "discontinued": false
@@ -1676,7 +1671,7 @@
     "name": "Royal Burgundy",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#90A375",
     "code": null,
     "discontinued": false,
@@ -1707,7 +1702,7 @@
     "name": "Sandstorm",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BF9F66",
     "code": null,
     "discontinued": false
@@ -1717,7 +1712,7 @@
     "name": "Sangria Red",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5E0A0A",
     "code": null,
     "discontinued": false
@@ -1747,7 +1742,7 @@
     "name": "Scorched Wood",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#24110A",
     "code": null,
     "discontinued": false
@@ -1777,7 +1772,7 @@
     "name": "Sharkfin Blue",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#95CAF6",
     "code": null,
     "discontinued": false,
@@ -1788,7 +1783,7 @@
     "name": "Shiny Gold",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#BFA22C",
     "code": null,
     "discontinued": false,
@@ -1799,7 +1794,7 @@
     "name": "Sirenscale Green",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#05C18E",
     "code": null,
     "discontinued": false,
@@ -1830,7 +1825,7 @@
     "name": "Slate Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#565656",
     "code": null,
     "discontinued": false
@@ -1840,7 +1835,7 @@
     "name": "Smoked Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#55677F",
     "code": null,
     "discontinued": false
@@ -1850,7 +1845,7 @@
     "name": "Solar Anomalie",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#D154A2",
     "code": null,
     "discontinued": false,
@@ -1861,7 +1856,7 @@
     "name": "Starship Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D6C72",
     "code": null,
     "discontinued": false
@@ -1871,7 +1866,7 @@
     "name": "Steampunk Copper",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#DDA37E",
     "code": null,
     "discontinued": false,
@@ -1882,7 +1877,7 @@
     "name": "Steel Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2A333C",
     "code": null,
     "discontinued": false
@@ -1892,7 +1887,7 @@
     "name": "Storm Surge Green",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#61A694",
     "code": null,
     "discontinued": false,
@@ -1903,7 +1898,7 @@
     "name": "Summersea Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0268B0",
     "code": null,
     "discontinued": false
@@ -1913,7 +1908,7 @@
     "name": "Sun-bleached Bone",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D1904E",
     "code": null,
     "discontinued": false
@@ -1933,7 +1928,7 @@
     "name": "Temple Ochre",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CA9F5B",
     "code": null,
     "discontinued": false
@@ -1953,7 +1948,7 @@
     "name": "Tiger Brown",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F19200",
     "code": null,
     "discontinued": false
@@ -1973,7 +1968,7 @@
     "name": "Tinmetal Grey",
     "brand": "Green Stuff World",
     "range": "Metallic Colors",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#B9ADAD",
     "code": null,
     "discontinued": false,
@@ -1984,7 +1979,7 @@
     "name": "Toxic Purple",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#7A398D",
     "code": null,
     "discontinued": false,
@@ -1995,7 +1990,7 @@
     "name": "Tropical Green",
     "brand": "Green Stuff World",
     "range": "Chameleon Colorshift Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#B3D924",
     "code": null,
     "discontinued": false,
@@ -2006,7 +2001,7 @@
     "name": "Tropical Turquoise",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#33AFA5",
     "code": null,
     "discontinued": false
@@ -2026,7 +2021,7 @@
     "name": "Ultramar Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#343468",
     "code": null,
     "discontinued": false
@@ -2036,7 +2031,7 @@
     "name": "Valkyrie Yellow",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E7D96C",
     "code": null,
     "discontinued": false
@@ -2046,7 +2041,7 @@
     "name": "Vanilla Drop",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FEE591",
     "code": null,
     "discontinued": false
@@ -2066,11 +2061,10 @@
     "name": "Violet",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#BE68E3",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-violet-hint-dip",
@@ -2087,7 +2081,7 @@
     "name": "Viridian Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#019A88",
     "code": null,
     "discontinued": false
@@ -2117,7 +2111,7 @@
     "name": "Warcry Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3E6121",
     "code": null,
     "discontinued": false
@@ -2127,18 +2121,17 @@
     "name": "White",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-whitecap-beige",
     "name": "Whitecap Beige",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D6C4B0",
     "code": null,
     "discontinued": false
@@ -2148,7 +2141,7 @@
     "name": "Wolven Grey",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B0B6C6",
     "code": null,
     "discontinued": false
@@ -2158,7 +2151,7 @@
     "name": "Wonka Violet",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#771641",
     "code": null,
     "discontinued": false
@@ -2168,11 +2161,10 @@
     "name": "Yellow",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#F8FB48",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-yellow-submarine-dip",
@@ -2189,7 +2181,7 @@
     "name": "Yellow-brown Ops",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8A5E21",
     "code": null,
     "discontinued": false
@@ -2199,18 +2191,17 @@
     "name": "Yellow-orange",
     "brand": "Green Stuff World",
     "range": "Fluor Metallic",
-    "type": "metallic",
+    "type": "opaque",
     "hex": "#F89D68",
     "code": null,
-    "discontinued": false,
-    "metallic": true
+    "discontinued": false
   },
   {
     "id": "green-stuff-world-yoda-green",
     "name": "Yoda Green",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#557C5D",
     "code": null,
     "discontinued": false
@@ -2220,7 +2211,7 @@
     "name": "Zima Blue",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#48A3C0",
     "code": null,
     "discontinued": false
@@ -2240,7 +2231,7 @@
     "name": "Zombie Flesh",
     "brand": "Green Stuff World",
     "range": "Acrylic Colors",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C9AC6A",
     "code": null,
     "discontinued": false

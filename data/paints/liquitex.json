@@ -4,7 +4,7 @@
     "name": "Alizarin Crimson Hue Permanent",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FCFEFD",
     "code": "116",
     "discontinued": false
@@ -14,7 +14,7 @@
     "name": "Bright Aqua Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5AAC7C",
     "code": "660",
     "discontinued": false
@@ -24,7 +24,7 @@
     "name": "Brilliant Blue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#037BC9",
     "code": "570",
     "discontinued": false
@@ -34,7 +34,7 @@
     "name": "Brilliant Purple",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8961A7",
     "code": "590",
     "discontinued": false
@@ -44,7 +44,7 @@
     "name": "Brilliant Yellow Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B7CF55",
     "code": "840",
     "discontinued": false
@@ -54,17 +54,18 @@
     "name": "Bronze Yellow",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#816C33",
     "code": "530",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-burnt-sienna",
     "name": "Burnt Sienna",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F1F1F3",
     "code": "127",
     "discontinued": false
@@ -74,7 +75,7 @@
     "name": "Burnt Umber",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F1F1F1",
     "code": "128",
     "discontinued": false
@@ -84,7 +85,7 @@
     "name": "Cadmium-free Orange",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E87427",
     "code": "892",
     "discontinued": false
@@ -94,7 +95,7 @@
     "name": "Cadmium-free Red Deep",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#7D1E26",
     "code": "895",
     "discontinued": false
@@ -104,7 +105,7 @@
     "name": "Cadmium-free Red Light",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E0412B",
     "code": "893",
     "discontinued": false
@@ -114,7 +115,7 @@
     "name": "Cadmium-free Red Medium",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B12B2C",
     "code": "894",
     "discontinued": false
@@ -124,7 +125,7 @@
     "name": "Cadmium-free Yellow Deep",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E89509",
     "code": "891",
     "discontinued": false
@@ -134,7 +135,7 @@
     "name": "Cadmium-free Yellow Light",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FCCD43",
     "code": "889",
     "discontinued": false
@@ -144,7 +145,7 @@
     "name": "Cadmium-free Yellow Medium",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DEA301",
     "code": "890",
     "discontinued": false
@@ -154,7 +155,7 @@
     "name": "Cerulean Blue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#234E7B",
     "code": "164",
     "discontinued": false
@@ -164,7 +165,7 @@
     "name": "Cerulean Blue Hue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1C5E78",
     "code": "470",
     "discontinued": false
@@ -174,7 +175,7 @@
     "name": "Chromium Oxide Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5C6E34",
     "code": "166",
     "discontinued": false
@@ -184,7 +185,7 @@
     "name": "Deep Magenta",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#4A1A28",
     "code": "300",
     "discontinued": false
@@ -194,7 +195,7 @@
     "name": "Deep Violet",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2C0321",
     "code": "115",
     "discontinued": false
@@ -204,7 +205,7 @@
     "name": "Dioxazine Purple",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F3F3F5",
     "code": "186",
     "discontinued": false
@@ -214,7 +215,7 @@
     "name": "Emerald Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#326F2A",
     "code": "450",
     "discontinued": false
@@ -224,7 +225,7 @@
     "name": "Fluorescent Blue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#00A0FB",
     "code": "984",
     "discontinued": false
@@ -234,7 +235,7 @@
     "name": "Fluorescent Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2FBD73",
     "code": "985",
     "discontinued": false
@@ -244,7 +245,7 @@
     "name": "Fluorescent Orange",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FE8D01",
     "code": "982",
     "discontinued": false
@@ -254,7 +255,7 @@
     "name": "Fluorescent Pink",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FE4D69",
     "code": "987",
     "discontinued": false
@@ -264,7 +265,7 @@
     "name": "Fluorescent Red",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FF4C36",
     "code": "983",
     "discontinued": false
@@ -274,7 +275,7 @@
     "name": "Fluorescent Yellow",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E1ED6D",
     "code": "981",
     "discontinued": false
@@ -284,7 +285,7 @@
     "name": "Green Deep Permanent",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0B4417",
     "code": "350",
     "discontinued": false
@@ -294,17 +295,18 @@
     "name": "Green Gold",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#413915",
     "code": "325",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-hooker-s-green-deep-hue-permanent",
     "name": "Hooker’s Green Deep Hue Permanent",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#13271E",
     "code": "225",
     "discontinued": false
@@ -314,7 +316,7 @@
     "name": "Hooker’s Green Hue Permanent",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#DFDFDF",
     "code": "224",
     "discontinued": false
@@ -324,7 +326,7 @@
     "name": "Indantherene Blue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2D2439",
     "code": "322",
     "discontinued": false
@@ -334,7 +336,7 @@
     "name": "Indian Yellow",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C38111",
     "code": "324",
     "discontinued": false
@@ -344,7 +346,7 @@
     "name": "Indigo",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#201B22",
     "code": "208",
     "discontinued": false
@@ -354,107 +356,117 @@
     "name": "Iridescent Antique Gold",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#958146",
     "code": "237",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-black",
     "name": "Iridescent Black",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#252328",
     "code": "338",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-bright-gold",
     "name": "Iridescent Bright Gold",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F4F5F9",
     "code": "234",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-bright-silver",
     "name": "Iridescent Bright Silver",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#9C9E9D",
     "code": "236",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-rich-bronze",
     "name": "Iridescent Rich Bronze",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#724623",
     "code": "229",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-rich-copper",
     "name": "Iridescent Rich Copper",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#935337",
     "code": "230",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-rich-gold",
     "name": "Iridescent Rich Gold",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8C6931",
     "code": "235",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-rich-silver",
     "name": "Iridescent Rich Silver",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F1F3F2",
     "code": "239",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-rose-gold",
     "name": "Iridescent Rose Gold",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#BA5658",
     "code": "227",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-iridescent-white",
     "name": "Iridescent White",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D9D6CF",
     "code": "238",
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "liquitex-ivory-black",
     "name": "Ivory Black",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#222325",
     "code": "244",
     "discontinued": false
@@ -464,7 +476,7 @@
     "name": "Light Bismuth Yellow",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#E3DBAC",
     "code": "156",
     "discontinued": false
@@ -474,7 +486,7 @@
     "name": "Light Blue Permanent",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8AC5C1",
     "code": "770",
     "discontinued": false
@@ -484,7 +496,7 @@
     "name": "Light Blue Violet",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8486C3",
     "code": "680",
     "discontinued": false
@@ -494,7 +506,7 @@
     "name": "Light Emerald Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5BA23A",
     "code": "650",
     "discontinued": false
@@ -504,7 +516,7 @@
     "name": "Light Green Permanent",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#367F2D",
     "code": "312",
     "discontinued": false
@@ -514,7 +526,7 @@
     "name": "Light Phthalocyanine Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#8EDBE1",
     "code": "313",
     "discontinued": false
@@ -524,7 +536,7 @@
     "name": "Light Pink",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F2F4F3",
     "code": "810",
     "discontinued": false
@@ -534,7 +546,7 @@
     "name": "Manganese Blue Hue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#165068",
     "code": "275",
     "discontinued": false
@@ -544,7 +556,7 @@
     "name": "Mars Black",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#232325",
     "code": "276",
     "discontinued": false
@@ -554,7 +566,7 @@
     "name": "Medium Magenta",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#B53A68",
     "code": "500",
     "discontinued": false
@@ -564,7 +576,7 @@
     "name": "Muted Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#254737",
     "code": "501",
     "discontinued": false
@@ -574,7 +586,7 @@
     "name": "Muted Grey",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#343434",
     "code": "505",
     "discontinued": false
@@ -584,7 +596,7 @@
     "name": "Muted Pink",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#523531",
     "code": "504",
     "discontinued": false
@@ -594,7 +606,7 @@
     "name": "Muted Turquoise",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#283339",
     "code": "503",
     "discontinued": false
@@ -604,7 +616,7 @@
     "name": "Muted Violet",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#3A2931",
     "code": "502",
     "discontinued": false
@@ -614,7 +626,7 @@
     "name": "Naphthol Crimson",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#95071D",
     "code": "292",
     "discontinued": false
@@ -624,7 +636,7 @@
     "name": "Naphthol Red Light",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C42C21",
     "code": "294",
     "discontinued": false
@@ -634,7 +646,7 @@
     "name": "Naples Yellow Hue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D59646",
     "code": "601",
     "discontinued": false
@@ -644,7 +656,7 @@
     "name": "Neutral Gray 5",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#6F685E",
     "code": "599",
     "discontinued": false
@@ -654,7 +666,7 @@
     "name": "Parchment",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D8D4B1",
     "code": "436",
     "discontinued": false
@@ -664,7 +676,7 @@
     "name": "Payne's Gray",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F4F6F5",
     "code": "310",
     "discontinued": false
@@ -674,7 +686,7 @@
     "name": "Phthalocyanine Blue Green Shade",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "shade",
+    "type": "wash",
     "hex": "#EEEEF0",
     "code": "316",
     "discontinued": false
@@ -684,7 +696,7 @@
     "name": "Phthalocyanine Blue Red Shade",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "shade",
+    "type": "wash",
     "hex": "#221F3A",
     "code": "314",
     "discontinued": false
@@ -694,7 +706,7 @@
     "name": "Phthalocyanine Green Blue Shade",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "shade",
+    "type": "wash",
     "hex": "#F5F5F7",
     "code": "317",
     "discontinued": false
@@ -704,7 +716,7 @@
     "name": "Phthalocyanine Green Yellow Shade",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "shade",
+    "type": "wash",
     "hex": "#034D2C",
     "code": "319",
     "discontinued": false
@@ -714,7 +726,7 @@
     "name": "Prism Violet",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2E2135",
     "code": "391",
     "discontinued": false
@@ -724,7 +736,7 @@
     "name": "Prussian Blue Hue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#192734",
     "code": "320",
     "discontinued": false
@@ -734,7 +746,7 @@
     "name": "Pyrrole Crimson",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#702029",
     "code": "326",
     "discontinued": false
@@ -744,7 +756,7 @@
     "name": "Pyrrole Orange",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D44D16",
     "code": "323",
     "discontinued": false
@@ -754,7 +766,7 @@
     "name": "Pyrrole Red",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A61816",
     "code": "321",
     "discontinued": false
@@ -764,7 +776,7 @@
     "name": "Quinacridone Blue Violet",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#331C2E",
     "code": "118",
     "discontinued": false
@@ -774,7 +786,7 @@
     "name": "Quinacridone Crimson",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#791C26",
     "code": "110",
     "discontinued": false
@@ -784,7 +796,7 @@
     "name": "Quinacridone Magenta",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#5D2735",
     "code": "114",
     "discontinued": false
@@ -794,7 +806,7 @@
     "name": "Quinacridone Red",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#A13B2C",
     "code": "112",
     "discontinued": false
@@ -804,7 +816,7 @@
     "name": "Quinacridone Red-orange",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#701824",
     "code": "109",
     "discontinued": false
@@ -814,7 +826,7 @@
     "name": "Raw Sienna",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F1F3F2",
     "code": "330",
     "discontinued": false
@@ -824,7 +836,7 @@
     "name": "Raw Umber",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F4F6F5",
     "code": "331",
     "discontinued": false
@@ -834,7 +846,7 @@
     "name": "Red Oxide",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#86422D",
     "code": "335",
     "discontinued": false
@@ -844,7 +856,7 @@
     "name": "Sap Green Permanent",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#2B3211",
     "code": "315",
     "discontinued": false
@@ -854,7 +866,7 @@
     "name": "Titanium White",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F0F2F1",
     "code": "432",
     "discontinued": false
@@ -864,7 +876,7 @@
     "name": "Transparent Burnt Sienna",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "glaze",
     "hex": "#492318",
     "code": "129",
     "discontinued": false
@@ -874,7 +886,7 @@
     "name": "Transparent Burnt Umber",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "glaze",
     "hex": "#302219",
     "code": "130",
     "discontinued": false
@@ -884,7 +896,7 @@
     "name": "Transparent Orange",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "glaze",
     "hex": "#CE0A0E",
     "code": "035",
     "discontinued": false
@@ -894,7 +906,7 @@
     "name": "Transparent Raw Sienna",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "glaze",
     "hex": "#9B5A20",
     "code": "332",
     "discontinued": false
@@ -904,7 +916,7 @@
     "name": "Transparent Raw Umber",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "glaze",
     "hex": "#403323",
     "code": "333",
     "discontinued": false
@@ -914,7 +926,7 @@
     "name": "Transparent Viridian Hue",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "glaze",
     "hex": "#026749",
     "code": "327",
     "discontinued": false
@@ -924,7 +936,7 @@
     "name": "Turner’s Yellow",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#CD8717",
     "code": "730",
     "discontinued": false
@@ -934,7 +946,7 @@
     "name": "Turquoise Deep",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#1E2D32",
     "code": "561",
     "discontinued": false
@@ -944,7 +956,7 @@
     "name": "Ultramarine Blue Green Shade",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "shade",
+    "type": "wash",
     "hex": "#1D1F58",
     "code": "380",
     "discontinued": false
@@ -954,7 +966,7 @@
     "name": "Ultramarine Blue Red Shade",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "shade",
+    "type": "wash",
     "hex": "#2D2A5F",
     "code": "382",
     "discontinued": false
@@ -964,7 +976,7 @@
     "name": "Unbleached Titanium",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F3F4F6",
     "code": "434",
     "discontinued": false
@@ -974,7 +986,7 @@
     "name": "Van Dyke Red",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#362825",
     "code": "392",
     "discontinued": false
@@ -984,7 +996,7 @@
     "name": "Viridian Hue Permanent",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#0F3C28",
     "code": "398",
     "discontinued": false
@@ -994,7 +1006,7 @@
     "name": "Vivid Lime Green",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#AFBB1B",
     "code": "740",
     "discontinued": false
@@ -1004,7 +1016,7 @@
     "name": "Vivid Red Orange",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#D75E19",
     "code": "620",
     "discontinued": false
@@ -1014,7 +1026,7 @@
     "name": "Yellow Light Hansa",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#FFD13E",
     "code": "411",
     "discontinued": false
@@ -1024,7 +1036,7 @@
     "name": "Yellow Medium Azo",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F2B72B",
     "code": "412",
     "discontinued": false
@@ -1034,7 +1046,7 @@
     "name": "Yellow Orange Azo",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#F38E00",
     "code": "414",
     "discontinued": false
@@ -1044,7 +1056,7 @@
     "name": "Yellow Oxide",
     "brand": "Liquitex",
     "range": "Liquitex Heavy Body Acrylix",
-    "type": "other",
+    "type": "opaque",
     "hex": "#C08521",
     "code": "416",
     "discontinued": false

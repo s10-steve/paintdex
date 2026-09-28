@@ -9,7 +9,7 @@ import {
 import { BROWSE_INDEX_URL } from "@/lib/paints/browse-index";
 import { formerBrand } from "@/lib/paints/brand-aliases";
 import { contrastText } from "@/lib/color";
-import { PAINT_TYPES, type Paint, type PaintWithLab } from "@/lib/paints/types";
+import { PAINT_TYPES, VALUE_LABELS, type Paint, type PaintWithLab } from "@/lib/paints/types";
 import { CopyHex } from "@/components/copy-hex";
 import { SimilarColours, type SimilarItem } from "@/components/similar-colours";
 import { JsonLd } from "@/components/json-ld";
@@ -153,13 +153,17 @@ export default async function PaintDetailPage({
             <dt className="text-muted-foreground">Range</dt>
             <dd>{paint.ranges ? paint.ranges.join(", ") : paint.range}</dd>
             <dt className="text-muted-foreground">Type</dt>
-            <dd className="capitalize">
-              {paint.type}
+            <dd>
+              {VALUE_LABELS[paint.type] ?? paint.type}
               {paint.metallic ? (
                 <span className="ml-2 rounded-md bg-muted px-1.5 py-0.5 text-xs">
                   Metallic
                 </span>
               ) : null}
+            </dd>
+            <dt className="text-muted-foreground">Format</dt>
+            <dd>
+              {VALUE_LABELS[paint.format]} · {VALUE_LABELS[paint.binder]}
             </dd>
             <dt className="text-muted-foreground">Colour family</dt>
             <dd className="capitalize">{paint.family}</dd>

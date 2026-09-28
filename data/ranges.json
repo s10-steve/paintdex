@@ -1,0 +1,861 @@
+{
+  "ranges": {
+    "AK Interactive": {
+      "AFV": {
+        "slug": "afv",
+        "line": "2nd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "AFV (3rd Gen)": {
+        "slug": "afv-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Air": {
+        "slug": "air",
+        "line": "2nd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "Aircraft colours, not airbrush paints"
+      },
+      "Air (3rd Gen)": {
+        "slug": "air-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "Aircraft colours, not airbrush paints"
+      },
+      "Auxiliary (3rd Gen)": {
+        "slug": "auxiliary-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "medium",
+        "note": "Mediums; Crackle Medium is technical"
+      },
+      "Color Punch (3rd Gen)": {
+        "slug": "color-punch-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "Saturated opaques, explicitly not a one-coat paint (Tale of Painters)"
+      },
+      "Effects": {
+        "slug": "effects",
+        "line": "effects",
+        "format": "brush",
+        "binder": "enamel",
+        "defaultType": "wash"
+      },
+      "Figures": {
+        "slug": "figures",
+        "line": "2nd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Figures (3rd Gen)": {
+        "slug": "figures-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "General": {
+        "slug": "general",
+        "line": "2nd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Ink (3rd Gen)": {
+        "slug": "ink-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "ink"
+      },
+      "Intense (3rd Gen)": {
+        "slug": "intense-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Metallic (3rd Gen)": {
+        "slug": "metallic-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "metallic": true
+      },
+      "Naval": {
+        "slug": "naval",
+        "line": "2nd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Pastel (3rd Gen)": {
+        "slug": "pastel-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Primer (3rd Gen)": {
+        "slug": "primer-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "primer"
+      },
+      "Real Colors - AFV": {
+        "slug": "real-colors-afv",
+        "line": "real-colors",
+        "format": "brush",
+        "binder": "lacquer",
+        "defaultType": "opaque",
+        "note": "Marketed for airbrush but needs thinning, so brush; clears live in Standard/Modern too"
+      },
+      "Real Colors - Air": {
+        "slug": "real-colors-air",
+        "line": "real-colors",
+        "format": "brush",
+        "binder": "lacquer",
+        "defaultType": "opaque",
+        "note": "Aircraft colours, not airbrush paints"
+      },
+      "Real Colors - Clear": {
+        "slug": "real-colors-clear",
+        "line": "real-colors",
+        "format": "brush",
+        "binder": "lacquer",
+        "defaultType": "glaze"
+      },
+      "Real Colors - Modern": {
+        "slug": "real-colors-modern",
+        "line": "real-colors",
+        "format": "brush",
+        "binder": "lacquer",
+        "defaultType": "opaque"
+      },
+      "Real Colors - Standard": {
+        "slug": "real-colors-standard",
+        "line": "real-colors",
+        "format": "brush",
+        "binder": "lacquer",
+        "defaultType": "opaque"
+      },
+      "Real Colors - WWII": {
+        "slug": "real-colors-wwii",
+        "line": "real-colors",
+        "format": "brush",
+        "binder": "lacquer",
+        "defaultType": "opaque"
+      },
+      "Standard (3rd Gen)": {
+        "slug": "standard-3rd-gen",
+        "line": "3rd-gen",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      }
+    },
+    "Army Painter": {
+      "D&D Nolzur's Marvelous Pigments": {
+        "slug": "d-d-nolzur-s-marvelous-pigments",
+        "line": "d-d-nolzur-s-marvelous-pigments",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "D&D Nolzur's Marvelous Pigments Primer": {
+        "slug": "d-d-nolzur-s-marvelous-pigments-primer",
+        "line": "d-d-nolzur-s-marvelous-pigments-primer",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "primer"
+      },
+      "D&D Nolzur's Marvelous Pigments Wash": {
+        "slug": "d-d-nolzur-s-marvelous-pigments-wash",
+        "line": "d-d-nolzur-s-marvelous-pigments-wash",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      },
+      "D&D Undead Set": {
+        "slug": "d-d-undead-set",
+        "line": "d-d-undead-set",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "D&D Underdark Set": {
+        "slug": "d-d-underdark-set",
+        "line": "d-d-underdark-set",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "John Blanche Masterclass": {
+        "slug": "john-blanche-masterclass",
+        "line": "john-blanche-masterclass",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Metallic Colours Paint Set": {
+        "slug": "metallic-colours-paint-set",
+        "line": "metallic-colours-paint-set",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "metallic": true
+      },
+      "Quickshade Washes Set": {
+        "slug": "quickshade-washes-set",
+        "line": "quickshade-washes-set",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      },
+      "Skin Tones Paint Set": {
+        "slug": "skin-tones-paint-set",
+        "line": "skin-tones-paint-set",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Skin Tones Paint Set - Washes": {
+        "slug": "skin-tones-paint-set-washes",
+        "line": "skin-tones-paint-set-washes",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      },
+      "Speedpaint Set": {
+        "slug": "speedpaint-set",
+        "line": "speedpaint-set",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "contrast"
+      },
+      "Speedpaint Set 2.0": {
+        "slug": "speedpaint-set-2-0",
+        "line": "speedpaint-set-2-0",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "contrast"
+      },
+      "Warpaints": {
+        "slug": "warpaints",
+        "line": "warpaints",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Warpaints Air": {
+        "slug": "warpaints-air",
+        "line": "warpaints-air",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Warpaints Fanatic": {
+        "slug": "warpaints-fanatic",
+        "line": "warpaints-fanatic",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Warpaints Fanatic Wash": {
+        "slug": "warpaints-fanatic-wash",
+        "line": "warpaints-fanatic-wash",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      },
+      "Warpaints Primer": {
+        "slug": "warpaints-primer",
+        "line": "warpaints-primer",
+        "format": "spray",
+        "binder": "acrylic",
+        "defaultType": "primer",
+        "note": "Colour Primer aerosols (WP1472, a pot, moves to Warpaints)"
+      },
+      "Warpaints Tone": {
+        "slug": "warpaints-tone",
+        "line": "warpaints-tone",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      },
+      "Warpaints Wash": {
+        "slug": "warpaints-wash",
+        "line": "warpaints-wash",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      }
+    },
+    "Duncan Rhodes": {
+      "Wave 1": {
+        "slug": "wave-1",
+        "line": "wave-1",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Wave 2": {
+        "slug": "wave-2",
+        "line": "wave-2",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Wave 3": {
+        "slug": "wave-3",
+        "line": "wave-3",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      }
+    },
+    "Green Stuff World": {
+      "Acrylic Colors": {
+        "slug": "acrylic-colors",
+        "line": "acrylic-colors",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Candy Ink Metallic": {
+        "slug": "candy-ink-metallic",
+        "line": "candy-ink-metallic",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "ink",
+        "note": "Transparent gloss inks for over metals; not metallic themselves"
+      },
+      "Chameleon Colorshift Metallic": {
+        "slug": "chameleon-colorshift-metallic",
+        "line": "chameleon-colorshift-metallic",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "metallic": true
+      },
+      "Dipping Inks": {
+        "slug": "dipping-inks",
+        "line": "dipping-inks",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "contrast",
+        "note": "GSW files them under Contrast paints; one-coat over white"
+      },
+      "Fluor Metallic": {
+        "slug": "fluor-metallic",
+        "line": "fluor-metallic",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "Fluorescents, not metallic, despite the range name (confirmed by Steve)"
+      },
+      "Gloss Surface": {
+        "slug": "gloss-surface",
+        "line": "gloss-surface",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "primer"
+      },
+      "Intensity Ink": {
+        "slug": "intensity-ink",
+        "line": "intensity-ink",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "ink"
+      },
+      "Matt Surface": {
+        "slug": "matt-surface",
+        "line": "matt-surface",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "primer"
+      },
+      "Metallic Colors": {
+        "slug": "metallic-colors",
+        "line": "metallic-colors",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "metallic": true
+      },
+      "Wash Ink": {
+        "slug": "wash-ink",
+        "line": "wash-ink",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      }
+    },
+    "Liquitex": {
+      "Liquitex Heavy Body Acrylix": {
+        "slug": "liquitex-heavy-body-acrylix",
+        "line": "liquitex-heavy-body-acrylix",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      }
+    },
+    "Mig": {
+      "Acrylics": {
+        "slug": "acrylics",
+        "line": "acrylics",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Oilbrusher": {
+        "slug": "oilbrusher",
+        "line": "oilbrusher",
+        "format": "brush",
+        "binder": "oil",
+        "defaultType": "opaque"
+      },
+      "Primers": {
+        "slug": "primers",
+        "line": "primers",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "primer",
+        "note": "One Shot is sold ready to spray, no thinner"
+      },
+      "Washes": {
+        "slug": "washes",
+        "line": "washes",
+        "format": "brush",
+        "binder": "enamel",
+        "defaultType": "wash"
+      }
+    },
+    "P3": {
+      "Privateer Press Formula P3": {
+        "slug": "privateer-press-formula-p3",
+        "line": "privateer-press-formula-p3",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Privateer Press Formula P3 Wash": {
+        "slug": "privateer-press-formula-p3-wash",
+        "line": "privateer-press-formula-p3-wash",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      }
+    },
+    "Scale 75": {
+      "Artist Range": {
+        "slug": "artist-range",
+        "line": "artist-range",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Fantasy & Games Range": {
+        "slug": "fantasy-games-range",
+        "line": "fantasy-games-range",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "FX Range": {
+        "slug": "fx-range",
+        "line": "fx-range",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "UV fluorescents, slightly transparent"
+      },
+      "Inktensity Range": {
+        "slug": "inktensity-range",
+        "line": "inktensity-range",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "ink"
+      },
+      "Instant Colors Range": {
+        "slug": "instant-colors-range",
+        "line": "instant-colors-range",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "contrast"
+      },
+      "Metal N Alchemy Range": {
+        "slug": "metal-n-alchemy-range",
+        "line": "metal-n-alchemy-range",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "The Alchemy colours are non-metallic tone modifiers"
+      },
+      "Primers": {
+        "slug": "primers",
+        "line": "primers",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "primer"
+      },
+      "Scale Color Range": {
+        "slug": "scale-color-range",
+        "line": "scale-color-range",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Soil Works": {
+        "slug": "soil-works",
+        "line": "soil-works",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "technical",
+        "note": "Mixed: acrylic pastes, pigments and oil washes (see overrides)"
+      },
+      "Warfront  Range": {
+        "slug": "warfront-range",
+        "line": "warfront-range",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "Range name has a double space in the data"
+      }
+    },
+    "Tamiya": {
+      "Acrylics Mini Flat": {
+        "slug": "acrylics-mini-flat",
+        "line": "acrylics-mini-flat",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Acrylics Mini Gloss": {
+        "slug": "acrylics-mini-gloss",
+        "line": "acrylics-mini-gloss",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Aircraft Spray": {
+        "slug": "aircraft-spray",
+        "line": "aircraft-spray",
+        "format": "spray",
+        "binder": "lacquer",
+        "defaultType": "opaque"
+      },
+      "Lacquer Paint": {
+        "slug": "lacquer-paint",
+        "line": "lacquer-paint",
+        "format": "brush",
+        "binder": "lacquer",
+        "defaultType": "opaque"
+      },
+      "Tamiya Spray": {
+        "slug": "tamiya-spray",
+        "line": "tamiya-spray",
+        "format": "spray",
+        "binder": "lacquer",
+        "defaultType": "opaque"
+      },
+      "Weathering & Accents": {
+        "slug": "weathering-accents",
+        "line": "weathering-accents",
+        "format": "brush",
+        "binder": "enamel",
+        "defaultType": "wash"
+      }
+    },
+    "Vallejo": {
+      "Arte Deco": {
+        "slug": "arte-deco",
+        "line": "arte-deco",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Arte Deco Colores Fluoresecents": {
+        "slug": "arte-deco-colores-fluoresecents",
+        "line": "arte-deco-colores-fluoresecents",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Game Air": {
+        "slug": "game-air",
+        "line": "game-air",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "The 2024 formula, 76.xxx; colours match Game Color"
+      },
+      "Game Air (old formula)": {
+        "slug": "game-air-old-formula",
+        "line": "game-air-old-formula",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "discontinued": true,
+        "note": "72.7xx, replaced by the 2024 formula. Retailers list it as discontinued; the metallics had no successor, Vallejo points airbrushers to Game Color metallics"
+      },
+      "Game Color": {
+        "slug": "game-color",
+        "line": "game-color",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Game Color Special FX": {
+        "slug": "game-color-special-fx",
+        "line": "game-color-special-fx",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "technical"
+      },
+      "Game Color Wash": {
+        "slug": "game-color-wash",
+        "line": "game-color-wash",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      },
+      "Hobby Paint": {
+        "slug": "hobby-paint",
+        "line": "hobby-paint",
+        "format": "spray",
+        "binder": "acrylic",
+        "defaultType": "primer",
+        "note": "400ml aerosols; some records carry other lines' codes"
+      },
+      "Liquid Gold": {
+        "slug": "liquid-gold",
+        "line": "liquid-gold",
+        "format": "brush",
+        "binder": "lacquer",
+        "defaultType": "opaque",
+        "metallic": true,
+        "note": "Alcohol-based with real metal; lacquer is the nearest binder"
+      },
+      "Mecha Color": {
+        "slug": "mecha-color",
+        "line": "mecha-color",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "note": "Especially designed for airbrushing"
+      },
+      "Metal Color": {
+        "slug": "metal-color",
+        "line": "metal-color",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "metallic": true,
+        "note": "Sold for airbrushing, usable from the bottle"
+      },
+      "Model Air": {
+        "slug": "model-air",
+        "line": "model-air",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Model Color": {
+        "slug": "model-color",
+        "line": "model-color",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Nocturna Models": {
+        "slug": "nocturna-models",
+        "line": "nocturna-models",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Panzer Aces": {
+        "slug": "panzer-aces",
+        "line": "panzer-aces",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Premium Airbrush Color": {
+        "slug": "premium-airbrush-color",
+        "line": "premium-airbrush-color",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Surface Primer": {
+        "slug": "surface-primer",
+        "line": "surface-primer",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "primer",
+        "note": "Sprays unthinned; brushable too"
+      },
+      "Wash FX": {
+        "slug": "wash-fx",
+        "line": "wash-fx",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      },
+      "Weathering FX": {
+        "slug": "weathering-fx",
+        "line": "weathering-fx",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "technical"
+      },
+      "Xpress Color": {
+        "slug": "xpress-color",
+        "line": "xpress-color",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "contrast"
+      },
+      "Xpress Color Intense": {
+        "slug": "xpress-color-intense",
+        "line": "xpress-color-intense",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "contrast"
+      }
+    },
+    "Warhammer": {
+      "Air": {
+        "slug": "air",
+        "line": "air",
+        "format": "airbrush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Base": {
+        "slug": "base",
+        "line": "base",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Contrast": {
+        "slug": "contrast",
+        "line": "contrast",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "contrast"
+      },
+      "Dry": {
+        "slug": "dry",
+        "line": "dry",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Foundation": {
+        "slug": "foundation",
+        "line": "foundation",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque",
+        "discontinued": true,
+        "note": "Holds all old Citadel colours, not only Foundation paints"
+      },
+      "Foundation Primer": {
+        "slug": "foundation-primer",
+        "line": "foundation-primer",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "primer",
+        "discontinued": true
+      },
+      "Foundation Wash": {
+        "slug": "foundation-wash",
+        "line": "foundation-wash",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash",
+        "discontinued": true
+      },
+      "Glaze": {
+        "slug": "glaze",
+        "line": "glaze",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "glaze"
+      },
+      "Layer": {
+        "slug": "layer",
+        "line": "layer",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      },
+      "Shade": {
+        "slug": "shade",
+        "line": "shade",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "wash"
+      },
+      "Spray": {
+        "slug": "spray",
+        "line": "spray",
+        "format": "spray",
+        "binder": "acrylic",
+        "defaultType": "primer"
+      },
+      "Technical": {
+        "slug": "technical",
+        "line": "technical",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "technical"
+      },
+      "Tone Pro": {
+        "slug": "tone-pro",
+        "line": "tone-pro",
+        "format": "brush",
+        "binder": "acrylic",
+        "defaultType": "opaque"
+      }
+    }
+  },
+  "exceptions": {
+    "scale-75-dark-stains": {
+      "binder": "oil",
+      "note": "Soil Works oil wash (agreed)"
+    },
+    "scale-75-fuel-and-grease": {
+      "binder": "oil",
+      "note": "Soil Works oil wash (agreed)"
+    },
+    "scale-75-grease": {
+      "binder": "oil",
+      "note": "Soil Works oil wash (agreed)"
+    },
+    "scale-75-odorless-thinner": {
+      "binder": "oil",
+      "note": "Thinner for the oil washes"
+    }
+  }
+}

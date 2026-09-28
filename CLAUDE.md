@@ -177,7 +177,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `labToHex` plus `blendHexLab`, the parts-weighted mean the paint mixes need;
   forward and inverse share a white point and a matrix, so they stay in one file
   — CIEDE2000, LCh,
-  contrast, colour families), `paints/` (load, filter, types, plus `scatter.ts` —
+  contrast, colour families), `paints/` (load, filter, types, `ranges.ts` —
+  `data/ranges.json`'s reader and `withRangeInfo`, which gives every loaded
+  paint its range's format and binder — plus `scatter.ts` —
   the alternatives plot's layout maths — `filter-params.ts`, the URL vocabulary
   shared by both paint pages, `facet-availability.ts`, which owns the
   shared facet-pruning pass, `matchesFacets` — **the** facet predicate, used by
@@ -220,6 +222,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   directory, so a new brand would reach the browse grid but not
   `generateStaticParams`, and with `dynamicParams = false` every one of its cards
   would be a hard 404. `test/catalogue-sources.test.ts` is the drift guard.
+  **A new range also needs an entry in `data/ranges.json`** (format, binder,
+  line, default type) — `validate:data` fails until it has one, on purpose: a
+  silent default would file it as brush-on acrylic. See "Paint categories".
   **Citadel is brand `Warhammer` (in `warhammer.json`) but its ids are still
   `citadel-*`, on purpose** — URLs, `paint_collection.paint_id` rows and preset
   ids all point at them; only new paints (Tone Pro) get `warhammer-*`. The old
@@ -232,12 +237,14 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   document unequal to its `syncedCanon` and start an autosave for every
   signed-in user who has one.
 - `scripts/` — `build-browse-index.ts`, `build-similar-index.ts`,
-  `validate-data.ts`, `import-source.mjs`. The importer's `mapType` is ordered
-  most-specific-first, so an "Enamel Wash" stays a `wash`; its `oil` rule is
-  `/\boil/` rather than a substring, or Scale 75's "Soil Works" range imports as
-  14 oils — and `tone` is `/\btone\b/` for the same reason ("stone"). A
-  source's `idPrefix` overrides the brand slug in ids, which is what stops a
-  re-import minting `warhammer-*` ids for the Citadel paints.
+  `validate-data.ts`, `import-source.mjs`, and `categorise/` (the one-off
+  migration that wrote `data/ranges.json` and the new types — kept as the
+  record of every decision, and idempotent). The importer **rewrites each file
+  wholesale** and knows nothing of hand-added paints or the migration's fixes,
+  so diff before committing a re-import; it deduplicates within a product line
+  (never across) and carries each existing id's `type`, `metallic` and primary
+  range forward. A source's `idPrefix` overrides the brand slug in ids, which
+  is what stops a re-import minting `warhammer-*` ids for the Citadel paints.
 - `test/` — Vitest suites for the `src/lib` logic (including `scatter.test.ts`,
   which is where the alternatives plot's behaviour is pinned, and
   `filter-params.test.ts`, which pins the URL codec, guards the comma
@@ -309,14 +316,15 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   hard-loaded with query params (e.g. arriving from the homepage search), which
   silently freezes the results. See `src/components/paints-browser.tsx`.
   - `src/lib/paints/filter-params.ts` owns the **whole** vocabulary for both pages
-    — `brand`, `range`, `type`, `metal`, `disc`, `mine`, `family`, `q`, `sort`,
-    `match`, `view` — plus `TRAVEL_PARAMS`, the allow-list an internal link may
-    copy.
+    — `brand`, `range`, `type`, `format`, `binder`, `metal`, `disc`, `mine`,
+    `family`, `q`, `sort`, `match`, `view` — plus `TRAVEL_PARAMS`, the
+    allow-list an internal link may copy, and `LEGACY_TYPES`, which reads the
+    old `type` vocabulary (see "Paint categories").
   - **Filters travel between the two pages, in both directions**, and the rule for
     what goes where generalises the one already stated for the plot's `axisChoice`
     below: **a param that says *which paints you want* is shared and travels; a
     param that says *how to present this page* stays local.**
-    - `brand`/`range`/`type`/`metal`/`disc`/`mine` are `SharedFacets`: applied by both
+    - `brand`/`range`/`type`/`format`/`binder`/`metal`/`disc`/`mine` are `SharedFacets`: applied by both
       pages, and rendered by one component (`paint-facets.tsx`) so the sidebars
       can't drift apart again — they previously disagreed on the heading, on the
       wording of the metallic option, and on which groups existed.
@@ -387,7 +395,8 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   - Comma-joining is only safe because no brand or range name contains a comma —
     `test/filter-params.test.ts` has a drift guard that fails if one ever does.
   - Closed vocabularies are validated on read (`type` against `PAINT_TYPES`,
-    `match` against `MATCH_VALUES`, `metal` against `1`/`0`) and unknown values
+    `format`/`binder` against `PAINT_FORMATS`/`PAINT_BINDERS`, `match` against
+    `MATCH_VALUES`, `metal` against `1`/`0`) and unknown values
     dropped. `match` especially: it used to be `Number()`d straight from state,
     and `?match=abc` would have produced `distance < NaN` — an empty list with no
     error. Brands and ranges can't be validated in the pure module (it must not
@@ -526,10 +535,12 @@ instruction ("airbrush over the upper 75%").
 - **The "thins" flag is manual, and has to be.** A medium counts in the ratio
   but is left out of the blend, which is the only reason 1:1 Agrax + Lahmian
   stays brown — Lahmian Medium is `#F9F9F9`, so blending it as a pigment gives
-  pale beige. It cannot be detected: the catalogue's `technical` type also holds
-  Crackle Medium and Blood for the Blood God, and "Medium" in a name is usually
-  a real colour ("Medium Sea Grey"). An all-medium mix blends everything rather
-  than returning grey.
+  pale beige. The catalogue now has a `medium` type, but it still can't decide
+  this: a custom colour has no type, a scheme paint carries no catalogue id
+  (`catalogue-match` is a name lookup that can miss), and whether a component
+  *thins* is about how it's used in this mix. "Medium" in a name is usually a
+  real colour ("Medium Sea Grey"), so no name rule either. An all-medium mix
+  blends everything rather than returning grey.
 - **The blend is additive, not subtractive** — blue and yellow average to grey,
   not green. Lab is the honest cheap approximation and reuses the transforms
   already in `color/`; Kubelka–Munk is the real answer and is far more work. A
@@ -623,6 +634,51 @@ instruction ("airbrush over the upper 75%").
   line ("Tentacles" needs 54px). Lower it and long names split mid-word, because
   `break-words` is the only thing stopping them overflowing into the next bar and
   `hyphens: auto` can't help — hyphenation doesn't apply to an emergency break.
+
+## Paint categories (type, format, binder, line)
+
+A paint's `type` says **what it does**, comparably across brands: `opaque`,
+`contrast`, `wash`, `glaze`, `ink`, `primer`, `varnish`, `medium`,
+`technical`. Nothing else lives there. The old vocabulary mixed four things —
+Citadel's product lines (`base`/`layer`/`dry`/`tone`), delivery
+(`air`/`spray`), binder (`enamel`/`oil`) and the metallic finish — because the
+importer used Citadel's words, and so filed 60% of the catalogue as `other`.
+
+- **Format and binder are properties of the range**, in `data/ranges.json`,
+  resolved onto every paint by `withRangeInfo` (`lib/paints/ranges.ts`) in
+  `load.ts` and the browse-index build. A range holds what's true of every
+  bottle in it, so 235 Model Air records don't each say "airbrush". The four
+  paints that break their range's rule (Scale 75 Soil Works' oil washes) are
+  listed under `exceptions` there, not on the paint record.
+- **`line` is what a bottle *is*; `range` is a heading it's listed under.** AK
+  prints one Real Colors bottle under both "Air" and "WWII", and that is the
+  only thing a paint's `ranges[]` may mean. `validate:data` rejects a record
+  whose ranges span two lines. The importer used to merge any two rows with the
+  same name and hex, which made Game Color and Game Air one paint — so "I own
+  the pot" and "I own the airbrush version" were indistinguishable in *My
+  paints*, and codes landed on whichever record the importer met first. 90
+  such records were split; the id stayed with the range its page showed,
+  because that's what someone who saved it was reading.
+- **Vallejo's "Game Air" heading is two products.** The source files the
+  original formula (72.7xx) and the 2024 reformulation (76.xxx, colours
+  identical to Game Color) under one name; the old one is `Game Air (old
+  formula)`, discontinued.
+- **`metallic` is the only metallic marker** — it stopped being a type. Scale
+  75's Metal N Alchemy is the reason it's per paint: its "Alchemy" colours
+  aren't metallic.
+- **Old `?type=` links still filter** through `LEGACY_TYPES` in
+  `filter-params.ts`, read-side only, so the heal both pages already do writes
+  the new form. The product-line values map to ranges and keep their result sets
+  exactly (`test/filter-params.test.ts` pins `layer` → 93 and `base` → 143 —
+  `base` also needs `type: opaque`, because the old Foundation range holds inks).
+  Don't add a legacy key that equals a current type; the test forbids it.
+- `ranges.json` also carries each range's `slug` (for the planned range pages),
+  a `defaultType` (the importer's for new paints) and range-level
+  `discontinued`, which `validate:data` requires every paint in it to match.
+- **Name rules only ever propose a type.** "Medium Blue", "Basic Skin Tone",
+  "Bronze Green" and "Blood Red" are all ordinary opaque colours. The migration
+  (`scripts/categorise/`) records the research behind each range's call and each
+  per-paint override; read it before re-litigating one.
 
 ## The alternatives plot
 
@@ -757,8 +813,9 @@ scrolling sidebar, or behind a closed drawer on a phone.
 - **Labels arrive display-ready from the pure module**, not cased by CSS. The
   visible text and the `aria-label` have to be the same string, and CSS can't
   reach an attribute — `first-letter:uppercase` gave "Remove filter: oil" beside a
-  chip reading "Oil". Only `type` and `family` are cased (lowercase internal
-  vocabulary); brands and ranges carry their own. The chip's `value` keeps the raw
+  chip reading "Oil". `type`, `format` and `binder` take written-out words from
+  `VALUE_LABELS` ("Texture & effect", "Brush-on"); `family` is cased; brands and
+  ranges carry their own. The chip's `value` keeps the raw
   catalogue string, which is what goes back to the toggle. The facet checkboxes
   had the opposite defect on the same page — a CSS `capitalize`, so the control
   announced "oil" while showing "Oil" — and both now go through the one
@@ -978,12 +1035,14 @@ paint's own page, and the alternatives list; managed on `/my-paints`.
   *owned* paints only (a wishlisted pot isn't one you can reach for), memoized
   on the collection map's identity so typing the title doesn't redo it, and
   worded as a colour match rather than a substitute on purpose. It is also
-  **like-for-like**: same `paintGroup`, same metallic finish, technical paints
-  never on either side, and nothing past `MAX_SUGGESTION` (ΔE 20) — by colour
-  alone it offered Nuln Oil for Macragge Blue. `paintGroup` is a stopgap over
-  `type`, which mixes product lines with what a paint does (see the README
-  roadmap item on categorising paints); replace it when that's settled rather
-  than growing its table.
+  **like-for-like**: same `paintGroup`, same `binder`, same metallic finish,
+  technical paints (textures, mediums, varnishes) never on either side, and
+  nothing past `MAX_SUGGESTION` (ΔE 20) — by colour alone it offered Nuln Oil
+  for Macragge Blue. `paintGroup` is now a direct read of `type`, coarser on
+  purpose: wash, glaze and ink are one group, because painters thin an ink into
+  a wash. **Format is deliberately not matched** — owning the airbrush Macragge
+  Blue means owning the colour — while "do I own this paint" still means this
+  exact record, which is why pot and air versions are separate records.
 - **`/my-paints` filters in local state, not the URL.** The URL-as-truth rule
   exists for shareability, and this page is `noindex` and per-user — a link to
   it means nothing to anyone else. It also hard-wires `includeDiscontinued: true`

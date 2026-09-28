@@ -38,6 +38,8 @@ export type ChipKind =
   | "brands"
   | "ranges"
   | "types"
+  | "formats"
+  | "binders"
   | "families"
   | "metallic"
   | "discontinued"
@@ -80,7 +82,8 @@ const valueChip = (kind: FacetKind, value: string): ActiveFilterChip =>
 /**
  * Every chip, in the sidebar's group order, so scanning the chips and scanning
  * the controls give the same picture: your paints → brand → family → type →
- * finish → range → discontinued, then the page-specific control.
+ * format → binder → finish → range → discontinued, then the page-specific
+ * control.
  *
  * Callers pass the **effective** state (`effectiveFacets`), so a `?mine=` that
  * isn't applied (signed out) gets no chip, and `disc` gets none while `mine` has
@@ -100,6 +103,8 @@ function describeFilters(
   for (const b of s.brands) out.push(valueChip("brands", b));
   for (const f of extras.families ?? []) out.push(valueChip("families", f));
   for (const t of s.types) out.push(valueChip("types", t));
+  for (const f of s.formats) out.push(valueChip("formats", f));
+  for (const b of s.binders) out.push(valueChip("binders", b));
   if (s.metallic) {
     out.push(
       chip(

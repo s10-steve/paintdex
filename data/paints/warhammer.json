@@ -4,7 +4,7 @@
     "name": "Ardcoat",
     "brand": "Warhammer",
     "range": "Technical",
-    "type": "technical",
+    "type": "varnish",
     "hex": "#F9F9F9",
     "code": null,
     "discontinued": false
@@ -14,7 +14,7 @@
     "name": "Abaddon Black",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#000000",
     "code": null,
     "discontinued": false
@@ -24,7 +24,7 @@
     "name": "Abaddon Black",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#000000",
     "code": null,
     "discontinued": false
@@ -34,7 +34,7 @@
     "name": "Adeptus Battlegrey",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#4A4C58",
     "code": null,
     "discontinued": true
@@ -44,7 +44,7 @@
     "name": "Administratum Grey",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#989C94",
     "code": null,
     "discontinued": false
@@ -54,7 +54,7 @@
     "name": "Administratum Grey",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#8F9690",
     "code": null,
     "discontinued": false
@@ -84,7 +84,7 @@
     "name": "Agrax Earthshade",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#3C3C28",
     "code": null,
     "discontinued": false
@@ -94,7 +94,7 @@
     "name": "Agrax Earthshade Gloss",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#B4AA9E",
     "code": null,
     "discontinued": true
@@ -124,7 +124,7 @@
     "name": "Ahriman Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#00708A",
     "code": null,
     "discontinued": false
@@ -134,7 +134,7 @@
     "name": "Air Caste Thinner",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "medium",
     "hex": "#F9F9F9",
     "code": null,
     "discontinued": false
@@ -154,7 +154,7 @@
     "name": "Alaitoc Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#2F4F85",
     "code": null,
     "discontinued": false
@@ -164,7 +164,7 @@
     "name": "Altdorf Guard Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#2D4696",
     "code": null,
     "discontinued": false
@@ -174,7 +174,7 @@
     "name": "Angron Red Clear",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#E21823",
     "code": null,
     "discontinued": false
@@ -214,7 +214,7 @@
     "name": "Astorath Red",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#A9311E",
     "code": null,
     "discontinued": false
@@ -244,7 +244,7 @@
     "name": "Astronomicon Grey",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#93ABAF",
     "code": null,
     "discontinued": true
@@ -264,7 +264,7 @@
     "name": "Athonian Camoshade",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#485F2B",
     "code": null,
     "discontinued": false
@@ -274,7 +274,7 @@
     "name": "Auric Armour Gold",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#FFC451",
     "code": null,
     "discontinued": false,
@@ -285,7 +285,7 @@
     "name": "Averland Sunset",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#FBB81C",
     "code": null,
     "discontinued": false
@@ -295,7 +295,7 @@
     "name": "Averland Sunset",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#FBB81C",
     "code": null,
     "discontinued": false
@@ -315,7 +315,7 @@
     "name": "Bad Moon Yellow",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#FFF200",
     "code": null,
     "discontinued": true
@@ -335,7 +335,7 @@
     "name": "Baharroth Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#54BDCA",
     "code": null,
     "discontinued": false
@@ -345,7 +345,7 @@
     "name": "Balor Brown",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#875408",
     "code": null,
     "discontinued": false
@@ -355,7 +355,7 @@
     "name": "Balor Brown",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#875408",
     "code": null,
     "discontinued": false
@@ -365,7 +365,7 @@
     "name": "Balthasar Gold",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A77353",
     "code": null,
     "discontinued": false,
@@ -376,7 +376,7 @@
     "name": "Balthasar Gold",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#A77353",
     "code": null,
     "discontinued": false,
@@ -387,7 +387,7 @@
     "name": "Baneblade Brown",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#8F7C68",
     "code": null,
     "discontinued": false
@@ -397,7 +397,7 @@
     "name": "Baneblade Brown",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#8F7C68",
     "code": null,
     "discontinued": false
@@ -407,7 +407,7 @@
     "name": "Barak-Nar Burgundy",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#451636",
     "code": null,
     "discontinued": false
@@ -427,7 +427,7 @@
     "name": "Beaten Copper",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#73372D",
     "code": null,
     "discontinued": true,
@@ -438,7 +438,7 @@
     "name": "Bestial Brown",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#7B4A39",
     "code": null,
     "discontinued": true
@@ -448,7 +448,7 @@
     "name": "Bestigor Flesh",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#D08951",
     "code": null,
     "discontinued": false
@@ -458,7 +458,7 @@
     "name": "Biel-Tan Green",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#336F47",
     "code": null,
     "discontinued": false
@@ -468,7 +468,7 @@
     "name": "Bilious Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A9D171",
     "code": null,
     "discontinued": true
@@ -508,7 +508,7 @@
     "name": "Blazing Orange",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#E65925",
     "code": null,
     "discontinued": true
@@ -518,7 +518,7 @@
     "name": "Bleached Bone",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#EED5AC",
     "code": null,
     "discontinued": true
@@ -548,7 +548,7 @@
     "name": "Blood Red",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#D2223E",
     "code": null,
     "discontinued": true
@@ -568,7 +568,7 @@
     "name": "Bloodreaver Flesh",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#6A4848",
     "code": null,
     "discontinued": false
@@ -578,7 +578,7 @@
     "name": "Blue Horror",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#9EB5CE",
     "code": null,
     "discontinued": false
@@ -588,7 +588,7 @@
     "name": "Boltgun Metal",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#888789",
     "code": null,
     "discontinued": true,
@@ -599,7 +599,7 @@
     "name": "Brass Scorpion",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#A65D2C",
     "code": null,
     "discontinued": false,
@@ -610,7 +610,7 @@
     "name": "Brazen Brass",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#966747",
     "code": null,
     "discontinued": true,
@@ -621,7 +621,7 @@
     "name": "Bronzed Flesh",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#EC9A36",
     "code": null,
     "discontinued": true
@@ -631,7 +631,7 @@
     "name": "Bubonic Brown",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B89142",
     "code": null,
     "discontinued": true
@@ -641,7 +641,7 @@
     "name": "Bugman Glow",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#804C43",
     "code": null,
     "discontinued": false
@@ -651,7 +651,7 @@
     "name": "Burnished Gold",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#E0C068",
     "code": null,
     "discontinued": true,
@@ -662,7 +662,7 @@
     "name": "Cadian Fleshtone",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#C47652",
     "code": null,
     "discontinued": false
@@ -672,7 +672,7 @@
     "name": "Caledor Sky",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#366699",
     "code": null,
     "discontinued": false
@@ -682,7 +682,7 @@
     "name": "Caledor Sky",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#366699",
     "code": null,
     "discontinued": false
@@ -692,7 +692,7 @@
     "name": "Calgar Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#2A497F",
     "code": null,
     "discontinued": false
@@ -702,7 +702,7 @@
     "name": "Calgar Blue",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2A497F",
     "code": null,
     "discontinued": false
@@ -712,7 +712,7 @@
     "name": "Caliban Green",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#003D15",
     "code": null,
     "discontinued": false
@@ -722,7 +722,7 @@
     "name": "Caliban Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#003D15",
     "code": null,
     "discontinued": false
@@ -732,7 +732,7 @@
     "name": "Calth Blue Clear",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#0087D1",
     "code": null,
     "discontinued": false
@@ -742,7 +742,7 @@
     "name": "Calthan Brown",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#7A4231",
     "code": null,
     "discontinued": true
@@ -752,7 +752,7 @@
     "name": "Camo Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#878D52",
     "code": null,
     "discontinued": true
@@ -762,7 +762,7 @@
     "name": "Canoptek Alloy",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#C3B2AC",
     "code": null,
     "discontinued": false,
@@ -773,7 +773,7 @@
     "name": "Carroburg Crimson",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#752455",
     "code": null,
     "discontinued": false
@@ -783,7 +783,7 @@
     "name": "Cassandora Yellow",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#AD8A38",
     "code": null,
     "discontinued": false
@@ -793,7 +793,7 @@
     "name": "Castellan Green",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#264715",
     "code": null,
     "discontinued": false
@@ -803,7 +803,7 @@
     "name": "Castellan Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#264715",
     "code": null,
     "discontinued": false
@@ -813,27 +813,29 @@
     "name": "Castellax Bronze",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#C68351",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-castellax-bronze-air",
     "name": "Castellax Bronze",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C68351",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-catachan-fleshtone",
     "name": "Catachan Fleshtone",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#442B25",
     "code": null,
     "discontinued": false
@@ -843,7 +845,7 @@
     "name": "Catachan Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#455440",
     "code": null,
     "discontinued": true
@@ -853,7 +855,7 @@
     "name": "Celestra Grey",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#8BA3A3",
     "code": null,
     "discontinued": false
@@ -863,7 +865,7 @@
     "name": "Chainmail",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#8E8C91",
     "code": null,
     "discontinued": true,
@@ -874,7 +876,7 @@
     "name": "Changeling Pink",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#F3ABCA",
     "code": null,
     "discontinued": false
@@ -884,7 +886,7 @@
     "name": "Chaos Black",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#001522",
     "code": null,
     "discontinued": true
@@ -894,7 +896,7 @@
     "name": "Chaos Black",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#000000",
     "code": null,
     "discontinued": false
@@ -904,7 +906,7 @@
     "name": "Charadon Granite",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#463F39",
     "code": null,
     "discontinued": true
@@ -914,7 +916,7 @@
     "name": "Chemos Purple",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#4F356C",
     "code": null,
     "discontinued": false
@@ -924,7 +926,7 @@
     "name": "Chronus Blue",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#4B90CF",
     "code": null,
     "discontinued": false
@@ -934,7 +936,7 @@
     "name": "Codex Grey",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#808285",
     "code": null,
     "discontinued": true
@@ -944,7 +946,7 @@
     "name": "Coelia Greenshade",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#2B5D58",
     "code": null,
     "discontinued": false
@@ -954,7 +956,7 @@
     "name": "Commando Khaki",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#9A8C7B",
     "code": null,
     "discontinued": true
@@ -964,7 +966,7 @@
     "name": "Contrast Medium",
     "brand": "Warhammer",
     "range": "Technical",
-    "type": "technical",
+    "type": "medium",
     "hex": "#F9F9F9",
     "code": null,
     "discontinued": false
@@ -974,7 +976,7 @@
     "name": "Corax White",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -984,7 +986,7 @@
     "name": "Corax White",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -994,7 +996,7 @@
     "name": "Corvus Black",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#171314",
     "code": null,
     "discontinued": false
@@ -1004,7 +1006,7 @@
     "name": "Corvus Black",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#171314",
     "code": null,
     "discontinued": false
@@ -1024,7 +1026,7 @@
     "name": "Cryptek Armourshade Gloss",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#856A67",
     "code": null,
     "discontinued": true
@@ -1044,7 +1046,7 @@
     "name": "Daemonette Hide",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#655F81",
     "code": null,
     "discontinued": false
@@ -1064,7 +1066,7 @@
     "name": "Dark Angels Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#19553C",
     "code": null,
     "discontinued": true
@@ -1074,7 +1076,7 @@
     "name": "Dark Flesh",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#683B31",
     "code": null,
     "discontinued": true
@@ -1094,7 +1096,7 @@
     "name": "Dark Reaper",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#354D4C",
     "code": null,
     "discontinued": false
@@ -1114,7 +1116,7 @@
     "name": "Dawnstone",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#697068",
     "code": null,
     "discontinued": false
@@ -1124,7 +1126,7 @@
     "name": "Dawnstone",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#697068",
     "code": null,
     "discontinued": false
@@ -1134,7 +1136,7 @@
     "name": "Dawnstone",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#697068",
     "code": null,
     "discontinued": false
@@ -1144,7 +1146,7 @@
     "name": "Death Guard Green",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#556229",
     "code": null,
     "discontinued": false
@@ -1154,7 +1156,7 @@
     "name": "Death Guard Green",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#6D774D",
     "code": null,
     "discontinued": false
@@ -1164,7 +1166,7 @@
     "name": "Death Korps Drab",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#3D4539",
     "code": null,
     "discontinued": false
@@ -1174,7 +1176,7 @@
     "name": "Death Korps Drab",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#3D4539",
     "code": null,
     "discontinued": false
@@ -1184,7 +1186,7 @@
     "name": "Deathclaw Brown",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#AF634F",
     "code": null,
     "discontinued": false
@@ -1194,7 +1196,7 @@
     "name": "Deathclaw Brown",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#AF634F",
     "code": null,
     "discontinued": false
@@ -1204,7 +1206,7 @@
     "name": "Deathshroud Clear",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#1C1C1B",
     "code": null,
     "discontinued": false
@@ -1214,7 +1216,7 @@
     "name": "Deathworld Forest",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#556229",
     "code": null,
     "discontinued": false
@@ -1224,7 +1226,7 @@
     "name": "Deathworld Forest",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#556229",
     "code": null,
     "discontinued": false
@@ -1234,7 +1236,7 @@
     "name": "Dechala Lilac",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#B598C9",
     "code": null,
     "discontinued": false
@@ -1244,7 +1246,7 @@
     "name": "Deepkin Flesh",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#A9B79F",
     "code": null,
     "discontinued": false
@@ -1254,7 +1256,7 @@
     "name": "Desert Yellow",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#9C8855",
     "code": null,
     "discontinued": true
@@ -1274,7 +1276,7 @@
     "name": "Dheneb Stone",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B8ACA0",
     "code": null,
     "discontinued": true
@@ -1284,7 +1286,7 @@
     "name": "Doombull Brown",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#570003",
     "code": null,
     "discontinued": false
@@ -1294,7 +1296,7 @@
     "name": "Dorn Yellow",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#FFF55A",
     "code": null,
     "discontinued": false
@@ -1304,7 +1306,7 @@
     "name": "Drakenhof Nightshade",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#1B3E6E",
     "code": null,
     "discontinued": false
@@ -1314,7 +1316,7 @@
     "name": "Druchii Violet",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#542B66",
     "code": null,
     "discontinued": false
@@ -1324,7 +1326,7 @@
     "name": "Dryad Bark",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#2B2A24",
     "code": null,
     "discontinued": false
@@ -1334,7 +1336,7 @@
     "name": "Dryad Bark",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2B2A24",
     "code": null,
     "discontinued": false
@@ -1344,7 +1346,7 @@
     "name": "Dwarf Bronze",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A26840",
     "code": null,
     "discontinued": true,
@@ -1355,7 +1357,7 @@
     "name": "Dwarf Flesh",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#DA9382",
     "code": null,
     "discontinued": true
@@ -1365,7 +1367,7 @@
     "name": "Eidolon Purple Clear",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#7D4D99",
     "code": null,
     "discontinued": false
@@ -1375,7 +1377,7 @@
     "name": "Eldar Flesh",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#E8C07F",
     "code": null,
     "discontinued": false
@@ -1385,7 +1387,7 @@
     "name": "Elf Flesh",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#EDAE74",
     "code": null,
     "discontinued": true
@@ -1395,7 +1397,7 @@
     "name": "Elysian Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#6B8C37",
     "code": null,
     "discontinued": false
@@ -1405,7 +1407,7 @@
     "name": "Elysian Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#6B8C37",
     "code": null,
     "discontinued": false
@@ -1415,7 +1417,7 @@
     "name": "Emperor Children",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#B74073",
     "code": null,
     "discontinued": false
@@ -1425,7 +1427,7 @@
     "name": "Enchanted Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#0071B7",
     "code": null,
     "discontinued": true
@@ -1435,7 +1437,7 @@
     "name": "Eshin Grey",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#484B4E",
     "code": null,
     "discontinued": false
@@ -1445,7 +1447,7 @@
     "name": "Etherium Blue",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#9EB5CE",
     "code": null,
     "discontinued": false
@@ -1455,7 +1457,7 @@
     "name": "Evil Sunz Scarlet",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#C01411",
     "code": null,
     "discontinued": false
@@ -1465,7 +1467,7 @@
     "name": "Evil Sunz Scarlet",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C01411",
     "code": null,
     "discontinued": false
@@ -1475,7 +1477,7 @@
     "name": "Fenrisian Grey",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#6D94B3",
     "code": null,
     "discontinued": false
@@ -1485,7 +1487,7 @@
     "name": "Fenrisian Grey",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#6D94B3",
     "code": null,
     "discontinued": false
@@ -1495,7 +1497,7 @@
     "name": "Fenrys Grey",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#2C4363",
     "code": null,
     "discontinued": true
@@ -1505,7 +1507,7 @@
     "name": "Fiery Orange",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#F47920",
     "code": null,
     "discontinued": true
@@ -1515,7 +1517,7 @@
     "name": "Fire Dragon Bright",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#F4874E",
     "code": null,
     "discontinued": false
@@ -1525,7 +1527,7 @@
     "name": "Flash Gitz Yellow",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#FFF300",
     "code": null,
     "discontinued": false
@@ -1535,7 +1537,7 @@
     "name": "Flash Gitz Yellow",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#FFF300",
     "code": null,
     "discontinued": false
@@ -1545,7 +1547,7 @@
     "name": "Flayed One Flesh",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#EEC483",
     "code": null,
     "discontinued": false
@@ -1575,7 +1577,7 @@
     "name": "Fortress Grey",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#BCBDC0",
     "code": null,
     "discontinued": true
@@ -1585,7 +1587,7 @@
     "name": "Fuegan Orange",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#7F512D",
     "code": null,
     "discontinued": false
@@ -1595,7 +1597,7 @@
     "name": "Fulgrim Pink",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#F3ABCA",
     "code": null,
     "discontinued": false
@@ -1605,7 +1607,7 @@
     "name": "Fulgurite Copper",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#CE8D51",
     "code": null,
     "discontinued": false,
@@ -1626,7 +1628,7 @@
     "name": "Gal Vorbak Red",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#4B213C",
     "code": null,
     "discontinued": false
@@ -1636,7 +1638,7 @@
     "name": "Gal Vorbak Red",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#4B213C",
     "code": null,
     "discontinued": false
@@ -1646,7 +1648,7 @@
     "name": "Gauss Blaster Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#7FC1A5",
     "code": null,
     "discontinued": false
@@ -1656,17 +1658,18 @@
     "name": "Gehenna Gold",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#C96B18",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-genestealer-purple",
     "name": "Genestealer Purple",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#7658A5",
     "code": null,
     "discontinued": false
@@ -1676,7 +1679,7 @@
     "name": "Genestealer Purple",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#7658A5",
     "code": null,
     "discontinued": false
@@ -1686,7 +1689,7 @@
     "name": "Ghostly Grey",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#C3C6CD",
     "code": null,
     "discontinued": true
@@ -1696,7 +1699,7 @@
     "name": "Goblin Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#3D9353",
     "code": null,
     "discontinued": true
@@ -1706,7 +1709,7 @@
     "name": "Golden Griffon",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#E1BA7F",
     "code": null,
     "discontinued": false
@@ -1716,7 +1719,7 @@
     "name": "Golden Yellow",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#FFC20E",
     "code": null,
     "discontinued": true
@@ -1726,7 +1729,7 @@
     "name": "Golgfag Brown",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#8F502A",
     "code": null,
     "discontinued": false
@@ -1746,7 +1749,7 @@
     "name": "Gorthor Brown",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#5F463F",
     "code": null,
     "discontinued": false
@@ -1756,7 +1759,7 @@
     "name": "Graveyard Earth",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#665238",
     "code": null,
     "discontinued": true
@@ -1766,7 +1769,7 @@
     "name": "Gretchin Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#7E6930",
     "code": null,
     "discontinued": true
@@ -1776,27 +1779,29 @@
     "name": "Grey Knights Steel",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B0BDC6",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-grey-knights-steel-air",
     "name": "Grey Knights Steel",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B0BDC6",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-grey-seer",
     "name": "Grey Seer",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A2A5A7",
     "code": null,
     "discontinued": false
@@ -1806,7 +1811,7 @@
     "name": "Grey Seer",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#A2A5A7",
     "code": null,
     "discontinued": false
@@ -1866,7 +1871,7 @@
     "name": "Hashut Copper",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#BA885F",
     "code": null,
     "discontinued": false,
@@ -1877,7 +1882,7 @@
     "name": "Hawk Turquoise",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#008194",
     "code": null,
     "discontinued": true
@@ -1887,7 +1892,7 @@
     "name": "Hellion Green",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#7FC1A5",
     "code": null,
     "discontinued": false
@@ -1897,7 +1902,7 @@
     "name": "Hexos Palesun",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#FFF55A",
     "code": null,
     "discontinued": false
@@ -1917,7 +1922,7 @@
     "name": "Hobgrot Hide",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#9C823B",
     "code": null,
     "discontinued": false
@@ -1927,7 +1932,7 @@
     "name": "Hoeth Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#4C78AF",
     "code": null,
     "discontinued": false
@@ -1937,7 +1942,7 @@
     "name": "Hoeth Blue",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#4C78AF",
     "code": null,
     "discontinued": false
@@ -1947,7 +1952,7 @@
     "name": "Hormagaunt Purple",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#54496B",
     "code": null,
     "discontinued": true
@@ -1957,7 +1962,7 @@
     "name": "Ice Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#81D3EB",
     "code": null,
     "discontinued": true
@@ -1967,7 +1972,7 @@
     "name": "Imperial Purple",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#562F7E",
     "code": null,
     "discontinued": true
@@ -1977,7 +1982,7 @@
     "name": "Imrik Blue",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#208ABF",
     "code": null,
     "discontinued": false
@@ -1987,7 +1992,7 @@
     "name": "Incubi Darkness",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#082E32",
     "code": null,
     "discontinued": false
@@ -1997,7 +2002,7 @@
     "name": "Ionrach Skin",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#97A384",
     "code": null,
     "discontinued": false
@@ -2007,7 +2012,7 @@
     "name": "Iron Hands Steel",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B2A79F",
     "code": null,
     "discontinued": false,
@@ -2018,7 +2023,7 @@
     "name": "Iron Hands Steel",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B2A79F",
     "code": null,
     "discontinued": false,
@@ -2029,17 +2034,18 @@
     "name": "Iron Warriors",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#706E6B",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-ironbreaker",
     "name": "Ironbreaker",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#899092",
     "code": null,
     "discontinued": false,
@@ -2050,7 +2056,7 @@
     "name": "Ironbreaker",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#899092",
     "code": null,
     "discontinued": false,
@@ -2061,7 +2067,7 @@
     "name": "Iyanden Darksun",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#AD852E",
     "code": null,
     "discontinued": true
@@ -2081,7 +2087,7 @@
     "name": "Jade Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#069B7D",
     "code": null,
     "discontinued": true
@@ -2091,7 +2097,7 @@
     "name": "Jokaero Orange",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#ED3814",
     "code": null,
     "discontinued": false
@@ -2101,7 +2107,7 @@
     "name": "Kabalite Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#008962",
     "code": null,
     "discontinued": false
@@ -2111,7 +2117,7 @@
     "name": "Kakophoni Purple",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#8869AE",
     "code": null,
     "discontinued": false
@@ -2121,7 +2127,7 @@
     "name": "Kakophoni Purple",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#8869AE",
     "code": null,
     "discontinued": false
@@ -2131,7 +2137,7 @@
     "name": "Kantor Blue",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#02134E",
     "code": null,
     "discontinued": false
@@ -2141,7 +2147,7 @@
     "name": "Kantor Blue",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#02134E",
     "code": null,
     "discontinued": false
@@ -2151,7 +2157,7 @@
     "name": "Karak Stone",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#B7945C",
     "code": null,
     "discontinued": false
@@ -2161,7 +2167,7 @@
     "name": "Karak Stone",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#B7945C",
     "code": null,
     "discontinued": false
@@ -2171,7 +2177,7 @@
     "name": "Khemri Brown",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#73614D",
     "code": null,
     "discontinued": true
@@ -2181,7 +2187,7 @@
     "name": "Khorne Red",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#650001",
     "code": null,
     "discontinued": false
@@ -2191,7 +2197,7 @@
     "name": "Khorne Red",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#650001",
     "code": null,
     "discontinued": false
@@ -2201,7 +2207,7 @@
     "name": "Kindleflame",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#F69C82",
     "code": null,
     "discontinued": false
@@ -2211,7 +2217,7 @@
     "name": "Kislev Flesh",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#D1A570",
     "code": null,
     "discontinued": false
@@ -2221,7 +2227,7 @@
     "name": "Kislev Flesh",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#D1A570",
     "code": null,
     "discontinued": false
@@ -2231,7 +2237,7 @@
     "name": "Knarloc Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#48563C",
     "code": null,
     "discontinued": true
@@ -2241,7 +2247,7 @@
     "name": "Knight-Questor Flesh",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#996563",
     "code": null,
     "discontinued": false
@@ -2251,7 +2257,7 @@
     "name": "Kommando Khaki",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#9E915C",
     "code": null,
     "discontinued": true
@@ -2261,7 +2267,7 @@
     "name": "Kommando Khaki",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#9B8C7B",
     "code": null,
     "discontinued": true
@@ -2271,7 +2277,7 @@
     "name": "Krieg Khaki",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#BCBB7E",
     "code": null,
     "discontinued": false
@@ -2281,7 +2287,7 @@
     "name": "Lahmian Medium",
     "brand": "Warhammer",
     "range": "Technical",
-    "type": "technical",
+    "type": "medium",
     "hex": "#F9F9F9",
     "code": null,
     "discontinued": false
@@ -2301,7 +2307,7 @@
     "name": "Leadbelcher",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#868686",
     "code": null,
     "discontinued": false,
@@ -2312,7 +2318,7 @@
     "name": "Leadbelcher",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#969696",
     "code": null,
     "discontinued": false,
@@ -2323,7 +2329,7 @@
     "name": "Leadbelcher",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#969696",
     "code": null,
     "discontinued": false,
@@ -2334,7 +2340,7 @@
     "name": "Leprous Brown",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#D88E2D",
     "code": null,
     "discontinued": true
@@ -2364,7 +2370,7 @@
     "name": "Liberator Gold",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#E1BA7F",
     "code": null,
     "discontinued": false,
@@ -2375,7 +2381,7 @@
     "name": "Liche Purple",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#2C2D8B",
     "code": null,
     "discontinued": true
@@ -2385,7 +2391,7 @@
     "name": "Lightning Bolt Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#8BB9DD",
     "code": null,
     "discontinued": true
@@ -2395,7 +2401,7 @@
     "name": "Longbeard Grey",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#DBDCC6",
     "code": null,
     "discontinued": false
@@ -2405,7 +2411,7 @@
     "name": "Loren Forest",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#486C25",
     "code": null,
     "discontinued": false
@@ -2415,7 +2421,7 @@
     "name": "Lothern Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#2C9BCC",
     "code": null,
     "discontinued": false
@@ -2425,7 +2431,7 @@
     "name": "Lothern Blue",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#2C9BCC",
     "code": null,
     "discontinued": false
@@ -2435,7 +2441,7 @@
     "name": "Lucius Lilac",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#B598C9",
     "code": null,
     "discontinued": false
@@ -2445,7 +2451,7 @@
     "name": "Lugganath Orange",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#F69B82",
     "code": null,
     "discontinued": false
@@ -2455,7 +2461,7 @@
     "name": "Lupercal Green",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#002C2B",
     "code": null,
     "discontinued": false
@@ -2465,7 +2471,7 @@
     "name": "Lupercal Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#002C2B",
     "code": null,
     "discontinued": false
@@ -2475,7 +2481,7 @@
     "name": "Macharius Solar Orange",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B94023",
     "code": null,
     "discontinued": true
@@ -2485,7 +2491,7 @@
     "name": "Macragge Blue",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#103E7C",
     "code": null,
     "discontinued": false
@@ -2495,7 +2501,7 @@
     "name": "Macragge Blue",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#0F3D7C",
     "code": null,
     "discontinued": false
@@ -2505,7 +2511,7 @@
     "name": "Macragge Blue",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#0F3D7C",
     "code": null,
     "discontinued": false
@@ -2555,7 +2561,7 @@
     "name": "Mechanicus Standard Grey",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#39484A",
     "code": null,
     "discontinued": false
@@ -2565,7 +2571,7 @@
     "name": "Mechanicus Standard Grey",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#39484A",
     "code": null,
     "discontinued": false
@@ -2575,7 +2581,7 @@
     "name": "Mechanicus Standard Grey",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#39484A",
     "code": null,
     "discontinued": false
@@ -2585,7 +2591,7 @@
     "name": "Mechrite Red",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A82014",
     "code": null,
     "discontinued": true
@@ -2595,7 +2601,7 @@
     "name": "Mephiston Red",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#960C09",
     "code": null,
     "discontinued": false
@@ -2605,7 +2611,7 @@
     "name": "Mephiston Red",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#960C09",
     "code": null,
     "discontinued": false
@@ -2615,7 +2621,7 @@
     "name": "Mephiston Red",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#960D0A",
     "code": null,
     "discontinued": false
@@ -2625,7 +2631,7 @@
     "name": "Midnight Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#002561",
     "code": null,
     "discontinued": true
@@ -2645,7 +2651,7 @@
     "name": "Mithril Silver",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B7BEC5",
     "code": null,
     "discontinued": true,
@@ -2656,7 +2662,7 @@
     "name": "Moot Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#3DAF44",
     "code": null,
     "discontinued": false
@@ -2666,7 +2672,7 @@
     "name": "Moot Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#3DAF44",
     "code": null,
     "discontinued": false
@@ -2686,7 +2692,7 @@
     "name": "Mordian Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#244882",
     "code": null,
     "discontinued": true
@@ -2696,7 +2702,7 @@
     "name": "Morghast Bone",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#C0A973",
     "code": null,
     "discontinued": false
@@ -2706,7 +2712,7 @@
     "name": "Mortarion Green Clear",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#00832B",
     "code": null,
     "discontinued": false
@@ -2716,7 +2722,7 @@
     "name": "Mournfang Brown",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#490F06",
     "code": null,
     "discontinued": false
@@ -2726,7 +2732,7 @@
     "name": "Mournfang Brown",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#490F06",
     "code": null,
     "discontinued": false
@@ -2736,7 +2742,7 @@
     "name": "Munitorum Varnish",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "varnish",
     "hex": "#FAFAFA",
     "code": null,
     "discontinued": false
@@ -2746,7 +2752,7 @@
     "name": "Naggaroth Night",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#3B2B50",
     "code": null,
     "discontinued": false
@@ -2756,7 +2762,7 @@
     "name": "Nauseating Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#412A7A",
     "code": null,
     "discontinued": true
@@ -2776,7 +2782,7 @@
     "name": "Necron Abyss",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#1A213D",
     "code": null,
     "discontinued": true
@@ -2786,7 +2792,7 @@
     "name": "Necron Compound",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#DADDDF",
     "code": null,
     "discontinued": false,
@@ -2797,7 +2803,7 @@
     "name": "Niblet Green",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#378C35",
     "code": null,
     "discontinued": false
@@ -2807,7 +2813,7 @@
     "name": "Night Lords Blue",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#002B5C",
     "code": null,
     "discontinued": false
@@ -2817,7 +2823,7 @@
     "name": "Night Lords Blue",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#002B5C",
     "code": null,
     "discontinued": false
@@ -2847,7 +2853,7 @@
     "name": "Nocturne Green",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#162A29",
     "code": null,
     "discontinued": false
@@ -2857,7 +2863,7 @@
     "name": "Nocturne Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#162A29",
     "code": null,
     "discontinued": false
@@ -2867,7 +2873,7 @@
     "name": "Nuln Oil",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#393944",
     "code": null,
     "discontinued": false
@@ -2877,7 +2883,7 @@
     "name": "Nuln Oil Gloss",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#B3AFAE",
     "code": null,
     "discontinued": true
@@ -2897,7 +2903,7 @@
     "name": "Nurgling Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#7E975E",
     "code": null,
     "discontinued": false
@@ -2907,7 +2913,7 @@
     "name": "Nurgling Green",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#7E975E",
     "code": null,
     "discontinued": false
@@ -2917,7 +2923,7 @@
     "name": "Ogryn Camo",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#96A648",
     "code": null,
     "discontinued": false
@@ -2927,7 +2933,7 @@
     "name": "Ogryn Camo",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#96A648",
     "code": null,
     "discontinued": false
@@ -2957,7 +2963,7 @@
     "name": "Orkhide Shade",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "shade",
+    "type": "wash",
     "hex": "#26372D",
     "code": null,
     "discontinued": true
@@ -2967,7 +2973,7 @@
     "name": "Orruk Flesh",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#97C17E",
     "code": null,
     "discontinued": false
@@ -2977,7 +2983,7 @@
     "name": "Pallid Flesh",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#EEC8C7",
     "code": null,
     "discontinued": true
@@ -2987,7 +2993,7 @@
     "name": "Pallid Wych Flesh",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#CACCBB",
     "code": null,
     "discontinued": false
@@ -2997,7 +3003,7 @@
     "name": "Phalanx Yellow",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#FFE200",
     "code": null,
     "discontinued": false
@@ -3007,7 +3013,7 @@
     "name": "Phalanx Yellow",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#FFE200",
     "code": null,
     "discontinued": false
@@ -3017,7 +3023,7 @@
     "name": "Phoenician Purple",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#440052",
     "code": null,
     "discontinued": false
@@ -3027,7 +3033,7 @@
     "name": "Phoenician Purple",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#440052",
     "code": null,
     "discontinued": false
@@ -3037,7 +3043,7 @@
     "name": "Pink Horror",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#8E2757",
     "code": null,
     "discontinued": false
@@ -3057,7 +3063,7 @@
     "name": "Praxeti White",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -3077,7 +3083,7 @@
     "name": "Pyroclast Orange Clear",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#ED8022",
     "code": null,
     "discontinued": false
@@ -3087,7 +3093,7 @@
     "name": "Rakarth Flesh",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#9C998D",
     "code": null,
     "discontinued": false
@@ -3097,7 +3103,7 @@
     "name": "Ratskin Flesh",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A86648",
     "code": null,
     "discontinued": false
@@ -3107,7 +3113,7 @@
     "name": "Red Gore",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#9D2B3F",
     "code": null,
     "discontinued": true
@@ -3117,7 +3123,7 @@
     "name": "Regal Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#003F70",
     "code": null,
     "discontinued": true
@@ -3127,7 +3133,7 @@
     "name": "Reikland Fleshshade",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#7E3226",
     "code": null,
     "discontinued": false
@@ -3137,7 +3143,7 @@
     "name": "Reikland Fleshshade Gloss",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#C2A896",
     "code": null,
     "discontinued": true
@@ -3147,17 +3153,18 @@
     "name": "Relictor Gold",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#EAC58F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-retributor-armour",
     "name": "Retributor Armour",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#EDC169",
     "code": null,
     "discontinued": false,
@@ -3168,7 +3175,7 @@
     "name": "Retributor Armour",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#EDC06A",
     "code": null,
     "discontinued": false,
@@ -3179,7 +3186,7 @@
     "name": "Rhinox Hide",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#462F30",
     "code": null,
     "discontinued": false
@@ -3189,7 +3196,7 @@
     "name": "Rotting Flesh",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B8C39E",
     "code": null,
     "discontinued": true
@@ -3199,7 +3206,7 @@
     "name": "Runefang Steel",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#C2C8CC",
     "code": null,
     "discontinued": false,
@@ -3210,7 +3217,7 @@
     "name": "Runefang Steel",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C2C8CC",
     "code": null,
     "discontinued": false,
@@ -3221,17 +3228,18 @@
     "name": "Runelord Brass",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#8D806F",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-russ-grey",
     "name": "Russ Grey",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#507085",
     "code": null,
     "discontinued": false
@@ -3241,7 +3249,7 @@
     "name": "Russ Grey",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#507085",
     "code": null,
     "discontinued": false
@@ -3251,7 +3259,7 @@
     "name": "Ryza Rust",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#F16C23",
     "code": null,
     "discontinued": false
@@ -3261,7 +3269,7 @@
     "name": "Scab Red",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#90263D",
     "code": null,
     "discontinued": true
@@ -3271,7 +3279,7 @@
     "name": "Scaly Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#006063",
     "code": null,
     "discontinued": true
@@ -3281,7 +3289,7 @@
     "name": "Scorched Brown",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#5A422F",
     "code": null,
     "discontinued": true
@@ -3291,7 +3299,7 @@
     "name": "Scorpion Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#65B345",
     "code": null,
     "discontinued": true
@@ -3301,7 +3309,7 @@
     "name": "Screamer Pink",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#7A0E44",
     "code": null,
     "discontinued": false
@@ -3311,7 +3319,7 @@
     "name": "Screaming Bell",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#D18A5E",
     "code": null,
     "discontinued": false,
@@ -3322,7 +3330,7 @@
     "name": "Screaming Skull",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#B9C099",
     "code": null,
     "discontinued": false
@@ -3332,7 +3340,7 @@
     "name": "Seraphim Sepia",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#905931",
     "code": null,
     "discontinued": false
@@ -3342,7 +3350,7 @@
     "name": "Shadow Grey",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#106993",
     "code": null,
     "discontinued": true
@@ -3352,7 +3360,7 @@
     "name": "Shining Gold",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#EFB736",
     "code": null,
     "discontinued": true,
@@ -3373,7 +3381,7 @@
     "name": "Sigismund Yellow Clear",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#FFE32F",
     "code": null,
     "discontinued": false
@@ -3383,7 +3391,7 @@
     "name": "Sigmarite",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#D6AC57",
     "code": null,
     "discontinued": false
@@ -3393,7 +3401,7 @@
     "name": "Skarsnik Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#588F6B",
     "code": null,
     "discontinued": false
@@ -3403,7 +3411,7 @@
     "name": "Skavenblight Dinge",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#45413B",
     "code": null,
     "discontinued": false
@@ -3423,7 +3431,7 @@
     "name": "Skink Blue",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#54BDCA",
     "code": null,
     "discontinued": false
@@ -3433,7 +3441,7 @@
     "name": "Skrag Brown",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#8B4806",
     "code": null,
     "discontinued": false
@@ -3443,7 +3451,7 @@
     "name": "Skull White",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": true
@@ -3453,17 +3461,18 @@
     "name": "Skullcrusher Brass",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#F4CB7A",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-slaanesh-grey",
     "name": "Slaanesh Grey",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#8B8893",
     "code": null,
     "discontinued": false
@@ -3473,7 +3482,7 @@
     "name": "Slaanesh Grey",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#8B8893",
     "code": null,
     "discontinued": false
@@ -3493,7 +3502,7 @@
     "name": "Snakebite Leather",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#8C6C40",
     "code": null,
     "discontinued": true
@@ -3513,7 +3522,7 @@
     "name": "Snot Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#006F45",
     "code": null,
     "discontinued": true
@@ -3523,7 +3532,7 @@
     "name": "Sons of Horus Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#00545E",
     "code": null,
     "discontinued": false
@@ -3533,7 +3542,7 @@
     "name": "Sons of Horus Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#00545E",
     "code": null,
     "discontinued": false
@@ -3543,7 +3552,7 @@
     "name": "Sotek Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#0B6371",
     "code": null,
     "discontinued": false
@@ -3573,7 +3582,7 @@
     "name": "Space Wolves Grey",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#91BFDC",
     "code": null,
     "discontinued": true
@@ -3593,7 +3602,7 @@
     "name": "Squig Orange",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#A74D42",
     "code": null,
     "discontinued": false
@@ -3603,27 +3612,29 @@
     "name": "Steel Legion Drab",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#584E2D",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-steel-legion-drab-air",
     "name": "Steel Legion Drab",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#584E2D",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-stegadon-scale-green",
     "name": "Stegadon Scale Green",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#06455D",
     "code": null,
     "discontinued": false
@@ -3653,7 +3664,7 @@
     "name": "Storm Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#27357E",
     "code": null,
     "discontinued": true
@@ -3663,7 +3674,7 @@
     "name": "Stormfang",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#5A7FA3",
     "code": null,
     "discontinued": false
@@ -3673,7 +3684,7 @@
     "name": "Stormhost Silver",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#DADDDF",
     "code": null,
     "discontinued": false,
@@ -3694,7 +3705,7 @@
     "name": "Stormvermin Fur",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#6D655F",
     "code": null,
     "discontinued": false
@@ -3704,7 +3715,7 @@
     "name": "Straken Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#597F1C",
     "code": null,
     "discontinued": false
@@ -3714,7 +3725,7 @@
     "name": "Straken Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#597F1C",
     "code": null,
     "discontinued": false
@@ -3724,7 +3735,7 @@
     "name": "Sunburst Yellow",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#FFD400",
     "code": null,
     "discontinued": true
@@ -3734,7 +3745,7 @@
     "name": "Sybarite Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#17A166",
     "code": null,
     "discontinued": false
@@ -3744,7 +3755,7 @@
     "name": "Sybarite Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#17A166",
     "code": null,
     "discontinued": false
@@ -3754,7 +3765,7 @@
     "name": "Sycorax Bronze",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#BB9F84",
     "code": null,
     "discontinued": false,
@@ -3765,7 +3776,7 @@
     "name": "Sylvaneth Bark",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#4E483B",
     "code": null,
     "discontinued": false
@@ -3785,7 +3796,7 @@
     "name": "Tallarn Flesh",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B27B67",
     "code": null,
     "discontinued": true
@@ -3795,7 +3806,7 @@
     "name": "Tallarn Sand",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#A07409",
     "code": null,
     "discontinued": false
@@ -3805,7 +3816,7 @@
     "name": "Tallarn Sand",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#A07409",
     "code": null,
     "discontinued": false
@@ -3815,7 +3826,7 @@
     "name": "Tanned Flesh",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A95C3E",
     "code": null,
     "discontinued": true
@@ -3825,7 +3836,7 @@
     "name": "Tau Light Ochre",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#BC6B10",
     "code": null,
     "discontinued": false
@@ -3835,7 +3846,7 @@
     "name": "Tau Light Ochre",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#BC6B10",
     "code": null,
     "discontinued": false
@@ -3845,7 +3856,7 @@
     "name": "Tausept Ochre",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A06E3B",
     "code": null,
     "discontinued": true
@@ -3855,7 +3866,7 @@
     "name": "Teclis Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#3877BF",
     "code": null,
     "discontinued": false
@@ -3865,7 +3876,7 @@
     "name": "Temple Guard Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#239489",
     "code": null,
     "discontinued": false
@@ -3875,7 +3886,7 @@
     "name": "Temple Guard Blue",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#239489",
     "code": null,
     "discontinued": false
@@ -3885,7 +3896,7 @@
     "name": "Tentacle Pink",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#DC9DC6",
     "code": null,
     "discontinued": true
@@ -3895,7 +3906,7 @@
     "name": "Terminatus Stone",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#C8B79D",
     "code": null,
     "discontinued": false
@@ -3905,7 +3916,7 @@
     "name": "Terminatus Stone",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C8B79D",
     "code": null,
     "discontinued": false
@@ -3915,7 +3926,7 @@
     "name": "Terracotta",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#793721",
     "code": null,
     "discontinued": true
@@ -3945,17 +3956,18 @@
     "name": "Thallax Gold",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#E88F47",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-the-fang",
     "name": "The Fang",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#405B71",
     "code": null,
     "discontinued": false
@@ -3965,7 +3977,7 @@
     "name": "The Fang",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#405B71",
     "code": null,
     "discontinued": false
@@ -3975,7 +3987,7 @@
     "name": "Thondia Brown",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#4F322C",
     "code": null,
     "discontinued": false
@@ -3985,7 +3997,7 @@
     "name": "Thousand Sons Blue",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#00506F",
     "code": null,
     "discontinued": false
@@ -3995,7 +4007,7 @@
     "name": "Thunderhawk Blue",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#396A70",
     "code": null,
     "discontinued": false
@@ -4005,7 +4017,7 @@
     "name": "Thunderhawk Blue",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#396A70",
     "code": null,
     "discontinued": false
@@ -4015,7 +4027,7 @@
     "name": "Tin Bitz",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#473F39",
     "code": null,
     "discontinued": true,
@@ -4026,7 +4038,7 @@
     "name": "Troll Slayer Orange",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#F16C23",
     "code": null,
     "discontinued": false
@@ -4036,7 +4048,7 @@
     "name": "Troll Slayer Orange",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#F16C23",
     "code": null,
     "discontinued": false
@@ -4046,7 +4058,7 @@
     "name": "Tuskgor Fur",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#863231",
     "code": null,
     "discontinued": false
@@ -4056,7 +4068,7 @@
     "name": "Tuskgor Fur",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#863231",
     "code": null,
     "discontinued": false
@@ -4066,7 +4078,7 @@
     "name": "Typhon Ash",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#E4D8C1",
     "code": null,
     "discontinued": false
@@ -4086,7 +4098,7 @@
     "name": "Tyrant Skull",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#C8C483",
     "code": null,
     "discontinued": false
@@ -4096,7 +4108,7 @@
     "name": "Ulthuan Grey",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#C4DDD5",
     "code": null,
     "discontinued": false
@@ -4106,7 +4118,7 @@
     "name": "Ulthuan Grey",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#C4DDD5",
     "code": null,
     "discontinued": false
@@ -4116,7 +4128,7 @@
     "name": "Ultramarine Blue",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#0066B3",
     "code": null,
     "discontinued": true
@@ -4136,7 +4148,7 @@
     "name": "Underhive Ash",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#BCBB7E",
     "code": null,
     "discontinued": false
@@ -4146,7 +4158,7 @@
     "name": "Ungor Flesh",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#D1A560",
     "code": null,
     "discontinued": false
@@ -4156,7 +4168,7 @@
     "name": "Ushabti Bone",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#ABA173",
     "code": null,
     "discontinued": false
@@ -4166,7 +4178,7 @@
     "name": "Ushabti Bone",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#ABA173",
     "code": null,
     "discontinued": false
@@ -4176,10 +4188,11 @@
     "name": "Valdor Gold",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#CE8D51",
     "code": null,
-    "discontinued": false
+    "discontinued": false,
+    "metallic": true
   },
   {
     "id": "citadel-valhallan-blizzard",
@@ -4196,7 +4209,7 @@
     "name": "Vermin Brown",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#843910",
     "code": null,
     "discontinued": true
@@ -4206,7 +4219,7 @@
     "name": "Vermin Fur",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#904F2E",
     "code": null,
     "discontinued": true
@@ -4216,7 +4229,7 @@
     "name": "Verminlord Hide",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#7E3331",
     "code": null,
     "discontinued": false
@@ -4226,7 +4239,7 @@
     "name": "Vile Green",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#82C59C",
     "code": null,
     "discontinued": true
@@ -4246,7 +4259,7 @@
     "name": "Vomit Brown",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#CE8B3C",
     "code": null,
     "discontinued": true
@@ -4256,7 +4269,7 @@
     "name": "Vulkan Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#223C2E",
     "code": null,
     "discontinued": false
@@ -4266,7 +4279,7 @@
     "name": "Vulkan Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#223C2E",
     "code": null,
     "discontinued": false
@@ -4276,7 +4289,7 @@
     "name": "Waaagh! Flesh",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#0B3B36",
     "code": null,
     "discontinued": false
@@ -4286,7 +4299,7 @@
     "name": "Warboss Green",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#317E57",
     "code": null,
     "discontinued": false
@@ -4296,7 +4309,7 @@
     "name": "Warboss Green",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#317E57",
     "code": null,
     "discontinued": false
@@ -4306,7 +4319,7 @@
     "name": "Warlock Purple",
     "brand": "Warhammer",
     "range": "Foundation",
-    "type": "base",
+    "type": "opaque",
     "hex": "#A43E8B",
     "code": null,
     "discontinued": true
@@ -4326,7 +4339,7 @@
     "name": "Warpfiend Grey",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#66656E",
     "code": null,
     "discontinued": false
@@ -4336,7 +4349,7 @@
     "name": "Warplock Bronze",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#B36E4F",
     "code": null,
     "discontinued": false,
@@ -4347,7 +4360,7 @@
     "name": "Warpstone Glow",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#0F702A",
     "code": null,
     "discontinued": false
@@ -4377,7 +4390,7 @@
     "name": "Wazdakka Red",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#880804",
     "code": null,
     "discontinued": false
@@ -4387,7 +4400,7 @@
     "name": "White Scar",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -4397,7 +4410,7 @@
     "name": "White Scar",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -4407,7 +4420,7 @@
     "name": "Wild Rider Red",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#E82E1B",
     "code": null,
     "discontinued": false
@@ -4417,7 +4430,7 @@
     "name": "Word Bearers Red",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#620104",
     "code": null,
     "discontinued": false
@@ -4427,7 +4440,7 @@
     "name": "Word Bearers Red",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#620104",
     "code": null,
     "discontinued": false
@@ -4437,7 +4450,7 @@
     "name": "Wrack White",
     "brand": "Warhammer",
     "range": "Dry",
-    "type": "dry",
+    "type": "opaque",
     "hex": "#D3D0CF",
     "code": null,
     "discontinued": false
@@ -4447,7 +4460,7 @@
     "name": "Wraithbone",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#DBD1B2",
     "code": null,
     "discontinued": false
@@ -4457,7 +4470,7 @@
     "name": "Wraithbone",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#DBD1B2",
     "code": null,
     "discontinued": false
@@ -4477,7 +4490,7 @@
     "name": "Xereus Purple",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#47125A",
     "code": null,
     "discontinued": false
@@ -4487,7 +4500,7 @@
     "name": "XV-88",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#6C4811",
     "code": null,
     "discontinued": false
@@ -4497,7 +4510,7 @@
     "name": "XV-88",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#6C4811",
     "code": null,
     "discontinued": false
@@ -4507,7 +4520,7 @@
     "name": "Yriel Yellow",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#FFD900",
     "code": null,
     "discontinued": false
@@ -4517,7 +4530,7 @@
     "name": "Zamesi Desert",
     "brand": "Warhammer",
     "range": "Layer",
-    "type": "layer",
+    "type": "opaque",
     "hex": "#D89D1B",
     "code": null,
     "discontinued": false
@@ -4527,7 +4540,7 @@
     "name": "Zandri Dust",
     "brand": "Warhammer",
     "range": "Base",
-    "type": "base",
+    "type": "opaque",
     "hex": "#988E56",
     "code": null,
     "discontinued": false
@@ -4537,7 +4550,7 @@
     "name": "Zandri Dust",
     "brand": "Warhammer",
     "range": "Air",
-    "type": "air",
+    "type": "opaque",
     "hex": "#988E56",
     "code": null,
     "discontinued": false
@@ -4547,7 +4560,7 @@
     "name": "Zandri Dust",
     "brand": "Warhammer",
     "range": "Spray",
-    "type": "spray",
+    "type": "primer",
     "hex": "#988E56",
     "code": null,
     "discontinued": false
@@ -4557,7 +4570,7 @@
     "name": "Soulblight Grey",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#7D747D",
     "code": null,
     "discontinued": false
@@ -4567,7 +4580,7 @@
     "name": "Berserker Bloodshade",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#82233B",
     "code": null,
     "discontinued": false
@@ -4577,7 +4590,7 @@
     "name": "Targor Rageshade",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#514357",
     "code": null,
     "discontinued": false
@@ -4587,7 +4600,7 @@
     "name": "Poxwalker",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#4C7476",
     "code": null,
     "discontinued": false
@@ -4597,7 +4610,7 @@
     "name": "Kroak Green",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#67886D",
     "code": null,
     "discontinued": false
@@ -4607,7 +4620,7 @@
     "name": "Tyran Blue",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#326895",
     "code": null,
     "discontinued": false
@@ -4617,7 +4630,7 @@
     "name": "Mortarion Grime",
     "brand": "Warhammer",
     "range": "Shade",
-    "type": "shade",
+    "type": "wash",
     "hex": "#7F7928",
     "code": null,
     "discontinued": false
@@ -4627,7 +4640,7 @@
     "name": "Enrapturess Dusk 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#1E1435",
     "code": null,
     "discontinued": false
@@ -4637,7 +4650,7 @@
     "name": "Enrapturess Dusk 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#413549",
     "code": null,
     "discontinued": false
@@ -4647,7 +4660,7 @@
     "name": "Enrapturess Dusk 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#534D5E",
     "code": null,
     "discontinued": false
@@ -4657,7 +4670,7 @@
     "name": "Enrapturess Dusk 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#6E6773",
     "code": null,
     "discontinued": false
@@ -4667,7 +4680,7 @@
     "name": "Enrapturess Dusk 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#817A86",
     "code": null,
     "discontinued": false
@@ -4677,7 +4690,7 @@
     "name": "Hive Fleet Purple 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#1E1A40",
     "code": null,
     "discontinued": false
@@ -4687,7 +4700,7 @@
     "name": "Hive Fleet Purple 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#3C1E54",
     "code": null,
     "discontinued": false
@@ -4697,7 +4710,7 @@
     "name": "Hive Fleet Purple 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#655192",
     "code": null,
     "discontinued": false
@@ -4707,7 +4720,7 @@
     "name": "Hive Fleet Purple 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#8769B1",
     "code": null,
     "discontinued": false
@@ -4717,7 +4730,7 @@
     "name": "Hive Fleet Purple 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#8F82AE",
     "code": null,
     "discontinued": false
@@ -4727,7 +4740,7 @@
     "name": "Magnus the Red 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#3A202D",
     "code": null,
     "discontinued": false
@@ -4737,7 +4750,7 @@
     "name": "Magnus the Red 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#4A123E",
     "code": null,
     "discontinued": false
@@ -4747,7 +4760,7 @@
     "name": "Magnus the Red 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#76003F",
     "code": null,
     "discontinued": false
@@ -4757,7 +4770,7 @@
     "name": "Magnus the Red 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#9A1B59",
     "code": null,
     "discontinued": false
@@ -4767,7 +4780,7 @@
     "name": "Magnus the Red 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#AA4277",
     "code": null,
     "discontinued": false
@@ -4777,7 +4790,7 @@
     "name": "Eye of Terror 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#920130",
     "code": null,
     "discontinued": false
@@ -4787,7 +4800,7 @@
     "name": "Eye of Terror 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#BD0147",
     "code": null,
     "discontinued": false
@@ -4797,7 +4810,7 @@
     "name": "Eye of Terror 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#C20060",
     "code": null,
     "discontinued": false
@@ -4807,7 +4820,7 @@
     "name": "Eye of Terror 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#D4427C",
     "code": null,
     "discontinued": false
@@ -4817,7 +4830,7 @@
     "name": "Eye of Terror 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#DB6499",
     "code": null,
     "discontinued": false
@@ -4827,7 +4840,7 @@
     "name": "Carthalos Skin 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#241815",
     "code": null,
     "discontinued": false
@@ -4837,7 +4850,7 @@
     "name": "Carthalos Skin 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#2D140C",
     "code": null,
     "discontinued": false
@@ -4847,7 +4860,7 @@
     "name": "Carthalos Skin 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#4E2212",
     "code": null,
     "discontinued": false
@@ -4857,7 +4870,7 @@
     "name": "Carthalos Skin 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#5F3A37",
     "code": null,
     "discontinued": false
@@ -4867,7 +4880,7 @@
     "name": "Carthalos Skin 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#795446",
     "code": null,
     "discontinued": false
@@ -4877,7 +4890,7 @@
     "name": "Celestine Skin 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#CD8169",
     "code": null,
     "discontinued": false
@@ -4887,7 +4900,7 @@
     "name": "Celestine Skin 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#D58B70",
     "code": null,
     "discontinued": false
@@ -4897,7 +4910,7 @@
     "name": "Celestine Skin 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#D99578",
     "code": null,
     "discontinued": false
@@ -4907,7 +4920,7 @@
     "name": "Celestine Skin 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#EAA889",
     "code": null,
     "discontinued": false
@@ -4917,7 +4930,7 @@
     "name": "Celestine Skin 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#DEB398",
     "code": null,
     "discontinued": false
@@ -4927,7 +4940,7 @@
     "name": "Gnarlwood 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#342928",
     "code": null,
     "discontinued": false
@@ -4937,7 +4950,7 @@
     "name": "Gnarlwood 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#514235",
     "code": null,
     "discontinued": false
@@ -4947,7 +4960,7 @@
     "name": "Gnarlwood 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#725C44",
     "code": null,
     "discontinued": false
@@ -4957,7 +4970,7 @@
     "name": "Gnarlwood 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#776857",
     "code": null,
     "discontinued": false
@@ -4967,7 +4980,7 @@
     "name": "Gnarlwood 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#887B67",
     "code": null,
     "discontinued": false
@@ -4977,7 +4990,7 @@
     "name": "Necrolith Bone 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#877561",
     "code": null,
     "discontinued": false
@@ -4987,7 +5000,7 @@
     "name": "Necrolith Bone 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#B0916A",
     "code": null,
     "discontinued": false
@@ -4997,7 +5010,7 @@
     "name": "Necrolith Bone 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#B99F7D",
     "code": null,
     "discontinued": false
@@ -5007,7 +5020,7 @@
     "name": "Necrolith Bone 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#C1AB86",
     "code": null,
     "discontinued": false
@@ -5017,7 +5030,7 @@
     "name": "Necrolith Bone 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#BCB79E",
     "code": null,
     "discontinued": false
@@ -5027,7 +5040,7 @@
     "name": "Dataslate Grey 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#2B2D28",
     "code": null,
     "discontinued": false
@@ -5037,7 +5050,7 @@
     "name": "Dataslate Grey 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#3E3D35",
     "code": null,
     "discontinued": false
@@ -5047,7 +5060,7 @@
     "name": "Dataslate Grey 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#555650",
     "code": null,
     "discontinued": false
@@ -5057,7 +5070,7 @@
     "name": "Dataslate Grey 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#737069",
     "code": null,
     "discontinued": false
@@ -5067,7 +5080,7 @@
     "name": "Dataslate Grey 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#878983",
     "code": null,
     "discontinued": false
@@ -5077,7 +5090,7 @@
     "name": "Blackstone Void 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#000208",
     "code": null,
     "discontinued": false
@@ -5087,7 +5100,7 @@
     "name": "Blackstone Void 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#4E5458",
     "code": null,
     "discontinued": false
@@ -5097,7 +5110,7 @@
     "name": "Blackstone Void 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#6E7074",
     "code": null,
     "discontinued": false
@@ -5107,7 +5120,7 @@
     "name": "Blackstone Void 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#9B9D9F",
     "code": null,
     "discontinued": false
@@ -5117,7 +5130,7 @@
     "name": "Blackstone Void 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#FFFFFF",
     "code": null,
     "discontinued": false
@@ -5127,7 +5140,7 @@
     "name": "Kasrkin Green 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#001B1B",
     "code": null,
     "discontinued": false
@@ -5137,7 +5150,7 @@
     "name": "Kasrkin Green 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#1F4530",
     "code": null,
     "discontinued": false
@@ -5147,7 +5160,7 @@
     "name": "Kasrkin Green 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#40713C",
     "code": null,
     "discontinued": false
@@ -5157,7 +5170,7 @@
     "name": "Kasrkin Green 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#678E55",
     "code": null,
     "discontinued": false
@@ -5167,7 +5180,7 @@
     "name": "Kasrkin Green 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#86A978",
     "code": null,
     "discontinued": false
@@ -5177,7 +5190,7 @@
     "name": "Hierotek Green 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#00321C",
     "code": null,
     "discontinued": false
@@ -5187,7 +5200,7 @@
     "name": "Hierotek Green 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#00542D",
     "code": null,
     "discontinued": false
@@ -5197,7 +5210,7 @@
     "name": "Hierotek Green 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#006A2E",
     "code": null,
     "discontinued": false
@@ -5207,7 +5220,7 @@
     "name": "Hierotek Green 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#00894E",
     "code": null,
     "discontinued": false
@@ -5217,7 +5230,7 @@
     "name": "Hierotek Green 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#02B681",
     "code": null,
     "discontinued": false
@@ -5227,7 +5240,7 @@
     "name": "Green Morkshroom 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#143230",
     "code": null,
     "discontinued": false
@@ -5237,7 +5250,7 @@
     "name": "Green Morkshroom 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#004F48",
     "code": null,
     "discontinued": false
@@ -5247,7 +5260,7 @@
     "name": "Green Morkshroom 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#016458",
     "code": null,
     "discontinued": false
@@ -5257,7 +5270,7 @@
     "name": "Green Morkshroom 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#007B6D",
     "code": null,
     "discontinued": false
@@ -5267,7 +5280,7 @@
     "name": "Green Morkshroom 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#37AC83",
     "code": null,
     "discontinued": false
@@ -5277,7 +5290,7 @@
     "name": "Seraphon Blue 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#002F35",
     "code": null,
     "discontinued": false
@@ -5287,7 +5300,7 @@
     "name": "Seraphon Blue 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#004650",
     "code": null,
     "discontinued": false
@@ -5297,7 +5310,7 @@
     "name": "Seraphon Blue 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#006874",
     "code": null,
     "discontinued": false
@@ -5307,7 +5320,7 @@
     "name": "Seraphon Blue 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#008D92",
     "code": null,
     "discontinued": false
@@ -5317,7 +5330,7 @@
     "name": "Seraphon Blue 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#00B7B9",
     "code": null,
     "discontinued": false
@@ -5327,7 +5340,7 @@
     "name": "Craventhrone Cloak 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#08232E",
     "code": null,
     "discontinued": false
@@ -5337,7 +5350,7 @@
     "name": "Craventhrone Cloak 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#13373E",
     "code": null,
     "discontinued": false
@@ -5347,7 +5360,7 @@
     "name": "Craventhrone Cloak 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#164858",
     "code": null,
     "discontinued": false
@@ -5357,7 +5370,7 @@
     "name": "Craventhrone Cloak 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#41717D",
     "code": null,
     "discontinued": false
@@ -5367,7 +5380,7 @@
     "name": "Craventhrone Cloak 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#598B8E",
     "code": null,
     "discontinued": false
@@ -5377,7 +5390,7 @@
     "name": "Stormwolf Blue 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#233F55",
     "code": null,
     "discontinued": false
@@ -5387,7 +5400,7 @@
     "name": "Stormwolf Blue 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#405568",
     "code": null,
     "discontinued": false
@@ -5397,7 +5410,7 @@
     "name": "Stormwolf Blue 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#54697D",
     "code": null,
     "discontinued": false
@@ -5407,7 +5420,7 @@
     "name": "Stormwolf Blue 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#6E95A4",
     "code": null,
     "discontinued": false
@@ -5417,7 +5430,7 @@
     "name": "Stormwolf Blue 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#87AFB9",
     "code": null,
     "discontinued": false
@@ -5427,7 +5440,7 @@
     "name": "Scinari Blue 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#014789",
     "code": null,
     "discontinued": false
@@ -5437,7 +5450,7 @@
     "name": "Scinari Blue 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#005895",
     "code": null,
     "discontinued": false
@@ -5447,7 +5460,7 @@
     "name": "Scinari Blue 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#006C9A",
     "code": null,
     "discontinued": false
@@ -5457,7 +5470,7 @@
     "name": "Scinari Blue 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#0188BB",
     "code": null,
     "discontinued": false
@@ -5467,7 +5480,7 @@
     "name": "Scinari Blue 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#009AB9",
     "code": null,
     "discontinued": false
@@ -5477,7 +5490,7 @@
     "name": "Blue Gorkshroom 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#002356",
     "code": null,
     "discontinued": false
@@ -5487,7 +5500,7 @@
     "name": "Blue Gorkshroom 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#004487",
     "code": null,
     "discontinued": false
@@ -5497,7 +5510,7 @@
     "name": "Blue Gorkshroom 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#0156A4",
     "code": null,
     "discontinued": false
@@ -5507,7 +5520,7 @@
     "name": "Blue Gorkshroom 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#006CAD",
     "code": null,
     "discontinued": false
@@ -5517,7 +5530,7 @@
     "name": "Blue Gorkshroom 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#007BB2",
     "code": null,
     "discontinued": false
@@ -5527,7 +5540,7 @@
     "name": "Ultramar Blue 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#001A42",
     "code": null,
     "discontinued": false
@@ -5537,7 +5550,7 @@
     "name": "Ultramar Blue 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#0F3062",
     "code": null,
     "discontinued": false
@@ -5547,7 +5560,7 @@
     "name": "Ultramar Blue 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#0D4F88",
     "code": null,
     "discontinued": false
@@ -5557,7 +5570,7 @@
     "name": "Ultramar Blue 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#436CA1",
     "code": null,
     "discontinued": false
@@ -5567,7 +5580,7 @@
     "name": "Ultramar Blue 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#6D9ECF",
     "code": null,
     "discontinued": false
@@ -5577,7 +5590,7 @@
     "name": "Shalaxi Violet 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#130040",
     "code": null,
     "discontinued": false
@@ -5587,7 +5600,7 @@
     "name": "Shalaxi Violet 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#262E6D",
     "code": null,
     "discontinued": false
@@ -5597,7 +5610,7 @@
     "name": "Shalaxi Violet 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#324E99",
     "code": null,
     "discontinued": false
@@ -5607,7 +5620,7 @@
     "name": "Shalaxi Violet 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#6472B9",
     "code": null,
     "discontinued": false
@@ -5617,7 +5630,7 @@
     "name": "Shalaxi Violet 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#7E8BC8",
     "code": null,
     "discontinued": false
@@ -5627,7 +5640,7 @@
     "name": "Carmine Blades 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#3C262A",
     "code": null,
     "discontinued": false
@@ -5637,7 +5650,7 @@
     "name": "Carmine Blades 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#5B3538",
     "code": null,
     "discontinued": false
@@ -5647,7 +5660,7 @@
     "name": "Carmine Blades 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#750019",
     "code": null,
     "discontinued": false
@@ -5657,7 +5670,7 @@
     "name": "Carmine Blades 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#910023",
     "code": null,
     "discontinued": false
@@ -5667,7 +5680,7 @@
     "name": "Carmine Blades 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#C64E50",
     "code": null,
     "discontinued": false
@@ -5677,7 +5690,7 @@
     "name": "Bloodtoof Red 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#581F16",
     "code": null,
     "discontinued": false
@@ -5687,7 +5700,7 @@
     "name": "Bloodtoof Red 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#94001E",
     "code": null,
     "discontinued": false
@@ -5697,7 +5710,7 @@
     "name": "Bloodtoof Red 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#AD082B",
     "code": null,
     "discontinued": false
@@ -5707,7 +5720,7 @@
     "name": "Bloodtoof Red 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#D60020",
     "code": null,
     "discontinued": false
@@ -5717,7 +5730,7 @@
     "name": "Bloodtoof Red 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#EF363D",
     "code": null,
     "discontinued": false
@@ -5727,7 +5740,7 @@
     "name": "Chotec Orange 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#93150B",
     "code": null,
     "discontinued": false
@@ -5737,7 +5750,7 @@
     "name": "Chotec Orange 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#B82F2D",
     "code": null,
     "discontinued": false
@@ -5747,7 +5760,7 @@
     "name": "Chotec Orange 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#E04A33",
     "code": null,
     "discontinued": false
@@ -5757,7 +5770,7 @@
     "name": "Chotec Orange 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#F56230",
     "code": null,
     "discontinued": false
@@ -5767,7 +5780,7 @@
     "name": "Chotec Orange 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#F78030",
     "code": null,
     "discontinued": false
@@ -5777,7 +5790,7 @@
     "name": "Ta'unar Ochre 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#BB5528",
     "code": null,
     "discontinued": false
@@ -5787,7 +5800,7 @@
     "name": "Ta'unar Ochre 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#D27144",
     "code": null,
     "discontinued": false
@@ -5797,7 +5810,7 @@
     "name": "Ta'unar Ochre 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#E78344",
     "code": null,
     "discontinued": false
@@ -5807,7 +5820,7 @@
     "name": "Ta'unar Ochre 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#EA9B6B",
     "code": null,
     "discontinued": false
@@ -5817,7 +5830,7 @@
     "name": "Ta'unar Ochre 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#E9B06E",
     "code": null,
     "discontinued": false
@@ -5827,7 +5840,7 @@
     "name": "Khemri Sands 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#6C4B12",
     "code": null,
     "discontinued": false
@@ -5837,7 +5850,7 @@
     "name": "Khemri Sands 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#8D5E07",
     "code": null,
     "discontinued": false
@@ -5847,7 +5860,7 @@
     "name": "Khemri Sands 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#B1791D",
     "code": null,
     "discontinued": false
@@ -5857,7 +5870,7 @@
     "name": "Khemri Sands 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#CF8400",
     "code": null,
     "discontinued": false
@@ -5867,7 +5880,7 @@
     "name": "Khemri Sands 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#DC9A00",
     "code": null,
     "discontinued": false
@@ -5877,7 +5890,7 @@
     "name": "Hawkshroud Yellow 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#F69113",
     "code": null,
     "discontinued": false
@@ -5887,7 +5900,7 @@
     "name": "Hawkshroud Yellow 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#FBA202",
     "code": null,
     "discontinued": false
@@ -5897,7 +5910,7 @@
     "name": "Hawkshroud Yellow 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#FEBB02",
     "code": null,
     "discontinued": false
@@ -5907,7 +5920,7 @@
     "name": "Hawkshroud Yellow 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#FFD302",
     "code": null,
     "discontinued": false
@@ -5917,7 +5930,7 @@
     "name": "Hawkshroud Yellow 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#FDE07E",
     "code": null,
     "discontinued": false
@@ -5927,7 +5940,7 @@
     "name": "Megaboss Yellow 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#F9AD01",
     "code": null,
     "discontinued": false
@@ -5937,7 +5950,7 @@
     "name": "Megaboss Yellow 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#F8CE00",
     "code": null,
     "discontinued": false
@@ -5947,7 +5960,7 @@
     "name": "Megaboss Yellow 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#FFE440",
     "code": null,
     "discontinued": false
@@ -5957,7 +5970,7 @@
     "name": "Megaboss Yellow 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#F8E85F",
     "code": null,
     "discontinued": false
@@ -5967,7 +5980,7 @@
     "name": "Megaboss Yellow 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#FFF175",
     "code": null,
     "discontinued": false
@@ -5977,7 +5990,7 @@
     "name": "Plague Toad Venom 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#49892D",
     "code": null,
     "discontinued": false
@@ -5987,7 +6000,7 @@
     "name": "Plague Toad Venom 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#549B32",
     "code": null,
     "discontinued": false
@@ -5997,7 +6010,7 @@
     "name": "Plague Toad Venom 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#80C234",
     "code": null,
     "discontinued": false
@@ -6007,7 +6020,7 @@
     "name": "Plague Toad Venom 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#9CC829",
     "code": null,
     "discontinued": false
@@ -6017,7 +6030,7 @@
     "name": "Plague Toad Venom 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#C8D600",
     "code": null,
     "discontinued": false
@@ -6027,7 +6040,7 @@
     "name": "Kruleboyz Green 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#4A7D36",
     "code": null,
     "discontinued": false
@@ -6037,7 +6050,7 @@
     "name": "Kruleboyz Green 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#627F3C",
     "code": null,
     "discontinued": false
@@ -6047,7 +6060,7 @@
     "name": "Kruleboyz Green 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#7A823F",
     "code": null,
     "discontinued": false
@@ -6057,7 +6070,7 @@
     "name": "Kruleboyz Green 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#939859",
     "code": null,
     "discontinued": false
@@ -6067,7 +6080,7 @@
     "name": "Kruleboyz Green 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#AEB16C",
     "code": null,
     "discontinued": false
@@ -6077,7 +6090,7 @@
     "name": "Lustria Green 1",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#004816",
     "code": null,
     "discontinued": false
@@ -6087,7 +6100,7 @@
     "name": "Lustria Green 2",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#006929",
     "code": null,
     "discontinued": false
@@ -6097,7 +6110,7 @@
     "name": "Lustria Green 3",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#007932",
     "code": null,
     "discontinued": false
@@ -6107,7 +6120,7 @@
     "name": "Lustria Green 4",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#34AD40",
     "code": null,
     "discontinued": false
@@ -6117,7 +6130,7 @@
     "name": "Lustria Green 5",
     "brand": "Warhammer",
     "range": "Tone Pro",
-    "type": "tone",
+    "type": "opaque",
     "hex": "#4EB33F",
     "code": null,
     "discontinued": false
