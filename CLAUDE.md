@@ -278,7 +278,9 @@ If these are missing, `next build`/`next dev` regenerate them. Don't commit them
   `layer-row-collection.test.tsx` (the visualiser's toggle, split out because
   it needs the provider mocked where `scheme-editor.test.tsx` needs no auth at
   all) — see "My paints" below,
-  `catalogue-sources.test.ts` (the `load.ts` drift guard)
+  `catalogue-sources.test.ts` (the `load.ts` drift guard),
+  `check-release.test.ts` (the changelog check's version rule — see "The
+  changelog and releasing")
   `shopping-list.test.ts` and `shopping-list-card.test.tsx`,
   `paints-browser-collection.test.tsx` and `similar-colours-collection.test.tsx`
   (the `mine` filter on each page: off/loading/ready/failed, and that a
@@ -1182,10 +1184,19 @@ for up to nine days — one of whose entries had meanwhile been filed under the
 *previous*, already-tagged version, where the tag says it never was. A
 deferred step is a step that waits for someone to remember it.
 
-- **A PR that touches `src/` writes its own entries, in that PR.**
-  `.github/workflows/changelog.yml` fails the PR otherwise; the escape hatch for
-  a genuine non-user-facing change is the `no changelog` label (which also means
-  no version bump). The check is deliberately narrow — `src/` only — so data
+- **A PR that touches `src/` writes its own entries and versions itself, in
+  that PR.** `.github/workflows/changelog.yml` fails the PR otherwise; the
+  escape hatch for a genuine non-user-facing change is the `no changelog` label
+  (which also means no version bump). The release half is
+  `scripts/check-release.mjs`, pure and pinned in `test/check-release.test.ts`:
+  `package.json` above the base branch's, both root `package-lock.json`
+  versions matching, the newest heading `## [<that version>] - <a real date>`
+  directly under an **empty** `[Unreleased]`, not already on the base branch,
+  and not dated before the release it follows. A date other than today is only
+  a warning — a PR can wait for review — and the fix is re-dating on merge day.
+  The check runs on push, not on merge: two PRs racing for one number are
+  caught because both edit the top of `CHANGELOG.md`, and the resulting
+  conflict forces a rebase, which re-runs it. The check is deliberately narrow — `src/` only — so data
   corrections and dependency bumps don't train people to reach for that label
   by reflex. A data-only PR that painters would notice (a new range) may still
   release; it just isn't forced to.
@@ -1229,7 +1240,8 @@ deferred step is a step that waits for someone to remember it.
 - Tag every release (`git tag -a vX.Y.Z`, then `git push origin vX.Y.Z`), and
   tag the **merge commit**, not the branch you cut the version on.
   Tagging here has been sporadic rather than absent. On the remote:
-  `v0.3.0`, `v0.5.0`, `v0.7.0`, `v0.9.0`, `v0.13.0`, `v0.14.0`, `v0.15.0`.
+  `v0.3.0`, `v0.5.0`, `v0.7.0`, `v0.9.0`, `v0.13.0`, `v0.14.0`, `v0.15.0`,
+  `v0.16.0`.
   Missing: 0.1.0, 0.2.0, 0.4.0, 0.6.0, 0.8.0, 0.10.0, 0.10.1, 0.11.0, 0.12.0 —
   nine of the sixteen releases in `CHANGELOG.md` have no commit behind their
   version, which is a large part of why the file was able to drift without
