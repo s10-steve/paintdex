@@ -73,13 +73,13 @@ Five things here have each cost a red CI run or a week of stalled PRs.
   so while `main` carries N advisories every PR that fixes one of them still
   fails on the other N−1 — eight PRs sat red for weeks for exactly this reason.
   Land them as one branch, resolved cleanly, rather than merging them in turn.
-- **`jsdom` is pinned exactly (`30.0.1`, no caret), deliberately.** 30.1.0 breaks
+- **`jsdom` is pinned exactly (no caret), deliberately.** 30.1.0 broke
   `URL.createObjectURL`: a `File` from the jsdom environment's own global, handed
-  to jsdom's own `createObjectURL`, throws `Cannot read properties of undefined
-  (reading '_buffer')`, failing six `use-poster` tests. The caret is what let a
-  clean resolve pick it up, and `npm ci` honouring the lock is not enough —
-  anyone regenerating lands back on the failures with nothing to explain them.
-  Dependabot will keep offering 30.1.x; that PR is where to re-test it.
+  to jsdom's own `createObjectURL`, threw `Cannot read properties of undefined
+  (reading '_buffer')`, failing six `use-poster` tests. 30.1.2 passes them, so
+  the pin moved there — but keep it exact: a caret is what let a clean resolve
+  pick up the broken release, and the `use-poster` suite is what to watch when
+  Dependabot offers the next one.
 - **`eslint.config.mjs` names the React version instead of letting the plugin
   detect it.** ESLint 10 removed the rule-context API that `eslint-plugin-react`'s
   version sniffer calls, so `detect` — what `eslint-config-next` leaves in place —
