@@ -75,7 +75,9 @@ what's actually live.
 
 **Any PR that changes `src/` adds its entries under a new
 `## [X.Y.Z] - YYYY-MM-DD` heading, just below the empty `## [Unreleased]`, and
-bumps the version, in that PR.** CI enforces the entry.
+bumps the version, in that PR.** CI enforces both: the changelog check fails
+until the version is bumped, the lock file matches, and the newest heading is
+that version with a date. A date other than today only gets a warning.
 
 - **Version:** a minor bump for anything new, a patch for fixes only (the site
   is pre-1.0, per [SemVer](https://semver.org/spec/v2.0.0.html)). Change
