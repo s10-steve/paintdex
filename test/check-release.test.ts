@@ -134,7 +134,7 @@ describe("the real CHANGELOG.md and package.json", () => {
   it("agree on the newest release, with [Unreleased] empty on top", () => {
     const md = readFileSync("CHANGELOG.md", "utf8");
     const version = JSON.parse(readFileSync("package.json", "utf8")).version;
-    const [date] = md.match(new RegExp(`^## \\[${version.replace(/\./g, "\\.")}\\] - (\\S+)$`, "m"))!.slice(1);
+    const [date] = md.match(new RegExp(`^## \\[${version.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\] - (\\S+)$`, "m"))!.slice(1);
     const { errors } = checkRelease({
       baseChangelog: "# Changelog\n",
       headChangelog: md,
